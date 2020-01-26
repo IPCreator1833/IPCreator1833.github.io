@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="mkdir、rmdir、cd、ls、cat、less、cp、mv、rm 、chmod cd ..  返回上级目录（若当前目录为“/“，则执行完后还在“/“；”..”为上级目录的意思）；cd ../..  返回上两级目录；">
+<meta name="keywords" content="Linux,Command">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Top Commands of Linux">
+<meta property="og:url" content="https://hazyman.com/Tools/IPCreator/Technology/Program/Android/linux-tips/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="mkdir、rmdir、cd、ls、cat、less、cp、mv、rm 、chmod cd ..  返回上级目录（若当前目录为“/“，则执行完后还在“/“；”..”为上级目录的意思）；cd ../..  返回上两级目录；">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://rumorscity.com/wp-content/uploads/2014/08/10-Linux-Unix-Command-Cheat-Sheet.jpg">
+<meta property="og:image" content="https://rumorscity.com/wp-content/uploads/2014/08/10-Linux-Unix-Command-Cheat-Sheet-011-720x1018.jpg">
+<meta property="og:updated_time" content="2017-03-27T10:04:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Top Commands of Linux">
+<meta name="twitter:description" content="mkdir、rmdir、cd、ls、cat、less、cp、mv、rm 、chmod cd ..  返回上级目录（若当前目录为“/“，则执行完后还在“/“；”..”为上级目录的意思）；cd ../..  返回上两级目录；">
+<meta name="twitter:image" content="https://rumorscity.com/wp-content/uploads/2014/08/10-Linux-Unix-Command-Cheat-Sheet.jpg">
+
+<link rel="canonical" href="https://hazyman.com/Tools/IPCreator/Technology/Program/Android/linux-tips/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Top Commands of Linux | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Tools/IPCreator/Technology/Program/Android/linux-tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Top Commands of Linux
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index">
+                    <span itemprop="name">Tools</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Tools/IPCreator/Technology/Program/Android/linux-tips/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Tools/IPCreator/Technology/Program/Android/linux-tips/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://rumorscity.com/wp-content/uploads/2014/08/10-Linux-Unix-Command-Cheat-Sheet.jpg" alt></p>
+<p>mkdir、rmdir、cd、ls、cat、less、cp、mv、rm 、chmod</p>
+<p>cd ..  返回上级目录（若当前目录为“/“，则执行完后还在“/“；”..”为上级目录的意思）；<br>cd ../..  返回上两级目录；</p>
+<a id="more"></a>
+<p>更多参考：<a href="https://rumorscity.com/2014/08/16/6-best-linuxunix-command-cheat-sheet/" target="_blank" rel="noopener">6 Best Linux/Unix Command Cheat Sheet</a></p>
+<p><img src="https://rumorscity.com/wp-content/uploads/2014/08/10-Linux-Unix-Command-Cheat-Sheet-011-720x1018.jpg" alt></p>
+<p>No 命令 功 能 实 例</p>
+<p>1 mkdir 创建目录 mkdir do<br>mkdir do/align<br>mkdir –p blast/hba/209</p>
+<p>2 rmdir 删除目录 rmdir tmp</p>
+<p>3 cd 改变目录 Cd<br>cd do<br>cd ..<br>cd ../do/tree/7hba</p>
+<p>4 ls 显示文件信息 ls<br>ls -l<br>ls <em>.fasta<br>ls /tmp/seq</em><br>ls –lR</p>
+<p>5 cat 编辑文件 cat seq1<br>cat &gt; seq1<br>cat &gt;&gt; seq1</p>
+<p>6 less 显示文件内容 more myseq</p>
+<p>7 cp 复制文件 cp seq1 seq2<br>cp ../seq/hba_human.sw .<br>cp /tmp/seq1 .<br>cp *.fasta ../keep/</p>
+<p>8 mv 更改文件名 mv seq1 seq2</p>
+<p>9 rm 删除文件 rm seq2<br>rm <em>.txt<br>rm tmp/seq.</em><br>rm –rf tmp</p>
+<p>10 chmod 改变权限 chmod –w seq1.fasta<br>chmod +w <em>.needle<br>chmod 755 </em></p>
+<h2 id="命令-1：mkdir"><a href="#命令-1：mkdir" class="headerlink" title="命令 1：mkdir"></a>命令 1：mkdir</h2><p>用途：创建目录<br>实例 1：mkdir do<br>含义：在当前目录下创建名为 do 的子目录<br>实例 2：mkdir do/align<br>含义：在子目录 do 下创建名为 align 的子目录（子目录 do 已经存在）<br>实例 3：mkdir –p hba/tree<br>含义：在当前目录下创建名为 hba 的子目录，并在子目录 hba 下创建名为 tree 的子目录</p>
+<h2 id="命令-2：rmdir"><a href="#命令-2：rmdir" class="headerlink" title="命令 2：rmdir"></a>命令 2：rmdir</h2><p>用途：删除目录<br>实例 1：rmdir tmp<br>含义：删除当前目录下名为 tmp 的子目录，该子目录中没有文件和子目录<br>命令 3：cd<br>用途：改变目录<br>实例 1：cd<br>含义：回到用户主目录，即登录时进入的目录<br>实例 2：cd do<br>含义：进入子目录 do</p>
+<h2 id="实例-3：cd"><a href="#实例-3：cd" class="headerlink" title="实例 3：cd .."></a>实例 3：cd ..</h2><p>含义：回到上级目录<br>实例 4：cd hba/tree<br>含义：直接进入子目录 hba 下的 tree 子目录<br>实例 5：cd ../do/align<br>含义：进入上级目录 do 下的 align 子目录</p>
+<h2 id="命令-4：ls"><a href="#命令-4：ls" class="headerlink" title="命令 4：ls"></a>命令 4：ls</h2><p>用途：显示文件或目录<br>实例 1：ls<br>含义：显示当前目录下子目录和文件名<br>实例 2：ls -l<br>含义：显示当前目录下子目录和文件名详细信息，包括属性、权限、大小和创建日期等<br>实例 3：ls <em>.fasta<br>含义：显示当前目录下所有以.fasta 结尾的文件<br>实例 4：ls hba/hba_</em><br>含义：显示子目录 hba 下所有以 hba_起始的文件<br>实例 5：ls /tmp<br>含义：显示/tmp 目录所有子目录和文件<br>实例 6：ls –lR<br>含义：逐级显示当前目录及子目录下所有子目录和文件</p>
+<h2 id="命令-5：cat"><a href="#命令-5：cat" class="headerlink" title="命令 5：cat"></a>命令 5：cat</h2><p>用途：显示或编辑文本文件<br>实例 1：cat &gt; cat1<br>含义：往 cat1 中逐行输入文本，用 Ctrl-D 结束输入<br>实例 2：cat &gt;&gt; cat1<br>含义：往 cat1 中逐行追加文本，用 Ctrl-D 结束输入<br>实例 3：cat cat1<br>含义：显示文本文件 cat1 中的内容</p>
+<h2 id="命令-6：less"><a href="#命令-6：less" class="headerlink" title="命令 6：less"></a>命令 6：less</h2><p>用途：显示文件内容<br>实例 1：less 209hba.list<br>含义：逐屏显示文件 209hba.list 内容，回车进一行，空格进一页，q 终止显示</p>
+<h2 id="命令-7：cp"><a href="#命令-7：cp" class="headerlink" title="命令 7：cp"></a>命令 7：cp</h2><p>用途：复制文件<br>实例 1：cp seq1 seq2<br>含义：将文件 seq1 复制到文件 seq2 中，保留 seq1<br>实例 2：cp *.fasta ../keep/<br>含义：将所有文件名以.fasta 结尾的文件复制到上级目录的 keep 子目录中<br>实例 3：cp ../seq/hba_human.sw .<br>含义：将上级目录的 seq 子目录中名为 hba_human.sw 的文件复制到当前目录中<br>实例 4：cp /tmp/tf/zmtf-pep.fasta blast/<br>含义：将/tmp 目录中 tf 子目录中名为 zmtf-pep.fasta 的文件复制到当前目录中名为blast 的子目录中</p>
+<h2 id="命令-8：mv"><a href="#命令-8：mv" class="headerlink" title="命令 8：mv"></a>命令 8：mv</h2><p>用途：更改文件名<br>实例 1：mv seq1 seq2<br>含义：将文件 seq1 改名为 seq2，不保留 seq1<br>实例 2：mv hba_human.fasta pku08s1/hba<br>含义：将当前目录下文件 hba_human.fasta 移到子目录 pku08s1 下的子目录hba 中</p>
+<h2 id="命令-9：rm"><a href="#命令-9：rm" class="headerlink" title="命令 9：rm"></a>命令 9：rm</h2><p>用途：删除文件或目录<br>实例 1：rm seq2<br>含义：删除文件 seq2<br>实例 2：rm <em>.txt<br>含义：删除所有以.txt 结尾的文件<br>实例 3：rm –r temp/</em><br>含义：删除子目录 temp 下所有子目录和文件，保留该目录<br>实例 4：rm –r temp<br>含义：删除子目录 temp 和该目录下所有子目录和文件</p>
+<h2 id="命令-10：chmod"><a href="#命令-10：chmod" class="headerlink" title="命令 10：chmod"></a>命令 10：chmod</h2><p>用途：改变文件或目录权限<br>实例 1：chmod –w ppf1.fas<br>含义：取消所有用户对 ppf1.fas 的写权限<br>实例 2：chmod +w seq1<br>含义：将当前目录下 seq1 设置为本用户可写，其他用户权限不变<br>实例 3：chmod -w keep/<br>含义：取消子目录 keep 写权限，不能在该目录下创建和删除文件或子目录<br>实例 4：chmod 755 bin/*<br>含义：将子目录 bin 下所有文件设置为本用户可读可写可执行，其它用户可读可执行</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+              <a href="/tags/Command/" rel="tag"><i class="fa fa-tag"></i> Command</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/adb-tips/" rel="next" title="Android Debug Bridge Tips">
+                  <i class="fa fa-chevron-left"></i> Android Debug Bridge Tips
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Java/IPCreator/Technology/Program/Java/java-trouble-solver/" rel="prev" title="Java Snippets">
+                  Java Snippets <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令-1：mkdir"><span class="nav-number">1.</span> <span class="nav-text">命令 1：mkdir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令-2：rmdir"><span class="nav-number">2.</span> <span class="nav-text">命令 2：rmdir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例-3：cd"><span class="nav-number">3.</span> <span class="nav-text">实例 3：cd ..</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令-4：ls"><span class="nav-number">4.</span> <span class="nav-text">命令 4：ls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令-5：cat"><span class="nav-number">5.</span> <span class="nav-text">命令 5：cat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令-6：less"><span class="nav-number">6.</span> <span class="nav-text">命令 6：less</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令-7：cp"><span class="nav-number">7.</span> <span class="nav-text">命令 7：cp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令-8：mv"><span class="nav-number">8.</span> <span class="nav-text">命令 8：mv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令-9：rm"><span class="nav-number">9.</span> <span class="nav-text">命令 9：rm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令-10：chmod"><span class="nav-number">10.</span> <span class="nav-text">命令 10：chmod</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

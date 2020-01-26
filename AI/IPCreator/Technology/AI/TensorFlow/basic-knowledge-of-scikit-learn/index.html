@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="基于SciPy的众多分支版本中，最有名，也是专门面向机器学习的就是Scikit-learn。  作者：雷锋网 恒亮 对Python语言有所了解的科研人员可能都知道SciPy——一个开源的基于Python的科学计算工具包。基于SciPy，目前开发者们针对不同的应用领域已经发展出了为数众多的分支版本，它们被统一称为Scikits，即SciPy工具包的意思。而在这些分支版本中，最有名，也是专门面向机器">
+<meta name="keywords" content="Scikit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction of Scikit-learn">
+<meta property="og:url" content="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/basic-knowledge-of-scikit-learn/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="基于SciPy的众多分支版本中，最有名，也是专门面向机器学习的就是Scikit-learn。  作者：雷锋网 恒亮 对Python语言有所了解的科研人员可能都知道SciPy——一个开源的基于Python的科学计算工具包。基于SciPy，目前开发者们针对不同的应用领域已经发展出了为数众多的分支版本，它们被统一称为Scikits，即SciPy工具包的意思。而在这些分支版本中，最有名，也是专门面向机器">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/588354590d9b4.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/58835330012c6.jpg?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/5883532f1329c.jpg?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/58835330b6cf2.jpg?imageMogr2/format/jpg/quality/90">
+<meta property="og:updated_time" content="2017-03-27T05:04:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Introduction of Scikit-learn">
+<meta name="twitter:description" content="基于SciPy的众多分支版本中，最有名，也是专门面向机器学习的就是Scikit-learn。  作者：雷锋网 恒亮 对Python语言有所了解的科研人员可能都知道SciPy——一个开源的基于Python的科学计算工具包。基于SciPy，目前开发者们针对不同的应用领域已经发展出了为数众多的分支版本，它们被统一称为Scikits，即SciPy工具包的意思。而在这些分支版本中，最有名，也是专门面向机器">
+<meta name="twitter:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/588354590d9b4.png?imageMogr2/format/jpg/quality/90">
+
+<link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/basic-knowledge-of-scikit-learn/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Introduction of Scikit-learn | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/basic-knowledge-of-scikit-learn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Introduction of Scikit-learn
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/AI/IPCreator/Technology/AI/TensorFlow/basic-knowledge-of-scikit-learn/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/AI/IPCreator/Technology/AI/TensorFlow/basic-knowledge-of-scikit-learn/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>基于SciPy的众多分支版本中，最有名，也是专门面向机器学习的就是Scikit-learn。</p>
+</blockquote>
+<p>作者：<a href="http://www.leiphone.com/news/201701/ZJMTak4Y8ch3Nwd0.html" target="_blank" rel="noopener">雷锋网 恒亮</a></p>
+<p>对Python语言有所了解的科研人员可能都知道SciPy——一个开源的基于Python的科学计算工具包。基于SciPy，目前开发者们针对不同的应用领域已经发展出了为数众多的分支版本，它们被统一称为Scikits，即SciPy工具包的意思。而在这些分支版本中，最有名，也是专门面向机器学习的一个就是Scikit-learn。</p>
+<p>Scikit-learn项目最早由数据科学家 David Cournapeau 在 2007 年发起，需要NumPy和SciPy等其他包的支持，是Python语言中专门针对机器学习应用而发展起来的一款开源框架。</p>
+<p>和其他众多的开源项目一样，Scikit-learn目前主要由社区成员自发进行维护。可能是由于维护成本的限制，Scikit-learn相比其他项目要显得更为保守。这主要体现在两个方面：一是Scikit-learn从来不做除机器学习领域之外的其他扩展，二是Scikit-learn从来不采用未经广泛验证的算法。</p>
+<p>本文将简单介绍Scikit-learn框架的六大功能，安装和运行Scikit-learn的大概步骤，同时为后续各更深入地学习Scikit-learn提供参考。原文来自infoworld网站的特约撰稿人Martin Heller，他曾在1986-2010年间做过长达20多年的数据库、通用软件和网页开发，具有丰富的开发经验。</p>
+<p><img src="http://static.leiphone.com/uploads/new/article/740_740/201701/588354590d9b4.png?imageMogr2/format/jpg/quality/90" alt></p>
+  <a id="more"></a>
+<p>  Scikit-learn的六大功能</p>
+<p>Scikit-learn的基本功能主要被分为六大部分：分类，回归，聚类，数据降维，模型选择和数据预处理。</p>
+<p>分类是指识别给定对象的所属类别，属于监督学习的范畴，最常见的应用场景包括垃圾邮件检测和图像识别等。目前Scikit-learn已经实现的算法包括：支持向量机（SVM），最近邻，逻辑回归，随机森林，决策树以及多层感知器（MLP）神经网络等等。</p>
+<p>需要指出的是，由于Scikit-learn本身不支持深度学习，也不支持GPU加速，因此这里对于MLP的实现并不适合于处理大规模问题。有相关需求的读者可以查看同样对Python有良好支持的Keras和Theano等框架。</p>
+<p>回归是指预测与给定对象相关联的连续值属性，最常见的应用场景包括预测药物反应和预测股票价格等。目前Scikit-learn已经实现的算法包括：支持向量回归（SVR），脊回归，Lasso回归，弹性网络（Elastic Net），最小角回归（LARS ），贝叶斯回归，以及各种不同的鲁棒回归算法等。可以看到，这里实现的回归算法几乎涵盖了所有开发者的需求范围，而且更重要的是，Scikit-learn还针对每种算法都提供了简单明了的用例参考。</p>
+<p>聚类是指自动识别具有相似属性的给定对象，并将其分组为集合，属于无监督学习的范畴，最常见的应用场景包括顾客细分和试验结果分组。目前Scikit-learn已经实现的算法包括：K-均值聚类，谱聚类，均值偏移，分层聚类，DBSCAN聚类等。</p>
+<p>数据降维是指使用主成分分析（PCA）、非负矩阵分解（NMF）或特征选择等降维技术来减少要考虑的随机变量的个数，其主要应用场景包括可视化处理和效率提升。</p>
+<p>模型选择是指对于给定参数和模型的比较、验证和选择，其主要目的是通过参数调整来提升精度。目前Scikit-learn实现的模块包括：格点搜索，交叉验证和各种针对预测误差评估的度量函数。</p>
+<p>数据预处理是指数据的特征提取和归一化，是机器学习过程中的第一个也是最重要的一个环节。这里归一化是指将输入数据转换为具有零均值和单位权方差的新变量，但因为大多数时候都做不到精确等于零，因此会设置一个可接受的范围，一般都要求落在0-1之间。而特征提取是指将文本或图像数据转换为可用于机器学习的数字变量。</p>
+<p>需要特别注意的是，这里的特征提取与上文在数据降维中提到的特征选择非常不同。特征选择是指通过去除不变、协变或其他统计上不重要的特征量来改进机器学习的一种方法。</p>
+<p>总结来说，Scikit-learn实现了一整套用于数据降维，模型选择，特征提取和归一化的完整算法/模块，虽然缺少按步骤操作的参考教程，但Scikit-learn针对每个算法和模块都提供了丰富的参考样例和详细的说明文档。</p>
+<p>安装和运行Scikit-learn</p>
+<p>如前所述，Scikit-learn需要NumPy和SciPy等其他包的支持，因此在安装Scikit-learn之前需要提前安装一些支持包，具体列表和教程可以查看Scikit-learn的官方文档： <a href="http://scikit-learn.org/stable/install.html" target="_blank" rel="noopener">http://scikit-learn.org/stable/install.html</a> ，以下仅列出Python、NumPy和SciPy等三个必备包的安装说明。</p>
+<p>Python：<a href="https://www.python.org/about/gettingstarted/" target="_blank" rel="noopener">https://www.python.org/about/gettingstarted/</a></p>
+<p>NumPy：<a href="http://www.numpy.org/" target="_blank" rel="noopener">http://www.numpy.org/</a></p>
+<p>SciPy：<a href="http://www.scipy.org/install.html" target="_blank" rel="noopener">http://www.scipy.org/install.html</a></p>
+<p>假定已经完整安装了所有支持包，那么利用安装Scikit-learn只需要简单的一条简单的pip命令（也可以用conda命令，详见官方文档）：</p>
+<p>$ sudo pip install -U scikit-learn</p>
+<p>这里加上sudo是为了避免安装过程中出现一些权限问题，如果用户已经确保了管理员权限也可以省略。</p>
+<p>当然，开发者也可以选择自己到GitHub开源平台上下载Scikit-learn的源代码，解压后在根目录键入make自行编译和连接可执行文件，效果是一样的。另外，为了确保测试方便，高级用户还可以选择安装针对Python的测试框架nose，安装方法详见其官方说明： <a href="http://nose.readthedocs.io/en/latest/" target="_blank" rel="noopener">http://nose.readthedocs.io/en/latest/</a>  。</p>
+<p>通过Jupyter Notebook工具运行Scikit-learn样例的过程也很简单，用户只需要在官方给出的样例库： <a href="http://scikit-learn.org/stable/auto_examples/index.html#general-examples" target="_blank" rel="noopener">http://scikit-learn.org/stable/auto_examples/index.html#general-examples</a>  选择一个样例，然后在页面中下载其Python源码和IPython notebook文件，借着通过Jupyter Notebook工具运行就可以了。假如选择了交叉验证预测的样例，那么其运行情况的截图如下所示。</p>
+<p><img src="http://static.leiphone.com/uploads/new/article/740_740/201701/58835330012c6.jpg?imageMogr2/format/jpg/quality/90" alt></p>
+<p>原作者在这里表示，Scikit-learn是他测试过的最简单易用的机器学习框架。他表示，Scikit-learn样例的运行结果和文档描述一模一样，API接口的设计合理且一致性高，而且几乎不存在“阻抗不匹配”的数据结构，使用这种功能完善且几乎没有Bug的开源框架进行机器学习研究，无疑是一件值得高兴的事。</p>
+<p>更深入地学习Scikit-learn</p>
+<p>如前所述，Scikit-learn针对每个算法和模块都提供了丰富的参考样例和详细的说明文档，据官方的统计大约有200多个。而且为了清晰明白，绝大多数样例都至少给出了一张由Matplotlib绘制的数据图表。这些都是官方提供的学习Scikit-learn框架最直接有效的学习材料。</p>
+<p>针对科学数据处理的应用场景，官方还给出了一个更为详细和全面的参考教程：A tutorial on statistical-learning for scientific data processing，其中包括统计学习、监督学习、模型选择和无监督学习等若干部分，内容覆盖全面，讲解细致，并且使用了真实的数据、代码和图表。</p>
+<p>另外，教程中还调用了与文本相关的样例，例如下图所示的四个不同SVM分类器的比较。</p>
+<p><img src="http://static.leiphone.com/uploads/new/article/740_740/201701/5883532f1329c.jpg?imageMogr2/format/jpg/quality/90" alt></p>
+<p>这里需要指出的是，虽然运行Scikit-learn官方给出的样例后通常都能得到一致的结果，但大多数情况下系统都会抛出警告信息。作者认为抛出警告信息的原因来自两个方面：一是苹果vecLib框架本身对Scikit-learn支持不好（作者用的是MacOS），二是样例中使用的Python版本可能是早期的版本，而实际运行中是最新的版本。例如下图中是使用Python 2.7.10版本抛出的警告信息，而Scikit-learn官方页面上并没有出现。</p>
+<p><img src="http://static.leiphone.com/uploads/new/article/740_740/201701/58835330b6cf2.jpg?imageMogr2/format/jpg/quality/90" alt></p>
+<p>总体上来说，作为专门面向机器学习的Python开源框架，Scikit-learn可以在一定范围内为开发者提供非常好的帮助。它内部实现了各种各样成熟的算法，容易安装和使用，样例丰富，而且教程和文档也非常详细。</p>
+<p>另一方面，Scikit-learn也有缺点。例如它不支持深度学习和强化学习，这在今天已经是应用非常广泛的技术，例如准确的图像分类和可靠的实时语音识别和语义理解等。此外，它也不支持图模型和序列预测，不支持Python之外的语言，不支持PyPy，也不支持GPU加速。</p>
+<p>看到这里可能会有人担心Scikit-learn的性能表现，这里需要指出的是：如果不考虑多层神经网络的相关应用，Scikit-learn的性能表现是非常不错的。究其原因，一方面是因为其内部算法的实现十分高效，另一方面或许可以归功于Cython编译器：通过Cython在Scikit-learn框架内部生成C语言代码的运行方式，Scikit-learn消除了大部分的性能瓶颈。</p>
+<p>应该明确的一点是：虽然概括地说Scikit-learn并不适合深度学习问题，但对于某些特殊场景而言，使用Scikit-learn仍然是明智的选择。例如要创建连接不同对象的预测函数时，或者在未标记的数据集中为了训练模型对不同的对象进行分类时，面对这些场景Scikit-learn只通过普通的旧机器学习模型就能很好地解决，而并不需要建立数十层的复杂神经网络。</p>
+<p>就好像喜欢Scala语言的人会选择Spark ML，喜欢绘制图表和偶尔编写少量Python/R语言代码的人会选择微软Cortana和Azure一样，对于那些Python语言的死忠粉而言，Scikit-learn可能是各种机器学习库中的最好选择。雷锋网(公众号：雷锋网)雷锋网</p>
+<p>来源：infoworld，雷锋网编译</p>
+<p>雷锋网版权文章，未经授权禁止转载。详情见转载须知。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Scikit/" rel="tag"><i class="fa fa-tag"></i> Scikit</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/TensorFlow/big-data-resources/" rel="next" title="Resources of Big Data/Data Mining/Recommendation System/Machine Learning">
+                  <i class="fa fa-chevron-left"></i> Resources of Big Data/Data Mining/Recommendation System/Machine Learning
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Tools/IPCreator/Technology/Program/Tools/Git/learn-journey-of-git/" rel="prev" title="Tutorials of Git">
+                  Tutorials of Git <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

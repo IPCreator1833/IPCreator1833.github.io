@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Fetch the log info Analyze the crash info Search the Google/Stack Overflow Summarize the process">
+<meta name="keywords" content="Debug,Android Studio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Analysis of Android Studio Debug Problem">
+<meta property="og:url" content="https://hazyman.com/Android/IPCreator/Technology/Program/Android/analysis-of-debug-problem/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="Fetch the log info Analyze the crash info Search the Google/Stack Overflow Summarize the process">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://okkntqe2h.bkt.clouddn.com/android_debug_bridge-600x338.png">
+<meta property="og:updated_time" content="2017-04-10T02:52:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Analysis of Android Studio Debug Problem">
+<meta name="twitter:description" content="Fetch the log info Analyze the crash info Search the Google/Stack Overflow Summarize the process">
+<meta name="twitter:image" content="http://okkntqe2h.bkt.clouddn.com/android_debug_bridge-600x338.png">
+
+<link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/analysis-of-debug-problem/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Analysis of Android Studio Debug Problem | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/analysis-of-debug-problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Analysis of Android Studio Debug Problem
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Android/IPCreator/Technology/Program/Android/analysis-of-debug-problem/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Android/IPCreator/Technology/Program/Android/analysis-of-debug-problem/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="http://okkntqe2h.bkt.clouddn.com/android_debug_bridge-600x338.png" alt></p>
+<ol>
+<li>Fetch the log info</li>
+<li>Analyze the crash info</li>
+<li>Search the Google/Stack Overflow</li>
+<li>Summarize the process</li>
+</ol>
+<a id="more"></a>
+<h2 id="Fetch-the-log-info"><a href="#Fetch-the-log-info" class="headerlink" title="Fetch the log info"></a>Fetch the log info</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">--------- beginning of crash</span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.492</span> <span class="number">7348</span>-<span class="number">7355</span>/me.ipcreator.ui.debug A/libc: Fatal signal <span class="number">6</span> (SIGABRT), code -<span class="number">6</span> in tid <span class="number">7355</span> (JDWP)</span><br><span class="line"></span><br><span class="line">                                                           [ <span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.493</span>  <span class="number">1282</span>: <span class="number">1282</span> W/         ]</span><br><span class="line">                                                           debuggerd: handling request: pid=<span class="number">7348</span> uid=<span class="number">10100</span> gid=<span class="number">10100</span> tid=<span class="number">7355</span></span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.551</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG: *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***</span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.551</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG: Build fingerprint: <span class="string">'Android/sdk_google_phone_x86/generic_x86:7.1.1/NYC/3756122:userdebug/test-keys'</span></span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.551</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG: Revision: <span class="string">'0'</span></span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.551</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG: ABI: <span class="string">'x86'</span></span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.551</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG: pid: <span class="number">7348</span>, tid: <span class="number">7355</span>, name: JDWP  &gt;&gt;&gt; me.ipcreator.ui.debug &lt;&lt;&lt;</span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.551</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG: signal <span class="number">6</span> (SIGABRT), code -<span class="number">6</span> (SI_TKILL), fault addr --------</span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.551</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG: Abort message: <span class="string">'art/runtime/jdwp/jdwp_event.cc:661] Check failed: Thread::Current() != GetDebugThread() (Thread::Current()=0xac58f400, GetDebugThread()=0xac58f400) Expected event thread'</span></span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.551</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG:     eax <span class="number">00000000</span>  ebx <span class="number">00001</span>cb4  ecx <span class="number">00001</span>cbb  edx <span class="number">00000006</span></span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.551</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG:     esi b12d0978  edi b12d0920</span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.551</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG:     xcs <span class="number">00000073</span>  xds <span class="number">0000007</span>b  xes <span class="number">0000007</span>b  xfs <span class="number">0000003</span>b  xss <span class="number">0000007</span>b</span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.551</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG:     eip b6366424  ebp b12ceac8  esp b12cea6c  flags <span class="number">00000296</span></span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.555</span> <span class="number">7366</span>-<span class="number">7366</span>/? A/DEBUG: backtrace:</span><br><span class="line">04-10 10:03:48.555 7366-7366/? A/DEBUG:     #00 pc ffffe424  [vdso:b6366000] (__kernel_vsyscall+16)</span><br><span class="line">04-10 10:03:48.555 7366-7366/? A/DEBUG:     #01 pc 0007a03c  /system/lib/libc.so (tgkill+28)</span><br><span class="line">04-10 10:03:48.555 7366-7366/? A/DEBUG:     #02 pc 00075885  /system/lib/libc.so (pthread_kill+85)</span><br><span class="line">04-10 10:03:48.555 7366-7366/? A/DEBUG:     #03 pc 0002785a  /system/lib/libc.so (raise+42)</span><br><span class="line">04-10 10:03:48.555 7366-7366/? A/DEBUG:     #04 pc 0001ee36  /system/lib/libc.so (abort+86)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #05 pc 005183c5  /system/lib/libart.so (_ZN3art7Runtime5AbortEPKc+565)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #06 pc 0011a5b3  /system/lib/libart.so (_ZN3art10LogMessageD1Ev+1747)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #07 pc 0039b74d  /system/lib/libart.so (_ZN3art4JDWP9JdwpState24AcquireJdwpTokenForEventEy+733)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #08 pc 0039acf3  /system/lib/libart.so (_ZN3art4JDWP9JdwpState29SendRequestAndPossiblySuspendEPNS0_9ExpandBufENS0_17JdwpSuspendPolicyEy+211)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #09 pc 003a0ec9  /system/lib/libart.so (_ZN3art4JDWP9JdwpState16PostClassPrepareEPNS_6mirror5ClassE+1705)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #10 pc 001c2a85  /system/lib/libart.so (_ZN3art3Dbg16PostClassPrepareEPNS_6mirror5ClassE+53)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #11 pc 001689fc  /system/lib/libart.so (_ZN3art11ClassLinker11DefineClassEPNS_6ThreadEPKcjNS_6HandleINS_6mirror11ClassLoaderEEERKNS_7DexFileERKNS9_8ClassDefE+1116)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #12 pc 001683e9  /system/lib/libart.so (_ZN3art11ClassLinker26FindClassInPathClassLoaderERNS_33ScopedObjectAccessAlreadyRunnableEPNS_6ThreadEPKcjNS_6HandleINS_6mirror11ClassLoaderEEEPPNS8_5ClassE+1865)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #13 pc 0016979b  /system/lib/libart.so (_ZN3art11ClassLinker9FindClassEPNS_6ThreadEPKcNS_6HandleINS_6mirror11ClassLoaderEEE+1163)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #14 pc 005a7a7a  /system/lib/libart.so (_ZN3art8verifier12RegTypeCache12ResolveClassEPKcPNS_6mirror11ClassLoaderE+186)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #15 pc 005a742d  /system/lib/libart.so (_ZN3art8verifier12RegTypeCache4FromEPNS_6mirror11ClassLoaderEPKcb+701)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #16 pc 005a70fd  /system/lib/libart.so (_ZN3art8verifier12RegTypeCache14FromDescriptorEPNS_6mirror11ClassLoaderEPKcb+77)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #17 pc 005862ed  /system/lib/libart.so (_ZN3art8verifier14MethodVerifier26ResolveClassAndCheckAccessEj+173)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #18 pc 005960c4  /system/lib/libart.so (_ZN3art8verifier14MethodVerifier27ResolveMethodAndCheckAccessEjNS0_10MethodTypeE+84)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #19 pc 0059265c  /system/lib/libart.so (_ZN3art8verifier14MethodVerifier20VerifyInvocationArgsEPKNS_11InstructionENS0_10MethodTypeEb+76)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #20 pc 00587e02  /system/lib/libart.so (_ZN3art8verifier14MethodVerifier25CodeFlowVerifyInstructionEPj+4914)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #21 pc 00585f96  /system/lib/libart.so (_ZN3art8verifier14MethodVerifier20CodeFlowVerifyMethodEv+358)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #22 pc 00581c9d  /system/lib/libart.so (_ZN3art8verifier14MethodVerifier14VerifyCodeFlowEv+973)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #23 pc 0057da56  /system/lib/libart.so (_ZN3art8verifier14MethodVerifier6VerifyEv+854)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #24 pc 0057c742  /system/lib/libart.so (_ZN3art8verifier14MethodVerifier12VerifyMethodEPNS_6ThreadEjPKNS_7DexFileENS_6HandleINS_6mirror8DexCacheEEENS7_INS8_11ClassLoaderEEEPKNS4_8ClassDefEPKNS4_8CodeItemEPNS_9ArtMethodEjPNS_17CompilerCallbacksEbNS_11LogSeverityEbPNSt3__112basic_stringIcNSO_11char_traitsIcEENSO_9allocatorIcEEEE+226)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #25 pc 0057c1c7  /system/lib/libart.so (_ZN3art8verifier14MethodVerifier13VerifyMethodsILb0EEENS1_11FailureDataEPNS_6ThreadEPNS_11ClassLinkerEPKNS_7DexFileEPKNS8_8ClassDefEPNS_21ClassDataItemIteratorENS_6HandleINS_6mirror8DexCacheEEENSG_INSH_11ClassLoaderEEEPNS_17CompilerCallbacksEbNS_11LogSeverityEbPNSt3__112basic_stringIcNSP_11char_traitsIcEENSP_9allocatorIcEEEE+791)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #26 pc 0057b1f9  /system/lib/libart.so (_ZN3art8verifier14MethodVerifier11VerifyClassEPNS_6ThreadEPKNS_7DexFileENS_6HandleINS_6mirror8DexCacheEEENS7_INS8_11ClassLoaderEEEPKNS4_8ClassDefEPNS_17CompilerCallbacksEbNS_11LogSeverityEPNSt3__112basic_stringIcNSJ_11char_traitsIcEENSJ_9allocatorIcEEEE+921)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #27 pc 0057a4b9  /system/lib/libart.so (_ZN3art8verifier14MethodVerifier11VerifyClassEPNS_6ThreadEPNS_6mirror5ClassEPNS_17CompilerCallbacksEbNS_11LogSeverityEPNSt3__112basic_stringIcNSA_11char_traitsIcEENSA_9allocatorIcEEEE+841)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #28 pc 00174386  /system/lib/libart.so (_ZN3art11ClassLinker11VerifyClassEPNS_6ThreadENS_6HandleINS_6mirror5ClassEEENS_11LogSeverityE+2102)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #29 pc 0017a406  /system/lib/libart.so (_ZN3art11ClassLinker15InitializeClassEPNS_6ThreadENS_6HandleINS_6mirror5ClassEEEbb+326)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #30 pc 00158dde  /system/lib/libart.so (_ZN3art11ClassLinker17EnsureInitializedEPNS_6ThreadENS_6HandleINS_6mirror5ClassEEEbb+222)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #31 pc 001b60da  /system/lib/libart.so (_ZN3artL17GetFieldValueImplEyyyPNS_4JDWP9ExpandBufEb+1866)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #32 pc 001b667e  /system/lib/libart.so (_ZN3art3Dbg19GetStaticFieldValueEyyPNS_4JDWP9ExpandBufE+78)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #33 pc 003a4c5d  /system/lib/libart.so (_ZN3art4JDWPL12RT_GetValuesEPNS0_9JdwpStateEPNS0_7RequestEPNS0_9ExpandBufE+141)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #34 pc 003a2ea4  /system/lib/libart.so (_ZN3art4JDWP9JdwpState14ProcessRequestEPNS0_7RequestEPNS0_9ExpandBufEPb+1044)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #35 pc 003ab570  /system/lib/libart.so (_ZN3art4JDWP9JdwpState12HandlePacketEv+192)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #36 pc 00678df3  /system/lib/libart.so (_ZN3art4JDWP12JdwpAdbState15ProcessIncomingEv+1139)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #37 pc 003ab9d1  /system/lib/libart.so (_ZN3art4JDWP9JdwpState3RunEv+593)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #38 pc 003aae50  /system/lib/libart.so (_ZN3art4JDWPL15StartJdwpThreadEPv+48)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #39 pc 00074fe2  /system/lib/libc.so (_ZL15__pthread_startPv+210)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #40 pc 0002029e  /system/lib/libc.so (__start_thread+30)</span><br><span class="line">04-10 10:03:48.556 7366-7366/? A/DEBUG:     #41 pc 0001e076  /system/lib/libc.so (__bionic_clone+70)</span><br><span class="line"><span class="number">04</span>-<span class="number">10</span> <span class="number">10</span>:<span class="number">03</span>:<span class="number">48.863</span> <span class="number">1607</span>-<span class="number">7371</span>/system_process W/ActivityManager:   Force finishing activity me.ipcreator.ui.debug/org.ipcreator.ui.MainActivity</span><br></pre></td></tr></table></figure>
+<h2 id="Analyze-the-crash-info"><a href="#Analyze-the-crash-info" class="headerlink" title="Analyze the crash info"></a>Analyze the crash info</h2><blockquote>
+<p>04-10 10:03:48.551 7366-7366/? A/DEBUG: Abort message: ‘art/runtime/jdwp/jdwp_event.cc:661] Check failed: Thread::Current() != GetDebugThread() (Thread::Current()=0xac58f400, GetDebugThread()=0xac58f400) Expected event thread’</p>
+</blockquote>
+<h2 id="Search-the-Google-Stack-Overflow"><a href="#Search-the-Google-Stack-Overflow" class="headerlink" title="Search the Google/Stack Overflow"></a>Search the Google/Stack Overflow</h2><p>Problem could be related with Android version 7.x, i removed all the breakpoints in nested functions and it worked, tested with Android version 6.0 too, and it is working without problem.</p>
+<p>According to google developers team response, it was fixed on 12/1/2016 and will be applied in next release.</p>
+<p>In my case i had to disable Instant Run. It seems like Instant Run has all sorts of side effects and this can be one of them.<br>Note, in Android Studio, the is under File -&gt; Settings -&gt; Build, Execution, Deployment -&gt; Instant Run</p>
+<h2 id="Summarize-the-process"><a href="#Summarize-the-process" class="headerlink" title="Summarize the process"></a>Summarize the process</h2><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://stackoverflow.com/questions/40618803/android-app-crashes-when-launched-in-debug-mode" target="_blank" rel="noopener">Android app crashes when launched in debug mode</a><br><a href="https://code.google.com/p/android/issues/detail?id=227513" target="_blank" rel="noopener"><br>Issue 227513:    art/runtime/jdwp/jdwp_event.cc:661] Check failed: Thread::Current() != GetDebugThread() (Thread::Current()=0x7ffeecc19400, GetDebugThread()=0x7ffeecc19400) Expected event thread</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debug/" rel="tag"><i class="fa fa-tag"></i> Debug</a>
+              <a href="/tags/Android-Studio/" rel="tag"><i class="fa fa-tag"></i> Android Studio</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Tools/IPCreator/Technology/Program/Tools/C&C++/the-basic-concepts-of-c-compiler/" rel="next" title="The Basic Concepts of C Compiler">
+                  <i class="fa fa-chevron-left"></i> The Basic Concepts of C Compiler
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/MyApp/ui/" rel="prev" title="UI">
+                  UI <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fetch-the-log-info"><span class="nav-number">1.</span> <span class="nav-text">Fetch the log info</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-the-crash-info"><span class="nav-number">2.</span> <span class="nav-text">Analyze the crash info</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Search-the-Google-Stack-Overflow"><span class="nav-number">3.</span> <span class="nav-text">Search the Google/Stack Overflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summarize-the-process"><span class="nav-number">4.</span> <span class="nav-text">Summarize the process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

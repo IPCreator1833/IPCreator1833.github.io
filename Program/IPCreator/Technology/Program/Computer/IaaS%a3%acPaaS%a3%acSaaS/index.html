@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="作者： 阮一峰 SaaS：软件服务，Software-as-a-serviceSaaS 是软件的开发、管理、部署都交给第三方，不需要关心技术问题，可以拿来即用。 PaaS：平台服务，Platform-as-a-servicePaaS 提供软件部署平台（runtime），抽象掉了硬件和操作系统细节，可以无缝地扩展（scaling）。开发者只需要关注自己的业务逻辑，不需要关注底层。 IaaS：基础设">
+<meta name="keywords" content="Share">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The difference between IaaS，PaaS and SaaS">
+<meta property="og:url" content="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/IaaS%a3%acPaaS%a3%acSaaS/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="作者： 阮一峰 SaaS：软件服务，Software-as-a-serviceSaaS 是软件的开发、管理、部署都交给第三方，不需要关心技术问题，可以拿来即用。 PaaS：平台服务，Platform-as-a-servicePaaS 提供软件部署平台（runtime），抽象掉了硬件和操作系统细节，可以无缝地扩展（scaling）。开发者只需要关注自己的业务逻辑，不需要关注底层。 IaaS：基础设">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072301.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072302.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072303.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072304.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072308.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072305.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072306.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072307.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/201010/bg2010103101.png">
+<meta property="og:updated_time" content="2018-03-29T09:05:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The difference between IaaS，PaaS and SaaS">
+<meta name="twitter:description" content="作者： 阮一峰 SaaS：软件服务，Software-as-a-serviceSaaS 是软件的开发、管理、部署都交给第三方，不需要关心技术问题，可以拿来即用。 PaaS：平台服务，Platform-as-a-servicePaaS 提供软件部署平台（runtime），抽象掉了硬件和操作系统细节，可以无缝地扩展（scaling）。开发者只需要关注自己的业务逻辑，不需要关注底层。 IaaS：基础设">
+<meta name="twitter:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072301.jpg">
+
+<link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/IaaS%a3%acPaaS%a3%acSaaS/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>The difference between IaaS，PaaS and SaaS | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/IaaS%a3%acPaaS%a3%acSaaS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          The difference between IaaS，PaaS and SaaS
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Computer/IaaS%a3%acPaaS%a3%acSaaS/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Computer/IaaS%a3%acPaaS%a3%acSaaS/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072301.jpg" alt></p>
+<p><a href="http://www.ruanyifeng.com/blog/2017/07/iaas-paas-saas.html" target="_blank" rel="noopener">作者： 阮一峰</a></p>
+<p>SaaS：软件服务，Software-as-a-service<br>SaaS 是软件的开发、管理、部署都交给第三方，不需要关心技术问题，可以拿来即用。</p>
+<p>PaaS：平台服务，Platform-as-a-service<br>PaaS 提供软件部署平台（runtime），抽象掉了硬件和操作系统细节，可以无缝地扩展（scaling）。开发者只需要关注自己的业务逻辑，不需要关注底层。</p>
+<p>IaaS：基础设施服务，Infrastructure-as-a-service<br>IaaS 是云服务的最底层，主要提供一些基础资源。它与 PaaS 的区别是，用户需要自己控制底层，实现基础设施的使用逻辑。</p>
+<a id="more"></a>
+<p>越来越多的软件，开始采用云服务。<br>云服务只是一个统称，可以分成三大类。</p>
+<p>IaaS：基础设施服务，Infrastructure-as-a-service<br>PaaS：平台服务，Platform-as-a-service<br>SaaS：软件服务，Software-as-a-service</p>
+<p>它们有什么区别呢？</p>
+<p>IBM 的软件架构师 Albert Barron 曾经使用披萨作为比喻，解释这个问题。David Ng 进一步引申，让它变得更准确易懂。<br>请设想你是一个餐饮业者，打算做披萨生意。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072302.jpg" alt></p>
+<p>你可以从头到尾，自己生产披萨，但是这样比较麻烦，需要准备的东西多，因此你决定外包一部分工作，采用他人的服务。你有三个方案。<br>（1）方案一：IaaS<br>他人提供厨房、炉子、煤气，你使用这些基础设施，来烤你的披萨。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072303.jpg" alt></p>
+<p>（2）方案二：PaaS<br>除了基础设施，他人还提供披萨饼皮。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072304.jpg" alt></p>
+<p>你只要把自己的配料洒在饼皮上，让他帮你烤出来就行了。也就是说，你要做的就是设计披萨的味道（海鲜披萨或者鸡肉披萨），他人提供平台服务，让你把自己的设计实现。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072308.jpg" alt></p>
+<p>（3）方案三：SaaS<br>他人直接做好了披萨，不用你的介入，到手的就是一个成品。你要做的就是把它卖出去，最多再包装一下，印上你自己的 Logo。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072305.jpg" alt></p>
+<p>上面的三种方案，可以总结成下面这张图。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072306.png" alt></p>
+<p>从左到右，自己承担的工作量（上图蓝色部分）越来越少，IaaS &gt; PaaS &gt; SaaS。<br>对应软件开发，则是下面这张图。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017072307.jpg" alt></p>
+<p>SaaS 是软件的开发、管理、部署都交给第三方，不需要关心技术问题，可以拿来即用。普通用户接触到的互联网服务，几乎都是 SaaS，下面是一些例子。</p>
+<blockquote>
+<p>客户管理服务 Salesforce<br>团队协同服务 Google Apps<br>储存服务 Box<br>储存服务 Dropbox<br>社交服务 Facebook / Twitter / Instagram</p>
+</blockquote>
+<p>PaaS 提供软件部署平台（runtime），抽象掉了硬件和操作系统细节，可以无缝地扩展（scaling）。开发者只需要关注自己的业务逻辑，不需要关注底层。下面这些都属于 PaaS。</p>
+<blockquote>
+<p>Heroku<br>Google App Engine<br>OpenShift</p>
+</blockquote>
+<p>IaaS 是云服务的最底层，主要提供一些基础资源。它与 PaaS 的区别是，用户需要自己控制底层，实现基础设施的使用逻辑。下面这些都属于 IaaS。</p>
+<blockquote>
+<p>Amazon EC2<br>Digital Ocean<br>RackSpace Cloud</p>
+</blockquote>
+<p>参考链接<br>SaaS, PaaS and IaaS explained in one graphic, by David Ng<br>When to use SaaS, PaaS, and IaaS, by Eamonn Colman</p>
+<h2 id="Web-service是什么？"><a href="#Web-service是什么？" class="headerlink" title="Web service是什么？"></a><a href="http://www.ruanyifeng.com/blog/2009/08/what_is_web_service.html" target="_blank" rel="noopener">Web service是什么？</a></h2><p>作者： 阮一峰<br>日期： 2009年8月26日</p>
+<p>我认为，下一代互联网软件将建立在Web service（也就是”云”）的基础上。</p>
+<p>我把学习笔记和学习心得，放到网志上，欢迎指正。</p>
+<p>今天先写一个最基本的问题，Web service到底是什么？</p>
+<p>一、Web service的概念</p>
+<p>想要理解Web service，必须先理解什么是Service（服务）。</p>
+<p>传统上，我们把计算机后台程序（Daemon）提供的功能，称为”服务”（service）。比如，让一个杀毒软件在后台运行，它会自动监控系统，那么这种自动监控就是一个”服务”。通俗地说，”服务”就是计算机可以提供的某一种功能。</p>
+<p>根据来源的不同，”服务”又可以分成两种：一种是”本地服务”（使用同一台机器提供的服务，不需要网络），另一种是”网络服务”（使用另一台计算机提供的服务，必须通过网络才能完成）。</p>
+<p>举例来说，我现在有一批图片，需要把它们的大小缩小一半。那么，我们可以把”缩放图片”看成是一种服务。你可以使用”本地服务”，在自己计算机上用软件缩小图片，也可以使用”网络服务”，将图片上传到某个网站，让服务器替你缩小图片，完成后再通过网络送回给你。这就好比，一件事你可以自己做，也可以交给另一个人去做。肚子饿了，你可以自己做饭，也可以打电话去订一份比萨，让店家替你做好送上门。</p>
+<blockquote>
+<p>“网络服务”（Web Service）的本质，就是通过网络调用其他网站的资源。</p>
+</blockquote>
+<p>举例来说，去年我写过一个”四川大地震图片墙”，它能动态显示关于四川地震的最新图片。但是，所有的图片都不是储存在我的服务器上，而是来自flickr.com。我只是发出一个动态请求，要求flickr.com向我提供图片。这种情况下，flickr.com提供的就是一种Web service。如果我把图片都存放在本地服务器，不调用flickr.com，那么我就是在使用”本地服务”。</p>
+<p>所以，Web service让你的网站可以使用其他网站的资源，比如在网页上显示天气、地图、twitter上的最新动态等等。</p>
+<p>二、Web Service架构和云</p>
+<p>如果一个软件的主要部分采用了”网络服务”，即它把存储或计算环节”外包”给其他网站了，那么我们就说这个软件属于Web Service架构。</p>
+<p>Web Service架构的基本思想，就是尽量把非核心功能交给其他人去做，自己全力开发核心功能。比如，如果你要开发一个相册软件，完全可以使用Flickr的网络服务，把相片都储存到它上面，你只要全力做好相册本身就可以了。总体上看，凡是不属于你核心竞争力的功能，都应该把它”外包”出去。</p>
+<blockquote>
+<p>最近很红的”云计算”（cloud computing）或者”云服务”（cloud services），实际上就是Web Service的同义词，不过更形象一些罢了。它们不说你把事情交给其他计算机去做，而说你把事情交给”云”去做。</p>
+</blockquote>
+<p>三、本地服务的缺陷</p>
+<p>“网络服务”是未来软件开发和使用的趋势，本地服务将用得越来越少，主要因为以下三个原因：</p>
+<p>*　本地资源不足。很多数据和资料，本地得不到，只有向其他网站要。</p>
+<p>*　成本因素。本地提供服务，往往是不经济的，使用专业网站的服务更便宜。这里面涉及硬件和人员两部分，即使你买得起硬件，专门找一个人管理系统，也是很麻烦的事。</p>
+<p>*　可移植性差。如果你想把本机的服务，移植到其他机器上，往往很困难，尤其是在跨平台的情况下。</p>
+<p>四、Web Service的优势</p>
+<p>除了本地服务的缺点以外，Web Service还有以下的优越性：</p>
+<p>*　平台无关。不管你使用什么平台，都可以使用Web service。</p>
+<p>*　编程语言无关。只要遵守相关协议，就可以使用任意编程语言，向其他网站要求Web service。这大大增加了web service的适用性，降低了对程序员的要求。</p>
+<p>*　对于Web service提供者来说，部署、升级和维护Web service都非常单纯，不需要考虑客户端兼容问题，而且一次性就能完成。</p>
+<p>*　对于Web service使用者来说，可以轻易实现多种数据、多种服务的聚合（mashup），因此能够做出一些以前根本无法想像的事情。</p>
+<p>五、Web service的发展趋势</p>
+<p>根据我的观察，目前Web service有这样几种发展趋势。</p>
+<p>*　在使用方式上，RPC和soap的使用在减少，Restful架构占到了主导地位。</p>
+<p>*　在数据格式上，XML格式的使用在减少，json等轻量级格式的使用在增多。</p>
+<p>*　在设计架构上，越来越多的第三方软件让用户在客户端（即浏览器），直接与云端对话，不再使用第三方的服务器进行中转或处理数据。</p>
+<h2 id="云主机是什么？"><a href="#云主机是什么？" class="headerlink" title="云主机是什么？"></a><a href="http://www.ruanyifeng.com/blog/2010/10/what_is_cloud_hosting.html" target="_blank" rel="noopener">云主机是什么？</a></h2><p>作者： 阮一峰<br>日期： 2010年10月31日</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/201010/bg2010103101.png" alt></p>
+<p>一、共享主机和云主机</p>
+<p>从互联网诞生至今，大部分站长都是从”共享主机”（shared hosting）开始学习建站的。所谓”共享主机”，就是一台服务器上有许多网站，大家共享这台服务器的硬件和带宽。如果它发生故障，那么上面的所有网站都无法访问。</p>
+<p>“云主机”（Cloud hosting）可以看成是新一代的共享主机。</p>
+<p>首先，主机公司将它的硬件和网络线路，做成一朵”云”，然后提供一些通向这朵”云”的网络接口API，供客户使用。这时，每个客户共享的不再是某一台特定的服务器，而是云里的所有服务器。</p>
+<p>比如，假设你要把本机的文件备份到网上，你可以使用共享主机，把文件传到某一台服务器上；也可以使用云主机，通过某种形式的接口，把它们传到云里。也就是说，共享主机用户直接面对特定的服务器，而云主机用户直接面对网络接口，看不到服务器内部。</p>
+<p>一个通俗的比喻是，你可以向银行租一个编号为”8888”的保险箱（共享主机），也可以把贵重物品直接交给保管公司（云主机），听任他们保管。</p>
+<p>诸如Gmail、FaceBook、Twitter、Flickr这样的产品，都可以看作是基于”云主机”的服务。</p>
+<p>二、云主机的优点</p>
+<p>云主机主要有三大优点。</p>
+<p>（1）便宜。</p>
+<p>因为服务可以分散到多台服务器，因此能够充分利用资源，这样就降低了硬件、电力和维护成本。而且，云主机是根据使用量计费的，多用多付，少用少付，所以对小网站特别有利。</p>
+<p>（2）可靠。</p>
+<p>因为服务分布在多台服务器、甚至多个机房，所以不容易彻底宕机，抗灾容错能力强，可以保证长时间在线。</p>
+<p>（3）可扩展性好（scalability）。</p>
+<p>云主机的基本特点就是分布式架构，所以可以轻而易举地增加服务器，成倍扩展服务能力。</p>
+<p>三、云主机的缺点</p>
+<p>一些客户担心云主机的安全问题，感到对服务缺乏控制。</p>
+<p>因为云主机只是提供网络接口，所以客户的数据必然全部服从云服务公司的安排，完全在后者控制之下。数据是否安全保密，取决于后者的职业道德和保护能力。</p>
+<p>但是，这其实是一个”伪问题”，<strong>因为绝大多数情况下，云服务公司会比客户更在乎、也更善于保护数据</strong>。Paul Graham在《黑客与画家》一书中，就谈过这一点：</p>
+<p>“反对者往往觉得我们的产品不安全，如果员工可以很容易地登录，那么坏人也可以很容易地登录。一些大公司觉得不能把客户的信用卡资料交给我们，而是放在自己的服务器上更安全。……但是事实上，他们的服务器就是没我们的安全，我们对数据的保护几乎肯定比他们好。</p>
+<p>想想看，谁能雇到更高水平的网络安全专家，是一个所有业务就是管理服务器的技术型创业公司，还是一家服装零售商？……而且我们比他们更关心数据的安全。如果一家服装零售商的服务器被入侵，最多只影响到这家公司本身，这件事也很可能在公司内部被掩盖起来，最严重的情况下可能还会有一个员工被解雇。但是，如果我们的服务器被入侵，就有成千上万家公司可能受到影响，这件事也许还会被当作新闻，发表在业内网站上面，使得我们生意做不下去，不得不关门歇业。</p>
+<blockquote>
+<p>如果你想把钱藏在安全的地方，请问你是选择家中床垫下面，还是选择银行？这个比喻对服务器管理的方方面面都适用，不仅是安全性，还包括正常运行时间、带宽、负载管理、备份等等，都是我们占优。”</p>
+</blockquote>
+<p>四、如何选择云主机</p>
+<p>一般来说，知名公司总是优先的选择。目前主要有三家：Amazon Web Services、NetDepot和Rackspace。但是，小公司也有自己的优势，比如满足个性化需求和更低的价格。</p>
+<p>你可以根据客户服务、机房分布、可靠性、API的强大程度、安全措施、价格等因素，进行综合考虑。</p>
+<p>（完）</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Share/" rel="tag"><i class="fa fa-tag"></i> Share</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Book/IPCreator/Book/The Survivor in the Future World/" rel="next" title="The Survivor in the Future World">
+                  <i class="fa fa-chevron-left"></i> The Survivor in the Future World
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Basic Concept/a brief of neural network/" rel="prev" title="A Brief Introduction of Neural Network">
+                  A Brief Introduction of Neural Network <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-service是什么？"><span class="nav-number">1.</span> <span class="nav-text">Web service是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#云主机是什么？"><span class="nav-number">2.</span> <span class="nav-text">云主机是什么？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

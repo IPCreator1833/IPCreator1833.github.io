@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="J Alammar  MotivationI’m not a machine learning expert. I’m a software engineer by training and I’ve had little interaction with AI. I had always wanted to delve deeper into machine learning, but neve">
+<meta name="keywords" content="Neural Network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Visual and Interactive Guide to the Basics of Neural Networks">
+<meta property="og:url" content="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/visual-interactive-guide-basics-neural-networks/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="J Alammar  MotivationI’m not a machine learning expert. I’m a software engineer by training and I’ve had little interaction with AI. I had always wanted to delve deeper into machine learning, but neve">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://jalammar.github.io/images/NNs_2_variables.png">
+<meta property="og:image" content="https://hazyman.com/images/simple_NN_1.png">
+<meta property="og:image" content="https://hazyman.com/images/NNs_formula_no_bias.png">
+<meta property="og:image" content="https://hazyman.com/images/data_points_graph_animated.gif">
+<meta property="og:image" content="https://hazyman.com/images/data_points_error_animated.gif">
+<meta property="og:image" content="https://hazyman.com/images/lines_and_errors_animated.gif">
+<meta property="og:image" content="https://hazyman.com/images/NNs_bias.png">
+<meta property="og:image" content="https://hazyman.com/images/NNs_bias_2.png">
+<meta property="og:image" content="https://hazyman.com/images/NNs_formula.png">
+<meta property="og:image" content="https://hazyman.com/images/NNs_formula_ex.png">
+<meta property="og:image" content="https://hazyman.com/images/NNs_2_variables.png">
+<meta property="og:image" content="https://hazyman.com/images/NNs_formula_two_variables.png">
+<meta property="og:image" content="https://hazyman.com/images/android_tensorflow_classifier_results.jpg">
+<meta property="og:image" content="https://hazyman.com/images/softmax-regression-scalargraph.png">
+<meta property="og:updated_time" content="2017-03-27T04:46:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Visual and Interactive Guide to the Basics of Neural Networks">
+<meta name="twitter:description" content="J Alammar  MotivationI’m not a machine learning expert. I’m a software engineer by training and I’ve had little interaction with AI. I had always wanted to delve deeper into machine learning, but neve">
+<meta name="twitter:image" content="https://jalammar.github.io/images/NNs_2_variables.png">
+
+<link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/visual-interactive-guide-basics-neural-networks/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>A Visual and Interactive Guide to the Basics of Neural Networks | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/visual-interactive-guide-basics-neural-networks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          A Visual and Interactive Guide to the Basics of Neural Networks
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/AI/IPCreator/Technology/AI/TensorFlow/visual-interactive-guide-basics-neural-networks/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/AI/IPCreator/Technology/AI/TensorFlow/visual-interactive-guide-basics-neural-networks/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="https://jalammar.github.io/visual-interactive-guide-basics-neural-networks/" target="_blank" rel="noopener">J Alammar</a></p>
+<p><img src="https://jalammar.github.io/images/NNs_2_variables.png" alt></p>
+<h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>I’m not a machine learning expert. I’m a software engineer by training and I’ve had little interaction with AI. I had always wanted to delve deeper into machine learning, but never really found my “in”. That’s why when Google open sourced TensorFlow in November 2015, I got super excited and knew it was time to jump in and start the learning journey. Not to sound dramatic, but to me, it actually felt kind of like Prometheus handing down fire to mankind from the Mount Olympus of machine learning. In the back of my head was the idea that the entire field of Big Data and technologies like Hadoop were vastly accelerated when Google researchers released their Map Reduce paper. This time it’s not a paper – it’s the actual software they use internally after years and years of evolution.</p>
+<p>So I started learning what I can about the basics of the topic, and saw the need for gentler resources for people with no experience in the field. This is my attempt at that.</p>
+  <a id="more"></a>
+<h2 id="start-here">Start here</h2><br><p>Let’s start with a simple example. Say you’re helping a friend who wants to buy a house. She was quoted $400,000 for a 2000 sq ft house (185 meters). Is this a good price or not?</p><br><br><p>It’s not easy to tell without a frame of reference. So you ask your friends who have bought houses in that same neighborhoods, and you end up with three data points:</p><br><br><div class="one_variable"><br><br>  <table><br>    <thead><br>      <tr><br>        <th>Area (sq ft) (x)</th><br>        <th>Price (y)</th><br>      </tr><br>    </thead><br>    <tbody><br>      <tr><br>        <td>2,104</td><br>        <td>399,900</td><br>      </tr><br>      <tr><br>        <td>1,600</td><br>        <td>329,900</td><br>      </tr><br>      <tr><br>        <td>2,400</td><br>        <td>369,000</td><br>      </tr><br>    </tbody><br>  </table><br><br></div><br><br><p>Personally, my first instinct would be to get the average price per sq ft. That comes to $180 per sq ft.</p><br><br><p>Welcome to your first neural network! Now it’s not quite at Siri level yet, but now you know the fundamental building block. And it looks like this:</p><br><br><div class="img-div"><br>    <img src="/images/simple_NN_1.png"><br></div><br><br><p>Diagrams like this show you the structure of the network and how it calculates a prediction. The calculation starts from the input node at the left. The input value flows to the right. It gets multiplied by the weight and the result becomes our output.</p><br><br><p>Multiplying 2,000 sq ft by 180 gives us $360,000. That’s all there is to it at this level. Calculating the prediction is simple multiplication. But before that, we needed to think about the weight we’ll be multiplying by. Here we started with an average, later we’ll look at better algorithms that can scale as we get more inputs and more complicated models. Finding the weight is our “training” stage. So whenever you hear of someone “training” a neural network, it just means finding the weights we use to calculate the prediction.</p><br><br><div class="img-div"><br>    <img src="/images/NNs_formula_no_bias.png"><br></div><br><br><p>This is a form of prediction. This is a simple predictive model that takes an input, does a calculation, and gives an output (since the output can be of continuous values, the technical name for what we have would be a “regression model”)</p><br><br><p>Let us visualize this process (for simplicity, let’s switch our price unit from $1 to $1000. Now our weight is 0.180 rather than 180):</p><br><br><p class="gif-space"></p><br><br><p><img src="/images/data_points_graph_animated.gif" alt></p><br><br><p class="gif-space"></p><br><br><p class="gif-space"></p><br><br><h2 id="harder-better-faster-stronger">Harder, Better, Faster, Stronger</h2>
+
+<p>Can we do better than estimate the price based on the average of our data points? Let’s try. Let’s first define what it means to be better in this scenario. If we apply our model to the three data points we have, how good of a job would it do?</p>
+
+<p class="gif-space"></p>
+
+<p><img src="/images/data_points_error_animated.gif" alt></p>
+
+<p class="gif-space"></p>
+
+<p>That’s quite a bit of yellow. Yellow is bad. Yellow is error. We want to shrink yellow as much as we can.</p>
+
+<div class="one_variable"><br><br>  <div class="one_variable"><br><br>    <table><br>    <thead><br>      <tr><br>        <th>Area (x)</th><br>        <th>Price ($1000) (<span class="y_">y_</span>)</th><br>        <th>Prediction (<span class="y">y</span>)</th><br>        <th><span class="y_">y_</span>-<span class="y">y</span></th><br>        <th>(<span class="y_">y_</span>-<span class="y">y</span>)²</th><br>      </tr><br>    </thead><br>    <tbody><br>      <tr><br>        <td>2,104</td><br>        <td>399.9</td><br>        <td>379</td><br>        <td>21</td><br>        <td>449</td><br>      </tr><br>      <tr><br>        <td>1,600</td><br>        <td>329.9</td><br>        <td>288</td><br>        <td>42</td><br>        <td>1756</td><br>      </tr><br>      <tr><br>        <td>2,400</td><br>        <td>369</td><br>        <td>432</td><br>        <td>-63</td><br>        <td>3969</td><br>      </tr><br>      <tr><br>        <td> </td><br>        <td> </td><br>        <td colspan="2" align="right"><span class="total"> Average:</span></td><br>        <td><b>2,058</b></td><br>      </tr><br>    </tbody><br>  </table><br><br>  </div>
+
+<p></p></div><p></p>
+<p>Here we can see the <span class="y_">actual price value</span>, the <span class="y">predicted price value</span>, and the <span class="error-value">difference between them</span>. Then we’ll need to average these differences so we have a number that tells us how much error there is in this prediction model. The problem is, the 3rd row has -63 as its value. We have to deal with this negative value if we want to use the difference between the prediction and price as our error measuring stick. That’s one reason why we introduce an additional column that shows the error squared, thus getting rid of the negative value.</p>
+
+<p>This is now our definition of doing better – a better model is one that has less error. Error is measured as the average of the errors for each point in our data set. For each point, the error is measured by the difference between the actual value and the predicted value, raised to the power of 2. This is called <a href="http://mste.illinois.edu/patel/amar430/meansquare.html" target="_blank" rel="noopener">Mean Square Error</a>. Using it as a guide to train our model makes it our <strong>loss function</strong> (also, <strong>cost function</strong>).</p>
+
+<p>Now that we defined our measuring stick for what makes a better model, let’s experiment with a couple more weight values and compare them with our average pick:</p>
+
+<p class="gif-space"></p>
+
+<p><img src="/images/lines_and_errors_animated.gif" alt></p>
+
+<div class="img-div"><br>We can’t improve much on the model by varying the weight any more. But if we add a bias we can find values that improve the model.<br></div><br><p class="gif-space"></p><br><br><p>Our lines can better approximate our values now that we have this b value added to the line formula. In this context, we call it a “bias”. This makes our neural network look like this:</p><br><br><div class="img-div"><br>    <img src="/images/NNs_bias.png"><br></div>
+
+<p>We can generalize it by saying that a neural network with one input and one output (<em>spoiler warning:</em> and no hidden layers) looks like this:</p>
+
+<div class="img-div"><br>    <img src="/images/NNs_bias_2.png"><br></div><br><p>In this graph, W and b are values we find during the training process. X is the input we plug into the formula (area in sq ft in our example). Y is the predicted price.</p><br><br><p>Calculating a prediction now uses this formula:</p><br><br><div class="img-div"><br>    <img src="/images/NNs_formula.png"><br></div>
+
+<p>So our current model calculates predictions by plugging in the area of house as x in this formula:</p>
+
+<div class="img-div"><br>    <img src="/images/NNs_formula_ex.png"><br></div>
+
+<h2 id="train-your-dragon">Train Your Dragon</h2><br><p>How about you take a crack at training our toy neural network? Minimize the loss function by tweaking the weight and bias dials. Can you get an error value below 799?</p><br><br><div id="training-one-chart" class="training-chart"></div><br><table id="training-one" class="training-table"><br>    <tr><br>        <td><br>            Error<br>        </td><br>        <td colspan="2"><br>            <span id="error-value"></span><br>        </td><br>    </tr><br>    <tr><br>        <td class="error-cell" colspan="3"><br>            <span id="error-value-message"></span>&nbsp;<br>        </td><br>    </tr><br>    <tr><br>        <td><br>            Weight<br>        </td><br>        <td><br>            <input id="weightSlider" type="range" class="weight" min="0" max="0.4" step="0.001"><br>        </td><br>        <td class="slider-value"><br>            <span id="weight" class="weight">0</span><br>        </td><br>    </tr><br>    <tr><br>        <td><br>            Bias<br>        </td><br>        <td><br>            <input id="biasSlider" type="range" class="bias" min="0" max="460" step="1"><br>        </td><br>        <td class="slider-value"><br>            <span id="bias" class="bias">0</span><br>        </td><br>    </tr><br></table><br><br><div id="neural-network-graph" class="nn-graph-area"></div><br><br><h2 id="automation">Automation</h2><br><p>Congratulations on manually training your first neural network! Let’s look at how to automate this training process. Below is another example with an additional autopilot-like functionality. These are the GD Step buttons. They use an algorithm called “Gradient Descent” to try to step towards the correct weight and bias values that minimize the loss function.</p><br><br><div class="container"><br>    <div class="row"><br><br>        <div class="col-sm-6 graphs"><br>            <div id="training-one-gd-chart" class="training-chart"></div><br><br><br>                <div class="row training-chart mini-charts"><br>                    <div id="training-one-gd-error-chart" class="error-chart col-xs-6"></div><br>                    <div id="training-one-gd-heatmap" class="error-chart col-xs-6"></div><br>                </div><br><br>        </div><br><br>        <div class="col-sm-6"><br><br>            <table id="training-one-gd" class="training-table"><br>                <tr><br>                    <td colspan="3" class="gd-buttons"><br>                        <input type="button" value="GD Step" id="gradient-descent-button" class="btn btn-primary"><br>                        <input type="button" value="10 GD Steps " id="gradient-descent-10-button" class="btn btn-primary"><br>                        <input type="button" value="100 GD Steps " id="gradient-descent-100-button" class="btn btn-primary"><br>                    </td><br>                </tr><br>                <tr><br>                    <td><br>                        Error<br>                    </td><br>                    <td colspan="2"><br>                        <span id="error-value"></span><br>                    </td><br><br>                </tr><br><br>                <tr><br>                    <td class="error-cell" colspan="3"><br>                        <span id="error-value-message"></span>&nbsp;<br>                    </td><br><br>                </tr><br>                <tr><br>                    <td><br>                        Weight<br>                    </td><br>                    <td><br>                        <input id="weightSlider" type="range" class="weight" min="0" max="0.4" step="0.0001"><br>                    </td><br>                    <td class="slider-value"><br>                        <span id="weight" class="weight">0</span><br>                    </td><br>                </tr><br>                <tr><br>                    <td><br>                        Bias<br>                    </td><br>                    <td><br>                        <input id="biasSlider" type="range" class="bias" min="0" max="460" step="0.1"><br>                    </td><br>                    <td class="slider-value"><br>                        <span id="bias" class="bias">0</span><br>                    </td><br>                </tr><br>            </table><br><br>            <div id="neural-network-gd-graph" class="nn-graph-area"></div><br>        </div><br>    </div><br></div><br><br><p>The two new graphs are to help you track the error values as you fiddle with the parameters (weight and bias) of the model. It’s important to keep track of the error as the training process is all about reducing this error as much possible.</p><br><br><p>How does gradient descent know where its next step should be? Calculus. You see, knowing the function we’re minimizing (our loss function, the average of (y_ - y)² for all our data points), and knowing the current inputs into it (the current weight and bias), the derivatives of the loss function tell us which direction to nudge W and b in order to minimize the error.</p><br><br><p>Learn more about gradient descent and how to use it to calculate the new weights &amp; bias in the first lectures of Coursera’s <a href="https://www.coursera.org/learn/machine-learning" target="_blank" rel="noopener">Machine Learning</a> course.</p><br><br><h2 id="and-then-there-were-two">And Then There Were Two</h2>
+
+<p>Is the size of the house the only variable that goes into how much it costs? Obviously there are many other factors. Let’s add another variable and see how we can adjust our neural network to it.</p>
+
+<p>Say your friend does a bit more research and finds a bunch more data points. She also finds out how many bathrooms each house has:</p>
+
+<div class="two_variables"><br><br>  <table><br>    <thead><br>      <tr><br>        <th>Area (sq ft) (x1)</th><br>        <th>Bathrooms (x2)</th><br>        <th>Price (y)</th><br>      </tr><br>    </thead><br>    <tbody><br>      <tr><br>        <td>2,104</td><br>        <td>3</td><br>        <td>399,900</td><br>      </tr><br>      <tr><br>        <td>1,600</td><br>        <td>3</td><br>        <td>329,900</td><br>      </tr><br>      <tr><br>        <td>2,400</td><br>        <td>3</td><br>        <td>369,000</td><br>      </tr><br>      <tr><br>        <td>1,416</td><br>        <td>2</td><br>        <td>232,000</td><br>      </tr><br>      <tr><br>        <td>3,000</td><br>        <td>4</td><br>        <td>539,900</td><br>      </tr><br>      <tr><br>        <td>1,985</td><br>        <td>4</td><br>        <td>299,900</td><br>      </tr><br>      <tr><br>        <td>1,534</td><br>        <td>3</td><br>        <td>314,900</td><br>      </tr><br>      <tr><br>        <td>1,427</td><br>        <td>3</td><br>        <td>198,999</td><br>      </tr><br>      <tr><br>        <td>1,380</td><br>        <td>3</td><br>        <td>212,000</td><br>      </tr><br>      <tr><br>        <td>1,494</td><br>        <td>3</td><br>        <td>242,500</td><br>      </tr><br>    </tbody><br>  </table><br><br></div>
+
+<p>Our neural network with two variables looks like this:</p>
+
+<div class="img-div"><br>    <img src="/images/NNs_2_variables.png"><br></div>
+
+<p>We now have to find two weights (one for each input) and one bias to create our new model.</p>
+
+<p>Calculating Y looks like this:</p>
+
+<div class="img-div"><br>    <img src="/images/NNs_formula_two_variables.png"><br></div>
+
+<p>But how do we find w1 and w2? This is a little trickier than when we only had to worry about one weight value. How much does having an extra bathroom change how we predict the value of a home?</p>
+
+<p>Take a stab at finding the right weights and bias. You will start here to see the complexity we start getting into as the number of our inputs increase. We start losing the ability to create simple 2d shapes that allow us to visualize the model at a glance. Instead, we’ll have to mainly rely on how the error value is evolving as we tweak our model parameters.</p>
+
+<div class="container"><br>    <div class="row"><br><br>        <div class="col-sm-6 graphs"><br>            <div id="training-two-chart" class="error-chart"></div>
+
+<pre><code>    &lt;/div&gt;
+
+    &lt;div class=&quot;col-sm-6&quot;&gt;
+
+        &lt;table id=&quot;training-two-table&quot; class=&quot;training-table&quot;&gt;
+            &lt;tr&gt;
+                &lt;td colspan=&quot;3&quot; class=&quot;gd-buttons&quot;&gt;
+                    &lt;input type=&quot;button&quot; value=&quot;GD Step&quot; id=&quot;gradient-descent-button&quot; class=&quot;btn btn-primary&quot; /&gt;
+                    &lt;input type=&quot;button&quot; value=&quot;10 GD Steps &quot; id=&quot;gradient-descent-10-button&quot; class=&quot;btn btn-primary&quot; /&gt;
+                    &lt;input type=&quot;button&quot; value=&quot;100 GD Steps &quot; id=&quot;gradient-descent-100-button&quot; class=&quot;btn btn-primary&quot; /&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;
+                    Error
+                &lt;/td&gt;
+                &lt;td colspan=&quot;2&quot;&gt;
+                    &lt;span id=&quot;error-value&quot;&gt;&lt;/span&gt;
+                &lt;/td&gt;
+
+            &lt;/tr&gt;
+
+            &lt;tr&gt;
+                &lt;td class=&quot;error-cell&quot; colspan=&quot;3&quot;&gt;
+                    &lt;span id=&quot;error-value-message&quot;&gt;&lt;/span&gt;&amp;nbsp;
+                &lt;/td&gt;
+
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;
+                    Weight #1
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;input id=&quot;weight0Slider&quot; type=&quot;range&quot; class=&quot;weight&quot; min=&quot;-0.4&quot; max=&quot;0.4&quot; step=&quot;0.0001&quot; /&gt;
+                &lt;/td&gt;
+                &lt;td class=&quot;slider-value&quot;&gt;
+                    &lt;span id=&quot;weight0&quot; class=&quot;weight&quot;&gt;0&lt;/span&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;
+                    Weight #2
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;input id=&quot;weight1Slider&quot; type=&quot;range&quot; class=&quot;weight&quot; min=&quot;-100&quot; max=&quot;200&quot; step=&quot;0.0001&quot; /&gt;
+                &lt;/td&gt;
+                &lt;td class=&quot;slider-value&quot;&gt;
+                    &lt;span id=&quot;weight1&quot; class=&quot;weight&quot;&gt;0&lt;/span&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;
+                    Bias
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;input id=&quot;biasSlider&quot; type=&quot;range&quot; class=&quot;bias&quot; min=&quot;-100&quot; max=&quot;300&quot; step=&quot;0.1&quot; /&gt;
+                &lt;/td&gt;
+                &lt;td class=&quot;slider-value&quot;&gt;
+                    &lt;span id=&quot;bias&quot; class=&quot;bias&quot;&gt;0&lt;/span&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+
+        &lt;div id=&quot;neural-network-two-graph&quot; class=&quot;nn-graph-area&quot;&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p></p></div><p></p>
+<p>Our trusty gradient descent is here to help once again. It still is valuable in helping us find the right weights and bias.</p>
+
+<h2 id="features">Features</h2><br><p>Now that you’ve seen neural networks with one and two features, you can sort of figure out how to add additional features and use them to calculate your predictions. The number of weights will continue to grow, and our implementation of gradient descent will have to be tweaked as we add each feature so that it can update the new weights associated with the new feature.</p><br><br><p>It’s important to note here that we don’t blindly feed the network everything we know about our examples. We have to be selective about which features we feed the model. Feature selection/processing is an entire discipline with its own set of best practices and considerations. If you want to see an example of the process of examining a dataset to choose which features to feed a prediction model, check out  <a href="https://www.kaggle.com/omarelgabry/titanic/a-journey-through-titanic" target="_blank" rel="noopener">A Journey Through Titanic</a>. It’s a notebook where <a href="https://twitter.com/Omar_ElGabry" target="_blank" rel="noopener">Omar EL Gabry</a> narrates his process for solving Kaggle’s Titanic challenge. Kaggle makes available the passenger’s manifest of the Titanic including data like name, sex, age, cabin, and whether the person survived or not. The challenge is to build a model that predicts whether a person survived or not given their other information.</p><br><br><h2 id="classification">Classification</h2>
+
+<p>Let’s continue to tweak our example. Assume your friend gives you a list of houses. This time, she has labeled which ones she thinks have a good size and number of bathrooms:</p>
+
+<div class="two_variables"><br><br>  <table><br>    <thead><br>      <tr><br>        <th>Area (sq ft) (x1)</th><br>        <th>Bathrooms (x2)</th><br>        <th>Label (y)</th><br>      </tr><br>    </thead><br>    <tbody><br>      <tr><br>        <td>2,104</td><br>        <td>3</td><br>        <td>Good</td><br>      </tr><br>      <tr><br>        <td>1,600</td><br>        <td>3</td><br>        <td>Good</td><br>      </tr><br>      <tr><br>        <td>2,400</td><br>        <td>3</td><br>        <td>Good</td><br>      </tr><br>      <tr><br>        <td>1,416</td><br>        <td>2</td><br>        <td>Bad</td><br>      </tr><br>      <tr><br>        <td>3,000</td><br>        <td>4</td><br>        <td>Bad</td><br>      </tr><br>      <tr><br>        <td>1,985</td><br>        <td>4</td><br>        <td>Good</td><br>      </tr><br>      <tr><br>        <td>1,534</td><br>        <td>3</td><br>        <td>Bad</td><br>      </tr><br>      <tr><br>        <td>1,427</td><br>        <td>3</td><br>        <td>Good</td><br>      </tr><br>      <tr><br>        <td>1,380</td><br>        <td>3</td><br>        <td>Good</td><br>      </tr><br>      <tr><br>        <td>1,494</td><br>        <td>3</td><br>        <td>Good</td><br>      </tr><br>    </tbody><br>  </table><br><br></div>
+
+<p>She needs you to use this to create a model to predict whether she would like a house or not given its size and number of bathrooms. You will use this list above to build the model, then she will use the model to classify many other houses. One additional change in the process, is that she has another list of 10 houses she has labeled, but she’s keeping it from you. That other list would be used to evaluate your model after you’ve trained it – thus trying to ensure your model grasps the conditions that actually make her like the features of the house.</p>
+
+<p>The neural networks we’ve been toying around with until now are all doing “regression” – they calculate and output a “continuous” value (the output can be 4, or 100.6, or 2143.342343). In practice, however, neural networks are more often used in “classification” type problems. In these problems, the neural network’s output has to be from a set of discrete values (or “classes”) like “Good” or “Bad”. How this works out in practice, is that we’ll have a model that will say that it’s 75% sure that a house is “Good” rather than just spit out “good” or “bad”.</p>
+
+<div class="img-div"><br>    <img src="/images/android_tensorflow_classifier_results.jpg"><br>    The TensorFlow app I discussed in my <a href="https://jalammar.github.io/Supercharging-android-apps-using-tensorflow/" target="_blank" rel="noopener">previous post</a> is a good example for a classification model in practice.<br><br></div>
+
+<p>One way we can transform the network we’ve seen into a classification network is to have it output two values – one for each class (our classes now being “good” and “bad”). We then pass these values through an operation called “<a href="https://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/" target="_blank" rel="noopener">softmax</a>”. The output of softmax is the probability of each class. For example, say that layer of the network outputs 2 for “good” and 4 for “bad”, if we feed [2, 4] to softmax, it will return [0.11,  0.88] as the output. Which translates the values to say the network is 88% sure that the inputted value is “bad” and our friend would not like that house.</p>
+
+<p>Softmax takes an array and outputs an array of the same length. Notice that its outputs are all positive and sum up to 1 – which is useful when we’re outputting a probability value. Also notice that even though 4 is double 2, its probability is not only double, but is eight times that of 2. This is a useful property that exaggerates the difference in output thus improving our training process.</p>
+
+<table><br>  <thead><br>    <tr><br>      <th> </th><br>      <th>output</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <td>softmax([ 1 ])</td><br>      <td>[ 1 ]</td><br>    </tr><br>    <tr><br>      <td>softmax([ 1, 1 ])</td><br>      <td>[ 0.5, 0.5 ]</td><br>    </tr><br>    <tr><br>      <td>softmax([ 0, 1 ])</td><br>      <td>[ 0.26,  0.73 ]</td><br>    </tr><br>    <tr><br>      <td>softmax([ 2, 4 ])</td><br>      <td>[ 0.11,  0.88 ]</td><br>    </tr><br>    <tr><br>      <td>softmax([ 5, 10 ])</td><br>      <td>[ 0.007,  0.993 ]</td><br>    </tr><br>    <tr><br>      <td>softmax([ -1, 0, 1 ])</td><br>      <td>[ 0.09,  0.24,  0.66 ]</td><br>    </tr><br>    <tr><br>      <td>softmax([ 1, 2, 4 ])</td><br>      <td>[ 0.04,  0.11,  0.84 ]</td><br>    </tr><br>  </tbody><br></table>
+
+<p>As you can see in the last two rows, softmax extends to any number of inputs. So now if our friend adds a third label (say “Good, but I’ll have to airbnb one room”), softmax scales to accomedate that change.</p>
+
+<p>Take a second to explore the shape of the network as you vary the number of features (x1, x2, x3…etc) (which can be area, number of bathrooms, price, proximity to school/work…etc) and vary the number of classes (y1, y2, y3…etc) (which can be “too expensive”, “good deal”, “good if I airbnb”, “too small”):</p>
+
+<table><br>    <tr><br>        <td><br>            Features (x):<br>        </td><br>        <td><br>           <div class="input-group"><br>                  <span class="input-group-btn"><br>                      <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]"><br>                          <span class="glyphicon glyphicon-minus"></span><br>                      </button><br>                  </span><br>                  <input type="text" name="quant[1]" class="form-control input-number" value="2"><br>                  <span class="input-group-btn"><br>                      <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]"><br>                          <span class="glyphicon glyphicon-plus"></span><br>                      </button><br>                  </span><br>            </div><br>        </td><br>    </tr><br>    <tr><br>        <td><br>            Classes (y):<br>        </td><br>        <td><br>           <div class="input-group"><br>                  <span class="input-group-btn"><br>                      <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[2]"><br>                          <span class="glyphicon glyphicon-minus"></span><br>                      </button><br>                  </span><br>                  <input type="text" name="quant[2]" class="form-control input-number" value="2"><br>                  <span class="input-group-btn"><br>                      <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[2]"><br>                          <span class="glyphicon glyphicon-plus"></span><br>                      </button><br>                  </span><br>            </div><br>        </td><br>    </tr><br></table>
+
+<div id="shallow-neural-network-graph" class="nn-graph-area"></div>
+
+<p>You can see an example of how to create and train this network using TensorFlow in <a href="https://github.com/jalammar/simpleTensorFlowClassificationExample/blob/master/Basic%20Classification%20Example%20with%20TensorFlow.ipynb" target="_blank" rel="noopener">this notebook</a> I created to accompany this post.</p>
+
+<p></p><h2 id="true-motivation">True Motivation</h2><p></p>
+<p>If you have reached this far, I have to reveal to you another motivation of mine to write this post. This post is meant as an even gentler intro to TensorFlow tutorials. If you start working through <a href="https://www.tensorflow.org/versions/r0.10/tutorials/mnist/beginners/index.html" target="_blank" rel="noopener">MNIST For ML Beginners</a> now, and come across this graph:</p>
+
+<div class="img-div"><br>    <img src="/images/softmax-regression-scalargraph.png"><br>    I wrote this post to prepare people without machine learning experience for this graph in the TensorFlow introductory tutorial. That’s why I simulated its visual style.<br></div>
+
+<p>I hope you would feel prepared and that you have an understanding of this system and how it works. If you want to start tinkering with code, feel free to pick up from the intro <a href="https://www.tensorflow.org/versions/r0.10/tutorials/mnist/beginners/index.html" target="_blank" rel="noopener">tutorial</a> and teach a neural network how to detect handwritten digits.</p>
+
+<p>You should also continue your education by learning the theoretical and mathematical underpinnings of the concepts we discussed here. Good questions to ask now include:</p>
+
+<ul><br>  <li>What other kinds of cost functions exist? Which are better for which applications?</li><br>  <li>What’s the algorithm to actually calculate new weights using gradient descent?</li><br>  <li>What are the applications for machine learning in the fields you’re already knowledgeable about? What new magic can you wield by mixing this spell with others in your spell book?</li><br></ul>
+
+<p>Great learning resources include:</p>
+
+<ul><br>  <li>Coursera’s <a href="https://www.coursera.org/learn/machine-learning" target="_blank" rel="noopener">Machine Learning</a> course by <a href="https://twitter.com/AndrewYNg" target="_blank" rel="noopener">Andrew Ng</a>. This is the one I started with. Starts with regression then moves to classification and neural networks.</li><br>  <li>Coursera’s <a href="https://www.coursera.org/learn/neural-networks" target="_blank" rel="noopener">Neural Networks for Machine Learning</a> by <a href="https://en.wikipedia.org/wiki/Geoffrey_Hinton" target="_blank" rel="noopener">Geoffrey Hinton</a>. More focused on neural networks and its visual applications.</li><br>  <li>Stanford’s <a href="https://www.youtube.com/watch?v=g-PvXUjD6qg&amp;list=PLlJy-eBtNFt6EuMxFYRiNRS07MCWN5UIA" target="_blank" rel="noopener">CS231n: Convolutional Neural Networks for Visual Recognition</a> by <a href="https://twitter.com/karpathy" target="_blank" rel="noopener">Andrej Karpathy</a>. It’s interesting to see some advanced concepts and the state of the art in visual recognition using deep neural networks.</li><br>  <li>The <a href="http://www.asimovinstitute.org/neural-network-zoo/" target="_blank" rel="noopener">Neural Network Zoo</a> is a great resource to learn more about the different types of neural networks.</li><br></ul>
+
+<p></p><h2 id="acknowledgements">Acknowledgements</h2><p></p>
+<p>Thanks to <a href="https://www.linkedin.com/in/yasmine-alfouzan-b05ba317" target="_blank" rel="noopener">Yasmine Alfouzan</a>, <a href="https://twitter.com/a3ammar" target="_blank" rel="noopener">Ammar Alammar</a>, <a href="https://www.linkedin.com/in/khalidalnuaim" target="_blank" rel="noopener">Khalid Alnuaim</a>, <a href="https://twitter.com/fahd09" target="_blank" rel="noopener">Fahad Alhazmi</a>, <a href="https://www.linkedin.com/in/mkhdev" target="_blank" rel="noopener">Mazen Melibari</a>, and <a href="https://www.linkedin.com/in/hadeel-al-negheimish-4a73abb3" target="_blank" rel="noopener">Hadeel Al-Negheimish</a> for their assistance in reviewing previous versions of this post.</p>
+
+<p>Please contact me on <a href="https://twitter.com/jalammar" target="_blank" rel="noopener">Twitter</a> with any corrections or feedback.</p>
+</div></div>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Neural-Network/" rel="tag"><i class="fa fa-tag"></i> Neural Network</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/TensorFlow/IPCreator/Technology/AI/TensorFlow/supercharging-android-apps-with-tensorflow/" rel="next" title="Supercharging Android Apps with TensorFlow">
+                  <i class="fa fa-chevron-left"></i> Supercharging Android Apps with TensorFlow
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Basic Concept/super-intelligence-individual/" rel="prev" title="Super Intelligence">
+                  Super Intelligence <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Motivation"><span class="nav-number">1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#start-here"><span class="nav-number">2.</span> <span class="nav-text">Start here</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#harder-better-faster-stronger"><span class="nav-number">3.</span> <span class="nav-text">Harder, Better, Faster, Stronger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#train-your-dragon"><span class="nav-number">4.</span> <span class="nav-text">Train Your Dragon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#automation"><span class="nav-number">5.</span> <span class="nav-text">Automation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#and-then-there-were-two"><span class="nav-number">6.</span> <span class="nav-text">And Then There Were Two</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#features"><span class="nav-number">7.</span> <span class="nav-text">Features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#classification"><span class="nav-number">8.</span> <span class="nav-text">Classification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#true-motivation"><span class="nav-number">9.</span> <span class="nav-text">True Motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#acknowledgements"><span class="nav-number">10.</span> <span class="nav-text">Acknowledgements</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

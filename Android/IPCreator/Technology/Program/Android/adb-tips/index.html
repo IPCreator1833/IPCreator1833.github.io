@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="图形化界面太低效，还存在DDMS连接不稳定的隐患，尽量通过命令行方式高效解决">
+<meta name="keywords" content="ADB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Debug Bridge Tips">
+<meta property="og:url" content="https://hazyman.com/Android/IPCreator/Technology/Program/Android/adb-tips/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="图形化界面太低效，还存在DDMS连接不稳定的隐患，尽量通过命令行方式高效解决">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://github.com/ipcreator/awesome-adb/raw/master/assets/title.png">
+<meta property="og:updated_time" content="2017-03-27T10:04:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Debug Bridge Tips">
+<meta name="twitter:description" content="图形化界面太低效，还存在DDMS连接不稳定的隐患，尽量通过命令行方式高效解决">
+<meta name="twitter:image" content="https://github.com/ipcreator/awesome-adb/raw/master/assets/title.png">
+
+<link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/adb-tips/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Android Debug Bridge Tips | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/adb-tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android Debug Bridge Tips
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Android/IPCreator/Technology/Program/Android/adb-tips/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Android/IPCreator/Technology/Program/Android/adb-tips/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://github.com/ipcreator/awesome-adb/raw/master/assets/title.png" alt></p>
+<p>图形化界面太低效，还存在DDMS连接不稳定的隐患，尽量通过命令行方式高效解决</p>
+<a id="more"></a>
+<p>原文详细请参考：<a href="https://github.com/ipcreator/awesome-adb" target="_blank" rel="noopener">ADB Usage Complete</a></p>
+<h2 id="常用命令的简单描述"><a href="#常用命令的简单描述" class="headerlink" title="常用命令的简单描述"></a>常用命令的简单描述</h2><p>cat    显示文件内容<br>cd    切换目录<br>chmod    改变文件的存取模式/访问权限<br>df    查看磁盘空间使用情况<br>grep    过滤输出<br>kill    杀死指定 PID 的进程<br>ls    列举目录内容<br>mount    挂载目录的查看和管理<br>mv    移动或重命名文件<br>ps    查看正在运行的进程<br>rm    删除文件<br>top    查看进程的资源占用情况</p>
+<h2 id="USB-连接"><a href="#USB-连接" class="headerlink" title="USB 连接"></a>USB 连接</h2><p>通过 USB 连接来正常使用 adb 需要保证几点：</p>
+<p>硬件状态正常。</p>
+<p>包括 Android 设备处于正常开机状态，USB 连接线和各种接口完好。</p>
+<p>Android 设备的开发者选项和 USB 调试模式已开启。</p>
+<p>可以到「设置」-「开发者选项」-「Android 调试」查看。</p>
+<p>如果在设置里找不到开发者选项，那需要通过一个彩蛋来让它显示出来：在「设置」-「关于手机」连续点击「版本号」7 次。</p>
+<p>设备驱动状态正常。</p>
+<p>这一点貌似在 Linux 和 Mac OS X 下不用操心，在 Windows 下有可能遇到需要安装驱动的情况，确认这一点可以右键「计算机」-「属性」，到「设备管理器」里查看相关设备上是否有黄色感叹号或问号，如果没有就说明驱动状态已经好了。否则可以下载一个手机助手类程序来安装驱动先。</p>
+<p>通过 USB 线连接好电脑和设备后确认状态。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb devices</span><br></pre></td></tr></table></figure></p>
+<p>如果能看到</p>
+<p>xxxxxx device<br>说明连接成功。</p>
+<h2 id="以-root-权限运行-adbd"><a href="#以-root-权限运行-adbd" class="headerlink" title="以 root 权限运行 adbd"></a>以 root 权限运行 adbd</h2><p>adb 的运行原理是 PC 端的 adb server 与手机端的守护进程 adbd 建立连接，然后 PC 端的 adb client 通过 adb server 转发命令，adbd 接收命令后解析运行。</p>
+<p>所以如果 adbd 以普通权限执行，有些需要 root 权限才能执行的命令无法直接用 adb xxx 执行。这时可以 adb shell 然后 su 后执行命令，也可以让 adbd 以 root 权限执行，这个就能随意执行高权限命令了。</p>
+<p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb root</span><br></pre></td></tr></table></figure></p>
+<p>现在再运行 adb shell，看看命令行提示符是不是变成 # 了？</p>
+<p>有些手机 root 后也无法通过 adb root 命令让 adbd 以 root 权限执行，比如三星的部分机型，会提示 adbd cannot run as root in production builds，此时可以先安装 adbd Insecure，然后 adb root 试试。</p>
+<p>相应地，如果要恢复 adbd 为非 root 权限的话，可以使用 adb unroot 命令。</p>
+<h2 id="安装-APK"><a href="#安装-APK" class="headerlink" title="安装 APK"></a>安装 APK</h2><p>命令格式：</p>
+<p>adb install [-lrtsdg] &lt;path_to_apk&gt;<br>参数：</p>
+<p>adb install 后面可以跟一些可选参数来控制安装 APK 的行为，可用参数及含义如下：</p>
+<p>参数    含义<br>-l    将应用安装到保护目录 /mnt/asec<br>-r    允许覆盖安装<br>-t    允许安装 AndroidManifest.xml 里 application 指定 android:testOnly=”true” 的应用<br>-s    将应用安装到 sdcard<br>-d    允许降级覆盖安装<br>-g    授予所有运行时权限<br>运行命令后如果见到类似如下输出（状态为 Success）代表安装成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[100%] /data/local/tmp/1.apk</span><br><span class="line">    pkg: /data/local/tmp/1.apk</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
+<p>参考：<a href="https://github.com/android/platform_frameworks_base/blob/master/core%2Fjava%2Fandroid%2Fcontent%2Fpm%2FPackageManager.java" target="_blank" rel="noopener">PackageManager.java</a></p>
+<p>adb install 内部原理简介</p>
+<p>adb install 实际是分三步完成：</p>
+<p>push apk 文件到 /data/local/tmp。</p>
+<p>调用 pm install 安装。</p>
+<p>删除 /data/local/tmp 下的对应 apk 文件。</p>
+<p>所以，必要的时候也可以根据这个步骤，手动分步执行安装过程。</p>
+<h2 id="卸载应用"><a href="#卸载应用" class="headerlink" title="卸载应用"></a>卸载应用</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb uninstall [-k] &lt;packagename&gt;</span><br></pre></td></tr></table></figure></p>
+<p><packagename> 表示应用的包名，-k 参数可选，表示卸载应用但保留数据和缓存目录。</packagename></p>
+<p>命令示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb uninstall com.qihoo360.mobilesafe</span><br></pre></td></tr></table></figure></p>
+<p>表示卸载 360 手机卫士。</p>
+<h2 id="复制设备里的文件到电脑"><a href="#复制设备里的文件到电脑" class="headerlink" title="复制设备里的文件到电脑"></a>复制设备里的文件到电脑</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull &lt;设备里的文件路径&gt; [电脑上的目录]</span><br></pre></td></tr></table></figure></p>
+<p>其中 电脑上的目录 参数可以省略，默认复制到当前目录。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull /sdcard/sr.mp4 ~/tmp/</span><br></pre></td></tr></table></figure></p>
+<p>小技巧：设备上的文件路径可能需要 root 权限才能访问，如果你的设备已经 root 过，可以先使用 adb shell 和 su 命令在 adb shell 里获取 root 权限后，先 cp /path/on/device /sdcard/filename 将文件复制到 sdcard，然后 adb pull /sdcard/filename /path/on/pc。</p>
+<h2 id="复制电脑里的文件到设备"><a href="#复制电脑里的文件到设备" class="headerlink" title="复制电脑里的文件到设备"></a>复制电脑里的文件到设备</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb push &lt;电脑上的文件路径&gt; &lt;设备里的目录&gt;</span><br></pre></td></tr></table></figure></p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb push ~/sr.mp4 /sdcard/</span><br></pre></td></tr></table></figure></p>
+<p>小技巧：设备上的文件路径普通权限可能无法直接写入，如果你的设备已经 root 过，可以先 adb push /path/on/pc /sdcard/filename，然后 adb shell 和 su 在 adb shell 里获取 root 权限后，cp /sdcard/filename /path/on/device。</p>
+<p>实战派：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb push AdbTest\. /sdcard/Download</span><br><span class="line">/sdcard/Download/./: 4 files pushed. 0 files skipped. 0.1 MB/s (3726 bytes in 0.057s)</span><br></pre></td></tr></table></figure></p>
+<p>关键点：使用 “.”是可以一次性 push一个文件目录的。<br>如果AdbTest有子目录会如何？如果子目录中有文件，则会将子目录和其中的文件一起推送过去，如果子目录是空的，则会跳过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb push comment12031715.txt commenttest.txt userLibrary.dic /sdcard/Download</span><br></pre></td></tr></table></figure>
+<p>adb 一次性推送多个文件，如果目标文件夹中存在同名文件，会如何？默认是直接覆盖的，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\user\Desktop&gt;adb push smile.lrc /storage/sdcard/Download</span><br><span class="line">smile.lrc: 1 file pushed. 0.0 MB/s (1061 bytes in 0.100s)</span><br><span class="line"></span><br><span class="line">C:\Users\user\Desktop&gt;adb push smile.jpg /storage/sdcard/Download</span><br><span class="line">smile.jpg: 1 file pushed. 0.6 MB/s (51419 bytes in 0.088s)</span><br></pre></td></tr></table></figure>
+<h2 id="遇到读写权限问题的解决办法"><a href="#遇到读写权限问题的解决办法" class="headerlink" title="遇到读写权限问题的解决办法"></a>遇到读写权限问题的解决办法</h2><p>在shell命令行中输入：adb root<br>切换到root用户<br>然后执行如下命令：（注意 /表示的是根目录，因此这个不仅仅是对sdcard，其他文件也可以读写。rw表示读写权限，mount重挂载文件系统）<br>adb shell mount -o remount rw / , 修改系统读写权限</p>
+<p>注意系统文件在push后需要修改权限，以framework-res.apk为例，输入：adb shell chmod 644 /system/framework/framework-res.apk回车，然后设备重启下就替换完成了。</p>
+<h2 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h2><p>Android 系统的日志分为两部分，底层的 Linux 内核日志输出到 /proc/kmsg，Android 的日志输出到 /dev/log。</p>
+<h3 id="Android-日志"><a href="#Android-日志" class="headerlink" title="Android 日志"></a>Android 日志</h3><p>命令格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[adb] logcat [&lt;option&gt;] ... [&lt;filter-spec&gt;] ...</span><br></pre></td></tr></table></figure></p>
+<p>常用用法列举如下：</p>
+<p>按级别过滤日志</p>
+<p>Android 的日志分为如下几个优先级（priority）：</p>
+<p>V —— Verbose（最低，输出得最多）<br>D —— Debug<br>I —— Info<br>W —— Warning<br>E —— Error<br>F —— Fatal<br>S —— Silent（最高，啥也不输出）<br>按某级别过滤日志则会将该级别及以上的日志输出。</p>
+<p>比如，命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb logcat *:W</span><br></pre></td></tr></table></figure></p>
+<p>会将 Warning、Error、Fatal 和 Silent 日志输出。</p>
+<p>（注：在 macOS 下需要给 <em>:W 这样以 </em> 作为 tag 的参数加双引号，如 adb logcat “<em>:W”，不然会报错 no matches found: </em>:W。）</p>
+<p>按 tag 和级别过滤日志</p>
+<p><filter-spec> 可以由多个 <tag>[:priority] 组成。</tag></filter-spec></p>
+<p>比如，命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb logcat ActivityManager:I MyApp:D *:S</span><br></pre></td></tr></table></figure></p>
+<p>表示输出 tag ActivityManager 的 Info 以上级别日志，输出 tag MyApp 的 Debug 以上级别日志，及其它 tag 的 Silent 级别日志（即屏蔽其它 tag 日志）。</p>
+<p><strong>清空日志</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb logcat -c</span><br></pre></td></tr></table></figure></p>
+<h2 id="内核日志"><a href="#内核日志" class="headerlink" title="内核日志"></a>内核日志</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dmesg</span><br></pre></td></tr></table></figure></p>
+<p>输出示例：</p>
+<p><6>[14201.684016] PM: noirq resume of devices complete after 0.982 msecs</6></p>
+<p><6>[14201.685525] PM: early resume of devices complete after 0.838 msecs</6></p>
+<p><6>[14201.753642] PM: resume of devices complete after 68.106 msecs</6></p>
+<p><4>[14201.755954] Restarting tasks … done.</4></p>
+<p><6>[14201.771229] PM: suspend exit 2016-08-28 13:31:32.679217193 UTC</6></p>
+<p><6>[14201.872373] PM: suspend entry 2016-08-28 13:31:32.780363596 UTC</6></p>
+<p><6>[14201.872498] PM: Syncing filesystems … done.<br>中括号里的 [14201.684016] 代表内核开始启动后的时间，单位为秒。</6></p>
+<p>通过内核日志我们可以做一些事情，比如衡量内核启动时间，在系统启动完毕后的内核日志里找到 Freeing init memory 那一行前面的时间就是。</p>
+<h2 id="屏幕截图"><a href="#屏幕截图" class="headerlink" title="屏幕截图"></a>屏幕截图</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell screencap -p /sdcard/sc.png</span><br></pre></td></tr></table></figure></p>
+<p>然后将 png 文件导出到电脑：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull /sdcard/sc.png</span><br></pre></td></tr></table></figure></p>
+<p>可以使用 adb shell screencap -h 查看 screencap 命令的帮助信息，下面是两个有意义的参数及含义：</p>
+<p>参数    含义<br>-p    指定保存文件为 png 格式<br>-d display-id    指定截图的显示屏编号（有多显示屏的情况下）<br>实测如果指定文件名以 .png 结尾时可以省略 -p 参数；否则需要使用 -p 参数。如果不指定文件名，截图文件的内容将直接输出到 stdout。</p>
+<p>直接一行命令截图并保存到电脑的方法：</p>
+<p>Linux 和 Windows<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell screencap -p | sed &quot;s/\r$//&quot; &gt; sc.png</span><br></pre></td></tr></table></figure></p>
+<p>Mac OS X<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell screencap -p | gsed &quot;s/\r$//&quot; &gt; sc.png</span><br></pre></td></tr></table></figure></p>
+<p>这个方法需要用到 gnu sed 命令，在 Linux 下直接就有，在 Windows 下 Git 安装目录的 bin 文件夹下也有。如果确实找不到该命令，可以下载 <a href="http://gnuwin32.sourceforge.net/packages/sed.htm" target="_blank" rel="noopener">sed for Windows</a> 并将 sed.exe 所在文件夹添加到 PATH 环境变量里。</p>
+<p>而在 Mac 下使用系统自带的 sed 命令会报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed: RE error: illegal byte sequence</span><br></pre></td></tr></table></figure></p>
+<p>需要安装 gnu-sed，然后使用 gsed 命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install gnu-sed</span><br></pre></td></tr></table></figure></p>
+<h2 id="录制屏幕"><a href="#录制屏幕" class="headerlink" title="录制屏幕"></a>录制屏幕</h2><p>录制屏幕以 mp4 格式保存到 /sdcard：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell screenrecord /sdcard/filename.mp4</span><br></pre></td></tr></table></figure></p>
+<p>需要停止时按 Ctrl-C，默认录制时间和最长录制时间都是 180 秒。</p>
+<p>如果需要导出到电脑：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull /sdcard/filename.mp4</span><br></pre></td></tr></table></figure></p>
+<p>可以使用 adb shell screenrecord –help 查看 screenrecord 命令的帮助信息，下面是常见参数及含义：</p>
+<p>参数    含义<br>–size WIDTHxHEIGHT    视频的尺寸，比如 1280x720，默认是屏幕分辨率。<br>–bit-rate RATE    视频的比特率，默认是 4Mbps。<br>–time-limit TIME    录制时长，单位秒。<br>–verbose    输出更多信息。</p>
+<h2 id="重新挂载-system-分区为可写"><a href="#重新挂载-system-分区为可写" class="headerlink" title="重新挂载 system 分区为可写"></a>重新挂载 system 分区为可写</h2><p>注：需要 root 权限。</p>
+<p>/system 分区默认挂载为只读，但有些操作比如给 Android 系统添加命令、删除自带应用等需要对 /system 进行写操作，所以需要重新挂载它为可读写。</p>
+<p>步骤：</p>
+<p>进入 shell 并切换到 root 用户权限。</p>
+<p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br></pre></td></tr></table></figure></p>
+<p>查看当前分区挂载情况。</p>
+<p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount</span><br></pre></td></tr></table></figure></p>
+<p>输出示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">rootfs / rootfs ro,relatime 0 0</span><br><span class="line">tmpfs /dev tmpfs rw,seclabel,nosuid,relatime,mode=755 0 0</span><br><span class="line">devpts /dev/pts devpts rw,seclabel,relatime,mode=600 0 0</span><br><span class="line">proc /proc proc rw,relatime 0 0</span><br><span class="line">sysfs /sys sysfs rw,seclabel,relatime 0 0</span><br><span class="line">selinuxfs /sys/fs/selinux selinuxfs rw,relatime 0 0</span><br><span class="line">debugfs /sys/kernel/debug debugfs rw,relatime 0 0</span><br><span class="line">none /var tmpfs rw,seclabel,relatime,mode=770,gid=1000 0 0</span><br><span class="line">none /acct cgroup rw,relatime,cpuacct 0 0</span><br><span class="line">none /sys/fs/cgroup tmpfs rw,seclabel,relatime,mode=750,gid=1000 0 0</span><br><span class="line">none /sys/fs/cgroup/memory cgroup rw,relatime,memory 0 0</span><br><span class="line">tmpfs /mnt/asec tmpfs rw,seclabel,relatime,mode=755,gid=1000 0 0</span><br><span class="line">tmpfs /mnt/obb tmpfs rw,seclabel,relatime,mode=755,gid=1000 0 0</span><br><span class="line">none /dev/memcg cgroup rw,relatime,memory 0 0</span><br><span class="line">none /dev/cpuctl cgroup rw,relatime,cpu 0 0</span><br><span class="line">none /sys/fs/cgroup tmpfs rw,seclabel,relatime,mode=750,gid=1000 0 0</span><br><span class="line">none /sys/fs/cgroup/memory cgroup rw,relatime,memory 0 0</span><br><span class="line">none /sys/fs/cgroup/freezer cgroup rw,relatime,freezer 0 0</span><br><span class="line">/dev/block/platform/msm_sdcc.1/by-name/system /system ext4 ro,seclabel,relatime,data=ordered 0 0</span><br><span class="line">/dev/block/platform/msm_sdcc.1/by-name/userdata /data ext4 rw,seclabel,nosuid,nodev,relatime,noauto_da_alloc,data=ordered 0 0</span><br><span class="line">/dev/block/platform/msm_sdcc.1/by-name/cache /cache ext4 rw,seclabel,nosuid,nodev,relatime,data=ordered 0 0</span><br><span class="line">/dev/block/platform/msm_sdcc.1/by-name/persist /persist ext4 rw,seclabel,nosuid,nodev,relatime,data=ordered 0 0</span><br><span class="line">/dev/block/platform/msm_sdcc.1/by-name/modem /firmware vfat ro,context=u:object_r:firmware_file:s0,relatime,uid=1000,gid=1000,fmask=0337,dmask=0227,codepage=cp437,iocharset=iso8859-1,shortname=lower,errors=remount-ro 0 0</span><br><span class="line">/dev/fuse /mnt/shell/emulated fuse rw,nosuid,nodev,relatime,user_id=1023,group_id=1023,default_permissions,allow_other 0 0</span><br><span class="line">/dev/fuse /mnt/shell/emulated/0 fuse rw,nosuid,nodev,relatime,user_id=1023,group_id=1023,default_permissions,allow_other 0 0</span><br></pre></td></tr></table></figure></p>
+<p>找到其中我们关注的带 /system 的那一行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/block/platform/msm_sdcc.1/by-name/system /system ext4 ro,seclabel,relatime,data=ordered 0 0</span><br></pre></td></tr></table></figure></p>
+<p>重新挂载。</p>
+<p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -o remount,rw -t yaffs2 /dev/block/platform/msm_sdcc.1/by-name/system /system</span><br></pre></td></tr></table></figure></p>
+<p>这里的 /dev/block/platform/msm_sdcc.1/by-name/system 就是我们从上一步的输出里得到的文件路径。</p>
+<p>如果输出没有提示错误的话，操作就成功了，可以对 /system 下的文件为所欲为了。</p>
+<h2 id="重启手机"><a href="#重启手机" class="headerlink" title="重启手机"></a>重启手机</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb reboot</span><br></pre></td></tr></table></figure></p>
+<h2 id="检测设备是否已-root"><a href="#检测设备是否已-root" class="headerlink" title="检测设备是否已 root"></a>检测设备是否已 root</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br></pre></td></tr></table></figure></p>
+<p>此时命令行提示符是 $ 则表示没有 root 权限，是 # 则表示已 root。</p>
+<h2 id="使用-Monkey-进行压力测试"><a href="#使用-Monkey-进行压力测试" class="headerlink" title="使用 Monkey 进行压力测试"></a>使用 Monkey 进行压力测试</h2><p>Monkey 可以生成伪随机用户事件来模拟单击、触摸、手势等操作，可以对正在开发中的程序进行随机压力测试。</p>
+<p>简单用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell monkey -p &lt;packagename&gt; -v 500</span><br></pre></td></tr></table></figure></p>
+<p>表示向 <packagename> 指定的应用程序发送 500 个伪随机事件。</packagename></p>
+<p>Monkey 的详细用法参考 <a href="https://developer.android.com/studio/test/monkey.html" target="_blank" rel="noopener">官方文档</a>。</p>
+<h2 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell ps</span><br></pre></td></tr></table></figure></p>
+<p>输出示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">USER     PID   PPID  VSIZE  RSS     WCHAN    PC        NAME</span><br><span class="line">root      1     0     8904   788   ffffffff 00000000 S /init</span><br><span class="line">root      2     0     0      0     ffffffff 00000000 S kthreadd</span><br><span class="line">...</span><br><span class="line">u0_a71    7779  5926  1538748 48896 ffffffff 00000000 S com.sohu.inputmethod.sogou:classic</span><br><span class="line">u0_a58    7963  5926  1561916 59568 ffffffff 00000000 S org.mazhuang.boottimemeasure</span><br><span class="line">...</span><br><span class="line">shell     8750  217   10640  740   00000000 b6f28340 R ps</span><br></pre></td></tr></table></figure></p>
+<p>各列含义：</p>
+<p>列名    含义<br>USER    所属用户<br>PID    进程 ID<br>PPID    父进程 ID<br>NAME    进程名</p>
+<h2 id="查看实时资源占用情况"><a href="#查看实时资源占用情况" class="headerlink" title="查看实时资源占用情况"></a>查看实时资源占用情况</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell top</span><br></pre></td></tr></table></figure></p>
+<p>输出示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">User 0%, System 6%, IOW 0%, IRQ 0%</span><br><span class="line">User 3 + Nice 0 + Sys 21 + Idle 280 + IOW 0 + IRQ 0 + SIRQ 3 = 307</span><br><span class="line"></span><br><span class="line">  PID PR CPU% S  #THR     VSS     RSS PCY UID      Name</span><br><span class="line"> 8763  0   3% R     1  10640K   1064K  fg shell    top</span><br><span class="line">  131  0   3% S     1      0K      0K  fg root     dhd_dpc</span><br><span class="line"> 6144  0   0% S   115 1682004K 115916K  fg system   system_server</span><br><span class="line">  132  0   0% S     1      0K      0K  fg root     dhd_rxf</span><br><span class="line"> 1731  0   0% S     6  20288K    788K  fg root     /system/bin/mpdecision</span><br><span class="line">  217  0   0% S     6  18008K    356K  fg shell    /sbin/adbd</span><br><span class="line"> ...</span><br><span class="line"> 7779  2   0% S    19 1538748K  48896K  bg u0_a71   com.sohu.inputmethod.sogou:classic</span><br><span class="line"> 7963  0   0% S    18 1561916K  59568K  fg u0_a58   org.mazhuang.boottimemeasure</span><br><span class="line"> ...</span><br></pre></td></tr></table></figure></p>
+<p>各列含义：</p>
+<p>列名    含义<br>PID    进程 ID<br>PR    优先级<br>CPU%    当前瞬间占用 CPU 百分比<br>S    进程状态（R=运行，S=睡眠，T=跟踪/停止，Z=僵尸进程）</p>
+<p>#THR    线程数<br>VSS    Virtual Set Size 虚拟耗用内存（包含共享库占用的内存）<br>RSS    Resident Set Size 实际使用物理内存（包含共享库占用的内存）<br>PCY    调度策略优先级，SP_BACKGROUND/SPFOREGROUND<br>UID    进程所有者的用户 ID<br>NAME    进程名<br>top 命令还支持一些命令行参数，详细用法如下：</p>
+<p>Usage: top [ -m max_procs ] [ -n iterations ] [ -d delay ] [ -s sort_column ] [ -t ] [ -h ]<br>    -m num  最多显示多少个进程<br>    -n num  刷新多少次后退出<br>    -d num  刷新时间间隔（单位秒，默认值 5）<br>    -s col  按某列排序（可用 col 值：cpu, vss, rss, thr）<br>    -t      显示线程信息<br>    -h      显示帮助文档</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ADB/" rel="tag"><i class="fa fa-tag"></i> ADB</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/android_signature_v1_and_v2/" rel="next" title="APK Signature Scheme v2">
+                  <i class="fa fa-chevron-left"></i> APK Signature Scheme v2
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Tools/IPCreator/Technology/Program/Android/linux-tips/" rel="prev" title="Top Commands of Linux">
+                  Top Commands of Linux <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令的简单描述"><span class="nav-number">1.</span> <span class="nav-text">常用命令的简单描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#USB-连接"><span class="nav-number">2.</span> <span class="nav-text">USB 连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以-root-权限运行-adbd"><span class="nav-number">3.</span> <span class="nav-text">以 root 权限运行 adbd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-APK"><span class="nav-number">4.</span> <span class="nav-text">安装 APK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卸载应用"><span class="nav-number">5.</span> <span class="nav-text">卸载应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制设备里的文件到电脑"><span class="nav-number">6.</span> <span class="nav-text">复制设备里的文件到电脑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制电脑里的文件到设备"><span class="nav-number">7.</span> <span class="nav-text">复制电脑里的文件到设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到读写权限问题的解决办法"><span class="nav-number">8.</span> <span class="nav-text">遇到读写权限问题的解决办法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看日志"><span class="nav-number">9.</span> <span class="nav-text">查看日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-日志"><span class="nav-number">9.1.</span> <span class="nav-text">Android 日志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内核日志"><span class="nav-number">10.</span> <span class="nav-text">内核日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#屏幕截图"><span class="nav-number">11.</span> <span class="nav-text">屏幕截图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#录制屏幕"><span class="nav-number">12.</span> <span class="nav-text">录制屏幕</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新挂载-system-分区为可写"><span class="nav-number">13.</span> <span class="nav-text">重新挂载 system 分区为可写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重启手机"><span class="nav-number">14.</span> <span class="nav-text">重启手机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检测设备是否已-root"><span class="nav-number">15.</span> <span class="nav-text">检测设备是否已 root</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Monkey-进行压力测试"><span class="nav-number">16.</span> <span class="nav-text">使用 Monkey 进行压力测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看进程"><span class="nav-number">17.</span> <span class="nav-text">查看进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看实时资源占用情况"><span class="nav-number">18.</span> <span class="nav-text">查看实时资源占用情况</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Article Source  A step-by-step tutorial on how to use a Tensorflow model inside an Android app">
+<meta name="keywords" content="TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tutorial  Build Your First Tensorflow Android App">
+<meta property="og:url" content="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/tutorial-build-your-first-tensorflow-android-app/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="Article Source  A step-by-step tutorial on how to use a Tensorflow model inside an Android app">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://omid.al/img/tf_android.png">
+<meta property="og:image" content="https://omid.al/img/tfandroid/HelloTensorGUI.png">
+<meta property="og:updated_time" content="2017-09-15T00:52:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tutorial  Build Your First Tensorflow Android App">
+<meta name="twitter:description" content="Article Source  A step-by-step tutorial on how to use a Tensorflow model inside an Android app">
+<meta name="twitter:image" content="https://omid.al/img/tf_android.png">
+
+<link rel="canonical" href="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/tutorial-build-your-first-tensorflow-android-app/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Tutorial  Build Your First Tensorflow Android App | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/tutorial-build-your-first-tensorflow-android-app/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Tutorial  Build Your First Tensorflow Android App
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TensorFlow/" itemprop="url" rel="index">
+                    <span itemprop="name">TensorFlow</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/TensorFlow/IPCreator/Technology/AI/TensorFlow/tutorial-build-your-first-tensorflow-android-app/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/TensorFlow/IPCreator/Technology/AI/TensorFlow/tutorial-build-your-first-tensorflow-android-app/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="https://omid.al/posts/2017-02-20-Tutorial-Build-Your-First-Tensorflow-Android-App.html" target="_blank" rel="noopener">Article Source</a></p>
+<blockquote>
+<p>A step-by-step tutorial on how to use a Tensorflow model inside an Android app</p>
+</blockquote>
+<p><img src="https://omid.al/img/tf_android.png" alt></p>
+ <a id="more"></a>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This tutorial helps you getting started with bringing your tensorflow models into your Android applications.</p>
+<p>Recently, and slowly, tensorflow has been adding features and examples for using its models on Android and iOS. There are now three apps in the TensorFlow Android Camera Demo which show very cool computer vision examples. However, they all use models that are already prepared and packaged and don’t explain much how to create a new one. So, I thought it would be nice to have a short tutorial on how to start with your own machine learning model and use it inside any Android application.</p>
+<p>In this tutorial, we go through two parts: creating and preparing the tensorflow model, and accessing the model inside an Android app. Although it doesn’t get deep into any machine learning or Android concepts, you need to have a basic knowledge of Python, Java, Tensorflow, and Android development to go follow this tutorial.</p>
+<p>You need a working installation of tensorflow. I’ve tested these procedures on the recent v1.0 release of tensorflow, however, if you use older compiled libraries they work with v0.12 as well with minor changes. You can find the instructions on how to install tensorflow here.</p>
+<h2 id="Preparing-the-TF-Model"><a href="#Preparing-the-TF-Model" class="headerlink" title="Preparing the TF Model"></a>Preparing the TF Model</h2><p>First, we first create a simple model and save its computation graph as a serialized GraphDef file. After training the model, we then save the values of its variables into a checkpoint file. We have to turn these two files into an optimized standalone file, which is all we need to use inside the Android app.</p>
+<h2 id="Creating-and-Saving-the-Model"><a href="#Creating-and-Saving-the-Model" class="headerlink" title="Creating and Saving the Model"></a>Creating and Saving the Model</h2><p>For this tutorial, we create a very simple Tensorflow graph that implements a small single-layer neural network with ReLU activations. We define four tensors: a 3-dimensional input tensor named I, a 3x2 weight tensor named W, a bias tensor named b, and an output activation tensor named O.</p>
+<p>This network might seem too simple and lack an actual learning, but I think it is enough to demonstrate the point. I know I could have been more creative here ;)</p>
+<p>Running the above piece of code will produce two files: first, it saves the TF computation graph in a GraphDef text file called tfdroid.pbtxt. Next, it will do a simple assignment (which normally would be done through actual learning) and saves a checkpoint of the model variables in tfdroid.ckpt.</p>
+<h2 id="Freezing-the-Graph"><a href="#Freezing-the-Graph" class="headerlink" title="Freezing the Graph"></a>Freezing the Graph</h2><p>Now that we have these files, we need to freeze the graph by converting the variables in the checkpoint file into Const Ops that contain the values of the variables, and combining them with the GraphDef proto in a single standalone file. Using this file makes it easier to load the model inside a mobile app. Tensorflow provides freeze_graph in tensorflow.python.tools for this purpose:</p>
+<h2 id="Optimizing-the-Model-File"><a href="#Optimizing-the-Model-File" class="headerlink" title="Optimizing the Model File"></a>Optimizing the Model File</h2><p>Once we have the frozen graph, we can further optimize the file for inference-only purposes by removing the parts of the graph that are only needed during training. According to the documentation, these include:</p>
+<p>Removing training-only operations like checkpoint saving.<br>Stripping out parts of the graph that are never reached.<br>Removing debug operations like CheckNumerics.<br>Folding batch normalization ops into the pre-calculated weights.<br>Fusing common operations into unified versions.<br>Tensorflow provides optimize_for_inference_lib in tensorflow.python.tools for this purpose:</p>
+<p>Take note of the input nodes and output nodes in the above code. Our graph only has one input node named I, and one output node named O. These names correspond to the names you use when you define your tensors. You should adjust these based on your graph in case you are using a different one.</p>
+<p>Now we have a binary file called optimized_tfdroid.pb. Now we are ready to build our Android app.</p>
+<h2 id="Creating-the-Android-App"><a href="#Creating-the-Android-App" class="headerlink" title="Creating the Android App"></a>Creating the Android App</h2><p>We need to get the tensorflow libraries for Android, create an Android app and configure it to use these libraries, and then invoke the tensorflow model inside the app.</p>
+<h2 id="Getting-the-TF-Libraries"><a href="#Getting-the-TF-Libraries" class="headerlink" title="Getting the TF Libraries"></a>Getting the TF Libraries</h2><p>Although you can compile the Tensorflow libraries from scratch, it’s easier to use the prebuilt libraries that are provided in nightly android builds.</p>
+<p>For this tutorial, I’m using the lastest successful build at the time of this writing, Build #44 (Feb 17, 2017 12:05:00 AM), which you can download from:</p>
+<p><a href="https://ci.tensorflow.org/view/Nightly/job/nightly-android/44/artifact/" target="_blank" rel="noopener">https://ci.tensorflow.org/view/Nightly/job/nightly-android/44/artifact/</a></p>
+<p>Inside the nightly android builds, will find the installable package (.apk) for the official demo apps, the Java library (.jar), and the native shared libraries (.so) for different architectures.</p>
+<h2 id="Creating-an-Empty-APP"><a href="#Creating-an-Empty-APP" class="headerlink" title="Creating an Empty APP"></a>Creating an Empty APP</h2><p>I used Android Studio to create an Android project with an empty activity.</p>
+<h2 id="Add-the-TF-Libraries-to-Your-Project"><a href="#Add-the-TF-Libraries-to-Your-Project" class="headerlink" title="Add the TF Libraries to Your Project"></a>Add the TF Libraries to Your Project</h2><p>Once you have all the output artifacts from the nightly build, you need to add some of them to your project and let your build system know that you are going to use them. For this example, these include the Java and libtensorflow_inference native library.</p>
+<p>Copy the libandroid_tensorflow_inference_java.jar and the architecture folders inside of the libtensorflow_inference.so folder to app/libs/. The libs/ folder should look like:</p>
+<p>libs<br>|<strong><strong>arm64-v8a<br>| |</strong></strong>libtensorflow_inference.so<br>|<strong><strong>armeabi-v7a<br>| |</strong></strong>libtensorflow_inference.so<br>|<strong><strong>libandroid_tensorflow_inference_java.jar<br>|</strong></strong>x86<br>| |<strong><strong>libtensorflow_inference.so<br>|</strong></strong>x86_64<br>| |____libtensorflow_inference.so<br>You need to let your build system know where these libraries are located by putting the following lines inside of the android block in app/build.gradle:</p>
+<h2 id="Copying-the-TF-Model"><a href="#Copying-the-TF-Model" class="headerlink" title="Copying the TF Model"></a>Copying the TF Model</h2><p>Create an Android Asset Folder for the app and put the optimized_tfdroid.pb that we just created inside (app/src/main/assets/).</p>
+<h2 id="Add-Some-GUI"><a href="#Add-Some-GUI" class="headerlink" title="Add Some GUI"></a>Add Some GUI</h2><p>We can add some basic GUI so that we can enter different numbers as input. Here is what it could look like:</p>
+<p><img src="https://omid.al/img/tfandroid/HelloTensorGUI.png" alt></p>
+<h2 id="Accessing-the-TF-Inference-Interface"><a href="#Accessing-the-TF-Inference-Interface" class="headerlink" title="Accessing the TF Inference Interface"></a>Accessing the TF Inference Interface</h2><p>Inside of the MainActivity.java, we first import the TensorFlowInferenceInterface package:</p>
+<p>And load the tensorflow_inference native library:</p>
+<p>We use some constants to specify the path to the model file, the names of the input and output nodes in the computation graph, and the size of the input data as follows:</p>
+<p>And create a TensorFlowInferenceInterface instance that we use to make inferences on the graph throughout the app:</p>
+<p>We then initialize the inferenceInterface it and load the model file inside of the onCreate event of the MainActivity:</p>
+<p>Now we are ready to perform an inference anywhere in the app.</p>
+<h2 id="Perform-Inference"><a href="#Perform-Inference" class="headerlink" title="Perform Inference"></a>Perform Inference</h2><p>We perform inference by first filling the input nodes with our desired values (as we would do with feed_dict in Python):</p>
+<p>And calling the runInference() method for the OUTPUT_NODE (similar to sess.run()):</p>
+<p>Once the inference is done, we can read the value of the output node:</p>
+<h2 id="Complete-Srouce-Code"><a href="#Complete-Srouce-Code" class="headerlink" title="Complete Srouce Code"></a>Complete Srouce Code</h2><p>You can look at/download/clone/fork the complete working example for the Android app here on Github.</p>
+<p>The code snippets for creating and preparing the model can also be found here.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TensorFlow/" rel="tag"><i class="fa fa-tag"></i> TensorFlow</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/android-tips/" rel="next" title="Awesome Android  Tips">
+                  <i class="fa fa-chevron-left"></i> Awesome Android  Tips
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/TensorFlow/IPCreator/Technology/AI/TensorFlow/android-tensorFlow-machine-learning-example/" rel="prev" title="Android TensorFlow Machine Learning Example">
+                  Android TensorFlow Machine Learning Example <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Preparing-the-TF-Model"><span class="nav-number">2.</span> <span class="nav-text">Preparing the TF Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-and-Saving-the-Model"><span class="nav-number">3.</span> <span class="nav-text">Creating and Saving the Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Freezing-the-Graph"><span class="nav-number">4.</span> <span class="nav-text">Freezing the Graph</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Optimizing-the-Model-File"><span class="nav-number">5.</span> <span class="nav-text">Optimizing the Model File</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-the-Android-App"><span class="nav-number">6.</span> <span class="nav-text">Creating the Android App</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-the-TF-Libraries"><span class="nav-number">7.</span> <span class="nav-text">Getting the TF Libraries</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-an-Empty-APP"><span class="nav-number">8.</span> <span class="nav-text">Creating an Empty APP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-the-TF-Libraries-to-Your-Project"><span class="nav-number">9.</span> <span class="nav-text">Add the TF Libraries to Your Project</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copying-the-TF-Model"><span class="nav-number">10.</span> <span class="nav-text">Copying the TF Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-Some-GUI"><span class="nav-number">11.</span> <span class="nav-text">Add Some GUI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Accessing-the-TF-Inference-Interface"><span class="nav-number">12.</span> <span class="nav-text">Accessing the TF Inference Interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Perform-Inference"><span class="nav-number">13.</span> <span class="nav-text">Perform Inference</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Complete-Srouce-Code"><span class="nav-number">14.</span> <span class="nav-text">Complete Srouce Code</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

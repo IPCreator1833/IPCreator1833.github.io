@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="汇编语言是二进制指令的文本形式，与指令是一一对应的关系。比如，加法指令00000011写成汇编语言就是 ADD。只要还原成二进制，汇编语言就可以被 CPU 直接执行，所以它是最底层的低级语言。">
+<meta name="keywords" content="Assembly,Language">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Assembly Language">
+<meta property="og:url" content="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/Assembly Language/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="汇编语言是二进制指令的文本形式，与指令是一一对应的关系。比如，加法指令00000011写成汇编语言就是 ADD。只要还原成二进制，汇编语言就可以被 CPU 直接执行，所以它是最底层的低级语言。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://opb37u589.bkt.clouddn.com/25178843-1_w_2.jpg?imageMogr2/thumbnail/!75p">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012204.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012202.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012203.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012205.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012206.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012207.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012208.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012209.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012210.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012211.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012212.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012213.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012214.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012215.png">
+<meta property="og:image" content="http://opb37u589.bkt.clouddn.com/emu8086-assembler.png?imageMogr2/thumbnail/!75p">
+<meta property="og:updated_time" content="2018-02-21T02:53:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Assembly Language">
+<meta name="twitter:description" content="汇编语言是二进制指令的文本形式，与指令是一一对应的关系。比如，加法指令00000011写成汇编语言就是 ADD。只要还原成二进制，汇编语言就可以被 CPU 直接执行，所以它是最底层的低级语言。">
+<meta name="twitter:image" content="http://opb37u589.bkt.clouddn.com/25178843-1_w_2.jpg?imageMogr2/thumbnail/!75p">
+
+<link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/Assembly Language/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Assembly Language | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/Assembly Language/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Assembly Language
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Computer/Assembly Language/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Computer/Assembly Language/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="http://opb37u589.bkt.clouddn.com/25178843-1_w_2.jpg?imageMogr2/thumbnail/!75p" alt="25178843-1_w_2.jpg"></p>
+<blockquote>
+<p>汇编语言是二进制指令的文本形式，与指令是一一对应的关系。比如，加法指令00000011写成汇编语言就是 ADD。只要还原成二进制，汇编语言就可以被 CPU 直接执行，所以它是最底层的低级语言。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="汇编语言入门教程"><a href="#汇编语言入门教程" class="headerlink" title="汇编语言入门教程"></a><a href="http://www.ruanyifeng.com/blog/2018/01/assembly-language-primer.html" target="_blank" rel="noopener">汇编语言入门教程</a></h2><p>作者： 阮一峰<br>日期： 2018年1月21日</p>
+<p>学习编程其实就是学高级语言，即那些为人类设计的计算机语言。</p>
+<p>但是，计算机不理解高级语言，必须通过编译器转成二进制代码，才能运行。学会高级语言，并不等于理解计算机实际的运行步骤。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012204.png" alt></p>
+<p>计算机真正能够理解的是低级语言，它专门用来控制硬件。汇编语言就是低级语言，直接描述/控制 CPU 的运行。如果你想了解 CPU 到底干了些什么，以及代码的运行步骤，就一定要学习汇编语言。</p>
+<p>汇编语言不容易学习，就连简明扼要的介绍都很难找到。下面我尝试写一篇最好懂的汇编语言教程，解释 CPU 如何执行代码。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012202.jpg" alt></p>
+<p>一、汇编语言是什么？<br>我们知道，CPU 只负责计算，本身不具备智能。你输入一条指令（instruction），它就运行一次，然后停下来，等待下一条指令。</p>
+<p>这些指令都是二进制的，称为操作码（opcode），比如加法指令就是00000011。<strong>编译器的作用，就是将高级语言写好的程序，翻译成一条条操作码。</strong></p>
+<p>对于人类来说，二进制程序是不可读的，根本看不出来机器干了什么。为了解决可读性的问题，以及偶尔的编辑需求，就诞生了汇编语言。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012203.jpg" alt></p>
+<blockquote>
+<p>汇编语言是二进制指令的文本形式，与指令是一一对应的关系。比如，加法指令00000011写成汇编语言就是 ADD。只要还原成二进制，汇编语言就可以被 CPU 直接执行，所以它是最底层的低级语言。</p>
+</blockquote>
+<p>二、来历</p>
+<p>最早的时候，编写程序就是手写二进制指令，然后通过各种开关输入计算机，比如要做加法了，就按一下加法开关。后来，发明了纸带打孔机，通过在纸带上打孔，将二进制指令自动输入计算机。</p>
+<p>为了解决二进制指令的可读性问题，工程师将那些指令写成了八进制。二进制转八进制是轻而易举的，但是八进制的可读性也不行。很自然地，最后还是用文字表达，加法指令写成 ADD。内存地址也不再直接引用，而是用标签表示。</p>
+<blockquote>
+<p>这样的话，就多出一个步骤，要把这些文字指令翻译成二进制，这个步骤就称为 assembling，完成这个步骤的程序就叫做 assembler。它处理的文本，自然就叫做 aseembly code。标准化以后，称为 assembly language，缩写为 asm，中文译为汇编语言。</p>
+</blockquote>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012205.jpg" alt></p>
+<p>每一种 CPU 的机器指令都是不一样的，因此对应的汇编语言也不一样。本文介绍的是目前最常见的 x86 汇编语言，即 Intel 公司的 CPU 使用的那一种。</p>
+<p>三、寄存器</p>
+<p>学习汇编语言，首先必须了解两个知识点：寄存器和内存模型。</p>
+<p>先来看寄存器。CPU 本身只负责运算，不负责储存数据。数据一般都储存在内存之中，CPU 要用的时候就去内存读写数据。但是，CPU 的运算速度远高于内存的读写速度，为了避免被拖慢，CPU 都自带一级缓存和二级缓存。<strong>基本上，CPU 缓存可以看作是读写速度较快的内存。</strong></p>
+<p>但是，CPU 缓存还是不够快，另外数据在缓存里面的地址是不固定的，CPU 每次读写都要寻址也会拖慢速度。因此，除了缓存之外，CPU 还自带了寄存器（register），用来储存最常用的数据。也就是说，那些最频繁读写的数据（比如循环变量），都会放在寄存器里面，CPU 优先读写寄存器，再由寄存器跟内存交换数据。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012206.png" alt></p>
+<p>寄存器不依靠地址区分数据，而依靠名称。每一个寄存器都有自己的名称，我们告诉 CPU 去具体的哪一个寄存器拿数据，这样的速度是最快的。<strong>有人比喻寄存器是 CPU 的零级缓存。</strong></p>
+<p>四、寄存器的种类</p>
+<p>早期的 x86 CPU 只有8个寄存器，而且每个都有不同的用途。现在的寄存器已经有100多个了，都变成通用寄存器，不特别指定用途了，但是早期寄存器的名字都被保存了下来。</p>
+<blockquote>
+<p>EAX<br>EBX<br>ECX<br>EDX<br>EDI<br>ESI<br>EBP<br>ESP</p>
+</blockquote>
+<p>上面这8个寄存器之中，前面七个都是通用的。ESP 寄存器有特定用途，保存当前 Stack 的地址（详见下一节）。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012207.png" alt></p>
+<blockquote>
+<p>我们常常看到 32位 CPU、64位 CPU 这样的名称，其实指的就是寄存器的大小。32 位 CPU 的寄存器大小就是4个字节。</p>
+</blockquote>
+<p>五、内存模型：Heap</p>
+<p>寄存器只能存放很少量的数据，大多数时候，CPU 要指挥寄存器，直接跟内存交换数据。所以，除了寄存器，还必须了解内存怎么储存数据。</p>
+<p>程序运行的时候，操作系统会给它分配一段内存，用来储存程序和运行产生的数据。这段内存有起始地址和结束地址，比如从0x1000到0x8000，起始地址是较小的那个地址，结束地址是较大的那个地址。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012208.png" alt></p>
+<p>程序运行过程中，对于动态的内存占用请求（比如新建对象，或者使用malloc命令），系统就会从预先分配好的那段内存之中，划出一部分给用户，具体规则是从起始地址开始划分（实际上，起始地址会有一段静态数据，这里忽略）。举例来说，用户要求得到10个字节内存，那么从起始地址0x1000开始给他分配，一直分配到地址0x100A，如果再要求得到22个字节，那么就分配到0x1020。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012209.png" alt></p>
+<p>这种因为用户主动请求而划分出来的内存区域，叫做 Heap（堆）。它由起始地址开始，从低位（地址）向高位（地址）增长。Heap 的一个重要特点就是不会自动消失，必须手动释放，或者由垃圾回收机制来回收。</p>
+<p>六、内存模型：Stack</p>
+<p>除了 Heap 以外，其他的内存占用叫做 Stack（栈）。简单说，Stack 是由于函数运行而临时占用的内存区域。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012210.png" alt></p>
+<p>请看下面的例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int main() &#123;</span><br><span class="line">   int a = 2;</span><br><span class="line">   int b = 3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中，系统开始执行main函数时，会为它在内存里面建立一个帧（frame），所有main的内部变量（比如a和b）都保存在这个帧里面。main函数执行结束后，该帧就会被回收，释放所有的内部变量，不再占用空间。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012211.png" alt></p>
+<p>如果函数内部调用了其他函数，会发生什么情况？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main() &#123;</span><br><span class="line">   int a = 2;</span><br><span class="line">   int b = 3;</span><br><span class="line">   return add_a_and_b(a, b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中，main函数内部调用了add_a_and_b函数。执行到这一行的时候，系统也会为add_a_and_b新建一个帧，用来储存它的内部变量。也就是说，此时同时存在两个帧：main和add_a_and_b。一般来说，调用栈有多少层，就有多少帧。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012212.png" alt></p>
+<p>等到add_a_and_b运行结束，它的帧就会被回收，系统会回到函数main刚才中断执行的地方，继续往下执行。通过这种机制，就实现了函数的层层调用，并且每一层都能使用自己的本地变量。</p>
+<blockquote>
+<p>所有的帧都存放在 Stack，由于帧是一层层叠加的，所以 Stack 叫做栈。生成新的帧，叫做”入栈”，英文是 push；栈的回收叫做”出栈”，英文是 pop。Stack 的特点就是，最晚入栈的帧最早出栈（因为最内层的函数调用，最先结束运行），这就叫做”后进先出”的数据结构。每一次函数执行结束，就自动释放一个帧，所有函数执行结束，整个 Stack 就都释放了。</p>
+</blockquote>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012213.jpg" alt></p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012214.jpg" alt></p>
+<p>Stack 是由内存区域的结束地址开始，从高位（地址）向低位（地址）分配。比如，内存区域的结束地址是0x8000，第一帧假定是16字节，那么下一次分配的地址就会从0x7FF0开始；第二帧假定需要64字节，那么地址就会移动到0x7FB0。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018012215.png" alt></p>
+<p>七、CPU 指令</p>
+<p>7.1 一个实例</p>
+<p>了解寄存器和内存模型以后，就可以来看汇编语言到底是什么了。下面是一个简单的程序example.c。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int add_a_and_b(int a, int b) &#123;</span><br><span class="line">   return a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">   return add_a_and_b(2, 3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>gcc 将这个程序转成汇编语言。</p>
+<blockquote>
+<p>$ gcc -S example.c</p>
+</blockquote>
+<p>上面的命令执行以后，会生成一个文本文件example.s，里面就是汇编语言，包含了几十行指令。这么说吧，一个高级语言的简单操作，底层可能由几个，甚至几十个 CPU 指令构成。CPU 依次执行这些指令，完成这一步操作。</p>
+<p>example.s经过简化以后，大概是下面的样子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">_add_a_and_b:</span><br><span class="line">   push   %ebx</span><br><span class="line">   mov    %eax, [%esp+8]</span><br><span class="line">   mov    %ebx, [%esp+12]</span><br><span class="line">   add    %eax, %ebx</span><br><span class="line">   pop    %ebx</span><br><span class="line">   ret  </span><br><span class="line"></span><br><span class="line">_main:</span><br><span class="line">   push   3</span><br><span class="line">   push   2</span><br><span class="line">   call   _add_a_and_b</span><br><span class="line">   add    %esp, 8</span><br><span class="line">   ret</span><br></pre></td></tr></table></figure>
+<p>可以看到，原程序的两个函数add_a_and_b和main，对应两个标签_add_a_and_b和_main。每个标签里面是该函数所转成的 CPU 运行流程。</p>
+<p>每一行就是 CPU 执行的一次操作。它又分成两部分，就以其中一行为例。</p>
+<p>push   %ebx</p>
+<p>这一行里面，push是 CPU 指令，%ebx是该指令要用到的运算子。一个 CPU 指令可以有零个到多个运算子。</p>
+<p>下面我就一行一行讲解这个汇编程序，建议读者最好把这个程序，在另一个窗口拷贝一份，省得阅读的时候再把页面滚动上来。</p>
+<p>7.2 push 指令</p>
+<p>根据约定，程序从_main标签开始执行，这时会在 Stack 上为main建立一个帧，并将 Stack 所指向的地址，写入 ESP 寄存器。后面如果有数据要写入main这个帧，就会写在 ESP 寄存器所保存的地址。</p>
+<p>然后，开始执行第一行代码。</p>
+<p>push   3</p>
+<p>push指令用于将运算子放入 Stack，这里就是将3写入main这个帧。</p>
+<p>虽然看上去很简单，push指令其实有一个前置操作。它会先取出 ESP 寄存器里面的地址，将其减去4个字节，然后将新地址写入 ESP 寄存器。使用减法是因为 Stack 从高位向低位发展，4个字节则是因为3的类型是int，占用4个字节。得到新地址以后， 3 就会写入这个地址开始的四个字节。</p>
+<p>push   2</p>
+<p>第二行也是一样，push指令将2写入main这个帧，位置紧贴着前面写入的3。这时，ESP 寄存器会再减去 4个字节（累计减去8）。</p>
+<p>7.3 call 指令</p>
+<p>第三行的call指令用来调用函数。</p>
+<p>call   _add_a_and_b</p>
+<p>上面的代码表示调用add_a_and_b函数。这时，程序就会去找_add_a_and_b标签，并为该函数建立一个新的帧。</p>
+<p>下面就开始执行_add_a_and_b的代码。</p>
+<p>push   %ebx</p>
+<p>这一行表示将 EBX 寄存器里面的值，写入_add_a_and_b这个帧。这是因为后面要用到这个寄存器，就先把里面的值取出来，用完后再写回去。</p>
+<p>这时，push指令会再将 ESP 寄存器里面的地址减去4个字节（累计减去12）。</p>
+<p>7.4 mov 指令</p>
+<p>mov指令用于将一个值写入某个寄存器。</p>
+<p>mov    %eax, [%esp+8]</p>
+<p>这一行代码表示，先将 ESP 寄存器里面的地址加上8个字节，得到一个新的地址，然后按照这个地址在 Stack 取出数据。根据前面的步骤，可以推算出这里取出的是2，再将2写入 EAX 寄存器。</p>
+<p>下一行代码也是干同样的事情。</p>
+<p>mov    %ebx, [%esp+12]</p>
+<p>上面的代码将 ESP 寄存器的值加12个字节，再按照这个地址在 Stack 取出数据，这次取出的是3，将其写入 EBX 寄存器。</p>
+<p>7.5 add 指令</p>
+<p>add指令用于将两个运算子相加，并将结果写入第一个运算子。</p>
+<p>add    %eax, %ebx</p>
+<p>上面的代码将 EAX 寄存器的值（即2）加上 EBX 寄存器的值（即3），得到结果5，再将这个结果写入第一个运算子 EAX 寄存器。</p>
+<p>7.6 pop 指令</p>
+<p>pop指令用于取出 Stack 最近一个写入的值（即最低位地址的值），并将这个值写入运算子指定的位置。</p>
+<p>pop    %ebx</p>
+<p>上面的代码表示，取出 Stack 最近写入的值（即 EBX 寄存器的原始值），再将这个值写回 EBX 寄存器（因为加法已经做完了，EBX 寄存器用不到了）。</p>
+<p>注意，pop指令还会将 ESP 寄存器里面的地址加4，即回收4个字节。</p>
+<p>7.7 ret 指令</p>
+<p>ret指令用于终止当前函数的执行，将运行权交还给上层函数。也就是，当前函数的帧将被回收。</p>
+<p>ret<br>可以看到，该指令没有运算子。</p>
+<p>随着add_a_and_b函数终止执行，系统就回到刚才main函数中断的地方，继续往下执行。</p>
+<p>add    %esp, 8</p>
+<p>上面的代码表示，将 ESP 寄存器里面的地址，手动加上8个字节，再写回 ESP 寄存器。这是因为 ESP 寄存器的是 Stack 的写入开始地址，前面的pop操作已经回收了4个字节，这里再回收8个字节，等于全部回收。</p>
+<p>ret</p>
+<p>最后，main函数运行结束，ret指令退出程序执行。</p>
+<p>八、参考链接<br>Introduction to reverse engineering and Assembly, by Youness Alaoui<br>x86 Assembly Guide, by University of Virginia Computer Science</p>
+<h2 id="EMU8086"><a href="#EMU8086" class="headerlink" title="EMU8086"></a><a href="http://www.emu8086.com/" target="_blank" rel="noopener">EMU8086</a></h2><p><img src="http://opb37u589.bkt.clouddn.com/emu8086-assembler.png?imageMogr2/thumbnail/!75p" alt="emu8086-assembler.png"></p>
+<p>8086/8088 MICROPROCESSOR EMULATOR<br>INTEGRATED ASSEMBLER AND DISASSEMBLER</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Assembly/" rel="tag"><i class="fa fa-tag"></i> Assembly</a>
+              <a href="/tags/Language/" rel="tag"><i class="fa fa-tag"></i> Language</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/People/IPCreator/People/Yong-Ming Wei/" rel="next" title="Yong-Ming Wei">
+                  <i class="fa fa-chevron-left"></i> Yong-Ming Wei
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/IPR/IPCreator/IPR/Trademark/" rel="prev" title="Trademark">
+                  Trademark <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#汇编语言入门教程"><span class="nav-number">1.</span> <span class="nav-text">汇编语言入门教程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EMU8086"><span class="nav-number">2.</span> <span class="nav-text">EMU8086</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

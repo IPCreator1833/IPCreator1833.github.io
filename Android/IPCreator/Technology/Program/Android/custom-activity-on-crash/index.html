@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Android library that allows launching a custom activity when your app crashes, instead of showing the hated “Unfortunately, X has stopped” dialog.">
+<meta name="keywords" content="Crash">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Custom Activity On Crash">
+<meta property="og:url" content="https://hazyman.com/Android/IPCreator/Technology/Program/Android/custom-activity-on-crash/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="Android library that allows launching a custom activity when your app crashes, instead of showing the hated “Unfortunately, X has stopped” dialog.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Ereza/CustomActivityOnCrash/master/images/frontpage.png">
+<meta property="og:updated_time" content="2017-03-27T07:53:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Custom Activity On Crash">
+<meta name="twitter:description" content="Android library that allows launching a custom activity when your app crashes, instead of showing the hated “Unfortunately, X has stopped” dialog.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Ereza/CustomActivityOnCrash/master/images/frontpage.png">
+
+<link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/custom-activity-on-crash/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Custom Activity On Crash | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/custom-activity-on-crash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Custom Activity On Crash
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Android/IPCreator/Technology/Program/Android/custom-activity-on-crash/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Android/IPCreator/Technology/Program/Android/custom-activity-on-crash/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://raw.githubusercontent.com/Ereza/CustomActivityOnCrash/master/images/frontpage.png" alt></p>
+<p>Android library that allows launching a custom activity when your app crashes, instead of showing the hated “Unfortunately, X has stopped” dialog.</p>
+<a id="more"></a>
+<h1 id="Custom-Activity-On-Crash-library"><a href="#Custom-Activity-On-Crash-library" class="headerlink" title="Custom Activity On Crash library"></a>Custom Activity On Crash library</h1><p>This library allows launching a custom activity when the app crashes, instead of showing the hated “Unfortunately, X has stopped” dialog.</p>
+<h2 id="How-to-use"><a href="#How-to-use" class="headerlink" title="How to use"></a>How to use</h2><h3 id="1-Add-a-dependency"><a href="#1-Add-a-dependency" class="headerlink" title="1. Add a dependency"></a>1. Add a dependency</h3><p>Add the following dependency to your build.gradle:<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'cat.ereza:customactivityoncrash:1.5.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>You can also do it manually, by downloading the source code, importing the <code>library</code> folder as an Android Library Module, and adding a dependency on your project to that module.</p>
+<h3 id="2-Set-up-your-application"><a href="#2-Set-up-your-application" class="headerlink" title="2. Set up your application"></a>2. Set up your application</h3><p>On your application class, use this snippet:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Install CustomActivityOnCrash</span></span><br><span class="line">    CustomActivityOnCrash.install(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Now initialize your error handlers as normal</span></span><br><span class="line">    <span class="comment">//i.e., ACRA.init(this);</span></span><br><span class="line">    <span class="comment">//or Fabric.with(this, new Crashlytics())</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>WARNING!</strong> If you already have ACRA, Crashlytics or any similar library in your app, it will still work as normal, but the CustomActivityOnCrash initialization <strong>MUST</strong> be done first, or the original reporting tool will stop working.</p>
+<h3 id="3-Test-it"><a href="#3-Test-it" class="headerlink" title="3. Test it"></a>3. Test it</h3><p>Make the app crash by using something like this in your code:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Boom!"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>The error activity should show up, instead of the system dialog.</p>
+<h3 id="Optional-Customization"><a href="#Optional-Customization" class="headerlink" title="Optional: Customization"></a>Optional: Customization</h3><p><strong>Custom behavior</strong></p>
+<p>You can call the following methods at any time to customize how the library works, although usually you will call them before calling <code>install(context)</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.setLaunchErrorActivityWhenInBackground(<span class="keyword">boolean</span>);</span><br></pre></td></tr></table></figure>
+<p>This method defines if the error activity should be launched when the app crashes while on background.<br>By default, this is true. On API&lt;14, it’s always true since there is no way to detect if the app is in foreground.<br>If you set it to <code>false</code>, a crash while in background won’t launch the error activity nor the system dialog, so it will be a silent crash.<br>The default is <code>true</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.setShowErrorDetails(<span class="keyword">boolean</span>);</span><br></pre></td></tr></table></figure>
+<p>This method defines if the error activity must show a button with error details.<br>If you set it to <code>false</code>, the button on the default error activity will disappear, thus disabling the user from seeing the stack trace.<br>The default is <code>true</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.setDefaultErrorActivityDrawable(<span class="keyword">int</span>);</span><br></pre></td></tr></table></figure>
+<p>This method allows changing the default upside-down bug image with an image of your choice.<br>You may pass a resource id for a drawable or a mipmap.<br>The default is <code>R.drawable.customactivityoncrash_error_image</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.setEnableAppRestart(<span class="keyword">boolean</span>);</span><br></pre></td></tr></table></figure>
+<p>This method defines if the error activity must show a “Restart app” button or a “Close app” button.<br>If you set it to <code>false</code>, the button on the default error activity will close the app instead of restarting.<br>Warning! If you set it to <code>true</code>, there is the possibility of it still displaying the “Close app” button,<br>if no restart activity is specified or found!<br>The default is <code>true</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.setEventListener(EventListener);</span><br></pre></td></tr></table></figure>
+<p>This method allows you to specify an event listener in order to get notified when the library shows the error activity, restarts or closes the app.<br>The EventListener you provide can not be an anonymous or non-static inner class, because it needs to be serialized by the library. The library will throw an exception if you try to set an invalid class.<br>If you set it to null, no event listener will be invoked.<br>The default is null.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.setRestartActivityClass(Class&lt;? extends Activity&gt;);</span><br></pre></td></tr></table></figure>
+<p>This method sets the activity that must be launched by the error activity when the user presses the button to restart the app.<br>If you don’t set it (or set it to null), the library will use the first activity on your manifest that has an intent-filter with action<br><code>cat.ereza.customactivityoncrash.RESTART</code>, and if there is none, the default launchable activity on your app.<br>If no launchable activity can be found and you didn’t specify any, the “restart app” button will become a “close app” button,<br>even if <code>setEnableAppRestart</code> is set to <code>true</code>.</p>
+<p>As noted, you can also use the following intent-filter to specify the restart activity:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"cat.ereza.customactivityoncrash.RESTART"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.setErrorActivityClass(Class&lt;? extends Activity&gt;);</span><br></pre></td></tr></table></figure>
+<p>This method allows you to set a custom error activity to be launched, instead of the default one.<br>Use it if you need further customization that is not just strings, colors or themes (see below).<br>If you don’t set it (or set it to null), the library will use the first activity on your manifest that has an intent-filter with action<br><code>cat.ereza.customactivityoncrash.ERROR</code>, and if there is none, a default error activity from the library.<br>If you use this, the activity <strong>must</strong> be declared in your <code>AndroidManifest.xml</code>, with <code>process</code> set to <code>:error_activity</code>.</p>
+<p>Example:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">"cat.ereza.sample.customactivityoncrash.activity.CustomErrorActivity"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:label</span>=<span class="string">"@string/error_title"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:process</span>=<span class="string">":error_activity"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>As noted, you can also use the following intent-filter to specify the error activity:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"cat.ereza.customactivityoncrash.ERROR"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Customization of the default activity</strong></p>
+<p>You can override several resources to customize the default activity:</p>
+<p><em>Theme:</em></p>
+<p>You can override the default error activity theme by defining a theme in your app with the following id: <code>CustomActivityOnCrashTheme</code></p>
+<p><em>Image:</em></p>
+<p>By default, an image of a bug is displayed. You can change it to any image by creating a <code>customactivityoncrash_error_image</code> drawable on all density buckets (mdpi, hdpi, xhdpi, xxhdpi and xxxhdpi).<br>You can also use the provided <code>CustomActivityOnCrash.setDefaultErrorActivityDrawable(int)</code> method.</p>
+<p><em>Strings:</em></p>
+<p>You can provide new strings and translations for the default error activity strings by overriding the following strings:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"customactivityoncrash_error_activity_error_occurred_explanation"</span>&gt;</span>An unexpected error occurred.\nSorry for the inconvenience.<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"customactivityoncrash_error_activity_unknown_exception"</span>&gt;</span>Unknown exception<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"customactivityoncrash_error_activity_restart_app"</span>&gt;</span>Restart app<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"customactivityoncrash_error_activity_close_app"</span>&gt;</span>Close app<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"customactivityoncrash_error_activity_error_details"</span>&gt;</span>Error details<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"customactivityoncrash_error_activity_error_details_title"</span>&gt;</span>Error details<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"customactivityoncrash_error_activity_error_details_close"</span>&gt;</span>Close<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"customactivityoncrash_error_activity_error_details_copy"</span>&gt;</span>Copy to clipboard<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"customactivityoncrash_error_activity_error_details_copied"</span>&gt;</span>Copied to clipboard<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"customactivityoncrash_error_activity_error_details_clipboard_label"</span>&gt;</span>Error information<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><em>There is a <code>sample</code> project module with examples of these overrides. If in doubt, check the code in that module.</em></p>
+<p><strong>Completely custom error activity</strong></p>
+<p>If you choose to create your own completely custom error activity, you can use these methods:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.getStackTraceFromIntent(getIntent());</span><br></pre></td></tr></table></figure>
+<p>Returns the stack trace that caused the error as a string.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.getAllErrorDetailsFromIntent(getIntent());</span><br></pre></td></tr></table></figure>
+<p>Returns several error details including the stack trace that caused the error, as a string. This is used in the default error activity error details dialog.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.getRestartActivityClassFromIntent(getIntent());</span><br></pre></td></tr></table></figure>
+<p>Returns the class of the activity you have to launch to restart the app, or <code>null</code> if not set.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.getEventListenerFromIntent(getIntent());</span><br></pre></td></tr></table></figure>
+<p>Returns the event listener that you must pass to <code>restartApplicationWithIntent(activity, intent, eventListener)</code> or <code>closeApplication(activity, eventListener)</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.restartApplicationWithIntent(activity, intent, eventListener);</span><br></pre></td></tr></table></figure>
+<p>Kills the current process and restarts the app again with an <code>startActivity()</code> to the passed intent.<br>You <strong>MUST</strong> call this to restart the app, or you will end up having several <code>Application</code> class instances and experience multiprocess issues in API&lt;17.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomActivityOnCrash.closeApplication(activity, eventListener);</span><br></pre></td></tr></table></figure>
+<p>Closes the app and kills the current process.<br>You <strong>MUST</strong> call this to close the app, or you will end up having several Application class instances and experience multiprocess issues in API&lt;17.</p>
+<p><em>The <code>sample</code> project module includes an example of a custom error activity. If in doubt, check the code in that module.</em></p>
+<h2 id="Using-Proguard"><a href="#Using-Proguard" class="headerlink" title="Using Proguard?"></a>Using Proguard?</h2><p>No need to add special rules, the library should work even with obfuscation.</p>
+<h2 id="Inner-workings"><a href="#Inner-workings" class="headerlink" title="Inner workings"></a>Inner workings</h2><p>This library relies on the <code>Thread.setDefaultUncaughtExceptionHandler</code> method.<br>When an exception is caught by the library’s <code>UncaughtExceptionHandler</code> it does the following:</p>
+<ol>
+<li>Captures the stack trace that caused the crash</li>
+<li>Launches a new intent to the error activity passing the stacktrace as an extra.</li>
+<li>Kills the current process.</li>
+</ol>
+<p>The inner workings are based on <a href="https://github.com/ACRA/acra" target="_blank" rel="noopener">ACRA</a>‘s dialog reporting mode with some minor tweaks. Look at the code if you need more detail about how it works.</p>
+<h2 id="Incompatibilities"><a href="#Incompatibilities" class="headerlink" title="Incompatibilities"></a>Incompatibilities</h2><ul>
+<li>CustomActivityOnCrash will not work in these cases:<ul>
+<li>With any custom <code>UncaughtExceptionHandler</code> set after initializing the library, that does not call back to the original handler.</li>
+<li>With ACRA enabled and reporting mode set to <code>TOAST</code> or <code>DIALOG</code>.</li>
+</ul>
+</li>
+<li>If you use a custom <code>UncaughtExceptionHandler</code>, it will not be called if you initialize it before the library initialization (so, Crashlytics or ACRA initialization must be done <strong>after</strong> CustomActivityOnCrash initialization).</li>
+<li>On some rare cases on devices with API&lt;14, the app may enter a restart loop when a crash occurs. Therefore, using it on API&lt;14 is not recommended.</li>
+<li>If your app initialization or error activity crash, there is a possibility of entering an infinite restart loop (this is checked by the library for the most common cases, but could happen in rarer cases).</li>
+<li>The library has not been tested with multidex enabled. It uses Class.forName() to load classes, so maybe that could cause some problem in API&lt;21. If you test it with such configuration, please provide feedback!</li>
+<li>The library has not been tested with multiprocess apps. If you test it with such configuration, please provide feedback too!</li>
+</ul>
+<h2 id="Disclaimers"><a href="#Disclaimers" class="headerlink" title="Disclaimers"></a>Disclaimers</h2><ul>
+<li>This will not avoid ANRs from happening.</li>
+<li>This will not catch native errors.</li>
+<li>There is no guarantee that this will work on every device.</li>
+<li>This library will not make you toast for breakfast :)</li>
+</ul>
+<h2 id="Contributing-amp-license"><a href="#Contributing-amp-license" class="headerlink" title="Contributing &amp; license"></a>Contributing &amp; license</h2><p>Any contribution in order to make this library better will be welcome!</p>
+<p>The library is licensed under the <a href="https://github.com/Ereza/CustomActivityOnCrash/blob/master/LICENSE" target="_blank" rel="noopener">Apache License 2.0</a>.</p>
+<p>The bug image used in the default error activity is licensed under CC-BY by Riffschievous: <a href="https://www.sketchport.com/drawing/6119265933459456/lady-bug" target="_blank" rel="noopener">https://www.sketchport.com/drawing/6119265933459456/lady-bug</a><br>If you use the image in your app, don’t forget to mention that!</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Crash/" rel="tag"><i class="fa fa-tag"></i> Crash</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/IPR/IPCreator/IPR/Patent Searcher/" rel="next" title="Patent Searcher">
+                  <i class="fa fa-chevron-left"></i> Patent Searcher
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/emmagee/" rel="prev" title="Emmagee">
+                  Emmagee <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Custom-Activity-On-Crash-library"><span class="nav-number">1.</span> <span class="nav-text">Custom Activity On Crash library</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-use"><span class="nav-number">1.1.</span> <span class="nav-text">How to use</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Add-a-dependency"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. Add a dependency</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Set-up-your-application"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. Set up your application</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Test-it"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. Test it</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optional-Customization"><span class="nav-number">1.1.4.</span> <span class="nav-text">Optional: Customization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-Proguard"><span class="nav-number">1.2.</span> <span class="nav-text">Using Proguard?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inner-workings"><span class="nav-number">1.3.</span> <span class="nav-text">Inner workings</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Incompatibilities"><span class="nav-number">1.4.</span> <span class="nav-text">Incompatibilities</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disclaimers"><span class="nav-number">1.5.</span> <span class="nav-text">Disclaimers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Contributing-amp-license"><span class="nav-number">1.6.</span> <span class="nav-text">Contributing &amp; license</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="作者： 阮一峰 眼下最热门的技术，绝对是人工智能。人工智能的底层模型是”神经网络”（neural network）。许多复杂的应用（比如模式识别、自动控制）和高级模型（比如深度学习）都基于它。学习人工智能，一定是从它开始。 什么是神经网络呢？网上似乎缺乏通俗的解释。前两天，我读到 Michael Nielsen 的开源教材《神经网络与深度学习》（Neural Networks and Deep">
+<meta name="keywords" content="Neural Network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Brief Introduction of Neural Network">
+<meta property="og:url" content="https://hazyman.com/AI/IPCreator/Technology/AI/Basic Concept/a brief of neural network/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="作者： 阮一峰 眼下最热门的技术，绝对是人工智能。人工智能的底层模型是”神经网络”（neural network）。许多复杂的应用（比如模式识别、自动控制）和高级模型（比如深度学习）都基于它。学习人工智能，一定是从它开始。 什么是神经网络呢？网上似乎缺乏通俗的解释。前两天，我读到 Michael Nielsen 的开源教材《神经网络与深度学习》（Neural Networks and Deep">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071201.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071212.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071202.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071213.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071203.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071205.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071211.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071206.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071205.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071207.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071214.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071215.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071216.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071217.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071208.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071209.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071210.png">
+<meta property="og:image" content="http://img.blog.csdn.net/20140521212230921">
+<meta property="og:image" content="http://img.blog.csdn.net/20140521212235031">
+<meta property="og:image" content="http://img.blog.csdn.net/20140521212238593">
+<meta property="og:image" content="http://img.blog.csdn.net/20140521212242156">
+<meta property="og:image" content="http://img.blog.csdn.net/20140521212245859">
+<meta property="og:updated_time" content="2018-03-16T03:37:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Brief Introduction of Neural Network">
+<meta name="twitter:description" content="作者： 阮一峰 眼下最热门的技术，绝对是人工智能。人工智能的底层模型是”神经网络”（neural network）。许多复杂的应用（比如模式识别、自动控制）和高级模型（比如深度学习）都基于它。学习人工智能，一定是从它开始。 什么是神经网络呢？网上似乎缺乏通俗的解释。前两天，我读到 Michael Nielsen 的开源教材《神经网络与深度学习》（Neural Networks and Deep">
+<meta name="twitter:image" content="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071201.jpg">
+
+<link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/Basic Concept/a brief of neural network/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>A Brief Introduction of Neural Network | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/AI/IPCreator/Technology/AI/Basic Concept/a brief of neural network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          A Brief Introduction of Neural Network
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/AI/IPCreator/Technology/AI/Basic Concept/a brief of neural network/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/AI/IPCreator/Technology/AI/Basic Concept/a brief of neural network/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071201.jpg" alt></p>
+<p><a href="http://www.ruanyifeng.com/blog/2017/07/neural-network.html" target="_blank" rel="noopener">作者： 阮一峰</a></p>
+<p>眼下最热门的技术，绝对是人工智能。<br>人工智能的底层模型是”神经网络”（neural network）。许多复杂的应用（比如模式识别、自动控制）和高级模型（比如深度学习）都基于它。学习人工智能，一定是从它开始。</p>
+<p>什么是神经网络呢？网上似乎缺乏通俗的解释。<br>前两天，我读到 Michael Nielsen 的开源教材<a href="http://neuralnetworksanddeeplearning.com/index.html" target="_blank" rel="noopener">《神经网络与深度学习》（Neural Networks and Deep Learning）</a>，意外发现里面的解释非常好懂。下面，我就按照这本书，介绍什么是神经网络。</p>
+<a id="more"></a>
+<h2 id="一、感知器"><a href="#一、感知器" class="headerlink" title="一、感知器"></a>一、感知器</h2><p>历史上，科学家一直希望模拟人的大脑，造出可以思考的机器。人为什么能够思考？科学家发现，原因在于人体的神经网络。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071212.png" alt></p>
+<ol>
+<li>外部刺激通过神经末梢，转化为电信号，转导到神经细胞（又叫神经元）。</li>
+<li>无数神经元构成神经中枢。</li>
+<li>神经中枢综合各种信号，做出判断。</li>
+<li>人体根据神经中枢的指令，对外部刺激做出反应。<br>5.<br>既然思考的基础是神经元，如果能够”人造神经元”（artificial neuron），就能组成人工神经网络，模拟思考。上个世纪六十年代，提出了最早的”人造神经元”模型，叫做”感知器”（perceptron），直到今天还在用。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071202.png" alt><br>上图的圆圈就代表一个感知器。它接受多个输入（x1，x2，x3…），产生一个输出（output），好比神经末梢感受各种外部环境的变化，最后产生电信号。</li>
+</ol>
+<p>为了简化模型，我们约定每种输入只有两种可能：1 或 0。如果所有输入都是1，表示各种条件都成立，输出就是1；如果所有输入都是0，表示条件都不成立，输出就是0。</p>
+<h2 id="二、感知器的例子"><a href="#二、感知器的例子" class="headerlink" title="二、感知器的例子"></a>二、感知器的例子</h2><p>下面来看一个例子。城里正在举办一年一度的游戏动漫展览，小明拿不定主意，周末要不要去参观。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071213.jpg" alt><br>他决定考虑三个因素。<br>天气：周末是否晴天？<br>同伴：能否找到人一起去？<br>价格：门票是否可承受？<br>这就构成一个感知器。上面三个因素就是外部输入，最后的决定就是感知器的输出。如果三个因素都是 Yes（使用1表示），输出就是1（去参观）；如果都是 No（使用0表示），输出就是0（不去参观）。</p>
+<h2 id="三、权重和阈值"><a href="#三、权重和阈值" class="headerlink" title="三、权重和阈值"></a>三、权重和阈值</h2><p>看到这里，你肯定会问：如果某些因素成立，另一些因素不成立，输出是什么？比如，周末是好天气，门票也不贵，但是小明找不到同伴，他还要不要去参观呢？<br>现实中，各种因素很少具有同等重要性：某些因素是决定性因素，另一些因素是次要因素。因此，可以给这些因素指定权重（weight），代表它们不同的重要性。<br>天气：权重为8<br>同伴：权重为4<br>价格：权重为4<br>上面的权重表示，天气是决定性因素，同伴和价格都是次要因素。<br>如果三个因素都为1，它们乘以权重的总和就是 8 + 4 + 4 = 16。如果天气和价格因素为1，同伴因素为0，总和就变为 8 + 0 + 4 = 12。<br>这时，还需要指定一个阈值（threshold）。如果总和大于阈值，感知器输出1，否则输出0。假定阈值为8，那么 12 &gt; 8，小明决定去参观。阈值的高低代表了意愿的强烈，阈值越低就表示越想去，越高就越不想去。<br>上面的决策过程，使用数学表达如下。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071203.png" alt><br>上面公式中，x表示各种外部因素，w表示对应的权重。</p>
+<h2 id="四、决策模型"><a href="#四、决策模型" class="headerlink" title="四、决策模型"></a>四、决策模型</h2><p>单个的感知器构成了一个简单的决策模型，已经可以拿来用了。真实世界中，实际的决策模型则要复杂得多，是由多个感知器组成的多层网络。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071205.png" alt><br>上图中，底层感知器接收外部输入，做出判断以后，再发出信号，作为上层感知器的输入，直至得到最后的结果。（注意：感知器的输出依然只有一个，但是可以发送给多个目标。）<br>这张图里，信号都是单向的，即下层感知器的输出总是上层感知器的输入。现实中，有可能发生循环传递，即 A 传给 B，B 传给 C，C 又传给 A，这称为”递归神经网络”（recurrent neural network），本文不涉及。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071211.png" alt></p>
+<h2 id="五、矢量化"><a href="#五、矢量化" class="headerlink" title="五、矢量化"></a>五、矢量化</h2><p>为了方便后面的讨论，需要对上面的模型进行一些数学处理。</p>
+<blockquote>
+<p>外部因素 x1、x2、x3 写成矢量 &lt;x1, x2, x3&gt;，简写为 x<br>权重 w1、w2、w3 也写成矢量 (w1, w2, w3)，简写为 w<br>定义运算 w⋅x = ∑ wx，即 w 和 x 的点运算，等于因素与权重的乘积之和<br>定义 b 等于负的阈值 b = -threshold</p>
+</blockquote>
+<p>感知器模型就变成了下面这样。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071206.png" alt></p>
+<h2 id="六、神经网络的运作过程"><a href="#六、神经网络的运作过程" class="headerlink" title="六、神经网络的运作过程"></a>六、神经网络的运作过程</h2><p>一个神经网络的搭建，需要满足三个条件。</p>
+<blockquote>
+<p>输入和输出<br>权重（w）和阈值（b）<br>多层感知器的结构</p>
+</blockquote>
+<p>也就是说，需要事先画出上面出现的那张图。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071205.png" alt></p>
+<p>其中，最困难的部分就是确定权重（w）和阈值（b）。目前为止，这两个值都是主观给出的，但现实中很难估计它们的值，必需有一种方法，可以找出答案。</p>
+<p>这种方法就是试错法。其他参数都不变，w（或b）的微小变动，记作Δw（或Δb），然后观察输出有什么变化。不断重复这个过程，直至得到对应最精确输出的那组w和b，就是我们要的值。这个过程称为模型的训练。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071207.png" alt></p>
+<p>因此，神经网络的运作过程如下。</p>
+<blockquote>
+<p>确定输入和输出<br>找到一种或多种算法，可以从输入得到输出<br>找到一组已知答案的数据集，用来训练模型，估算w和b<br>一旦新的数据产生，输入模型，就可以得到结果，同时对w和b进行校正</p>
+</blockquote>
+<p>可以看到，整个过程需要海量计算。所以，神经网络直到最近这几年才有实用价值，而且一般的 CPU 还不行，要使用专门为机器学习定制的 GPU 来计算。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071214.jpg" alt></p>
+<h2 id="七、神经网络的例子"><a href="#七、神经网络的例子" class="headerlink" title="七、神经网络的例子"></a>七、神经网络的例子</h2><p>下面通过车牌自动识别的例子，来解释神经网络。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071215.jpg" alt></p>
+<p>所谓”车牌自动识别”，就是高速公路的探头拍下车牌照片，计算机识别出照片里的数字。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071216.jpg" alt></p>
+<p>这个例子里面，车牌照片就是输入，车牌号码就是输出，照片的清晰度可以设置权重（w）。然后，找到一种或多种图像比对算法，作为感知器。算法的得到结果是一个概率，比如75%的概率可以确定是数字1。这就需要设置一个阈值（b）（比如85%的可信度），低于这个门槛结果就无效。<br>一组已经识别好的车牌照片，作为训练集数据，输入模型。不断调整各种参数，直至找到正确率最高的参数组合。以后拿到新照片，就可以直接给出结果了。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071217.png" alt></p>
+<h2 id="八、输出的连续性"><a href="#八、输出的连续性" class="headerlink" title="八、输出的连续性"></a>八、输出的连续性</h2><p>上面的模型有一个问题没有解决，按照假设，输出只有两种结果：0和1。但是，模型要求w或b的微小变化，会引发输出的变化。如果只输出0和1，未免也太不敏感了，无法保证训练的正确性，因此必须将”输出”改造成一个连续性函数。<br>这就需要进行一点简单的数学改造。<br>首先，将感知器的计算结果wx + b记为z。</p>
+<p>z = wx + b<br>然后，计算下面的式子，将结果记为σ(z)。</p>
+<p>σ(z) = 1 / (1 + e^(-z))<br>这是因为如果z趋向正无穷z → +∞（表示感知器强烈匹配），那么σ(z) → 1；如果z趋向负无穷z → -∞（表示感知器强烈不匹配），那么σ(z) → 0。也就是说，只要使用σ(z)当作输出结果，那么输出就会变成一个连续性函数。<br>原来的输出曲线是下面这样。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071208.png" alt><br>现在变成了这样。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071209.png" alt><br>实际上，还可以证明Δσ满足下面的公式。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017071210.png" alt><br>即Δσ和Δw和Δb之间是线性关系，变化率是偏导数。这就有利于精确推算出w和b的值了。<br>（正文完）</p>
+<h2 id="ML简史"><a href="#ML简史" class="headerlink" title="ML简史"></a><a href="http://blog.csdn.net/stdcoutzyx/article/details/26509483" target="_blank" rel="noopener">ML简史</a></h2><p><img src="http://img.blog.csdn.net/20140521212230921" alt></p>
+<p>图 1 机器学习时间线</p>
+<p>在科学技术刚刚萌芽的时候，科学家Blaise Pascal和Von Leibniz就想到了有朝一日能够实现人工智能。即让机器拥有像人一样的智能。</p>
+<p>机器学习是AI中一条重要的发展线，在工业界和学术界都异常火爆。企业、大学都在投入大量的资源来做机器学习方面的研究。最近，机器学习在很多任务上都有了重大的进步，达到或者超越了人类的水平（例如，交通标志的识别[1]，ML达到了98.98%，已超越了人类）。</p>
+<p>图1中展示了ML的一个粗略的时间线，标记了很多里程碑。熟悉该图，阅读下文会觉得顺畅很多。</p>
+<p>推动机器学习流行化的第一个舵手是Hebb，1949年他提出了神经心理学学习范式——Hebbian学习理论。经过简单的扩展，该理论就开始研究递归神经网络的节点之间的相关度，它记录下网络上的共性然后像记忆一样工作，正式的表达是这样：</p>
+<p>假设反射活动的持久性或重复性可以诱导细胞发生变化，以适应这种活动…当神经元细胞A距离神经元细胞B足够近时，它就可以持续重复的激活B，那么这两个细胞之一或者全部就会发生一些代谢过程或生长变化来提高效率[1]。</p>
+<p>1952年，IBM的Arthur Samuel写出了西洋棋程序，该程序可以通过棋盘状态学习一个隐式的模型来为下一步给出较好的走法。Samuel和程序对战多局后，觉得这个程序经过一定时间的学习后可以达到很高的水平。</p>
+<p>用这个程序，Samual驳倒了机器不能像人类那样可以学习显式代码之上的模式。他定义并解释了一个新词——机器学习。</p>
+<p>机器学习是给计算机一种不用显式编程就能获得能力的领域。</p>
+<p>1957年，Rosenblatt的感知器算法是第二个有着神经系统科学背景的机器学习模型，它与今天的ML模型已经很像了。在当时，感知器的出现引起了不小的轰动，因为它比Hebbian的想法更容易实现。Rosenblatt用下面的话向大家阐释感知器算法：</p>
+<p>感知器算法的作用是，在不用深入理解只对一些特定生物有机体有效的未知条件的前提下，说明了通用智能系统一些基础特点[2]。</p>
+<p>3年之后，Widrow [4] 因发明Delta学习规则而载入ML史册，该规则马上就很好的应用到了感知器的训练中，对，没错，就是现在常见的最小二乘问题。感知器和Delta学习规则的联姻着实构造了一个极好的线性分类器。但是，根据后浪拍死前浪的历史规律，感知器的热度在1969被Minskey[3]一盆冷水泼灭了。他提出了著名的XOR问题，论证了感知器在类似XOR问题的线性不可分数据的无力。对神经网络（NN）社区来说，形成了几乎当时看来几乎不可逾越的鸿沟，史称“明斯基之印”。然而无论如何，在10年的19世纪80年代，NN学者们还是打破了这个紧箍咒。</p>
+<p><img src="http://img.blog.csdn.net/20140521212235031" alt><br>图 2 XOR问题-线性不可分数据示例</p>
+<p>被封印后，ML的发展几乎停滞，尽管BP的思想在70年代就被Linnainmaa [5] 以“自动微分的翻转模式”被提出来，但直到1981年才被Werbos [6]应用到多层感知器(MLP)中，直到现在仍是神经网络架构的关键组成部分。多层感知器和BP算法的出现，促成了第二次神经网络大发展，1985-1986年NN研究者们成功的实现了实用的BP算法来训练MLP。（Rumelhart, Hinton, Williams [7]-  Hetch, Nielsen[8]）</p>
+<p><img src="http://img.blog.csdn.net/20140521212238593" alt><br>图 3 来自Hetch和Nielsen</p>
+<p>花开并蒂，各表一枝。另一个同样很著名的ML算法在1986年被J. R. Quinlan[9]提出，即决策树算法，具体来说是ID3算法。这是机器学习的另一条主流中一个灯塔式的成就。ID3以其简单的规则和明确的推理，解决了很多现实世界的问题，实际上，它就是以一个实用软件的姿态出现的，相对于黑箱子般的NN算法。</p>
+<p>ID3之后，很多其他的算法或改进如雨后春笋般的出现，例如ID4，回归树，CART等等)。直到现在，决策树仍然是ML界中的热点。</p>
+<p><img src="http://img.blog.csdn.net/20140521212242156" alt><br>图 4 一个简单的决策树</p>
+<p>接下来就是ML领域最重要的一个突破——支持向量机（SVM）。SVM由大师Vapnik and Cortes[10] 在1995年提出，它有很强的理论论证和实证结果。自此之后，ML社区就楚河汉界划分为NN和SVM两派。2000年左右，随着核方法的提出，SVM大占上风，在很多领域上都超过了NN模型。除此之外，SVM还发展了一系列的针对NN模型的基础理论，包括凸优化、泛化间隔理论和核方法。可以说，在这个时段，SVM的发展无论是理论还是实践都占尽天时地利，因而发展速度极快。</p>
+<p><img src="http://img.blog.csdn.net/20140521212245859" alt><br>图 5 From Vapnik and Cortes [10]</p>
+<p>不仅在外部遭到了巨大的挑战，NN内部也发生了问题。1991年的Hochreiter[40]和2001年的Hochreiter[11]的工作，都表明在使用BP算法时，NN单元饱和之后会发生梯度损失。简单来说，训练NN模型时，超过一定的迭代次数后，再迭代NN模型就很容易过拟合。</p>
+<p>再往前一点点，另一个坚实的ML模型AdaBoost在1997被Freund和Schapire提出，该算法最大的特点在于组合弱分类器形成强分类器。这个成果为它的作者赢得了Godel奖。Adaboost通过给那些难的样例更高的权重来对那些容易训练的分类器进行训练。该模型在脸部识别和检测方面应用的很广。它还是PAC（概率近似正确理论）的一种实现。通常来说，所谓的弱分类器都被Adaboost用来当树桩——即单个的决策树节点。他们这样来描述Adaboost：</p>
+<p>作为一个良好的在线预测模型的抽象扩展，Adaboost可以被解释为一个通用的决策理论设置…[11]</p>
+<p>另外一个可以将多个决策树组合起来的模型在2001年被Breiman[12]提出。该模型被称为随机森林(RF)，因为它的每个组成节点都是随机的选择一组示例和一组特征。RF也拥有理论上和实验上的抗过拟合的证据。甚至有些数据Adaboost都不能很好的克服过拟合和离群点的时候，RF都能有很好的鲁棒性。RF在很多其他不同领域比如Kaggle比赛上都有很成功的表现。</p>
+<p>随机森林是一个树预测器的组合体，每棵树都取决于一个独立同分布的随机向量。因而整个森林的泛化误差随着森林数目的增多而收敛[12]。</p>
+<p>时间终于走到了当下，一个新的NN领域——深度学习出现了。在这个阶段，NN模型可以拥有多层。3层的NN模型在2005年被Hinton,LeCun, Bengio, Andrew Ng等诸多大师一一实现。下面列举了一些深度学习上的重要概念：</p>
+<p>Ø  GPU programming</p>
+<p>Ø  Convolutional NNs [18][20][40]</p>
+<p>Ø  Deconvolutional Networks [21]</p>
+<p>Ø  Optimization algorithms</p>
+<p>Ø  Stochastic Gradient Descent [19][22]</p>
+<p>Ø  BFGS and L-BFGS [23]</p>
+<p>Ø  Conjugate Gradient Descent [24]</p>
+<p>Ø  Backpropagation [40][19]</p>
+<p>Ø  Rectifier Units</p>
+<p>Ø  Sparsity [15][16]</p>
+<p>Ø  Dropout Nets [26]</p>
+<p>Ø  Maxout Nets  [25]</p>
+<p>Ø  Unsupervised NN models [14]</p>
+<p>Ø  Deep Belief Networks [13]</p>
+<p>Ø  Stacked Auto-Encoders [16][39]</p>
+<p>Ø  Denoising NN models [17]</p>
+<p>将上面列举的这些技术和想法综合到一起，NN模型迎来了又一个春天，在物体识别、语音识别、自然语言处理等方面，均击败之前的最高水平的技术。但重要的事，这并不意味着其他ML流派的终结，即使现在深度学习的成功故事还在一个接一个的上演，仍然有着参数众多、训练花费巨大的缺陷。而且，SVM由于其简单性仍然被广泛使用。</p>
+<p>在结束之前，我们再介绍一个相对年轻的ML趋势，随着www和社会媒体的发展，大数据出现且影响了很多ML的研究。因为大数据中的问题数据量都极大，很多强大的ML算法在机器性能的限制下都变得有些无用（对大公司来说自然不是这样）。因此，研究人员提出了一套简单模型——dubbed  Bandit Algorithms[27-38]，这些算法都是在线学习算法，都能适应大规模问题。</p>
+<p>这只是一个简单的ML历史的介绍，若有问题，欢迎指出。</p>
+<p>Reference：</p>
+<p>[1] Hebb D. O., The organization of behaviour. New York: Wiley &amp; Sons.</p>
+<p>[2] Rosenblatt, Frank. “The perceptron: a probabilistic model for information storage and organization in the brain.”  Psychological review 65.6 (1958): 386.</p>
+<p>[3] Minsky, Marvin, and Papert Seymour. “Perceptrons.” (1969).</p>
+<p>[4]Widrow, Hoff  “Adaptive switching circuits.” (1960): 96-104.</p>
+<p>[5]S. Linnainmaa. The representation of the cumulative rounding error of an algorithm as a Taylor<br>expansion of the local rounding errors. Master’s thesis, Univ. Helsinki, 1970.</p>
+<p>[6] P. J. Werbos. Applications of advances in nonlinear sensitivity analysis. In Proceedings of the 10th<br>IFIP Conference, 31.8 - 4.9, NYC, pages 762–770, 1981.</p>
+<p>[7]  Rumelhart, David E., Geoffrey E. Hinton, and Ronald J. Williams.  Learning internal representations by error propagation. No. ICS-8506. CALIFORNIA UNIV SAN DIEGO LA JOLLA INST FOR COGNITIVE SCIENCE, 1985.</p>
+<p>[8]  Hecht-Nielsen, Robert. “Theory of the backpropagation neural network.”  Neural Networks, 1989. IJCNN., International Joint Conference on. IEEE, 1989.</p>
+<p>[9]  Quinlan, J. Ross. “Induction of decision trees.”  Machine learning 1.1 (1986): 81-106.</p>
+<p>[10]  Cortes, Corinna, and Vladimir Vapnik. “Support-vector networks.”  Machine learning 20.3 (1995): 273-297.</p>
+<p>[11]  Freund, Yoav, Robert Schapire, and N. Abe. “A short introduction to boosting.” Journal-Japanese Society For Artificial Intelligence 14.771-780 (1999): 1612.</p>
+<p>[12]  Breiman, Leo. “Random forests.”  Machine learning 45.1 (2001): 5-32.</p>
+<p>[13]  Hinton, Geoffrey E., Simon Osindero, and Yee-Whye Teh. “A fast learning algorithm for deep belief nets.”  Neural computation 18.7 (2006): 1527-1554.</p>
+<p>[14] Bengio, Lamblin, Popovici, Larochelle, “Greedy Layer-Wise<br>Training of Deep Networks”, NIPS’2006</p>
+<p>[15] Ranzato, Poultney, Chopra, LeCun “ Efficient Learning of  Sparse Representations with an Energy-Based Model “, NIPS’2006</p>
+<p>[16] Olshausen B a, Field DJ. Sparse coding with an overcomplete basis set: a strategy employed by V1? Vision Res. 1997;37(23):3311–25. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/9425546" target="_blank" rel="noopener">http://www.ncbi.nlm.nih.gov/pubmed/9425546</a>.</p>
+<p>[17] Vincent, H. Larochelle Y. Bengio and P.A. Manzagol,  Extracting and Composing Robust Features with Denoising Autoencoders , Proceedings of the Twenty-fifth International Conference on Machine Learning (ICML‘08), pages 1096 - 1103, ACM, 2008.</p>
+<p>[18]  Fukushima, K. (1980). Neocognitron: A self-organizing neural network model for a mechanism of pattern recognition unaffected by shift in position. Biological Cybernetics, 36, 193–202.</p>
+<p>[19]  LeCun, Yann, et al. “Gradient-based learning applied to document recognition.” Proceedings of the IEEE 86.11 (1998): 2278-2324.</p>
+<p>[20]  LeCun, Yann, and Yoshua Bengio. “Convolutional networks for images, speech, and time series.”  The handbook of brain theory and neural networks3361 (1995).</p>
+<p>[21]  Zeiler, Matthew D., et al. “Deconvolutional networks.”  Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on. IEEE, 2010.</p>
+<p>[22] S. Vishwanathan, N. Schraudolph, M. Schmidt, and K. Mur- phy. Accelerated training of conditional random fields with stochastic meta-descent. In International Conference on Ma- chine Learning (ICML ’06), 2006.</p>
+<p>[23] Nocedal, J. (1980). ”Updating Quasi-Newton Matrices with Limited Storage.” Mathematics of Computation 35 (151): 773782. doi:10.1090/S0025-5718-1980-0572855-</p>
+<p>[24] S. Yun and K.-C. Toh, “A coordinate gradient descent method for l1- regularized convex minimization,” Computational Optimizations and Applications, vol. 48, no. 2, pp. 273–307, 2011.</p>
+<p>[25] Goodfellow I, Warde-Farley D. Maxout networks. arXiv Prepr arXiv …. 2013. Available at: <a href="http://arxiv.org/abs/1302.4389" target="_blank" rel="noopener">http://arxiv.org/abs/1302.4389</a>. Accessed March 20, 2014.</p>
+<p>[26] Wan L, Zeiler M. Regularization of neural networks using dropconnect. Proc …. 2013;(1). Available at: <a href="http://machinelearning.wustl.edu/mlpapers/papers/icml2013_wan13" target="_blank" rel="noopener">http://machinelearning.wustl.edu/mlpapers/papers/icml2013_wan13</a>. Accessed March 13, 2014.</p>
+<p>[27]  Alekh Agarwal ,  Olivier Chapelle ,  Miroslav Dudik ,  John Langford ,  A Reliable Effective Terascale Linear Learning System , 2011</p>
+<p>[28]  M. Hoffman ,  D. Blei ,  F. Bach ,  Online Learning for Latent Dirichlet Allocation , in Neural Information Processing Systems (NIPS) 2010.</p>
+<p>[29]  Alina Beygelzimer ,  Daniel Hsu ,  John Langford , and  Tong Zhang   Agnostic Active Learning Without Constraints  NIPS 2010.</p>
+<p>[30]  John Duchi ,  Elad Hazan , and  Yoram Singer ,  Adaptive Subgradient Methods for Online Learning and Stochastic Optimization , JMLR 2011 &amp; COLT 2010.</p>
+<p>[31]  H. Brendan McMahan ,  Matthew Streeter ,  Adaptive Bound Optimization for Online Convex Optimization , COLT 2010.</p>
+<p>[32]  Nikos Karampatziakis  and  John Langford ,  Importance Weight Aware Gradient Updates  UAI 2010.</p>
+<p>[33]  Kilian Weinberger ,  Anirban Dasgupta ,  John Langford ,  Alex Smola ,  Josh Attenberg ,  Feature Hashing for Large Scale Multitask Learning , ICML 2009.</p>
+<p>[34]  Qinfeng Shi ,  James Petterson ,  Gideon Dror ,  John Langford ,  Alex Smola , and  SVN Vishwanathan , Hash Kernels for Structured Data , AISTAT 2009.</p>
+<p>[35]  John Langford ,  Lihong Li , and  Tong Zhang ,  Sparse Online Learning via Truncated Gradient , NIPS 2008.</p>
+<p>[36]  Leon Bottou ,  Stochastic Gradient Descent , 2007.</p>
+<p>[37]  Avrim Blum ,  Adam Kalai , and  John Langford   Beating the Holdout: Bounds for KFold and Progressive Cross-Validation . COLT99 pages 203-208.</p>
+<p>[38]  Nocedal, J.  (1980). “Updating Quasi-Newton Matrices with Limited Storage”. Mathematics of Computation 35: 773–782.</p>
+<p>[39] D. H. Ballard. Modular learning in neural networks. In AAAI, pages 279–284, 1987.</p>
+<p>[40] S. Hochreiter. Untersuchungen zu dynamischen neuronalen Netzen. Diploma thesis, Institut f ̈ur In-<br>formatik, Lehrstuhl Prof. Brauer, Technische Universit ̈at M ̈unchen, 1991. Advisor: J. Schmidhuber.</p>
+<h2 id="机器学习算法概览"><a href="#机器学习算法概览" class="headerlink" title=" 机器学习算法概览"></a><a href="http://blog.csdn.net/stdcoutzyx/article/details/44501797" target="_blank" rel="noopener"> 机器学习算法概览</a></h2><p>本文是翻译文章，但我并未逐字句的翻译，而是有所删减，并加入了一些自己的补充。</p>
+<p>转载请注明：<a href="http://blog.csdn.net/stdcoutzyx/article/details/44501797" target="_blank" rel="noopener">http://blog.csdn.net/stdcoutzyx/article/details/44501797</a></p>
+<p>机器学习（Machine Learning， ML）是什么，作为一个MLer，经常难以向大家解释何为ML。久而久之，发现要理解或解释机器学习是什么，可以从机器学习可以解决的问题这个角度来说。对于MLers，理解ML解决的问题的类型也有助于我们更好的准备数据和选择算法。</p>
+<p>十个机器学习问题样例<br>想入门机器学习的同学，经常会去看一些入门书，比如《集体智慧编程》、《机器学习实战》、《数据挖掘》、《推荐系统实践》等。看书的过程中，经常性的会看到如下样例：</p>
+<p>垃圾邮件识别<br>信用卡交易异常检测<br>手写数字识别<br>语音识别<br>人脸检测<br>商品推荐<br>疾病检测（根据以往病例记录，确定病人是否患病）<br>股票预测<br>用户分类（根据用户行为判断该用户是否会转化为付费用户）<br>形状检测（根据用户在手写板上上画得形状，确定用户画的到底是什么形状）</p>
+<p>因此，当再有人问ML是什么的时候，就可以说这个是ML可以handle的，这个问题ML也可以handle，blahblah。</p>
+<p>机器学习问题类型</p>
+<p>对问题进行分类，好处就在于可以更好的把握问题的本质，更好的知道什么类型的算法需要用到。</p>
+<p>一般有四大类型：</p>
+<p>分类（classification）：有一些已经标注好类别的数据，在标注好的数据上建模，对于新样本，判断它的类别。如垃圾邮件识别</p>
+<p>回归（regression）：有一些已经标注好的数据，标注值与分类问题不同，分类问题的标注是离散值，而回归问题中的标注是实数，在标注好的数据上建模，对于新样本，得到它的标注值。如股票预测。</p>
+<p>聚类（clustering）：数据没有被标注，但是给出了一些相似度衡量标准，可以根据这些标准将数据进行划分。如在一堆未给出名字的照片中，自动的将同一个人的照片聚集到一块。</p>
+<p>规则抽取（rule extraction）：发现数据中属性之间的统计关系，而不只是预测一些事情。如啤酒和尿布。</p>
+<p>机器学习算法</p>
+<p>知道了机器学习要解决的问题后，就可以思考针对某一个问题，需要采集的数据的类型和可以使用的机器学习算法，机器学习发展到今天，诞生了很多算法，在实际应用中往往问题在于算法的选择，在本文中，使用两种标准对算法进行分类，即学习方式和算法之间的相似性。</p>
+<p>学习方式（Learning Style）</p>
+<p>在ML中，只有几个主流的学习方式，在下面的介绍中，使用一些算法和问题的样例来对这些方式进行解释说明。按照学习方式对机器学习算法进行分类可以使我们更多的思考输入数据在算法中的角色和使用模型前需要的准备工作，对我们选择最适合的模型有很好的指导作用。</p>
+<p>监督学习（supervised learning）：输入数据都有一个类别标记或结果标记，被称作训练数据，比如垃圾邮件与非垃圾邮件、某时间点的股票价格。模型由训练过程得到，利用模型，可以对新样本做出推测，并可以计算得到这些预测的精确度等指标。训练过程往往需要在训练集上达到一定程度的精确度，不欠拟合或过拟合。监督学习一般解决的问题是分类和回归，代表算法有逻辑斯底回归（Logistic Regression）和神经网络后向传播算法（Back Propagation Neural Network）。</p>
+<p>无监督学习（Unsupervised Learning）：输入数据没有任何标记，通过推理数据中已有的结构来构建模型。一般解决的问题是规则学习和聚类，代表算法有Apriori算法和k-means算法。</p>
+<p>半监督学习（Semi-Supervised Learning）：输入数据是标注数据和非标注数据的混合，它也是为了解决预测问题的，但是模型必须同时兼顾学习数据中已经存在的结构和作出预测，即上述监督学习和无监督学习的融合。该方法要解决的问题仍然是分类的回归，代表算法一般是在监督学习的算法上进行扩展，使之可以对未标注数据建模。</p>
+<p>增强学习（Reinforcement Learning）：在这种学习方式中，模型先被构建，然后输入数据刺激模型，输入数据往往来自于环境中，模型得到的结果称之为反馈，使用反馈对模型进行调整。它与监督学习的区别在于反馈数据更多的来自于环境的反馈而不是由人指定。该方式解决的问题是系统与机器人控制，代表算法是Q-学习（Q-learning）和时序差分算法（Temporal difference learning）。</p>
+<p>在商业决策中，一般会使用的方法是监督学习和无监督学习。当下一个热门的话题是半监督学习，比如在图片分类中，有很多数据集都是有少量的标记数据和大量的非标记数据。增强学习更多的用于机器人控制机其他的控制系统中。</p>
+<p>算法相似度（Algorithm Similarity）</p>
+<p>一般会根据模型的模式或者函数模式的相似度来对算法进行划分。比如基于树的方法（tree-based method）与神经网络算法（neural network）。当然，这种方法并不完美，因为很多算法可以很容易的被划分到多个类别中去，比如学习矢量量化算法（Learning Vector Quantization）既是神经网络算法也是基于样例的算法（Instance-based method）。在本文中，可以看到很多不同的分类方法。</p>
+<p>回归（Regression）</p>
+<p>回归是在自变量和需要预测的变量之间构建一个模型，并使用迭代的方法逐渐降低预测值和真实值之间的误差。回归方法是统计机器学习的一种 </p>
+<p>常用的回归算法如下：</p>
+<p>Ordinary Least Squares（最小二乘法）<br>Logistic Regression（逻辑斯底回归）<br>Stepwise Regression（逐步回归）<br>Multivariate Adaptive Regression Splines（多元自适应回归样条法）<br>Locally Estimated Scatterplot Smoothing（局部加权散点平滑法）</p>
+<p>基于样例的方法（Instance-based Methods）</p>
+<p>基于样例的方法需要一个样本库，当新样本出现时，在样本库中找到最佳匹配的若干个样本，然后做出推测。基于样例的方法又被成为胜者为王的方法和基于内存的学习，该算法主要关注样本之间相似度的计算方法和存储数据的表示形式。</p>
+<p>k-Nearest Neighbour (kNN)<br>Learning Vector Quantization (LVQ)<br>Self-Organizing Map (SOM)</p>
+<p>正则化方法（Regularization Methods）</p>
+<p>这是一个对其他方法的延伸（通常是回归方法），这个延伸就是在模型上加上了一个惩罚项，相当于奥卡姆提到，对越简单的模型越有利，有防止过拟合的作用，并且更擅长归纳。我在这里列出它是因为它的流行和强大。</p>
+<p>Ridge Regression<br>Least Absolute Shrinkage and Selection Operator (LASSO)<br>Elastic Net</p>
+<p>决策树模型（Decision Tree Learning）<br>决策树方法建立了一个根据数据中属性的实际值决策的模型。决策树用来解决归纳和回归问题。</p>
+<p>Classification and Regression Tree (CART)<br>Iterative Dichotomiser 3 (ID3)<br>C4.5<br>Chi-squared Automatic Interaction Detection (CHAID)<br>Decision Stump<br>Random Forest<br>Multivariate Adaptive Regression Splines (MARS)<br>Gradient Boosting Machines (GBM)</p>
+<p>贝叶斯（Bayesian）<br>贝叶斯方法是在解决归类和回归问题中应用了贝叶斯定理的方法。</p>
+<p>Naive Bayes<br>Averaged One-Dependence Estimators (AODE)<br>Bayesian Belief Network (BBN)</p>
+<p>核方法（Kernel Methods）<br>核方法中最有名的是Support Vector Machines(支持向量机)。这种方法把输入数据映射到更高维度上，将其变得可分，使得归类和回归问题更容易建模。</p>
+<p>Support Vector Machines (SVM)<br>Radial Basis Function (RBF)<br>Linear Discriminate Analysis (LDA)</p>
+<p>聚类（Clustering Methods）<br>聚类本身就形容了问题和方法。聚类方法通常是由建模方式分类的比如基于中心的聚类和层次聚类。所有的聚类方法都是利用数据的内在结构来组织数据，使得每组内的点有最大的共同性。</p>
+<p>K-Means<br>Expectation Maximisation (EM)<br>联合规则学习（Association Rule Learning）<br>联合规则学习是用来对数据间提取规律的方法，通过这些规律可以发现巨量多维空间数据之间的联系，而这些重要的联系可以被组织拿来使用或者盈利。</p>
+<p>Apriori algorithm<br>Eclat algorithm<br>人工神经网络（Artificial Neural Networks）<br>受生物神经网络的结构和功能的启发诞生的人工神经网络属于模式匹配一类，经常被用于回归和分类问题，但是它存在上百个算法和变种组成。其中有一些是经典流行的算法（深度学习拿出来单独讲）：</p>
+<p>Perceptron<br>Back-Propagation<br>Hopfield Network<br>Self-Organizing Map (SOM)<br>Learning Vector Quantization (LVQ)</p>
+<p>深度学习（Deep Learning）<br>Deep Learning(深度学习)方法是人工神经网络在当下的一个变种。相比传统的神经网络，它更关注更加复杂的网络构成，许多方法都是关心半监督学习，就是一个大数据集中只有少量标注数据的那种问题。</p>
+<p>Restricted Boltzmann Machine (RBM)<br>Deep Belief Networks (DBN)<br>Convolutional Network<br>Stacked Auto-encoders</p>
+<p>降维（Dimensionality Reduction）<br>与聚类方法类似，对数据中的固有结构进行利用，使用无监督的方法学习一种方式，该方式用更少的信息来对数据做归纳和描述。这对于对数据进行可视化或者简化数据很有用，也有去除噪声的影响，经常采用这种方法使得算法更加高效。</p>
+<p>Principal Component Analysis (PCA)<br>Partial Least Squares Regression (PLS)<br>Sammon Mapping<br>Multidimensional Scaling (MDS)<br>Projection Pursuit</p>
+<p>组合方法（Ensemble Methods）<br>Ensemble methods(组合方法)由许多小的模型组成，这些模型经过独立训练，做出独立的结论，最后汇总起来形成最后的预测。组合方法的研究点集中在使用什么模型以及这些模型怎么被组合起来。</p>
+<p>Boosting<br>Bootstrapped Aggregation (Bagging)<br>AdaBoost<br>Stacked Generalization (blending)<br>Gradient Boosting Machines (GBM)<br>Random Forest</p>
+<p>原文链接<br>a tour of machine learning algorithms<br>practical machine learning problems</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Neural-Network/" rel="tag"><i class="fa fa-tag"></i> Neural Network</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Program/IPCreator/Technology/Program/Computer/IaaS%a3%acPaaS%a3%acSaaS/" rel="next" title="The difference between IaaS，PaaS and SaaS">
+                  <i class="fa fa-chevron-left"></i> The difference between IaaS，PaaS and SaaS
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Movie/IPCreator/Journey/Movie/fast and furious/" rel="prev" title="The Fate of the Furious">
+                  The Fate of the Furious <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、感知器"><span class="nav-number">1.</span> <span class="nav-text">一、感知器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、感知器的例子"><span class="nav-number">2.</span> <span class="nav-text">二、感知器的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、权重和阈值"><span class="nav-number">3.</span> <span class="nav-text">三、权重和阈值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、决策模型"><span class="nav-number">4.</span> <span class="nav-text">四、决策模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、矢量化"><span class="nav-number">5.</span> <span class="nav-text">五、矢量化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、神经网络的运作过程"><span class="nav-number">6.</span> <span class="nav-text">六、神经网络的运作过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、神经网络的例子"><span class="nav-number">7.</span> <span class="nav-text">七、神经网络的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、输出的连续性"><span class="nav-number">8.</span> <span class="nav-text">八、输出的连续性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ML简史"><span class="nav-number">9.</span> <span class="nav-text">ML简史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习算法概览"><span class="nav-number">10.</span> <span class="nav-text"> 机器学习算法概览</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

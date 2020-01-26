@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="作者：网易AI研究院       对于企业而言，该投资人工智能还是机器学习呢？国外媒体发表Avanade高级总监贾马尔·赫瓦贾（Jamal Khawaja）的文章对这一问题进行了深入解析。">
+<meta name="keywords" content="Basic Concept,Machine Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI vs Machine Learning">
+<meta property="og:url" content="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/ai-vs-machine-learning/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="作者：网易AI研究院       对于企业而言，该投资人工智能还是机器学习呢？国外媒体发表Avanade高级总监贾马尔·赫瓦贾（Jamal Khawaja）的文章对这一问题进行了深入解析。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://dingyue.nosdn.127.net/FvoCteXeaxOQg4IblKLzFzKWGzhz86zMvylL6jsI6tLsx1485348908493compressflag.jpg">
+<meta property="og:image" content="http://dingyue.nosdn.127.net/s3uiNsduKLIguOKVBKBjnBJgyAHbkNsqFOY5ZphBvVd8y1486696266124compressflag.jpg">
+<meta property="og:updated_time" content="2017-03-27T08:55:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AI vs Machine Learning">
+<meta name="twitter:description" content="作者：网易AI研究院       对于企业而言，该投资人工智能还是机器学习呢？国外媒体发表Avanade高级总监贾马尔·赫瓦贾（Jamal Khawaja）的文章对这一问题进行了深入解析。">
+<meta name="twitter:image" content="http://dingyue.nosdn.127.net/FvoCteXeaxOQg4IblKLzFzKWGzhz86zMvylL6jsI6tLsx1485348908493compressflag.jpg">
+
+<link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/ai-vs-machine-learning/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>AI vs Machine Learning | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/ai-vs-machine-learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AI vs Machine Learning
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/AI/IPCreator/Technology/AI/TensorFlow/ai-vs-machine-learning/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/AI/IPCreator/Technology/AI/TensorFlow/ai-vs-machine-learning/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="http://dy.163.com/v2/article/detail/CBLFGEEV0511CUKV.html" target="_blank" rel="noopener">作者：网易AI研究院</a></p>
+ <div align="center"><br><img src="http://dingyue.nosdn.127.net/FvoCteXeaxOQg4IblKLzFzKWGzhz86zMvylL6jsI6tLsx1485348908493compressflag.jpg" width="839" height="416"><br> </div>
+
+<p>  对于企业而言，该投资人工智能还是机器学习呢？国外媒体发表Avanade高级总监贾马尔·赫瓦贾（Jamal Khawaja）的文章对这一问题进行了深入解析。</p>
+  <a id="more"></a>
+<p>　在过去的一年里，笔者一直在研究两种在如何利用大数据上相互矛盾的方法：人工智能（AI）和机器学习（ML）。毕竟，大数据没什么令人兴奋的，除非你有个机制去处理它。经过数周的深入研究后，我意识到大家对于一切的定义都是不一致的。另外，二者之间的区别相当无趣乏味。因此，我将尝试用一种既不讨好供应商也不讨好学术界的语言，来解析我对未来十年行业的发展的看法。</p>
+<p>　　不过，在展开讨论之前，我们首先说明一些背景信息。先来谈谈AI和ML与大数据相关的定义：</p>
+<p>　　<strong>人工智能</strong>：AI的目标是理解神经功能，模拟大脑的神经功能来从给定的情境中学习。在很多情况下，大脑实质上就是鲁布·戈德堡机器（即极为复杂的机器设备）。有了这种进化性的构建模块，我们就能够达到一种复杂的终端状态。</p>
+<p>　　早在1980年代，AI在科学家当中是一个热门研究领域：专家们是如何做他们的工作的，如何将他们的那些任务简化成一系列的规则，如何通过编程给计算机引入那些规则，进而取代那些专家。研究人员想要教导计算机诊断疾病，翻译各种语言，甚至推断我们想要但不自知的东西。<strong>从根本上说，AI寻求构造在一个系统内进行逻辑推理的能力。</strong></p>
+<p>　　这种努力并没有成功。</p>
+<p>　　在被宣告失败之前，传统的AI项目吸引了数亿美元的风投资金。当时，AI的问题在于，我们没有足够有成本效率的计算能力去完成那些目标。但得益于Map Reduce和云技术，我们现在有足够充裕的计算能力去做AI。</p>
+<p>　　<strong>机器学习</strong>：ML实际上是数项技术的集合，其中包括计算统计学、算法设计和数学，旨在尝试进行数据挖掘分析，以发现模式，再将模式转化成语言。这种技术会给系统提供初始的指令组，然后系统进行数据归纳，发现或者推断出模式，以期将那些信息应用到新的解决方案。</p>
+<p>　　<strong>ML是从AI进化而来的。</strong>当AI的挑战变得非常显著，变得无法克服时，理论家们寻求一种更加定制化的归纳计算决策方法。这种模式有不同的种类。供应商们将它们的系统称为“机器智能”或者“监督式学习”。</p>
+<p>　　除了更容易构造以外，机器学习的好处都显而易见。<strong>ML始于一个界定的问题，以及描述对给定数据集的恰当分析的规则组。</strong></p>
+<h2 id="AI与ML的相似之处"><a href="#AI与ML的相似之处" class="headerlink" title="AI与ML的相似之处"></a>AI与ML的相似之处</h2><p>　　- 迭代算法：尽管机制上存在差异，但ML和AI有着共同的主要组成部分：迭代学习。<strong>在ML中，迭代学习是从所描述的参数组中定义不确定边界的过程。在AI中，迭代学习通过通常随时间变动的非线性序列发生。</strong></p>
+<p>　　- 数据越多，迭代越快：系统本身会从学习中构造和优化算法模型。</p>
+<p>　　- 可应用在明确算法不能实行的地方（垃圾邮件过滤、OCM和计算机视觉）。本质上，当物体、动作或者任何其它的东西的定义无法精确描述出来的时候，就需要更加复杂的指令组（通常是概率建模）来分析和理解。</p>
+<p>-两种系统都依靠基于归纳推理的“学会学习”能力：二者的运作过程存在着很大的差异，但最终的效果都取决于系统从经验中学习的能力。那种学习可以是外显的，有指导的（典型的例子就是机器学习），也可以是基于一系列的先验知识，由系统本身进行推测（典型例子就是人工智能）。</p>
+<h2 id="人工智能"><a href="#人工智能" class="headerlink" title="人工智能"></a>人工智能</h2><p>　　- AI的目标是推理。系统不仅仅要鉴别需要估算什么，还要鉴别如何进行估算，即便在不确定的情况下也是如此。这是一项困难的任务，很多人都缺乏这种能力。</p>
+<p>　　- 所基于的神经网络：AI执行最常见的解决方案机制是人工神经网络。从根本上说，不同抽象层次的互联神经元会权衡受观察或者被计算的行为的价值，会通过使用输入的非线性函数来调整驱动系统的算法。</p>
+<p>　　- 在不同的抽象层次学习：AI算法会在信号从输入层传送到输出层的过程中将信号遇到的转变参数化。该转变是有可训练的考量因素的处理单元，如权重和阈值。层数反映神经网络的复杂性，参数的权重反映它背后的逻辑。</p>
+<p>　　- 寻找方差的转变，以识别变化：在神经网络中，有机制识别方差的实际转变和变化的程度。这是AI的基石之一；量化方差和推断其影响的能力对于AI而言必不可少。</p>
+<h2 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h2><p>　　- ML专注于根据已知属性预测未知属性，这反过来是依据概率分布。这反映出ML的两个主要目标：</p>
+<p>　　1. 目标是解决问题；利用给定的带有定义输入的数据组和监督式误差反向传播，鉴别和解决问题</p>
+<p>　　2. ML并不是寻求思考的能力；相反，它是寻求做会思考的实体能够做的事情的能力</p>
+<p>-ML方面有两类函数：能够被学习的东西和不能够被学习的东西。这种机制是通过围绕与前馈控制系统相关的复杂性建模建立起来的，该系统负责将来自来源的控制信号向外部环境进行例示。这表明理解的层次不仅仅是围绕系统扰动，还围绕基于数学建模的系统中的预期变化。相反地，反馈系统会反应性地改变控制信号。这些系统无法使得行为有理化时，则会将函数渲染为无法学习的东西，以及在机器学习环境范畴之外的东西。</p>
+<p>　　关于ML，值得注意的是量子机器开始被引入系统的学习过程。理论上，量子计算可给给定环境提供无限量的前馈系统。人们可能会断定，量子学习本质上不是确定性的；量子计算（量子位）的基本计算元素创造了一种模糊的逻辑模型。这可能会带来已知物理定律下最具创造性的问题解决过程。目前，它正被应用于图像识别，但未来的实施会考虑训练基于难解运算的概率模型。</p>
+<p>　　然而，不管使用哪一种系统：</p>
+<p>　　- 你最终都会得出经过优化的结果。你不一定理解你是如何将其进化的，但结果不言而喻。你只能够理解过程和界面。</p>
+<p>　　- 学习的中心从产品转向过程：不改动最终产品，而是改动过程。</p>
+<p>　　- 这两种模型都不仅仅涉及工程设计：我们试图创造的东西比我们想象的要多。</p>
+<p>　　那么，该投资AI还是ML呢？说到底，这取决于你的业务需求。<strong>ML可提供大量的企业友好型工具</strong>，这使得它成为很多企业项目的首选解决方案：它能够受到已知技术的约束；它能够解决特定的问题，所出现的问题能够通过调整输入信息、数据结构或者输出值来解决。事实上，<strong>AI在1980年代失宠是有原因的：无法将专家的能力转化成可外推到更加复杂的场景的规则组。</strong></p>
+<p>　　然而，我认为<strong>AI才是未来。推理能力包含比商业需要重要的智力能力和情感能力。</strong>这是程序员、理论家和科学家们自统计学分析创立以来一直在竭力追求的东西；我们如何才能创造出能够解答我们不知道的问题的机器呢？IBM在这一领域进行了巨额投资，微软，特斯拉，甲骨文，谷歌，地球上的每一家医疗保健公司，大多数的银行，每一位想要找到赚更多钱的窍门且精通技术的企业家亦然。</p>
+<p>　　如果你是位普通的企业家，那就投资机器学习。它会给你带来好处。但如果你是有远见的人，那就<strong>投资人工智能，你可能会改变世界。</strong>（皓慧）</p>
+<p>　　注：本文为网易智能工作室稿件，转载需注明出处，否则追究其法律责任。</p>
+<h2 id="AI研究院-科普：人工智能与机器学习到底有什么区别？"><a href="#AI研究院-科普：人工智能与机器学习到底有什么区别？" class="headerlink" title="AI研究院 | 科普：人工智能与机器学习到底有什么区别？"></a>AI研究院 | 科普：人工智能与机器学习到底有什么区别？</h2><p>　　【AI研究院 | 网易智能工作室倾力打造的人工智能专业栏目，聚焦行业，深度分析，只为专业】</p>
+<p>　　<img src="http://dingyue.nosdn.127.net/s3uiNsduKLIguOKVBKBjnBJgyAHbkNsqFOY5ZphBvVd8y1486696266124compressflag.jpg" alt></p>
+<p>　　网易智能讯 2月10日消息，人们常常把人工智能与机器学习混为一谈，其实这两者之间有着很大的区别。</p>
+<p>　　机器学习和人工智能是当前科技领域的两大趋势。实际上，这两个术语经常可以互换使用。然而，两者之间仍然存在着微妙却重大的差异。</p>
+<p>　　从很多方面来说，机器学习是人工智能的一部分。而且，人工智能这个术语也比机器学习出现得更早。</p>
+<p>　　它们之间的区别到底是什么呢?</p>
+<p>　　<strong>人工智能的核心是试图让机器以人脑的方式进行思考。</strong> 著名的图灵测试表明，如果人类不能将一个系统的行为与人类的行为区别开来，那么这个系统就可以说是智能的。然而，目前的技术远未达到这一目标，所以人工智能目前也只是意味着创造出能够做出人类擅长的行为的系统。但这只是个笼统的说法。</p>
+<p>　　机器学习也可以追溯到20世纪中期。<strong>阿瑟塞缪尔将机器学习定义为“在没有进行明确编程的情况下的学习能力”。</strong></p>
+<p>　　使用及应用</p>
+<p>　　机器学习</p>
+<p>　　机器学习的原理几十年来一直没有得到重视(这一点与人工智能很像)，但随着上个世纪末之前数据挖掘工作的兴起，人们 <strong>需要一种算法来寻找每一个数据集的模式。机器学习做到了这一点，但它又更进一步，从过程中学习，而它的性能也会随着不断学习而提高。</strong></p>
+<p>　　机器学习的另一种用途是图像识别。这些应用最初是由人类训练的，先观察图像，然后进行描述。在使用了成千上万的图像进行训练之后，机器学习系统就可以根据像素分辨出画面中是一条狗、一座房子、一束鲜花还是一个人。</p>
+<p>　　机器学习也可以在推荐引擎中使用。这些算法可以帮助Facebook决定在新闻中显示什么信息，或者帮助亚马逊决定向用户推送什么广告。</p>
+<p>　　随着大数据分析越来越普及，<strong>企业正在向依靠机器学习来驱动预测分析转变。与统计数据、数据挖掘和预测分析的联系已经足够让人认为机器学习是人工智能的一个领域。</strong></p>
+<p>　　原因就在于，诸如自然语言处理或自动推理的人工智能技术可以在没有机器学习能力的情况下完成。机器学习系统并不需要具有人工智能的其他特征。</p>
+<p>　　人工智能</p>
+<p>　　人工智能目前有数百个使用案例，而随着企业不断采用人工智能来应对商业挑战，人工智能的案例也开始为人所知。</p>
+<p>　　当前最受欢迎的人工智能应用之一是语音助手。微软的Cortana、Siri、谷歌助理和亚马逊Alexa都是智能家居和智能手机的核心部分，用户可以通过聊天机器人预约午餐会议，或者用语音助手来控制家里的照明开关。但是，Alexa现在站在另一个行业的前沿。聊天机器人和davis可以让IT管理员通过询问davis问题来识别和修复IT基础架构的问题。</p>
+<p>　　人们有充分的理由担心人工智能将取代人类的工作岗位，如数据输入。牛津大学预计，在未来20年，英国约有35%的就业机会将被自动化取代。</p>
+<p>　　将两个术语混淆</p>
+<p>　　还有一些与这一主题相关的其他的术语。人工神经网络处理信息的方式与人脑类似。但是人工神经网络也相当擅长机器学习，这就让事情变得更加复杂了。</p>
+<p>　　这种神经网络构成了深度学习的基础，而 <strong>深度学习本身就是机器学习的一种形式。</strong> 大量的机器学习算法能够利用成百上千的GPU瞬间处理大量数据。</p>
+<p>　　如果你对这些感到困惑，不要担心，科学家们仍在探讨机器学习和人工智能的确切定义，探讨可能会一直持续下去。</p>
+<p>　　（英文来源：ITPRO 编译：机器小易 审校：日月沉香）</p>
+<p>　　注：本文为网易智能工作室稿件，转载需注明出处，否则追究其法律责任。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Basic-Concept/" rel="tag"><i class="fa fa-tag"></i> Basic Concept</a>
+              <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Tools/IPCreator/Technology/Program/Tools/Atom/techniques-of-atom-editor/" rel="next" title="Learning of Atom">
+                  <i class="fa fa-chevron-left"></i> Learning of Atom
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/TensorFlow/IPCreator/Technology/AI/TensorFlow/history-of-tensorflow/" rel="prev" title="Update History of Tensorflow">
+                  Update History of Tensorflow <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AI与ML的相似之处"><span class="nav-number">1.</span> <span class="nav-text">AI与ML的相似之处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#人工智能"><span class="nav-number">2.</span> <span class="nav-text">人工智能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习"><span class="nav-number">3.</span> <span class="nav-text">机器学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AI研究院-科普：人工智能与机器学习到底有什么区别？"><span class="nav-number">4.</span> <span class="nav-text">AI研究院 | 科普：人工智能与机器学习到底有什么区别？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

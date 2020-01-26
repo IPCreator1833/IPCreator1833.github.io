@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="What’s Annotation? Why use Annotation? How to Use Annotation? Pitfall Best Practice">
+<meta name="keywords" content="Java,Basic Concept,Annotation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Improve Code Inspection with Annotations">
+<meta property="og:url" content="https://hazyman.com/Android/IPCreator/Technology/Program/Java/improve-code-inspection-with-annotations/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="What’s Annotation? Why use Annotation? How to Use Annotation? Pitfall Best Practice">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://developer.android.com/studio/images/write/indirect-permissions-warning_2-2_2x.png?hl=zh-cn">
+<meta property="og:image" content="http://img.blog.csdn.net/20161222232726578?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZGQ4NjQxNDAxMzA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-04-11T04:03:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Improve Code Inspection with Annotations">
+<meta name="twitter:description" content="What’s Annotation? Why use Annotation? How to Use Annotation? Pitfall Best Practice">
+<meta name="twitter:image" content="https://developer.android.com/studio/images/write/indirect-permissions-warning_2-2_2x.png?hl=zh-cn">
+
+<link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Java/improve-code-inspection-with-annotations/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Improve Code Inspection with Annotations | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Android/IPCreator/Technology/Program/Java/improve-code-inspection-with-annotations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Improve Code Inspection with Annotations
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Android/IPCreator/Technology/Program/Java/improve-code-inspection-with-annotations/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Android/IPCreator/Technology/Program/Java/improve-code-inspection-with-annotations/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://developer.android.com/studio/images/write/indirect-permissions-warning_2-2_2x.png?hl=zh-cn" alt></p>
+<ol>
+<li><a href="#What&#39;s-Annotation?">What’s Annotation?</a></li>
+<li><a href="#Why-use-Annotation?">Why use Annotation?</a></li>
+<li><a href="#How-to-Use-Annotation?">How to Use Annotation?</a></li>
+<li><a href="#Pitfall">Pitfall</a></li>
+<li><a href="#Best-Practice">Best Practice</a></li>
+</ol>
+<a id="more"></a>
+<h2 id="What’s-Annotation"><a href="#What’s-Annotation" class="headerlink" title="What’s Annotation?"></a>What’s Annotation?</h2><h3 id="Annotation"><a href="#Annotation" class="headerlink" title="Annotation"></a>Annotation</h3><h4 id="interface"><a href="#interface" class="headerlink" title="@interface"></a>@interface</h4><p>@interface是java中用于声明注解类的关键字.使用该注解表示将自动继承java.lang.annotation.Annotation类,该过程交给编译器完成.需要注意:在定义注解时,不能继承其他注解或接口.</p>
+<p>元注解：<br>元注解的作用就是负责注解其他注解。Java5.0定义了4个标准的meta-annotation类型，它们被用来提供对其它 annotation类型作说明。Java5.0定义的元注解：<br>@Target,<br>@Retention,<br>@Documented,<br>@Inherited</p>
+<h4 id="Target："><a href="#Target：" class="headerlink" title="@Target："></a>@Target：</h4><p>该注解用于定义注解的作用目标,即注解可以用在什么地方,比如是用于方法上还是用于字段上,该注解接受以下参数:</p>
+<p>作用目标    含义<br>@Target(ElementType.TYPE)    用于接口(注解本质上也是接口),类,枚举<br>@Target(ElementType.FIELD)    用于字段,枚举常量<br>@Target(ElementType.METHOD)    用于方法<br>@Target(ElementType.PARAMETER)    用于方法参数<br>@Target(ElementType.CONSTRUCTOR)    用于构造参数<br>@Target(ElementType.LOCAL_VARIABLE)    用于局部变量<br>@Target(ElementType.ANNOTATION_TYPE)    用于注解<br>@Target(ElementType.PACKAGE)    用于包</p>
+<p>,通过@interface,@Retention,@Target已经可以完整的定义一个注解</p>
+<h4 id="Retention："><a href="#Retention：" class="headerlink" title="@Retention："></a>@Retention：</h4><p>对Annotation的“生命周期”限制：某些Annotation仅出现在源代码中，而被编译器丢弃；而另一些却被编译在class文件中；编译在class文件中的Annotation可能会被虚拟机忽略，而另一些在class被装载时将被读取。<br>作用：表示需要在什么级别保存该注释信息，用于描述注解的生命周期（即：被描述的注解在什么范围内有效）<br>RetentionPolicy.SOURCE:在源文件中有效<br>RetentionPolicy.CLASS:在class文件中有效<br>RetentionPolicy.RUNTIME:在运行时有效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Target(ElementType.FIELD)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface Column &#123;</span><br><span class="line">    public String name() default &quot;fieldName&quot;;</span><br><span class="line">    public boolean defaultDBValue() default false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Column注解的的RetentionPolicy的属性值是RUTIME,这样注解处理器可以通过反射，获取到该注解的属性值，从而去做一些运行时的逻辑处理。</p>
+<h4 id="Documented"><a href="#Documented" class="headerlink" title="@Documented:"></a>@Documented:</h4><p>该注解用于描述其它类型的annotation应该被javadoc文档化,出现在api doc中.<br>比如使用该注解的@Target会出出现在api说明中.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Documented</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Target(ElementType.ANNOTATION_TYPE)</span><br><span class="line">public @interface Target &#123;</span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20161222232726578?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZGQ4NjQxNDAxMzA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
+<h4 id="Inherited："><a href="#Inherited：" class="headerlink" title="@Inherited："></a>@Inherited：</h4><p>是一个标记注解，@Inherited阐述了某个被标注的类型是被继承的。如果一个使用了@Inherited修饰的annotation类型被用于一个class，则这个annotation将被用于该class的子类。</p>
+<p>注意：当@Inherited的Retention是RetentionPolicy.RUNTIME，则反射API增强了这种继承性。如果我们使用java.lang.reflect去查询一个@Inherited annotation类型的annotation时，反射代码检查将展开工作：检查class和其父类，直到发现指定的annotation类型被发现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Inherited</span><br><span class="line">public @interface Greeting &#123;</span><br><span class="line">    public enum FontColor&#123; BULE,RED,GREEN&#125;;</span><br><span class="line">    String name();</span><br><span class="line">    FontColor fontColor() default FontColor.GREEN;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="注解参数"><a href="#注解参数" class="headerlink" title="注解参数"></a>注解参数</h4><p>参数成员只能用基本类型byte,short,char,int,long,float,double,boolean八种基本数据类型和 String,Enum,Class,annotations等数据类型,以及这一些类型的数组。</p>
+<h4 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h4><p>注解元素必须有确定的值，要么在定义注解的默认值中指定，要么在使用注解时指定，非基本类型的注解元素的值不可为null。因此, 使用空字符串或0作为默认值是一种常用的做法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Target(ElementType.FIELD)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Documented</span><br><span class="line">public @interface FruitProvider &#123;</span><br><span class="line">    public int id() default -1;</span><br><span class="line">    public String name() default &quot;&quot;;</span><br><span class="line">    public String address() default &quot;&quot;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Target(ElementType.FIELD)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Documented</span><br><span class="line">public @interface FruitProvider &#123;</span><br><span class="line">    public int value() default -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="系统注解"><a href="#系统注解" class="headerlink" title="系统注解"></a>系统注解</h4><p>java设计者已经为我们自定义了几个常用的注解,我们称之为系统注解,主要是这三个:</p>
+<p>系统注解    含义<br>@Override    用于修饰方法,表示此方法重写了父类方法<br>像@Override这样,没有成员定义的注解称之为标记注解.</p>
+<p>@Deprecated    用于修饰方法,表示此方法已经过时<br>需要注意@Deprecated和@deprecated这两者的区别,前者被javac识别和处理,而后者则是被javadoc工具识别和处理.因此当我们需要在源码标记某个方法已经过时应该使用@Deprecated,如果需要在文档中说明则使用@deprecated</p>
+<p>@SuppressWarnnings    该注解用于告诉编译器忽视某类编译警告<br>该注解被用于有选择的关闭编译器对类,方法,成员变量即变量初始化的警告.该注解可接受以下参数:</p>
+<p>参数    含义<br>deprecated    使用已过时类,方法,变量<br>unchecked    执行了未检查的转告时的警告,如使用集合是为使用泛型来制定集合保存时的类型<br>fallthrough    使用switch,但是没有break时<br>path    类路径,源文件路径等有不存在的路径<br>serial    可序列化的类上缺少serialVersionUID定义时的警告<br>finally    任何finally字句不能正常完成时的警告<br>all    以上所有情况的警告</p>
+<h4 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h4><p>了解完系统注解之后,现在我们就可以自己来定义注解了,通过上面@Override的实例,不难看出定义注解的格式如下:</p>
+<p>public @interface 注解名 {定义体}</p>
+<p>定义体就是方法的集合,每个方法实则是声明了一个配置参数.方法的名称作为配置参数的名称,方法的返回值类型就是配置参数的类型.和普通的方法不一样,可以通过default关键字来声明配置参数的默认值.</p>
+<p>需要注意:</p>
+<ol>
+<li>此处只能使用public或者默认的default两个权限修饰符</li>
+<li>配置参数的类型只能使用基本类型(byte,boolean,char,short,int,long,float,double)和String,Enum,Class,annotation</li>
+<li>对于只含有一个配置参数的注解,参数名建议设置中value,即方法名为value</li>
+<li>配置参数一旦设置,其参数值必须有确定的值,要不在使用注解的时候指定,要不在定义注解的时候使用default为其设置默认值,对于非基本类型的参数值来说,其不能为null.<br>像@Override这样,没有成员定义的注解称之为标记注解.</li>
+</ol>
+<h3 id="注解处理器"><a href="#注解处理器" class="headerlink" title="注解处理器"></a>注解处理器</h3><p>根据注解的特性,注解处理器可以分为<strong>运行时注解处理</strong>和<strong>编译时注解处理器</strong>.运行时处理器需要借助反射机制实现,而编译时处理器则需要借助APT来实现.</p>
+<h2 id="Why-use-Annotation"><a href="#Why-use-Annotation" class="headerlink" title="Why use Annotation?"></a>Why use Annotation?</h2><p>Annotations allow you to provide hints to code inspections tools like Lint, to help detect these more subtle code problems. They are added as metadata tags that you attach to variables, parameters, and return values to inspect method return values, passed parameters, local variables, and fields. When used with code inspections tools, annotations can help you detect problems, such as null pointer exceptions and resource type conflicts.</p>
+<h2 id="How-to-Use-Annotation"><a href="#How-to-Use-Annotation" class="headerlink" title="How to Use Annotation?"></a>How to Use Annotation?</h2><p>Android supports a variety of annotations through the <a href="https://developer.android.com/topic/libraries/support-library/features.html?hl=zh-cn#annotations" target="_blank" rel="noopener">Annotations Support Library</a>. You can access the library through the <a href="https://developer.android.com/reference/android/support/annotation/package-summary.html?hl=zh-cn" target="_blank" rel="noopener">android.support.annotation</a> package.</p>
+<h3 id="Nullness-Annotations"><a href="#Nullness-Annotations" class="headerlink" title="Nullness Annotations"></a>Nullness Annotations</h3><h3 id="线程注解-UiThread-WorkerThread-…"><a href="#线程注解-UiThread-WorkerThread-…" class="headerlink" title="线程注解: @UiThread, @WorkerThread, …"></a>线程注解: @UiThread, @WorkerThread, …</h3><p>(Support library 22.2及其之后版本支持.)</p>
+<p>如果你的方法只能在指定的线程类型中被调用，那么你就可以使用以下4个注解来标注它：<br>@UiThread<br>@MainThread<br>@WorkerThread<br>@BinderThread<br>如果一个类中的所有方法都有相同的线程需求，那么你可以注解类本身。比如android.view.View，就被用@UiThread标注。</p>
+<p>关于线程注解使用的一个很好的例子就是AsyncTask：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@WorkerThread</span><br><span class="line">protected abstract Result doInBackground(Params... params);</span><br><span class="line"></span><br><span class="line">@MainThread</span><br><span class="line">protected void onProgressUpdate(Progress... values) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>@UiThread还是@MainThread?</p>
+<p>在进程里只有一个主线程。这个就是@MainThread。同时这个线程也是一个@UiThread。比如activity的主要窗口就运行在这个线程上。然而它也有能力为应用创建其他线程。这很少见，一般具备这样功能的都是系统进程。通常是把和生命周期有关的用@MainThread标注，和View层级结构相关的用@UiThread标注。但是由于@MainThread本质上是一个@UiThread，而大部分情况下@UiThread又是一个@MainThread，所以工具(lint ,Android Studio,等等)可以把他们互换，所以你能在一个可以调用@MainThread方法的地方也能调用@UiThread方法，反之亦然。</p>
+<p>值约束: @Size, @IntRange, @FloatRange</p>
+<h2 id="Pitfall"><a href="#Pitfall" class="headerlink" title="Pitfall"></a>Pitfall</h2><h2 id="Best-Practice"><a href="#Best-Practice" class="headerlink" title="Best Practice"></a>Best Practice</h2><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1]<a href="https://developer.android.com/studio/write/annotations.html?hl=zh-cn#adding-annotations" target="_blank" rel="noopener">Improve Code Inspection with Annotations</a><br>[2]<a href="http://www.flysnow.org/2015/08/13/android-tech-docs-support-annotations.html" target="_blank" rel="noopener">Android注解支持(Support Annotations)</a><br>[3]<a href="https://juejin.im/entry/58df5e5c2f301e006208b307" target="_blank" rel="noopener">性能最佳实践: 在开发中避免使用枚举</a><br>[4]<a href="https://joyrun.github.io/2016/07/18/java-annotation/" target="_blank" rel="noopener">Java Annotation最佳入门实践</a><br>[5]<a href="https://joyrun.github.io/2016/07/19/AptHelloWorld/" target="_blank" rel="noopener">Android APT（编译时代码生成）最佳实践</a><br>[6]<a href="https://joyrun.github.io/2016/08/01/ActivityRouter/" target="_blank" rel="noopener">ActivityRouter路由框架：通过注解实现URL打开Activity</a><br>[7]<a href="http://blog.csdn.net/dd864140130/article/details/53875814" target="_blank" rel="noopener">基础篇：带你从头到尾玩转注解</a><br>[8]<a href="http://blog.csdn.net/dd864140130/article/details/53957691" target="_blank" rel="noopener">拓展篇：注解处理器最佳实践</a><br>[9]<a href="http://www.infoq.com/cn/articles/cf-java-annotation?utm_source=articles_about_java-depth-adventure&amp;utm_medium=link&amp;utm_campaign=java-depth-adventure" target="_blank" rel="noopener">Java深度历险（六）——Java注解</a><br>[10]<a href="http://www.trinea.cn/android/java-annotation-android-open-source-analysis/" target="_blank" rel="noopener">Java Annotation 及几个常用开源项目注解原理简析</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+              <a href="/tags/Basic-Concept/" rel="tag"><i class="fa fa-tag"></i> Basic Concept</a>
+              <a href="/tags/Annotation/" rel="tag"><i class="fa fa-tag"></i> Annotation</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/Design/compile-process-of-apk/" rel="next" title="Compile Process of Android Application">
+                  <i class="fa fa-chevron-left"></i> Compile Process of Android Application
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/3rdLib/great-spirit-on-github/" rel="prev" title="Great Spirits on Github">
+                  Great Spirits on Github <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What’s-Annotation"><span class="nav-number">1.</span> <span class="nav-text">What’s Annotation?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Annotation"><span class="nav-number">1.1.</span> <span class="nav-text">Annotation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#interface"><span class="nav-number">1.1.1.</span> <span class="nav-text">@interface</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Target："><span class="nav-number">1.1.2.</span> <span class="nav-text">@Target：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Retention："><span class="nav-number">1.1.3.</span> <span class="nav-text">@Retention：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Documented"><span class="nav-number">1.1.4.</span> <span class="nav-text">@Documented:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Inherited："><span class="nav-number">1.1.5.</span> <span class="nav-text">@Inherited：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注解参数"><span class="nav-number">1.1.6.</span> <span class="nav-text">注解参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认值"><span class="nav-number">1.1.7.</span> <span class="nav-text">默认值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#系统注解"><span class="nav-number">1.1.8.</span> <span class="nav-text">系统注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义注解"><span class="nav-number">1.1.9.</span> <span class="nav-text">自定义注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注解处理器"><span class="nav-number">1.2.</span> <span class="nav-text">注解处理器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-use-Annotation"><span class="nav-number">2.</span> <span class="nav-text">Why use Annotation?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Use-Annotation"><span class="nav-number">3.</span> <span class="nav-text">How to Use Annotation?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nullness-Annotations"><span class="nav-number">3.1.</span> <span class="nav-text">Nullness Annotations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程注解-UiThread-WorkerThread-…"><span class="nav-number">3.2.</span> <span class="nav-text">线程注解: @UiThread, @WorkerThread, …</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pitfall"><span class="nav-number">4.</span> <span class="nav-text">Pitfall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Best-Practice"><span class="nav-number">5.</span> <span class="nav-text">Best Practice</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

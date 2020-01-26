@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="王烨clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。 也许这是个千人千面的话题，每个工程师都有自己的理解。比如我，从一个天天被骂代码写得烂的人，逐渐学习成长，到现在也能写的出“人模人样”的代码来了。这期间算是积累了一点经验心得，想和大家分享，抛砖引玉。 本文主要针对面向对象编程的clean code来阐述，面向过程代码的思路会比较不">
+<meta name="keywords" content="Clean Code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Talking About Clean Code">
+<meta property="og:url" content="https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="王烨clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。 也许这是个千人千面的话题，每个工程师都有自己的理解。比如我，从一个天天被骂代码写得烂的人，逐渐学习成长，到现在也能写的出“人模人样”的代码来了。这期间算是积累了一点经验心得，想和大家分享，抛砖引玉。 本文主要针对面向对象编程的clean code来阐述，面向过程代码的思路会比较不">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://okkntqe2h.bkt.clouddn.com/clean-code.jpg">
+<meta property="og:image" content="http://tech.meituan.com/img/poi%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE.png">
+<meta property="og:image" content="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1%E5%9B%BE.png">
+<meta property="og:image" content="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png">
+<meta property="og:image" content="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png">
+<meta property="og:image" content="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_2.png">
+<meta property="og:image" content="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_3.png">
+<meta property="og:image" content="http://tech.meituan.com/img/qrcode_for_gh.jpg">
+<meta property="og:updated_time" content="2017-03-27T10:02:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Talking About Clean Code">
+<meta name="twitter:description" content="王烨clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。 也许这是个千人千面的话题，每个工程师都有自己的理解。比如我，从一个天天被骂代码写得烂的人，逐渐学习成长，到现在也能写的出“人模人样”的代码来了。这期间算是积累了一点经验心得，想和大家分享，抛砖引玉。 本文主要针对面向对象编程的clean code来阐述，面向过程代码的思路会比较不">
+<meta name="twitter:image" content="http://okkntqe2h.bkt.clouddn.com/clean-code.jpg">
+
+<link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Talking About Clean Code | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Talking About Clean Code
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="http://tech.meituan.com/clean-code.html" target="_blank" rel="noopener">王烨</a><br><img src="http://okkntqe2h.bkt.clouddn.com/clean-code.jpg" alt><br>clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。</p>
+<p>也许这是个千人千面的话题，每个工程师都有自己的理解。比如我，从一个天天被骂代码写得烂的人，逐渐学习成长，到现在也能写的出“人模人样”的代码来了。这期间算是积累了一点经验心得，想和大家分享，抛砖引玉。</p>
+<p>本文主要针对面向对象编程的clean code来阐述，面向过程代码的思路会比较不同，不在本文的讨论范畴。</p>
+<a id="more"></a>
+<h3 id="代码整洁的大前提"><a href="#代码整洁的大前提" class="headerlink" title="代码整洁的大前提"></a>代码整洁的大前提</h3><p>代码大部分时候是用来维护的，而不是用来实现功能的<br>这个原则适用于大部分的工程。我们的代码，一方面是编译好让机器执行，完成功能需求；另一方面，是写给身边的队友和自己看的，需要长期维护，而且大部分项目都不是朝生夕死的短命鬼。</p>
+<p>大部分情况下，如果不能写出清晰好看的代码，可能自己一时爽快，后续维护付出的代价和成本将远高于你的想象。</p>
+<h3 id="对清晰好看代码的追求精神，比所有的技巧都要重要。"><a href="#对清晰好看代码的追求精神，比所有的技巧都要重要。" class="headerlink" title="对清晰好看代码的追求精神，比所有的技巧都要重要。"></a>对清晰好看代码的追求精神，比所有的技巧都要重要。</h3><p>优秀的代码大部分是可以<strong>自描述</strong>的，好于文档和注释<br>当你翻看很多开源代码时，会发现注释甚至比我们自己写的项目都少，但是却能看的很舒服。当读完源码时，很多功能设计就都清晰明了了。通过仔细斟酌的方法命名、清晰的流程控制，代码本身就可以拿出来当作文档使用，而且它永远不会过期。</p>
+<p>相反，注释不能让写的烂的代码变的更好。如果别人只能依靠注释读懂你的代码的时候，你一定要反思代码出现了什么问题（当然，这里不是说大家不要写注释了）。</p>
+<p>说下比较适合写注释的两种场景：</p>
+<p>public interface，向别人明确发布你功能的语义，输入输出，且不需要关注实现。<br>功能容易有歧义的点，或者涉及比较深层专业知识的时候。比如，如果你写一个客户端，各种config参数的含义等。</p>
+<h3 id="设计模式只是手段，代码清晰才是目的"><a href="#设计模式只是手段，代码清晰才是目的" class="headerlink" title="设计模式只是手段，代码清晰才是目的"></a>设计模式只是手段，代码清晰才是目的</h3><p>之前见过一些所谓“高手”的代码都比较抽象，各种工厂、各种继承。想找到一个实现总是要山路十八弯，一个工程里大部分的类是抽象类或者接口，找不到一两句实现的代码，整个读起代码来很不顺畅。我跟他聊起来的时候，他的主要立场是：保留合适的扩展点，克服掉所有的硬编码。</p>
+<p>其实在我看来，也许他的代码被“过度设计”了。首先必须要承认的是，在同一个公司工作的同事，水平是参差不齐的。无论你用了如何高大上的设计，如果大多数人都不能理解你的代码或者读起来很费劲的话，其实这是一个失败的设计。</p>
+<p>当你的系统内大部分抽象只有一个实现的时候，要好好思考一下，是不是设计有点过度了，清晰永远是第一准则。</p>
+<h3 id="代码整洁的常见手段"><a href="#代码整洁的常见手段" class="headerlink" title="代码整洁的常见手段"></a>代码整洁的常见手段</h3><p>记住原则后，我们开始进入实践环节，先来看下有哪些促成clean code的常见手段。</p>
+<h3 id="code-review"><a href="#code-review" class="headerlink" title="code review"></a>code review</h3><p>很多大公司会用git的pull request机制来做code review。我们重点应该review什么？是代码的格式、业务逻辑还是代码风格？我想说的是，凡是能通过机器检查出来的事情，无需通过人。比如换行、注释、方法长度、代码重复等。除了基本功能需求的逻辑合理没有bug外，我们更应该关注代码的设计与风格。比如，一段功能是不是应该属于一个类、是不是有很多相似的功能可以抽取出来复用、代码太过冗长难懂等等。</p>
+<p>我个人非常推崇集体code review，因为很多时候，组里相对高级的工程师能够一眼发现代码存在较大设计缺陷，提出改进意见或者重构方式。我们可以在整个小组内形成一个好的文化传承和风格统一，并且很大程度上培养了大家对clean code的热情。</p>
+<h3 id="勤于重构"><a href="#勤于重构" class="headerlink" title="勤于重构"></a>勤于重构</h3><p>好的代码，一般都不是一撮而就的。即使一开始设计的代码非常优秀，随着业务的快速迭代，也可能被改的面目全非。</p>
+<p>为了避免重构带来的负面影响（delay需求或者带来bug），我们需要做好以下的功课：<br>① 掌握一些常见的“无痛”重构技巧，这在下文会有具体讲解。<br>② 小步快跑，不要企图一口吃成个胖子。改一点，测试一点，一方面减少代码merge的痛苦，另一方面减少上线的风险。<br>③ 建立自动化测试机制，要做到即使代码改坏了，也能保证系统最小核心功能的可用，并且保证自己修改的部分被测试覆盖到。<br>④ 熟练掌握IDE的自动重构功能。这些会很大程度上减少我们的体力劳动，避免犯错。</p>
+<h3 id="静态检查"><a href="#静态检查" class="headerlink" title="静态检查"></a>静态检查</h3><p>现在市面上有很多代码静态检查的工具，也是发现bug和风格不好的比较容易的方式。可以与发布系统做集成，强制把主要问题修复掉才可以上线。目前美团点评技术团队内部的研发流程中已经普遍接入了Sonar质量管理平台。</p>
+<h3 id="多读开源代码和身边优秀同学的代码"><a href="#多读开源代码和身边优秀同学的代码" class="headerlink" title="多读开源代码和身边优秀同学的代码"></a>多读开源代码和身边优秀同学的代码</h3><p>感谢开源社区，为我们提供了这么好的学习机会。无论是JDK的源码，还是经典的Netty、Spring、Jetty，还是一些小工具如Guava等，都是clean code的典范。多多学习，多多反思和总结，必有收益。</p>
+<h3 id="代码整洁的常见技巧"><a href="#代码整洁的常见技巧" class="headerlink" title="代码整洁的常见技巧"></a>代码整洁的常见技巧</h3><p>前面的内容都属于热身，让大家有个整体宏观的认识。下面终于进入干货环节了，我会分几个角度讲解编写整洁代码的常见技巧和误区。</p>
+<h3 id="通用技巧"><a href="#通用技巧" class="headerlink" title="通用技巧"></a>通用技巧</h3><h3 id="单一职责"><a href="#单一职责" class="headerlink" title="单一职责"></a>单一职责</h3><p>这是整洁代码的最重要也是最基本的原则了。简单来讲，大到一个module、一个package，小到一个class、一个method乃至一个属性，都应该承载一个明确的职责。要定义的东西，如果不能用一句话描述清楚职责，就把它拆掉。</p>
+<p>我们平时写代码时，最容易犯的错误是：一个方法干了好几件事或者一个类承载了许多功能。</p>
+<p>先来聊聊方法的问题。个人非常主张把方法拆细，这是复用的基础。如果方法干了两件事情，很有可能其中一个功能的其他业务有差别就不好重用了。另外语义也是不明确的。经常看到一个get()方法里面竟然修改了数据，这让使用你方法的人情何以堪？如果不点进去看看实现，可能就让程序陷入bug，让测试陷入麻烦。</p>
+<p>再来聊聊类的问题。我们经常会看到“又臭又长”的service/biz层的代码，里面有几十个方法，干什么的都有：既有增删改查，又有业务逻辑的聚合。每次找到一个方法都费劲。不属于一个领域或者一个层次的功能，就不要放到一起。</p>
+<p>我们team在code review中，最常被批评的问题，就是一个方法应该归属于哪个类。</p>
+<h3 id="优先定义整体框架"><a href="#优先定义整体框架" class="headerlink" title="优先定义整体框架"></a>优先定义整体框架</h3><p>我写代码的时候，比较喜欢先去定义整体的框架，就是写很多空实现，来把整体的业务流程穿起来。良好的方法签名，用入参和出参来控制流程。这样能够避免陷入业务细节无法自拔。在脑海中先定义清楚流程的几个阶段，并为每个阶段找到合适的方法／类归属。</p>
+<p>这样做的好处是，阅读你代码的人，无论读到什么深度，都可以清晰地了解每一层的职能，如果不care下一层的实现，完全可以跳过不看，并且方法的粒度也会恰到好处。</p>
+<p>简而言之，我比较推崇写代码的时候“广度优先”而不是“深度优先”，这和我读代码的方式是一致的。当然，这件事情跟个人的思维习惯有一定的关系，可能对抽象思维能力要求会更高一些。如果开始写代码的时候这些不够清晰，起码要通过不断地重构，使代码达到这样的成色。</p>
+<h3 id="清晰的命名"><a href="#清晰的命名" class="headerlink" title="清晰的命名"></a>清晰的命名</h3><p>老生常谈的话题，这里不展开讲了，但是必须要mark一下。有的时候，我思考一个方法命名的时间，比写一段代码的时间还长。原因还是那个逻辑：每当你写出一个类似于”temp”、”a”、”b”这样变量的时候，后面每一个维护代码的人，都需要用几倍的精力才能理顺。</p>
+<p>并且这也是代码自描述最重要的基础。</p>
+<h3 id="避免过长参数"><a href="#避免过长参数" class="headerlink" title="避免过长参数"></a>避免过长参数</h3><p>如果一个方法的参数长度超过4个，就需要警惕了。一方面，没有人能够记得清楚这些函数的语义；另一方面，代码的可读性会很差；最后，如果参数非常多，意味着一定有很多参数，在很多场景下，是没有用的，我们只能构造默认值的方式来传递。</p>
+<p>解决这个问题的方法很简单，一般情况下我们会构造paramObject。用一个struct或者一个class来承载数据，一般这种对象是value object，不可变对象。这样，能极大程度提高代码的可复用性和可读性。在必要的时候，提供合适的build方法，来简化上层代码的开发成本。</p>
+<h3 id="避免过长方法和类"><a href="#避免过长方法和类" class="headerlink" title="避免过长方法和类"></a>避免过长方法和类</h3><p>一个类或者方法过长的时候，读者总是很崩溃的。简单地把方法、类和职责拆细，往往会有立竿见影的成效。以类为例，拆分的维度有很多，常见的是横向／纵向。例如，如果一个service，处理的是跟一个库表对象相关的所有逻辑，横向拆分就是根据业务，把建立／更新／修改／通知等逻辑拆到不同的类里去；而纵向拆分，指的是<br>把数据库操作/MQ操作/Cache操作/对象校验等，拆到不同的对象里去，让主流程尽量简单可控，让同一个类，表达尽量同一个维度的东西。</p>
+<h3 id="让相同长度的代码段表示相同粒度的逻辑"><a href="#让相同长度的代码段表示相同粒度的逻辑" class="headerlink" title="让相同长度的代码段表示相同粒度的逻辑"></a>让相同长度的代码段表示相同粒度的逻辑</h3><p>这里想表达的是，尽量多地去抽取private方法，让代码具有自描述的能力。举个简单的例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public void doSomeThing(Map params1,Map params2)&#123;</span><br><span class="line">Do1 do1 = getDo1(params1);</span><br><span class="line">Do2 do2 = new Do2();</span><br><span class="line">do2.setA(params2.get(&quot;a&quot;));</span><br><span class="line">do2.setB(params2.get(&quot;b&quot;));</span><br><span class="line">do2.setC(params2.get(&quot;c&quot;));</span><br><span class="line">mergeDO(do1,do2);</span><br><span class="line">&#125;</span><br><span class="line">private void getDo1(Map params1);</span><br><span class="line">private void mergeDo(do1,do2)&#123;...&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>类似这种代码，在业务代码中随处可见。获取do1是一个方法，merge是一个方法，但获取do2的代码却在主流程里写了。这种代码，流程越长，读起来越累。很多人读代码的逻辑，是“广度优先”的。先读懂主流程，再去看细节。类似这种代码，如果能够把构造do2的代码，提取一个private 方法，就会舒服很多。</p>
+<h2 id="面向对象设计技巧"><a href="#面向对象设计技巧" class="headerlink" title="面向对象设计技巧"></a>面向对象设计技巧</h2><h3 id="贫血与领域驱动"><a href="#贫血与领域驱动" class="headerlink" title="贫血与领域驱动"></a>贫血与领域驱动</h3><p>不得不承认，Spring已经成为企业级Java开发的事实标准。而大部分公司采用的三层/四层贫血模型，已经让我们的编码习惯，变成了面向DAO而不是面向对象。</p>
+<p>缺少了必要的模型抽象和设计环节，使得代码冗长，复用程度比较差。每次撸代码的时候，从mapper撸起，好像已经成为不成文的规范。</p>
+<p>好处是上手简单，学习成本低。但是每次都不能重用，然后面对两三千行的类看着眼花的时候，我的心是很痛的。关于领域驱动的设计模式，本文不会展开去讲。回归面向对象，还是跟大家share一些比较好的code技巧，能够在一个通用的框架下，尽量好的写出漂亮可重用的code。</p>
+<p>个人认为，一个好的系统，一定离不开一套好的模型定义。梳理清楚系统中的核心模型，清楚的定义每个方法的类归属，无论对于代码的可读性、可交流性，还是和产品的沟通，都是有莫大好处的。</p>
+<h3 id="为每个方法找到合适的类归属，数据和行为尽量要在一起"><a href="#为每个方法找到合适的类归属，数据和行为尽量要在一起" class="headerlink" title="为每个方法找到合适的类归属，数据和行为尽量要在一起"></a>为每个方法找到合适的类归属，数据和行为尽量要在一起</h3><p>如果一个类的所有方法，都是在操作另一个类的对象。这时候就要仔细想一想类的设计是否合理了。理论上讲，面向对象的设计，主张数据和行为在一起。这样，对象之间的结构才是清晰的，也能减少很多不必要的参数传递。</p>
+<p>不过这里面有一个要讨论的方法：service对象。如果操作一个对象数据的所有方法都建立在对象内部，可能使对象承载了很多并不属于它本身职能的方法。</p>
+<p>例如，我定义一个类，叫做person，。这个类有很多行为，比如：吃饭、睡觉、上厕所、生孩子；也有很多字段，比如：姓名、年龄、性格。</p>
+<p>很明显，字段从更大程度上来讲，是定义和描述我这个人的，但很多行为和我的字段并不相关。上厕所的时候是不会关心我是几岁的。如果把所有关于人的行为全部在person内部承载，这个类一定会膨胀的不行。</p>
+<p>这时候就体现了service方法的价值，如果一个行为，无法明确属于哪个领域对象，牵强地融入领域对象里，会显得很不自然。这时候，无状态的service可以发挥出它的作用。但一定要把握好这个度，回归本质，我们要把属于每个模型的行为合理的去划定归属。</p>
+<h3 id="警惕static"><a href="#警惕static" class="headerlink" title="警惕static"></a>警惕static</h3><p>static方法，本质上来讲是面向过程的，无法清晰地反馈对象之间的关系。虽然有一些代码实例（自己实现单例或者Spring托管等）的无状态方法可以用static来表示，但这种抽象是浅层次的。说白了，如果我们所有调用static的地方，都写上import static，那么所有的功能就由类自己在承载了。</p>
+<p>让我画一个类图？尴尬了……画不出来。</p>
+<p>而单例的膨胀，很大程度上也是贫血模型带来的副作用。如果对象本身有血有肉，就不需要这么多无状态方法。</p>
+<h3 id="static真正适用的场景：工具方法，而不是业务方法。"><a href="#static真正适用的场景：工具方法，而不是业务方法。" class="headerlink" title="static真正适用的场景：工具方法，而不是业务方法。"></a>static真正适用的场景：工具方法，而不是业务方法。</h3><h3 id="巧用method-object"><a href="#巧用method-object" class="headerlink" title="巧用method object"></a>巧用method object</h3><p>method object是大型重构的常用技巧。当一段逻辑特别复杂的代码，充斥着各种参数传递和是非因果判断的时候，我首先想到的重构手段是提取method object。所谓method object，是一个有数据有行为的对象。依赖的数据会成为这个对象的变量，所有的行为会成为这个对象的内部方法。利用成员变量代替参数传递，会让代码简洁清爽很多。并且，把一段过程式的代码转换成对象代码，为很多面向对象编程才可以使用的继承／封装／多态等提供了基础。</p>
+<p>举个例子，上文引用的代码如果用method object表示大概会变成这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class DoMerger&#123;</span><br><span class="line">   map params1;</span><br><span class="line">   map params2;</span><br><span class="line">   Do1 do1;</span><br><span class="line">   Do2 do2;</span><br><span class="line">   public DoMerger(Map params1,Map params2)&#123;</span><br><span class="line">      this.params1 = params1;</span><br><span class="line">      this.params2 = parmas2;</span><br><span class="line">   &#125;</span><br><span class="line">   public void invoke()&#123;</span><br><span class="line">       do1 = getDo1();</span><br><span class="line">       do2 = getDo2();</span><br><span class="line">      mergeDO(do1,do2);</span><br><span class="line">   &#125;</span><br><span class="line">   private Do1 getDo1();</span><br><span class="line">    private Do2 getDo2();</span><br><span class="line">    private void mergeDo()&#123;</span><br><span class="line">       print(do1+do2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="面向接口编程"><a href="#面向接口编程" class="headerlink" title="面向接口编程"></a>面向接口编程</h3><p>面向接口编程是很多年来大家形成的共识和最佳实践。最早的理论是便于实现的替换，但现在更显而易见的好处是避免public方法的膨胀。一个对外publish的接口，一定有明确的职责。要判断每一个public方法是否应该属于同一个interface，是很容易的。</p>
+<p>整个代码基于接口去组织，会很自然地变得非常清晰易读。关注实现的人才去看实现，不是嘛？</p>
+<h3 id="正确使用继承和组合"><a href="#正确使用继承和组合" class="headerlink" title="正确使用继承和组合"></a>正确使用继承和组合</h3><p>这也是个在业界被讨论过很久的问题，也有很多论调。最新的观点是组合的使用一般情况下比继承更为灵活，尤其是单继承的体系里，所以倾向于使用组合，否则会让子类承载很多不属于自己的职能。</p>
+<p>个人对此观点持保留意见，在我经历过的代码中，有一个小规律，我分析一下。</p>
+<p>protected abstract 这种是最值得使用继承的，父类保留扩展点，子类扩展，没什么好说的。</p>
+<p>protected final 这种方法，子类是只能使用不能修改实现的。一般有两种情况：<br>① 抽象出主流程不能被修改的，然而一般情况下，public final更适合这个职能。如果只是流程的一部分，需要思考这个流程的类归属，大部分变成public组合到其他类里是更合适的。<br>② 父类是抽象类无法直接对外提供服务，又不希望子类修改它的行为，这种大多数情况下属于工具方法，比较适合用另一个领域对象来承载并用组合的方式来使用。</p>
+<p>protected 这种是有争议的，是父类有默认实现但子类可以扩展的。凡是有扩展可能的，使用继承更理想一些。否则，定义成final并考虑成组合。</p>
+<p>综上所述，个人认为继承更多的是为扩展提供便利，为复用而存在的方法最好使用组合的方式。当然，更为大的原则是明确每个方法的领域划分。</p>
+<h2 id="代码复用技巧"><a href="#代码复用技巧" class="headerlink" title="代码复用技巧"></a>代码复用技巧</h2><h3 id="模板方法"><a href="#模板方法" class="headerlink" title="模板方法"></a>模板方法</h3><p>这是我用得最多的设计模式了。每当有两个行为类似但又不完全相同的代码段时，我总是会想到模板方法。提取公共流程和可复用的方法到父类，保留不同的地方作为abstract方法，由不同的子类去实现。</p>
+<p>并在合适的时机，pull method up（复用）或者 pull method down（特殊逻辑）。</p>
+<p>最后，把不属于流程的、但可复用的方法，判断是不是属于基类的领域职责，再使用继承或者组合的方法，为这些方法找到合适的安家之处。</p>
+<h3 id="extract-method"><a href="#extract-method" class="headerlink" title="extract method"></a>extract method</h3><p>很多复用的级别没有这么大，也许只是几行相同的逻辑被copy了好几次，何不尝试提取方法（private）。又能明确方法行为，又能做到代码复用，何乐不为？</p>
+<h3 id="责任链"><a href="#责任链" class="headerlink" title="责任链"></a>责任链</h3><p>经常看到这样的代码，一连串类似的行为，只是数据或者行为不一样。如一堆校验器，如果成功怎么样、失败怎么样；或者一堆对象构建器，各去构造一部分数据。碰到这种场景，我总是喜欢定义一个通用接口，入参是完整的要校验／构造的参数，<br>出参是成功/失败的标示或者是void。然后有很多实现器分别实现这个接口，再用一个集合把这堆行为串起来。最后，遍历这个集合，串行或者并行的执行每一部分的逻辑。</p>
+<p>这样做的好处是：<br>① 很多通用的代码可以在责任链原子对象的基类里实现；<br>② 代码清晰，开闭原则，每当有新的行为产生的时候，只需要定义行的实现类并添加到集合里即可；<br>③ 为并行提供了基础。</p>
+<h3 id="为集合显式定义它的行为"><a href="#为集合显式定义它的行为" class="headerlink" title="为集合显式定义它的行为"></a>为集合显式定义它的行为</h3><p>集合是个有意思的东西，本质上它是个容器，但由于泛型的存在，它变成了可以承载所有对象的容器。很多非集合的类，我们可以定义清楚他们的边界和行为划分，但是装进集合里，它们却都变成了一个样子。不停地有代码，各种循环集合，做一些相似的操作。</p>
+<p>其实很多时候，可以把对集合的操作显示地封装起来，让它变得更有血有肉。</p>
+<p>例如一个Map，它可能表示一个配制、一个缓存等等。如果所有的操作都是直接操作Map，那么它的行为就没有任何语义。第一，读起来就必须要深入细节；第二，如果想从获取配置读取缓存的地方加个通用的逻辑，例如打个log什么的，你可以想象是多么的崩溃。</p>
+<p>个人提倡的做法是，对于有明确语义的集合的一些操作，尤其是全局的集合或者被经常使用的集合，做一些封装和抽象，如把Map封装成一个Cache类或者一个config类，再提供GetFromCache这样的方法。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文从clean code的几个大前提出发，然后提出了实践clean code的一些手段，重点放在促成clean code的一些常用编码和重构技巧。<br>当然，这些只代表笔者本人的一点点感悟。好的代码，最最需要的，还是大家不断追求卓越的精神。欢迎大家一起探索交流这个领域，为clean code提供更多好的思路与方法。</p>
+<h3 id="作者简介"><a href="#作者简介" class="headerlink" title="作者简介"></a>作者简介</h3><p>王烨，现在是美团点评旅游后台研发组的工程师，之前曾经在百度、去哪儿和优酷工作过，专注Java后台开发。对于网络编程和并发编程具有浓厚的兴趣，曾经做过一些基础组件，也翻过一些源码，属于比较典型的宅男技术控。期待能够与更多知己，在coding的路上并肩前行~<br>联系邮箱：<a href="mailto:wangye03@meituan.com" target="_blank" rel="noopener">wangye03@meituan.com</a></p>
+<p><a href="http://tech.meituan.com/performance_tunning.html" target="_blank" rel="noopener">常见性能优化策略的总结 晓明</a></p>
+<p>本文要感谢我职级评定过程中的一位评委，他建议把之前所做的各种性能优化的案例和方案加以提炼、总结，以文档的形式沉淀下来，并在内部进行分享。力求达到如下效果：</p>
+<ol>
+<li><p>形成可实践、可借鉴、可参考的各种性能优化的方案以及选型考虑点，同时配合具体的真实案例，其他人遇到相似问题时，不用从零开始。</p>
+</li>
+<li><p>有助于开阔视野，除了性能优化之外，也能提供通用的常见思路以及方案选型的考虑点，帮助大家培养在方案选型时的意识、思维以及做各种权衡的能力。</p>
+</li>
+</ol>
+<p>文章在内部分享后，引起强烈分享，得到了不少同事和朋友的认可和好评，觉得对日常的工作有很好的指导作用。考虑到这些经验可能对业界同行也有帮助，所以在美团点评技术团队博客公开。</p>
+<h2 id="常见性能优化策略分类"><a href="#常见性能优化策略分类" class="headerlink" title="常见性能优化策略分类"></a>常见性能优化策略分类</h2><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>之所以把代码放到第一位，是因为这一点最容易引起技术人员的忽视。很多技术人员拿到一个性能优化的需求以后，言必称缓存、异步、JVM等。实际上，第一步就应该是分析相关的代码，找出相应的瓶颈，再来考虑具体的优化策略。有一些性能问题，完全是由于代码写的不合理，通过直接修改一下代码就能解决问题的，比如for循环次数过多、作了很多无谓的条件判断、相同逻辑重复多次等。</p>
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>数据库的调优，总的来说分为以下三部分：</p>
+<h3 id="SQL调优"><a href="#SQL调优" class="headerlink" title="SQL调优"></a>SQL调优</h3><p>这是最常用、每一个技术人员都应该掌握基本的SQL调优手段（包括方法、工具、辅助系统等）。这里以MySQL为例，最常见的方式是，由自带的慢查询日志或者开源的慢查询系统定位到具体的出问题的SQL，然后使用explain、profile等工具来逐步调优，最后经过测试达到效果后上线。这方面的细节，可以参考<strong>MySQL索引原理及慢查询优化</strong>。</p>
+<h3 id="架构层面的调优"><a href="#架构层面的调优" class="headerlink" title="架构层面的调优"></a>架构层面的调优</h3><p>这一类调优包括读写分离、多从库负载均衡、水平和垂直分库分表等方面，一般需要的改动较大，但是频率没有SQL调优高，而且一般需要DBA来配合参与。那么什么时候需要做这些事情？我们可以通过内部监控报警系统（比如Zabbix），定期跟踪一些指标数据是否达到瓶颈，一旦达到瓶颈或者警戒值，就需要考虑这些事情。通常，DBA也会定期监控这些指标值。</p>
+<h3 id="连接池调优"><a href="#连接池调优" class="headerlink" title="连接池调优"></a>连接池调优</h3><p>我们的应用为了实现数据库连接的高效获取、对数据库连接的限流等目的，通常会采用连接池类的方案，即每一个应用节点都管理了一个到各个数据库的连接池。随着业务访问量或者数据量的增长，原有的连接池参数可能不能很好地满足需求，这个时候就需要结合当前使用连接池的原理、具体的连接池监控数据和当前的业务量作一个综合的判断，通过反复的几次调试得到最终的调优参数。</p>
+<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>本地缓存（HashMap/ConcurrentHashMap、Ehcache、Guava Cache等），缓存服务（Redis/Tair/Memcache等）。</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>什么情况适合用缓存？考虑以下两种场景：</p>
+<p>短时间内相同数据重复查询多次且数据更新不频繁，这个时候可以选择先从缓存查询，查询不到再从数据库加载并回设到缓存的方式。此种场景较适合用单机缓存。<br>高并发查询热点数据，后端数据库不堪重负，可以用缓存来扛。</p>
+<h3 id="选型考虑"><a href="#选型考虑" class="headerlink" title="选型考虑"></a>选型考虑</h3><p>如果数据量小，并且不会频繁地增长又清空（这会导致频繁地垃圾回收），那么可以选择本地缓存。具体的话，如果需要一些策略的支持（比如缓存满的逐出策略），可以考虑Ehcache；如不需要，可以考虑HashMap；如需要考虑多线程并发的场景，可以考虑ConcurentHashMap。<br>其他情况，可以考虑缓存服务。目前从资源的投入度、可运维性、是否能动态扩容以及配套设施来考虑，我们优先考虑Tair。除非目前Tair还不能支持的场合（比如分布式锁、Hash类型的value），我们考虑用Redis。</p>
+<h3 id="设计关键点"><a href="#设计关键点" class="headerlink" title="设计关键点"></a>设计关键点</h3><p>什么时候更新缓存？如何保障更新的可靠性和实时性？<br>更新缓存的策略，需要具体问题具体分析。这里以门店POI的缓存数据为例，来说明一下缓存服务型的缓存更新策略是怎样的？目前约10万个POI数据采用了Tair作为缓存服务，具体更新的策略有两个：</p>
+<p>接收门店变更的消息，准实时更新。<br>给每一个POI缓存数据设置5分钟的过期时间，过期后从DB加载再回设到DB。这个策略是对第一个策略的有力补充，解决了手动变更DB不发消息、接消息更新程序临时出错等问题导致的第一个策略失效的问题。通过这种双保险机制，有效地保证了POI缓存数据的可靠性和实时性。<br>缓存是否会满，缓存满了怎么办？<br>对于一个缓存服务，理论上来说，随着缓存数据的日益增多，在容量有限的情况下，缓存肯定有一天会满的。如何应对？<br>① 给缓存服务，选择合适的缓存逐出算法，比如最常见的LRU。<br>② 针对当前设置的容量，设置适当的警戒值，比如10G的缓存，当缓存数据达到8G的时候，就开始发出报警，提前排查问题或者扩容。<br>③ 给一些没有必要长期保存的key，尽量设置过期时间。</p>
+<h3 id="缓存是否允许丢失？丢失了怎么办？"><a href="#缓存是否允许丢失？丢失了怎么办？" class="headerlink" title="缓存是否允许丢失？丢失了怎么办？"></a>缓存是否允许丢失？丢失了怎么办？</h3><p>根据业务场景判断，是否允许丢失。如果不允许，就需要带持久化功能的缓存服务来支持，比如Redis或者Tair。更细节的话，可以根据业务对丢失时间的容忍度，还可以选择更具体的持久化策略，比如Redis的RDB或者AOF。</p>
+<h3 id="缓存被“击穿”问题"><a href="#缓存被“击穿”问题" class="headerlink" title="缓存被“击穿”问题"></a>缓存被“击穿”问题</h3><p>对于一些设置了过期时间的key，如果这些key可能会在某些时间点被超高并发地访问，是一种非常“热点”的数据。这个时候，需要考虑另外一个问题：缓存被“击穿”的问题。</p>
+<p>概念：缓存在某个时间点过期的时候，恰好在这个时间点对这个Key有大量的并发请求过来，这些请求发现缓存过期一般都会从后端DB加载数据并回设到缓存，这个时候大并发的请求可能会瞬间把后端DB压垮。<br>如何解决：业界比较常用的做法，是使用mutex。简单地来说，就是在缓存失效的时候（判断拿出来的值为空），不是立即去load db，而是先使用缓存工具的某些带成功操作返回值的操作（比如Redis的SETNX或者Memcache的ADD）去set一个mutex key，当操作返回成功时，再进行load db的操作并回设缓存；否则，就重试整个get缓存的方法。类似下面的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public String get(key) &#123;</span><br><span class="line">    String value = redis.get(key);</span><br><span class="line">    if (value == null) &#123; //代表缓存值过期</span><br><span class="line">        //设置3min的超时，防止del操作失败的时候，下次缓存过期一直不能load db</span><br><span class="line">        if (redis.setnx(key_mutex, 1, 3 * 60) == 1) &#123;  //代表设置成功</span><br><span class="line">             value = db.get(key);</span><br><span class="line">                    redis.set(key, value, expire_secs);</span><br><span class="line">                    redis.del(key_mutex);</span><br><span class="line">            &#125; else &#123;  //这个时候代表同时候的其他线程已经load db并回设到缓存了，这时候重试获取缓存值即可</span><br><span class="line">                    sleep(50);</span><br><span class="line">                    get(key);  //重试</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return value;      </span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h2><h3 id="使用场景-1"><a href="#使用场景-1" class="headerlink" title="使用场景"></a>使用场景</h3><p>针对某些客户端的请求，在服务端可能需要针对这些请求做一些附属的事情，这些事情其实用户并不关心或者用户不需要立即拿到这些事情的处理结果，这种情况就比较适合用异步的方式处理这些事情。</p>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>缩短接口响应时间，使用户的请求快速返回，用户体验更好。<br>避免线程长时间处于运行状态，这样会引起服务线程池的可用线程长时间不够用，进而引起线程池任务队列长度增大，从而阻塞更多请求任务，使得更多请求得不到技术处理。<br>线程长时间处于运行状态，可能还会引起系统Load、CPU使用率、机器整体性能下降等一系列问题，甚至引发雪崩。异步的思路可以在不增加机器数和CPU数的情况下，有效解决这个问题。<br>常见做法<br>一种做法，是额外开辟线程，这里可以采用额外开辟一个线程或者使用线程池的做法，在IO线程（处理请求响应）之外的线程来处理相应的任务，在IO线程中让response先返回。</p>
+<p>如果异步线程处理的任务设计的数据量非常巨大，那么可以引入阻塞队列BlockingQueue作进一步的优化。具体做法是让一批异步线程不断地往阻塞队列里扔数据，然后额外起一个处理线程，循环批量从队列里拿预设大小的一批数据，来进行批处理（比如发一个批量的远程服务请求），这样进一步提高了性能。</p>
+<p>另一种做法，是使用消息队列（MQ）中间件服务，MQ天生就是异步的。一些额外的任务，可能不需要我这个系统来处理，但是需要其他系统来处理。这个时候可以先把它封装成一个消息，扔到消息队列里面，通过消息中间件的可靠性保证把消息投递到关心它的系统，然后让这个系统来做相应的处理。</p>
+<p>比如C端在完成一个提单动作以后，可能需要其它端做一系列的事情，但是这些事情的结果不会立刻对C端用户产生影响，那么就可以先把C端下单的请求响应先返回给用户，返回之前往MQ中发一个消息即可。而且这些事情理应不是C端的负责范围，所以这个时候用MQ的方式，来解决这个问题最合适。</p>
+<h2 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h2><h3 id="和缓存的区别"><a href="#和缓存的区别" class="headerlink" title="和缓存的区别"></a>和缓存的区别</h3><p>先说明一下，这里介绍的和缓存那一节不一样，虽然可能会使用一样的数据存储方案（比如Redis或者Tair），但是使用的方式不一样，这一节介绍的是把它作为DB来用。如果当作DB来用，需要有效保证数据存储方案的可用性、可靠性。</p>
+<h3 id="使用场景-2"><a href="#使用场景-2" class="headerlink" title="使用场景"></a>使用场景</h3><p>需要结合具体的业务场景，看这块业务涉及的数据是否适合用NoSQL来存储，对数据的操作方式是否适合用NoSQL的方式来操作，或者是否需要用到NoSQL的一些额外特性（比如原子加减等）。</p>
+<p>如果业务数据不需要和其他数据作关联，不需要事务或者外键之类的支持，而且有可能写入会异常频繁，这个时候就比较适合用NoSQL（比如HBase）。</p>
+<p>比如，美团点评内部有一个对exception做的监控系统，如果在应用系统发生严重故障的时候，可能会短时间产生大量exception数据，这个时候如果选用MySQL，会造成MySQL的瞬间写压力飙升，容易导致MySQL服务器的性能急剧恶化以及主从同步延迟之类的问题，这种场景就比较适合用Hbase类似的NoSQL来存储。</p>
+<h2 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h2><h3 id="什么时候调？"><a href="#什么时候调？" class="headerlink" title="什么时候调？"></a>什么时候调？</h3><p>通过监控系统（如没有现成的系统，自己做一个简单的上报监控的系统也很容易）上对一些机器关键指标（gc time、gc count、各个分代的内存大小变化、机器的Load值与CPU使用率、JVM的线程数等）的监控报警，也可以看gc log和jstat等命令的输出，再结合线上JVM进程服务的一些关键接口的性能数据和请求体验，基本上就能定位出当前的JVM是否有问题，以及是否需要调优。</p>
+<h3 id="怎么调？"><a href="#怎么调？" class="headerlink" title="怎么调？"></a>怎么调？</h3><p>如果发现高峰期CPU使用率与Load值偏大，这个时候可以观察一些JVM的thread count以及gc count（可能主要是young gc count），如果这两个值都比以往偏大（也可以和一个历史经验值作对比），基本上可以定位是young gc频率过高导致，这个时候可以通过适当增大young区大小或者占比的方式来解决。<br>如果发现关键接口响应时间很慢，可以结合gc time以及gc log中的stop the world的时间，看一下整个应用的stop the world的时间是不是比较多。如果是，可能需要减少总的gc time，具体可以从减小gc的次数和减小单次gc的时间这两个维度来考虑，一般来说，这两个因素是一对互斥因素，我们需要根据实际的监控数据来调整相应的参数（比如新生代与老生代比值、eden与survivor比值、MTT值、触发cms回收的old区比率阈值等）来达到一个最优值。<br>如果发生full gc或者old cms gc非常频繁，通常这种情况会诱发STW的时间相应加长，从而也会导致接口响应时间变慢。这种情况，大概率是出现了“内存泄露”，Java里的内存泄露指的是一些应该释放的对象没有被释放掉（还有引用拉着它）。那么这些对象是如何产生的呢？为啥不会释放呢？对应的代码是不是出问题了？问题的关键是搞明白这个，找到相应的代码，然后对症下药。所以问题的关键是转化成寻找这些对象。怎么找？综合使用jmap和MAT，基本就能定位到具体的代码。</p>
+<h2 id="多线程与分布式"><a href="#多线程与分布式" class="headerlink" title="多线程与分布式"></a>多线程与分布式</h2><h3 id="使用场景-3"><a href="#使用场景-3" class="headerlink" title="使用场景"></a>使用场景</h3><p>离线任务、异步任务、大数据任务、耗时较长任务的运行**，适当地利用，可达到加速的效果。</p>
+<p>注意：线上对响应时间要求较高的场合，尽量少用多线程，尤其是服务线程需要等待任务线程的场合（很多重大事故就是和这个息息相关），如果一定要用，可以对服务线程设置一个最大等待时间。</p>
+<h3 id="常见做法"><a href="#常见做法" class="headerlink" title="常见做法"></a>常见做法</h3><p>如果单机的处理能力可以满足实际业务的需求，那么尽可能地使用单机多线程的处理方式，减少复杂性；反之，则需要使用多机多线程的方式。</p>
+<p>对于单机多线程，可以引入线程池的机制，作用有二：</p>
+<h3 id="提高性能，节省线程创建和销毁的开销"><a href="#提高性能，节省线程创建和销毁的开销" class="headerlink" title="提高性能，节省线程创建和销毁的开销"></a>提高性能，节省线程创建和销毁的开销</h3><p>限流，给线程池一个固定的容量，达到这个容量值后再有任务进来，就进入队列进行排队，保障机器极限压力下的稳定处理能力在使用JDK自带的线程池时，一定要仔细理解构造方法的各个参数的含义，如core pool size、max pool size、keepAliveTime、worker queue等，在理解的基础上通过不断地测试调整这些参数值达到最优效果。<br>如果单机的处理能力不能满足需求，这个时候需要使用多机多线程的方式。这个时候就需要一些分布式系统的知识了。首先就必须引入一个单独的节点，作为调度器，其他的机器节点都作为执行器节点。调度器来负责拆分任务，和分发任务到合适的执行器节点；执行器节点按照多线程的方式（也可能是单线程）来执行任务。这个时候，我们整个任务系统就由单击演变成一个集群的系统，而且不同的机器节点有不同的角色，各司其职，各个节点之间还有交互。这个时候除了有多线程、线程池等机制，像RPC、心跳等网络通信调用的机制也不可少。后续我会出一个简单的分布式调度运行的框架。</p>
+<h3 id="度量系统（监控、报警、服务依赖管理）"><a href="#度量系统（监控、报警、服务依赖管理）" class="headerlink" title="度量系统（监控、报警、服务依赖管理）"></a>度量系统（监控、报警、服务依赖管理）</h3><p>严格来说，度量系统不属于性能优化的范畴，但是这方面和性能优化息息相关，可以说为性能优化提供一个强有力的数据参考和支撑。没有度量系统，基本上就没有办法定位到系统的问题，也没有办法有效衡量优化后的效果。很多人不重视这方面，但我认为它是系统稳定性和性能保障的基石。</p>
+<h3 id="关键流程"><a href="#关键流程" class="headerlink" title="关键流程"></a>关键流程</h3><p>如果要设计这套系统，总体来说有哪些关键流程需要设计呢？<br>① 确定指标<br>② 采集数据<br>③ 计算数据，存储结果<br>④ 展现和分析</p>
+<p>需要监控和报警哪些指标数据？需要关注哪些？<br>按照需求出发，主要需要二方面的指标：</p>
+<p>接口性能相关，包括单个接口和全部的QPS、响应时间、调用量（统计时间维度越细越好；最好是，既能以节点为维度，也可以以服务集群为维度，来查看相关数据）。其中还涉及到服务依赖关系的管理，这个时候需要用到服务依赖管理系统<br>单个机器节点相关，包括CPU使用率、Load值、内存占用率、网卡流量等。如果节点是一些特殊类型的服务（比如MySQL、Redis、Tair），还可以监控这些服务特有的一些关键指标。<br>数据采集方式<br>通常采用异步上报的方式，具体做法有两种：第一种，发到本地的Flume端口，由Flume进程收集到远程的Hadoop集群或者Storm集群来进行运算；第二种，直接在本地运算好以后，使用异步和本地队列的方式，发送到监控服务器。</p>
+<h3 id="数据计算"><a href="#数据计算" class="headerlink" title="数据计算"></a>数据计算</h3><p>可以采用离线运算（MapReduce/Hive）或者实时/准实时运算（Storm/Spark）的方式，运算后的结果存入MySQL或者HBase；某些情况，也可以不计算，直接采集发往监控服务器。</p>
+<p>展现和分析<br>提供统一的展现分析平台，需要带报表（列表/图表）监控和报警的功能。</p>
+<h2 id="真实案例分析"><a href="#真实案例分析" class="headerlink" title="真实案例分析"></a>真实案例分析</h2><h3 id="案例一：商家与控制区关系的刷新job"><a href="#案例一：商家与控制区关系的刷新job" class="headerlink" title="案例一：商家与控制区关系的刷新job"></a>案例一：商家与控制区关系的刷新job</h3><p>背景<br>这是一个每小时定期运行一次的job，作用是用来刷新商家与控制区的关系。具体规则就是根据商家的配送范围（多个）与控制区是否有交集，如果有交集，就把这个商家划到这个控制区的范围内。</p>
+<p>业务需求<br>需要这个过程越短越好，最好保持在20分钟内。</p>
+<p>优化过程<br>原有代码的主要处理流程是：</p>
+<p>拿到所有门店的配送范围列表和控制区列表。<br>遍历控制区列表，针对每一个控制区：<br>a. 遍历商家的配送范围列表，找到和这个控制区相交的配送范围列表。<br>b. 遍历上述商家配送范围列表，对里面的商家ID去重，保存到一个集合里。<br>c. 批量根据上述商家ID集合，取到对应的商家集合。<br>d. 遍历上述商家集合，从中拿到每一个商家对象，进行相应的处理（根据是否已是热门商家、自营、在线支付等条件来判断是否需要插入或者更新之前的商家和控制区的关系）。<br>e. 删除这个控制区当前已有的，但是不应该存在的商家关系列表。<br>分析代码，发现第2步的a步骤和b步骤，找出和某控制区相交的配送范围集合并对商家ID去重，可以采用R树空间索引的方式来优化。具体做法是：</p>
+<p>任务开始先更新R树，然后利用R树的结构和匹配算法来拿到和控制区相交的配送范围ID列表。<br>再批量根据配送范围ID列表，拿到配送范围列表。<br>然后针对这一批配送范围列表（数量很小），用原始多边形相交匹配的方法做进一步过滤，并且对过滤后的商家ID去重。<br>这个优化已经在第一期优化中上线，整个过程耗时由40多分钟缩短到20分钟以内。</p>
+<p>第一期优化改为R树以后，运行了一段时间，随着数据量增大，性能又开始逐渐恶化，一个月后已经恶化到50多分钟。于是继续深入代码分析，寻找了两个优化点，安排第二期优化并上线。</p>
+<p>这两个优化点是：</p>
+<p>第2步的c步骤，原来是根据门店ID列表从DB批量获取门店，现在可以改成mget的方式从缓存批量获取（此时商家数据已被缓存）；<br>第2步的d步骤，根据是否已是热门商家、自营、在线支付等条件来判断是否需要插入或者更新之前的商家和控制区的关系。<br>上线后效果<br>通过日志观察，执行时间由50多分钟缩短到15分钟以内，下图是截取了一天的4台机器的日志时间（单位：毫秒）：<br>poi优化效果图<br>可以看到，效果还是非常明显的。<br><img src="http://tech.meituan.com/img/poi%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE.png" alt></p>
+<h3 id="案例二：POI缓存设计与实现"><a href="#案例二：POI缓存设计与实现" class="headerlink" title="案例二：POI缓存设计与实现"></a>案例二：POI缓存设计与实现</h3><p>背景<br>2014年Q4，数据库中关于POI（这里可以简单理解为外卖的门店）相关的数据的读流量急剧上升，虽然说加入从库节点可以解决一部分问题，但是毕竟节点的增加是会达到极限的，达到极限后主从复制会达到瓶颈，可能会造成数据不一致。所以此时，急需引入一种新的技术方案来分担数据库的压力，降低数据库POI相关数据的读流量。另外，任何场景都考虑加DB从库的做法，会对资源造成一定的浪费。</p>
+<p>实现方案<br>基于已有的经过考验的技术方案，我选择Tair来作为缓存的存储方案，来帮DB分担来自于各应用端的POI数据的读流量的压力。理由主要是从可用性、高性能、可扩展性、是否经过线上大规模数据和高并发流量的考验、是否有专业运维团队、是否有成熟工具等几个方面综合考量决定。</p>
+<p>详细设计<br>第一版设计<br>缓存的更新策略，根据业务的特点、已有的技术方案和实现成本，选择了用MQ来接收POI改变的消息来触发缓存的更新，但是这个过程有可能失败；同时启用了key的过期策略，并且调用端会先判断是否过期，如过期，会从后端DB加载数据并回设到缓存，再返回。通过两个方面双保险确保了缓存数据的可用。</p>
+<p>第二版设计<br>第一版设计运行到一段时间以后，我们发现了两个问题：</p>
+<p>某些情况下不能保证数据的实时一致（比如技术人员手动改动DB数据、利用MQ更新缓存失败），这个时候只能等待5分钟的过期时间，有的业务是不允许的。<br>加入了过期时间导致另外一个问题：Tair在缓存不命中的那一刻，会尝试从硬盘中Load数据，如果硬盘没有再去DB中Load数据。这无疑会进一步延长Tair的响应时间，这样不仅使得业务的超时比率加大，而且会导致Tair的性能进一步变差。<br>为了解决上述问题，我们从美团点评负责基础架构的同事那里了解到Databus可以解决缓存数据在某些情况下不一致的问题，并且可以去掉过期时间机制，从而提高查询效率，避免tair在内存不命中时查询硬盘。而且为了防止DataBus单点出现故障影响我们的业务，我们保留了之前接MQ消息更新缓存的方案，作了切换开关，利用这个方案作容错，整体架构如下：<br><img src="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1%E5%9B%BE.png" alt></p>
+<p>上线后效果<br>上线后，通过持续地监控数据发现，随着调用量的上升，到DB的流量有了明显地减少，极大地减轻了DB的压力。同时这些数据接口的响应时间也有了明显地减少。缓存更新的双重保障机制，也基本保证了缓存数据的可用。见下图：<br><img src="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png" alt><br>poi缓存优化效果图</p>
+<h3 id="案例三：业务运营后台相关页面的性能优化"><a href="#案例三：业务运营后台相关页面的性能优化" class="headerlink" title="案例三：业务运营后台相关页面的性能优化"></a>案例三：业务运营后台相关页面的性能优化</h3><p>背景<br>随着业务的快速发展，带来的访问量和数据量的急剧上升，通过我们相应的监控系统可以发现，系统的某些页面的性能开始出现恶化。 从用户方的反馈，也证明了这点。此时此刻，有必要迅速排期，敏捷开发，对这些页面进行调优。</p>
+<p>欢迎页<br>需求背景：欢迎页是地推人员乃至总部各种角色人员进入外卖运营后台的首页，会显示地推人员最想看到最关心的一些核心数据，其重要性不言而喻，所以该页面的性能恶化会严重影响到用户体验。因此，首先需要优化的就是欢迎页。通过相应定位和分析，发现导致性能恶化的主要原因有两个：数据接口层和计算展现层。<br>解决方案：对症下药，分而治之。经过仔细排查、分析定位，数据接口层采用接口调用批量化、异步RPC调用的方式来进行有效优化，计算展现层决定采用预先计算、再把计算好的结果缓存的方式来提高查询速度。其中，缓存方案根据业务场景和技术特点，选用Redis。定好方案后，快速开发上线。<br>上线效果：上线后性能对比图，如下：<br><img src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png" alt><br>组织架构页<br>需求背景：组织架构页，采用了四层树形结构图，一起呈现加载，第一版上线后发现性能非常差。用户迫切希望对这个页面的性能进行调优。<br>解决方案：经过分析代码，定位到一个比较经典的问题：里面执行了太多次小数据量的SQL查询。于是采用多个SQL合并成大SQL的方式，然后使用本地缓存来缓存这些数据，合理预估数据量和性能，充分测试后上线。<br>上线效果：上线后性能对比图，如下：<br><img src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_2.png" alt><br>订单关联楼宇页<br>需求背景：随着订单量日益增大，订单表积累的数据日益增多，订单关联楼宇页的性能也日益变差（响应时间线性上升）。而这个页面和地推人员的业绩息息相关，所以地推人员使用该页面的频率非常高，性能日益恶化极大地影响了地推人员的用户体验。<br>解决方案：经过分析与设计，决定采用当时已有的订单二级索引月分表来代替原始的订单表来供前端的查询请求；并且限制住筛选的时间条件，使得筛选的开始时间和结束时间不能跨月（事先和用户沟通过，可以接受，能满足用户的基本需求），这样就只需一个月分索引表即可，通过适当的功能限制来达到性能的调优。这样从二级索引月分表中根据各种查询条件查到最终的分页的订单ID集合，然后再根据订单ID从订单库来查出相应的订单数据集合。<br>上线效果：上线后发现在调用量几乎没怎么变的情况下，性能提升明显，如下图：<br><img src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_3.png" alt><br>其他<br>除了上面介绍的之外，优化还涉及前端、分布式文件系统、CDN、全文索引、空间索引等几方面。限于篇幅，我们留到未来再做介绍。</p>
+<p>不想错过技术博客更新？想给文章评论、和作者互动？第一时间获取技术沙龙信息？</p>
+<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>公众号二维码</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Clean-Code/" rel="tag"><i class="fa fa-tag"></i> Clean Code</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Meituan/example-of-machine-learning-in-meituan/" rel="next" title="Examples of Machine Learning in Meituan">
+                  <i class="fa fa-chevron-left"></i> Examples of Machine Learning in Meituan
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/the-essence-of-hardware-accelarate-in-android/" rel="prev" title="Essence of Android Hardware Accelerate">
+                  Essence of Android Hardware Accelerate <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码整洁的大前提"><span class="nav-number">1.</span> <span class="nav-text">代码整洁的大前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对清晰好看代码的追求精神，比所有的技巧都要重要。"><span class="nav-number">2.</span> <span class="nav-text">对清晰好看代码的追求精神，比所有的技巧都要重要。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式只是手段，代码清晰才是目的"><span class="nav-number">3.</span> <span class="nav-text">设计模式只是手段，代码清晰才是目的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码整洁的常见手段"><span class="nav-number">4.</span> <span class="nav-text">代码整洁的常见手段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-review"><span class="nav-number">5.</span> <span class="nav-text">code review</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#勤于重构"><span class="nav-number">6.</span> <span class="nav-text">勤于重构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态检查"><span class="nav-number">7.</span> <span class="nav-text">静态检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多读开源代码和身边优秀同学的代码"><span class="nav-number">8.</span> <span class="nav-text">多读开源代码和身边优秀同学的代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码整洁的常见技巧"><span class="nav-number">9.</span> <span class="nav-text">代码整洁的常见技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通用技巧"><span class="nav-number">10.</span> <span class="nav-text">通用技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单一职责"><span class="nav-number">11.</span> <span class="nav-text">单一职责</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先定义整体框架"><span class="nav-number">12.</span> <span class="nav-text">优先定义整体框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清晰的命名"><span class="nav-number">13.</span> <span class="nav-text">清晰的命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免过长参数"><span class="nav-number">14.</span> <span class="nav-text">避免过长参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免过长方法和类"><span class="nav-number">15.</span> <span class="nav-text">避免过长方法和类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#让相同长度的代码段表示相同粒度的逻辑"><span class="nav-number">16.</span> <span class="nav-text">让相同长度的代码段表示相同粒度的逻辑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面向对象设计技巧"><span class="nav-number"></span> <span class="nav-text">面向对象设计技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#贫血与领域驱动"><span class="nav-number">1.</span> <span class="nav-text">贫血与领域驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为每个方法找到合适的类归属，数据和行为尽量要在一起"><span class="nav-number">2.</span> <span class="nav-text">为每个方法找到合适的类归属，数据和行为尽量要在一起</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#警惕static"><span class="nav-number">3.</span> <span class="nav-text">警惕static</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static真正适用的场景：工具方法，而不是业务方法。"><span class="nav-number">4.</span> <span class="nav-text">static真正适用的场景：工具方法，而不是业务方法。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#巧用method-object"><span class="nav-number">5.</span> <span class="nav-text">巧用method object</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面向接口编程"><span class="nav-number">6.</span> <span class="nav-text">面向接口编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正确使用继承和组合"><span class="nav-number">7.</span> <span class="nav-text">正确使用继承和组合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码复用技巧"><span class="nav-number"></span> <span class="nav-text">代码复用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模板方法"><span class="nav-number">1.</span> <span class="nav-text">模板方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#extract-method"><span class="nav-number">2.</span> <span class="nav-text">extract method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#责任链"><span class="nav-number">3.</span> <span class="nav-text">责任链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为集合显式定义它的行为"><span class="nav-number">4.</span> <span class="nav-text">为集合显式定义它的行为</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作者简介"><span class="nav-number">1.</span> <span class="nav-text">作者简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见性能优化策略分类"><span class="nav-number"></span> <span class="nav-text">常见性能优化策略分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库"><span class="nav-number">2.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL调优"><span class="nav-number">3.</span> <span class="nav-text">SQL调优</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构层面的调优"><span class="nav-number">4.</span> <span class="nav-text">架构层面的调优</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接池调优"><span class="nav-number">5.</span> <span class="nav-text">连接池调优</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存"><span class="nav-number"></span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类"><span class="nav-number">1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景"><span class="nav-number">2.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选型考虑"><span class="nav-number">3.</span> <span class="nav-text">选型考虑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计关键点"><span class="nav-number">4.</span> <span class="nav-text">设计关键点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存是否允许丢失？丢失了怎么办？"><span class="nav-number">5.</span> <span class="nav-text">缓存是否允许丢失？丢失了怎么办？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存被“击穿”问题"><span class="nav-number">6.</span> <span class="nav-text">缓存被“击穿”问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步"><span class="nav-number"></span> <span class="nav-text">异步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景-1"><span class="nav-number">1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用"><span class="nav-number">2.</span> <span class="nav-text">作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NoSQL"><span class="nav-number"></span> <span class="nav-text">NoSQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#和缓存的区别"><span class="nav-number">1.</span> <span class="nav-text">和缓存的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景-2"><span class="nav-number">2.</span> <span class="nav-text">使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM调优"><span class="nav-number"></span> <span class="nav-text">JVM调优</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候调？"><span class="nav-number">1.</span> <span class="nav-text">什么时候调？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#怎么调？"><span class="nav-number">2.</span> <span class="nav-text">怎么调？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程与分布式"><span class="nav-number"></span> <span class="nav-text">多线程与分布式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景-3"><span class="nav-number">1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见做法"><span class="nav-number">2.</span> <span class="nav-text">常见做法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提高性能，节省线程创建和销毁的开销"><span class="nav-number">3.</span> <span class="nav-text">提高性能，节省线程创建和销毁的开销</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#度量系统（监控、报警、服务依赖管理）"><span class="nav-number">4.</span> <span class="nav-text">度量系统（监控、报警、服务依赖管理）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键流程"><span class="nav-number">5.</span> <span class="nav-text">关键流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据计算"><span class="nav-number">6.</span> <span class="nav-text">数据计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#真实案例分析"><span class="nav-number"></span> <span class="nav-text">真实案例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#案例一：商家与控制区关系的刷新job"><span class="nav-number">1.</span> <span class="nav-text">案例一：商家与控制区关系的刷新job</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例二：POI缓存设计与实现"><span class="nav-number">2.</span> <span class="nav-text">案例二：POI缓存设计与实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例三：业务运营后台相关页面的性能优化"><span class="nav-number">3.</span> <span class="nav-text">案例三：业务运营后台相关页面的性能优化</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

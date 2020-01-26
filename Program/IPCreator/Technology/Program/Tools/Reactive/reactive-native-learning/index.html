@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="包建强 本文表面上讲React Native（以下简称RN），实际上对于学习任何语言和系统都适用。 对于新技术的学习，分为两种，一种是语言，类似Swift、Objective-C、Java、ES6，另一种是系统，比如Android、iOS、前端。">
+<meta name="keywords" content="Reactive">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to learn a technique quickly">
+<meta property="og:url" content="https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Reactive/reactive-native-learning/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="包建强 本文表面上讲React Native（以下简称RN），实际上对于学习任何语言和系统都适用。 对于新技术的学习，分为两种，一种是语言，类似Swift、Objective-C、Java、ES6，另一种是系统，比如Android、iOS、前端。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://opb37u589.bkt.clouddn.com/react-native.png">
+<meta property="og:updated_time" content="2017-09-15T00:53:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to learn a technique quickly">
+<meta name="twitter:description" content="包建强 本文表面上讲React Native（以下简称RN），实际上对于学习任何语言和系统都适用。 对于新技术的学习，分为两种，一种是语言，类似Swift、Objective-C、Java、ES6，另一种是系统，比如Android、iOS、前端。">
+<meta name="twitter:image" content="http://opb37u589.bkt.clouddn.com/react-native.png">
+
+<link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Reactive/reactive-native-learning/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>How to learn a technique quickly | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Reactive/reactive-native-learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          How to learn a technique quickly
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Tools/Reactive/reactive-native-learning/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Tools/Reactive/reactive-native-learning/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="http://opb37u589.bkt.clouddn.com/react-native.png" alt><br><a href="http://blog.csdn.net/jspandasp/article/details/71024299" target="_blank" rel="noopener">包建强</a></p>
+<p>本文表面上讲React Native（以下简称RN），实际上对于学习任何语言和系统都适用。</p>
+<p>对于新技术的学习，分为两种，一种是语言，类似Swift、Objective-C、Java、ES6，另一种是系统，比如Android、iOS、前端。</p>
+<a id="more"></a>
+<h2 id="1-语言层面"><a href="#1-语言层面" class="headerlink" title="1. 语言层面"></a>1. 语言层面</h2><p>如果你精通某一门语言，那么是可以很快切换到另一门语言的。这就是语言的相通性。翻开市面上那些21天精通某某语言之类的书籍，你会发现，它们具有很多共通的地方：</p>
+<ul>
+<li>变量</li>
+<li>类型</li>
+<li>运算符</li>
+<li>流程控制语句（if、for、while、swicth）</li>
+<li>字符串操作</li>
+<li>集合（数组、字典等）</li>
+<li>函数（参数、返回值等等）</li>
+<li>面向对象编程（类、接口、抽象类、属性、继承、多态、、重载、重写等等）</li>
+<li>反射</li>
+<li>结构体、枚举</li>
+<li>异常捕获</li>
+<li>多线程编程</li>
+<li>函数式编程</li>
+</ul>
+<p>无论是Java、Objective-C，还是Swift和ES6，基本都被上面这些点覆盖，所以经常有老司机说说自己是Android领域做了很多年，然后一两个月就进入到iOS领域，但这仅仅是语言层面的。</p>
+<p>对于从一门语言切换到另一门语言，我这些年来的经验是，把23个设计模式用这门新语言全都实现一遍，基本你就掌握了这门语言的大部分特性了。</p>
+<p>我是9年经验的C#技术出身，我起初对Java的Interface回调方法也很不理解，是通过亲手写了一个策略模式，牢记于心。我对Objective-C中的delegate语法也曾经一度感到很别扭，也是通过编写适配器模式后，才想明白的。</p>
+<h2 id="2-系统层面"><a href="#2-系统层面" class="headerlink" title="2. 系统层面"></a>2. 系统层面</h2><p>这个部分就没那么简单了。你可以花一个月学会一门语言，但是想把Android或iOS搞明白就需要几年时间的积累了，每个领域都有自己独特的文化：</p>
+<p>比如<strong>iOS的Runtime技术</strong>，iOS所有的技术体系都围绕着Runtime而展开。<br>比如Android的四大组件，以及背后的AMS、PMS，进而延伸到AIDL和Binder机制。<br>比如前端的几十种框架，从JS打包、CSS打包，到SPA、Hybrid等若干思想的演进历史。</p>
+<p>所以每个领域都是需要沉淀几年，没发过几次版，或者熬到半夜修改其中的bug，是难以理解这个领域中的酸甜苦辣到。</p>
+<p>但是，当你在Android、iOS、前端这几个领域都做过一遍之后，你会发现，它们也是有相同的东西的，我们一个个分析。</p>
+<p>首先是一些基本的点：</p>
+<ul>
+<li>基本控件、事件绑定</li>
+<li>列表</li>
+<li>网络请求封装</li>
+<li>页面跳转</li>
+<li>本地存储（数据库、文件）</li>
+<li>页面的生命周期</li>
+<li>自定义组件</li>
+</ul>
+<p>其实做App，只要会做两种页面就够了，列表页和详情页，你会发现，任何App，都是这两种页面的循环往复，首页、产品列表页、产品详情页、订单填写页、支付页、订单列表页、订单详情页。这是一条主线。</p>
+<p>这其中，在列表页，需要知道怎么把数据绑定到ListView上，怎么上拉分页。在详情页，需要知道几个基本的控件，Button、Label、输入框、单选框，基本就够了。然后你还要知道怎么点击控件触发一个方法，怎么发起一个网络请求并处理返回的数据。掌握了这些，一个页面内的事情就都搞定了。</p>
+<p>只有一个页面不够啊，所以要学会页面跳转，从A页面跳转到B页面，至此，App就“活”了。</p>
+<h2 id="模块化拆分"><a href="#模块化拆分" class="headerlink" title="模块化拆分"></a>模块化拆分</h2><p>功能开发多了，比如网络请求，你会封装出几个类，专门处理网络请求，与业务逻辑无关，这时候就需要把这几个类放到一个单独的项目中，Android称之为Library，iOS称之为静态库，你的App保持对这个Library的引用。</p>
+<p>再接着，业务多了，比如吃喝玩乐四大模块，为了能让项目编译更快，为了团队之间相互不干扰，就需要把这些模块都拆分成Library，各自模块在日常开发过程中，既能作为独立的App调试，又能在发版本时融合在一起。Android用到了Maven，iOS用到了CocoaPods来解决这类问题，我们称之为模块化拆分，也称为组件化拆分。</p>
+<p>以上种种，在前端根本不是什么难事，各个模块的脚本可以各自打包下载分发。</p>
+<h2 id="插件化和热修复"><a href="#插件化和热修复" class="headerlink" title="插件化和热修复"></a>插件化和热修复</h2><p>都是为了解决线上bug的修复，或者快速发版而不通过市场的审核。</p>
+<h2 id="MVP和MVVM"><a href="#MVP和MVVM" class="headerlink" title="MVP和MVVM"></a>MVP和MVVM</h2><p>起初Android和iOS都是基于MVC的，随着App越做越复杂，发现MVC不好用了。我是13年的时候在做电影院选座逻辑的时候就发现MVC搞不定这事了，因为我要写四五十种单元测试case，来保障每次修改繁杂的选座逻辑，不会影响之前运行良好的功能，但是MVC的Controller层把UI逻辑和数据逻辑混在一起，而导致我没办法写单元测试。因为当时我刚从微软的WPF/Silverlight技术转到App技术，所以自然就把WPF的MVVM思想引入了App中。时至今日，五年时间，MVP和MVVM思想已经深入人心，无论是Android还是iOS，抑或是前端的Angular、Vue和React，都是如此。</p>
+<h2 id="推送、埋点、性能监控、崩溃统计"><a href="#推送、埋点、性能监控、崩溃统计" class="headerlink" title="推送、埋点、性能监控、崩溃统计"></a>推送、埋点、性能监控、崩溃统计</h2><p>这些技术点，都是企业App开发所不可或缺的技术，顾名思义，这里不多介绍。</p>
+<p>看到这里，你也许会问，怎么还没讲React Native啊？如果我说这篇文章已经接近尾声了。你会不会打我？</p>
+<p>关于如何学习React Native，都在上面的内容中。为了不让广大的读者说我故弄玄虚，我还是结合前面列举的清单，梳理一下React Native的学习方法。</p>
+<p>1.语言层面，需要把ES6看一遍。但也没必要全看，很多高级语法短期你是用不到的。掌握我上面列举的语言类清单的内容就够了。</p>
+<p>所以当你为…或bind(this)这样到语法搞得三尸神暴躁的时候，那是你缘木求鱼了。就比如说bind(this)这样的语法，也许看RN中按钮的绑定方法，会理解的更透彻一些。</p>
+<p>此外，网上讲解ES5的文章很多，会和ES6混在一起，对于初学者是个很大的障碍，我就曾经花了很多冤枉时间在上面。</p>
+<p>2.系统层面</p>
+<p>这里主要是对React的快速学习，可以参照我上面列举的那几个关键点，再发一遍：</p>
+<p>基本控件、事件绑定<br>这里比较有趣的就是按钮，它在React中其实并不存在。<br>列表<br>网络请求封装<br>有必要像封装Android和iOS网络框架那样，封装出一个React的网络框架来给开发人员使用。<br>页面跳转<br>React提供的页面跳转机制太复杂，有必要把它进行封装。<br>本地存储（数据库、文件）<br>访问SQLite和Realm<br>页面的生命周期<br>Component的生命周期，尤其是props和state这两个值的读写<br>自定义组件<br>主要是父子组件之间怎么进行通信。</p>
+<p>至此，你就可以开发出一个简单的RN应用了。但是还没完，想做一个完整的RN应用，还需要下面的技术：</p>
+<ol start="3">
+<li><p>打包<br>把RN的js脚本打出bundle包，手动放入App中，然后线上实现增量更新。</p>
+</li>
+<li><p>集成到App<br>使用RN的很多场景，是在原有的Android或iOS应用中的某个模块，使用RN来编写。这时，如何在现有项目中集成RN，是我们所需要解决的。<br>集成进来后，App和RN中间的相互跳转页面、相互调用方法，是我们需要解决的。</p>
+</li>
+<li><p>Redux<br>对于复杂的ReactNative应用，需要使用Redux进行解耦。</p>
+</li>
+</ol>
+<p>写到这里，ReactNative的全貌就都展现着读者面前了。有人会觉得React Native太庞大太复杂，但如果按照我的这个学习方法论，把上面这些点都扫一遍，一个月时间左右，基本就能搞定一款App了。</p>
+<p>接下来我会有一系列文章和例子来介绍React Native，这是我这一年来做线下培训的教案。我面对的都是些什么学员呢？有没接触过React Native的前端人员，有转型为React Native的Android和iOS开发人员，所以我比较清楚怎么把我文章中的这些知识点，灌输给他们。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Reactive/" rel="tag"><i class="fa fa-tag"></i> Reactive</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Business/use-ai/" rel="next" title="《程序员》5月精彩内容：人工智能 为我所用">
+                  <i class="fa fa-chevron-left"></i> 《程序员》5月精彩内容：人工智能 为我所用
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Business/ai-on-law/" rel="prev" title="人工智能如何变革法律？">
+                  人工智能如何变革法律？ <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-语言层面"><span class="nav-number">1.</span> <span class="nav-text">1. 语言层面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-系统层面"><span class="nav-number">2.</span> <span class="nav-text">2. 系统层面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块化拆分"><span class="nav-number">3.</span> <span class="nav-text">模块化拆分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件化和热修复"><span class="nav-number">4.</span> <span class="nav-text">插件化和热修复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVP和MVVM"><span class="nav-number">5.</span> <span class="nav-text">MVP和MVVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推送、埋点、性能监控、崩溃统计"><span class="nav-number">6.</span> <span class="nav-text">推送、埋点、性能监控、崩溃统计</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

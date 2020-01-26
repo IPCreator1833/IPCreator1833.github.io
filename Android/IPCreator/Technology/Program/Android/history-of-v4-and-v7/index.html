@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="原文作者：都有米  在之前的开发经历中经常需要导入一些如v4、v7、v13等Android官方的支持包，遇到这些情况时都是网上搜索一下，按照前人给的示例添加依赖。这么稀里糊涂的使用后代码正常运行了，但心中不免会有一些疑问，如，Android官方为什么要提供支持包，都提供哪些支持包，这些支持包又提供了什么特性，开发者又应该如何选择使用这些支持包？ 为了解开这些疑问，周末在家仔细阅读了官方的开发者指导">
+<meta name="keywords" content="Support Library,V4,V7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="History of Android Support Library">
+<meta property="og:url" content="https://hazyman.com/Android/IPCreator/Technology/Program/Android/history-of-v4-and-v7/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="原文作者：都有米  在之前的开发经历中经常需要导入一些如v4、v7、v13等Android官方的支持包，遇到这些情况时都是网上搜索一下，按照前人给的示例添加依赖。这么稀里糊涂的使用后代码正常运行了，但心中不免会有一些疑问，如，Android官方为什么要提供支持包，都提供哪些支持包，这些支持包又提供了什么特性，开发者又应该如何选择使用这些支持包？ 为了解开这些疑问，周末在家仔细阅读了官方的开发者指导">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1621638-64e0312fb3d79864.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1621638-ab90ba556333d9a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1621638-1f66aafb225df824.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1621638-8f78827ae6276c1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1621638-e50b38383771e40c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-03-27T07:57:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="History of Android Support Library">
+<meta name="twitter:description" content="原文作者：都有米  在之前的开发经历中经常需要导入一些如v4、v7、v13等Android官方的支持包，遇到这些情况时都是网上搜索一下，按照前人给的示例添加依赖。这么稀里糊涂的使用后代码正常运行了，但心中不免会有一些疑问，如，Android官方为什么要提供支持包，都提供哪些支持包，这些支持包又提供了什么特性，开发者又应该如何选择使用这些支持包？ 为了解开这些疑问，周末在家仔细阅读了官方的开发者指导">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1621638-64e0312fb3d79864.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/history-of-v4-and-v7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>History of Android Support Library | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/history-of-v4-and-v7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          History of Android Support Library
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Android/IPCreator/Technology/Program/Android/history-of-v4-and-v7/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Android/IPCreator/Technology/Program/Android/history-of-v4-and-v7/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>原文作者：<a href="http://www.jianshu.com/p/f5f9a4fd22e8" target="_blank" rel="noopener">都有米</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1621638-64e0312fb3d79864.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>在之前的开发经历中经常需要导入一些如v4、v7、v13等Android官方的支持包，遇到这些情况时都是网上搜索一下，按照前人给的示例添加依赖。这么稀里糊涂的使用后代码正常运行了，但心中不免会有一些疑问，如，Android官方为什么要提供支持包，都提供哪些支持包，这些支持包又提供了什么特性，开发者又应该如何选择使用这些支持包？</p>
+<p>为了解开这些疑问，周末在家仔细阅读了官方的开发者指导文档的相关内容。这篇文章就是读后整理的读书笔记。</p>
+ <a id="more"></a>
+<h2 id="Android官方为什么要提供支持包？"><a href="#Android官方为什么要提供支持包？" class="headerlink" title="Android官方为什么要提供支持包？"></a>Android官方为什么要提供支持包？</h2><p>为什么官方向开发者在提供了android sdk之外，还要提供一些零碎的开发支持jar包，全部放在framework中不好吗？恩，不好！因为这不是好不好的问题，这是Android平台快速发展带来的必然产物，这张图罗列了已经发布的Android版本及其对应的开发sdk的级别。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1621638-ab90ba556333d9a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>至于为什么提供支持包官方给出了大致三个原因：</p>
+<p><strong>1、向后兼容</strong><br>如，我们开的App需要支持的minSdkVersion=9，targetSdkVersion=11，在程序里使用了android 3.0 (API level 11)提供的ActionBar类，使用compileSdkVersion=11成功编译出apk。在android 3.0的设备上完美运行，但是app在android 2.3的设备就会crash，报找不到ActionBar的错误。这很好理解，因为旧版本上没有新版本里新增的类。为了避免使用了最新功能开发的app只能在最新系统的设备上运行的尴尬，<strong>官方把新版系统framework中新增加的接口提出来放到了Android Support Library（支持包）中，开发者在遇到上面的情况时，就可以使用支持包中具有同样功能的ActionBar类，这个支持包会打包进App里，这样使用了新版本系统上功能的App也可以向后兼容以前的老系统版本设备了。</strong></p>
+<p>使用支持包中的类除了让我们免于判断App运行的系统版本外，还可以使App在各个版本保持同样的用户体验。如在5.0以下系统使用material design。</p>
+<p>App编译时用的android sdk（android.jar）不会打包进我们的App中。因为App编码是使用android.jar中的接口就是android设备里系统框架层（framework）对外提供的接口。</p>
+<p><strong>2、提供不适合打包进framework的功能</strong><br>Android官方对App开发提供了推荐设计，希望Android应用都有相对一致的交互设计来减少用户的使用成本，希望三方App类似系统应用从而完美融入到Android生态系统中。但是这都仅仅是推荐，不要求开发者一定要这样，如果有这种需求就可以使用官方支持包提供的这些功能，避免重复造轮子。如支持包中的DrawerLayout、Snackbar等类都是这种情况。</p>
+<p><strong>3、为了支持不同形态的设备</strong><br>通过使用支持包来在不同形态设备上提供功能，如手机、电视、可穿戴设备等。</p>
+<h2 id="官方提供了哪些支持包，都有哪些特性？"><a href="#官方提供了哪些支持包，都有哪些特性？" class="headerlink" title="官方提供了哪些支持包，都有哪些特性？"></a>官方提供了哪些支持包，都有哪些特性？</h2><p>现在Android官方发布了下面13类支持库，不同的支持库包含不同特征，适用的Android版本也不相同。通常情况下我们都使用到v4和v7这两个集合库，因为这两个库支持的android系统版本范围比较广，官方推荐的UI设计样式相关类也都在这两集合库中。<br><img src="http://upload-images.jianshu.io/upload_images/1621638-1f66aafb225df824.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>【※】v4 Support Libraries</p>
+<p>v4库被设计在Android 2.3 (API level 9)及其以上系统中使用。 Support Library的第1版（２０１１年３月发布）就只包含v4库，当时v4库只是一个库，支持Android 1.6 (API level 4)及其以上版本，这也是v4名字的由来。随着系统的迭代现在Android 1.6设备已经很少了，官方在Support Library的第24.2.0版本（２０１6年8月发布）的时候移除了对Android 2.2 (API level 8)及其以下版本的支持，但是名字依然是v4。v4悠久的历史长期的发展造就了它较大的体积。也是在24.2.0这个版本Goggle将原来的单个v4库拆分成了5个子库，我们在使用的时候可以直接依赖某个子库，从而减少依赖包的大小。下图可见Android 2.2 Froyo占有率约为0.1%。<br><img src="http://upload-images.jianshu.io/upload_images/1621638-8f78827ae6276c1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>Gradle编译脚本中整个v4库的依赖语句如下：</p>
+<blockquote>
+<p>compile ‘com.android.support:support-v4:24.2.1’</p>
+</blockquote>
+<p>gradle中jar依赖语句格式如 compile ‘jar文件组（group/命名空间）:jar文件名（name）:jar文件版本（version）’。所以上面的语句意思是依赖Android支持库中第24.2.1版的support-v4库。由于在24.2.0版本support-v4库已经被拆分成5个子库，所以如下图所示依赖24.2.1版本的support-v4库除了导入support-v4库外还会导入它的5个子库，这个版本的support-v4库本身是一个空的包，所有具体的实现都在它依赖的子库中。下面依次看下v4库拆分出来的5个子库。<br><img src="http://upload-images.jianshu.io/upload_images/1621638-e50b38383771e40c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>v4 compat library<br>为一些框架的API提供兼容性包装。如，Context.obtainDrawable()、View.performAccessibilityAction()等。<br>Gradle编译脚本中v4 compat库的依赖语句：</p>
+<blockquote>
+<p>compile ‘com.android.support:support-compat:24.2.1’</p>
+</blockquote>
+<p>v4 core-utils library<br>提供了一些工具类。如，AsyncTaskLoader、PermissionChecker等。<br>Gradle编译脚本中v4 core-utils库的依赖语句：</p>
+<blockquote>
+<p>compile ‘com.android.support:support-core-utils:24.2.1’</p>
+</blockquote>
+<p>v4 core-ui library<br>提供很多UI相关组件。如，ViewPager、NestedScrollView、ExploreByTouchHelper等。<br>Gradle编译脚本中v4 core-ui库的依赖语句：</p>
+<blockquote>
+<p>compile ‘com.android.support:support-core-ui:24.2.1’</p>
+</blockquote>
+<p>v4 media-compat library<br>多媒体框架相关部分。如，MediaBrowser、MediaSession等。<br>Gradle编译脚本中v4 media-compat库的依赖语句：</p>
+<blockquote>
+<p>compile ‘com.android.support:support-media-compat:24.2.1’</p>
+</blockquote>
+<p>v4 fragment library<br>跟fragment相关部分。v4这个子库依赖了其他4个子库，所以我们一旦依赖这个库就会自动导入其他4个子库，这跟直接依赖整个support-v4效果类似。关于v4拆分<a href="http://www.trinea.cn/android/android-%E6%9C%80%E6%96%B0-support-v4-%E5%8C%85%E5%A4%A7%E6%8B%86%E5%88%86%E6%9C%89%E7%94%A8%E5%90%97%EF%BC%9F/" target="_blank" rel="noopener">这篇文章</a>有介绍，有兴趣的可以点过去看看。<br>Gradle编译脚本中v4 fragment 库的依赖语句如下：</p>
+<blockquote>
+<p>compile ‘com.android.support:support-fragment:24.2.1’</p>
+</blockquote>
+<p>【※】v7 Support Libraries</p>
+<p>注意这里的Library用的也是复数，说明v7库和v4一样也是很多库的集合，不同的是v7各个库不是后来拆分出来的，而是最初发布时就是以各个独立的库的形式发布的，如发布的最早的v7库v7 gridlayout library。这些库的共同之处是发布之初都是支持Android 2.1 (API level 7)及其以上版本，所以把他们统称为v7支持库。需要注意的24.2.0版本以后的v7支持库支持范围也是Android 2.3 (API level 9)及其以上版本了，这是因为v7依赖的v4库支持版本范围改变了，这点在v4支持库小节有介绍。v7库集合里有7个子库，使用时根据需要选择导入哪些库。</p>
+<p>v7 appcompat library<br>支持UI设计样式、 material design相关，如ActionBar、AppCompatActivity、Theme等。<br>Gradle编译脚本中v7 appcompat库的依赖语句：</p>
+<p>compile ‘com.android.support:appcompat-v7:24.2.1’<br>v7 cardview library<br>支持cardview控件，使用material design语言设计，卡片式的信息展示，在电视App中有广泛的使用。<br>Gradle编译脚本中v7 cardview库的依赖语句：</p>
+<p>compile ‘com.android.support:cardview-v7:24.2.1’<br>v7 gridlayout library<br>支持gridlayout布局。<br>Gradle编译脚本中v7 gridlayout库的依赖语句：</p>
+<p>compile ‘com.android.support:gridlayout-v7:24.2.1’<br>v7 mediarouter library<br>该库提供了 MediaRouter、MediaRouteProvider等与Google Cast相关的类。<br>Gradle编译脚本中v7 mediarouter库的依赖语句：</p>
+<p>compile ‘com.android.support:mediarouter-v7:24.2.1’<br>v7 palette library<br>该库提供了palette类，使用这个类可以很方便提取出图片中主题色。比如在音乐App中，从音乐专辑封面图片中提取出专辑封面图片的主题色，然后将播放界面的背景色设置为封面的主题色，随着播放音乐的改变，播放界面的背景色也会巧妙的跟着改变，从而提供更好的用户体验。<br>Gradle编译脚本中v7 palette库的依赖语句：</p>
+<p>compile ‘com.android.support:palette-v7:24.2.1’<br>v7 recyclerview library<br>该库提供了recyclerview类。这个库使用的频率很高，网上有很多文章介绍recyclerview。<br>Gradle编译脚本中v7 recyclerview库的依赖语句：</p>
+<p>compile ‘com.android.support:recyclerview-v7:24.2.1’<br>v7 Preference Support library<br>这个库在设置界面常用到。提供了 CheckBoxPreference、ListPreference等类。<br>Gradle编译脚本中v7 preference support库的依赖语句：</p>
+<p>compile ‘com.android.support:preference-v7:24.2.1’<br>v8 Support Library</p>
+<p>v8支持库支持范围也是Android 2.3 (API level 9)及其以上版本。v8支持库集合中现在只有一个库。</p>
+<p>v8 renderscript library<br>这个库支持渲染脚本计算框架。对这个库有兴趣可以看渲染脚本开发指导。<br>使用v8 renderscript库Gradle编译脚本的配置方法：<br>defaultConfig {<br>      renderscriptTargetApi 18<br>      renderscriptSupportModeEnabled true<br>}<br>【※】v13 Support Library</p>
+<p>v13支持库适用范围是Android 3.2 (API level 13)及其以上版本。这个库跟v4 fragment library功能基本一样，也是提供兼容fragment相关内容。区别是v4 fragment library需要依赖v4支持库集合里的其它4个子库，而v13 support library依赖的是Android 3.2 (API level 13)及其以上版本framework。也就是说v4支持库除了v4 fragment library以外，其它功能都在Android 3.2 (API level 13)及其以上版本的framework中提供了。所以我们的App如果只需要兼容到Android 3.2，那么fragment部分使用v13 Support Library中的相关类才是明智之举。<br>Gradle编译脚本中v13 support库的依赖语句：</p>
+<p>  compile ‘com.android.support:support-v13:24.2.1’<br>v14 Preference Support Library</p>
+<p>功能类似v7 Preference Support library，支持Android系统版本不一致，新增部分相关接口。<br>Gradle编译脚本中v 库的依赖语句：</p>
+<p>  compile ‘com.android.support:preference-v14:24.2.1’<br>v17 Preference Support Library for TV</p>
+<p>功能类似v7 Preference Support library，支持Android系统版本不一致，新增部分相关接口，为电视设备App提供相应的UI。<br>Gradle编译脚本中v 库的依赖语句：</p>
+<p>  compile ‘com.android.support:preference-leanback-v17:24.2.1’<br>v17 Leanback Library</p>
+<p>这也是在电视设备上使用的库，主要是和YouTube相关的。<br>Gradle编译脚本中v17 Leanback库的依赖语句：</p>
+<p>  compile ‘com.android.support:leanback-v17:24.2.1’<br>Annotations Support Library</p>
+<p>提供注解相关功能。<br>Gradle编译脚本中Annotations Support库的依赖语句：</p>
+<p>  compile ‘com.android.support:support-annotations:24.2.1’<br>【※】Design Support Library</p>
+<p>这个库现在使用的也比较多，它提供了material design设计风格的控件。如，navigation drawers、floating action buttons (FAB)、snackbars、tabs等。<br>Gradle编译脚本中Design Support库的依赖语句：</p>
+<p>  compile ‘com.android.support:design:24.2.1’<br>【※】Multidex Support Library</p>
+<p>Android的单个.dex文件最多能引用65536个方法，在这之后的方法就无法引用了。当我们的方法数超过这个限制后就需要分成多个dex文件，该库就是用来支持多个dex文件构建应用程序的。<br>Gradle编译脚本中Multidex Support库的依赖语句：</p>
+<p>compile ‘com.android.support:multidex:1.0.0’<br>【※】Custom Tabs Support Library</p>
+<p>这个库有很有意思，提供了一种新的打开网页的方式。以前的App要打开一个网页有两种选择，一个是用webview，这种方式工作量较大，第二种方式是调用浏览器应用来打开网页，这种方式要在两个应用中切换，用户的操作体验是割裂的，都不够理想。这个库提供了第三种选择，具体情况可以点击这篇文章了解。<br>Gradle编译脚本中Custom Tabs Support库的依赖语句：</p>
+<p>  compile ‘com.android.support:customtabs:24.2.1’<br>Percent Support Library</p>
+<p>百分比支持库提供了如PercentFrameLayout、PercentRelativeLayout布局，在这些布局中子view可以使用百分比来设置大小、位置等。<br>Gradle编译脚本中Percent Support库的依赖语句：</p>
+<p>  compile ‘com.android.support:percent:24.2.1’<br>App Recommendation Support Library for TV</p>
+<p>这个库是电视设备上用来提供视频内容推荐的。<br>Gradle编译脚本中Recommendation Support库的依赖语句：</p>
+<p>  compile ‘com.android.support:recommendation:24.2.1’<br>如何选择使用支持包？</p>
+<p>其实在了解了支持包特性之后，这个问题也就迎刃而解了，这里再做下总结。在使用Android Support Library之前我们需要通过sdk manager安装Android Support Repository，然后再在gradle编译脚本中添加如下依赖语句就可以了。</p>
+<p>compile ‘com.android.support:support-v4:24.2.1’  //以v4为例<br>前面文章说过gradle中jar依赖语句格式如 compile jar文件组（group/命名空间）:jar文件名（name）:jar文件版本（version）。对于Android Support Library库的依赖语句jar文件名和jar文件版本两部分需要选择确定。</p>
+<p>jar文件名：在选择之前要明确两件事，需要使用支持包的哪种特性、需要兼容的最低Android版本，然后就可以确定具体依赖哪个支持库。<br>jar文件版本：支持库的版本需要跟compileSdkVersion保持一致。</p>
+<blockquote>
+<p>注意：由于依赖的支持库会打包进apk，所以官方推荐开发者在编译时使用ProGuard工具预处理release版本的apk。<strong>ProGuard工具除了混淆源代码外，还会移除那些依赖的支持库中没有使用到的类，达到apk瘦身的效果。</strong></p>
+</blockquote>
+<h2 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h2><p>以上就是关于Android Support Library全部了，谢谢。如果文章有错误或者有疑问请务必留言告诉我。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Support-Library/" rel="tag"><i class="fa fa-tag"></i> Support Library</a>
+              <a href="/tags/V4/" rel="tag"><i class="fa fa-tag"></i> V4</a>
+              <a href="/tags/V7/" rel="tag"><i class="fa fa-tag"></i> V7</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/hot-update-of-android/" rel="next" title="Robust——Hot Update Way of Android APK">
+                  <i class="fa fa-chevron-left"></i> Robust——Hot Update Way of Android APK
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Program/IPCreator/Technology/Program/Tools/Data Base/the-essence-of-mysql-index/" rel="prev" title="MySQL Index principle and optimization">
+                  MySQL Index principle and optimization <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android官方为什么要提供支持包？"><span class="nav-number">1.</span> <span class="nav-text">Android官方为什么要提供支持包？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#官方提供了哪些支持包，都有哪些特性？"><span class="nav-number">2.</span> <span class="nav-text">官方提供了哪些支持包，都有哪些特性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束"><span class="nav-number">3.</span> <span class="nav-text">结束</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

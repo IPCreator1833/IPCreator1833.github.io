@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="designapp  图形处理器(英语：Graphics Processing Unit，缩写：gpu)，又称显示核心、视觉处理器、显示芯片，是一种专门在个人电脑、工作站、游戏机和一些移动设备(如平板电脑、智能手机等)上图像运算工作的微处理器。 用途是将计算机系统所需要的显示信息进行转换驱动，并向显示器提供行扫描信号，控制显示器的正确显示，是连接显示器和个人电脑主板的重要元件，也是“人机对话”的重">
+<meta name="keywords" content="GPU,Basic Concept">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Anatomy of GPU">
+<meta property="og:url" content="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/the-anatomy-of-GPU/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="designapp  图形处理器(英语：Graphics Processing Unit，缩写：gpu)，又称显示核心、视觉处理器、显示芯片，是一种专门在个人电脑、工作站、游戏机和一些移动设备(如平板电脑、智能手机等)上图像运算工作的微处理器。 用途是将计算机系统所需要的显示信息进行转换驱动，并向显示器提供行扫描信号，控制显示器的正确显示，是连接显示器和个人电脑主板的重要元件，也是“人机对话”的重">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://okkntqe2h.bkt.clouddn.com/gpu%E5%9B%BE%E5%BD%A2%E5%A4%84%E7%90%86%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%A4%A7%E8%87%B4%E5%88%86%E6%88%90%205%20%E4%B8%AA%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="http://okkntqe2h.bkt.clouddn.com/gpu%E5%9B%BE%E5%BD%A2%E5%A4%84%E7%90%86%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%A4%A7%E8%87%B4%E5%88%86%E6%88%90%205%20%E4%B8%AA%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="http://okkntqe2h.bkt.clouddn.com/%E6%8A%AC%E8%B5%B7%E5%A4%B4%E6%9D%A5%E8%A7%82%E7%9C%8B%E6%98%9F%E6%98%9F%EF%BC%8C%E5%88%86%E4%B8%8D%E5%87%BA%E6%98%9F%E6%98%9F%E7%9A%84%E8%BF%9C%E8%BF%91%EF%BC%8C%E5%8F%AA%E8%83%BD%E5%88%86%E8%BE%A8%E5%87%BA%E4%BA%AE%E5%BA%A6.png">
+<meta property="og:image" content="http://okkntqe2h.bkt.clouddn.com/%E5%B0%86%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%EF%BC%8C%E7%94%A8%E6%96%B9%E6%A0%BC%E5%91%88%E7%8E%B0%E8%BF%91%E4%BC%BC%E5%8E%9F%E5%A7%8B%E5%9B%BE%E6%A1%88%EF%BC%8C%E5%B9%B6%E7%9D%80%E4%B8%8A%E9%A2%9C%E8%89%B2%E3%80%82%E4%B8%80%E5%9D%97%E5%8F%88%E4%B8%80%E5%9D%97%E7%9A%84%E6%96%B9%E6%A0%BC%EF%BC%8C%E5%B0%B1%E6%98%AF%E6%98%BE%E7%A4%BA%E5%99%A8%E4%B8%8A%E7%9A%84%E5%83%8F%E7%B4%A0.png">
+<meta property="og:updated_time" content="2017-03-27T08:55:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Anatomy of GPU">
+<meta name="twitter:description" content="designapp  图形处理器(英语：Graphics Processing Unit，缩写：gpu)，又称显示核心、视觉处理器、显示芯片，是一种专门在个人电脑、工作站、游戏机和一些移动设备(如平板电脑、智能手机等)上图像运算工作的微处理器。 用途是将计算机系统所需要的显示信息进行转换驱动，并向显示器提供行扫描信号，控制显示器的正确显示，是连接显示器和个人电脑主板的重要元件，也是“人机对话”的重">
+<meta name="twitter:image" content="http://okkntqe2h.bkt.clouddn.com/gpu%E5%9B%BE%E5%BD%A2%E5%A4%84%E7%90%86%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%A4%A7%E8%87%B4%E5%88%86%E6%88%90%205%20%E4%B8%AA%E6%AD%A5%E9%AA%A4.png">
+
+<link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/the-anatomy-of-GPU/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Anatomy of GPU | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/the-anatomy-of-GPU/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Anatomy of GPU
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Computer/the-anatomy-of-GPU/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Computer/the-anatomy-of-GPU/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="http://www.eechina.com/thread-176224-1-1.html" target="_blank" rel="noopener">designapp</a></p>
+<p><img src="http://okkntqe2h.bkt.clouddn.com/gpu%E5%9B%BE%E5%BD%A2%E5%A4%84%E7%90%86%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%A4%A7%E8%87%B4%E5%88%86%E6%88%90%205%20%E4%B8%AA%E6%AD%A5%E9%AA%A4.png" alt></p>
+<p>图形处理器(英语：Graphics Processing Unit，缩写：gpu)，又称显示核心、视觉处理器、显示芯片，是一种专门在个人电脑、工作站、游戏机和一些移动设备(如平板电脑、智能手机等)上图像运算工作的微处理器。</p>
+<p>用途是将计算机系统所需要的显示信息进行转换驱动，并向显示器提供行扫描信号，控制显示器的正确显示，是连接显示器和个人电脑主板的重要元件，也是“人机对话”的重要设备之一。显卡作为电脑主机里的一个重要组成部分，承担输出显示图形的任务，对于从事专业图形设计的人来说显卡非常重要。</p>
+<a id="more"></a>
+<p>gpu由于历史原因，是为了视频游戏而产生的(至今其主要驱动力还是不断增长的视频游戏市场)，在三维游戏中常常出现的一类操作是对海量数据进行相同的操作，如：对每一个顶点进行同样的坐标变换，对每一个顶点按照同样的光照模型计算颜色值。</p>
+<p>gpu的众核架构非常适合把同样的指令流并行发送到众核上，采用不同的输入数据执行。在 2003-2004年左右，图形学之外的领域专家开始注意到gpu与众不同的计算能力，开始尝试把gpu用于通用计算(即GPgpu)。之后NVIDIA发布了CUDA，amd和等公司也发布了OpenCL，gpu开始在通用计算领域得到广泛应用，包括：数值分析，海量数据处理(排序，Map- Reduce等)，金融分析等等。</p>
+<p>简而言之，<strong>当程序员为cpu编写程序时，他们倾向于利用复杂的逻辑结构优化算法从而减少计算任务的运行时间，即Latency。当程序员为gpu编写程序时，则利用其处理海量数据的优势，通过提高总的数据吞吐量(Throughput)来掩盖 Lantency。</strong> 目前，cpu和gpu的区别正在逐渐缩小，因为gpu也在处理不规则任务和线程间通信方面有了长足的进步。另外，功耗问题对于gpu比cpu更严重。</p>
+<p>gpu是显示卡的“心脏”，也就相当于cpu在电脑中的作用，它决定了该显卡的档次和大部分性能，同时也是2D显示卡和3D显示卡的区别依据。</p>
+<p>2D显示芯片在处理3D图像和特效时主要依赖cpu的处理能力，称为“软加速”。3D显示芯片是将三维图像和特效处理功能集中在显示芯片内，也即所谓的“硬件加速”功能。显示芯片通常是显示卡上最大的芯片(也是引脚最多的)。gpu使显卡减少了对cpu的依赖，并进行部分原本cpu的工作，尤其是在3D图形处理时。gpu所采用的核心技术有硬体T&amp;L、立方环境材质贴图和顶点混合、纹理压缩和凹凸映射贴图、双重纹理四像素256位渲染引擎等，而硬体T&amp;L技术可以说是gpu的标志。</p>
+<h2 id="gpu工作原理-工作原理"><a href="#gpu工作原理-工作原理" class="headerlink" title="gpu工作原理-工作原理"></a>gpu工作原理-工作原理</h2><p>简单的说gpu就是能够从硬件上支持T&amp;L(Transform and LighTIng，多边形转换与光源处理)的显示芯片，因为T&amp;L是3D渲染中的一个重要部分，其作用是计算多边形的3D位置和处理动态光线效果，也可以称为“几何处理”。一个好的T&amp;L单元，可以提供细致的3D物体和高级的光线特效;只不过大多数PC中，T&amp;L的大部分运算是交由cpu处理的(这就也就是所谓的软件T&amp;L)，由于cpu的任务繁多，除了T&amp;L之外，还要做内存管理、输入响应等非3D图形处理工作，因此在实际运算的时候性能会大打折扣，常常出现显卡等待cpu数据的情况，其运算速度远跟不上今天复杂三维游戏的要求。即使cpu的工作频率超过 1GHz或更高，对它的帮助也不大，由于这是PC本身设计造成的问题，与cpu的速度无太大关系。</p>
+<p>gpu图形处理，可以大致分成 5 个步骤，如下图箭头的部分。分别为 vertex shader、primiTIve processing、rasterisaTIon、fragment shader、tesTIng and blending。<br><img src="http://okkntqe2h.bkt.clouddn.com/gpu%E5%9B%BE%E5%BD%A2%E5%A4%84%E7%90%86%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%A4%A7%E8%87%B4%E5%88%86%E6%88%90%205%20%E4%B8%AA%E6%AD%A5%E9%AA%A4.png" alt></p>
+<p>第一步，vertex shader。是将三维空间中数个(x，y，z)顶点放进 gpu 中。在这一步骤中，电脑会在内部模拟出一个三维空间，并将这些顶点放置在这一空间内部。接着，投影在同一平面上，也是我们将看到的画面。同时，存下各点距离投影面的垂直距离，以便做后续的处理。</p>
+<p>这个过程就像是本地球观看星星一般。地球的天空，就像是一个投影面，所有的星星，不管远近皆投影在同一面上。本地球的我们，抬起头来观看星星，分不出星星的远近，只能分辨出亮度。gpu 所投影出的结果，和这个情况类似。<br><img src="http://okkntqe2h.bkt.clouddn.com/%E6%8A%AC%E8%B5%B7%E5%A4%B4%E6%9D%A5%E8%A7%82%E7%9C%8B%E6%98%9F%E6%98%9F%EF%BC%8C%E5%88%86%E4%B8%8D%E5%87%BA%E6%98%9F%E6%98%9F%E7%9A%84%E8%BF%9C%E8%BF%91%EF%BC%8C%E5%8F%AA%E8%83%BD%E5%88%86%E8%BE%A8%E5%87%BA%E4%BA%AE%E5%BA%A6.png" alt></p>
+<p>从地球所看到的星空，星星就像是投影到一球面上，除非使用特别的仪器，不然分不出星星和地球的距离</p>
+<p>第二步，primitive processing。是将相关的点链接在一起，以形成图形。在一开始输入数个顶点进入 gpu 时，程序会特别注记哪些点是需要组合在一起，以形成一线或面。就像是看星座的时候一样，将相关连的星星连起来，形成特定的图案。</p>
+<p>第三步，rasterisation。因为电脑的屏幕是由一个又一个的像素组成，因此，需要将一条连续的直线，使用绘图的演算法，以方格绘出该直线。图形也是以此方式，先标出边线，再用方格填满整个平面。</p>
+<p>第四步，fragment shader。将格点化后的图形着上颜色。所需着上的颜色也是于输入时便被注记。在游玩游戏时，这一步相当耗费 gpu 的计算资源，因为光影的效果、物体表面材质皆是在这一步进行，这些计算决定着游戏画面的精细程度。因此在游玩游戏时，调高游戏画面品质大幅增加这一步的计算负担，降低游戏品质。<br><img src="http://okkntqe2h.bkt.clouddn.com/%E5%B0%86%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%EF%BC%8C%E7%94%A8%E6%96%B9%E6%A0%BC%E5%91%88%E7%8E%B0%E8%BF%91%E4%BC%BC%E5%8E%9F%E5%A7%8B%E5%9B%BE%E6%A1%88%EF%BC%8C%E5%B9%B6%E7%9D%80%E4%B8%8A%E9%A2%9C%E8%89%B2%E3%80%82%E4%B8%80%E5%9D%97%E5%8F%88%E4%B8%80%E5%9D%97%E7%9A%84%E6%96%B9%E6%A0%BC%EF%BC%8C%E5%B0%B1%E6%98%AF%E6%98%BE%E7%A4%BA%E5%99%A8%E4%B8%8A%E7%9A%84%E5%83%8F%E7%B4%A0.png" alt></p>
+<p>将一个三角形，用方格呈现近似原始图案，并着上颜色。一块又一块的方格，就是显示器上的像素</p>
+<p>最后一步，testing and blending。便是将第一步所获得的投影垂直距离取出，和第四步的结果一同做最后处理。在去除被会被其他较近距离的物体挡住的物体后，让剩下的图形放进 gpu 的输出内存。之后，结果便会被送到电脑屏幕显示。</p>
+<h2 id="gpu工作原理-主要供应商"><a href="#gpu工作原理-主要供应商" class="headerlink" title="gpu工作原理-主要供应商"></a>gpu工作原理-主要供应商</h2><p>gpu有非常多的厂商都生产，和cpu一样，生产的厂商比较多，但大家熟悉的却只有INA，以至于大家以为gpu只有三大厂商。</p>
+<h3 id="英特尔"><a href="#英特尔" class="headerlink" title="英特尔"></a>英特尔</h3><p>英特尔的gpu基本为集成显卡芯片，用于英特尔的主板和英特尔的cpu。可能你想不到，要是只按市场占有率计算，英特尔随着他主板及cpu发售的集成gpu占据了整个gpu市场的60%以上。</p>
+<p>他的gpu主要有：唯一一款独立显卡芯片Intel 740(i740)。Extreme Graphics系列、GMA系列(集成于芯片组中)。现在的HD Graphics系列[1] 、Iris? Graphics系列[2] 、Iris? Pro Graphics[2] 系列等(集成于cpu中)。</p>
+<h3 id="NVIDIA"><a href="#NVIDIA" class="headerlink" title="NVIDIA"></a>NVIDIA</h3><p>NVIDIA是现在最大的独立显卡芯片生产销售商。他的gpu包括大家熟悉的Geforce系列 ，包括GTX、GTS、GT等。专业工作站的Quadro系列 ，超级计算的Tesla系列 ，多显示器商用的NVS系列 ，移动设备的Tegra系列 。</p>
+<p>以前也销售集成在主板上的集成显卡芯片，这些随着主板芯片组一起发售，但是由于amd收购ATI后自身主板芯片组gpu能力提高，NVIDIA芯片组如日中天的景象已经消失了。曾经为游戏机Xbox、PS3供应gpu。</p>
+<h3 id="amd-ATI"><a href="#amd-ATI" class="headerlink" title="amd(ATI)"></a>amd(ATI)</h3><p>amd是世界上第二大的独立显卡芯片生产销售商，他的前身就是ATI，2006年amd以54亿美元收购ATI。他的gpu主要是大家熟悉的Radeon系列，包括以前的X、HD系列，近几年的R9、R7、R5、R3，现在的RX系列等。专业工作站的FireGL系列，超级计算的FireStream系列，多显示器商用的FireMV系列，现在前三者已合并为FirePro系列 。</p>
+<p>早期ATI还生产过Wonder系列、Mach系列、Rage系列芯片。除了独立显卡之外amd还拥有集成显卡芯片，集成于芯片组、APU中。由于amd收购ATI后，其主板市场迅速扩大，已经夺取了NVIDIA在amd处理器主板芯片组的半壁江山。就现在的发售量和发售盈利方面，amd的gpu市场占有率方面仍然略输于NVIDIA。amd也是游戏机Xbox 360、Wii、Wii U、PS4、Xbox One的gpu供应商。</p>
+<h3 id="3dfx"><a href="#3dfx" class="headerlink" title="3dfx"></a>3dfx</h3><p>是一家于1994年成立的生产3D gpu及显卡的公司。曾经生产了Voodoo系列显卡，并且研发了SLI技术。由于经营不善等问题于2002年被NVIDIA收购。</p>
+<h3 id="Matrox"><a href="#Matrox" class="headerlink" title="Matrox"></a>Matrox</h3><p>Matrox当年和NVIDIA，ATI一起争夺独立显卡芯片市场份额的一家公司，在曾经的一个时期Matrox的显卡和NVIDIA，ATI曾经在性能上比肩过。但由于后来其开发能力日渐衰退，在GF5时期，也就是ATI的9000系列时期，Matrox由于性能上整整落后了GF5900和Raden9800一个世代而逐渐被淘汰，淡出了民用独立显卡市场。但时下Matrox仍然在工程用专业显卡方面有自己的地位。</p>
+<p>这些显卡用于工程主图和多头输出仍然很强力。与NVIDIA和amd的专业显卡不同，NVIDIA，ATI的专业显卡涉足的是3D领域，而Matrox得专业显卡涉足的是2D领域，也就是CAD。但由于OpenCL、CUDA的日渐普及，DX10以上显卡将在所有支持CUDA的程序上表现出惊人的性能，也就是说当CUDA在各种运用软件普及的那天，Matrox也必将退出2D专业卡的市场。</p>
+<h3 id="SiS和VIA"><a href="#SiS和VIA" class="headerlink" title="SiS和VIA"></a>SiS和VIA</h3><p>矽统和威盛时下是对孪生兄弟，但他们曾经也是分开的两家公司，并且都生产自己主板的集成显卡芯片。但这可怜的两兄弟已经逐步在淡出主板市场了，也就必定将淡出gpu市场。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/GPU/" rel="tag"><i class="fa fa-tag"></i> GPU</a>
+              <a href="/tags/Basic-Concept/" rel="tag"><i class="fa fa-tag"></i> Basic Concept</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Program/IPCreator/Technology/Program/Computer/the-anatomy-of-hard-disk/" rel="next" title="Anatomy of Hard Disk">
+                  <i class="fa fa-chevron-left"></i> Anatomy of Hard Disk
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Program/IPCreator/Technology/Program/Tools/Linux/the-anatomy-of-file-system/" rel="prev" title="File System of Linux">
+                  File System of Linux <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gpu工作原理-工作原理"><span class="nav-number">1.</span> <span class="nav-text">gpu工作原理-工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gpu工作原理-主要供应商"><span class="nav-number">2.</span> <span class="nav-text">gpu工作原理-主要供应商</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#英特尔"><span class="nav-number">2.1.</span> <span class="nav-text">英特尔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NVIDIA"><span class="nav-number">2.2.</span> <span class="nav-text">NVIDIA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amd-ATI"><span class="nav-number">2.3.</span> <span class="nav-text">amd(ATI)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3dfx"><span class="nav-number">2.4.</span> <span class="nav-text">3dfx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Matrox"><span class="nav-number">2.5.</span> <span class="nav-text">Matrox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SiS和VIA"><span class="nav-number">2.6.</span> <span class="nav-text">SiS和VIA</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

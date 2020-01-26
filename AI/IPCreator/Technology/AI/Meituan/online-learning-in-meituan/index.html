@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="孔东营 背景Online Learning是工业界比较常用的机器学习算法，在很多场景下都能有很好的效果。本文主要介绍Online Learning的基本原理和两种常用的Online Learning算法：FTRL（Follow The Regularized Leader）[1]和BPR（Bayesian Probit Regression）[2]，以及Online Learning在美团移动端推">
+<meta name="keywords" content="Algorithm,Meituan,Application,Deep Learning,Online">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Online Learning Algorithm Theory and Practice">
+<meta property="og:url" content="https://hazyman.com/AI/IPCreator/Technology/AI/Meituan/online-learning-in-meituan/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="孔东营 背景Online Learning是工业界比较常用的机器学习算法，在很多场景下都能有很好的效果。本文主要介绍Online Learning的基本原理和两种常用的Online Learning算法：FTRL（Follow The Regularized Leader）[1]和BPR（Bayesian Probit Regression）[2]，以及Online Learning在美团移动端推">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-flow.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-model-flow.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/bayesian-online-learning-flow.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-rerank.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-server.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-skip-above.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-feature.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-result.png">
+<meta property="og:image" content="http://tech.meituan.com/img/qrcode_for_gh.jpg">
+<meta property="og:updated_time" content="2017-03-27T09:04:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Online Learning Algorithm Theory and Practice">
+<meta name="twitter:description" content="孔东营 背景Online Learning是工业界比较常用的机器学习算法，在很多场景下都能有很好的效果。本文主要介绍Online Learning的基本原理和两种常用的Online Learning算法：FTRL（Follow The Regularized Leader）[1]和BPR（Bayesian Probit Regression）[2]，以及Online Learning在美团移动端推">
+<meta name="twitter:image" content="http://tech.meituan.com/img/online-learning/online-learning-flow.png">
+
+<link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/Meituan/online-learning-in-meituan/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Online Learning Algorithm Theory and Practice | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/AI/IPCreator/Technology/AI/Meituan/online-learning-in-meituan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Online Learning Algorithm Theory and Practice
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/AI/IPCreator/Technology/AI/Meituan/online-learning-in-meituan/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/AI/IPCreator/Technology/AI/Meituan/online-learning-in-meituan/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="http://tech.meituan.com/online-learning.html" target="_blank" rel="noopener">孔东营</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p><img src="http://tech.meituan.com/img/online-learning/online-learning-flow.png" alt><br>Online Learning是工业界比较常用的机器学习算法，在很多场景下都能有很好的效果。本文主要介绍Online Learning的基本原理和两种常用的Online Learning算法：FTRL（Follow The Regularized Leader）[1]和BPR（Bayesian Probit Regression）[2]，以及Online Learning在美团移动端推荐重排序的应用。</p>
+   <a id="more"></a>
+<h2 id="什么是Online-Learning"><a href="#什么是Online-Learning" class="headerlink" title="什么是Online Learning"></a>什么是Online Learning</h2><p>准确地说，Online Learning并不是一种模型，而是一种模型的训练方法，Online Learning能够根据线上反馈数据，实时快速地进行模型调整，使得模型及时反映线上的变化，提高线上预测的准确率。Online Learning的流程包括：将模型的预测结果展现给用户，然后收集用户的反馈数据，再用来训练模型，形成闭环的系统。如上图所示：</p>
+<p>   Online Learning有点像自动控制系统，但又不尽相同，二者的区别是：Online Learning的优化目标是整体的损失函数最小化，而自动控制系统要求最终结果与期望值的偏差最小。</p>
+<p>   传统的训练方法，模型上线后，更新的周期会比较长（一般是一天，效率高的时候为一小时），这种模型上线后，一般是静态的（一段时间内不会改变），不会与线上的状况有任何互动，假设预测错了，只能在下一次更新的时候完成更正。Online Learning训练方法不同，会根据线上预测的结果动态调整模型。如果模型预测错误，会及时做出修正。因此，Online Learning能够更加及时地反映线上变化。</p>
+<p>   Online Learning的优化目标<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-model-flow.png" alt></p>
+<p>   如上图所示，Online Learning训练过程也需要优化一个目标函数（红框标注的），但是和其他的训练方法不同，Online Learning要求快速求出目标函数的最优解，最好是能有解析解。</p>
+<h2 id="怎样实现Online-Learning"><a href="#怎样实现Online-Learning" class="headerlink" title="怎样实现Online Learning"></a>怎样实现Online Learning</h2><p>   前面说到Online Learning要求快速求出目标函数的最优解。要满足这个要求，一般的做法有两种：Bayesian Online Learning和Follow The Regularized Leader。下面就详细介绍这两种做法的思路。</p>
+<p>   Bayesian Online Learning<br>   贝叶斯方法能够比较自然地导出Online Learning的训练方法：给定参数先验，根据反馈计算后验，将其作为下一次预测的先验，然后再根据反馈计算后验，如此进行下去，就是一个Online Learning的过程，如下图所示。<br>   <img src="http://tech.meituan.com/img/online-learning/bayesian-online-learning-flow.png" alt></p>
+<p>   举个例子， 我们做一个抛硬币实验，估算硬币正面的概率μμ。我们假设μμ的先验满足<br>   p(μ)=Beta(α,β)<br>   p(μ)=Beta⁡(α,β)</p>
+<p>   对于观测值Y＝1Y＝1，代表是正面，我们可以算的后验：<br>   p(μ|Y=1)=Beta(α+1,β)<br>   p(μ|Y=1)=Beta⁡(α+1,β)</p>
+<p>   对于观测值Y＝0Y＝0，代表是反面，我们可以算的后验：<br>   p(μ|Y=0)=Beta(α,β+1)<br>   p(μ|Y=0)=Beta⁡(α,β+1)</p>
+<p>   按照上面的Bayesian Online Learning流程，我们可以得到估算μμ的Online Learning算法：</p>
+<p>   初始化 αα,ββ<br>   for i = 0 … n</p>
+<p>   如果 YiYi是正面<br>   α=α+1α=α+1<br>   如果 YiYi是反面<br>   β=β+1β=β+1<br>   最终: μ∼Beta(α,β)μ∼Beta⁡(α,β)，可以取μμ的期望，μ=αα+βμ=αα+β<br>   假设抛了NN次硬币，正面出现HH次，反面出现TT次，按照上面的算法，可以算得：<br>   μ=α+Hα+β+N<br>   μ=α+Hα+β+N</p>
+<p>   和最大化似然函数：<br>   log[p(μ∣α,β)⋅p(Y=1∣μ)H⋅p(Y=0∣μ)T]<br>   log[p(μ∣α,β)⋅p(Y=1∣μ)H⋅p(Y=0∣μ)T]</p>
+<p>   得到的解是一样的。</p>
+<p>   上面的例子是针对离散分布的，我们可以再看一个连续分布的例子。</p>
+<p>   有一种测量仪器，测量的方差σ2σ2是已知的， 测量结果为：Y1,Y2,Y3,…,YnY1,Y2,Y3,…,Yn, 求真实值μμ的分布。<br>   仪器的方差是σ2σ2, 所以观测值Y满足高斯分布：<br>   p(Y∣μ)=N(Y∣μ,σ2)<br>   p(Y∣μ)=N(Y∣μ,σ2)</p>
+<p>   观测到 Y1,Y2,Y3,…,YnY1,Y2,Y3,…,Yn, 估计参数 μμ 。<br>   假设参数 μμ 满足高斯分布：<br>   p(μ)=N(μ∣m,v2)<br>   p(μ)=N(μ∣m,v2)</p>
+<p>   观测到YiYi, 可以计算的后验：<br>   p(μ∣Yi)=N(μ∣Yiv2+mσ2σ2+v2,σ2v2σ2+v2)<br>   p(μ∣Yi)=N(μ∣Yiv2+mσ2σ2+v2,σ2v2σ2+v2)</p>
+<p>   可以得到以下的Online Learning算法：</p>
+<p>   初始化 mm,v2v2<br>   for i = 0 … n</p>
+<p>   观测值为YiYi<br>   更新<br>   m=Yiv2+mσ2σ2+v2<br>   m=Yiv2+mσ2σ2+v2</p>
+<p>   v2=σ2v2σ2+v2<br>   v2=σ2v2σ2+v2<br>   上面的两个结果都是后验跟先验是同一分布的（一般取共轭先验，就会有这样的效果），这个后验很自然的作为后面参数估计的先验。假设后验分布和先验不一样，我们该怎么办呢？</p>
+<p>   举个例子：假设上面的测量仪器只能观测到YY，是大于0，还是小于0，即Yi∈{−1，1}Yi∈{−1，1},Yi=−1Yi=−1，代表观测值小于0，Yi=1Yi=1代表观测值大于0。<br>   此时，我们仍然可以计算后验分布：<br>   p(μ∣Yi＝1)=I(μ&gt;0)p(μ)∫+∞0p(μ)du<br>   p(μ∣Yi＝1)=I(μ&gt;0)p(μ)∫0+∞p(μ)du</p>
+<p>   p(μ∣Yi＝−1)=I(μ&lt;0)p(μ)∫0−∞p(μ)du<br>   p(μ∣Yi＝−1)=I(μ&lt;0)p(μ)∫−∞0p(μ)du</p>
+<p>   但是后验分布显然不是高斯分布（是截断高斯分布），这种情况下，我们可以用和上面分布KL距离最近的高斯分布代替。<br>   观测到Yi=1Yi=1<br>   KL(p(μ∣Yi=1)||N(μ∣m~,v~2))<br>   KL(p(μ∣Yi=1)||N(μ∣m~,v~2))</p>
+<p>   可以求得：<br>   m~=m+v⋅υ(mv)<br>   m~=m+v⋅υ(mv)</p>
+<p>   v~2=v2(1−ω(mv))<br>   v~2=v2(1−ω(mv))<br>   观测到Yi=−1Yi=−1<br>   KL(p(μ∣Yi=−1)||N(μ∣μ~,v~2))<br>   KL(p(μ∣Yi=−1)||N(μ∣μ~,v~2))</p>
+<p>   可以求得：<br>   m~=m−v⋅υ(−mv)<br>   m~=m−v⋅υ(−mv)</p>
+<p>   v~2=v2(1−ω(−mv))<br>   v~2=v2(1−ω(−mv))<br>   两者综合起来，可以求得：<br>   m~=m+Yiv⋅υ(Yimv)<br>   m~=m+Yiv⋅υ(Yimv)</p>
+<p>   v~2=v2(1−ω(Yimv))<br>   v~2=v2(1−ω(Yimv))</p>
+<p>   其中：<br>   υ(t)=ϕ(t)Φ(t)<br>   υ(t)=ϕ(t)Φ(t)</p>
+<p>   ϕ(t)=12πexp(−12t2)<br>   ϕ(t)=12πexp(−12t2)</p>
+<p>   Φ(t)=∫t−∞ϕ(t)dt<br>   Φ(t)=∫−∞tϕ(t)dt</p>
+<p>   ω(t)=υ(t)∗(t−υ(t))<br>   ω(t)=υ(t)∗(t−υ(t))<br>   有了后验我们可以得到Online Bayesian Learning流程：</p>
+<p>   初始化 mm,v2v2<br>   for i = 0 … n</p>
+<p>   观测值为YiYi<br>   更新</p>
+<p>   m=m+Yi⋅v⋅υ(Yi⋅mv)<br>   m=m+Yi⋅v⋅υ(Yi⋅mv)<br>   v2=v2(1−ω(Yi⋅mv))<br>   v2=v2(1−ω(Yi⋅mv))<br>   Bayesian Online Learning最常见的应用就是BPR（Bayesian Probit Regression）。</p>
+<p>   BPR<br>   在看Online BPR前，我们先了解以下Linear Gaussian System(具体可以参考[3]的4.4节)。<br>   xx是满足多维高斯分布：<br>   p(x)=N(x∣μx,Σx)<br>   p(x)=N(x∣μx,Σx)</p>
+<p>   yy是xx通过线性变换加入随机扰动ΣyΣy得到的变量：<br>   p(y∣x)=N(y∣Ax+b,Σy)<br>   p(y∣x)=N(y∣Ax+b,Σy)<br>   已知xx，我们可以得到yy的分布：</p>
+<p>   p(y)=N(y∣AμX+b,Σy+AΣxAT)<br>   p(y)=N(y∣AμX+b,Σy+AΣxAT)<br>   上面这个结论的具体的推导过程可以参考[3]的4.4节，这里我们直接拿来用。</p>
+<p>   我们可以假设特征权重 ww 满足独立高斯分布，即<br>   p(w)=N(w∣μ,Σ)<br>   p(w)=N(w∣μ,Σ)<br>   ：<br>   μ=[μ1,μ2,…,μD]T<br>   μ=[μ1,μ2,…,μD]T</p>
+<p>   Σ=⎡⎣⎢⎢⎢⎢⎢σ210⋮00σ22⋮0……⋱…00⋮σ2D⎤⎦⎥⎥⎥⎥⎥<br>   Σ=[σ120…00σ22…0⋮⋮⋱⋮00…σD2]<br>   YY是一维变量，是ww与特征向量xx的内积，加入方差为β2β2的扰动：</p>
+<p>   p(y∣w)=N(y∣xTw,β2)<br>   p(y∣w)=N(y∣xTw,β2)</p>
+<p>   根据上面的式子可以得出：<br>   p(y∣w)=N(y∣xTμ,xTΣx+β2)<br>   p(y∣w)=N(y∣xTμ,xTΣx+β2)</p>
+<p>   由于我们只能观测到YY，是大于0，还是小于0，即Yi∈{−1，1}Yi∈{−1，1},Yi=−1Yi=−1，代表观测值小于0，Yi=1Yi=1代表观测值大于0。</p>
+<p>   对于观测值，我们可以先用KL距离近似yy的分布，我们可以算出后验：<br>   p(y∣Yi)=N(y∣m~,v~2)<br>   p(y∣Yi)=N(y∣m~,v~2)</p>
+<p>   m~=xTμ+Yiυ(Yi⋅xTμxTΣx+β2−−−−−−−−−√)<br>   m~=xTμ+Yiυ(Yi⋅xTμxTΣx+β2)</p>
+<p>   v~2=(xTΣx+β2)(1−ω(Yi⋅xTμxTΣx+β2−−−−−−−−−√))<br>   v~2=(xTΣx+β2)(1−ω(Yi⋅xTμxTΣx+β2))</p>
+<p>   有了yy的近似分布，我们可以计算出后验：<br>   p(w∣y)∝p(y∣w)p(w)<br>   p(w∣y)∝p(y∣w)p(w)<br>   可以求得：<br>   p(wd∣y)=N(wd∣μ~d,σ~d)<br>   p(wd∣y)=N(wd∣μ~d,σ~d)</p>
+<p>   μ~d=μd+Yixi,d⋅σ2dxTΣx+β2−−−−−−−−−√⋅υ(Yi⋅xTμxTΣx+β2−−−−−−−−−√)<br>   μ~d=μd+Yixi,d⋅σd2xTΣx+β2⋅υ(Yi⋅xTμxTΣx+β2)<br>   σ~d=σd⋅[1−xi,d⋅σ2dxTΣx+β2ω(Yi⋅xTμxTΣx+β2−−−−−−−−−√)]<br>   σ~d=σd⋅[1−xi,d⋅σd2xTΣx+β2ω(Yi⋅xTμxTΣx+β2)]<br>   Online Bayesian Probit Regression 训练流程如下：</p>
+<p>   初始化 μ1μ1,σ21σ12, μ2μ2,σ22σ22 , … , μDμD,σ2DσD2<br>   for i = 1 … n</p>
+<p>   观测值为YiYi<br>   for d = 1 … D<br>   更新</p>
+<p>   μd=μd+Yixi,d⋅σ2dxTiΣxi+β2−−−−−−−−−√⋅υ⎛⎝⎜Yi⋅xTiμxTiΣxi+β2−−−−−−−−−√⎞⎠⎟<br>   μd=μd+Yixi,d⋅σd2xiTΣxi+β2⋅υ(Yi⋅xiTμxiTΣxi+β2)<br>   σd=σd⋅⎡⎣⎢1−xi,d⋅σ2dxTiΣxi+β2ω⎛⎝⎜Yi⋅xTiμxTiΣx+β2−−−−−−−−−√⎞⎠⎟⎤⎦⎥<br>   σd=σd⋅[1−xi,d⋅σd2xiTΣxi+β2ω(Yi⋅xiTμxiTΣx+β2)]<br>   FTRL<br>   除了Online Bayesian Learning，还有一种做法就是FTRL（Follow The Regularized Leader）。<br>   FTRL的网上资料很多，但是大部分介绍怎么样产生稀疏化解，而往往忽略了FTRL的基本原理。顾名思义，FTRL和稀疏化并没有关系，它只是一种做Online Learning的思想。</p>
+<p>   先说说FTL（Follow The Leader）算法，FTL思想就是每次找到让之前所有损失函数之和最小的参数。流程如下：</p>
+<p>   初始化 ww<br>   for t = 1 … n</p>
+<p>   损失函数 ftft<br>   更新</p>
+<p>   w=argminw∑i=1tfi(w)<br>   w=argminw∑i=1tfi(w)<br>   FTRL算法就是在FTL的优化目标的基础上，加入了正规化，防止过拟合：<br>   w=argminw∑i=1tfi(w)+R(w)<br>   w=argminw∑i=1tfi(w)+R(w)</p>
+<p>   其中，R(w)R(w)是正规化项。</p>
+<p>   FTRL算法的损失函数，一般也不是能够很快求解的，这种情况下，一般需要找一个代理的损失函数。</p>
+<p>   代理损失函数需要满足几个要求：</p>
+<p>   代理损失函数比较容易求解，最好是有解析解<br>   优化代理损失函数求的解，和优化原函数得到的解差距不能太大<br>   为了衡量条件2中的两个解的差距，这里需要引入regret的概念。</p>
+<p>   假设每一步用的代理函数是ht(w)ht(w)<br>   每次取</p>
+<p>   wt=argminwht−1(w)<br>   wt=argminwht−1(w)</p>
+<p>   Regrett=∑t=1Tft(wt)−∑t=1Tft(w∗)<br>   Regrett=∑t=1Tft(wt)−∑t=1Tft(w∗)<br>   其中w∗=argminw∑ti=1fi(w)w∗=argminw∑i=1tfi(w)，是原函数的最优解。就是我们每次代理函数求出解，离真正损失函数求出解的损失差距。当然这个损失必须满足一定的条件，Online Learning才可以有效，就是：</p>
+<p>   limt→∞Regrettt=0<br>   limt→∞Regrettt=0<br>   随着训练样本的增多，这两个优化目标优化出的参数的实际损失值差距越来越小。</p>
+<p>   代理函数 ht(w)ht(w) 应该该怎么选呢？<br>   如果ft(w)ft(w) 是凸函数，我们可以用下面的代理损失函数：</p>
+<p>   ht=∑i=1tgi⋅w+∑i=1t(12ηt−12ηt−1)||w−wt||2<br>   ht=∑i=1tgi⋅w+∑i=1t(12ηt−12ηt−1)||w−wt||2<br>   其中gigi 是fi(wi)fi(wi)次梯度（如果 fi(wi)fi(wi)是可导的，次梯度就是梯度）。ηtηt满足：<br>   ηt=α∑ti=1g2t−−−−−−−√<br>   ηt=α∑i=1tgt2<br>   为了产生稀疏的效果，我们也可以加入l1正规化：</p>
+<p>   ht=∑i=1tgi⋅w+∑i=1t(12ηt−12ηt−1)||w−wt||2＋λ1|w|<br>   ht=∑i=1tgi⋅w+∑i=1t(12ηt−12ηt−1)||w−wt||2＋λ1|w|</p>
+<p>   只要ft(w)ft(w) 是凸函数，上面的代理函数一定满足：</p>
+<p>   limt→∞Regrettt=0<br>   limt→∞Regrettt=0<br>   上面的式子我们可以得出ww的解析解：</p>
+<p>   wt+1,i={0−ηt(zt,i−sgn(zt,i)λ1))|zt,i|&lt;λ1otherwise<br>   wt+1,i={0|zt,i|&lt;λ1−ηt(zt,i−sgn(zt,i)λ1))otherwise<br>   其中<br>   zt,i=∑s=1tgs,i+∑s=1t(1ηt,i−1ηt−1,i)wt,i<br>   zt,i=∑s=1tgs,i+∑s=1t(1ηt,i−1ηt−1,i)wt,i<br>   可以得到FTRL的更新流程如下：</p>
+<p>   输入αα, λ1λ1<br>   初始化 w1…Nw1…N, z1..N=0z1..N=0 , n1..N=0n1..N=0<br>   for t = 1 … T</p>
+<p>   损失函数 ftft<br>   for i = 1 ..N</p>
+<p>   计算</p>
+<p>   gt,i=∂fi(wt−1)wt−1,i<br>   gt,i=∂fi(wt−1)wt−1,i<br>   zt+=gt,i+1α(ni+g2t,i−−−−−−−√−ni−−√)wt,i<br>   zt+=gt,i+1α(ni+gt,i2−ni)wt,i<br>   ni+=g2t,i<br>   ni+=gt,i2</p>
+<p>   更新</p>
+<p>   wt+1,i={0−ηt(zt,i−sgn(zt,i)λ1))|zt,i|&lt;λ1otherwise<br>   wt+1,i={0|zt,i|&lt;λ1−ηt(zt,i−sgn(zt,i)λ1))otherwise<br>   Online Learning实践<br>   前面讲了Online Learning的基本原理，这里以移动端推荐重排序为例，介绍一下Online Learning在实际中的应用。</p>
+<p>   推荐重排序介绍</p>
+<p>   目前的推荐系统，主要采用了两层架构，首先是触发层，会根据上下文条件和用户的历史行为，触发用户可能感兴趣的item，然后由排序模型对触发的item排序，如下图所示：<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-rerank.png" alt></p>
+<p>   推荐重排序既能融合不同触发策略，又能较大幅度提高推荐效果（我们这里主要是下单率）。在移动端，屏幕更加小，用户每次看到的item数目更加少，排序的作用更加突出。</p>
+<p>   美团重排序Online Learning架构</p>
+<p>   美团Online Learning架构如下图所示：<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-server.png" alt></p>
+<p>   线上的展示日志，点击日志和下单日志会写入不同的Kafka流。读取Kafka流，以HBase为中间缓存，完成label match（下单和点击对映到相应的展示日志），在做label match的过成中，会对把同一个session的日志放在一起，方便后面做skip above：</p>
+<p>   训练数据生成</p>
+<p>   移动端推荐的数据跟PC端不同，移动端一次会加载很多item，但是无法保证这些item会被用户看到。为了保证数据的准确性，我们采用了skip above的办法，如下图所示：<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-skip-above.png" alt></p>
+<p>   假设用户点击了第i个位置，我们保留从第1条到第i+2条数据作为训练数据，其他的丢弃。这样能够最大程度的保证训练样本中的数据是被用户看到的。</p>
+<p>   特征</p>
+<p>   用的特征如下图所示：<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-feature.png" alt></p>
+<p>   算法选择</p>
+<p>   我们尝试了FTRL和BPR效果，线下实验效果如下表：</p>
+<p>   算法       AUC         模型参数个数<br>   FTRL    0.8432    200W<br>   BPR    0.8441    1500W<br>   BPR的效果略好，但是我们线上选用了FTRL模型，主要原因是FTRL能够产生稀疏化的效果，训练出的模型会比较小。</p>
+<p>   模型训练</p>
+<p>   训练算法不断地从HBase中读取数据，完成模型地训练，训练模型放在Medis（美团内部地Redis）中，线上会用Medis中的模型预测下单率，根据预测的下单率，完成排序。</p>
+<p>   线上效果</p>
+<p>   上线后，最终的效果如下图所示，和base算法相比，下单率提高了5%。<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-result.png" alt></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>   [1] McMahan H B, Holt G, Sculley D, et al. Ad Click Prediction: a View from the Trenches. Proceedings of the 19th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD). 2013.<br>   [2] Graepel T, Candela J Q, Borchert T,et al. Web-Scale Bayesian Click-Through Rate Prediction for Sponsored Search Advertising in Microsoft’s Bing Search Engine. Proceedings of the 27th International Conference on Machine Learning ICML. 2010.<br>   [3] Murphy K P. Machine Learning: A Probabilistic Perspective. The MIT Press. 2012.</p>
+<p>   不想错过技术博客更新？想给文章评论、和作者互动？第一时间获取技术沙龙信息？</p>
+<p>   请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br>   <img src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>   公众号二维码</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm/" rel="tag"><i class="fa fa-tag"></i> Algorithm</a>
+              <a href="/tags/Meituan/" rel="tag"><i class="fa fa-tag"></i> Meituan</a>
+              <a href="/tags/Application/" rel="tag"><i class="fa fa-tag"></i> Application</a>
+              <a href="/tags/Deep-Learning/" rel="tag"><i class="fa fa-tag"></i> Deep Learning</a>
+              <a href="/tags/Online/" rel="tag"><i class="fa fa-tag"></i> Online</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Meituan/framework-of-get-features-in-meituan/" rel="next" title="Framework of Getting Features in Meituan">
+                  <i class="fa fa-chevron-left"></i> Framework of Getting Features in Meituan
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Meituan/ffm-learning-in-meituan/" rel="prev" title="Deep FFM Theory and Practice in Meituan">
+                  Deep FFM Theory and Practice in Meituan <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Online-Learning"><span class="nav-number">2.</span> <span class="nav-text">什么是Online Learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎样实现Online-Learning"><span class="nav-number">3.</span> <span class="nav-text">怎样实现Online Learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

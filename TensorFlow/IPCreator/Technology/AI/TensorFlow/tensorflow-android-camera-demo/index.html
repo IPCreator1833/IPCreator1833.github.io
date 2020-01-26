@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="作者：tensorflow    This folder contains an example application utilizing TensorFlow for Android devices. DescriptionThe demos in this folder are designed to give straightforward samples of using TensorF">
+<meta name="keywords" content="Camera,Android,Tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow Android Camera Demo">
+<meta property="og:url" content="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/tensorflow-android-camera-demo/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="作者：tensorflow    This folder contains an example application utilizing TensorFlow for Android devices. DescriptionThe demos in this folder are designed to give straightforward samples of using TensorF">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/android/sample_images/classify1.jpg">
+<meta property="og:image" content="https://github.com/tensorflow/tensorflow/raw/master/tensorflow/examples/android/sample_images/stylize1.jpg">
+<meta property="og:image" content="https://github.com/tensorflow/tensorflow/raw/master/tensorflow/examples/android/sample_images/detect1.jpg">
+<meta property="og:updated_time" content="2017-09-15T00:51:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow Android Camera Demo">
+<meta name="twitter:description" content="作者：tensorflow    This folder contains an example application utilizing TensorFlow for Android devices. DescriptionThe demos in this folder are designed to give straightforward samples of using TensorF">
+<meta name="twitter:image" content="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/android/sample_images/classify1.jpg">
+
+<link rel="canonical" href="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/tensorflow-android-camera-demo/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>TensorFlow Android Camera Demo | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/tensorflow-android-camera-demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TensorFlow Android Camera Demo
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TensorFlow/" itemprop="url" rel="index">
+                    <span itemprop="name">TensorFlow</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/TensorFlow/IPCreator/Technology/AI/TensorFlow/tensorflow-android-camera-demo/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/TensorFlow/IPCreator/Technology/AI/TensorFlow/tensorflow-android-camera-demo/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/android" target="_blank" rel="noopener">作者：tensorflow</a></p>
+<p><img src="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/android/sample_images/classify1.jpg" alt></p>
+<p><img src="https://github.com/tensorflow/tensorflow/raw/master/tensorflow/examples/android/sample_images/stylize1.jpg" alt></p>
+<p><img src="https://github.com/tensorflow/tensorflow/raw/master/tensorflow/examples/android/sample_images/detect1.jpg" alt></p>
+<p>This folder contains an example application utilizing TensorFlow for Android devices.</p>
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>The demos in this folder are designed to give straightforward samples of using TensorFlow in mobile applications.</p>
+<p>Inference is done using the TensorFlow Android Inference Interface, which may be built separately if you want a standalone library to drop into your existing application.</p>
+<p>A device running Android 5.0 (API 21) or higher is required to run the demo.</p>
+<a id="more"></a>
+<h2 id="Current-samples"><a href="#Current-samples" class="headerlink" title="Current samples:"></a>Current samples:</h2><pre><code>TF Classify: Uses the Google Inception model to classify camera frames in real-time, displaying the top results in an overlay on the camera image.
+TF Detect: Demonstrates a model based on Scalable Object Detection using Deep Neural Networks to localize and track people in the camera preview in real-time.
+TF Stylize: Uses a model based on A Learned Representation For Artistic Style to restyle the camera preview image to that of a number of different artists.
+</code></pre><h2 id="Prebuilt-APK"><a href="#Prebuilt-APK" class="headerlink" title="Prebuilt APK:"></a>Prebuilt APK:</h2><pre><code>If you just want the fastest path to trying the demo, you may download the nightly build here. Expand the &quot;View&quot; and then the &quot;out&quot; folders under &quot;Last Successful Artifacts to find tensorflow_demo.apk. Also available are precompiled native libraries that you may drop into your own applications. See tensorflow/contrib/android/README.md for more details.
+</code></pre><h2 id="Running-the-Demo"><a href="#Running-the-Demo" class="headerlink" title="Running the Demo"></a>Running the Demo</h2><pre><code>Once the app is installed it can be started via the &quot;TF Classify&quot;, &quot;TF Detect&quot; and &quot;TF Stylize&quot; icons, which have the orange TensorFlow logo as their icon.
+
+While running the activities, pressing the volume keys on your device will toggle debug visualizations on/off, rendering additional info to the screen that may be useful for development purposes.
+</code></pre><h2 id="Building-the-Demo-from-Source"><a href="#Building-the-Demo-from-Source" class="headerlink" title="Building the Demo from Source"></a>Building the Demo from Source</h2><pre><code>Pick your preferred approach below. At the moment, we have full support for Bazel, and partial support for gradle, cmake, make, and Android Studio.
+
+As a first step for all build types, clone the TensorFlow repo with:
+
+git clone --recurse-submodules https://github.com/tensorflow/tensorflow.git
+Note that --recurse-submodules is necessary to prevent some issues with protobuf compilation.
+</code></pre><h2 id="Bazel"><a href="#Bazel" class="headerlink" title="Bazel"></a>Bazel</h2><pre><code>Install Bazel and Android Prerequisites
+
+Bazel is the primary build system for TensorFlow. To build with Bazel, it and the Android NDK and SDK must be installed on your system.
+
+Get the recommended Bazel version listed in os_setup.html
+The Android NDK is required to build the native (C/C++) TensorFlow code. The current recommended version is 12b, which may be found here.
+The Android SDK and build tools may be obtained here, or alternatively as part of Android Studio. Build tools API &gt;= 23 is required to build the TF Android demo.
+Edit WORKSPACE
+
+The Android entries in &lt;workspace_root&gt;/WORKSPACE must be uncommented with the paths filled in appropriately depending on where you installed the NDK and SDK. Otherwise an error such as: &quot;The external label &apos;//external:android/sdk&apos; is not bound to anything&quot; will be reported.
+
+Also edit the API levels for the SDK in WORKSPACE to the highest level you have installed in your SDK. This must be &gt;= 23 (this is completely independent of the API level of the demo, which is defined in AndroidManifest.xml). The NDK API level may remain at 21.
+
+Install Model Files (optional)
+
+The TensorFlow GraphDefs that contain the model definitions and weights are not packaged in the repo because of their size. They are downloaded automatically and packaged with the APK by Bazel via a new_http_archive defined in WORKSPACE during the build process.
+
+Optional: If you wish to place the models in your assets manually (E.g. for non-Bazel builds), remove all of the model_files entries from the assets list in tensorflow_demo found in the [BUILD](BUILD) file. Then download and extract the archives yourself to the assets directory in thesource tree:
+
+BASE_URL=https://storage.googleapis.com/download.tensorflow.org/models
+for MODEL_ZIP in inception5h.zip mobile_multibox_v1a.zip stylize_v1.zip
+do
+  curl -L ${BASE_URL}/${MODEL_ZIP} -o /tmp/${MODEL_ZIP}
+  unzip /tmp/${MODEL_ZIP} -d tensorflow/examples/android/assets/
+done
+This will extract the models and their associated metadata files to the local assets/ directory.
+
+Build
+
+After editing your WORKSPACE file to update the SDK/NDK configuration, you may build the APK. Run this from your workspace root:
+
+bazel build -c opt //tensorflow/examples/android:tensorflow_demo
+If you get build errors about protocol buffers, run git submodule update --init and make sure that you&apos;ve modified your WORKSPACE file as instructed, then try building again.
+
+Install
+
+Make sure that adb debugging is enabled on your Android 5.0 (API 21) or later device, then after building use the following command from your workspace root to install the APK:
+
+adb install -r bazel-bin/tensorflow/examples/android/tensorflow_demo.apk
+</code></pre><h2 id="Android-Studio"><a href="#Android-Studio" class="headerlink" title="Android Studio"></a>Android Studio</h2><pre><code>Android Studio may be used to build the demo in conjunction with Bazel. First, make sure that you can build with Bazel following the above directions. Then, look at build.gradle and make sure that the path to Bazel matches that of your system.
+
+At this point you can add the tensorflow/examples/android directory as a new Android Studio project. Click through installing all the Gradle extensions it requests, and you should be able to have Android Studio build the demo like any other application (it will call out to Bazel to build the native code with the NDK).
+</code></pre><h2 id="CMake"><a href="#CMake" class="headerlink" title="CMake"></a>CMake</h2><pre><code>Full CMake support for the demo is coming soon, but for now it is possible to build the TensorFlow Android Inference library using tensorflow/contrib/android/cmake.
+</code></pre>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Camera/" rel="tag"><i class="fa fa-tag"></i> Camera</a>
+              <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+              <a href="/tags/Tensorflow/" rel="tag"><i class="fa fa-tag"></i> Tensorflow</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/TensorFlow/IPCreator/Technology/AI/TensorFlow/tensorflow-android-stand-alone-demo/" rel="next" title="TensorFlow Android Stand-Alone Demo">
+                  <i class="fa fa-chevron-left"></i> TensorFlow Android Stand-Alone Demo
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/TensorFlow/IPCreator/Technology/AI/TensorFlow/supercharging-android-apps-with-tensorflow/" rel="prev" title="Supercharging Android Apps with TensorFlow">
+                  Supercharging Android Apps with TensorFlow <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Description"><span class="nav-number">1.</span> <span class="nav-text">Description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Current-samples"><span class="nav-number">2.</span> <span class="nav-text">Current samples:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prebuilt-APK"><span class="nav-number">3.</span> <span class="nav-text">Prebuilt APK:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Running-the-Demo"><span class="nav-number">4.</span> <span class="nav-text">Running the Demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Building-the-Demo-from-Source"><span class="nav-number">5.</span> <span class="nav-text">Building the Demo from Source</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bazel"><span class="nav-number">6.</span> <span class="nav-text">Bazel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-Studio"><span class="nav-number">7.</span> <span class="nav-text">Android Studio</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMake"><span class="nav-number">8.</span> <span class="nav-text">CMake</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

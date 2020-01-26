@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Understand the concept,  read the official documents carefully, based on common sense thinking, combined with the reference sample, keep on  deliberate practice.">
+<meta name="keywords" content="Application,Fast Android Networking">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Implement of Upload Files to QiNiu Server">
+<meta property="og:url" content="https://hazyman.com/Android/IPCreator/Technology/Program/Android/MyApp/qi-niu-upload/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="Understand the concept,  read the official documents carefully, based on common sense thinking, combined with the reference sample, keep on  deliberate practice.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://om8nmvpn9.bkt.clouddn.com/2017-03-26_173401.jpg">
+<meta property="og:image" content="https://ok0kc3ycj.qnssl.com/kodo-image/png/usecase.png">
+<meta property="og:image" content="https://odum9helk.qnssl.com/FuAHhZgiYaHTDqLritFe1K85AVrI">
+<meta property="og:image" content="https://odum9helk.qnssl.com/Fmy1Y_s9I4oCPYuMGDrvYxCRv2FM">
+<meta property="og:image" content="https://odum9helk.qnssl.com/FkPZ31ECmtGnEisOahMKc5kQkuRr">
+<meta property="og:image" content="https://ok0kc3ycj.qnssl.com/kodo-image/png/token.png">
+<meta property="og:updated_time" content="2017-04-10T13:38:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Implement of Upload Files to QiNiu Server">
+<meta name="twitter:description" content="Understand the concept,  read the official documents carefully, based on common sense thinking, combined with the reference sample, keep on  deliberate practice.">
+<meta name="twitter:image" content="http://om8nmvpn9.bkt.clouddn.com/2017-03-26_173401.jpg">
+
+<link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/MyApp/qi-niu-upload/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Implement of Upload Files to QiNiu Server | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/MyApp/qi-niu-upload/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Implement of Upload Files to QiNiu Server
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Android/IPCreator/Technology/Program/Android/MyApp/qi-niu-upload/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Android/IPCreator/Technology/Program/Android/MyApp/qi-niu-upload/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="http://om8nmvpn9.bkt.clouddn.com/2017-03-26_173401.jpg" alt></p>
+<blockquote>
+<p>Understand the concept,  read the official documents carefully, based on common sense thinking, combined with the reference sample, keep on  deliberate practice.</p>
+</blockquote>
+ <a id="more"></a>
+<h2 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h2><p>功能要求：使用第三方开源库Fast-Android-Networking实现从七牛服务器快速下载和上传文件；<br>应用场景：快速完成/取消文件下载/上传，支持回调以更新进度等相关UI。</p>
+<h2 id="设计及实现"><a href="#设计及实现" class="headerlink" title="设计及实现"></a>设计及实现</h2><h3 id="Fast-Android-Networking第三方库"><a href="#Fast-Android-Networking第三方库" class="headerlink" title="Fast-Android-Networking第三方库"></a>Fast-Android-Networking第三方库</h3><p><a href="/2017/03/25/Program/Android/fast-android-networking/">Fast-Android-Networking</a></p>
+<h3 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h3><p><strong>下载</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">String realDownFileURL = auth.privateDownloadUrl(QINIU_DOWNLOAD_PRIVATE_TEST_FILE);</span><br><span class="line"></span><br><span class="line">                AndroidNetworking.download(realDownFileURL,//&quot;http://om845dfwl.bkt.clouddn.com/smile.mp3&quot;</span><br><span class="line">                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath(),</span><br><span class="line">                        &quot;fast android network test.jpg&quot;)</span><br><span class="line">                        .setTag(&quot;downloadTest&quot;)</span><br><span class="line">                        .setPriority(Priority.MEDIUM)</span><br><span class="line">                        .build()</span><br><span class="line">                        .setDownloadProgressListener(new DownloadProgressListener() &#123;</span><br><span class="line">                            @Override</span><br><span class="line">                            public void onProgress(long bytesDownloaded, long totalBytes) &#123;</span><br><span class="line">                                // do anything with progress</span><br><span class="line">                                int progress = (int)(bytesDownloaded/totalBytes);</span><br><span class="line">                                progressBar.setProgress(progress);</span><br><span class="line"></span><br><span class="line">                                notificationManager.notify(NOTIFICATION_ID_DOWNLOAD,getNotification(&quot;Downloading...&quot;,</span><br><span class="line">                                        &quot;fast android network test.jpg&quot;,progress));</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;)</span><br><span class="line">                        .startDownload(new DownloadListener() &#123;</span><br><span class="line">                            @Override</span><br><span class="line">                            public void onDownloadComplete() &#123;</span><br><span class="line">                                // do anything after completion</span><br><span class="line">                                notificationManager.notify(NOTIFICATION_ID_DOWNLOAD,</span><br><span class="line">                                        getNotification(&quot;Download Success&quot;,&quot;fast android network test.jpg&quot;, 0));</span><br><span class="line">                                progressBar.setProgress(100);</span><br><span class="line">                            &#125;</span><br><span class="line">                            @Override</span><br><span class="line">                            public void onError(ANError error) &#123;</span><br><span class="line">                                // handle error</span><br><span class="line">                                notificationManager.notify(NOTIFICATION_ID_DOWNLOAD,</span><br><span class="line">                                        getNotification(&quot;Download Failed&quot;,&quot;fast android network test.jpg&quot;, -1));</span><br><span class="line">                                progressBar.setProgress(0);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>上传</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">String uploadPath =Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+&quot;/smile.mp3&quot;;</span><br><span class="line"></span><br><span class="line">File uploadFile=new File(uploadPath);</span><br><span class="line"></span><br><span class="line">QiNiuAuth auth =  create(ACCESS_KEY, SECRET_KEY);</span><br><span class="line"></span><br><span class="line">String token = auth.uploadToken(BUCKET);</span><br><span class="line"></span><br><span class="line">AndroidNetworking.upload(QI_NIU_UPLOAD_URL)//&quot;http://upload.qiniu.com/&quot;</span><br><span class="line">                        .addMultipartFile(&quot;file&quot;,uploadFile)</span><br><span class="line">                        .addMultipartParameter(&quot;token&quot;,token)</span><br><span class="line">                        .addMultipartParameter(&quot;key&quot;,&quot;2017/3/26/smile.mp3&quot;)</span><br><span class="line">                        .setTag(&quot;uploadTest&quot;)</span><br><span class="line">                        .setPriority(Priority.HIGH)</span><br><span class="line">                        .build()</span><br><span class="line">                        .setUploadProgressListener(new UploadProgressListener() &#123;</span><br><span class="line">                            @Override</span><br><span class="line">                            public void onProgress(long bytesUploaded, long totalBytes) &#123;</span><br><span class="line">                                // do anything with progress</span><br><span class="line">                                long lTotalBytes = uploadFile.length();</span><br><span class="line">                                int progress = (int)((bytesUploaded*100)/lTotalBytes);</span><br><span class="line">                                progressBar.setProgress(progress);</span><br><span class="line">                                notificationManager.notify(NOTIFICATION_ID_DOWNLOAD,</span><br><span class="line">                                        getNotification(&quot;Uploading...&quot;,&quot;smile.mp3&quot;,progress));</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;)</span><br><span class="line">                        .getAsJSONObject(new JSONObjectRequestListener() &#123;</span><br><span class="line">                            @Override</span><br><span class="line">                            public void onResponse(JSONObject response) &#123;</span><br><span class="line">                                // do anything with response</span><br><span class="line">                                textView.setText(response.toString());</span><br><span class="line">                            &#125;</span><br><span class="line">                            @Override</span><br><span class="line">                            public void onError(ANError error) &#123;</span><br><span class="line">                                // handle error</span><br><span class="line">                                notificationManager.notify(NOTIFICATION_ID_DOWNLOAD,</span><br><span class="line">                                        getNotification(&quot;Upload Failed&quot;,&quot;smile.mp3&quot;, -1));</span><br><span class="line">                                progressBar.setProgress(0);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="七牛存储基本概念"><a href="#七牛存储基本概念" class="headerlink" title="七牛存储基本概念"></a><a href="https://developer.qiniu.com/kodo/manual/concepts" target="_blank" rel="noopener">七牛存储基本概念</a></h3><h4 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h4><p>资源是七牛云存储服务中的逻辑存储单元。对于每一个账号，该账号里存放的每个资源都有唯一的 空间 与 键(Key) 标识。资源键名是一个字符串，例如：level1/level2/example1.jpg，它可以包含任意字符（包括 UTF-8 编码形式的 Unicode 字符）。</p>
+<p>使用者可以在上传资源时为其指定一个方便管理的键名，通过前缀来达到类似于文件目录的分类和层次效果。例如对于一个网站的资源，我们可以用如下键名命名资源：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">index.html</span><br><span class="line">features/index.html</span><br><span class="line">imgs/features/feature1.png</span><br><span class="line">about.html</span><br></pre></td></tr></table></figure></p>
+<h4 id="空间"><a href="#空间" class="headerlink" title="空间"></a>空间</h4><p>空间是资源的组织管理单位，一个资源必然位于某个空间中。可以为每个空间设置一系列的属性，以对资源提供合理的管理动作。 常见的属性有：</p>
+<ol>
+<li>将空间设置为公开或私有，以控制对空间内资源的访问权限。</li>
+<li>设置资源的数据处理样式，以便于用简短方式对资源进行处理。</li>
+</ol>
+<h4 id="开发者和用户"><a href="#开发者和用户" class="headerlink" title="开发者和用户"></a>开发者和用户</h4><p>开发者是七牛云存储服务的直接使用者，用户是开发者所推出产品的使用者即七牛云存储服务的间接使用者。<br><img src="https://ok0kc3ycj.qnssl.com/kodo-image/png/usecase.png" alt></p>
+<h4 id="键值对"><a href="#键值对" class="headerlink" title="键值对"></a>键值对</h4><p>键值对 (Key-Value) 是一个常用的数据结构概念，通常又称为字典 (Dictionary) 或映射 (Map)。每个存放到该数据结构中的值 (Value) 都对应一个全局唯一的键 (Key)。该数据结构的特征是以空间换时间，通过键查询值通常是比较快速的过程。</p>
+<h4 id="存储区域"><a href="#存储区域" class="headerlink" title="存储区域"></a>存储区域</h4><p>存储区域是在创建空间时指定的，一旦指定后就不允许修改。存储区域表示七牛云对象存储服务的数据中心所在区域，物理位置。您可以根据费用、请求来源等综合考虑选择合适的存储区域。一般来说，选择离您近的存储区域访问速度更快。</p>
+<p>存储区域是数个存储机房的逻辑联合体，提供一组独立的具体访问域名，将流量导向最适合的存储机房。</p>
+<p>七牛云对象存储目前提供四个存储区域：华东、华北、华南、北美，您可以根据实际需求选用，以获取最高访问性能和最佳用户体验。</p>
+<p>注意：不同存储区域的数据并非互为备份副本，比如存储在华东的文件，不能通过华北访问域名访问。</p>
+<h4 id="访问密钥-AK-SK"><a href="#访问密钥-AK-SK" class="headerlink" title="访问密钥 (AK/SK)"></a>访问密钥 (AK/SK)</h4><p>Access Key 与 Secret Key 是七牛颁发的一对密钥，用于对操作请求进行授权签名。</p>
+<ol>
+<li>用户凭证 (Access Key) 简称 AK ，是七牛云存储颁发给用户的标识。用户将用户凭证放入访问请求，以便七牛云存储识别访问者的身份。</li>
+<li>签名密钥 (Secret Key) 简称 SK ，是七牛云存储颁发给用户，用于对访问请求签名的字串。用户使用签名密钥对访问请求的核心要素进行签名，获得请求认证 令牌。用户将令牌随同访问请求一起发送至七牛云存储服务，七牛云存储将对令牌进行校验，以确认用户请求的合法性。<br>用户凭证和签名密钥成对颁发，不会重复。一个用户可以拥有两对用户凭证和签名密钥，用于不同的访问。</li>
+</ol>
+<h4 id="存储机房"><a href="#存储机房" class="headerlink" title="存储机房"></a>存储机房</h4><p>存储机房是部署了一套完整的七牛云存储集群的单一数据中心机房，每个机房均配备多个 IP 作为上传和下载入口，并有对应的访问域名指向这些 IP。</p>
+<h4 id="编程模型"><a href="#编程模型" class="headerlink" title="编程模型"></a><a href="https://developer.qiniu.com/kodo/manual/programming-model" target="_blank" rel="noopener">编程模型</a></h4><p><img src="https://odum9helk.qnssl.com/FuAHhZgiYaHTDqLritFe1K85AVrI" alt></p>
+<p>七牛云存储服务是以<a href="https://developer.qiniu.com/kodo/manual/concepts#key-value" target="_blank" rel="noopener">键值对</a>方式提供非结构化资源存储服务。向业务服务器提供资源管理服务，向客户端提供资源上传和下载服务。</p>
+<p>关键的几个交互过程：</p>
+<p><strong>上传</strong></p>
+<p>客户端在上传资源到七牛云存储之前要先从业务服务器获取一个有效的<a href="https://developer.qiniu.com/kodo/manual/upload-token" target="_blank" rel="noopener">上传凭证</a>，因此需要先后和两个服务端打交道。<br><img src="https://odum9helk.qnssl.com/Fmy1Y_s9I4oCPYuMGDrvYxCRv2FM" alt></p>
+<p>如果有设置回调，则上传完成时七牛云存储会自动发起回调到指定的业务服务器。<br><img src="https://odum9helk.qnssl.com/FkPZ31ECmtGnEisOahMKc5kQkuRr" alt></p>
+<p><strong>下载</strong></p>
+<p>公开资源不需要对应的下载凭证，客户端可以直接从七牛云存储下载对应资源。私有资源需要对应的下载凭证，因此必须先和业务服务器打交道。</p>
+<p>按照实际的使用场景，客户端对于内容的展示非常类似一个动态网页的生成过程，因此无论该页面内容是公开还是私有，均需要从业务服务器获取展示该页面的动态布局信息。所以通常显示过程也是需要先后和业务服务器及七牛云存储服务打交道。</p>
+<h4 id="关键原则"><a href="#关键原则" class="headerlink" title="关键原则"></a>关键原则</h4><p>这个模型的关键点如下：</p>
+<ol>
+<li>整个架构中需要一个业务服务器组件。</li>
+<li>无论如何，访问密钥（AK/SK）均不得包含在客户端的分发包中（如二进制代码、配置文件或网页中）。</li>
+<li>SecretKey不得在任何场景中的公网上传输，更不得传输到客户端。</li>
+<li>业务服务器端应维持一个用于管理资源元数据的数据库和一个用于管理最终用户账号信息的数据库。</li>
+<li>原则上客户端和七牛云存储之间的交互只有上传和下载，不应使用任何其他的API。</li>
+</ol>
+<h4 id="安全机制"><a href="#安全机制" class="headerlink" title="安全机制"></a>安全机制</h4><p>数据安全性是云存储服务的重中之重。云存储的安全机制主要需要考虑以下几个因素：</p>
+<p>如何判断该请求方是否合法，且对目标空间有相应的访问权限。<br>因为服务的访问协议同时支持 HTTP 和 HTTPS，服务端需要判断收到的请求是否经过篡改。<br>相比上传新资源，覆盖文件或删除已有资源拥有更高的风险。因此对上传或修改动作，需要确认请求方是否拥有修改或删除的权限。<br>在使用七牛云存储服务的过程中，需要考虑安全机制的场景主要有如下几种：</p>
+<p>上传资源<br>访问资源<br>管理和修改资源<br>这三个场景需要考虑不同的安全因素，因此七牛针对性的提供了三种安全机制：<a href="https://developer.qiniu.com/kodo/manual/upload-token" target="_blank" rel="noopener">上传凭证</a>、<a href="https://developer.qiniu.com/kodo/manual/download-token" target="_blank" rel="noopener">下载凭证</a>和<a href="https://developer.qiniu.com/kodo/manual/access-token" target="_blank" rel="noopener">管理凭证</a>。</p>
+<p>因为凭证的生成需要用到SecretKey，因此该生成动作不应在不受信任的环境中进行。需要注意的是，开发者绝不能将密钥包含在分发给最终用户的程序中，无论是包含在配置文件中还是二进制文件中都会带来非常大的密钥泄漏风险。</p>
+<p>推荐的模型如下所示：<br><img src="https://ok0kc3ycj.qnssl.com/kodo-image/png/token.png" alt></p>
+<p><strong>上传凭证（UploadToken）</strong><br>客户端上传前需要先获取从服务端颁发的上传凭证，并在上传资源时将上传凭证包含为请求内容的一部分。不带凭证或带非法凭证的请求将返回 HTTP 错误码 401，代表认证失败。</p>
+<p>生成上传凭证时需要指定以下要素：</p>
+<p><strong>权限</strong>，指定上传的目标空间或允许覆盖的指定资源。<br><strong>凭证有效期</strong>，即一个符合Unix时间戳规范的数值，单位为秒。<br>注意： 因为时间戳的创建和验证在不同的服务端进行（在业务服务器创建，在云存储服务器验证），因此开发者的业务服务器需要尽可能校准时间，否则可能出现凭证刚创建就过期等各种奇怪的问题。<br>可选择设置的最终用户标识 ID。这是为了让业务服务器在收到结果回调时能够识别产生该请求的最终用户信息。</p>
+<p>我们使用<a href="https://developer.qiniu.com/kodo/manual/put-policy" target="_blank" rel="noopener">上传策略 (PutPolicy)</a>保存和传递这些设置。关于上传策略和上传凭证的生成细节，请查阅上传凭证。</p>
+<p><strong>下载凭证（DownloadToken）</strong><br>下载私有资源的请求需要带一个合法的下载凭证。不带凭证或带非法凭证的请求将返回 HTTP 错误码 401，代表认证失败。</p>
+<p>与上传凭证相比，下载凭证的作用比较简单：</p>
+<p>保证请求发起者拥有对目标空间的访问权限。<br>保证服务端收到的下载请求内容未经中途篡改，具体包括目标资源的 URI 和该访问请求的有效期信息均应未受到篡改。<br>关于下载凭证的生成细节，请查阅下载凭证。</p>
+<p><strong>防盗链</strong><br>下载还有一种常见的场景，即公开资源的防盗链，例如禁止特定来源域名的访问，禁止非浏览器发起的访问等。</p>
+<p>我们可以通过 HTTP 协议支持的 Referer 机制即<a href="https://developer.qiniu.com/kodo/glossary/h" target="_blank" rel="noopener">HTTP Referer</a>来进行相应的来源识别和管理。</p>
+<p>防盗链是一个系统设置，不影响开发工作。如发现有盗链情况，开发者可在七牛开发者平台里的 融合CDN加速 中的 高级配置 进行设置。</p>
+<p><strong>管理凭证（AccessToken）</strong></p>
+<p>在管理现有资源时，例如查看资源元数据、删除或移动资源等，通常需要带一个合法的管理凭证。不带凭证或带非法凭证的管理请求将返回 HTTP 错误码 401，代表认证失败。</p>
+<p>管理凭证的作用与下载凭证比较类似：</p>
+<p>保证请求发起者拥有对目标空间的管理权限。<br>保证服务端收到的管理请求内容未经中途篡改，具体包括代表管理动作的 URI 和该管理动作的参数信息均应未受到篡改。<br>关于管理凭证的生成细节，请查阅管理凭证。</p>
+<p><strong>跨域访问</strong><br>出于安全的考虑，Web 浏览器从很早之前就定下同域安全策略的标准，默认情况下同一域名下的页面只能向同域（包括 CNAME 域名、端口）下的 URL 发送所有类型的 HTTP 请求。而向不同域的地址发送非 GET 请求时，默认情况下只能返回同域安全策略错误。</p>
+<p>对此，在发起上传或下载请求的时候，七牛的服务会返回相应的支持跨域的 Header：</p>
+<p>上传(upload.qiniu.com)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size</span><br><span class="line">Access-Control-Allow-Methods: OPTIONS, HEAD, POST</span><br><span class="line">Access-Control-Allow-Origin: *</span><br></pre></td></tr></table></figure></p>
+<p>下载(<bucket>.qiniudn.com)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Origin: *</span><br></pre></td></tr></table></figure></bucket></p>
+<h4 id="上传凭证Token在线生成"><a href="#上传凭证Token在线生成" class="headerlink" title="上传凭证Token在线生成"></a>上传凭证Token在线生成</h4><p><a href="http://jsfiddle.net/gh/get/extjs/4.2/icattlecoder/jsfiddle/tree/master/uptoken" target="_blank" rel="noopener">Token</a></p>
+<p><strong>算法</strong></p>
+<p>1.构造上传策略：<br>用户根据业务需求，确定上传策略要素，构造出具体的上传策略。例如用户要向空间 my-bucket 上传一个名为 sunflower.jpg 的图片，授权有效期截止到 2015-12-31 00:00:00（该有效期指上传完成后在七牛生成文件的时间，而非上传的开始时间），并且希望得到图片的名称、大小、宽高和校验值。那么相应的上传策略各字段分别为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">scope = &apos;my-bucket:sunflower.jpg&apos;</span><br><span class="line">deadline = 1451491200</span><br><span class="line">returnBody = &apos;&#123;</span><br><span class="line">      &quot;name&quot;: $(fname),</span><br><span class="line">      &quot;size&quot;: $(fsize),</span><br><span class="line">      &quot;w&quot;: $(imageInfo.width),</span><br><span class="line">      &quot;h&quot;: $(imageInfo.height),</span><br><span class="line">      &quot;hash&quot;: $(etag)</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>2.将上传策略序列化成为JSON：</p>
+<p>用户可以使用各种语言的 JSON 库，也可以手工拼接字符串。序列化后，应得到如下形式的字符串（字符串值以外部分不含空格或换行）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">putPolicy =</span><br><span class="line">&apos;&#123;</span><br><span class="line">  &quot;scope&quot;: &quot;my-bucket:sunflower.jpg&quot;,</span><br><span class="line">  &quot;deadline&quot;:1451491200,</span><br><span class="line">  &quot;returnBody&quot;:</span><br><span class="line">  &quot;&#123;</span><br><span class="line">    \&quot;name\&quot;:$(fname),</span><br><span class="line">    \&quot;size\&quot;:$(fsize),</span><br><span class="line">    \&quot;w\&quot;:$(imageInfo.width),</span><br><span class="line">    \&quot;h\&quot;:$(imageInfo.height),</span><br><span class="line">    \&quot;hash\&quot;:$(etag)</span><br><span class="line">   &#125;&quot;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>3.对 JSON 编码的上传策略进行URL 安全的 Base64 编码，得到待签名字符串：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">encodedPutPolicy = urlsafe_base64_encode(putPolicy)</span><br><span class="line"></span><br><span class="line">#实际值为：</span><br><span class="line">encodedPutPolicy = &quot;eyJzY29wZSI6Im15LWJ1Y2tldDpzdW5mbG93ZXIuanBnIiwiZGVhZGxpbmUiOjE0NTE0OTEyMDAsInJldHVybkJvZHkiOiJ7XCJuYW1lXCI6JChmbmFtZSksXCJzaXplXCI6JChmc2l6ZSksXCJ3XCI6JChpbWFnZUluZm8ud2lkdGgpLFwiaFwiOiQoaW1hZ2VJbmZvLmhlaWdodCksXCJoYXNoXCI6JChldGFnKX0ifQ==&quot;</span><br></pre></td></tr></table></figure></p>
+<p>4.使用访问密钥（AK/SK）对上一步生成的待签名字符串计算HMAC-SHA1签名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sign = hmac_sha1(encodedPutPolicy, &quot;&lt;SecretKey&gt;&quot;)</span><br><span class="line"></span><br><span class="line">#假设 SecretKey 为 MY_SECRET_KEY，实际签名为：</span><br><span class="line">sign = &quot;c10e287f2b1e7f547b20a9ebce2aada26ab20ef2&quot;</span><br></pre></td></tr></table></figure></p>
+<p>注意：签名结果是二进制数据，此处输出的是每个字节的十六进制表示，以便核对检查。</p>
+<p>5.对签名进行URL安全的Base64编码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">encodedSign = urlsafe_base64_encode(sign)</span><br><span class="line"></span><br><span class="line">#最终签名值为：</span><br><span class="line">encodedSign = &quot;wQ4ofysef1R7IKnrziqtomqyDvI=&quot;</span><br></pre></td></tr></table></figure></p>
+<p>6.将访问密钥（AK/SK）、encodedSign 和 encodedPutPolicy 用英文符号 : 连接起来：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uploadToken = AccessKey + &apos;:&apos; + encodedSign + &apos;:&apos; + encodedPutPolicy</span><br><span class="line"></span><br><span class="line">#假设用户的 AccessKey 为 MY_ACCESS_KEY ，则最后得到的上传凭证应为：</span><br><span class="line">uploadToken = &quot;MY_ACCESS_KEY:wQ4ofysef1R7IKnrziqtomqyDvI=:eyJzY29wZSI6Im15LWJ1Y2tldDpzdW5mbG93ZXIuanBnIiwiZGVhZGxpbmUiOjE0NTE0OTEyMDAsInJldHVybkJvZHkiOiJ7XCJuYW1lXCI6JChmbmFtZSksXCJzaXplXCI6JChmc2l6ZSksXCJ3XCI6JChpbWFnZUluZm8ud2lkdGgpLFwiaFwiOiQoaW1hZ2VJbmZvLmhlaWdodCksXCJoYXNoXCI6JChldGFnKX0ifQ==&quot;</span><br></pre></td></tr></table></figure></p>
+<p>注意：为确保客户端、业务服务器和七牛服务器对于授权截止时间的理解保持一致，需要同步校准各自的时钟。频繁返回 401 状态码时请先检查时钟同步性与生成 deadline 值的代码逻辑。</p>
+<h4 id="上传凭证Token本地生成"><a href="#上传凭证Token本地生成" class="headerlink" title="上传凭证Token本地生成"></a>上传凭证Token本地生成</h4><p><a href="https://github.com/qiniu/java-sdk/blob/master/src/main/java/com/qiniu/util/Auth.java" target="_blank" rel="noopener">Auth.java</a></p>
+<h2 id="踩过的坑"><a href="#踩过的坑" class="headerlink" title="踩过的坑"></a>踩过的坑</h2><h3 id="报错”incorrect-region-please-use-up-z2-qiniu-com”"><a href="#报错”incorrect-region-please-use-up-z2-qiniu-com”" class="headerlink" title="报错”incorrect region, please use up-z2.qiniu.com”"></a>报错”incorrect region, please use up-z2.qiniu.com”</h3><p>因为空间与上传域名有对应关系，详见<a href="https://developer.qiniu.com/kodo/manual/region-endpoint" target="_blank" rel="noopener">访问域名和存储区域</a></p>
+<p>up-z2对应华南<br>UP HTTP 上传    <a href="http://up-z2.qiniu.com" target="_blank" rel="noopener">http://up-z2.qiniu.com</a><br>上传源站 HTTP 地址, 适用于服务器端上传<br><a href="http://upload-z2.qiniu.com" target="_blank" rel="noopener">http://upload-z2.qiniu.com</a><br>上传 HTTP 加速地址, 适用于客户端上传</p>
+<p>up.qiniu.com对应华东<br>UP HTTP 上传    <a href="http://up.qiniu.com" target="_blank" rel="noopener">http://up.qiniu.com</a><br>上传源站 HTTP 地址, 适用于服务器端上传<br><a href="http://upload.qiniu.com" target="_blank" rel="noopener">http://upload.qiniu.com</a><br>上传 HTTP 加速地址, 适用于客户端上传</p>
+<h3 id="直传文件"><a href="#直传文件" class="headerlink" title="直传文件"></a><a href="https://developer.qiniu.com/kodo/api/upload" target="_blank" rel="noopener">直传文件</a></h3><p>upload接口，用于在一次 HTTP 会话中上传单一的一个文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;form method=&quot;post&quot; action=&quot;http://upload.qiniu.com/&quot;</span><br><span class="line"> enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">  &lt;input name=&quot;key&quot; type=&quot;hidden&quot; value=&quot;&lt;resource_key&gt;&quot;&gt;</span><br><span class="line">  &lt;input name=&quot;x:&lt;custom_name&gt;&quot; type=&quot;hidden&quot; value=&quot;&lt;custom_value&gt;&quot;&gt;</span><br><span class="line">  &lt;input name=&quot;token&quot; type=&quot;hidden&quot; value=&quot;&lt;upload_token&gt;&quot;&gt;</span><br><span class="line">  &lt;input name=&quot;file&quot; type=&quot;file&quot; /&gt;</span><br><span class="line">  &lt;input name=&quot;crc32&quot; type=&quot;hidden&quot; /&gt;</span><br><span class="line">  &lt;input name=&quot;accept&quot; type=&quot;hidden&quot; /&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">POST / HTTP/1.1</span><br><span class="line">Host:           upload.qiniu.com</span><br><span class="line">Content-Type:   multipart/form-data; boundary=&lt;frontier&gt;</span><br><span class="line">Content-Length: &lt;multipartContentLength&gt;</span><br><span class="line"></span><br><span class="line">--&lt;frontier&gt;</span><br><span class="line">Content-Disposition:       form-data; name=&quot;token&quot;</span><br><span class="line"></span><br><span class="line">&lt;uploadToken&gt;</span><br><span class="line">--&lt;frontier&gt;</span><br><span class="line">Content-Disposition:       form-data; name=&quot;key&quot;</span><br><span class="line"></span><br><span class="line">&lt;key&gt;</span><br><span class="line">--&lt;frontier&gt;</span><br><span class="line">Content-Disposition:       form-data; name=&quot;&lt;xVariableName&gt;&quot;</span><br><span class="line"></span><br><span class="line">&lt;xVariableValue&gt;</span><br><span class="line">--&lt;frontier&gt;</span><br><span class="line">Content-Disposition:       form-data; name=&quot;crc32&quot;</span><br><span class="line"></span><br><span class="line">&lt;crc32&gt;</span><br><span class="line">--&lt;frontier&gt;</span><br><span class="line">Content-Disposition:       form-data; name=&quot;accept&quot;</span><br><span class="line"></span><br><span class="line">&lt;acceptContentType&gt;</span><br><span class="line">--&lt;frontier&gt;</span><br><span class="line">Content-Disposition:       form-data; name=&quot;file&quot;; filename=&quot;&lt;fileName&gt;&quot;</span><br><span class="line">Content-Type:              application/octet-stream</span><br><span class="line">Content-Transfer-Encoding: binary</span><br><span class="line"></span><br><span class="line">&lt;fileBinaryData&gt;</span><br><span class="line">--&lt;frontier&gt;--</span><br></pre></td></tr></table></figure></p>
+<h3 id="如何在空间下创建文件夹？"><a href="#如何在空间下创建文件夹？" class="headerlink" title="如何在空间下创建文件夹？"></a>如何在空间下创建文件夹？</h3><p>在空间中不能创建文件夹，但是为了区分不同的文件，可以这么做:<br>文件名以 2017/1/12/1.img , 即创建这样的虚拟目录 2017/1/12/ 做区分。</p>
+<h2 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h2><h3 id="ETag"><a href="#ETag" class="headerlink" title="ETag"></a>ETag</h3><p>ETag为HTTP协议的一部分，它是 HTTP 提供web缓存验证机制之一。以这种方式使用etag类似于指纹,他们可以通过快速比较来确定两个资源是否相同。</p>
+<h3 id="Exif"><a href="#Exif" class="headerlink" title="Exif"></a>Exif</h3><p>Exif 意指可交换图像文件格式，专门为数码相机的照片所设计，可以记录数码照片的属性信息和拍摄数据。Exif 信息是由数码相机在拍摄过程中采集的一系列信息，然后这些信息放置在我们熟知的 JPEG/TIFF 文件的头部。</p>
+<h3 id="HTTP-Referer"><a href="#HTTP-Referer" class="headerlink" title="HTTP Referer"></a>HTTP Referer</h3><p>HTTP Referer是header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，告诉服务器我是从哪个页面链接过来的，服务器藉此可以获得一些信息用于处理。</p>
+<h3 id="HMAC-SHA1"><a href="#HMAC-SHA1" class="headerlink" title="HMAC-SHA1"></a>HMAC-SHA1</h3><p>HMAC是哈希运算消息认证码 (Hash-based Message Authentication Code)，HMAC运算利用哈希算法，以一个密钥和一个消息为输入，生成一个消息摘要作为输出。您可以使用它同时验证数据的完整性和消息的真实性。HMAC-SHA1签名算法是一种常用的签名算法，用于对一段信息进行生成签名摘要。</p>
+<h3 id="键-key"><a href="#键-key" class="headerlink" title="键 (key)"></a>键 (key)</h3><p>空间中资源的唯一标识符。空间中的每个资源都有一个对应的键。因为空间和键一起唯一标识每一个资源，您可以认为七牛云存储是基于空间＋键和资源本身之间的基本数据映射。</p>
+<p>例如：<a href="http://78re52.com1.z0.glb.clouddn.com/resource/AllEast.jpg" target="_blank" rel="noopener">http://78re52.com1.z0.glb.clouddn.com/resource/AllEast.jpg</a></p>
+<p>78re52.com1.z0.glb.clouddn.com是空间的绑定域名<br>resource/AllEast.jpg是键</p>
+<h3 id="签名密钥"><a href="#签名密钥" class="headerlink" title="签名密钥"></a>签名密钥</h3><p>签名密钥 (Secret Key) 简称 SK ，是七牛云存储颁发给用户，用于对访问请求签名的字串。用户使用签名密钥对访问请求的核心要素进行签名，获得请求认证令牌。用户将令牌随同访问请求一起发送至七牛云存储服务，七牛云存储将对令牌进行校验，以确认用户请求的合法性。</p>
+<h3 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h3><p>JSON（JavaScript Object Notation）一种轻量级的数据交换格式，具有良好的可读和便于快速编写的特性。可在不同平台之间进行数据交换。JSON采用兼容性很高的、完全独立于语言文本格式，同时也具备类似于C语言的习惯（包括C, C++, C#, Java, JavaScript, Perl, Python等）体系的行为。这些特性使JSON成为理想的数据交换语言。</p>
+<h3 id="令牌-Token"><a href="#令牌-Token" class="headerlink" title="令牌 (Token)"></a>令牌 (Token)</h3><p>令牌是用户访问七牛云存储时，进行身份验证的凭证。当用户将一个Bucket设置为私有后，在访问七牛云存储时，必须通过身份验证。用户将访问请求中的一些要素整合起来，用签名密钥对其加密，得到令牌。然后将令牌随同请求一起发送至七牛云存储。用户可以在令牌中指定请求的时效（七牛云存储统一使用UTC时间计算令牌有效期），防止请求被非法使用。</p>
+<h3 id="Unix-时间戳"><a href="#Unix-时间戳" class="headerlink" title="Unix 时间戳"></a>Unix 时间戳</h3><p>Unix时间戳，是一种时间表示方式，定义为从1970年01月01日00时00分00秒起至现在的总秒数。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://developer.qiniu.com/kodo/sdk/android" target="_blank" rel="noopener">Android SDK</a><br><a href="https://developer.qiniu.com/kodo/sdk/java" target="_blank" rel="noopener">Java SDK</a><br><a href="https://developer.qiniu.com/kodo/kb/seven-niuyun-upload-download-instructions" target="_blank" rel="noopener">七牛云上传下载操作指南</a><br><a href="http://78re52.com1.z0.glb.clouddn.com/tsdocs/%E4%B8%83%E7%89%9B%E4%BA%91%E5%AD%98%E5%82%A8%E5%BF%85%E5%A4%87%E7%9F%A5%E8%AF%86.pdf" target="_blank" rel="noopener">七牛云存储必备知识.pdf</a><br><a href="http://78re52.com1.z0.glb.clouddn.com/tsdocs/%E4%B8%83%E7%89%9B%E4%BA%91%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-%E5%9F%BA%E7%A1%80%E4%B8%8A%E4%BC%A0%E6%9C%8D%E5%8A%A1.pdf" target="_blank" rel="noopener">七牛云存储文件上传-基础上传服务.pdf</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Application/" rel="tag"><i class="fa fa-tag"></i> Application</a>
+              <a href="/tags/Fast-Android-Networking/" rel="tag"><i class="fa fa-tag"></i> Fast Android Networking</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/TensorFlow/learning-resource-of-ai/" rel="next" title="Learning Resources of Machine Learning and AI">
+                  <i class="fa fa-chevron-left"></i> Learning Resources of Machine Learning and AI
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Program/IPCreator/Technology/Program/Resource List/" rel="prev" title="Resource List">
+                  Resource List <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目需求"><span class="nav-number">1.</span> <span class="nav-text">项目需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计及实现"><span class="nav-number">2.</span> <span class="nav-text">设计及实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fast-Android-Networking第三方库"><span class="nav-number">2.1.</span> <span class="nav-text">Fast-Android-Networking第三方库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键代码"><span class="nav-number">2.2.</span> <span class="nav-text">关键代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七牛存储基本概念"><span class="nav-number">2.3.</span> <span class="nav-text">七牛存储基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#资源"><span class="nav-number">2.3.1.</span> <span class="nav-text">资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空间"><span class="nav-number">2.3.2.</span> <span class="nav-text">空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开发者和用户"><span class="nav-number">2.3.3.</span> <span class="nav-text">开发者和用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#键值对"><span class="nav-number">2.3.4.</span> <span class="nav-text">键值对</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储区域"><span class="nav-number">2.3.5.</span> <span class="nav-text">存储区域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问密钥-AK-SK"><span class="nav-number">2.3.6.</span> <span class="nav-text">访问密钥 (AK/SK)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储机房"><span class="nav-number">2.3.7.</span> <span class="nav-text">存储机房</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编程模型"><span class="nav-number">2.3.8.</span> <span class="nav-text">编程模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关键原则"><span class="nav-number">2.3.9.</span> <span class="nav-text">关键原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全机制"><span class="nav-number">2.3.10.</span> <span class="nav-text">安全机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#上传凭证Token在线生成"><span class="nav-number">2.3.11.</span> <span class="nav-text">上传凭证Token在线生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#上传凭证Token本地生成"><span class="nav-number">2.3.12.</span> <span class="nav-text">上传凭证Token本地生成</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#踩过的坑"><span class="nav-number">3.</span> <span class="nav-text">踩过的坑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#报错”incorrect-region-please-use-up-z2-qiniu-com”"><span class="nav-number">3.1.</span> <span class="nav-text">报错”incorrect region, please use up-z2.qiniu.com”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直传文件"><span class="nav-number">3.2.</span> <span class="nav-text">直传文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何在空间下创建文件夹？"><span class="nav-number">3.3.</span> <span class="nav-text">如何在空间下创建文件夹？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本术语"><span class="nav-number">4.</span> <span class="nav-text">基本术语</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ETag"><span class="nav-number">4.1.</span> <span class="nav-text">ETag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exif"><span class="nav-number">4.2.</span> <span class="nav-text">Exif</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-Referer"><span class="nav-number">4.3.</span> <span class="nav-text">HTTP Referer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HMAC-SHA1"><span class="nav-number">4.4.</span> <span class="nav-text">HMAC-SHA1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#键-key"><span class="nav-number">4.5.</span> <span class="nav-text">键 (key)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#签名密钥"><span class="nav-number">4.6.</span> <span class="nav-text">签名密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON"><span class="nav-number">4.7.</span> <span class="nav-text">JSON</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#令牌-Token"><span class="nav-number">4.8.</span> <span class="nav-text">令牌 (Token)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unix-时间戳"><span class="nav-number">4.9.</span> <span class="nav-text">Unix 时间戳</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="作者：刘志勇  在“数据为王”的今天，越来越多的人对数据科学产生了兴趣。数据科学家离不开算法的使用，那么，数据科学家最常用的算法，都是哪些呢？  　　最近，著名的资料探勘信息网站KDnuggets策划了十大算法调查，这次调查对数据科学家常用的算法进行排名，并发现最“产业”和最“学术”的算法，还对这些算法在过去5年间（2011~2016）的变化，做了一番详细的介绍。  　　这次调查结果，是基于844">
+<meta name="keywords" content="Visualization,Algorithm,Statistics,Machine Learning,Regression,Clustering,Decision Trees&#x2F;Rules,K-nearest neighbors,PCA,Random Forests,Time Series&#x2F;Sequences,Text Mining">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ton 10 Algorithms Used by Data Scientists">
+<meta property="og:url" content="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/ai-and-algorithms/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="作者：刘志勇  在“数据为王”的今天，越来越多的人对数据科学产生了兴趣。数据科学家离不开算法的使用，那么，数据科学家最常用的算法，都是哪些呢？  　　最近，著名的资料探勘信息网站KDnuggets策划了十大算法调查，这次调查对数据科学家常用的算法进行排名，并发现最“产业”和最“学术”的算法，还对这些算法在过去5年间（2011~2016）的变化，做了一番详细的介绍。  　　这次调查结果，是基于844">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://dingyue.nosdn.127.net/XxbMqsswitgYGAfXTPRKrIW4J7xo9xrldOfRmWTK4cRxm1486093692046.jpg">
+<meta property="og:image" content="http://dingyue.nosdn.127.net/ntwXZpw4Bb3WyNEhTyj=uuYBbfm33CuG7xN39p8gl0jBi1486093692046.png">
+<meta property="og:image" content="http://dingyue.nosdn.127.net/jKPaTvdZef=C9pjg2oJMqtjCL4r=yPtcbAuwC1wu2enku1486093692047.png">
+<meta property="og:image" content="http://dingyue.nosdn.127.net/kIMsTkLRjPKcCrbJUvn3l9xYXId6FU6AH7vq0uDkrbpkE1486093692047.jpg">
+<meta property="og:image" content="http://dingyue.nosdn.127.net/FfcG4w9Bk4rRwETEVJTT6mwiYrbfLB9sVSKlkqD7rYRIh1486093692047.jpg">
+<meta property="og:image" content="http://dingyue.nosdn.127.net/zq9JX56Yi4FQSr5aAOuc2RYQhfvcTwzd5E=deUDVsOGAF1486093692048compressflag.png">
+<meta property="og:image" content="http://dingyue.nosdn.127.net/58iCfNN6VzwiCVQO5Vxz3WD4ioIs4ph5rvIWQr=0UbFE71486189069842.jpg">
+<meta property="og:image" content="http://dingyue.nosdn.127.net/lQunouULVzWQQKzQsrHNVIMn2Xhde75VsXiFp=cMOdMPf1484574444143.jpg">
+<meta property="og:updated_time" content="2017-03-27T10:19:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ton 10 Algorithms Used by Data Scientists">
+<meta name="twitter:description" content="作者：刘志勇  在“数据为王”的今天，越来越多的人对数据科学产生了兴趣。数据科学家离不开算法的使用，那么，数据科学家最常用的算法，都是哪些呢？  　　最近，著名的资料探勘信息网站KDnuggets策划了十大算法调查，这次调查对数据科学家常用的算法进行排名，并发现最“产业”和最“学术”的算法，还对这些算法在过去5年间（2011~2016）的变化，做了一番详细的介绍。  　　这次调查结果，是基于844">
+<meta name="twitter:image" content="http://dingyue.nosdn.127.net/XxbMqsswitgYGAfXTPRKrIW4J7xo9xrldOfRmWTK4cRxm1486093692046.jpg">
+
+<link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/ai-and-algorithms/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Ton 10 Algorithms Used by Data Scientists | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/ai-and-algorithms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ton 10 Algorithms Used by Data Scientists
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/AI/IPCreator/Technology/AI/TensorFlow/ai-and-algorithms/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/AI/IPCreator/Technology/AI/TensorFlow/ai-and-algorithms/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="http://dy.163.com/v2/article/detail/CCBLQGO50511CUKV.html" target="_blank" rel="noopener">作者：刘志勇</a></p>
+<p> 在“数据为王”的今天，越来越多的人对数据科学产生了兴趣。数据科学家离不开算法的使用，那么，数据科学家最常用的算法，都是哪些呢？</p>
+<p> 　　最近，著名的资料探勘信息网站KDnuggets策划了十大算法调查，这次调查对数据科学家常用的算法进行排名，并发现最“产业”和最“学术”的算法，还对这些算法在过去5年间（2011~2016）的变化，做了一番详细的介绍。</p>
+<p> 　　这次调查结果，是基于844名受访者投票整理出来。</p>
+<p> 　　KDnuggets总结出十大算法及其投票份额如下：</p>
+<p> <div align="center"><br><img src="http://dingyue.nosdn.127.net/XxbMqsswitgYGAfXTPRKrIW4J7xo9xrldOfRmWTK4cRxm1486093692046.jpg" width="483" height="379"><br> </div><br> 　　图1：数据科学家使用的十大算法和方法。</p>
+<p> 　　请参阅文末的所有算法和方法的完整列表。</p>
+  <a id="more"></a>
+<p>  从调查中得知，受访者平均使用8.1个算法，与2011年的一项类似调查相比大幅提高。</p>
+<p>　　与用于数据分析/数据挖掘的2011年投票算法相比，我们注意到流行的算法仍然是 <strong>回归算法、聚类算法、决策树和可视化</strong>。相对来说最大的增长是以(pct2016/pct2011-1)测定的以下算法：</p>
+<p>　　Boosting，从2011年的23.5％至2016年的32.8％，同比增长40％</p>
+<p>　　文本挖掘，从2011年的从27.7％至2016年的35.9％，同比增长30％</p>
+<p>　　可视化，从2011年的从38.3％至2016年的48.7％，同比增长27％</p>
+<p>　　时间序列分析，从2011年的从29.6％至2016年的37.0％，同比增长25％</p>
+<p>　　异常/偏差检测，从2011年的从16.4％至2016年的19.5％，同比增长19％</p>
+<p>　　集合方法，从2011年的从28.3％至2016年的33.6％，同比增长19％</p>
+<p>　　支持向量机，从2011年的从28.6%至2016年的33.6%，同比增长18%</p>
+<p>　　回归算法，从2011年的从57.9%至2016年的67.1%，同比增长16%</p>
+<p>　　在2016年最受欢迎的新算法是：</p>
+<p>　　K-近邻算法（K-nearest neighbors，KNN），46%份额</p>
+<p>　　主成分分析（Principal Commponent Analysis，PCA），43%</p>
+<p>　　随机森林算法（Random Forests，RF），38%</p>
+<p>　　最优化算法（Optimization），24%</p>
+<p>　　神经网络-深度学习（Neural networks-Deep Learning），19%</p>
+<p>　　奇异值矩阵分解（Singular Value Decomposition，SVD）， 16%</p>
+<p>　　跌幅最大的算法分别为：</p>
+<p>　　关联规则（Association rules），从2011年的28.6%至2016年的15.3%，同比下降47%</p>
+<p>　　增量建模（Uplift modeling），从2011年的4.8%至2016年的3.1%，同比下降36%</p>
+<p>　　因子分析（Factor Analysis），从2011年的18.6%至2016年的14.2%，同比下降24%</p>
+<p>　　生存分析（Survival Analysis），从2011年的9.3%至2016年的7.9%，同比下降15%</p>
+<p>　　下表显示了不同算法类型的用途：监督学习、无监督学习、元分析和其他算法类型。我们排除了NA（4.5%）和其他（3%）的算法。</p>
+<p>　　表1：按行业类型的算法使用</p>
+<p><img src="http://dingyue.nosdn.127.net/ntwXZpw4Bb3WyNEhTyj=uuYBbfm33CuG7xN39p8gl0jBi1486093692046.png" alt></p>
+<p>　　我们注意到，<strong>几乎所有人都在使用监督学习算法。</strong></p>
+<p>　　政府和产业的数据科学家们比学生或学术界使用了更多的不同类型的算法，产业数据科学家更倾向使用元算法。</p>
+<p>　　接下来，我们分析深度学习的十大算法按行业类型的使用。</p>
+<p>　　表2：深度学习的十大算法按就业类型的使用</p>
+<p>　　Table 2: Top 10 Algorithms + Deep Learning usage by Employment Type</p>
+<p><img src="http://dingyue.nosdn.127.net/jKPaTvdZef=C9pjg2oJMqtjCL4r=yPtcbAuwC1wu2enku1486093692047.png" alt></p>
+<p>　　为了使差异更为醒目，我们计算特定行业类型相关的平均算法使用量设计算法为Bias(Alg,Type)=Usage(Alg,Type)/Usage(Alg,All)-1。</p>
+<p><img src="http://dingyue.nosdn.127.net/kIMsTkLRjPKcCrbJUvn3l9xYXId6FU6AH7vq0uDkrbpkE1486093692047.jpg" alt></p>
+<p>　　图2：按行业的算法使用偏差</p>
+<p>　　我们注意到产业界数据科学家更倾向使用回归算法、可视化、统计算法、随机森林算法和时间序列。政府/非盈利组织更倾向使用可视化、主成分分析和时间序列。学术研究人员更倾向使用主成分分析和深度学习。学生通常使用算法较少，但他们用的更多的是文本挖掘和深度学习。</p>
+<p>　　接下来，我们看看代表整体KDnuggets访客的地区参与情况。</p>
+<p>　　参与投票者的地区分布如下：</p>
+<p>　　北美，40%</p>
+<p>　　欧洲，32%</p>
+<p>　　亚洲8%</p>
+<p>　　拉美，5.0%</p>
+<p>　　非洲/中东，3.4%</p>
+<p>　　澳洲/新西兰，2.2%</p>
+<p>　　与2011年的调查一样，我们将产业/政府合并为同一个组，将学术研究人员/学生合并为第二组，并计算算法对产业/ 政府的“亲切度”：</p>
+<p><img src="http://dingyue.nosdn.127.net/FfcG4w9Bk4rRwETEVJTT6mwiYrbfLB9sVSKlkqD7rYRIh1486093692047.jpg" alt></p>
+<p>　　N(Alg,Ind_Gov) / N(Alg,Aca_Stu)<br>　　——————————- - 1<br>　　N(Ind_Gov) / N(Aca_Stu)<br>　　<br>　　亲切度为0的算法在产业/政府和学术研究人员/学生的使用情况相同。IG亲切度约稿表示该算法越“产业”，越低则表示越“学术”。</p>
+<p>　　其中最“产业”的算法”是：</p>
+<p>　　增量建模（Uplift modeling），2.01</p>
+<p>　　异常检测（Anomaly Detection），1.61</p>
+<p>　　生存分析（Survival Analysis），1.39</p>
+<p>　　因子分析（Factor Analysis），0.83</p>
+<p>　　时间序列（Time series/Sequences），0.69</p>
+<p>　　关联规则（Association Rules），0.5</p>
+<p>　　虽然增量建模又一次成为最“产业”的算法，但出乎意料的是它的使用率如此低：区区3.1%，在这次调查中，是使用率最低的算法。</p>
+<p>　　最“学术”的算法是：</p>
+<p>　　神经网络（Neural networks - regular），-0.35</p>
+<p>　　朴素贝叶斯（Naive Bayes），-0.35</p>
+<p>　　支持向量机（SVM），-0.24</p>
+<p>　　深度学习（Deep Learning），-0.19</p>
+<p>　　最大期望算法（EM），-0.17</p>
+<p>　　下图显示了所有算法以及它们在产业界/学术界的亲切度：</p>
+<p><img src="http://dingyue.nosdn.127.net/zq9JX56Yi4FQSr5aAOuc2RYQhfvcTwzd5E=deUDVsOGAF1486093692048compressflag.png" alt></p>
+<p>　　图3：Kdnugets调查：数据科学家使用的流行算法：产业界vs学术界</p>
+<p>　　下表包含了算法的详细信息，在2016年和2011年使用它们的受访者百分比调查，变化（％2016 /％2011 - 1）和行业亲切度如上所述。</p>
+<p>　　表3：KDnuggets2016调查：数据科学家使用的算法</p>
+<p>　　下表包含各个算法的详细信息：</p>
+<p>　　N: 根据使用度排名</p>
+<p>　　Algorithm: 算法名称</p>
+<p>　　Type：类型。S - 监督，U - 无监督，M - 元，Z - 其他，</p>
+<p>　　2016 % used：2016年调查中使用该算法的受访者比例</p>
+<p>　　2011 % used：2011年调查中使用该算法的受访者比例</p>
+<p>　　%Change：变动 (%2016 / %2011 - 1)</p>
+<p>　　Industry Affinity：产业亲切度（上文已提到）</p>
+<p>　　感谢杜小芳对本文的审校。</p>
+<h2 id="AI研究院-AI学习方式越来越像人-却越来越不靠谱？"><a href="#AI研究院-AI学习方式越来越像人-却越来越不靠谱？" class="headerlink" title="AI研究院 | AI学习方式越来越像人 却越来越不靠谱？"></a>AI研究院 | AI学习方式越来越像人 却越来越不靠谱？</h2><p>　　<img src="http://dingyue.nosdn.127.net/58iCfNN6VzwiCVQO5Vxz3WD4ioIs4ph5rvIWQr=0UbFE71486189069842.jpg" alt></p>
+<p>　　【AI研究院 | 网易智能工作室倾力打造的人工智能行业专业栏目，聚焦行业，深度分析，只为专业】</p>
+<p>　　网易智能讯 2月4日报道，据《连线》杂志报道，神经网络正风靡整个硅谷，无数的互联网服务中嵌入各种各样的人工智能（AI）。令人感到激动的是，最好的AI已经可以识别网络照片中的猫咪。但AI研究人员知道，神经网络依然存在许多缺陷。实际上，它们的缺陷非常多，以至于有些人怀疑这些模式识别系统是否是实现AI的可行、可靠方式。</p>
+<p>　　神经网络可以通过分析大量数据来学习和了解任务，比如帮助Facebook进行面部识别、帮助微软进行翻译、帮助谷歌进行互联网搜索等。它们甚至已经开始帮助聊天机器人学习对话艺术。它们正成为无人驾驶汽车和其他自动化机器的重要组成部分。但是在没有大量经过仔细标注的数据的帮助下，它们就无法理解世界的意义，它们不适合执行任何任务。AI研究人员很想知道，为何神经网络在做出具体决定时受到如此多的限制？在很多情况下，它们实际上就是“黑盒子”。这种不透明会引发严重问题：如果无人驾驶汽车向着某人撞去，结果会如何？</p>
+<p>　　卡内基梅隆大学计算机学教授、帮助开发顶级扑克人工智能系统Libratus的托马斯·桑德霍尔姆（Tuomas Sandholm）说：“深度学习已经受到许多关注，它当之无愧。但是深度学习并不能给你提供任何保证。”这是真的，但也正是因为神经网络存在这些明显弱点，许多世界上最大的科技公司正在扩展它们的AI思维，从最近的招聘、收购、研究动向中作出判断，许多初创企业也正涌往相同的方向。</p>
+<p>　　你可能认为这是贝叶斯算法(bayesian)的崛起，这类研究人员通常以科学方法研究AI，他们最初从假设开始，然后基于数据更新这个假设，而非像人经网络那样依赖数据去驱动结论。<strong>贝叶斯算法的研究人员寻找处理不确定性的方法，将新的证据输入到现有模型中，可以执行神经网络不擅长的工作。</strong></p>
+<p>　　与神经网络相似的是，贝叶斯算法也可以通过数据进行学习，但是这种机器学习可通过不同的方式进行。AI初创企业Gamalon创始人本·魏格达（Ben Vigoda）说：“令我们感兴趣的是自动化科学方法。”他的公司正通过所谓的“概率规划”计划推动这种趋势。</p>
+<p>　　这再次提醒我们，神经网络的快速崛起也将生命注入到许多其他技术中，这些技术可帮助机器变得更加聪明，从强化学习到进化计算等。有许多方法，可以帮助机器进行学习。</p>
+<p>　　神秘技术</p>
+<p>　　2016年12月份，当加里·马库斯（Gary Marcus）将15人的初创企业卖给Uber时，他带着全新的AI到来。至少他是那样说的。他的公司叫做几何智能（Geometric Intelligence），一个小小的操作就能做出巨大改变。这位现年47岁的纽约大学心理学教授说，他与同事们正在开发能够从很少数据中学习任务的系统，这与人类十分相似，同时超越了深度神经网络的力量。</p>
+<p>　　马库斯认为，小数据系统是建造机器必不可少的部分。这些机器可自主进行交谈，汽车也可以自己在公路上行驶。当Uber宣布收购Geometric Intelligence时，马库斯说：“在语言领域和无人驾驶汽车领域，你永远不会有足够数据像深度学习那样产生野蛮之力，这会产生许多问题。毕竟，你不能在繁忙的公路上撞车以便数据，用以预防将来发生车祸。你也不能购买它，它根本不存在。”</p>
+<p>　　马库斯和他的联合创始人、剑桥大学信息工程学教授左斌·加拉玛尼(Zoubin Ghahramani)依然没有探讨他们正在开发的技术的具体细节。就像技术界常见的情况，特别是AI领域，这种保密性通常会催生“神秘感”。但是加拉玛尼是贝叶斯算法的支持者之一。他专门从事名为“高斯过程（Gaussian process）”的特殊统计模型，而这种模型在马库斯开发的技术中发挥了重要作用。</p>
+<p>　　高斯过程</p>
+<p>　　<strong>在某种层次上，高斯过程是寻找特定问题最优解决方案的方式。同时，它也是另一种名为贝叶斯优化的数学技术的基础。</strong> 到目前为止，高斯过程已经帮助网站确定应该显示哪些广告，以及它们的网页应该如何排版。Uber已经招募擅长高斯过程的专家，改善其拼车服务。在谷歌，高斯过程帮助控制该公司的高空联网气球。</p>
+<p>　　<strong>从根本上说，高斯过程是确定不确定性的最佳方式。</strong> 爱丁堡大学AI研究员克里斯·威廉姆斯（Chris Williams）说：“知道你不知道的事情是件好事，而犯下自信的错误是你能做到的最糟糕的事情。”</p>
+<p>　　在2015年被Twitter收购的初创企业Whetlab，该技术提供了设计神经网络的更好方式。设计神经网络是个充满错误的实验过程，你没有编写软件那么多的编码，以便于从海量数据中学习。这是个困难、耗时的过程，但高斯过程和贝叶斯优化可帮助自动化这些任务。正如WhetLab创始人、哈佛大学计算机科学家赖安·亚当斯（Ryan Adams）所说，他的公司使用机器学习技术改善机器学习技术。神经网络可能会遇到“信心错误”问题，在识别不确定性方面，这种优化可帮助处理问题。亚当斯已经离开Twitter，加盟了谷歌AI团队Google Brain。</p>
+<p>　　有些研究人员还认为，<strong>小数据驱动的高斯过程在推动AI自动化方面可能会发挥关键作用</strong>。AI初创企业Prowler首席执行官维沙尔·查特拉斯（Vishal Chatrath）说：“为了开发真正的自动化代理人，它必须能够非常迅速地适应环境。这意味着，它需要以高效的方式学习。高斯过程可轻松胜任。与神经网络不同，它们没有‘黑盒子’问题的负担。如果发生意外，你可以追踪到源头。”</p>
+<p>　　不要恐慌</p>
+<p>　　在Prowler，查特拉斯已经招募了3名技术专家。之所以将总部选在剑桥，因为这里有许多人是高斯过程及其相关技术的专家。这家公司正开发新的AI系统，它可以学习浏览大型多人游戏和其他数字数节。这是个复杂的过程，但他们希望将来AI系统能出现在真实世界中</p>
+<p>　　与此同时，亚马逊也招募了擅长贝叶斯算法技术的AI研究人员，即舍费尔德大学计算机科学家尼尔·劳伦斯（Neil Lawrence）。劳伦斯最近在帖文中指出：“无需感到惊慌，<strong>通过使用我们的数学工具可以探索新一轮的深度学习方法</strong>。我们可以保证，它们大多数都是无害的。”（小小）</p>
+<p>　　注：本文为网易智能工作室稿件，转载需注明出处，否则追究其法律责任。</p>
+<h2 id="识别假新闻与NLP有何不同-为何连FB都搞不定？"><a href="#识别假新闻与NLP有何不同-为何连FB都搞不定？" class="headerlink" title="识别假新闻与NLP有何不同 为何连FB都搞不定？"></a>识别假新闻与NLP有何不同 为何连FB都搞不定？</h2><p>　　【网易智能讯 1月16日消息】假新闻成为新闻头条已达几个月，现在一组研究人员试图运用AI技术来解决假新闻难题。</p>
+<p>　　<img src="http://dingyue.nosdn.127.net/lQunouULVzWQQKzQsrHNVIMn2Xhde75VsXiFp=cMOdMPf1484574444143.jpg" alt></p>
+<p>　　卡内基梅隆大学副教授迪恩·波美勒（Dean Pomerleau）发起一项挑战，声称如果有人开发出能准确发现假新闻的AI算法，他将奖赏研究者2000美元。</p>
+<p>　　与此同时一些硅谷大公司——比如谷歌和Facebook——也在解决努力解决这个问题。开发AI算法来解决假新闻。</p>
+<p>　　但识别假新闻与其他AI算法的成功（比如图像识别和自然语言处理）不同，<strong>假新闻千变万化，本质上的多变性决定其难以抓取模式特征。</strong> 制服假新闻要求AI系统多一层判断，而这是今日之AI还不具备的能力。</p>
+<p>　　除了这个问题，竞争或许更能见证AI的进化。未来研究人员能够开发出比今日更优秀的工具。</p>
+<p>　　此外他还更详细地介绍了研究人员在解决假新闻过程中将要面临的挑战和机遇，以及他们的成败如何反映当今AI的发展状态。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Visualization/" rel="tag"><i class="fa fa-tag"></i> Visualization</a>
+              <a href="/tags/Algorithm/" rel="tag"><i class="fa fa-tag"></i> Algorithm</a>
+              <a href="/tags/Statistics/" rel="tag"><i class="fa fa-tag"></i> Statistics</a>
+              <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+              <a href="/tags/Regression/" rel="tag"><i class="fa fa-tag"></i> Regression</a>
+              <a href="/tags/Clustering/" rel="tag"><i class="fa fa-tag"></i> Clustering</a>
+              <a href="/tags/Decision-Trees-Rules/" rel="tag"><i class="fa fa-tag"></i> Decision Trees/Rules</a>
+              <a href="/tags/K-nearest-neighbors/" rel="tag"><i class="fa fa-tag"></i> K-nearest neighbors</a>
+              <a href="/tags/PCA/" rel="tag"><i class="fa fa-tag"></i> PCA</a>
+              <a href="/tags/Random-Forests/" rel="tag"><i class="fa fa-tag"></i> Random Forests</a>
+              <a href="/tags/Time-Series-Sequences/" rel="tag"><i class="fa fa-tag"></i> Time Series/Sequences</a>
+              <a href="/tags/Text-Mining/" rel="tag"><i class="fa fa-tag"></i> Text Mining</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Basic Concept/gentle-understanding-of-tensorflow/" rel="next" title="Gentlest Tensorflow">
+                  <i class="fa fa-chevron-left"></i> Gentlest Tensorflow
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Business/how-to-find-ai-start-up-firm/" rel="prev" title="How to Find AI Startup Firm">
+                  How to Find AI Startup Firm <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AI研究院-AI学习方式越来越像人-却越来越不靠谱？"><span class="nav-number">1.</span> <span class="nav-text">AI研究院 | AI学习方式越来越像人 却越来越不靠谱？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#识别假新闻与NLP有何不同-为何连FB都搞不定？"><span class="nav-number">2.</span> <span class="nav-text">识别假新闻与NLP有何不同 为何连FB都搞不定？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

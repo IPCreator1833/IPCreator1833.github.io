@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="作者：何红辉 / 关爱民  豆瓣评分：8.4   本书专门介绍Android源代码的设计模式，共26章，主要讲解面向对象的六大原则、主流的设计模式以及MVC和MVP模式。主要内容为：优化代码的首步、开闭原则、里氏替换原则、依赖倒置原则、接口隔离原则、迪米特原则、单例模式、Builder模式、原型模式、工厂方法模式、抽象工厂模式、策略模式、状态模式、责任链模式、解释器模式、命令模式、观察者模式、备忘">
+<meta name="keywords" content="Android,Design Pattern">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Design Pattern of Android">
+<meta property="og:url" content="https://hazyman.com/Program/IPCreator/Technology/Program/Android/android-design-pattern/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="作者：何红辉 / 关爱民  豆瓣评分：8.4   本书专门介绍Android源代码的设计模式，共26章，主要讲解面向对象的六大原则、主流的设计模式以及MVC和MVP模式。主要内容为：优化代码的首步、开闭原则、里氏替换原则、依赖倒置原则、接口隔离原则、迪米特原则、单例模式、Builder模式、原型模式、工厂方法模式、抽象工厂模式、策略模式、状态模式、责任链模式、解释器模式、命令模式、观察者模式、备忘">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img3.doubanio.com/lpic/s28320163.jpg">
+<meta property="og:updated_time" content="2017-09-15T00:54:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Design Pattern of Android">
+<meta name="twitter:description" content="作者：何红辉 / 关爱民  豆瓣评分：8.4   本书专门介绍Android源代码的设计模式，共26章，主要讲解面向对象的六大原则、主流的设计模式以及MVC和MVP模式。主要内容为：优化代码的首步、开闭原则、里氏替换原则、依赖倒置原则、接口隔离原则、迪米特原则、单例模式、Builder模式、原型模式、工厂方法模式、抽象工厂模式、策略模式、状态模式、责任链模式、解释器模式、命令模式、观察者模式、备忘">
+<meta name="twitter:image" content="https://img3.doubanio.com/lpic/s28320163.jpg">
+
+<link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Android/android-design-pattern/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Design Pattern of Android | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Program/IPCreator/Technology/Program/Android/android-design-pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Design Pattern of Android
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Android/android-design-pattern/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Android/android-design-pattern/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>作者：<a href="https://book.douban.com/search/%E5%85%B3%E7%88%B1%E6%B0%91" target="_blank" rel="noopener">何红辉 / 关爱民  </a><br>豆瓣评分：8.4</p>
+<p><div align="center"><br><img src="https://img3.doubanio.com/lpic/s28320163.jpg" width="398" height="512" alt="personal photo"><br></div></p>
+<blockquote>
+<p>本书专门介绍Android源代码的设计模式，共26章，主要讲解面向对象的六大原则、主流的设计模式以及MVC和MVP模式。主要内容为：优化代码的首步、开闭原则、里氏替换原则、依赖倒置原则、接口隔离原则、迪米特原则、单例模式、Builder模式、原型模式、工厂方法模式、抽象工厂模式、策略模式、状态模式、责任链模式、解释器模式、命令模式、观察者模式、备忘录模式、迭代器模式、模板方法模式、访问者模式、中介者模式、代理模式、组合模式、适配器模式、装饰模式、享元模式、外观模式、桥接模式，以及MVC的介绍与实战和MVP应用架构模式。</p>
+</blockquote>
+<p>见过最多的，也最可悲的是—— 永远不相信自己所有的问题就出在自己从来都不肯耐心把最基础的东西弄清楚弄明白。<sup>[1]<sup></sup></sup></p>
+<a id="more"></a>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><h3 id="第1章-走向灵活软件之路——面向对象的六大原则-1"><a href="#第1章-走向灵活软件之路——面向对象的六大原则-1" class="headerlink" title="第1章 走向灵活软件之路——面向对象的六大原则 1"></a>第1章 走向灵活软件之路——面向对象的六大原则 1</h3><p>1.1 优化代码的第一步——单一职责原则 1<br>1.2 让程序更稳定、更灵活——开闭原则 5<br>1.3 构建扩展性更好的系统——里氏替换原则 12<br>1.4 让项目拥有变化的能力——依赖倒置原则 13<br>1.5 系统有更高的灵活性——接口隔离原则 16<br>1.6 更好的可扩展性——迪米特原则 18<br>1.7 总结 22</p>
+<h3 id="第2章-应用最广的模式——单例模式-23"><a href="#第2章-应用最广的模式——单例模式-23" class="headerlink" title="第2章 应用最广的模式——单例模式 23"></a>第2章 应用最广的模式——单例模式 23</h3><p>2.1 单例模式介绍 23<br>2.2 单例模式的定义 23<br>2.3 单例模式的使用场景 23<br>2.4 单例模式UML类图 23<br>2.5 单例模式的简单示例 24<br>2.6 单例模式的其他实现方式 26<br>2.6.1 懒汉模式 26<br>2.6.2 Double CheckLock ( DCL )<br>实现单例 26<br>2.6.3 静态内部类单例模式 27<br>2.6.4 枚举单例 28<br>2.6.5 使用容器实现单例模式 28<br>2.7 Android源码中的单例模式 29<br>2.8 无名英雄——深入理解LayoutInflater 33<br>2.9 运用单例模式 40<br>2.10 总结 42</p>
+<h3 id="第3章-自由扩展你的项目——Builder模式-43"><a href="#第3章-自由扩展你的项目——Builder模式-43" class="headerlink" title="第3章 自由扩展你的项目——Builder模式 43"></a>第3章 自由扩展你的项目——Builder模式 43</h3><p>3.1 Builder模式介绍 43<br>3.2 Builder模式的定义 43<br>3.3 Builder模式的使用场景 43<br>3.4 Builder模式的UML类图 43<br>3.5 Builder模式的简单实现 44<br>3.6 Android源码中的Builder模式实现 46<br>3.7 深入了解WindowManager 52<br>3.8 Builder模式实战 59<br>3.9 总结 64</p>
+<h3 id="第4章-使程序运行更高效——原型模式-66"><a href="#第4章-使程序运行更高效——原型模式-66" class="headerlink" title="第4章 使程序运行更高效——原型模式 66"></a>第4章 使程序运行更高效——原型模式 66</h3><p>4.1 原型模式介绍 66<br>4.2 原型模式的定义 66<br>4.3 原型模式的使用场景 66<br>4.4 原型模式的UML类图 66<br>4.5 原型模式的简单实现 67<br>4.6 浅拷贝和深拷贝 69<br>4.7 Android源码中的原型模式实现 72<br>4.8 Intent的查找与匹配 74<br>4.8.1 App信息表的构建 74<br>4.8.2 精确匹配 80<br>4.9 原型模式实战 83<br>4.10 总结 85</p>
+<h3 id="第5章-应用最广泛的模式——工厂方法模式-87"><a href="#第5章-应用最广泛的模式——工厂方法模式-87" class="headerlink" title="第5章 应用最广泛的模式——工厂方法模式 87"></a>第5章 应用最广泛的模式——工厂方法模式 87</h3><p>5.1 工厂方法模式介绍 87<br>5.2 工厂方法模式的定义 87<br>5.3 工厂方法模式的使用场景 87<br>5.4 工厂方法模式的UML类图 87<br>5.5 模式的简单实现 90<br>5.6 Android源码中的工厂方法模式实现 93<br>5.7 关于onCreate方法 95<br>5.8 工厂方法模式实战 102<br>5.9 总结 105</p>
+<h3 id="第6章-创建型设计模式——抽象工厂模式-106"><a href="#第6章-创建型设计模式——抽象工厂模式-106" class="headerlink" title="第6章 创建型设计模式——抽象工厂模式 106"></a>第6章 创建型设计模式——抽象工厂模式 106</h3><p>6.1 抽象工厂模式介绍 106<br>6.2 抽象工厂模式的定义 106<br>6.3 抽象工厂模式的使用场景 106<br>6.4 抽象工厂模式的UML类图 106<br>6.5 抽象工厂方法模式的简单实现 109<br>6.6 Android源码中的抽象工厂方法模式实现 112<br>6.7 总结 116</p>
+<h3 id="第7章-时势造英雄——策略模式-117"><a href="#第7章-时势造英雄——策略模式-117" class="headerlink" title="第7章 时势造英雄——策略模式 117"></a>第7章 时势造英雄——策略模式 117</h3><p>7.1 策略模式介绍 117<br>7.2 策略模式的定义 117<br>7.3 策略模式的使用场景 117<br>7.4 策略模式的UML类图 118<br>7.5 策略模式的简单实现 118<br>7.6 Android源码中的策略模式实现 123<br>7.6.1 时间插值器 123<br>7.6.2 动画中的时间插值器 124<br>7.7 深入属性动画 128<br>7.7.1 属性动画体系的总体设计 128<br>7.7.2 属性动画的核心类介绍 128<br>7.7.3 基本使用 129<br>7.7.4 流程图 130<br>7.7.5 详细设计 131<br>7.7.6 核心原理分析 131<br>7.8 策略模式实战应用 142<br>7.9 总结 144</p>
+<h3 id="第8章-随遇而安——状态模式-145"><a href="#第8章-随遇而安——状态模式-145" class="headerlink" title="第8章 随遇而安——状态模式 145"></a>第8章 随遇而安——状态模式 145</h3><p>8.1 状态模式介绍 145<br>8.2 状态模式的定义 145<br>8.3 状态模式的使用场景 145<br>8.4 状态模式的UML类图 145<br>8.5 状态模式的简单示例 146<br>8.6 Wi-Fi管理中的状态模式 150<br>8.7 状态模式实战 159<br>8.8 总结 164</p>
+<h3 id="第9章-使编程更有灵活性——责任链模式-165"><a href="#第9章-使编程更有灵活性——责任链模式-165" class="headerlink" title="第9章 使编程更有灵活性——责任链模式 165"></a>第9章 使编程更有灵活性——责任链模式 165</h3><p>9.1 责任链模式介绍 165<br>9.2 责任链模式的定义 165<br>9.3 责任链模式的使用场景 165<br>9.4 责任链模式的UML类图 165<br>9.5 责任链模式的简单实现 170<br>9.6 Android源码中的责任链模式实现 173<br>9.7 责任链模式实战 178<br>9.8 总结 181</p>
+<h3 id="第10章-化繁为简的翻译机——解释器模式-182"><a href="#第10章-化繁为简的翻译机——解释器模式-182" class="headerlink" title="第10章 化繁为简的翻译机——解释器模式 182"></a>第10章 化繁为简的翻译机——解释器模式 182</h3><p>10.1 解释器模式介绍 182<br>10.2 解释器模式的定义 182<br>10.3 解释器模式的使用场景 183<br>10.4 解释器模式的UML类图 184<br>10.5 解释器模式的简单实现 185<br>10.6 Android源码中的解释器模式实现 189<br>10.7 关于PackageManagerService 195<br>10.8 总结 203</p>
+<h3 id="第11章-让程序畅通执行——命令模式-204"><a href="#第11章-让程序畅通执行——命令模式-204" class="headerlink" title="第11章 让程序畅通执行——命令模式 204"></a>第11章 让程序畅通执行——命令模式 204</h3><p>11.1 命令模式介绍 204<br>11.2 命令模式的定义 204<br>11.3 命令模式的使用场景 204<br>11.4 命令模式的UML类图 204<br>11.5 命令模式的简单实现 207<br>11.6 Android源码中的命令模式实现 211<br>11.7 Android事件输入系统介绍 214<br>11.8 命令模式实战 216<br>11.9 总结 223</p>
+<h3 id="第12章-解决、解耦的钥匙——观察者模式-224"><a href="#第12章-解决、解耦的钥匙——观察者模式-224" class="headerlink" title="第12章 解决、解耦的钥匙——观察者模式 224"></a>第12章 解决、解耦的钥匙——观察者模式 224</h3><p>12.1 观察者模式介绍 224<br>12.2 观察者模式的定义 224<br>12.3 观察者模式的使用场景 224<br>12.4 观察者模式的UML类图 224<br>12.5 观察者模式的简单实现 225<br>12.6 Android源码分析 227<br>12.7 观察者模式的深入拓展 230<br>12.8 实战 238<br>12.9 总结 245</p>
+<h3 id="第13章-编程中的“后悔药”——备忘录模式-247"><a href="#第13章-编程中的“后悔药”——备忘录模式-247" class="headerlink" title="第13章 编程中的“后悔药”——备忘录模式 247"></a>第13章 编程中的“后悔药”——备忘录模式 247</h3><p>13.1 备忘录模式介绍 247<br>13.2 备忘录模式的定义 247<br>13.3 备忘录模式的使用场景 247<br>13.4 备忘录模式的UML类图 247<br>13.5 备忘录模式的简单示例 248<br>13.6 Android源码中的备忘录模式 250<br>13.7 深度拓展 257<br>13.7.1 onSaveInstanceState调用的时机 257<br>13.7.2 使用V4包存储状态的bug 257<br>13.8 实战 260<br>13.9 总结 267</p>
+<h3 id="第14章-解决问题的“第三者”——迭代器模式-268"><a href="#第14章-解决问题的“第三者”——迭代器模式-268" class="headerlink" title="第14章 解决问题的“第三者”——迭代器模式 268"></a>第14章 解决问题的“第三者”——迭代器模式 268</h3><p>14.1 迭代器模式介绍 268<br>14.2 迭代器模式的定义 268<br>14.3 迭代器模式的使用场景 268<br>14.4 迭代器模式的UML类图 268<br>14.5 模式的简单实现 271<br>14.6 Android源码中的模式实现 275<br>14.7 总结 277</p>
+<h3 id="第15章-抓住问题核心——模板方法模式-278"><a href="#第15章-抓住问题核心——模板方法模式-278" class="headerlink" title="第15章 抓住问题核心——模板方法模式 278"></a>第15章 抓住问题核心——模板方法模式 278</h3><p>15.1 模板方法模式介绍 278<br>15.2 模板方法模式的定义 278<br>15.3 模板方法模式的使用场景 278<br>15.4 模板方法模式的UML类图 278<br>15.5 模板方法模式的简单示例 279<br>15.6 Android源码中的模板方法模式 281<br>15.7 深度拓展 283<br>15.8 模板方法实战 296<br>15.9 总结 299</p>
+<h3 id="第16章-访问者模式-301"><a href="#第16章-访问者模式-301" class="headerlink" title="第16章 访问者模式 301"></a>第16章 访问者模式 301</h3><p>16.1 访问者模式介绍 301<br>16.2 访问者模式的定义 301<br>16.3 访问者模式的使用场景 301<br>16.4 访问者模式的UML类图 301<br>16.5 访问者模式的简单示例 302<br>16.6 Android源码中的模式 306<br>16.7 访问者模式实战 309<br>16.8 总结 316</p>
+<h3 id="第17章-“和事佬”——中介者模式-317"><a href="#第17章-“和事佬”——中介者模式-317" class="headerlink" title="第17章 “和事佬”——中介者模式 317"></a>第17章 “和事佬”——中介者模式 317</h3><p>17.1 中介者模式介绍 317<br>17.2 中介者模式的定义 318<br>17.3 中介者模式的使用场景 318<br>17.4 中介者模式的UML类图 318<br>17.5 中介者模式的简单实现 320<br>17.6 Android源码中的中介者模式实现 324<br>17.7 中介者模式实战 326<br>17.8 总结 329</p>
+<h3 id="第18章-编程好帮手——代理模式-330"><a href="#第18章-编程好帮手——代理模式-330" class="headerlink" title="第18章 编程好帮手——代理模式 330"></a>第18章 编程好帮手——代理模式 330</h3><p>18.1 代理模式介绍 330<br>18.2 代理模式的定义 330<br>18.3 代理模式的使用场景 330<br>18.4 代理模式的UML类图 330<br>18.5 代理模式的简单实现 332<br>18.6 Android源码中的代理模式实现 336<br>18.7 Android中的Binder跨进程通信机制与AIDL 340<br>18.8 代理模式实战 351<br>18.9 总结 355</p>
+<h3 id="第19章-物以类聚——组合模式-356"><a href="#第19章-物以类聚——组合模式-356" class="headerlink" title="第19章 物以类聚——组合模式 356"></a>第19章 物以类聚——组合模式 356</h3><p>19.1 组合模式介绍 356<br>19.2 组合模式的定义 357<br>19.3 组合模式的使用场景 357<br>19.4 组合模式的UML类图 357<br>19.5 组合模式的简单实现 363<br>19.6 Android源码中的模式实现 367<br>19.7 为什么ViewGroup有容器的功能 368<br>19.8 总结 370</p>
+<h3 id="第20章-得心应手的“粘合剂”——适配器模式-371"><a href="#第20章-得心应手的“粘合剂”——适配器模式-371" class="headerlink" title="第20章 得心应手的“粘合剂”——适配器模式 371"></a>第20章 得心应手的“粘合剂”——适配器模式 371</h3><p>20.1 适配器模式介绍 371<br>20.2 适配器模式的定义 371<br>20.3 适配器模式的使用场景 371<br>20.4 适配器模式的UML类图 371<br>20.5 适配器模式应用的简单示例 372<br>20.5.1 类适配器模式 372<br>20.5.2 对象适配器模式 373<br>20.6 Android源码中的适配器模式 375<br>20.7 深度拓展 380<br>20.8 实战演示 393<br>20.9 总结 402</p>
+<h3 id="第21章-装饰模式-403"><a href="#第21章-装饰模式-403" class="headerlink" title="第21章 装饰模式 403"></a>第21章 装饰模式 403</h3><p>21.1 装饰模式介绍 403<br>21.2 装饰模式的定义 403<br>21.3 装饰模式的使用场景 403<br>21.4 装饰模式的UML类图 403<br>21.5 模式的简单实现 406<br>21.6 Android源码中的模式实现 408<br>21.7 Context与ContextImpl 410<br>21.8 模式实战 419<br>21.9 总结 419</p>
+<h3 id="第22章-对象共享，避免创建多对象——享元模式-420"><a href="#第22章-对象共享，避免创建多对象——享元模式-420" class="headerlink" title="第22章 对象共享，避免创建多对象——享元模式 420"></a>第22章 对象共享，避免创建多对象——享元模式 420</h3><p>22.1 享元模式介绍 420<br>22.2 享元模式定义 420<br>22.3 享元模式的使用场景 420<br>22.4 享元模式的UML类图 420<br>22.5 享元模式的简单示例 421<br>22.6 Android源码中的享元模式 424<br>22.7 深度拓展 429<br>22.7.1 深入了解Android的消息机制 429<br>22.7.2 子线程中创建Handler为何会抛出异常 438<br>22.8 总结 439</p>
+<h3 id="第23章-统一编程接口——外观模式-440"><a href="#第23章-统一编程接口——外观模式-440" class="headerlink" title="第23章 统一编程接口——外观模式 440"></a>第23章 统一编程接口——外观模式 440</h3><p>23.1 外观模式介绍 440<br>23.2 外观模式定义 440<br>23.3 外观模式的使用场景 440<br>23.4 外观模式的UML类图 440<br>23.5 外观模式的简单示例 441<br>23.6 Android源码中的外观模式 443<br>23.7 深度拓展 448<br>23.7.1 Android资源的加载与匹配 448<br>23.7.2 动态加载框架的实现 455<br>23.8 外观模式实战 461<br>23.9 总结 464</p>
+<h3 id="第24章-连接两地的交通枢钮——桥接模式-465"><a href="#第24章-连接两地的交通枢钮——桥接模式-465" class="headerlink" title="第24章 连接两地的交通枢钮——桥接模式 465"></a>第24章 连接两地的交通枢钮——桥接模式 465</h3><p>24.1 桥接模式介绍 465<br>24.2 桥接模式的定义 465<br>24.3 桥接模式的使用场景 465<br>24.4 桥接模式的UML类图 465<br>24.5 桥接模式的简单实现 467<br>24.6 Android源码中的桥接模式实现 470<br>24.7 关于WindowManagerService 471<br>24.8 桥接模式实战 479<br>24.9 总结 482</p>
+<h3 id="第25章-MVC的介绍与实战-483"><a href="#第25章-MVC的介绍与实战-483" class="headerlink" title="第25章 MVC的介绍与实战 483"></a>第25章 MVC的介绍与实战 483</h3><p>25.1 MVC的起源与历史 483<br>25.2 MVC在Android中的实现 484<br>25.3 总结 486</p>
+<h3 id="第26章-MVP应用架构模式-487"><a href="#第26章-MVP应用架构模式-487" class="headerlink" title="第26章 MVP应用架构模式 487"></a>第26章 MVP应用架构模式 487</h3><p>26.1 MVP模式介绍 487<br>26.2 MVP模式的三个角色 488<br>26.3 与MVC、MVVM的区别 488<br>26.4 MVP的实现 489<br>26.5 MVP与Activity、Fragment的生命周期 493</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+              <a href="/tags/Design-Pattern/" rel="tag"><i class="fa fa-tag"></i> Design Pattern</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Program/IPCreator/Technology/Program/Java/Code-The Hidden Language of Computer Hardware and Software/" rel="next" title="Code-The Hidden Language of Computer Hardware and Software">
+                  <i class="fa fa-chevron-left"></i> Code-The Hidden Language of Computer Hardware and Software
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Movie/IPCreator/Journey/Movie/Dangal/" rel="prev" title="Dangal">
+                  Dangal <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第1章-走向灵活软件之路——面向对象的六大原则-1"><span class="nav-number">1.1.</span> <span class="nav-text">第1章 走向灵活软件之路——面向对象的六大原则 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第2章-应用最广的模式——单例模式-23"><span class="nav-number">1.2.</span> <span class="nav-text">第2章 应用最广的模式——单例模式 23</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第3章-自由扩展你的项目——Builder模式-43"><span class="nav-number">1.3.</span> <span class="nav-text">第3章 自由扩展你的项目——Builder模式 43</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第4章-使程序运行更高效——原型模式-66"><span class="nav-number">1.4.</span> <span class="nav-text">第4章 使程序运行更高效——原型模式 66</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第5章-应用最广泛的模式——工厂方法模式-87"><span class="nav-number">1.5.</span> <span class="nav-text">第5章 应用最广泛的模式——工厂方法模式 87</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第6章-创建型设计模式——抽象工厂模式-106"><span class="nav-number">1.6.</span> <span class="nav-text">第6章 创建型设计模式——抽象工厂模式 106</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第7章-时势造英雄——策略模式-117"><span class="nav-number">1.7.</span> <span class="nav-text">第7章 时势造英雄——策略模式 117</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第8章-随遇而安——状态模式-145"><span class="nav-number">1.8.</span> <span class="nav-text">第8章 随遇而安——状态模式 145</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第9章-使编程更有灵活性——责任链模式-165"><span class="nav-number">1.9.</span> <span class="nav-text">第9章 使编程更有灵活性——责任链模式 165</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第10章-化繁为简的翻译机——解释器模式-182"><span class="nav-number">1.10.</span> <span class="nav-text">第10章 化繁为简的翻译机——解释器模式 182</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第11章-让程序畅通执行——命令模式-204"><span class="nav-number">1.11.</span> <span class="nav-text">第11章 让程序畅通执行——命令模式 204</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第12章-解决、解耦的钥匙——观察者模式-224"><span class="nav-number">1.12.</span> <span class="nav-text">第12章 解决、解耦的钥匙——观察者模式 224</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第13章-编程中的“后悔药”——备忘录模式-247"><span class="nav-number">1.13.</span> <span class="nav-text">第13章 编程中的“后悔药”——备忘录模式 247</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第14章-解决问题的“第三者”——迭代器模式-268"><span class="nav-number">1.14.</span> <span class="nav-text">第14章 解决问题的“第三者”——迭代器模式 268</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第15章-抓住问题核心——模板方法模式-278"><span class="nav-number">1.15.</span> <span class="nav-text">第15章 抓住问题核心——模板方法模式 278</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第16章-访问者模式-301"><span class="nav-number">1.16.</span> <span class="nav-text">第16章 访问者模式 301</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第17章-“和事佬”——中介者模式-317"><span class="nav-number">1.17.</span> <span class="nav-text">第17章 “和事佬”——中介者模式 317</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第18章-编程好帮手——代理模式-330"><span class="nav-number">1.18.</span> <span class="nav-text">第18章 编程好帮手——代理模式 330</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第19章-物以类聚——组合模式-356"><span class="nav-number">1.19.</span> <span class="nav-text">第19章 物以类聚——组合模式 356</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第20章-得心应手的“粘合剂”——适配器模式-371"><span class="nav-number">1.20.</span> <span class="nav-text">第20章 得心应手的“粘合剂”——适配器模式 371</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第21章-装饰模式-403"><span class="nav-number">1.21.</span> <span class="nav-text">第21章 装饰模式 403</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第22章-对象共享，避免创建多对象——享元模式-420"><span class="nav-number">1.22.</span> <span class="nav-text">第22章 对象共享，避免创建多对象——享元模式 420</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第23章-统一编程接口——外观模式-440"><span class="nav-number">1.23.</span> <span class="nav-text">第23章 统一编程接口——外观模式 440</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第24章-连接两地的交通枢钮——桥接模式-465"><span class="nav-number">1.24.</span> <span class="nav-text">第24章 连接两地的交通枢钮——桥接模式 465</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第25章-MVC的介绍与实战-483"><span class="nav-number">1.25.</span> <span class="nav-text">第25章 MVC的介绍与实战 483</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第26章-MVP应用架构模式-487"><span class="nav-number">1.26.</span> <span class="nav-text">第26章 MVP应用架构模式 487</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

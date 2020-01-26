@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="作者：singwhatiwanna DDApp 前言在Android插件化技术日新月异的今天，开发并落地一款插件化框架到底是简单还是困难，这个问题不同人会有不同的答案。但是我相信，完成一个插件化框架的demo并不是多难的事，但是要开发一款完善的插件化框架却不是一件容易的事，尤其在国内，各大Rom厂商都对Android系统做了一定程度的定制，这进一步加剧了Android本身的碎片化问题。 滴滴出行在">
+<meta name="keywords" content="Virtual APK">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Virtual APK">
+<meta property="og:url" content="https://hazyman.com/Android/IPCreator/Technology/Program/Android/virtual-apk/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="作者：singwhatiwanna DDApp 前言在Android插件化技术日新月异的今天，开发并落地一款插件化框架到底是简单还是困难，这个问题不同人会有不同的答案。但是我相信，完成一个插件化框架的demo并不是多难的事，但是要开发一款完善的插件化框架却不是一件容易的事，尤其在国内，各大Rom厂商都对Android系统做了一定程度的定制，这进一步加剧了Android本身的碎片化问题。 滴滴出行在">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlX2a8cELyOyZM3wjMvSu3kZIrwlF0ZUicLia6VviacLv68NRFOrC6FEcg0w/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlX43Yuk4KbNQjYuetsdSdgB8ubgIxnaxrMkkJpdTm1Owk8XlDdLBib0jw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXd4cfRibnogsOkEBNkzamCBuzKR7Arw2kwt2bw3yyrRNX5zib7kmdC39Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXLtmuq4Tog3Bia0Mj29RUmnicx6c6ObWpIicgmibL0NDQib6icRjdttkvgcqw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXYmKLcqRy1uvSLTbOXsAEq4Cibb2hCRV35WojIiaX4j42PsjQ23QOfXhQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXK535TSRFy32jhI4V9JqcXRtco5XJDuaovGsIgH0B4c6yx2PtHDmeXw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXWUuGgyPG2ZicHDicgezMZgrL3TiaEvMYyf10t0c61qjzbKVDNnbZDFphA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXt8B7OictQSCXgVUHnrWHmdSeqlxwzbicHOvTX5269YtcFicR7EP8XsKpQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXcYOXAGPZLqpLiaRGhpszf8Du7ooBdmGqOfKPSZl0DTVOebPGfOmNBqA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXWLQ6X5D9INZdzEuPJ4OeR6TjQtqMFnSqKqV5qibO75WSDCyfltQVasw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXiaXMyPTTBpjyagSeg3JcpOv2icVjZqu5vev7Q30ib2TameqWCGIVbjGcA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/1L1nVegtlrnjM0ibYic8Qib9g7aSuSz8mJEvFBE9KnX1sSDcIjV2fpPJrlWgbyRfRJ3EGXqeACKBcLfSmOTncHqibw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:updated_time" content="2017-03-27T10:02:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Virtual APK">
+<meta name="twitter:description" content="作者：singwhatiwanna DDApp 前言在Android插件化技术日新月异的今天，开发并落地一款插件化框架到底是简单还是困难，这个问题不同人会有不同的答案。但是我相信，完成一个插件化框架的demo并不是多难的事，但是要开发一款完善的插件化框架却不是一件容易的事，尤其在国内，各大Rom厂商都对Android系统做了一定程度的定制，这进一步加剧了Android本身的碎片化问题。 滴滴出行在">
+<meta name="twitter:image" content="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlX2a8cELyOyZM3wjMvSu3kZIrwlF0ZUicLia6VviacLv68NRFOrC6FEcg0w/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+
+<link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/virtual-apk/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Virtual APK | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/virtual-apk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Virtual APK
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Android/IPCreator/Technology/Program/Android/virtual-apk/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Android/IPCreator/Technology/Program/Android/virtual-apk/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>作者：<a href="http://mp.weixin.qq.com/s?__biz=MzIyNjcxODc3MA==&amp;mid=2247483684&amp;idx=1&amp;sn=c705424482f13941a9bcd6a5d6c24ed5&amp;chksm=e86d6479df1aed6f2f101a58ec7a5f839074b0209ce30c0f2d9d4e7bd2ac22937745b295c0d8#rd" target="_blank" rel="noopener">singwhatiwanna DDApp</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在Android插件化技术日新月异的今天，开发并落地一款插件化框架到底是简单还是困难，这个问题不同人会有不同的答案。但是我相信，完成一个插件化框架的demo并不是多难的事，但是要开发一款完善的插件化框架却不是一件容易的事，尤其在国内，各大Rom厂商都对Android系统做了一定程度的定制，这进一步加剧了Android本身的碎片化问题。</p>
+<p>滴滴出行在插件化上的探索起步较晚，由于滴滴业务发展较快，业务迭代占据了大量的时间，这使得我们在2016年才开始研究这方面的技术。经过半年的开发、测试、适配和线上验证，目前我们推出了一款比较完善的插件化框架：VirtualAPK。之所以现在推出来，是因为VirtualAPK在我们内部已经得到了很好的验证，我们在迭代过程中不断地做机型适配和细节特性的支持，目前已经达到一个非常稳定的状况，足以支撑滴滴部分乃至全部业务的动态发版需求。目前滴滴出行最新版本（v5.0.4）上面，小巴和接送机业务均为插件，大家可以去体验。</p>
+<a id="more"></a>
+<h2 id="插件化的现状"><a href="#插件化的现状" class="headerlink" title="插件化的现状"></a>插件化的现状</h2><p>到目前为止，业界已经有很多优秀的开源项目，比如早期的基于静态代理思想的DynamicLoadApk，随后的基于占坑思想的DynamicApk、Small，还有360手机助手的DroidPlugin。他们都是优秀的开源项目，他们很大程度上促进了国内插件化技术的发展。</p>
+<p>尽管有如此多的优秀框架存在，但是兼容性问题仍然是制约插件化发展的一个难题。一款插件化框架，也许可以在一款手机上完美运行，但是在数以千万的设备上却总是容易存在这样那样的兼容性问题。我相信上线过插件化的工程师应该深有体会。滴滴为什么还要自研一款新的插件化框架？因为我们需要一款功能完备的、兼容性优秀的、适用于滴滴业务的插件化框架，目前市面上的开源不能满足我们的需求，所以我们必须重新造轮子，于是VirtualAPK诞生了。</p>
+<h2 id="VirtualAPK的诞生"><a href="#VirtualAPK的诞生" class="headerlink" title="VirtualAPK的诞生"></a>VirtualAPK的诞生</h2><p>VirtualAPK是滴滴出行自研的一款优秀的插件化框架，主要有如下几个特性。</p>
+<p>功能完备</p>
+<p>支持几乎所有的Android特性；<br>四大组件方面<br>四大组件均不需要在宿主manifest中预注册，每个组件都有完整的生命周期。<br>Activity：支持显示和隐式调用，支持Activity的theme和LaunchMode，支持透明主题；<br>Service：支持显示和隐式调用，支持Service的start、stop、bind和unbind，并支持跨进程bind插件中的Service；<br>Receiver：支持静态注册和动态注册的Receiver；<br>ContentProvider：支持provider的所有操作，包括CRUD和call方法等，支持跨进程访问插件中的Provider。<br>自定义View：支持自定义View，支持自定义属性和style，支持动画；<br>PendingIntent：支持PendingIntent以及和其相关的Alarm、Notification和AppWidget；<br>支持插件Application以及插件manifest中的meta-data；<br>支持插件中的so。<br>优秀的兼容性</p>
+<p>兼容市面上几乎所有的Android手机，这一点已经在滴滴出行客户端中得到验证；<br>资源方面适配小米、Vivo、Nubia等，对未知机型采用自适应适配方案；<br>极少的Binder Hook，目前仅仅hook了两个Binder：AMS和IContentProvider，Hook过程做了充分的兼容性适配；<br>插件运行逻辑和宿主隔离，确保框架的任何问题都不会影响宿主的正常运行。<br>入侵性极低</p>
+<p>插件开发等同于原生开发，四大组件无需继承特定的基类；<br>精简的插件包，插件可以依赖宿主中的代码和资源，也可以不依赖；<br>插件的构建过程简单，通过Gradle插件来完成插件的构建，整个过程对开发者透明。</p>
+<h2 id="VirtualAPK的工作过程"><a href="#VirtualAPK的工作过程" class="headerlink" title="VirtualAPK的工作过程"></a>VirtualAPK的工作过程</h2><p>VirtualAPK对插件没有额外的约束，原生的apk即可作为插件。插件工程编译生成apk后，即可通过宿主App加载，每个插件apk被加载后，都会在宿主中创建一个单独的LoadedPlugin对象。如下图所示，通过这些LoadedPlugin对象，VirtualAPK就可以管理插件并赋予插件新的意义，使其可以像手机中安装过的App一样运行。</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlX2a8cELyOyZM3wjMvSu3kZIrwlF0ZUicLia6VviacLv68NRFOrC6FEcg0w/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt><br>VirtualAPK的运行形态</p>
+<p>我们计划赋予VirtualAPK两种工作形态，耦合形态和独立形态。目前VirtualAPK对耦合形态已经有了很好的支持，我们接下来将计划支持独立形态。<br>耦合形态<br>插件对宿主可以有代码或者资源的依赖，也可以没有依赖。这种模式下，插件中的类不能和宿主重复，资源id也不能和宿主冲突。这是VirtualAPK的默认形态，也是适用于大多数业务的形态。<br>独立形态<br>插件对宿主没有代码或者资源的依赖。这种模式下，插件和宿主没有任何关系，所以插件中的类和资源均可以和宿主重复。这种形态的主要作用是用于运行一些第三方apk。</p>
+<p>如何使用</p>
+<p>第一步： 初始化插件引擎</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlX43Yuk4KbNQjYuetsdSdgB8ubgIxnaxrMkkJpdTm1Owk8XlDdLBib0jw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+<p>第二步：加载插件</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXd4cfRibnogsOkEBNkzamCBuzKR7Arw2kwt2bw3yyrRNX5zib7kmdC39Q/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+<p>我们对上述加载过程进行了一些封装，通过如下方式即可异步地去加载一个插件。</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXLtmuq4Tog3Bia0Mj29RUmnicx6c6ObWpIicgmibL0NDQib6icRjdttkvgcqw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+<p>当插件入口被调用后，插件的后续逻辑均不需要宿主干预，均走原生的Android流程。<br>比如，在插件内部，如下代码将正确执行：<br><img src="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXYmKLcqRy1uvSLTbOXsAEq4Cibb2hCRV35WojIiaX4j42PsjQ23QOfXhQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+<h2 id="探究原理"><a href="#探究原理" class="headerlink" title="探究原理"></a>探究原理</h2><p>基本原理</p>
+<p>合并宿主和插件的ClassLoader<br>需要注意的是，插件中的类不可以和宿主重复<br>合并插件和宿主的资源<br>重设插件资源的packageId，将插件资源和宿主资源合并<br>去除插件包对宿主的引用<br>构建时通过Gradle插件去除插件对宿主的代码以及资源的引用</p>
+<p>四大组件的实现原理</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXK535TSRFy32jhI4V9JqcXRtco5XJDuaovGsIgH0B4c6yx2PtHDmeXw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+<p>Activity<br>采用宿主manifest中占坑的方式来绕过系统校验，然后再加载真正的activity；<br>Service<br>动态代理AMS，拦截service相关的请求，将其中转给一个虚拟空间（Matrix）去处理，Matrix会接管系统的所有操作；<br>Receiver<br>将插件中静态注册的receiver重新注册一遍；<br>ContentProvider<br>动态代理IContentProvider，拦截provider相关的请求，将其中转给一个虚拟空间（Matrix）去处理，Matrix会接管系统的所有操作。</p>
+<p>如下是VirtualAPK的整体结构图。<br><img src="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXWUuGgyPG2ZicHDicgezMZgrL3TiaEvMYyf10t0c61qjzbKVDNnbZDFphA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+<h2 id="填坑之路"><a href="#填坑之路" class="headerlink" title="填坑之路"></a>填坑之路</h2><p>在实践中我们遇到了很多很多的问题，比如机型适配、API版本适配、Binder hook的稳定性保证等问题，这里拿一个典型的资源适配问题来说明。</p>
+<p>其实这是一个很无奈的问题，由于国内各大Rom厂商喜欢深度定制Android系统，所以就出现了这种适配问题。<br>正常情况下我们通过如下代码去创建插件的Resources对象：<br><img src="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXt8B7OictQSCXgVUHnrWHmdSeqlxwzbicHOvTX5269YtcFicR7EP8XsKpQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+<p>然后在Vivo手机上，竟然出现了如下的类型转换错误，看起来是Vivo自己派生了Resources的子类。<br><img src="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXcYOXAGPZLqpLiaRGhpszf8Du7ooBdmGqOfKPSZl0DTVOebPGfOmNBqA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+<p>于是反编译了下Vivo的framework代码，果不其然，在如下代码中进行了类型转换，所以在加载插件资源的时候就报错了。<br><img src="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXWLQ6X5D9INZdzEuPJ4OeR6TjQtqMFnSqKqV5qibO75WSDCyfltQVasw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+<p>为了解决这个问题，我们分析了VivoResources的代码实现，然后在创建插件资源的时候，采用了如下的代码。<br><img src="http://mmbiz.qpic.cn/mmbiz_png/1L1nVegtlrnWLvXiaict17k3Nbib0rIvwlXiaXMyPTTBpjyagSeg3JcpOv2icVjZqu5vev7Q30ib2TameqWCGIVbjGcA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+<p>除了Vivo以外，有类似问题的还有MiUI、Nubia以及其它不知名的机型。而且在Vivo手机上，除了类型转换错误的问题，还有其他很坑的问题。</p>
+<p>事实上我们还处理了很多其他的坑，这里无法一一说明，所以说如何保证插件化的稳定性是一件很有技术挑战的事情。</p>
+<p>一些暂时不支持的特性</p>
+<p>由于种种原因，VirtualAPK目前未能支持所有的Android的特性，如下是已知的几点。</p>
+<p>不支持Activity的部分属性，比如process、configChanges等；<br>暂不支持overridePendingTransition(int enterAnim, int exitAnim)这种形式的转场动画；<br>插件中弹通知，不能使用插件中的资源，比如图片。<br>开源计划</p>
+<p>我们的目标是打造一款功能完备的插件化框架，使得各个业务线都能以插件的形式集成，从而实现Android App的热更新能力。</p>
+<p>目前VirtualAPK还有一些特性需要进一步完善，待完善后，将会有开源计划。我们期望VirtualAPK开源后，可以让其他App能够无缝集成，无需考虑细节实现和兼容性问题即可轻松拥有热更新能力。</p>
+<p>请关注滴滴 App 开发技术微信公众号 DDApp，我们会在上面发布 VirtualAPK的最新进展，也将会把滴滴 iOS 和 Android 开发的干货技术文章分享给大家：<br><img src="http://mmbiz.qpic.cn/mmbiz_jpg/1L1nVegtlrnjM0ibYic8Qib9g7aSuSz8mJEvFBE9KnX1sSDcIjV2fpPJrlWgbyRfRJ3EGXqeACKBcLfSmOTncHqibw/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Virtual-APK/" rel="tag"><i class="fa fa-tag"></i> Virtual APK</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Program/IPCreator/Technology/Program/IPCreator's View of Coding/" rel="next" title="IPCreator's View of Coding">
+                  <i class="fa fa-chevron-left"></i> IPCreator's View of Coding
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/English/IPCreator/English/English Article/" rel="prev" title="English Article">
+                  English Article <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件化的现状"><span class="nav-number">2.</span> <span class="nav-text">插件化的现状</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VirtualAPK的诞生"><span class="nav-number">3.</span> <span class="nav-text">VirtualAPK的诞生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VirtualAPK的工作过程"><span class="nav-number">4.</span> <span class="nav-text">VirtualAPK的工作过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#探究原理"><span class="nav-number">5.</span> <span class="nav-text">探究原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#填坑之路"><span class="nav-number">6.</span> <span class="nav-text">填坑之路</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

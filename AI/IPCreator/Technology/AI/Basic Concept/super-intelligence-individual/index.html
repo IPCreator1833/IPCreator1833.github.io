@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="作者：yjango 生命不限于个体。并非所有生命拥有意识，但所有生命都拥有智能。这些智能体通过大量并行和多层迭代的方式形成新的智能体。细胞、器官、个体、国家、地球，不论从哪个层级上观察，都是一个“智能体”。人类作为智能的一环，需跳出自身层级，用超出人类自身感知、情感和意识的方式去理解生命。 关于本书该书最终的目的是：通过理解智能，学习如何学习。  如何机器学习 如何大脑学习">
+<meta name="keywords" content="Open Source,Algorithm,Machine Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Super Intelligence">
+<meta property="og:url" content="https://hazyman.com/AI/IPCreator/Technology/AI/Basic Concept/super-intelligence-individual/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="作者：yjango 生命不限于个体。并非所有生命拥有意识，但所有生命都拥有智能。这些智能体通过大量并行和多层迭代的方式形成新的智能体。细胞、器官、个体、国家、地球，不论从哪个层级上观察，都是一个“智能体”。人类作为智能的一环，需跳出自身层级，用超出人类自身感知、情感和意识的方式去理解生命。 关于本书该书最终的目的是：通过理解智能，学习如何学习。  如何机器学习 如何大脑学习">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yjango.gitbooks.io/superorganism/content/universe.jpg">
+<meta property="og:image" content="https://yjango.gitbooks.io/superorganism/content/%E7%8C%AA%E7%BD%90%E5%AD%90.jpg">
+<meta property="og:image" content="https://yjango.gitbooks.io/superorganism/content/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0.png">
+<meta property="og:image" content="https://yjango.gitbooks.io/superorganism/content/rowmatirx.jpg">
+<meta property="og:image" content="https://yjango.gitbooks.io/superorganism/content/columnmatirx.jpg">
+<meta property="og:image" content="https://yjango.gitbooks.io/superorganism/content/plain.jpg">
+<meta property="og:image" content="http://img.blog.csdn.net/20161019110942425">
+<meta property="og:updated_time" content="2017-03-27T07:29:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Super Intelligence">
+<meta name="twitter:description" content="作者：yjango 生命不限于个体。并非所有生命拥有意识，但所有生命都拥有智能。这些智能体通过大量并行和多层迭代的方式形成新的智能体。细胞、器官、个体、国家、地球，不论从哪个层级上观察，都是一个“智能体”。人类作为智能的一环，需跳出自身层级，用超出人类自身感知、情感和意识的方式去理解生命。 关于本书该书最终的目的是：通过理解智能，学习如何学习。  如何机器学习 如何大脑学习">
+<meta name="twitter:image" content="https://yjango.gitbooks.io/superorganism/content/universe.jpg">
+
+<link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/Basic Concept/super-intelligence-individual/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Super Intelligence | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/AI/IPCreator/Technology/AI/Basic Concept/super-intelligence-individual/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Super Intelligence
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/AI/IPCreator/Technology/AI/Basic Concept/super-intelligence-individual/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/AI/IPCreator/Technology/AI/Basic Concept/super-intelligence-individual/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="https://www.gitbook.com/book/yjango/superorganism/details" target="_blank" rel="noopener">作者：yjango</a></p>
+<p>生命不限于个体。并非所有生命拥有意识，但所有生命都拥有智能。这些智能体通过大量并行和多层迭代的方式形成新的智能体。细胞、器官、个体、国家、地球，不论从哪个层级上观察，都是一个“智能体”。<br>人类作为智能的一环，需跳出自身层级，用超出人类自身感知、情感和意识的方式去理解生命。</p>
+<h2 id="关于本书"><a href="#关于本书" class="headerlink" title="关于本书"></a>关于本书</h2><p>该书最终的目的是：通过理解智能，学习如何学习。</p>
+<ol>
+<li>如何机器学习</li>
+<li><p>如何大脑学习</p>
+<a id="more"></a>
+<h2 id="如何阅读"><a href="#如何阅读" class="headerlink" title="如何阅读"></a>如何阅读</h2></li>
+</ol>
+<p>智能并非人类所特有，而是自生命诞生时起就产生了。没有智能就没有生命。智能又并非单一状态，它和宇宙一样，都在不断的扩张。不同阶段的智能表现出的能力不同。神经元、蚁群、人类、社会、国家、地球，乃至整个宇宙都可被视为智能体。它们通过组合和迭代来形成更高级的智能功能。智能从未停止发展，而我们人类也只不过是其中一个“细胞”。这本书将从智能的角度展示对世界的不同理解。</p>
+<p>核心知识：并非每个章节的内容本身（读者完全可以找到很多对应内容的经典书籍）。<strong>真正有价值的是将这些知识以何种方式排列和表达。</strong></p>
+<p>传达方式：语言是交流的工具，而交流的前提是双方的脑中都有相同内容。但是读者和作者的信息是不对等的。语言作为教学手段本身就有限。所以我描述的方式也并非直接告诉读者一个结论，打上这就是真理的标签，而是结合图，结合例子尽可能的消除信息的不等。我不是以教学者的身份来分享知识，而是引出一个问题让读者一起思考。虽然我提供了我的见解，但我相信会有很多读者能提出比我更好的见解。</p>
+<p>行文风格</p>
+<p>行文分很多部分，彼此的关系是递进或并列。每个部分通常会以一个问题的引入开始，结合若干实例对该问题进行思考，经过描述，最后得出总结性概括。文中带链接的内容请打开观看。</p>
+<h2 id="表达格式"><a href="#表达格式" class="headerlink" title="表达格式"></a>表达格式</h2><p>问题：<em>一、斜线文字</em></p>
+<p>实例：</p>
+<ul>
+<li><p>例子（情景、方式等）：普通格式</p>
+</li>
+<li><p>描述：普通格式</p>
+</li>
+</ul>
+<p>结论：</p>
+<blockquote>
+<p>引用格式</p>
+</blockquote>
+<p>例如</p>
+<p><em>猫咪觉得自己属于人类吗？</em></p>
+<ul>
+<li>实例1：实例内容</li>
+<li>实例2：实例内容</li>
+</ul>
+<p>描述内容</p>
+<blockquote>
+<p>猫咪觉得人类属于自己</p>
+</blockquote>
+<h2 id="智能的起源"><a href="#智能的起源" class="headerlink" title="智能的起源"></a>智能的起源</h2><p>我们对智能的探索陷入了错误的方式中。</p>
+<p>一、如果某天所有人类突然失忆，在不拆开计算机的情况下，我们该如何弄清计算机的工作原理，并给计算机下一个定义？</p>
+<p>方式：从计算机软件开始研究，描述各种软件的功能，并找一个可以概括所有功能的定义。人们会发现计算机可以产生图像。但很快又发现很多软件并没有图形界面。有的软件可以玩射击游戏，有的却可以操控机械。各式各样的功能会被人们发现并逐一分类，使得用一个定义概括所有功能成为不可能。更不用说这些软件的功能还在持续增长。</p>
+<p>显然我们并不以具体功能，而是以计算机最基本的工作原理去定义计算机。如今人们对智能的探索正是陷入了以功能来研究智能的方式中。人们把智能划分成了认知、理解、思考、学习等各式各样的功能并研究着，使得研究不同功能的专家对智能的定义都不相同。</p>
+<p>如果我们能够知道宇宙自大爆炸之后是以何种方式进行扩张的。我们就可以从起点开始，推测出所有星系可能的形状甚至它们在未来可能的形状。</p>
+<p>所以要想搞清智能的本质，不妨先试着找出智能的源头，思考一下为什么会产生智能。</p>
+<blockquote>
+<p>智能的研究需要从智能的源头开始</p>
+</blockquote>
+<p><img src="https://yjango.gitbooks.io/superorganism/content/universe.jpg" alt></p>
+<h2 id="智能的本质"><a href="#智能的本质" class="headerlink" title="智能的本质"></a>智能的本质</h2><h3 id="一、生命是如何产生的？"><a href="#一、生命是如何产生的？" class="headerlink" title="一、生命是如何产生的？"></a>一、生命是如何产生的？</h3><p>在漫漫的宇宙演变中，我想很多星球都有产生生命的概率。</p>
+<p>情景：想象某刻火星上产生了生命，但却遇到高温又被分解成了无机物。 第二个产生的生命却因为找不到支持机体的能源而再次化成了无机物。 第三个有机体幸运的诞生在大量能源旁，却由于能源的耗尽而前功尽弃。</p>
+<p>问题的关键并非生命能否产生，而是产生的生命能否存活。</p>
+<h3 id="二、究竟是什么阻碍了生命，生命又该如何存活？"><a href="#二、究竟是什么阻碍了生命，生命又该如何存活？" class="headerlink" title="二、究竟是什么阻碍了生命，生命又该如何存活？"></a>二、究竟是什么阻碍了生命，生命又该如何存活？</h3><p>如果世界是静止的，那么生命自然不朽。然而我们的世界在时时刻刻发生着变化，会从一个状态变化到另一个状态。生物无从知道下一刻等待它的究竟是毁灭还是幸存？这种未来的不确定性（uncertainty）阻碍了生命的延续。</p>
+<p>实例：</p>
+<ul>
+<li>植物会因为干旱而枯萎；野兽会因为捕不到猎物而饿死；每天又有约160中国人死于交通事故。</li>
+</ul>
+<p>阻碍生命的正是这种不可预测性（随机），它还有另一个名字，叫做熵（entropy）。而热力学第二定律表述孤立系统会自发的朝向最大熵状态演化。</p>
+<p>实例：</p>
+<ul>
+<li>我们房间会越来越乱，掉在地上的杯子的碎片会随处散落，熵会自发性的不断增加。我们从未见过房间自己越来越整洁，将杯子碎片会摔出一个完整的杯子的情况。说明了熵增在孤立系统下并不可逆。</li>
+</ul>
+<p><img src="https://yjango.gitbooks.io/superorganism/content/%E7%8C%AA%E7%BD%90%E5%AD%90.jpg" alt></p>
+<p>熵增不可逆的现象也意味着世界持续的发生变化。在过去可能产生过无数个生命，但只有那些可以根据变化而做出相应变化的生命才能躲避危险从而幸存。这种能力就是智能，同时也是生命得以延续的原因。</p>
+<blockquote>
+<p>智能：可以根据环境变化而做出相应变化的能力</p>
+</blockquote>
+<p>由于阻止生命延续的实际是不确定性（随机性、不可预测性），那生命所做的就是减少该不确定性来延续。</p>
+<p>奥地利物理学家薛定谔在《生命是什么》首次提出负熵的概念，并认为生命以负熵为生，所以智能也可被描述是：</p>
+<blockquote>
+<p>智能：熵减的能力</p>
+</blockquote>
+<h2 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h2><p><img src="https://yjango.gitbooks.io/superorganism/content/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0.png" alt></p>
+<h3 id="一、什么是线性代数？"><a href="#一、什么是线性代数？" class="headerlink" title="一、什么是线性代数？"></a>一、什么是线性代数？</h3><p>不断变化的世界使我们产生时间观念。正确描述事物状态及其不同时间下的变化至关重要。我们知道在三维空间下如何描述物体的位置。然而除了长宽高，世界上还有很多决定事物状态的因素。如决定股票价钱的因素、决定天气的因素。这些因素又该如何合理的描述？线性代数给了我们答案。推荐读物《Linear Algebra and Its Applications》。</p>
+<blockquote>
+<p>线性代数是有关任意维度空间下事物状态和状态变化的规则。</p>
+</blockquote>
+<p><strong>矩阵乘法</strong></p>
+<p>二、矩阵是什么？矩阵乘法又是什么？</p>
+<p>带着这个问题我们开始对矩阵及其乘法进行第一遍理解。</p>
+<p><strong>向量点乘</strong></p>
+<p>全篇将会以一个实例进行讨论，请观看一遍视频<a href="http://www.bilibili.com/video/av6467776/" target="_blank" rel="noopener">PPAP洗脑全球</a>。</p>
+<p>三、视频的内容涉及到很多种状态及变换。用线性代数应该如何描述？</p>
+<p>视频内容可以写成3个向量乘法：</p>
+<p>1、I have a pen, I have an apple—-&gt;apple pen</p>
+<p>[applepen][applepen][applepen] = [11]⋅[penapple][11]⋅[penapple][][11]⋅[penapple]  （eq.1）</p>
+<p><a href="https://yjango.gitbooks.io/superorganism/content/applepen.jpg" target="_blank" rel="noopener">https://yjango.gitbooks.io/superorganism/content/applepen.jpg</a></p>
+<p>2、I have a pen, I have a pineapple—-&gt;pineapple pen<br>[pineapplepen][pineapplepen][pineapplepen] = [11]⋅[penpineapple][11]⋅[penpineapple][][11]⋅[penpineapple]  （eq.2） 1</p>
+<p><a href="https://yjango.gitbooks.io/superorganism/content/pineapplepen.jpg" target="_blank" rel="noopener">https://yjango.gitbooks.io/superorganism/content/pineapplepen.jpg</a></p>
+<p>3、apple pen, pineapple pen—-&gt;pen pineapple apple pen<br>[penpineappleapplepen][penpineappleapplepen][penpineappleapplepen] = [11]⋅[applepenpineapplepen][11]⋅[applepenpineapplepen][][11]⋅[applepenpineapplepen]  （eq.3）</p>
+<p><a href="https://yjango.gitbooks.io/superorganism/content/allpen.jpg" target="_blank" rel="noopener">https://yjango.gitbooks.io/superorganism/content/allpen.jpg</a></p>
+<p>每个等式右边的第二个向量表示变化前拥有什么，右边的第一个向量表示变化时各拿几个，而等式的左边表示变化后获得了什么。从中可以看出来：</p>
+<blockquote>
+<p>向量点乘(dot product)是一种组合(combination)</p>
+</blockquote>
+<p><strong>矩阵乘向量</strong></p>
+<p>四、有没有其他描述方式？</p>
+<p>可以把（eq.1）（eq.2）合二为一，表示为（eq.4）：<br>（eq.1）I have a pen, I have an apple—-&gt;apple pen，<br>（eq.2）I have a pen, I have a pineapple—-&gt;pineapple pen</p>
+<p>[applepenpineapplepen][applepenpineapplepen][][applepenpineapplepen] = [100111]⋅⎡⎣⎢applepineapplepen⎤⎦⎥[100111][]⋅[applepineapplepen][101011]⋅[applepineapplepen]  （eq.4） 1</p>
+<p>此时，表示各拿几个的向量变成了两行（两组）向量，也就成了矩阵（向量是只有一行或一列的矩阵）。 每个向量也叫一组权重(weights)。</p>
+<p>在 [101][101][101] 中，第一个1对应着apple，第二个0对应着pineapple，第三个1对应着pen。不可以随意调换位置，所以，</p>
+<blockquote>
+<p>向量是有顺序的一组数字，每个数字是向量的一个因素(element)<br>因素横着排列的向量叫做行向量(row vector)<br>因素竖着排列的向量叫做列向量(column vector)<br>更具体的描述一下第一个结论。向量点乘是一种组合，但<br>向量点乘是一个向量中各个因素的一个组合</p>
+</blockquote>
+<p>五、如何计算矩阵乘向量？<br>（eq.4）可分两步：<br>计算第一行权重形成的组合：  [101]⋅⎡⎣⎢applepineapplepen⎤⎦⎥[101]⋅[applepineapplepen][101]⋅[applepineapplepen] 得到的组合apple pen后，放到第一行 [applepen][applepen][][applepen] 。<br>计算第二行权重形成的组合：  [011]⋅⎡⎣⎢applepineapplepen⎤⎦⎥[011]⋅[applepineapplepen][011]⋅[applepineapplepen] 得到的组合pineapple pen后，放到第二行 [pineapplepen][pineapplepen][][pineapplepen] 。<br>行成的 [applepenpineapplepen][applepenpineapplepen][][applepenpineapplepen] 依然有顺序，仍然是一个向量。比较向量点乘，可以看出</p>
+<blockquote>
+<p>矩阵乘向量是向量中各个因素有顺序的多个组合</p>
+</blockquote>
+<p>向量乘矩阵</p>
+<p>六、形成组合的成分一定是元素（数）吗？<br>形成组合的成分并非一定是向量中的各个元素，也可以是不同向量之间形成组合。<br>可以把（eq.1）（eq.2）（eq.3）所完成的行为改写成（eq.5）（eq.6）：<br>[applepenpineapplepen][applepenpineapplepen][applepenpineapplepen] = [11]⋅[penapplepenpineapple][11]⋅[penapplepenpineapple][][11]⋅[penpenapplepineapple]  （eq.5）<br>[penpineappleapplepen][penpineappleapplepen][penpineappleapplepen] = [pineapplepenapplepen]⋅[11][pineapplepenapplepen]⋅[11][][pineapplepenapplepen]⋅[11]  （eq.6）<br>（eq.5）等式右侧的矩阵由两个行向量组成。</p>
+<ul>
+<li>矩阵中的第一个行向量表示两次组合中分别先拿什么，第二个行向量表示两次组合中分别后拿什么。</li>
+<li>权重 [11][11][11] 的第一个因素对应着矩阵中第一个行向量的个数，第二个因素表示右侧第二个行向量的个数。</li>
+<li>矩阵中每个行向量内部因素的比例不变，整体完成矩阵内向量与向量之间的组合。</li>
+</ul>
+<blockquote>
+<p>向量乘矩阵可以是矩阵中各个行向量有顺的多个组合</p>
+</blockquote>
+<p>你会发现（eq.6）不同于（eq.5），要形成组合的向量被拿到了乘法点(dot)的左边，而权重被拿到了右边。</p>
+<ul>
+<li>效果是拿一个penpineapple和一个applepen形成组合。</li>
+<li>因为当行向量的因素作为组合成分时，乘法点右侧的矩阵（向量）是权重的信息。<br>可以看出矩阵乘法并不满足乘法交换律，因为交换了两个矩阵的位置，就交换了权重与要形成组合的向量的位置。<blockquote>
+<p>矩阵乘法不满足乘法交换律：commutative law: AB =! BA</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>矩阵乘矩阵</strong></p>
+<p>七、可以进行批量组合吗？<br>矩阵乘矩阵就可以看作是对一个矩阵中各个向量的批量线性组合。<br>如果视频中跳了两遍舞蹈。第二遍跳舞时，他在两次组合中，首次拿的东西都是两个，那么就可以把（eq.5）等式右侧的行向量变成两个行向量，形成了一个矩阵。<br>[applepenapple+2∗penpineapplepenpineapple+2∗pen][applepenapple+2∗penpineapplepenpineapple+2∗pen][][applepenpineapplepenapple+2∗penpineapple+2∗pen] = [1211]⋅[penapplepenpineapple][1211][]⋅[penapplepenpineapple][][1121]⋅[penpenapplepineapple]</p>
+<p>在唱第二遍时，就要唱：<br>I have two pens. I have an apple. Apple-2pens!<br>I have two pens. I have a pineapple. Pineapple-2pens!</p>
+<p>之前仅仅是把单词放在一起，并没有说明他们是如何组合的。而上式中终于写出了：pineapple +2*pen。</p>
+<p><strong>也就是只有乘法来控制数量，加法来组合不同向量。这样的组合方式才是线性代数讨论的组合，即线性组合。</strong></p>
+<p>所以所有已概括的结论中，组合前面都要加上“线性”两个字。同时控制数量的数是属于什么数要事先规定好（经常被规定为是实数 ∈R∈R∈R ，也有虚数域）。<br>不过这还没有结束，严谨性是数学的特点。上文所说的“加法”和“乘法”也只不过是个名字而已。它们到底指的是什么运算，遵循什么样的规则需要明确规定。<br>当你看线性代数教材的时候，你就会发现这8条规则。</p>
+<ul>
+<li>x+y=y+x</li>
+<li>x+(y+z)=(x+y)+z</li>
+<li>有一个唯一的“零向量” 对任意 x 都能使 x+0=x</li>
+<li>每个 x都有一个唯一的相反数使得 x+(−x)=0</li>
+<li>1x=x</li>
+<li>(c1c2)x=c1(c2x)</li>
+<li>c(x+y)=cx+cy</li>
+<li>(c1+c2)x=c1x+c2x(c1+c2)x=c1x+c2x</li>
+</ul>
+<p>不需要去记它们。只需要知道，它们是用于描述和约束在线性代数中的加法，乘法的运算。</p>
+<p>特别要注意的是，这些运算都有一个原点（0），为了允许正负的出现。</p>
+<blockquote>
+<p>线性组合：向量乘上各自对应的标量后再相加所形成的组合。（满足上述对乘法、加法的规则）</p>
+</blockquote>
+<p>##矩阵是什么##</p>
+<p>八、熟悉了各个乘法后，矩阵到底是什么？</p>
+<p><strong>线性代数是用来描述状态和变化的，而矩阵是存储状态和变化的信息的媒介。</strong></p>
+<p>矩阵的信息可以分为状态（静态）和变化（动态）信息来看待。</p>
+<p><strong>矩阵的静态信息</strong></p>
+<p>当把矩阵以静态信息来看待时，其信息的侧重点在于状态二字。<br>向量可用于描述一个事物的状态，该事物的状态由向量内各个因素来描述。<br>而矩阵可以视为多个维度（因素的个数）相同的向量的有序排列。<br>同时矩阵也可以视为一个“向量”，用于描述一个事物的状态，内部的每个向量就是矩阵的“因素”，该事物的状态由矩阵内各个向量来描述。</p>
+<p><strong>多个标量有序排列后形成向量，多个向量有序排列后形成矩阵，多个矩阵有序排列后形成三维张量（3D tensor）。 所以标量可以视为因素个数为1的向量，向量可以视为因素个数为1的矩阵，矩阵可以视为因素个数为1的三维张量（3D tensor）。</strong></p>
+<p>坐标值与坐标系：</p>
+<p><strong>描述一个事物的状态需要在一个选好的坐标系中进行，所以矩阵所包含的信息从来都是成对出现。</strong></p>
+<p>向量举例来说，这个向量并没有被赋予任何数值。但已经确定了我们要在apple的数量和pen的数量的两个因素（两个维度）下描述数据。换句话说，坐标系已被规定好。所以当写出任何具有实际数值的向量，如时，坐标系（二维向量空间）和坐标值就同时被确定了。它实际上是和的缩写。二者无法分割。即使是，虽然pen，apple前没有任何具体数字。但依然包含所有因素间的比例相同的隐含信息。调换2和1的顺序同时也表示坐标轴之间的调换。</p>
+<p>矩阵的动态信息</p>
+<p><strong>当把矩阵以动态信息来看待时，其信息的侧重点在于变化二字。这时的矩阵可以看做是一个方程。</strong><br><strong>变化可以理解为由于矩阵的作用，事物本身的变化，也可以理解为坐标系的变化。</strong><br><strong>向量可用于控制变化时所用成分的数量，即一组权重。</strong><br>矩阵可以视为多个维度（因素的个数）相同的权重的有序排列。可对另一个矩阵的静态信息进行批量变化。</p>
+<p>矩阵乘法是什么</p>
+<p><strong>矩阵可以被视为载有状态和变化两种信息的媒介。而矩阵乘法就是变化的行为。</strong><br>在一个矩阵内，把矩阵内的向量理解为向量或权重都可以。<br>但是当两个矩阵进行矩阵乘法时，一旦选择以动态信息理解其中一个矩阵，另一个矩阵的信息就会被瞬间静态信息。</p>
+<blockquote>
+<p>两个矩阵相乘，一个矩阵提供状态信息，另个矩阵提供变化信息。</p>
+</blockquote>
+<p>两个矩阵相乘 时，</p>
+<blockquote>
+<p>当把前者矩阵(A)中行向量理解成若干组权重，后者矩阵(B)中的行向量就是要形成组合的成分。</p>
+</blockquote>
+<p><img src="https://yjango.gitbooks.io/superorganism/content/rowmatirx.jpg" alt></p>
+<blockquote>
+<p>当把后者矩阵(B)中列向量理解成若干组权重，前者矩阵(A)中的列向量就是要形成组合的成分。</p>
+</blockquote>
+<p><img src="https://yjango.gitbooks.io/superorganism/content/columnmatirx.jpg" alt></p>
+<p>注意对应行向量与列向量。</p>
+<p><strong>转置一个矩阵可以理解为调换一个矩阵的动态与静态信息。</strong></p>
+<p>单位矩阵可以被理解为动态与静态信息相同。</p>
+<p>回想线性组合的描述（向量乘上各自对应的标量后再相加所形成的组合），因为向量的维度和权重的维度要一一对应。所以，</p>
+<blockquote>
+<p>矩阵A(m by n)和矩阵B(p by q)能够做乘法的条件是 n = p</p>
+</blockquote>
+<h2 id="向量空间"><a href="#向量空间" class="headerlink" title="向量空间"></a>向量空间</h2><p>很多线性代数教材所引入的第一个概念就是线性空间（linear space）。可见它的地位。虽然它有些抽象，但是却是自然而然推演出来的一个概念。</p>
+<p>九、空间是什么？</p>
+<p><strong>空间的本质是集合。而且是一个能够容纳所有要描述状态的集合。若超过空间范围，就该寻找正确的空间。</strong></p>
+<p>对“要描述内容”进行进一步说明，需从如何理解线性代数这四个字开始。</p>
+<p>我们已经知道了 <strong>什么是线性（那8个条件约束的加法和乘法）</strong>。<br><strong>那什么是代数？意思是指你可以把任何概念都代入其中。</strong></p>
+<p>看视频的时候，人们自然而然的会把苹果菠萝换成其他事物，比如PPAP河南话版。也可以换成任何宇宙上有的物体。<br>不仅仅是物体，甚至可以是一个抽象的概念。</p>
+<p>我个人最喜欢的描述是：</p>
+<blockquote>
+<p>向量空间是描述状态(state)的线性空间。再加上之前的约束，于是我们就有了向量空间是能够容纳所有线性组合的状态空间</p>
+</blockquote>
+<p>十、什么样的状态空间能够容纳所有的线性组合？</p>
+<p>情景：假如要描述一个人的两个状态（下图中的行向位置和纵向位置），向量的维度就是二维。那么一个大圆盘够不够容纳所有的线性组合？答案是不够。</p>
+<p><img src="https://yjango.gitbooks.io/superorganism/content/plain.jpg" alt></p>
+<p>因为线性组合是向量乘以各自对应的标量后再相加所形成的组合，而这个标量是实数域的时候，由于实数域无线延伸，那么乘以标量后的状态也会无限延伸。所以 <strong>向量空间一定是各个维度都像实数轴一样可以无线延伸。最终得到的将不会是一维下的线段，二维下的圆盘。而一定是一维下的无限延伸的直线，二维下的无限延伸的平面。</strong></p>
+<p>向量空间的基本特点是各个维度都可以无限延伸，且过原点。<br>之所以用状态二字，是因为刚才的两个维度，可以用于描述速度和体温。这时两个维度所展开的依然是一个平面，但却不是描述位置的平面。</p>
+<h2 id="子空间"><a href="#子空间" class="headerlink" title="子空间"></a>子空间</h2><p>子空间（subspace）可以被想成是向量空间内的向量空间，同样要满足能够容纳线性组合的条件。</p>
+<p>十一、最小的子空间是什么？<br>只有一个状态的空间（集合）。这个状态不是其他状态，就是0。只有这样才可以在乘以标量后依然不会跑出空间外。</p>
+<p>十二、其次空集可不可以是向量空间？<br>不可以，空集是没有任何元素的集合，既然什么状态都没有，又怎么能够容纳线性组合。<br>最小的向量空间是只包含零向量的空间</p>
+<p>十三、假如上图的圆盘是个无线延伸的平面，那平面的子空间可以是平面上所有直线吗？<br>不可以，8个运算规则中明确规定了，一定要有原点，这样才可以包含正负。所以这个平面的子空间是所有过原点的直线，加上中心的那个原点自己所组成的最小子空间，再加上这个平面自身（最大的子空间）。</p>
+<h2 id="线性无关"><a href="#线性无关" class="headerlink" title="线性无关"></a>线性无关</h2><p>十四、该如何选择因素？</p>
+<p>在视频的例子中，当要把（eq.1）（eq.2）合为（eq.4）时，是这个样子： = （eq.4），但最右侧的向量并不是4个维度。而是三个。因为pen 和pen是一个东西。</p>
+<p>我们想用的是 <strong>若干个毫不相关的因素去描述状态。在线性空间下的毫不相关，叫做线性无关。</strong></p>
+<p>十五、要描述的状态是由向量来描述时怎么办？</p>
+<p><strong>判断两个向量是否线性无关时，可以看他是否在空间下平行。</strong></p>
+<p>但怎么判断几个向量之间（不一定是两个）是否线性无关？我们需要可靠的依据。<br>线性无关（linearly independent）: 当表示权重，表示向量时，<br>只发生在when 全都等于零时。</p>
+<blockquote>
+<p>换句话说，这些向量不可以通过线性组合形成彼此。形成彼此的情况只能是他们都是零向量。</p>
+</blockquote>
+<h2 id="张成"><a href="#张成" class="headerlink" title="张成"></a>张成</h2><p>注意词的属性和关联词。<br>张成（spanning）是一个动词，动词的主语是一组向量（a set of vectors）。<br>描述的是一组向量通过线性组合所能形成子空间。描述的内容并不是形成的这个空间，而是形成的这个行为。</p>
+<p>，是4个向量，但只可以张成一个三维空间。（因为有两维线性相关，所以并不能张成4维）</p>
+<p>基底</p>
+<p>一个向量空间的一个基底（A basis for a vector space V）是一串有顺序的向量（a sequence of vectors），满足：<br>A、向量之间彼此线性无关 （不可多余）<br>B、这些向量可以张成向量空间V （不可过少）<br><strong>刚刚好可以张成向量空间V的一串向量是该向量空间V的一个基底.</strong><br>基底是一个类似people的复数名词，是从属于某个空间的，而不是矩阵，也不是向量。</p>
+<h2 id="维度"><a href="#维度" class="headerlink" title="维度"></a>维度</h2><p><strong>一个向量空间可以有无数个基底。但每个基底所包含的向量的个数（the number of vectors in every basis）是一个空间的维度。</strong></p>
+<p>注意：维度是空间的概念，而不是描述一个具体的向量。人们常说的n维向量实际是指n维向量空间内的向量，由于在讨论时并未给向量指定任何实际的数值，所以可以是任何值，可以张成整个空间。所以其真正描述的依旧是一个空间。并且，维度是站在观察者角度，希望在某个向量空间下尽可能的描述物体状态而选择的，并不一定是被描述者真实处在的空间。</p>
+<p>但若是你觉得理解起来有困难。就简单记住：<br><strong>互不相关的因素的个数是一个向量空间的维度</strong></p>
+<h2 id="秩"><a href="#秩" class="headerlink" title="秩"></a>秩</h2><p>矩阵可以视为动态和静态信息的媒介。而 <strong>一个具体的矩阵到底涵盖了多少信息可以由秩（rank）来描述。</strong><br>指的是一个矩阵的所有列向量所能张成的空间的维度。<br>矩阵的所有列向量所张成的空间叫做列空间（column space）<br>矩阵的所有行向量所张成的空间叫做行空间（row space）<br><strong>一个矩阵的列空间的维度是这个矩阵的秩，同时也等于该矩阵行空间的维度</strong><br>秩是用于描述矩阵所包含信息量的。</p>
+<h2 id="线性变换"><a href="#线性变换" class="headerlink" title="线性变换"></a>线性变换</h2><p>最终我们想要做的就是描述事物的变化。上文所有的内容都可以说是为此刻所做的铺垫。<br><strong>矩阵乘以矩阵可以视作一个矩阵内部向量的批量线性变换（linear transformation）。</strong> 所以可以仅讨论由矩阵乘以向量所形成的一次线性变换。</p>
+<h2 id="十六、什么是变换？"><a href="#十六、什么是变换？" class="headerlink" title="十六、什么是变换？"></a>十六、什么是变换？</h2><p>这里写图片描述</p>
+<p><img src="http://img.blog.csdn.net/20161019110942425" alt><br>by David C.Lay</p>
+<p>一个从n维实数域（）到m维实数域（）的变换（transformation or mapping or function）是将n维实数域（）空间下任意一个向量转换成为在m维实数域（）空间下对应向量<br>其中n维实数域（）空间叫做变换的domain，m维实数域（）空间叫做该变换的codomain。<br>向量叫做向量的image（变换行为下的）<br>所有image组成的集合叫做变换的range</p>
+<p>而线性变换是是指线性规则所造成的变换，是由一个矩阵来实现的。此时你就会看到无处不在的式子：</p>
+<blockquote>
+<p>y=Ax  ：列向量 xx 左乘一个矩阵 AA 后得到列向量 yy</p>
+</blockquote>
+<p>= （eq.4）举例来说， 是三维空间的向量（即的domain是三维），而经过线性变换后，变成了二维空间的向量（即的codomain是二维）。</p>
+<p>矩阵可以被理解成一个函数(function)，将三维空间下的每个向量投到二维空间下。<br><strong>y=Ax  也可以理解为经由一个外力，使其状态发生了改变。</strong><br>同时也是深层神经网络每层变换中的核心：y=a(Ax+b)</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Open-Source/" rel="tag"><i class="fa fa-tag"></i> Open Source</a>
+              <a href="/tags/Algorithm/" rel="tag"><i class="fa fa-tag"></i> Algorithm</a>
+              <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/TensorFlow/visual-interactive-guide-basics-neural-networks/" rel="next" title="A Visual and Interactive Guide to the Basics of Neural Networks">
+                  <i class="fa fa-chevron-left"></i> A Visual and Interactive Guide to the Basics of Neural Networks
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Program/IPCreator/Technology/Program/Tools/Python/tools-of-python/" rel="prev" title="Complete Resources of Python">
+                  Complete Resources of Python <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于本书"><span class="nav-number">1.</span> <span class="nav-text">关于本书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何阅读"><span class="nav-number">2.</span> <span class="nav-text">如何阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表达格式"><span class="nav-number">3.</span> <span class="nav-text">表达格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#智能的起源"><span class="nav-number">4.</span> <span class="nav-text">智能的起源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#智能的本质"><span class="nav-number">5.</span> <span class="nav-text">智能的本质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、生命是如何产生的？"><span class="nav-number">5.1.</span> <span class="nav-text">一、生命是如何产生的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、究竟是什么阻碍了生命，生命又该如何存活？"><span class="nav-number">5.2.</span> <span class="nav-text">二、究竟是什么阻碍了生命，生命又该如何存活？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性代数"><span class="nav-number">6.</span> <span class="nav-text">线性代数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、什么是线性代数？"><span class="nav-number">6.1.</span> <span class="nav-text">一、什么是线性代数？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向量空间"><span class="nav-number">7.</span> <span class="nav-text">向量空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子空间"><span class="nav-number">8.</span> <span class="nav-text">子空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性无关"><span class="nav-number">9.</span> <span class="nav-text">线性无关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张成"><span class="nav-number">10.</span> <span class="nav-text">张成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#维度"><span class="nav-number">11.</span> <span class="nav-text">维度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#秩"><span class="nav-number">12.</span> <span class="nav-text">秩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性变换"><span class="nav-number">13.</span> <span class="nav-text">线性变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十六、什么是变换？"><span class="nav-number">14.</span> <span class="nav-text">十六、什么是变换？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

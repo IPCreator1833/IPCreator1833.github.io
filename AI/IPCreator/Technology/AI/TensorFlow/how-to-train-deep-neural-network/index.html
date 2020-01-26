@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="作者：雷锋网  本文为印度深度学习专家、创业者 Rishabh Shukla 在 GitHub 上发表的长博文，总结了他过去的开发经验，旨在给新入门的开发者提供指导。雷锋网做了不改变原意的编译。 在深度学习领域，为了高效训练深度神经网络，有些实践方法被过来人强烈推荐。 在这篇博文中，我会覆盖几种最常使用的实践方法，从高品质训练数据的重要性、超参数（hyperparameters）到更快创建 DNN">
+<meta name="keywords" content="Neural Network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Advises of  Rishabh Shukla on How to Train Deep Neural Network">
+<meta property="og:url" content="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/how-to-train-deep-neural-network/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="作者：雷锋网  本文为印度深度学习专家、创业者 Rishabh Shukla 在 GitHub 上发表的长博文，总结了他过去的开发经验，旨在给新入门的开发者提供指导。雷锋网做了不改变原意的编译。 在深度学习领域，为了高效训练深度神经网络，有些实践方法被过来人强烈推荐。 在这篇博文中，我会覆盖几种最常使用的实践方法，从高品质训练数据的重要性、超参数（hyperparameters）到更快创建 DNN">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/587f11cbe835b.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:updated_time" content="2017-03-27T09:53:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Advises of  Rishabh Shukla on How to Train Deep Neural Network">
+<meta name="twitter:description" content="作者：雷锋网  本文为印度深度学习专家、创业者 Rishabh Shukla 在 GitHub 上发表的长博文，总结了他过去的开发经验，旨在给新入门的开发者提供指导。雷锋网做了不改变原意的编译。 在深度学习领域，为了高效训练深度神经网络，有些实践方法被过来人强烈推荐。 在这篇博文中，我会覆盖几种最常使用的实践方法，从高品质训练数据的重要性、超参数（hyperparameters）到更快创建 DNN">
+<meta name="twitter:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/587f11cbe835b.png?imageMogr2/format/jpg/quality/90">
+
+<link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/how-to-train-deep-neural-network/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Advises of  Rishabh Shukla on How to Train Deep Neural Network | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/how-to-train-deep-neural-network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Advises of  Rishabh Shukla on How to Train Deep Neural Network
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/AI/IPCreator/Technology/AI/TensorFlow/how-to-train-deep-neural-network/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/AI/IPCreator/Technology/AI/TensorFlow/how-to-train-deep-neural-network/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>作者：<a href="http://www.leiphone.com/news/201701/gOwAU7YFQkJcFkVB.html" target="_blank" rel="noopener">雷锋网</a></p>
+<p><img src="http://static.leiphone.com/uploads/new/article/740_740/201701/587f11cbe835b.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p>本文为印度深度学习专家、创业者 Rishabh Shukla 在 GitHub 上发表的长博文，总结了他过去的开发经验，旨在给新入门的开发者提供指导。雷锋网做了不改变原意的编译。</p>
+<p>在深度学习领域，为了高效训练深度神经网络，有些实践方法被过来人强烈推荐。</p>
+<p>在这篇博文中，我会覆盖几种最常使用的实践方法，从高品质训练数据的重要性、超参数（hyperparameters）到更快创建 DNN（深度神经网络） 原型模型的一般性建议。这些推荐方法中的大多数，已被学术界的研究所证实，并在论文中展示了相关实验、数学证据，比如 Efficient BackProp(Yann LeCun et al.) 和 Practical Recommendations for Deep Architectures(Yoshua Bengio)。</p>
+  <a id="more"></a>
+<ol>
+<li>训练数据</li>
+</ol>
+<p>许多 ML 开发者习惯把原始训练数据直接扔给 DNN——为什么不这么做呢？既然任何 DNN （大多数人的假设）仍然能够给出不错的结果，不是吗？但是，有句老话叫“给定恰当的数据类型，一个简单的模型能比复杂 DNN 提供更好、更快的结果”。虽然这有一些例外，但在今天，这句话仍然没有过时。因此，不管你是在计算机视觉（ CV），自然语言处理（NLP）还是统计建模（Statistical Modelling）等领域，想要对原始数据预处理，有几个方法可以得到更好的训练数据：</p>
+<p>获取越大的数据库越好。DNN 对数据很饥渴，越多越好。</p>
+<p>去除所有包含损坏数据的训练样本，比如短文字，高度扭曲的图像，假输出标签，包含许多虚值（null values）的属性。</p>
+<p>Data Augmentation（数据扩张）——生成新样例。以图像为例，重新调节，增加噪声等等。</p>
+<ol start="2">
+<li>选择恰当的激励函数（activation function）</li>
+</ol>
+<p>激励函数是所有神经网络的核心部分之一。</p>
+<p>激励函数把渴望已久的非线性（non-linearity）加入了模型。多年来，Sigmoid 函数 一直是多数人倾向的选择。但是，Sigmoid 函数不可避免地存在两个缺陷：1. 尾部  sigmoids 的饱和，进一步导致梯度消失。2. 不以 0 为中心（输出在 0 到 1 之间）。</p>
+<p>一个更好的替代选择是 Tanh 函数。数学上来说，Tanh 只是调整、平移过的 Sigmoid 函数：tanh(x) = 2*sigmoid(x) - 1。虽然 Tanh 仍旧存在梯度消失的缺陷，但好消息是：Tanh 以 0 为中心。因此，把 Tanh 作为激励函数能更快地收敛（converge）。我发现使用 Tanh 通常比 Sigmoid 效果更好。</p>
+<p>你还可以探索其他选择，比如 ReLU, SoftSign 等等。对于一些特定任务， 它们能够改善上述问题。</p>
+<ol start="3">
+<li>隐藏单元和隐层（Hidden Units and Layers）的数量</li>
+</ol>
+<p>如何训练深度神经网络？老司机的 15 点建议</p>
+<p>保留超出最优数量的隐藏单元，一般是比较保险的做法。这是因为任何正则化方法（ regularization method）都会处理好超出的单元，至少在某种程度上是这样。在另一方面，保留比最优数量更少的隐藏单元，会导致更高的模型欠拟合（underfitting）几率。</p>
+<p>另外，当采用无监督预训练的表示时（unsupervised pre-trained representations，下文会做进一步解释），隐藏单元的最优数目一般会变得更大。因此，预训练的表示可能会包含许多不相关信息（对于特定任务）。通过增加隐藏单元的数目，模型会得到所需的灵活性，以在预训练表示中过滤出最合适的信息。</p>
+<p>选择隐层的最优数目比较直接。正如 Yoshua Bengio 在  Quora 中提到的：</p>
+<p>“你只需不停增加层，直到测试误差不再减少。”</p>
+<ol start="4">
+<li>权重初始化 （Weight Initialization）</li>
+</ol>
+<p>永远用小的随机数字初始化权重，以打破不同单元间的对称性（symmetry）。但权重应该是多小呢？推荐的上限是多少？用什么概率分布产生随机数字？</p>
+<p>当使用 Sigmoid 激励函数时，如果权重初始化为很大的数字，那么 sigmoid 会饱和（尾部区域），导致死神经元（dead neurons）。如果权重特别小，梯度也会很小。因此，最好是在中间区域选择权重，比如说那些围绕平均值均衡分布的数值。</p>
+<p>幸运的是，已经有许多关于初始权重合适取值的研究。这对于高效的收敛非常重要。为初始化均衡分布的权重，均匀分布（uniform distribution ）或许是最好的选择之一。另外，就像论文中所展示的（Glorot and Bengio, 2010），有更多输入连接（fan_in）的单位，应该有相对更小的权重。</p>
+<p>多亏这些十分透彻的试验，现在我们已经有了经过检验的公式，可以直接用来权重的初始化。</p>
+<p>比如说在  ~ Uniform(-r, r) 提取的权重，对于 tanh 激励  r=sqrt(6/(fan_in+fan_out))；对于 sigmoid 激励 r=4*(sqrt(6/fan_in+fan_out)) 。fan_in 是上一层的大小， 而 fan_out 是下一层的。</p>
+<ol start="5">
+<li>学习率</li>
+</ol>
+<p>这或许是最重要的超参数之一，调节着学习过程。如果学习率设置得太小，你的模型很可能需要 n 年来收敛。设置得太大，再加上不多的初始训练样本，你的损失可能会极高。一般来说，0.01 的学习率比较保险。但雷锋网(公众号：雷锋网)提醒各位读者，这不是一个严格的标准。最优学习率与特定任务的属性息息相关。</p>
+<p>相比固定学习率，在每个周期、或每几千个样例后逐渐降低学习率是另一个选择。虽然这能更快地训练，但需要人工决定新的学习率。一般来说，学习率可以在每个周期后减半。几年前，这种策略十分普遍。</p>
+<p>幸运的是，我们现在有了更好的、基于动能（momentum based）的方法，来调整学习率。这取决于误差函数的曲率。另外，既然有些参数有更快、或更慢的学习速率；它或许能帮助我们针对模型中的单独参数，设定不同的学习率。</p>
+<p>最近有大量关于优化方法的研究，导致了自适应学习率（adaptive learning rates）。目前我们有许多选择，从老式动能方法（ Momentum Method ），到  Adagrad、Adam （个人最爱）、 RMSProp 等等。；类似于 Adagrad 或 Adam 的方法，能替我们省去人工选择初始学习率的麻烦；给定合适的时间，模型会开始平滑地收敛。当然，选择一个特别合适的初始学习率仍然能起到帮助作用。</p>
+<ol start="6">
+<li>超参数调参：扔掉网格搜索，拥抱随机搜索</li>
+</ol>
+<p>网格搜索（Grid Search ）在经典机器学习中十分普遍。但它在寻找 DNN 的最优超参数方面一点也不高效。这主要是由于 DNN 尝试不同超参数组合所耗费的时间。随着超参数不断增长，网格搜索需要的计算性能会指数级增长。</p>
+<p>有两种解决办法：</p>
+<p>取决于你之前的经验，你可以人工对部分常见超参数调参，比如学习率、隐层数目。</p>
+<p>采用随机搜索（random search），或者随机采样代替网格搜索，来选择最优超参数。</p>
+<p>超参数组合通常在期望范围之内、从均匀分布中被选择出来。加入之前获得的知识来进一步缩小搜寻空间，也是有可能的（比如，学习率不应该太大也不应该太小）。大家发现，随机搜索比网格搜索高效地多。</p>
+<ol start="7">
+<li>学习方法</li>
+</ol>
+<p>随机梯度下降（ Stochastic Gradient Descent ）的老方法也许对于 DNN 不是那么有效率（有例外）。最近，有许多研究聚焦于开发更灵活的优化算法，比如 Adagrad、Adam,、AdaDelta,、RMSProp 等等。在提供自适应学习率之外，这些复杂的方法还对于模型的不同参数使用不同的学习率，通常能有更平滑的收敛。把这些当做超参数是件好事，你应该每次都在训练数据的子集上试试它们。</p>
+<ol start="8">
+<li>权重的维度保持为 2 的幂</li>
+</ol>
+<p>即便是运行最先进的深度学习模型，使用最新、最强大的计算硬件，内存管理仍然在字节（byte）级别上进行。所以，把参数保持在 64, 128, 512, 1024 等 2 的次方永远是件好事。这也许能帮助分割矩阵和权重，导致学习效率的提升。当用 GPU 运算，这变得更明显。</p>
+<ol start="9">
+<li>无监督预训练（Unsupervised Pretraining ）</li>
+</ol>
+<p>不管你进行的是 NLP（自然语言处理）、计算机视觉还是语音识别等任务，无监督预训练永远能帮助你训练监督、或其他无监督模型：NLP 中词向量就（Word Vectors）无所不在；你可以用 ImageNet 的数据库，使用无监督方式对你的模型预训练，或是对于两个类别的监督分类；或是更大频域的音频样本，来在扬声器消崎模型（speaker disambiguation model）中使用该信息。</p>
+<ol start="10">
+<li>Mini-Batch（小批量） 对比随机学习（Stochastic Learning）</li>
+</ol>
+<p>训练一个模型的主要目的是学习合适的参数，即产生输入到输出的最优映射。这些参数利用每个训练样本进行调参，不管你决定使用 batch, mini-batch 还是随机学习。当采用随机学习方法时，学习每个训练样本后权重的梯度都会进行调参，向梯度加入噪音（随机学习中“随机”的由来）。这样做的结果十分理想，比如说，训练中加入的噪音使得模型更不容易过拟合。</p>
+<p>但是，随机学习方法也许效率不高。如今的计算设备有非常可观的运算能力，随机学习很可能会浪费其中的一大部分。如果我们能计算矩阵相乘，那么为什么要限制自己，重复单个矢量组之间的乘法呢？因此，为了更高的吞吐率和更快的学习，我推荐使用 mini-batch 而不是随机学习。</p>
+<p>但是，选择适当的 batch 规模同样重要。所以我们能保留一些噪音（相比大规模 batch），与此同时更高效地利用计算性能。一般来说，包含  16 个到 128 个样例的 batch（2 的幂）是不错的选择。通常，一旦你发现了更重要的超参数（通过随机搜索或是人工搜索），batch 规模就会确性下来。但是，有些场景中模型得到训练数据流（比如网络学习），那么采用随机学习就是不错的选择。</p>
+<ol start="11">
+<li>打乱训练样本</li>
+</ol>
+<p>这来自于信息理论（Information Theory）——“学习到一件不太可能发生的事却发生了，比学习一件很可能发生的事已经发生，包含更多的信息。”同样的，把训练样例的顺序随机化（在不同周期，或者 mini-batch），会导致更快的收敛。如果模型看到的很多样例不在同一种顺序下，运算速度会有小幅提升。</p>
+<ol start="12">
+<li>使用 Dropout 正则化</li>
+</ol>
+<p>如果有数百万的参数需要学习，正则化就是避免 DNN 过拟合的必须手段。你也可以继续使用 L1/L2 正则化，但 Dropout 是检查 DNN 过拟合的更好方式（雷锋网按：Dropout 是指随机让网络某些隐层节点的权重不工作，不工作的那些节点可以暂时认为不是网络结构的一部分，但是它的权重会保留下来）。执行 Dropout 很容易，并且通常能带来更快地学习。0.5 的默认值是一个不错的选择，当然，这取决于具体任务。如果模型不太复杂，0.2 的 Dropout 值或许就够了。</p>
+<p>在测试阶段，Dropout 应该被关闭，权重要调整到相应大小。只要对一个模型进行 Dropout 正则化，多一点训练时间，误差一定会降低。</p>
+<ol start="13">
+<li>周期 / 训练迭代次数</li>
+</ol>
+<p>“对深度学习模型进行多个周期的训练，会得到更好的模型”——我们经常听到这句话。但多少周期才是“多”呢？其实，这里有一个简单的策略：继续按照一个固定的样例数或者周期训练模型，比如两万个样例或者一个周期。在每批样例之后，比较测试误差（test error）和训练误差（train error），如果它们的差距在缩小，那么继续训练。另外，记得在每批训练之后，保存模型的参数，所以训练好之后你可以从多个模型中做选择。</p>
+<ol start="14">
+<li>可视化</li>
+</ol>
+<p>训练深度学习模型有上千种出差错的方式。我猜大家都遇到过这样的场景：模型已经训练了几个小时或者好几天，然而在训练完成之后，才意识到某个地方出问题了。为了不让你自己神经错乱，一定要对训练过程作可视化处理。比较显而易见的措施是保存或打印损失值、训练误差、测试误差等项目的日志。</p>
+<p>在此之外，一个很好的措施是采用可视化库（visualization library ），在几个训练样例之后、或者周期之间，生成权重柱状图。这或许能帮助我们追踪深度学习模型中的一些常见问题，比如梯度消失与梯度爆发（Exploding Gradient）。</p>
+<ol start="15">
+<li>使用支持 GPU 和自动微分法 (Automatic Differentiation）的库</li>
+</ol>
+<p>谢天谢地，对于快速创建原型模型，我们已经有了相当不错的库，比如 Theano, Tensorflow, Keras 等等。几乎所有这些深度学习库支持 GPU 计算和自动微分法。所以，你不需要深入研究核心 GPU 编程技术（除非你想——这绝对很有意思）。你也不需要写自己的微分代码——在非常复杂的模型上这相当费劲（但若需要，你应该有能力去做）。 Tensorflow还提供了分布式计算的支持——如果你是土豪的话。</p>
+<p>最后雷锋网提醒，这并不是训练 DNN 的完整注意事项表。为了容纳最常见的实践方法，作者去除了一些概念，比如 Normalization of inputs, Batch/Layer Normalization, Gradient Check 等。</p>
+<p>via <a href="http://rishy.github.io/ml/2017/01/05/how-to-train-your-dnn/" target="_blank" rel="noopener">github</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Neural-Network/" rel="tag"><i class="fa fa-tag"></i> Neural Network</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Basic Concept/brain-and-chips/" rel="next" title="Concept and History of Brain Chips">
+                  <i class="fa fa-chevron-left"></i> Concept and History of Brain Chips
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/TensorFlow/pytorch-of-facebook/" rel="prev" title="Facebook PyTorch">
+                  Facebook PyTorch <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

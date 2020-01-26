@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="专利全文  本发明公开了一种基于组合事件行为触发的Android恶意行为检测系统及其检测方法。多层行为监控模块捕获应用程序运行时的行为日志；行为分析模块通过函数调用关系和函数参数特征识别应用程序中的恶意行为，同时，行为分析模块会生成应用行为分析报告；DroidRunner行为触发模型根据对界面调度方式和已知恶意行为触发条件的分析设计了多组合均衡遍历算法和特殊事件触发库，完成对应用程序中恶意行为的动">
+<meta name="keywords" content="Android,DroidRunner">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Malicious Behaviour Detecting System Triggered by Combined Event in Android">
+<meta property="og:url" content="https://hazyman.com/IPR/IPCreator/IPR/Patent of Virus Detect Base on Android UI/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="专利全文  本发明公开了一种基于组合事件行为触发的Android恶意行为检测系统及其检测方法。多层行为监控模块捕获应用程序运行时的行为日志；行为分析模块通过函数调用关系和函数参数特征识别应用程序中的恶意行为，同时，行为分析模块会生成应用行为分析报告；DroidRunner行为触发模型根据对界面调度方式和已知恶意行为触发条件的分析设计了多组合均衡遍历算法和特殊事件触发库，完成对应用程序中恶意行为的动">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://books.daweisoft.com/abstphoto/FM/20160608/201610130822.0/201610130822.gif">
+<meta property="og:updated_time" content="2017-09-15T00:56:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Malicious Behaviour Detecting System Triggered by Combined Event in Android">
+<meta name="twitter:description" content="专利全文  本发明公开了一种基于组合事件行为触发的Android恶意行为检测系统及其检测方法。多层行为监控模块捕获应用程序运行时的行为日志；行为分析模块通过函数调用关系和函数参数特征识别应用程序中的恶意行为，同时，行为分析模块会生成应用行为分析报告；DroidRunner行为触发模型根据对界面调度方式和已知恶意行为触发条件的分析设计了多组合均衡遍历算法和特殊事件触发库，完成对应用程序中恶意行为的动">
+<meta name="twitter:image" content="http://books.daweisoft.com/abstphoto/FM/20160608/201610130822.0/201610130822.gif">
+
+<link rel="canonical" href="https://hazyman.com/IPR/IPCreator/IPR/Patent of Virus Detect Base on Android UI/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Malicious Behaviour Detecting System Triggered by Combined Event in Android | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/IPR/IPCreator/IPR/Patent of Virus Detect Base on Android UI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Malicious Behaviour Detecting System Triggered by Combined Event in Android
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/IPR/" itemprop="url" rel="index">
+                    <span itemprop="name">IPR</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/IPR/IPCreator/IPR/Patent of Virus Detect Base on Android UI/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/IPR/IPCreator/IPR/Patent of Virus Detect Base on Android UI/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="http://www.innojoy.com/searchresult/download.html?patentName=%E5%9F%BA%E4%BA%8E%E7%BB%84%E5%90%88%E4%BA%8B%E4%BB%B6%E8%A1%8C%E4%B8%BA%E8%A7%A6%E5%8F%91%E7%9A%84Android%E6%81%B6%E6%84%8F%E8%A1%8C%E4%B8%BA%E6%A3%80%E6%B5%8B%E7%B3%BB%E7%BB%9F%E5%8F%8A%E5%85%B6%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95[ZH]&amp;db=fmzl&amp;pd=2016.06.08&amp;dn=CN201610130822.0&amp;pp=BOOKS@FM@2016@20160608@201610130822.0&amp;lls=%E5%AE%9E%E5%AE%A1#" target="_blank" rel="noopener">专利全文</a></p>
+<p><img src="http://books.daweisoft.com/abstphoto/FM/20160608/201610130822.0/201610130822.gif" alt></p>
+<p>本发明公开了一种基于组合事件行为触发的Android恶意行为检测系统及其检测方法。多层行为监控模块捕获应用程序运行时的<strong>行为日志</strong>；行为分析模块通过<strong>函数调用关系和函数参数特征</strong>识别应用程序中的恶意行为，同时，行为分析模块会生成应用行为分析报告；<strong>DroidRunner行为触发模型</strong>根据对界面调度方式和已知恶意行为触发条件的分析设计了多组合均衡遍历算法和特殊事件触发库，完成对应用程序中恶意行为的动态检测。本发明其可覆盖应用程序运行期间绝大部分的函数调用，对应用程序中的敏感行为触发效果显著。达到高效、稳定触发应用程序中可能存在的恶意行为的效果。</p>
+<a id="more"></a>
+<h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><p>申请(专利)号    CN201610130822.0    申请日    2016.03.09<br>公开(公告)号    CN105653946A    公开(公告)日    2016.06.08<br>最终专利权人    哈尔滨工程大学<br>地址    150001 黑龙江省哈尔滨市南岗区南通大街145号哈尔滨工程大学科技处知识产权办公室<br>主分类号    G06F21/55(2013.01)I    国省代码    黑龙江;23<br>申请(专利权)人    哈尔滨工程大学<br>发明(设计)人    张国印;曲家兴;王玲;何志昌;高伟</p>
+<h2 id="权利要求书"><a href="#权利要求书" class="headerlink" title="权利要求书"></a>权利要求书</h2><ol>
+<li>基于组合事件行为触发的Android恶意行为检测系统，其特征在于：包括多层行为监 测模块、行为分析模块和DroidRunner行为触发模型；<br>多层行为监控模块通过修改Android源码、植入网络监控工具实现对Java调用、本地调 用和网络连接的监控，捕获应用程序运行时的行为日志；<br>行为分析模块通过函数调用关系和函数参数特征识别应用程序中的恶意行为，同时，行 为分析模块会生成应用行为分析报告，用户通过应用行为分析报告识别检测结果中误报或漏 报的恶意行为，并修正或扩展恶意行为特征库；<br>DroidRunner行为触发模型根据对界面调度方式和已知恶意行为触发条件的分析设计了多 组合均衡遍历算法和特殊事件触发库，完成对应用程序中恶意行为的动态检测。</li>
+</ol>
+<p>1 based on combined event is triggered amlroid malicious behaviour detecting system wherein the: Comprises a layer of the monitoring module the analyzing module and chemical oidrunner the triggering module; Several layers of the monitoring module through modifying amlroid source code is embedded into the network monitoring tool to realize the va the native transferring and network connection the monitoring and trapping application program during operation of the behaviour log; Behaviour analysis module through the function transferring relation and function parameter characteristic recognition application program in the invention prevents malicious behaviour at the same time to analyze module will produce applied behavioural analysis report of user through applied behavioural analysis report recognition and detection result of false alarm and missing report of the malicious behaviour and correction or extension malicious behaviour feature database; Droidrunner the triggering module according to the interface scheduling method and known malicious behaviour triggering condition of analyzing design of several groups of traversing with balance calculation method and special event triggers database to complete the application program in malicious behaviour dynamic detecting.</p>
+<ol start="2">
+<li><p>根据权利要求1所述的基于组合事件行为触发的Android恶意行为检测系统，其特征 在于：所述的DroidRunner行为触发模型包括预处理组件、主控组件、界面分析组件、界面 控制组件、特殊事件触发组件和特殊事件触发库组件；<br>预处理组件，分析APK并获取其基本信息，为其它组件的运行提供基础数据；<br>界面分析组件，获取当前Activity中显示的所有可操作控件的属性，并生成控件序列，为 界面控制组件提供基础数据；<br>界面控制组件，模拟用户对应用的操作，操作根据多组合均衡遍历算法调度生成；<br>特殊事件触发组件，基于对由注册广播接受器和检测运行环境类事件触发执行应用程序 恶意行为的分析，设计了命令行实现、脚本实现和预装实现方式三种方式来实现这些事件的 自动化触发；<br>特殊事件触发库组件，存储当前已发现恶意应用恶意行为的触发事件及实现方法；<br>主控组件，负责通过ADB与设备之间进行通讯与控制，并在界面分析组件、界面控制组 件、特殊事件触发组件的支撑下，实现对应用的自动化操作。</p>
+</li>
+<li><p>According to claim 1 said base used for combining event is triggered amlroid malicious behaviour detecting system wherein the: Said chemical processing oidrunner is model includes pretreatment subassembly the main control module interface analysis component interface control component special event triggering module and special event triggering base component; Pretreatment subassembly apk analysis and obtain the basic information as other components the movement of it provides foundation data for the; Interface analysis component obtaining the current activity to display all can be operated control property and generating control sequence the boundary control assembly it provides foundation data for the; Interface control module of simulated user to the application of the operation of the operation according to the combination balance traversing algorithm dispatching generating; Specific event triggering component on the basis of registered broadcasting receiver and detection operation environment kind of event triggering executing application program malicious behaviour analysis is designed in order to realize script realization method and device realizing method = method to realize operation of some event the automatic triggering; Specific event triggering module database storing current that has been found malicious application malicious behaviour of the trigger event and method for realizing; Main control module is responsible for through adb and the equipment is performed between communication and control interface and the analysis component interface control component special event triggering component of the supporting to realize the application of the automatic operation.</p>
+</li>
+<li><p>一种基于权利要求1所述的基于组合事件行为触发的Android恶意行为检测系统的检 测方法，其特征在于，包括以下步骤，<br>步骤一：多层行为监控模块通过修改Android源码、植入网络监控工具实现对Java调用、 本地调用和网络连接的监控，捕获应用程序运行时的行为日志；<br>步骤二：行为分析模块通过函数调用关系和函数参数特征识别应用程序中的恶意行为， 同时，行为分析模块会生成应用行为分析报告；<br>步骤三：根据应用行为分析和DroidRunner行为触发模型完成对恶意行为的动态检测。</p>
+</li>
+</ol>
+<p>3 according to claim 1 said base used for combining event is triggered amlroid malicious behaviour of the detection system detection method wherein it comprises w of the following steps step one: Several layers of the monitoring module through modifying android source code is embedded into the network monitoring tool to realize the va the native transferring and network connection the monitoring and trapping application program during operation of the behaviour log; Step two: Behaviour analysis module through the function transferring relation and function parameter characteristic recognition application program in the invention prevents malicious behaviour at the same time to analyze module will produce applied behavioural analysis report; Step s: According to applied behavioural analysis and chemical oidrunner to as trigger mode to finish the malicious behaviour dynamic detecting.</p>
+<ol start="4">
+<li>根据权利要求3所述的基于组合事件行为触发的Android恶意行为检测方法，其特征 在于：所述的根据应用行为分析和DroidRunner行为触发模型完成对恶意行为的动态检测的 方法为：<br>步骤一：通过预处理组件完成APK的分析并取其基本信息；利用apktool工具反编译APK 获取Androidmanifest.xml文件，通过分析Androidmanifest.xml文件获取APK的基本信息， 包括APK的包名称、MainActivity名称、4种组件信息、申请的权限；<br>步骤二：通过分析组件获取当前Activity中显示的所有可操作控件的绝对坐标、控件类型、 控件可操作指令属性，生成控件的操作序列，为界面控制组件提供基础数据；<br>步骤三：利用步骤二获得的数据信息模拟用户对应用的操作，操作根据多组合均衡遍历 算法调度生成；<br>步骤四：根据预处理组件获取的待检测应用的权限及组件信息，从特殊事件触发库中抽 取符合条件的特殊事件列表，在主控组件的控制下在APP运行期间随机触发这些特殊事件；<br>步骤五：通过ADB与设备之间进行通讯与控制，并在界面分析组件、界面控制组件、特 殊事件触发组件的支撑下，完成自动检测。</li>
+</ol>
+<p>4 according to claim 1 said base used for combining event is triggered amlroid malicious behaviour method for detecting the feature lies in that: Said according to applied behavioural analysis and chemical oidrunner for is model finishes the malicious behaviour dynamic detecting method is as follows: Step one: Through pre-treatment apk components to finish analysis and obtain the basic information; Using apktool tool obtaining the compiling apk chemical oidmanifest an xml file through analyzing chemical oidmanifest an xml file obtaining apk the basic information comprises apk the name of main activity name 4 assembly information request the authorization; Step two: By analyzing module obtains current activity is displayed in the operable to control the absolute coordinate control type control can be operation instruction attribute create control operation sequence the boundary control assembly it provides foundation data for the; Step by step two of obtaining the data information of simulated user to the application of the operation of the operation according to the combination balance traversing algorithm dispatching generating; Step four: According to the processing component for obtaining to be detected application property and component information from the special event trigger to extract the warehouse accords with condition of the special event list is in the main control module under control of the app operating period of random contact and transporting some special condition happens; Step five: Through adb and the equipment is performed between communication and control interface and the analysis component interface control component special event triggering module the support is finished automatically detecting.</p>
+<ol start="5">
+<li>根据权利要求4所述的基于组合事件行为触发的Android恶意行为检测方法，其特征 在于：所述的根据多组合均衡遍历算法调度生成生成操作的过程为：<br>(1)将Android应用界面间跳转关系转化为一个有向赋权图：<br>G=(L,W,E)L={li|i=1,2,3…,n}W={w(l)|∀l∈L}E={eij=|i,j=1,2,3…,n}]]&gt;<br>G表示界面跳转关系的有向图；<br>L表示应用所有界面的集合，集合中每个节点表示一个界面；<br>W表示界面权值的集合，权值表示需要调度到该界面执行操作的需求程度，该值越大表 示调度到该界面进行操作的需求越迫切；<br>E表示界面间跳转的边的集合，存储的是导致界面跳转的操作；<br>(2)如果即发现一个新的界面节点Li，将界面分析组件获取的当前界面的所有 操作置于Li.unKnownList表中，计算界面权值Li.weight，转到下一步；如果Li∈L，转到下 一步；<br>Li.weight=0,len(Li.unKnowList)=0,len(Li.notJumpList)=0n,n=len(Li.unKnowList)&gt;0nΣxk,n=len(Li.notJumpList)&gt;0,len(Li.unKnowList)=0]]&gt;<br>其中xk表示Li.notJumpList列表中k个操作被执行的次数，每一个界面节点均维持了3个 列表：unKnowList、notJumpList和jumpList；unKnowList列表用于存储不确定是否会导致界 面跳转的控件操作，在进入一个新的界面时，所有的控件操作均存储在这个列表中； notJumpList列表用于存储不会导致界面跳转的操作，初始值为空；jumpList列表用于存储会 发生界面跳转的操作，初始值为空；<br>(3)如果len(Li.unKnownList)≠0，在Li.notJumpList列表中，在Li.unKnownList列表中 随机选择执行一个操作xk，xk.count自加1，计算界面权值Li.weight；如果界面没有发生变 化，则将操作xk从Li.unKnownList列表移动到Li.notJumpList列表中，跳到步骤(3)；如果 界面发生跳转，新的界面为Lj，则将操作xk从Li.unKnownList列表移动到Li.notJumpList列 表中，并建立界面Li过操作xk跳转到界面Lj的指向关系，跳到步骤(2)；如果 len(Li.unKnownList)＝0，跳到步骤四(4)；<br>(4)如果len(Li.notJumpList)≥3，根据执行次数少优先和不同类型优先随机在 Li.notJumpLtis中选择3个操作组合Commands并执行；如果len(Li.notJumpList)&lt;3，执行所 有操作；被执行操作count属性自加1，计算界面权值Li.weight，完成后跳转到步骤(5)； 如果len(Li.notJumpList)＝0，跳转到步骤(5)；<br>(5)Lk＝max(W(L))，如果i＝k，跳到步骤(4)；如果i≠k，跳到步骤(6)；<br>(6)根据广度优先算法在图中搜索当前界面Li到界面Lk的路径S，如果S存在，按照跳 转操作执行，操作的count属性自加1，跳转到步骤(3)。如果S不存在，执行返回操作， 跳到步骤(6)。</li>
+</ol>
+<h2 id="说明书"><a href="#说明书" class="headerlink" title="说明书"></a>说明书</h2><h3 id="技术领域"><a href="#技术领域" class="headerlink" title="技术领域"></a>技术领域</h3><p>本发明属于AMBDS恶意行为检测领域，尤其涉及基于组合事件行为触发的Android恶 意行为检测系统及其检测方法。</p>
+<h3 id="背景技术"><a href="#背景技术" class="headerlink" title="背景技术"></a>背景技术</h3><p>伴随着Android平台的迅猛发展，Android平台的安全形势也愈加严峻。针对Android平 台的恶意软件数量近几年呈爆发式增长。Android平台开放源码，导致恶意应用开发者更容易 找出平台的安全缺陷开发恶意软件。当前，虽然Android平台已存在多类杀毒软件，但是出 于设备性能和用户体验考虑，其功能受到很大限制，对未知病毒的检测基本无能为力。这些 恶意软件主要的传播途径是第三方应用市场及网络下载。因此，在传播环节采用对应用程序 进行安全性审核的方式可实现对恶意应用程序的拦截，有效地遏制恶意软件的传播，更好的 保护Android平台移动设备的安全。同时，在该环节开发的检测工具不用受到设备性能和用 户体验的限制。</p>
+<p>Android平台自诞生至今只有短短七年的时间，国内外对Android平台恶意应用程序检测 方向的研究均处于起步阶段，对于下载或上传的应用程序是否具有恶意行为还缺乏有效的检 测手段。虽然，当前Android平台恶意应用检测方法已经取得了一些研究成果。但是，这些 成果存在行为触发方式过于单一、行为监控不全面、检测结果简单等问题。研究如何更全面 的提取应用程序运行期间的行为信息对于该领域具有重要的意义。AMBDS系统中的 DroidRunner行为触发模型设计了多组合均衡遍历算法、特殊事件触发库来提升对应用程序内 部路径和敏感行为的覆盖率，达到更高效的触发应用程序恶意行为的效果。</p>
+<h2 id="发明内容"><a href="#发明内容" class="headerlink" title="发明内容"></a>发明内容</h2><p>本发明的目的是提供一种改进了DroidRunner行为触发模型的，基于组合事件行为触发的 Android恶意行为检测系统。本发明的目的包括提供一种效率高、准确率高的，基于组合事 件行为触发的Android恶意行为检测方法。</p>
+<p>基于组合事件行为触发的Android恶意行为检测系统，包括多层行为监测模块、行为分 析模块和DroidRunner行为触发模型；</p>
+<p>多层行为监控模块通过修改Android源码、植入网络监控工具实现对Java调用、本地调 用和网络连接的监控，捕获应用程序运行时的行为日志；</p>
+<p>行为分析模块通过函数调用关系和函数参数特征识别应用程序中的恶意行为，同时，行 为分析模块会生成应用行为分析报告，用户通过应用行为分析报告识别检测结果中误报或漏 报的恶意行为，并修正或扩展恶意行为特征库；</p>
+<p>DroidRunner行为触发模型根据对界面调度方式和已知恶意行为触发条件的分析设计了多 组合均衡遍历算法和特殊事件触发库，完成对应用程序中恶意行为的动态检测。</p>
+<p>本发明基于组合事件行为触发的Android恶意行为检测系统，还可以包括：<br>1、DroidRunner行为触发模型包括预处理组件、主控组件、界面分析组件、界面控制组 件、特殊事件触发组件和特殊事件触发库组件；</p>
+<p>预处理组件，分析APK并获取其基本信息，为其它组件的运行提供基础数据；</p>
+<p>界面分析组件，获取当前Activity中显示的所有可操作控件的属性，并生成控件序列，为 界面控制组件提供基础数据；</p>
+<p>界面控制组件，模拟用户对应用的操作，操作根据多组合均衡遍历算法调度生成；</p>
+<p>特殊事件触发组件，基于对由注册广播接受器和检测运行环境类事件触发执行应用程序 恶意行为的分析，设计了命令行实现、脚本实现和预装实现方式三种方式来实现这些事件的 自动化触发；</p>
+<p>特殊事件触发库组件，存储当前已发现恶意应用恶意行为的触发事件及实现方法；</p>
+<p>主控组件，负责通过ADB与设备之间进行通讯与控制，并在界面分析组件、界面控制组 件、特殊事件触发组件的支撑下，实现对应用的自动化操作。</p>
+<p>基于组合事件行为触发的Android恶意行为检测方法，包括以下步骤，</p>
+<p>步骤一：多层行为监控模块通过修改Android源码、植入网络监控工具实现对Java调用、 本地调用和网络连接的监控，捕获应用程序运行时的行为日志；</p>
+<p>步骤二：行为分析模块通过函数调用关系和函数参数特征识别应用程序中的恶意行为， 同时，行为分析模块会生成应用行为分析报告；</p>
+<p>步骤三：根据应用行为分析和DroidRunner行为触发模型完成对恶意行为的动态检测。</p>
+<p>本发明基于组合事件行为触发的Android恶意行为检测方法，还可以包括：<br>1、根据应用行为分析和DroidRunner行为触发模型完成对恶意行为的动态检测的方法为：</p>
+<p>步骤一：通过预处理组件完成APK的分析并取其基本信息；利用apktool工具反编译APK 获取Androidmanifest.xml文件，通过分析Androidmanifest.xml文件获取APK的基本信息， 包括APK的包名称、MainActivity名称、4种组件信息、申请的权限；</p>
+<p>步骤二：通过分析组件获取当前Activity中显示的所有可操作控件的绝对坐标、控件类型、 控件可操作指令属性，生成控件的操作序列，为界面控制组件提供基础数据；</p>
+<p>步骤三：利用步骤二获得的数据信息模拟用户对应用的操作，操作根据多组合均衡遍历 算法调度生成；</p>
+<p>步骤四：根据预处理组件获取的待检测应用的权限及组件信息，从特殊事件触发库中抽 取符合条件的特殊事件列表，在主控组件的控制下在APP运行期间随机触发这些特殊事件；</p>
+<p>步骤五：通过ADB与设备之间进行通讯与控制，并在界面分析组件、界面控制组件、特 殊事件触发组件的支撑下，完成自动检测。</p>
+<p>2、根据多组合均衡遍历算法调度生成生成操作的过程为：</p>
+<p>(1)将Android应用界面间跳转关系转化为一个有向赋权图：</p>
+<p>G=(L,W,E)L={li|i=1,2,3…,n}W={w(l)|∀l∈L}E={eij=&lt;li,lj&gt;i,j=1,2,3…,n}]]&gt;</p>
+<p>G表示界面跳转关系的有向图；</p>
+<p>L表示应用所有界面的集合，集合中每个节点表示一个界面；</p>
+<p>W表示界面权值的集合，权值表示需要调度到该界面执行操作的需求程度，该值越大表 示调度到该界面进行操作的需求越迫切；<br>E表示界面间跳转的边的集合，存储的是导致界面跳转的操作；</p>
+<p>(2)如果即发现一个新的界面节点Li，将界面分析组件获取的当前界面的所有操作置于Li.unKnownList表中，计算界面权值Li.weight，转到下一步；如果Li∈L，转到下一步；</p>
+<p>Li.weight=0,len(Li.unKnowList)=0,len(Li.notJumpList)=0n,n=len(Li.unKnowList)&gt;0nΣxk,n=len(Li.notJumpList)&gt;0,len(Li.unKnowList)=0]]&gt;</p>
+<p>其中xk表示Li.notJumpList列表中k个操作被执行的次数，每一个界面节点均维持了3个 列表：unKnowList、notJumpList和jumpList；unKnowList列表用于存储不确定是否会导致界 面跳转的控件操作，在进入一个新的界面时，所有的控件操作均存储在这个列表中； notJumpList列表用于存储不会导致界面跳转的操作，初始值为空；jumpList列表用于存储会 发生界面跳转的操作，初始值为空；</p>
+<p>(3)如果len(Li.unKnownList)≠0，在Li.notJumpList列表中，在Li.unKnownList列表中 随机选择执行一个操作xk，xk.count自加1，计算界面权值Li.weight；如果界面没有发生变 化，则将操作xk从Li.unKnownList列表移动到Li.notJumpList列表中，跳到步骤(3)；如果 界面发生跳转，新的界面为Lj，则将操作xk从Li.unKnownList列表移动到Li.notJumpList列 表中，并建立界面Li过操作xk跳转到界面Lj的指向关系，跳到步骤(2)；如果 len(Li.unKnownList)＝0，跳到步骤四(4)；</p>
+<p>(4)如果len(Li.notJumpList)≥3，根据执行次数少优先和不同类型优先随机在 Li.notJumpIt中选择3个操作组合Commands并执行；如果len(Li.notJumpList)&lt;3，执行所 有操作；被执行操作count属性自加1，计算界面权值Li.weight，完成后跳转到步骤(5)； 如果len(Li.notJumpList)＝0，跳转到步骤(5)；</p>
+<p>(5)Lk＝max(W(L))，如果i＝k，跳到步骤(4)；如果i≠k，跳到步骤(6)；</p>
+<p>(6)根据广度优先算法在图中搜索当前界面Li到界面Lk的路径S，如果S存在，按照跳 转操作执行，操作的count属性自加1，跳转到步骤(3)。如果S不存在，执行返回操作， 跳到步骤(6)。</p>
+<p>有益效果：</p>
+<p>本发明主要是对DroidRunner行为触发模型进行了改进，体现在下面两点：</p>
+<p>改进一：设计了多组合均衡遍历算法。该遍历算法根据应用程序内用户界面的跳转构建 了界面跳转的图形描述，在遍历执行界面操作过程中，根据控件类型及操作执行的次数随机 生成不同的组合操作。同时，利用界面间调度算法均衡各个界面的操作平均执行次数。以此 提升应用运行期间对后台逻辑代码覆盖率，达到在动态检测期间提升触发应用恶意行为概率 的目的。</p>
+<p>改进二：设计了特殊事件触发库。通过对恶意行为触发条件的分析可知部分恶意行为并 非由用户对应用的操作触发，而是由系统广播事件等其它非用户操作的事件触发。本发明利 用已知恶意应用恶意行为的触发条件搭建了一个特殊事件触发库，通过在应用运行期间触发 这些事件，进一步提升触发应用恶意行为的概率。<br>本发明通过与Monkey和Monkeyrunner触发方式对比实验显示DroidRunner提升了运行 期间对应用程序内部方法层面的覆盖率，可更高效的触发应用程序的恶意行为。通过自编辑 恶意样本和网络恶意样本检测结果显示AMBDS系统可更高效、准确的识别应用程序的恶意 行为。</p>
+<h3 id="附图说明"><a href="#附图说明" class="headerlink" title="附图说明"></a>附图说明</h3><p>图1为AMBDS恶意行为检测系统；</p>
+<p>图2为DroidRunner模型示意图；</p>
+<p>图3为Android应用界面间跳转关系图；</p>
+<p>图4为AMBDS系统检测结果；</p>
+<p>图5为多种触发方式效果对比图。</p>
+<h3 id="具体实施方式"><a href="#具体实施方式" class="headerlink" title="具体实施方式"></a>具体实施方式</h3><p>下面将结合附图对本发明做进一步详细说明。</p>
+<p>在本发明中所涉及的基于组合事件行为触发的Android恶意行为检测模型主要功能为： 通过多层行为监控模块的行为监控，完成对程序行为特征的获取。根据获取的程序行为特征 信息，进行行为特征的分析并完成对恶意行为的判定，同时根据需求产生不同详细程度的行 为分析报告。根据对程序行为特征的分析，同时结合DroidRunner行为触发模型完成对应用 程序中恶意行为的动态检测，如图1所示。</p>
+<p>下面以DroidRunner行为触发模型对应用程序敏感行为的检测为例，介绍此模型触发应 用程序恶意行为的过程，描述如下：</p>
+<p>步骤一：通过预处理组件完成APK的分析并取其基本信息。利用apktool工具反编译APK 获取Androidmanifest.xml文件，通过分析Androidmanifest.xml文件获取APK的基本信息， 包括APK的包名称、MainActivity名称、4种组件信息、申请的权限等。这些信息为其它组 件的运行提供基础数据。<br>步骤二：通过分析组件获取当前Activity中显示的所有可操作控件的绝对坐标、控件类 型、控件可操作指令等属性，生成控件的操作序列，为界面控制组件提供基础数据。</p>
+<p>步骤三：利用步骤二获得的数据信息模拟用户对应用的操作，这些操作根据多组合均衡 遍历算法调度生成。</p>
+<p>多组合均衡遍历算法实现了对应用的模拟操作，为便于分析应用程序内部的界面间的调 度关系，本发明将Android应用界面间跳转关系转化为一个有向赋权图，其逻辑表示如下所 示：</p>
+<p>G=(L,W,E)L={li|i=1,2,3…,n}W={w(l)|∀l∈L}E={eij=&lt;li,lj&gt;i,j=1,2,3…,n}]]&gt;</p>
+<p>G表示界面跳转关系的有向图。</p>
+<p>L表示应用所有界面的集合，集合中每个节点表示一个界面。</p>
+<p>W表示界面权值的集合，权值表示需要调度到该界面执行操作的需求程度，该值越大说 明调度到该界面进行操作的需求越迫切。</p>
+<p>E表示界面间跳转的边的集合，存储的是导致界面跳转的操作。</p>
+<p>界面节点的权值确定了界面间调度优先级，本发明利用界面节点中操作控件执行情况确 定界面节点的权值。每一个界面节点均维持了3个列表：unKnowList、notJumpList和jumpList。 unKnowList列表用于存储不确定是否会导致界面跳转的控件操作，在进入一个新的界面时， 所有的控件操作均存储在这个列表中。notJumpList列表用于存储不会导致界面跳转的操作， 初始值为空。jumpList列表用于存储会发生界面跳转的操作，初始值为空。三个列表中所有 的操作共有四个属性：count、index、command和class，分别表示：</p>
+<p>1)count初始值为0，表示该操作被执行的次数。</p>
+<p>2)index属性用于标示这个操作。</p>
+<p>3)command表示具体的操作命令。<br>class表示控件的类型。</p>
+<p>每个界面Li都有一个权重Li.weight，在计算界面权值时以当前识别出的控件情况来计算， 因此不同的操作可能导致界面内的控件发生变化。界面节点的权值计算公式如下：</p>
+<p>Li.weight=0,len(Li.unKnowList)=0,len(Li.notJumpList)=0n,n=len(Li.unKnowList)&gt;0nΣxk,n=len(Li.notJumpList)&gt;0,len(Li.unKnowList)=0]]&gt;</p>
+<p>其中xk表示Li.notJumpList列表中k个操作被执行的次数。权值越大表示调度到这个界 面节点执行的优先级越高。根据界面权重与1的比较结果，有以下三种情况：</p>
+<p>1)界面权重大于1，说明这个界面还有多个操作没有被调度执行。</p>
+<p>2)界面权重小于1，说明该界面中所有的操作都被执行过。</p>
+<p>3)界面权值等于1，说明界面是存在一个操作没有被执行或者这个界面中所有的操作都 被执行了1次。</p>
+<p>多组合均衡遍历算法的具体描述如下：</p>
+<p>1)如果即发现一个新的界面节点Li，将界面分析组件获取的当前界面的所有操作置于Li.unKnownList表中，根据公式计算界面权值Li.weight，转到(2)。如果Li∈L，转到(2)。</p>
+<p>2)如果len(Li.unKnownList)≠0，在Li.notJumpList列表中，在Li.unKnownList列表中随 机选择执行一个操作xk，xk.count自加1，根据公式计算界面权值Li.weight。如果界面没有 发生变化，则将操作xk从Li.unKnownList列表移动到Li.notJumpList列表中，跳到(2)。如 果界面发生跳转，新的界面为Lj，则将操作xk从Li.unKnownList列表移动到Li.notJumpList列 表中，并建立界面Li过操作xk跳转到界面Lj的指向关系，跳到步骤(1)。如果 len(Li.unKnownList)＝0，跳到(3)。</p>
+<p>3)如果len(Li.notJumpList)≥3，根据执行次数少优先和不同类型优先随机在 Li.notJumpIt中选择3个操作组合Commands并执行；如果len(Li.notJumpList&lt;3)，执行所 有操作。被执行操作count属性自加1，根据公式计算界面权值Li.weight，完成后跳转到(4)。 如果len(Li.notJumpList)＝0，跳转到(4)。</p>
+<p>4)Lk＝max(W(L))，如果i＝k，跳到(3)；如果i≠k，跳到(5)。<br>5)根据广度优先算法在图中搜索当前界面Li到界面Lk的路径S，如果S存在，按照跳转 操作执行，操作的count属性自加1，跳转到(2)。如果S不存在，执行返回操作，跳到(5)。</p>
+<p>每个应用程序运行时间预定义是10分钟，当时间到达后自动结束上述遍历算法。预定义 时间可根据任务量和程序的大小进行调节。多组合均衡遍历算法的执行流程需要注意一种特 殊情况：在遍历执行的过程中，可能执行某个操作后会导致应用程序正常退出或异常崩溃退 出，如果出现这种异常，需要对这个操作进行标记，在遍历过程中减少这个操作运行的次数。 然后自动重新启动该应用，并继续执行遍历算法，如果在检测期间出现2次应用异常崩溃， 直接停止遍历算法。</p>
+<p>步骤四：根据预处理组件获取的待检测应用的权限及组件信息，从特殊事件触发库中抽 取符合条件的特殊事件列表，之后在主控组件的控制下在APP运行期间随机触发这些特殊事 件。</p>
+<p>多组合均衡遍历算法无法模拟接收到短信、锁屏等特殊事件，因此，本发明设计了特殊 事件触发库进一步提升对应用程序内部处理逻辑的覆盖率，达到触发应用程序恶意为的目的。 特殊事件触发库采用特殊事件-权限映射表存储当前已发现恶意应用恶意行为的触发事件及 实现方法。在特殊事件-权限映射表中，特殊事件与权限之间是1对1或1对多的关系，即某 一个特殊事件发生可能需要多种权限的组合。特殊事件-权限映射表的具体描述如下表所示。</p>
+<p>特殊事件的提取流程分为以下2步：</p>
+<p>步骤1：提取应用申请的权限信息，根据提取的权限从特殊事件-权限映射表中抽取对应 的特殊事件；</p>
+<p>步骤2：根据提取的特殊事件在特殊事件-权限映射表中查找需要的权限，如果需要的权 限均被应用申请，这表明这个特殊事件满足触发条件，需要在应用运行时执行这个特殊事件。 不满足则舍弃这个特殊事件。</p>
+<p>步骤五：通过ADB与设备之间进行通讯与控制，并在界面分析组件、界面控制组件、特 殊事件触发组件的支撑下，实现对应用的安装、启动、运行、卸载等自动化操作，提升触发 检测应用恶意行为的概率，完成自动检测。</p>
+<p>近年来，Android平台的恶意应用程序呈爆发式增长，国内外研究组织针对Android平台 恶意应用检测展开了许多研究。第三方应用市场和网络论坛是恶意应用程序的主要传播途径， 通过在这些渠道中检测上传应用程序是否含有恶意行为，可阻断恶意应用程序利用这些途径 传播，遏制恶意应用程序的扩散。但是，目前没有有效的方法可准确识别上传应用是否具有 恶意行为。通过对当前恶意应用检测领域的分析，本发明提出了可更高效、准确识别应用程 序恶意行为的AMBDS检测系统，该系统解决方案的工作可以划分为以下三个步骤：</p>
+<p>步骤1：多层行为监控模块通过修改Android源码、植入网络监控工具实现对Java调用、 本地调用和网络连接的监控，从多个层面捕获应用程序运行时的行为日志。</p>
+<p>步骤2：行为分析模块通过函数调用关系和函数参数特征识别应用程序中的恶意行为。 同时，行为分析模块会生成应用行为分析报告，以此帮助用户识别检测结果中误报或漏报的 恶意行为，并修正或扩展恶意行为特征库，进一步提升检测结果的准确性。<br>步骤3：检测系统中的DroidRunner行为触发模型根据对界面调度方式和已知恶意行为触 发条件的分析设计了多组合均衡遍历算法和特殊事件触发库，提升了对应用程序内路径和敏 感函数调用的覆盖率，可更高效的触发恶意行为。</p>
+<p>本发明重点在于DroidRunner行为触发模型的实施。该模型由6个组件组成：预处理、 主控、界面分析、界面控制、特殊事件触发和特殊事件触发库。其示意图如附图2所示。</p>
+<p>预处理组件实施时，主要是分析APK并获取其基本信息，为其它组件的运行提供基础数 据。界面分析组件实施时，主要是获取当前Activity中显示的所有可操作控件的属性，并生 成控件序列，为界面控制组件提供基础数据。</p>
+<p>界面控制组件实施时，主要是模拟用户对应用的操作，这些操作根据多组合均衡遍历算 法调度生成。该算法的核心思想是均衡的对应用中所有的可操作的控件进行遍历操作，在遍 历过程中，根据控件的类型进行不同的组合来模拟人对应用的操作，通过对用户界面内不同 控件的操作可能导致界面间的跳转，附图3展示了一个应用内界面间跳转关系的抽象图。</p>
+<p>特殊事件触发实施时，主要是基于对由注册广播接受器和检测运行环境类事件触发执行 应用程序恶意行为的分析，设计了命令行实现、脚本实现和预装实现方式三种方式来实现这 些事件的自动化触发。</p>
+<p>方式一：命令行实现方式。在Android系统中提供了功能强大的调试工具Android调试 桥和Dalvik虚拟机调试监控服务(DalvikDebugMonitorService，DDMS)。这些工具可以模 拟对Android虚拟机进行锁屏操作、启动指定服务、向虚拟机发送短信，打电话等特殊事件。</p>
+<p>方式二：脚本实现方式。通过录制模拟用户某些特定操作的脚本来实现特殊事件库中的 某些特殊事件。这类脚本包括录制变更联网操作的脚本，录制登陆支付宝、微信等应用的脚 本，录制发短信的脚本等。</p>
+<p>方式三：预装实现方式。在测试的Android虚拟机中根据应用的基本信息设置初始环境， 触发应用的恶意行为。这些预设信息可能是一些敏感的短信、通话记录等信息，预装一些社 交类应用、安全类应用、支付类应用等，并对这些应用进行基本操作产生一些使用记录等。</p>
+<p>特殊事件触发库实施时，会存储当前已发现恶意应用恶意行为的触发事件及实现方法。 根据应用程序申请的权限信息分析出应用程序对那些特殊事件敏感，同时根据应用程序的组 件构成等内容可分析出应用程序某些功能。基于这些分析提取出特殊事件触发库中的对应特 殊事件，提高检测的精度。</p>
+<p>主控组件实施时，主要是负责通过ADB与设备之间进行通讯与控制，并在界面分析组件、 界面控制组件、特殊事件触发组件的支撑下，实现对应用的安装、启动、运行、卸载等自动 化操作。</p>
+<p>本发明的测试环境为利用Python脚本语言和Java语言实现了AMBDS恶意行为检测系统， 开发环境是Ubuntu12.0464位操作系统。本发明从行为监控部分的虚拟机性能、行为触发部分 的触发效果及整体检测效果三个方面进行测试。</p>
+<p>1)AMBDS检测效果分析</p>
+<p>本项测试的目标是检测AMBDS的实际检测效果。通过网络论坛、QQ群和博客等途径收集 到了可用的恶意应用样本35个，同时，在其他同学的帮助下开发了5个恶意样本，共计40 个恶意应用样本。将上述40个恶意样本均利用AMBDS模型进行检测分析，设置每个样本的测 试时间为15分钟。为更好的分析本文提出的系统的检测效果，本文将自编辑样本和网络样本 分开统计，同时检测结果也分为直接识别出的检测结果和根据对行为分析报告分析修正后的 检测结果。40个恶意样本经AMBDS恶意行为检测系统检测后的检测结果统计数据如附图4所 示。</p>
+<p>结果分析：自编辑样本的恶意行为检出率高与网络样本的恶意行为检出率，原因可能是 自编辑的恶意样本中对恶意行为隐藏和掩饰的能力较差，同时这类样本是模仿分析过了恶意 样本进行编写，因此恶意行为特征库中存在这类变种样本的特征，从侧面也能表明AMBDS系 统对未知恶意应用具有好的检测效果。AMBDS系统对网络样本的直接检出率较低，其原因是 恶意行为特征库中的恶意行为特征规模相对较小。但是，通过对行为检测报高的分析，恶意 行为检出率有了明显提升。这表明AMBDS系统对恶意应用程序的分析可帮助分析人员发现未 知恶意应用的恶意行为。同时，根据新发现的恶意行为可归纳总结其行为特征扩充恶意行为 特征库，提升对应用程序恶意行为的直接检出率，以此形成良性循环。</p>
+<p>2)DroidRunner触发效果分析</p>
+<p>本项测试的目标是验证DroidRunner对应用程序实际的触发效果，本次测试设计了A、B 两组测试样本。A组由4个开源应用程序，通过添加了部分敏感API函数调用扩展应用程序 的功能。A组的测试样本分别使用Monkeyrunner和DroidRunner对其进行处罚并对并统计应 用程序执行期间的控件覆盖率、控件的点击次数差额、函数覆盖率、敏感API覆盖率和恶意 行为触发率。B组由20个病毒样本组成，分别使用Monkey、Monkeyrunner和DroidRunner 三种触发方式实现对样本的自动控制，并统计函数覆盖率、恶意行为触发率和敏感函数触发 次数。附图5展示了B组测试中三种触发方式在函数覆盖率、恶意行为触发率参数的统计值。</p>
+<p>结果分析：通过对以上两组测试的统计数据分析，DroidRunner基本能覆盖应用程序中所 有的识别出可操作控件，相比传统的行为触发方法，其可覆盖应用程序运行期间绝大部分的 函数调用，对应用程序中的敏感行为触发效果显著。DroidRunner可高效覆盖应用程序大部分 程序路径的能力，达到高效、稳定触发应用程序中可能存在的恶意行为的效果。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://www.innojoy.com/patent/patent.html?docno=CN201610130822.0&amp;trsdb=fmzl" target="_blank" rel="noopener">基于组合事件行为触发的Android恶意行为检测系统及其检测方法</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+              <a href="/tags/DroidRunner/" rel="tag"><i class="fa fa-tag"></i> DroidRunner</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/optimization-of-android/" rel="next" title="Best Practices of Android Performance">
+                  <i class="fa fa-chevron-left"></i> Best Practices of Android Performance
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/IPR/IPCreator/IPR/Patent Searcher/" rel="prev" title="Patent Searcher">
+                  Patent Searcher <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本信息"><span class="nav-number">1.</span> <span class="nav-text">基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#权利要求书"><span class="nav-number">2.</span> <span class="nav-text">权利要求书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说明书"><span class="nav-number">3.</span> <span class="nav-text">说明书</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#技术领域"><span class="nav-number">3.1.</span> <span class="nav-text">技术领域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#背景技术"><span class="nav-number">3.2.</span> <span class="nav-text">背景技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发明内容"><span class="nav-number">4.</span> <span class="nav-text">发明内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#附图说明"><span class="nav-number">4.1.</span> <span class="nav-text">附图说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体实施方式"><span class="nav-number">4.2.</span> <span class="nav-text">具体实施方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

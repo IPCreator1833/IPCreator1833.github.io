@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="贝叶斯定理的威力之一在于能让我们由已知的概率以及手头的信息去推断未知的概率。 概率论只不过是把常识用数学公式表达了出来。——拉普拉斯">
+<meta name="keywords" content="Math,Bayes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bayes&#39; Theorem">
+<meta property="og:url" content="https://hazyman.com/AI/IPCreator/Technology/AI/Basic Concept/bayes-rule/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="贝叶斯定理的威力之一在于能让我们由已知的概率以及手头的信息去推断未知的概率。 概率论只不过是把常识用数学公式表达了出来。——拉普拉斯">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.beekka.com/blog/201108/bg2011082507.jpg">
+<meta property="og:image" content="http://www.luojiji.com/data/attachment/forum/201512/29/162218syyj0uu30qu6oogf.jpg">
+<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2017/01/374.jpg">
+<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2017/01/367.png">
+<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2017/01/368.png">
+<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2017/01/369.png">
+<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2017/01/370.png">
+<meta property="og:updated_time" content="2017-11-06T09:45:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bayes&#39; Theorem">
+<meta name="twitter:description" content="贝叶斯定理的威力之一在于能让我们由已知的概率以及手头的信息去推断未知的概率。 概率论只不过是把常识用数学公式表达了出来。——拉普拉斯">
+<meta name="twitter:image" content="http://image.beekka.com/blog/201108/bg2011082507.jpg">
+
+<link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/Basic Concept/bayes-rule/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Bayes' Theorem | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/AI/IPCreator/Technology/AI/Basic Concept/bayes-rule/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bayes' Theorem
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/AI/IPCreator/Technology/AI/Basic Concept/bayes-rule/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/AI/IPCreator/Technology/AI/Basic Concept/bayes-rule/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="http://image.beekka.com/blog/201108/bg2011082507.jpg" alt></p>
+<p>贝叶斯定理的威力之一在于能让我们由已知的概率以及手头的信息去推断未知的概率。</p>
+<p>概率论只不过是把常识用数学公式表达了出来。——拉普拉斯</p>
+<a id="more"></a>
+<p><a href="https://xueqiu.com/8102984655/73644129" target="_blank" rel="noopener">贝叶斯定理的胆识</a></p>
+<p>同人于野</p>
+<p>你相信上帝吗？你相信中医吗？你相信全球变暖是人为造成的，而且问题非常严重吗？你相信转基因食品的安全性吗？你相信大年初一去雍和宫祈福能带来好运吗？</p>
+<p>本文不研究这些问题。我想说的是，当你说“我相信”或者“我不相信”的时候，你到底是个什么意思。</p>
+<p>如果我们把“相信”仅仅当成一个表态，那它的意义其实相当有限。也许我们可以在跟朋友闲聊的时候吹吹，也许我们可以在网上参与评论，也许我们还能写篇文章说明自己的立场。但是这又能怎样？空谈误国。我们的观点完全不左右真理，而且通常很难左右别人。</p>
+<p>“相信不相信”的真正意义，在于给我们自己的决策提供依据。如果我相信大年初一去雍和宫祈福能带来好运，那么第一，我想方设法去；第二，别人信与不信与我关系不大，事实上我可能希望信的人少，这样我去更方便。如此说来“信不信”是个非常主观的判断，我们完全可以容忍别人的判断跟自己不同。</p>
+<p>更进一步，“信或不信”有点生硬，最好我们能把它量化一下，用一个数字来描述，比如说用概率。比如如果我说“雍和宫好使的可能性是15%”，那我就是不怎么相信；如果我说“雍和宫好使的可能性是100%”，那我就是深信不疑。严格地说，这个概率数字当然是所谓“主观概率”，就好像天气预报说明天下雨的概率是30%—样，其实“明天”只发生一次，并不是说在100个平行宇宙的明天中有30个会下雨。</p>
+<p>这个量化了的信念可以让我们的决策更科学。如果我对雍和宫的信念值只有15%，但是我大年初一那天正好就从雍和官路过，那我就完全可以进去上个香，有枣没枣打一竿子再说——可是专程跑一趟就没必要了。如果我对雍和宫的信念值高达95%，那我就值得坐火车去北京上香。</p>
+<p>真正的深信不疑和彻底不信都是很少的，甚至可能是虚张声势自欺欺人。一般情况下对一般有争议的问题我们都是抱着将信将疑的态度，信念值在0.01%到99.99%之间。而且，我们对大多数事物的信念值都在动态变化。比如有什么特别突兀的新东西出来，我们一开始可能是不信的，随着证据增多，慢慢加强信念。</p>
+<blockquote>
+<p>—个智识分子应该拥有这种复杂的信念体系，时刻调整自己对各种事物的看法。也可以说，这是不断地变动自己的世界观。</p>
+</blockquote>
+<p>想要科学合理地做到这一点，我们需要用到贝叶斯定理。这个定理的数学形式和思想都非常简单，早在两百多年前就被人发现和使用了，但是—直争议极大，因为它的用法恰恰是计算主观概率。很多统计学家认为主观概率根本不科学，个人的信念毫无意义，只有客观概率才值得严肃对待。但是在过去这五六十年内，实用主义者们没理会统计学家的争论，使用贝叶斯定理做了很多很多事：破解了二战时德军密码、预测了俄罗斯潜艇的位置、判断申请贷款者的信用……我们不妨直接引用《金融时报》中文版何帆的一篇科普文章：</p>
+<p>生命科学家用它研究基因是如何被控制的；教育学家突然意识到，学生的学习过程其实就是贝叶斯法则的运用；基金经理用贝叶斯法则找到投资策略；Google用贝叶斯法则改进搜索功能，帮助用户过滤垃级邮件；无人驾驶汽车接收车顶传感器搜集到的路况和交通数据，运用贝叶斯法则灵新从地图上获得的信息。人工智能、机器翻译中大量用到贝叶斯法则。</p>
+<blockquote>
+<p>所有这些应用的原理都是一样的。如果我掌握这个东西的全部信息，那我当然能计算一个客观概率——可是生活中绝大多数决策面临的信息是不全的，我们手里只有非常有限的几个证据。而贝叶斯定理的精神在于，既然无法得到全面的信息，我们就在证据有限的情况下，尽可能地做一个更好的判断。</p>
+</blockquote>
+<p>先来看看贝叶斯定理是什么样的：</p>
+<p>P(A|B)= p(B|A) /  P（B) * p(A)</p>
+<p>A代表我们感兴趣的事件，比如“雍和宫祈福有用”，<br>p（A)表示它发生的概率。<br>B代表一个与之有关的事件，比如“我朋友，某甲，去年去了雍和宫祈福，结果他很快就升职了”，<br>P(A\B)则代表在B发生的情况下，A发生的概率。<br>类似地，p（B）表示B发生的概率，p(B\A)表示在A发生的情况下，B发生的概率。</p>
+<p>这是一个“定理”，因为它不是哪个门派掌门人拍脑袋决定的思路，而是数学推导出来的（推导过程非常容易，P(A|B)<em> p(A)和p(B|A) </em>P（B) 都等于“A和B都发生的概率”）。并不是你“选择”使用这个公式，而是只要你认同概率论的基本法则，你就必须用这个公式。统计学家的分歧在于走这一步到底好不好，而不在于这一步应该怎么走。</p>
+<p>如果你没怎么看懂上面说的技术细节，也请坚持往下读——最关键思想是：当B发生以后，有了这个新的证据，我们对A的信念就需要做一个调整，从p(A)变成p（A\B)了。你可以把A当成你对一般情况的理论预言，把B当成一次实验结果。有了新的实验结果，你就调整自己的理论预言。</p>
+<p>现在我们就拿雍和宫祈福这个例子，来看看一个贝叶斯主义者是怎么更新自己的信念的。首先我们用基本的概率公式，把p（B)展开成P(B)=p（B\A）<em>p（A）+p（B\A-）</em>p（A-），其中A-表示A的相反事件，也就是“雍和宫不好使”，p（A-)=1-p（A）。这么做可以更精确地估算p(B)。这样贝叶斯定理要求我们先自行估计三个值：</p>
+<p>你事先认为雍和宫有多好使，也就是p(A)；<br>p（A-)=1-p（A）<br>如果雍和宫好使，某甲因为祈福加持而升职的可能性，也就是P(B\A)；<br>如果雍和宫不好使，某甲不借助这个力量而升职的可能性，也就是p（B\A-)。</p>
+<p>—个比较合理的估计差不多是这样的。某甲既然能升职，必然有过人之处，那么我们可以认为他在没有雍和宫加持的情况下也有50%的升职可能，所以P(B\A-)=0.5。雍和宫就算再灵验也不能有求必应，否则人人出来都成亿万富翁了，我们姑且假设，所谓“灵验”就是能让某甲升职的概率大大提升，这样我们可以估计P（B\A)=0.8。如果你事先对雍和宫的信念值是15%，那么p（A)=0.15。</p>
+<p>这样根据贝叶斯定理计算，现在你的信念值应该是p（A\B)=0.22。<br>（<br>A、根据公式P(B)=p（B\A）<em>p（A）+p（B\A-）</em>p（A-），得到P（B）=0.545<br>B、根据公式P(A|B)<em> p(A)=p(B|A) </em>P（B) 计算得到p（A\B)=0.22）</p>
+<p>玩这种数字有什么意义呢？这比听风就是雨可高级多了。如果我的信念值从15%变成22%，那就说明第一，我这个人听劝，有利证据进来了，我的确调高了我的信念值；第二，我这个人稳重，没有听到一个证据就立即发生世界观的彻底改变，过去不怎么信，现在还是不怎么信。听劝又稳重，既做到了开张圣听，也没有妄自菲薄，古代对贤人的要求也不过如此吧？</p>
+<p>而且你可以继续调整信念。假设过了一年你听说另一个朋友某乙，水平与某甲相当，也去了雍和宫祈福升职，结果未能升职！这一次，p（A)=0.22。现在B表示“未能升职”，所以p（B\A）不再是0.8，而应该是0.2。p（B\A-)仍然是0.5。我们计算出，p（A\B）=0.1。</p>
+<p>所以因为这一次不灵的事件，你应该把你对雍和宫的信念值从22%调低到10%。在数学上很容易证明，<strong>只要p（B\A)&gt;p(B\A-)，B事件就会使我们对事件A的信念值提升，反之则会降低。</strong> 这样有时候往上调有时候往下调，当你听说了很多证据之后，就有可能形成一个比较稳定的看法。对雍和宫这样的例子来说，经过几次祈福不好使的打击，很快你就应该不信了。<br>而如果我们对某件事的信念值非常非常低，那么即使强有力的证据也很难扭转我们的信念。现在我们来说一个贝叶斯定理的极端例子，这个例子堪称典故！</p>
+<p>艾滋病毒（HIV)检测技术的准确度相当惊人。如果一个人真是HIV阳性，血液检测的手段有99.9%的把握把他这个阳性给检查出来而不漏网。如果一个人不携带HIV，那么检测手段的精度更高，达到99.99%——也就是说只有0.01%的可能性会冤枉他。</p>
+<p>已知一般人群中HIV携带者的比例是0.01%。现在假设我们随便在街头找一个人给他做检查，发现检测结果是HIV阳性，那么请问，这个人真的携带HIV的可能性是多大呢？</p>
+<p>在你回答之前，我先提供一点背景资料。德国马普研究所的心理学家曾经拿这道题考了好几百人，包括学生，数学家和医生。结果95%的大学生和40%的医生都给出了错误的答案。</p>
+<p>我们使用贝叶斯定理。<br>A表示“这个人真的携带HIV”，<br>B表示“检测出HIV”，<br>那么根据现有条件，p（A）=0.01%，<br>p（B\A)=99.9%，<br>p（B\A-)=0.01%，带入公式，计算得到p（A\B)=50%！</p>
+<p>答案是即使在这么高的检测准确度之下，哪怕这个人真的被检测到HIV阳性，他真有HIV的可能性也只有50%。</p>
+<p>如果你脑子还没转过弯来，我们还有个直观的解释。假设我们随机地找一万个人来做实验。根据HIV病毒的分布，这一万人中应该只有一个人是真的携带HIV的。而由于我们的检测手段很强，这个人会被检测出来。但剩下的9999人都没有携带HIV，可是我们对没有携带HIV的人的检测精度是99.99%，也就是说有万分之一的可能性会冤枉一人。这样一来，我们的检测手段还会在9999人中冤枉一个人。</p>
+<p>本来只有一人携带HIV，可是我们却检测出来两人。所以如果一个人被检测出HIV来，他真的携带HIV的可能性其实只有50%。</p>
+<p>从根本上说，造成这种局面的原因在于HIV尽管名声很大，但其实是一种罕见的病毒，人群中只有万分之一的人感染。在这种情况下即使你的检测手段再高，也很有可能会冤枉人。</p>
+<p>如果一个疾病比较罕见，那么你就不应该对阳性诊断太有信心。</p>
+<p>由此我联想到中国历史特殊时期的“抓特务”行动。“特务”这个工作的要求，其实贵在精而不在多，再说国民党也没那么多钱养，真正的特务其实是很少的。如果我们看到一个人长得像特务，说话走路也像特务，我们有多大把握说他就是特务呢？上面这个例子告诉我们，“误诊率”可能相当高。“抓特务”，最好的办法是冒出来一个抓一个，最可怕的办法是搞“人人过关”。如果你搞“人人过关”，必然是一大堆冤假错案！</p>
+<p>这就是冤假错案产生的数学原理，这也是为什么卡尔萨根说“超乎寻常的论断需要超乎寻常的证据”。</p>
+<p>我自己最近的一次信念改变的经历是关于自动驾驶汽车的。2010年第一次听说Google正在试验一个相当完善的自动驾驶汽车系统，我不太相信。那时候很多人还在把驾驶当成一个人工智能非常难以做到的例子来说事儿——计算机别说驾驶汽车，连在停车场停车都停不好。别的公司试验自动驾驶，都是非常初级的技术：或者需要特殊的公路，或者需要一个人做司机在前面引路，后面无人驾驶车队必须一辆紧挨着一辆不能有别的车插队，模仿着往前走，根本谈不上应对复杂的交通路况。所以我当时判断可能记者没听懂专家的介绍，或者记者被忽悠了。</p>
+<p>然而此后陆续看到很多关于Google这个项目的报道，越来越多细节被透露出来。这时候，虽然其他公司的自动驾驶项目仍然很初级，虽然家用吸尘机器人的行动路线仍然很愚蠢，但我已经非常相信Google的自动驾驶系统了。鉴于这个系统从未有过商业应用，我目前对它的相信程度大概是95%。这个信念值已经足以让我在写文章的时候假定这个自动驾驶系统真实存在。</p>
+<p>据说中国曾经在历史特殊时期禁止教授贝叶斯统计学，可能因为那时候的人认为信念不容更改吧。至今有很多人是坚持信念不看证据的，甚至有了与自己信念相反的证据出来，他直接忽略这个证据，或者干脆说这是个阴谋，反而证明我的信念更正确了。还有一种情况是像雍正对年羹尧那样，要说信任就好得如胶似漆，要说不信就不听辩解直接赐死！像这样的二愣子性格，实在不太适合求知。正确的态度是不断根据新的事实来调整自己的观点。</p>
+<p><strong>观点随事实改变，有胆有识，这就是贝叶斯定理的伟大原则。</strong></p>
+<p>文章选自《智识分子》</p>
+<h2 id="最简单概率论的五个智慧"><a href="#最简单概率论的五个智慧" class="headerlink" title="最简单概率论的五个智慧"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=3005&amp;highlight=%E6%99%BA%E6%85%A7" target="_blank" rel="noopener">最简单概率论的五个智慧</a></h2><p><img src="http://www.luojiji.com/data/attachment/forum/201512/29/162218syyj0uu30qu6oogf.jpg" alt></p>
+<p>2015-12-05万维钢</p>
+<p>我认为人人都应该学一些概率知识，它现在是公民必备知识。 </p>
+<p>现在的世界比过去复杂得多，其中有大量不确定性，<strong>是否理解概率，直接决定一个人的开化程度。 </strong></p>
+<p>1.随机：有些事情是无缘无故地发生的</p>
+<p>这个思想对我们的世界观有颠覆的意义。</p>
+<p>古人没有这个思想，认为一切事物都是有因果的，甚至可能都是有目的的。人们曾经认为世界像一个钟表一样精确地运行。但真实世界不是钟表，它充满不可控的偶然。 </p>
+<p>更严格地说，有些事情的发生，跟他之前发生的任何事情，都可以没有因果关系。不论我们做什么都不能让它一定发生，也不能让它一定不发生。 </p>
+<p>一个人考了好大学，人们会说这是他努力的结果；一个人事业成功，人们会说这是他努力工作的结果。可是如果一个人买彩票中了大奖，这又是为什么呢？</p>
+<p>答案是没有任何原因，这完全是一个随机事件。总会有人买彩票中奖，而这一期彩票中奖，跟他是不是好人，他在之前各期买过多少彩票，他是否关注中奖号码的走势，没有任何关系。 </p>
+<p>若一个人总是买彩票，他中奖的概率会比别人大点吧？的确，他一生之中中一次奖的概率比那些只是偶然买一次彩票的人大。但是当他跟上千万个人一起面对一次开奖的时候，他不具备任何优势。他之前所有的努力，对他在这次开奖中的运气没有任何帮助。一个此前没有买过任何彩票的人，完全有可能，而且有同样大的可能，在某一次开奖中把最高奖金拿走。 </p>
+<p>中奖，既不是他个人努力的结果，也不是“上天”对他有所“垂青”；不中，也不等于任何人与他做对。这就是“随机”，你没有任何办法左右结果。 </p>
+<p>理解随机性，我们就知道很多事情发生就发生了，没有太大可供解读的意义。我们不能从这件事获得什么教训，不值得较真，甚至不值得采取行动。 </p>
+<p>· 再完美的交通工具也不可能百分百安全，我们会因为极小的事故概率不坐飞机吗？我们只需要确定事故概率比其他旅行方式小就可以了。甚至连这都不需要，只需要确定这个小概率事件我们能够容忍就可以了。 </p>
+<p>2.赌徒谬误</p>
+<p>假如你在赌场玩老虎机，一上来运气不太好，连输好几把。这时候你是否有种强烈的感觉，你很快该赢了？ </p>
+<p>买股票、期货、彩票都是一样。连续好几把上来就亏损的情况下，是不是觉得下一把挣钱的概率很大？ </p>
+<p>这完全是一种错觉。赌博完全是独立的随机事件，这意味着下一把的结果和以前所有的结果都没有任何联系，已经发生了的事情不会影响将来。 </p>
+<p>“大数定律”说，如果进行足够多的抽奖，那么各种不同结果出现的频率就会等于他们的概率。 </p>
+<p>人们常常错误地理解为，随机就意味着均匀。如果过去一段时间内发生的事情不均匀，人们就错误的以为未来的事情会尽量往“抹平”的方向走。如果连输几把，那么下一把就应该会赢。 </p>
+<p>但大数定律的工作机制不是和过去搞平衡，它的真实意思是说如果未来进行非常多次的抽奖，你输非常多次、赢非常多次，以至于他们此前的一点点差异就会变得微不足道。 </p>
+<p>· 有个笑话说一个人乘坐飞机时总带着一颗炸弹，他认为这样就不会被恐怖分子炸飞机了，因为一架飞机上有两颗炸弹的可能性非常小。</p>
+<p>· 战场上士兵有个说法，如果战斗中炸弹在你身边爆炸，你应该迅速跳进那个弹坑，因为两颗炸弹不大可能打到同一个地方。</p>
+<p>这都是不理解独立随机事件导致的。</p>
+<p>3.在没有规律的地方发现规律 </p>
+<p>理解了随机性和独立随机事件，我们可以得到一个结论：独立随机事件的发生是没有规律和不可预测的，这是一个非常重要的智慧。</p>
+<p>彩票分析师，相信中奖号码存在走势，相信其中的规律，所以近期多次出现的组合可能会继续出现，或者按照这个趋势可以预测下一个号码。 </p>
+<p>但这里根本没有规律，是完全随机的现象，即便存在缺陷，也需要大量的开奖后才能发现，而且缺陷的结果也很简单，无非是某个特定号码出现的可能性略大一些，完全谈不上什么复杂规律。 </p>
+<p>明明没有规律，这些彩票分析师是怎么看出规律来的呢？也许他们不是故意骗人，而很可能他们真的相信自己找到了彩票的规律。</p>
+<p>发现规律是人的本能。</p>
+<p>春天过后是夏天，乌云压顶常下雨，大自然中很多事情的确是有规律的。我们的本能工作得如此之好，以至于我们在明明没有规律的地方也能找出规律来。人脑很擅长理解规律，但是很不擅长理解随机性。 </p>
+<p>在没有规律的地方发现规律是很容易的事情，只要你愿意忽略所有不符合你这个规律的数据。而且如果数据够多，我们可以找到任何我们想要的规律。 </p>
+<p>· 有人拿圣经做字符串游戏，声称这是圣经对后世的预言。问题是，这些预言可以完美的解释已经发生的事情，但在预测未发生的事情时就不好使了。关键是圣经中有很多很多字符，如果仔细寻找，尤其是借助计算机的话，总能找到任何想要的东西。</p>
+<p>· 把圣经换成毛选也一样，你会发现毛选也早就预言了中国后世发生的所有大事。</p>
+<p>未来是不可被精确预测的，这个世界也并不像钟表那样运行。 </p>
+<p>4.小数定律 </p>
+<p>现在我们知道，数据足够多的话，人们可以找到任何自己想要的重要规律，只要他不在乎这些规律的严格性和自洽性。那么在数据足够少的情况下又会如何？ </p>
+<p>如果数据足够少，有些规律会自己跳出来，你甚至不相信都不行。 </p>
+<p>人们抱着游戏或者认真的态度总结了世界杯足球赛的各种“定律”。比如——</p>
+<p>· “巴西队的礼物”：只要巴西夺冠，下一届的冠军就将是主办大赛的东道主，除非巴西队自己将礼物收回。这一定律在2006年被破解。<br>· “1982轴心定律”：世界杯夺冠球队以1982年世界杯为中心呈对称分布，这个定律在2006年被破解。 </p>
+<p>还有一些未被破解的定律，比如——</p>
+<p>· 凡是获得联合会杯或美洲杯，就别想在下一届世界杯夺冠。<br>· 中国队的“王治郅定律”：只要王治郅参加季后赛，八一队必然得总冠军，以及“0:2”落后无人翻盘定律。 </p>
+<p>如果仔细研究这些定律，会发现不易破解的定律其实都有一定的道理。王治郅和八一队都很强，0:2落后的确很难翻盘，而获得世界杯冠军是个非常不容易的事情，更别说同时获得联合会杯、美洲杯和世界杯。但不容易不等于不会发生，他们终究会被破解。</p>
+<p>那些看似没有道理的神奇定律（正因为没道理，所以显得神奇），则大多数已经被破解。之所以神奇，是因为纯属巧合。世界杯总共才进行了80多年，20多届。只要数据足够少，我们总能发现一些没有破解的规律。 </p>
+<p>如果数据少，随机现象可以看上去很不随机。甚至非常整齐，感觉好像真有规律一样。 </p>
+<p>问题的关键是，随机分布不等于均匀分布。要想均匀分布，必须要样本总数非常大的时候才有效。一旦不均匀，人们就认为其中必有缘故（阴谋论），而事实却是这可能只是偶然事件。 </p>
+<p>· iPod最早推出“随机播放”功能的时候，用户发现有些歌曲会被重复播放，他们据此认为播放根本不随机。苹果公司只好放弃真正的随机算法，用乔布斯本人的话说，就是改进以后的算法使播放“更不随机以至于让人感觉更随机”。 </p>
+<p>如果统计数据很少，就很容易出现特别不均匀的情况。这个现象被诺奖得主丹尼尔·卡尼曼戏称为“小数定律”。卡尼曼说，如果我们不理解小数定律，就不能真正理解大数定律。 </p>
+<p>大数定律是我们从统计数字中推测真相的理论基础。大数定律说如果统计样本足够大，那么事物出现的频率就能无限接近他的理论概率——也就是他的“本性”。而小数定律说如果样本不够大，那么他就表现为各种极端情况，而这些情况可以跟他的本性一点关系都没有。</p>
+<p>· 一个只有二十人的乡村中学某年突然有两人考上清华，跟一个有两千人的中学每年都有两百人考上清华，完全没有可比性。  </p>
+<p>如果统计样本不够大，就什么也说明不了。 </p>
+<p>正因为如此，我们才不能只凭自己的经验，哪怕加上家人和朋友的经验，去对事物做出判断。我们的经验非常有限。别看个例，看大规模统计。有的人听说两三个负面新闻就敢写文章把社会批得一文不值，这样的人非常无知。</p>
+<p>本文由作者 万维钢 授权罗辑思维发布，选自《万万没想到——用理工科思维理解世界》，电子工业出版社出版。</p>
+<p>罗胖日：<br>有的时候，样本量大也说明不了问题。<br>比如，中国的污染很重，犯罪率很高，槽点很多，能说明这个国家没前途吗？<br>也许恰恰是因为这个国家蒸蒸日上。<br>认知没有什么终极正确，只有逐步升级。<br>认知的升级，本质上来源于认知尺度的扩展。<br>1.时间尺度——多读历史。<br>2.空间尺度——多观世界。<br>3.观念尺度——聆听高人。<br>认知没有正误之别。但确实有高下之分。<br>因为所在尺度层次有异。</p>
+<h2 id="我理解的朴素贝叶斯模型"><a href="#我理解的朴素贝叶斯模型" class="headerlink" title="我理解的朴素贝叶斯模型"></a><a href="http://www.36dsj.com/archives/74779" target="_blank" rel="noopener">我理解的朴素贝叶斯模型</a></h2><p><img src="http://www.36dsj.com/wp-content/uploads/2017/01/374.jpg" alt></p>
+<p>文 | 胡晨川</p>
+<p>我想说：“任何事件都是条件概率。”为什么呢?因为我认为，任何事件的发生都不是完全偶然的，它都会以其他事件的发生为基础。换句话说，条件概率就是在其他事件发生的基础上，某事件发生的概率。</p>
+<blockquote>
+<p>条件概率是朴素贝叶斯模型的基础。</p>
+</blockquote>
+<p>假设，你的川术公司正在面临着用户流失的压力。虽然，你能计算用户整体流失的概率(流失用户数/用户总数)。但这个数字并没有多大意义，因为资源是有限的，利用这个数字你只能撒胡椒面似的把钱撒在所有用户上，显然不经济。<strong>你非常想根据用户的某种行为，精确地估计一个用户流失的概率，若这个概率超过某个阀值，再触发用户挽留机制。这样能把钱花到最需要花的地方。</strong></p>
+<p>你搜遍脑子里的数据分析方法，终于，一个250年前的人名在脑中闪现。就是“贝叶斯Bayes”。你取得了近一个月的流失用户数、流失用户中未读消息大于5条的人数、近一个月的活跃用户数及活跃用户中未读消息大于5条的人数。在此基础上，你获得了一个“<strong>一旦用户未读消息大于5条，他流失的概率高达%</strong>”的精确结论。怎么实现这个计算呢?先别着急，为了解释清楚贝叶斯模型，我们先定义一些名词。</p>
+<p>概率(Probability)——0和1之间的一个数字，表示一个特定结果发生的可能性。比如投资硬币，“正面朝上”这个特定结果发生的可能性为0.5，这个0.5就是概率。换一种说法，计算样本数据中出现该结果次数的百分比。即你投一百次硬币，正面朝上的次数基本上是50次。</p>
+<p>几率(Odds)——某一特定结果发生与不发生的概率比。如果你明天电梯上遇上你暗恋的女孩的概率是0.1，那么遇不上她的概率就是0.9，那么遇上暗恋女孩的几率就是1/9，几率的取值范围是0到无穷大。</p>
+<p>似然(Likelihood)——两个相关的条件概率之比，即给定B发生的情况下，某一特定结果A发生的概率和给定B不发生的情况下A发生的概率之比。另一种表达方式是，给定B的情况下A发生的几率和A的整体几率之比。两个计算方式是等价的。</p>
+<p><img src="http://www.36dsj.com/wp-content/uploads/2017/01/367.png" alt></p>
+<p>因为上面在似然当中提到了条件概率，那么我们有必要将什么是条件概率做更详尽的阐述。</p>
+<p>如上面的韦恩图，我们用矩形表示一个样本空间，代表随机事件发生的一切可能结果。的在统计学中，我们用符号P表示概率，A事件发生的概率表示为P(A)。两个事件间的概率表达实际上相当繁琐，我们只介绍本书中用得着的关系：</p>
+<p>A事件与B事件同时发生的概率表示为P(A∩B)，或简写为P(AB)即两个圆圈重叠的部分。</p>
+<p>A不发生的概率为1-P(A)，写为P(~A)，即矩形中除了圆圈A以外的其他部分。</p>
+<p>A或者B至少有一个发生的概率表示为P(A∪B)，即圆圈A与圆圈B共同覆盖的区域。</p>
+<p>在B事件发生的基础上发生A的概率表示为P(A|B)，这便是我们前文所提到的条件概率，图形上它有AB重合的面积比上B的面积。</p>
+<p>回到我们的例子。<strong>以P(A)代表用户流失的概率，P(B)代表用户有5条以上未读信息的概率，P(B|A)代表用户流失的前提下未读信息大于5条的概率。</strong>我们要求未读信息大于5条的用户流失的概率，即P(A|B)，贝叶斯公式告诉我们：</p>
+<p>P(A|B)=P(B|A)*P(A)/P(B)</p>
+<p>如下图，由这个公式我们就能轻松计算出，在观察到某用户的未读信息大于5条时，他流失的概率为80%。80%的数值比原来的30%真是靠谱太多了。</p>
+<p><img src="http://www.36dsj.com/wp-content/uploads/2017/01/368.png" alt></p>
+<p>当然，现实情况并不会像这个例子这么理想化。大家会问，凭什么你就会想到用“未读消息大于5条”来作为条件概率?我只能说，<strong>现实情况中，你可能要找上一堆觉得能够凸显用户流失的行为，然后一一做贝叶斯规则，来测算他们是否能显著识别用户流失</strong>。寻找这个字段的效率，取决于你对业务的理解程度和直觉的敏锐性。另外，你还需要定义“流失”和“活跃”，还需要定义贝叶斯规则计算的基础样本，这决定了结果的精度。</p>
+<p>利用全概率公式的一个例子</p>
+<p>朴素贝叶斯的应用不止于此，我们再例举一个更复杂，但现实场景也更实际的案例。假设你为了肃清电商平台上的恶性商户(刷单、非法交易、恶性竞争等)，委托算法团队开发了一个识别商家是否是恶性商户的模型M1。为什么要开发模型呢?因为之前识别恶性商家，你只能通过用户举报和人肉识别异常数据的方式，人力成本高且速率很慢。你指望有智能的算法来提高效率。</p>
+<p>之前监察团队的成果告诉我们，目前平台上的恶性商户比率为0.2%，记为P(E)，那么P(~E)就是99.8%。利用模型M1进行检测，你发现在监察团队已判定的恶性商户中，由模型M1所判定为阳性(恶性商户)的人数占比为90%，这是一个条件概率，表示为P(P|E)=90%;</p>
+<p>在监察团队判定为健康商户群体中，由模型M1判定为阳性的人数占比为8%，表示为P(P|~E)=8%。乍看之下，你是不是觉得这个模型的准确度不够呢?感觉对商户有8%的误杀，还有10%的漏判。其实不然，这个模型的结果不是你想当然的这么使用的。</p>
+<p>这里，我们需要使用一个称为“全概率公式”的计算模型，来计算出在M1判别某个商户为恶性商户时，这个结果的可信度有多高。这正是贝叶斯模型的核心。当M1判别某个商户为恶性商户时，这个商户的确是恶性商户的概率由P(E|P)表示：</p>
+<p>P(E|P)=P(P|E)<em>P(E)/(P(E)</em>P(P|E)+P(~E)*P(P|~E))</p>
+<p>上面就是<strong>全概率公式。要知道判别为恶性商户的前提下，该商户实际为恶性商户的概率，需要由先前的恶性商户比率P(E)，以判别的恶性商户中的结果为阳性的商户比率P(P|E)，以判别为健康商户中的结果为阳性的比率P(P|~E)，以判别商户中健康商户的比率P(~E)来共同决定。</strong></p>
+<p><img src="http://www.36dsj.com/wp-content/uploads/2017/01/369.png" alt></p>
+<p>由上面的数字，带入全概率公式后，我们获得的结果为2.2%。也就是说，根据M1的判别为阳性的结果，某个商户实际为恶性商户的概率为2.2%，是不进行判别的0.2%的11倍。</p>
+<p>你可能认为2.2%的概率并不算高。但实际情况下你应该这么思考：<strong>被M1模型判别为恶性商户，说明这家商户做出恶性行为的概率是一般商户的11倍，那么，就非常有必要用进一步的手段进行检查了。</strong></p>
+<p>恶性商户判别模型真正的使用逻辑应该是如下图所示。我们先用M1进行一轮判别，结果是阳性的商户，说明出现恶性行为的概率是一般商户的11倍，那么有必要用精度更高的方式进行判别，或者人工介入进行检查。精度更高的检查和人工介入，成本都是非常高的。因此M1模型的使用能够使我们的成本得到大幅节约。</p>
+<p><img src="http://www.36dsj.com/wp-content/uploads/2017/01/370.png" alt></p>
+<p>贝叶斯模型在很多方面都有应用，我们熟知的领域就有垃圾邮件识别、文本的模糊匹配、欺诈判别、商品推荐等等。通过贝叶斯模型的阐述，大家应该有这样的一种体会：分析模型并不取决于多么复杂的数学公式，多么高级的软件工具，多么高深的算法组合;它们的原理往往是通俗易懂的，实现起来也没有多高的门槛。比如贝叶斯模型，用Excel的单元格和加减乘除的符号就能实现。所以，<strong>不要觉得数据分析建模有多遥远，其实就在你手边。</strong></p>
+<p>36大数据(<a href="http://www.36dsj.com)成立于2013年5月，是中国访问量最大的大数据网站。36大数据(微信号:dashuju36)以独立第三方的角度，为大数据产业生态图谱上的需求商" target="_blank" rel="noopener">www.36dsj.com)成立于2013年5月，是中国访问量最大的大数据网站。36大数据(微信号:dashuju36)以独立第三方的角度，为大数据产业生态图谱上的需求商</a> 、应用商、服务商、技术解决商等相关公司及从业人员提供全球资讯、商机、案例、技术教程、项目对接、创业投资及专访报道等服务。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://xueqiu.com/8102984655/73644129" target="_blank" rel="noopener">贝叶斯定理的胆识</a><br><a href="http://blog.csdn.net/kesalin/article/details/40370325/" target="_blank" rel="noopener">从贝叶斯定理说开去</a><br><a href="http://mindhacks.cn/2008/09/21/the-magical-bayesian-method/" target="_blank" rel="noopener">数学之美番外篇：平凡而又神奇的贝叶斯方法</a><br><a href="http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_one.html" target="_blank" rel="noopener">贝叶斯推断及其互联网应用（一）：定理简介</a><br><a href="http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_two.html" target="_blank" rel="noopener">贝叶斯推断及其互联网应用（二）：过滤垃圾邮件</a><br><a href="http://www.ruanyifeng.com/blog/2012/10/spelling_corrector.html" target="_blank" rel="noopener">贝叶斯推断及其互联网应用（三）：拼写检查</a><br><a href="http://www.ruanyifeng.com/blog/2013/12/naive_bayes_classifier.html" target="_blank" rel="noopener">朴素贝叶斯分类器的应用</a><br><a href="http://blog.csdn.net/pongba/article/details/2915005" target="_blank" rel="noopener">机器学习与人工智能学习资源导引</a><br><a href="http://mindhacks.cn/2007/12/02/probability-theory-in-evolution/" target="_blank" rel="noopener">数学之美番外篇：进化论中的概率论</a><br><a href="http://www.matrix67.com" target="_blank" rel="noopener">Matrix67: The Aha Moments</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Math/" rel="tag"><i class="fa fa-tag"></i> Math</a>
+              <a href="/tags/Bayes/" rel="tag"><i class="fa fa-tag"></i> Bayes</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Business/datanovo/" rel="next" title="Data Novo">
+                  <i class="fa fa-chevron-left"></i> Data Novo
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Tools/IPCreator/Technology/Program/Tools/Google/the-meaning-of-cross-wall/" rel="prev" title="The Purpose of Cross Wall">
+                  The Purpose of Cross Wall <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#最简单概率论的五个智慧"><span class="nav-number">1.</span> <span class="nav-text">最简单概率论的五个智慧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我理解的朴素贝叶斯模型"><span class="nav-number">2.</span> <span class="nav-text">我理解的朴素贝叶斯模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

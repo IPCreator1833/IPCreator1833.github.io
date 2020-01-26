@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Article Source  In this article, we will train a model to recognize the handwritten digits. Here, we will use the famous MNIST Image Dataset which like the Hello World in Machine Learning for simplici">
+<meta name="keywords" content="TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Creating Custom Model For Android Using TensorFlow">
+<meta property="og:url" content="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/creating-custom-model-for-android-using-tensorflow/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="Article Source  In this article, we will train a model to recognize the handwritten digits. Here, we will use the famous MNIST Image Dataset which like the Hello World in Machine Learning for simplici">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/1250/1*Kyuv2e6HrUh8_b9jM1c7HA.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/500/1*YdULNcG8A7AECa07xum7xQ.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/500/1*YjGUlBmV61HWSaSS6bWTmg.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/500/1*iMgj8cYImOprdk_T6N5JTA.png">
+<meta property="og:updated_time" content="2017-09-15T00:51:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Creating Custom Model For Android Using TensorFlow">
+<meta name="twitter:description" content="Article Source  In this article, we will train a model to recognize the handwritten digits. Here, we will use the famous MNIST Image Dataset which like the Hello World in Machine Learning for simplici">
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/1250/1*Kyuv2e6HrUh8_b9jM1c7HA.png">
+
+<link rel="canonical" href="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/creating-custom-model-for-android-using-tensorflow/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Creating Custom Model For Android Using TensorFlow | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/creating-custom-model-for-android-using-tensorflow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Creating Custom Model For Android Using TensorFlow
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TensorFlow/" itemprop="url" rel="index">
+                    <span itemprop="name">TensorFlow</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/TensorFlow/IPCreator/Technology/AI/TensorFlow/creating-custom-model-for-android-using-tensorflow/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/TensorFlow/IPCreator/Technology/AI/TensorFlow/creating-custom-model-for-android-using-tensorflow/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="https://blog.mindorks.com/creating-custom-model-for-android-using-tensorflow-3f963d270bfb" target="_blank" rel="noopener">Article Source</a></p>
+<blockquote>
+<p>In this article, we will train a model to recognize the handwritten digits. Here, we will use the famous MNIST Image Dataset which like the Hello World in Machine Learning for simplicity.</p>
+</blockquote>
+<p><img src="https://cdn-images-1.medium.com/max/1250/1*Kyuv2e6HrUh8_b9jM1c7HA.png" alt></p>
+ <a id="more"></a>
+<p> As I had promised in my previous article on building TensorFlow for Android that I will be writing an article on How to train custom model for Android using TensorFlow. So, I have written this article. Still more to come.<br>If you have not checked my article on building TensorFlow for Android, check here.<br>Android TensorFlow Machine Learning Example</p>
+<p>Machine Learning: Integrating Tensorflow in Android<br>blog.mindorks.com<br>In this article, we will train a model to recognize the handwritten digits. Here, we will use the famous MNIST Image Dataset which like the Hello World in Machine Learning for simplicity.<br>Credit: The classifier example has been taken from Google TensorFlow example. The custom drawing view used in this project is taken from here.</p>
+<p><img src="https://cdn-images-1.medium.com/max/500/1*YdULNcG8A7AECa07xum7xQ.png" alt></p>
+<p><img src="https://cdn-images-1.medium.com/max/500/1*YjGUlBmV61HWSaSS6bWTmg.png" alt></p>
+<p><img src="https://cdn-images-1.medium.com/max/500/1*iMgj8cYImOprdk_T6N5JTA.png" alt></p>
+<p>Screenshot from sample app<br>Here is the complete sample project.<br>MindorksOpenSource/AndroidTensorFlowMNISTExample</p>
+<p>AndroidTensorFlowMNISTExample - Android TensorFlow MachineLearning MNIST Example (Building Model with TensorFlow for…<br>github.com<br>The complete code to train and save the model which will directly run on Android is below. Read it carefully.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br></pre></td><td class="code"><pre><span class="line">from __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"><span class="keyword">import</span> os.path</span><br><span class="line"><span class="keyword">import</span> tensorflow as tf</span><br><span class="line">from tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line"></span><br><span class="line">EXPORT_DIR = <span class="string">'./model'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> os.path.exists(EXPORT_DIR):</span><br><span class="line">    shutil.rmtree(EXPORT_DIR)</span><br><span class="line"></span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data/"</span>, one_hot=True)</span><br><span class="line"></span><br><span class="line"># Parameters</span><br><span class="line">learning_rate = <span class="number">0.001</span></span><br><span class="line">training_iters = <span class="number">200000</span></span><br><span class="line">batch_size = <span class="number">128</span></span><br><span class="line">display_step = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"># Network Parameters</span><br><span class="line">n_input = 784  # MNIST data input (img shape: 28*28)</span><br><span class="line">n_classes = 10  # MNIST total classes (0-9 digits)</span><br><span class="line">dropout = 0.75  # Dropout, probability to keep units</span><br><span class="line"></span><br><span class="line"># tf Graph input</span><br><span class="line">x = tf.placeholder(tf.float32, [None, n_input])</span><br><span class="line">y = tf.placeholder(tf.float32, [None, n_classes])</span><br><span class="line">keep_prob = tf.placeholder(tf.float32)  # dropout (keep probability)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Create some wrappers for simplicity</span><br><span class="line"><span class="function">def <span class="title">conv2d</span><span class="params">(x, W, b, strides=<span class="number">1</span>)</span>:</span></span><br><span class="line"><span class="function">    # Conv2D wrapper, with bias and relu activation</span></span><br><span class="line"><span class="function">    x </span>= tf.nn.conv2d(x, W, strides=[<span class="number">1</span>, strides, strides, <span class="number">1</span>], padding=<span class="string">'SAME'</span>)</span><br><span class="line">    x = tf.nn.bias_add(x, b)</span><br><span class="line">    <span class="keyword">return</span> tf.nn.relu(x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">def <span class="title">maxpool2d</span><span class="params">(x, k=<span class="number">2</span>)</span>:</span></span><br><span class="line"><span class="function">    # MaxPool2D wrapper</span></span><br><span class="line"><span class="function">    return tf.nn.<span class="title">max_pool</span><span class="params">(x, ksize=[<span class="number">1</span>, k, k, <span class="number">1</span>], strides=[<span class="number">1</span>, k, k, <span class="number">1</span>],</span></span></span><br><span class="line"><span class="function"><span class="params">                          padding=<span class="string">'SAME'</span>)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Create Model</span></span><br><span class="line"><span class="function">def <span class="title">conv_net</span><span class="params">(x, weights, biases, dropout)</span>:</span></span><br><span class="line"><span class="function">    # Reshape input picture</span></span><br><span class="line"><span class="function">    x </span>= tf.reshape(x, shape=[-<span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    # Convolution Layer</span><br><span class="line">    conv1 = conv2d(x, weights[<span class="string">'wc1'</span>], biases[<span class="string">'bc1'</span>])</span><br><span class="line">    # Max Pooling (down-sampling)</span><br><span class="line">    conv1 = maxpool2d(conv1, k=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    # Convolution Layer</span><br><span class="line">    conv2 = conv2d(conv1, weights[<span class="string">'wc2'</span>], biases[<span class="string">'bc2'</span>])</span><br><span class="line">    # Max Pooling (down-sampling)</span><br><span class="line">    conv2 = maxpool2d(conv2, k=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    # Fully connected layer</span><br><span class="line">    # Reshape conv2 output to fit fully connected layer input</span><br><span class="line">    fc1 = tf.reshape(conv2, [-<span class="number">1</span>, weights[<span class="string">'wd1'</span>].get_shape().as_list()[<span class="number">0</span>]])</span><br><span class="line">    fc1 = tf.add(tf.matmul(fc1, weights[<span class="string">'wd1'</span>]), biases[<span class="string">'bd1'</span>])</span><br><span class="line">    fc1 = tf.nn.relu(fc1)</span><br><span class="line">    # Apply Dropout</span><br><span class="line">    fc1 = tf.nn.dropout(fc1, dropout)</span><br><span class="line"></span><br><span class="line">    # Output, class prediction</span><br><span class="line">    out = tf.add(tf.matmul(fc1, weights[<span class="string">'out'</span>]), biases[<span class="string">'out'</span>])</span><br><span class="line">    <span class="keyword">return</span> out</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Store layers weight &amp; bias</span><br><span class="line">weights = &#123;</span><br><span class="line">    # 5x5 conv, 1 input, 32 outputs</span><br><span class="line">    <span class="string">'wc1'</span>: tf.Variable(tf.random_normal([<span class="number">5</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">32</span>])),</span><br><span class="line">    # 5x5 conv, 32 inputs, 64 outputs</span><br><span class="line">    <span class="string">'wc2'</span>: tf.Variable(tf.random_normal([<span class="number">5</span>, <span class="number">5</span>, <span class="number">32</span>, <span class="number">64</span>])),</span><br><span class="line">    # fully connected, 7*7*64 inputs, 1024 outputs</span><br><span class="line">    <span class="string">'wd1'</span>: tf.Variable(tf.random_normal([<span class="number">7</span> * <span class="number">7</span> * <span class="number">64</span>, <span class="number">1024</span>])),</span><br><span class="line">    # 1024 inputs, 10 outputs (class prediction)</span><br><span class="line">    <span class="string">'out'</span>: tf.Variable(tf.random_normal([<span class="number">1024</span>, n_classes]))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">biases = &#123;</span><br><span class="line">    <span class="string">'bc1'</span>: tf.Variable(tf.random_normal([<span class="number">32</span>])),</span><br><span class="line">    <span class="string">'bc2'</span>: tf.Variable(tf.random_normal([<span class="number">64</span>])),</span><br><span class="line">    <span class="string">'bd1'</span>: tf.Variable(tf.random_normal([<span class="number">1024</span>])),</span><br><span class="line">    <span class="string">'out'</span>: tf.Variable(tf.random_normal([n_classes]))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># Construct model</span><br><span class="line">pred = conv_net(x, weights, biases, keep_prob)</span><br><span class="line"></span><br><span class="line"># Define loss and optimizer</span><br><span class="line">cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, y))</span><br><span class="line">optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)</span><br><span class="line"></span><br><span class="line"># Evaluate model</span><br><span class="line">correct_pred = tf.equal(tf.argmax(pred, <span class="number">1</span>), tf.argmax(y, <span class="number">1</span>))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))</span><br><span class="line"></span><br><span class="line"># Initializing the variables</span><br><span class="line">init = tf.initialize_all_variables()</span><br><span class="line"></span><br><span class="line"># Launch the graph</span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    sess.run(init)</span><br><span class="line">    step = <span class="number">1</span></span><br><span class="line">    # Keep training until reach max iterations</span><br><span class="line">    <span class="keyword">while</span> step * batch_size &lt; training_iters:</span><br><span class="line">        batch_x, batch_y = mnist.train.next_batch(batch_size)</span><br><span class="line">        # Run optimization op (backprop)</span><br><span class="line">        sess.run(optimizer, feed_dict=&#123;x: batch_x, y: batch_y,</span><br><span class="line">                                       keep_prob: dropout&#125;)</span><br><span class="line">        <span class="keyword">if</span> step % display_step == <span class="number">0</span>:</span><br><span class="line">            # Calculate batch loss and accuracy</span><br><span class="line">            loss, acc = sess.run([cost, accuracy], feed_dict=&#123;x: batch_x,</span><br><span class="line">                                                              y: batch_y,</span><br><span class="line">                                                              keep_prob: <span class="number">1</span>.&#125;)</span><br><span class="line">            print(<span class="string">"Iter "</span> + str(step * batch_size) + <span class="string">", Minibatch Loss= "</span> + \</span><br><span class="line">                  <span class="string">"&#123;:.6f&#125;"</span>.format(loss) + <span class="string">", Training Accuracy= "</span> + \</span><br><span class="line">                  <span class="string">"&#123;:.5f&#125;"</span>.format(acc))</span><br><span class="line">        step += <span class="number">1</span></span><br><span class="line">    print(<span class="string">"Optimization Finished!"</span>)</span><br><span class="line"></span><br><span class="line">    # Calculate accuracy for 256 mnist test images</span><br><span class="line">    print(<span class="string">"Testing Accuracy:"</span>, \</span><br><span class="line">          sess.run(accuracy, feed_dict=&#123;x: mnist.test.images[:<span class="number">256</span>],</span><br><span class="line">                                        y: mnist.test.labels[:<span class="number">256</span>],</span><br><span class="line">                                        keep_prob: <span class="number">1</span>.&#125;))</span><br><span class="line">    WC1 = weights[<span class="string">'wc1'</span>].eval(sess)</span><br><span class="line">    BC1 = biases[<span class="string">'bc1'</span>].eval(sess)</span><br><span class="line">    WC2 = weights[<span class="string">'wc2'</span>].eval(sess)</span><br><span class="line">    BC2 = biases[<span class="string">'bc2'</span>].eval(sess)</span><br><span class="line">    WD1 = weights[<span class="string">'wd1'</span>].eval(sess)</span><br><span class="line">    BD1 = biases[<span class="string">'bd1'</span>].eval(sess)</span><br><span class="line">    W_OUT = weights[<span class="string">'out'</span>].eval(sess)</span><br><span class="line">    B_OUT = biases[<span class="string">'out'</span>].eval(sess)</span><br><span class="line"></span><br><span class="line"># Create new graph for exporting</span><br><span class="line">g = tf.Graph()</span><br><span class="line">with g.as_default():</span><br><span class="line">    x_2 = tf.placeholder(<span class="string">"float"</span>, shape=[None, <span class="number">784</span>], name=<span class="string">"input"</span>)</span><br><span class="line"></span><br><span class="line">    WC1 = tf.constant(WC1, name=<span class="string">"WC1"</span>)</span><br><span class="line">    BC1 = tf.constant(BC1, name=<span class="string">"BC1"</span>)</span><br><span class="line">    x_image = tf.reshape(x_2, [-<span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>])</span><br><span class="line">    CONV1 = conv2d(x_image, WC1, BC1)</span><br><span class="line">    MAXPOOL1 = maxpool2d(CONV1, k=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    WC2 = tf.constant(WC2, name=<span class="string">"WC2"</span>)</span><br><span class="line">    BC2 = tf.constant(BC2, name=<span class="string">"BC2"</span>)</span><br><span class="line">    CONV2 = conv2d(MAXPOOL1, WC2, BC2)</span><br><span class="line">    MAXPOOL2 = maxpool2d(CONV2, k=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    WD1 = tf.constant(WD1, name=<span class="string">"WD1"</span>)</span><br><span class="line">    BD1 = tf.constant(BD1, name=<span class="string">"BD1"</span>)</span><br><span class="line"></span><br><span class="line">    FC1 = tf.reshape(MAXPOOL2, [-<span class="number">1</span>, WD1.get_shape().as_list()[<span class="number">0</span>]])</span><br><span class="line">    FC1 = tf.add(tf.matmul(FC1, WD1), BD1)</span><br><span class="line">    FC1 = tf.nn.relu(FC1)</span><br><span class="line"></span><br><span class="line">    W_OUT = tf.constant(W_OUT, name=<span class="string">"W_OUT"</span>)</span><br><span class="line">    B_OUT = tf.constant(B_OUT, name=<span class="string">"B_OUT"</span>)</span><br><span class="line"></span><br><span class="line">    # skipped dropout for exported graph as there</span><br><span class="line">    # is no need for already calculated weights</span><br><span class="line"></span><br><span class="line">    OUTPUT = tf.nn.softmax(tf.matmul(FC1, W_OUT) + B_OUT, name=<span class="string">"output"</span>)</span><br><span class="line"></span><br><span class="line">    sess = tf.Session()</span><br><span class="line">    init = tf.initialize_all_variables()</span><br><span class="line">    sess.run(init)</span><br><span class="line"></span><br><span class="line">    graph_def = g.as_graph_def()</span><br><span class="line">    tf.train.write_graph(graph_def, EXPORT_DIR, <span class="string">'mnist_model_graph.pb'</span>, as_text=False)</span><br><span class="line"></span><br><span class="line">    # Test trained model</span><br><span class="line">    y_train = tf.placeholder(<span class="string">"float"</span>, [None, <span class="number">10</span>])</span><br><span class="line">    correct_prediction = tf.equal(tf.argmax(OUTPUT, <span class="number">1</span>), tf.argmax(y_train, <span class="number">1</span>))</span><br><span class="line">    accuracy = tf.reduce_mean(tf.cast(correct_prediction, <span class="string">"float"</span>))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"check accuracy %g"</span> % accuracy.eval(</span><br><span class="line">            &#123;x_2: mnist.test.images, y_train: mnist.test.labels&#125;, sess))</span><br></pre></td></tr></table></figure>
+<p>Explanation of code:<br>First, it downloads the dataset from the MNIST.<br>Then it starts training the model.<br>After training, it checks accuracy.<br>Then, it saves the model to the given path and checks the accuracy again.<br>Check the complete python code here.<br>MindorksOpenSource/AndroidTensorFlowMNISTExample</p>
+<p>AndroidTensorFlowMNISTExample - Android TensorFlow MachineLearning MNIST Example (Building Model with TensorFlow for…<br>github.com<br>It is very easy to understand it by reading the python code.<br>When we run this code, we get the required trained model that will be used in the Android application.<br>If you are getting any problem in building the project, connect with me, I will be happy to help.<br>Happy Coding :)</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TensorFlow/" rel="tag"><i class="fa fa-tag"></i> TensorFlow</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/TensorFlow/IPCreator/Technology/AI/TensorFlow/android-tensorFlow-machine-learning-example/" rel="next" title="Android TensorFlow Machine Learning Example">
+                  <i class="fa fa-chevron-left"></i> Android TensorFlow Machine Learning Example
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/a-complete-guide-to-learn-rxJava/" rel="prev" title="A Complete Guide To Learn RxJava">
+                  A Complete Guide To Learn RxJava <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

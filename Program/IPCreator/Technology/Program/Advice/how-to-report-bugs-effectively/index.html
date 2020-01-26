@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="作者：Simon Tatham 专业的自由软件程序员翻译：Dasn 引言为公众写过软件的人，大概都收到过很拙劣的bug（计算机程序代码中的错误或程序运行时的瑕疵——译者注）报告，例如：  在报告中说“不好用”； 所报告内容毫无意义； 在报告中用户没有提供足够的信息； 在报告中提供了错误信息； 所报告的问题是由于用户的过失而产生的； 所报告的问题是由于其他程序的错误而产生的； 所报告的问题是由于网络">
+<meta name="keywords" content="Bugs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Report Bugs Effectively">
+<meta property="og:url" content="https://hazyman.com/Program/IPCreator/Technology/Program/Advice/how-to-report-bugs-effectively/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="作者：Simon Tatham 专业的自由软件程序员翻译：Dasn 引言为公众写过软件的人，大概都收到过很拙劣的bug（计算机程序代码中的错误或程序运行时的瑕疵——译者注）报告，例如：  在报告中说“不好用”； 所报告内容毫无意义； 在报告中用户没有提供足够的信息； 在报告中提供了错误信息； 所报告的问题是由于用户的过失而产生的； 所报告的问题是由于其他程序的错误而产生的； 所报告的问题是由于网络">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-04-05T13:59:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to Report Bugs Effectively">
+<meta name="twitter:description" content="作者：Simon Tatham 专业的自由软件程序员翻译：Dasn 引言为公众写过软件的人，大概都收到过很拙劣的bug（计算机程序代码中的错误或程序运行时的瑕疵——译者注）报告，例如：  在报告中说“不好用”； 所报告内容毫无意义； 在报告中用户没有提供足够的信息； 在报告中提供了错误信息； 所报告的问题是由于用户的过失而产生的； 所报告的问题是由于其他程序的错误而产生的； 所报告的问题是由于网络">
+
+<link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Advice/how-to-report-bugs-effectively/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>How to Report Bugs Effectively | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Program/IPCreator/Technology/Program/Advice/how-to-report-bugs-effectively/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          How to Report Bugs Effectively
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Advice/how-to-report-bugs-effectively/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Advice/how-to-report-bugs-effectively/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>作者：<a href="http://www.chiark.greenend.org.uk/~sgtatham/bugs.html" target="_blank" rel="noopener">Simon Tatham</a> 专业的自由软件程序员<br>翻译：Dasn</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>为公众写过软件的人，大概都收到过很拙劣的bug（计算机程序代码中的错误或程序运行时的瑕疵——译者注）报告，例如：</p>
+<ul>
+<li>在报告中说“不好用”；</li>
+<li>所报告内容毫无意义；</li>
+<li>在报告中用户没有提供足够的信息；</li>
+<li>在报告中提供了错误信息；</li>
+<li>所报告的问题是由于用户的过失而产生的；</li>
+<li>所报告的问题是由于其他程序的错误而产生的；</li>
+<li>所报告的问题是由于网络错误而产生的；</li>
+</ul>
+<p>这便是为什么“技术支持”被认为是一件可怕的工作，因为有拙劣的bug报告需要处理。然而并不是所有的bug报告都令人生厌：我在业余时间维护自由软件，有时我会收到非常清晰、有帮助并且“有内容”的bug报告。在这里我会尽力阐明如何写一个好的bug报告。我非常希望每一个人在报告bug之前都读一下这篇短文，当然我也希望用户在给我报告bug之前已经读过这篇文章。</p>
+<a id="more"></a>
+<p>简单地说，报告bug的目的是为了让程序员看到程序的错误。您可以亲自示范，也可以给出能导致程序出错的、详尽的操作步骤。如果程序出错了，程序员会收集额外的信息直到找到错误的原因；如果程序没有出错，那么他们会请您继续关注这个问题，收集相关的信息。</p>
+<p>在bug报告里，要设法搞清什么是事实（例如：“我在电脑旁”和“XX出现了”）什么是推测（例如：“我想问题可能是出在……”）。如果愿意的话，您可以省去推测，但是千万别省略事实。</p>
+<p>当您报告bug的时候（既然您已经这么做了），一定是希望bug得到及时修正。所以此时针对程序员的任何过激或亵渎的言语（甚至谩骂）都是与事无补的——因为这可能是程序员的错误，也有可能是您的错误，也许您有权对他们发火，但是如果您能多提供一些有用的信息（而不是激愤之词）或许bug会被更快的修正。除此以外，请记住：如果是免费软件，作者提供给我们已经是出于好心，所以要是太多的人对他们无礼，他们可能就要“收起”这份好心了。</p>
+<p>##“程序不好用”</p>
+<p>程序员不是弱智：如果程序一点都不好用，他们不可能不知道。他们不知道一定是因为程序在他们看来工作得很正常。所以，或者是您作过一些与他们不同的操作，或者是您的环境与他们不同。他们需要信息，报告bug也是为了提供信息。信息总是越多越好。</p>
+<p>许多程序，特别是自由软件，会公布一个“已知bug列表”。如果您找到的bug在列表里已经有了，那就不必再报告了，但是如果您认为自己掌握的信息比列表中的丰富，那无论如何也要与程序员联系。您提供的信息可能会使他们更简单地修复bug。</p>
+<p>本文中提到的都是一些指导方针，没有哪一条是必须恪守的准则。不同的程序员会喜欢不同形式的bug报告。如果程序附带了一套报告bug的准则，一定要读。如果它与本文中提到的规则相抵触，那么请以它为准。</p>
+<p>如果您不是报告bug，而是寻求帮助，您应该说明您曾经到哪里找过答案，（例如：我看了第四章和第五章的第二节，但我找不到解决的办法。）这会使程序员了解用户喜欢到哪里去找答案，从而使程序员把帮助文档做得更容易使用。</p>
+<p>##“演示给我看”</p>
+<p>报告bug的最好的方法之一是“演示”给程序员看。让程序员站在电脑前，运行他们的程序，指出程序的错误。让他们看着您启动电脑、运行程序、如何进行操作以及程序对您的输入有何反应。</p>
+<p>他们对自己写的软件了如指掌，他们知道哪些地方不会出问题，而哪些地方最可能出问题。他们本能地知道应该注意什么。在程序真的出错之前，他们可能已经注意到某些地方不对劲，这些都会给他们一些线索。他们会观察程序测试中的每一个细节，并且选出他们认为有用的信息。</p>
+<p>这些可能还不够。也许他们觉得还需要更多的信息，会请您重复刚才的操作。他们可能在这期间需要与您交流一下，以便在他们需要的时候让bug重新出现。他们可能会改变一些操作，看看这个错误的产生是个别问题还是相关的一类问题。如果您不走运，他们可能需要坐下来，拿出一堆开发工具，花上几个小时来好好地研究一下。但是最重要的是在程序出错的时候让程序员在电脑旁。一旦他们看到了问题，他们通常会找到原因并开始试着修改。</p>
+<p>##“告诉我该怎么做”</p>
+<p>如今是网络时代，是信息交流的时代。我可以点一下鼠标把自己的程序送到俄罗斯的某个朋友那里，当然他也可以用同样简单的方法给我一些建议。但是如果我的程序出了什么问题，我不可能在他旁边。“演示”是很好的办法，但是常常做不到。</p>
+<p>如果您必须报告bug，而此时程序员又不在您身边，那么您就要想办法让bug重现在他们面前。当他们亲眼看到错误时，就能够进行处理了。</p>
+<p>确切地告诉程序员您做了些什么。如果是一个图形界面程序，告诉他们您按了哪个按钮，依照什么顺序按的。如果是一个命令行程序，精确的告诉他们您键入了什么命令。您应该尽可能详细地提供您所键入的命令和程序的反应。</p>
+<p>把您能想到的所有的输入方式都告诉程序员，如果程序要读取一个文件，您可能需要发一个文件的拷贝给他们。如果程序需要通过网络与另一台电脑通讯，您或许不能把那台电脑复制过去，但至少可以说一下电脑的类型和安装了哪些软件（如果可以的话）。</p>
+<p>##“哪儿出错了？在我看来一切正常哦！”</p>
+<p>如果您给了程序员一长串输入和指令，他们执行以后没有出现错误，那是因为您没有给他们足够的信息，可能错误不是在每台计算机上都出现，您的系统可能和他们的在某些地方不一样。有时候程序的行为可能和您预想的不一样，这也许是误会，但是您会认为程序出错了，程序员却认为这是对的。</p>
+<p>同样也要描述发生了什么。精确的描述您看到了什么。告诉他们为什么您觉得自己所看到的是错误的，最好再告诉他们，您认为自己应该看到什么。如果您只是说：“程序出错了”，那您很可能漏掉了非常重要的信息。</p>
+<p>如果您看到了错误消息，一定要仔细、准确的告诉程序员，这确实很重要。在这种情况下，程序员只要修正错误，而不用去找错误。他们需要知道是什么出问题了，系统所报的错误消息正好帮助了他们。如果您没有更好的方法记住这些消息，就把它们写下来。只报告“程序出了一个错”是毫无意义的，除非您把错误消息一块报上来。</p>
+<p>特殊情况下，如果有错误消息号，一定要把这些号码告诉程序员。不要以为您看不出任何意义，它就没有意义。错误消息号包含了能被程序员读懂的各种信息，并且很有可能包含重要的线索。给错误消息编号是因为用语言描述计算机错误常常令人费解。用这种方式告诉您错误的所在是一个最好的办法。</p>
+<p>在这种情形下，程序员的排错工作会十分高效。他们不知道发生了什么，也不可能到现场去观察，所以他们一直在搜寻有价值的线索。错误消息、错误消息号以及一些莫名其妙的延迟，都是很重要的线索，就像办案时的指纹一样重要，保存好。</p>
+<p>如果您使用UNIX系统，程序可能会产生一个内核输出（coredump）。内核输出是特别有用的线索来源，别扔了它们。另一方面，大多数程序员不喜欢收到含有大量内核输出文件的EMAIL，所以在发邮件之前最好先问一下。还有一点要注意：内核输出文件记录了完整的程序状态，也就是说任何秘密（可能当时程序正在处理一些私人信息或秘密数据）都可能包含在内核输出文件里。</p>
+<p>##“出了问题之后，我做了……”</p>
+<p>当一个错误或bug发生的时候，您可能会做许多事情。但是大多数人会使事情变的更糟。我的一个朋友在学校里误删了她所有的Word文件，在找人帮忙之前她重装了Word，又运行了一遍碎片整理程序，这些操作对于恢复文件是毫无益处的，因为这些操作搞乱了磁盘的文件区块。恐怕在这个世界上没有一种反删除软件能恢复她的文件了。如果她不做任何操作，或许还有一线希望。</p>
+<p>这种用户仿佛一只被逼到墙角的鼬（黄鼠狼、紫貂一类的动物——译者注）：背靠墙壁，面对死亡的降临奋起反扑，疯狂攻击。他们认为做点什么总比什么都不做强。然而这些在处理计算机软件问题时并不适用。</p>
+<p>不要做鼬，做一只羚羊。当一只羚羊面对料想不到的情况或受到惊吓时，它会一动不动，是为了不吸引任何注意，与此同时也在思考解决问题的最好办法（如果羚羊有一条技术支持热线，此时占线。）。然后，一旦它找到了最安全的行动方案，它便去做。</p>
+<p>当程序出毛病的时候，立刻停止正在做的任何操作。不要按任何健。仔细地看一下屏幕，注意那些不正常的地方，记住它或者写下来。然后慎重地点击“确定” 或“取消”，选择一个最安全的。学着养成一种条件反射——一旦电脑出了问题，先不要动。要想摆脱这个问题，关掉受影响的程序或者重新启动计算机都不好，一个解决问题的好办法是让问题再次产生。程序员们喜欢可以被重现的问题，快乐的程序员可以更快而且更有效率的修复bug。</p>
+<p>##“我想粒子的跃迁与错误的极化有关”</p>
+<p>并不只是非专业的用户才会写出拙劣的bug报告，我见过一些非常差的bug报告出自程序员之手，有些还是非常优秀的程序员。</p>
+<p>有一次我与另一个程序员一起工作，他一直在找代码中的bug，他常常遇到一个bug，但是不会解决，于是就叫我帮忙。“出什么毛病了？”我问。而他的回答却总是一些关于bug的意见。如果他的观点正确，那的确是一件好事。这意味着他已经完成了工作的一半，并且我们可以一起完成另一半工作。这是有效率并有用的。</p>
+<p>但事实上他常常是错的。这就会使我们花上半个小时在原本正确的代码里来回寻找错误，而实际上问题出在别的地方。我敢肯定他不会对医生这么做。“大夫，我得了Hydroyoyodyne（真是怪病——译者），给我开个方子”，人们知道不该对一位医生说这些。您描述一下症状，哪个地方不舒服，哪里疼、起皮疹、发烧……让医生诊断您得了什么病，应该怎样治疗。否则医生会把您当做疑心病或精神病患者打发了，这似乎没什么不对。</p>
+<p>做程序员也是一样。即便您自己的“诊断”有时真的有帮助，也要只说“症状”。“诊断”是可说可不说的，但是“症状”一定要说。同样，在bug报告里面附上一份针对bug而做出修改的源代码是有用处的，但它并不能替代bug报告本身。</p>
+<p>如果程序员向您询问额外的信息，千万别应付。曾经有一个人向我报告bug，我让他试一个命令，我知道这个命令不好用，但我是要看看程序会返回一个什么错误（这是很重要的线索）。但是这位老兄根本就没试，他在回复中说“那肯定不好用”，于是我又花了好些时间才说服他试了一下那个命令。</p>
+<p>用户多动动脑筋对程序员的工作是有帮助的。即使您的推断是错误的，程序员也应该感谢您，至少您想去帮助他们，使他们的工作变的更简单。不过千万别忘了报告“症状”，否则只会使事情变得更糟。</p>
+<p>##“真是奇怪，刚才还不好用，怎么现在又好了？”</p>
+<p>“间歇性错误”着实让程序员发愁。相比之下，进行一系列简单的操作便能导致错误发生的问题是简单的。程序员可以在一个便于观察的条件下重复那些操作，观察每一个细节。太多的问题在这种情况下不能解决，例如：程序每星期出一次错，或者偶然出一次错，或者在程序员面前从不出错（程序员一离开就出错。——译者）。当然还有就是程序的截止日期到了，那肯定要出错。</p>
+<p>大多数“间歇性错误”并不是真正的“间歇”。其中的大多数错误与某些地方是有联系的。有一些错误可能是内存泄漏产生的，有一些可能是别的程序在不恰当的时候修改某个重要文件造成的，还有一些可能发生在每一个小时的前半个小时中（我确实遇到过这种事情）。</p>
+<p>同样，如果您能使bug重现，而程序员不能，那很有可能是他们的计算机和您的计算机在某些地方是不同的，这种不同引起了问题。我曾写过一个程序，它的窗口可以蜷缩成一个小球呆在屏幕的左上角，它在别的计算机上只能在 800x600 的解析度工作，但是在我的机器上却可以在 1024x768 下工作。</p>
+<p>程序员想要了解任何与您发现的问题相关的事情。有可能的话您到另一台机器上试试，多试几次，两次，三次，看看问题是不是经常发生。如果问题出现在您进行了一系列操作之后，不是您想让它出现它就会出现，这就有可能是长时间的运行或处理大文件所导致的错误。程序崩溃的时候，您要尽可能的记住您都做了些什么，并且如果您看到任何图形,也别忘了提一下。您提供的任何事情都是有帮助的。即使只是概括性的描述（例如：当后台有EMACS运行时，程序常常出错），这虽然不能提供导致问题的直接线索，但是可能帮助程序员重现问题。</p>
+<p>最重要的是：程序员想要确定他们正在处理的是一个真正的“间歇性错误”呢，还是一个在另一类特定的计算机上才出现的错误。他们想知道有关您计算机的许多细节，以便了解您的机器与他们的有什么不同。有许多细节都依仗特定的程序，但是有一件东西您一定要提供——版本号。程序的版本、操作系统的版本以及与问题有关的程序的版本。</p>
+<p>##“我把磁盘装进了 Windows……”</p>
+<p>表意清楚在一份bug报告里是最基本的要求。如果程序员不知道您说的是什么意思，那您就跟没说一样。我收到的bug报告来自世界各地，有许多是来自非英语国家，他们通常为自己的英文不好而表示歉意。总的来说，这些用户发来的bug报告通常是清晰而且有用的。几乎所有不清晰的bug报告都是来自母语是英语的人，他们总是以为只要自己随便说说，程序员就能明白。</p>
+<p>精确。如果做相同的事情有两种方法，请说明您用的是哪一种。例如：“我选择了‘载入’”，可能意味着“我用鼠标点击‘载入’”或“我按下了‘ALT+L’”，说清楚您用了哪种方法，有时候这也有关系。<br>详细。信息宁多毋少！如果您说了很多，程序员可以略去一部分，可是如果您说的太少，他们就不得不回过头再去问您一些问题。有一次我收到了一份bug报告只有一句话，每一次我问他更多事情时，他每次的回复都是一句话，于是我花了几个星期的时间才得到了有用的信息。<br>慎用代词。诸如“它”，“窗体”这些词，当它们指代不清晰的时候不要用。来看看这句话：“我运行了FooApp，它弹出一个警告窗口，我试着关掉它，它就崩溃了。”这种表述并不清晰，用户究竟关掉了哪个窗口？是警告窗口还是整个FooApp程序？您可以这样说，“我运行FooApp程序时弹出一个警告窗口，我试着关闭警告窗口，FooApp崩溃了。”这样虽然罗嗦点，但是很清晰不容易产生误解。</p>
+<p>检查。重新读一遍您写的bug报告，您觉得它是否清晰？如果您列出了一系列能导致程序出错的操作，那么照着做一遍，看看您是不是漏写了一步。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li>bug报告的首要目的是让程序员亲眼看到错误。如果您不能亲自做给他们看，给他们能使程序出错的详细的操作步骤。</li>
+<li>如果首要目的不能达成，程序员不能看到程序出错。这就需要bug报告的第二个目的来描述程序的什么地方出毛病了。详细的描述每一件事情：您看到了什么，您想看到什么，把错误消息记下来，尤其是“错误消息号”。</li>
+<li>当您的计算机做了什么您料想不到的事，不要动！在您平静下来之前什么都别做。不要做您认为不安全的事。</li>
+<li>尽量试着自己“诊断”程序出错的原因（如果您认为自己可以的话）。即使做出了“诊断”，您仍然应该报告“症状”。</li>
+<li>如果程序员需要，请准备好额外的信息。如果他们不需要，就不会问您要。他们不会故意为难自己。您手头上一定要有程序的版本号，它很可能是必需品。</li>
+<li>表述清楚，确保您的意思不能被曲解。</li>
+<li>总的来说，最重要的是要做到精确。程序员喜欢精确。</li>
+</ul>
+<p>声明：我从没有真的看见过鼬和羚羊，我的比喻可能不恰当。</p>
+<p>版权所有 Simon Tatham 1999</p>
+<p>本文属于OPL（OpenContent License），请在复制和使用本文时自觉遵守OPL。</p>
+<p>对本文的任何意见和批评请发送至：</p>
+<p>英文版：<a href="mailto:anakin@pobox.com" target="_blank" rel="noopener">anakin@pobox.com</a></p>
+<p>中文版：<a href="mailto:dasn@users.sf.net" target="_blank" rel="noopener">dasn@users.sf.net</a></p>
+<h1 id="How-to-Report-Bugs-Effectively"><a href="#How-to-Report-Bugs-Effectively" class="headerlink" title="How to Report Bugs Effectively"></a><a href="http://www.chiark.greenend.org.uk/~sgtatham/bugs.html" target="_blank" rel="noopener">How to Report Bugs Effectively</a></h1><p>by Simon Tatham, professional and free-software programmer</p>
+<p>[ English | Português | 简体中文 | Česky | Dansk | Deutsch | Español | Français | Magyar | Italiano | 日本語 | Nederlands | Polski | Русский | 繁體中文 ]</p>
+<p>Introduction</p>
+<p>Anybody who has written software for public use will probably have received at least one bad bug report. Reports that say nothing (“It doesn’t work!”); reports that make no sense; reports that don’t give enough information; reports that give wrong information. Reports of problems that turn out to be user error; reports of problems that turn out to be the fault of somebody else’s program; reports of problems that turn out to be network failures.</p>
+<p>There’s a reason why technical support is seen as a horrible job to be in, and that reason is bad bug reports. However, not all bug reports are unpleasant: I maintain free software, when I’m not earning my living, and sometimes I receive wonderfully clear, helpful, informative bug reports.</p>
+<p>In this essay I’ll try to state clearly what makes a good bug report. Ideally I would like everybody in the world to read this essay before reporting any bugs to anybody. Certainly I would like everybody who reports bugs to me to have read it.</p>
+<p>In a nutshell, the aim of a bug report is to enable the programmer to see the program failing in front of them. You can either show them in person, or give them careful and detailed instructions on how to make it fail. If they can make it fail, they will try to gather extra information until they know the cause. If they can’t make it fail, they will have to ask you to gather that information for them.</p>
+<p>In bug reports, try to make very clear what are actual facts (“I was at the computer and this happened”) and what are speculations (“I think the problem might be this”). Leave out speculations if you want to, but don’t leave out facts.</p>
+<p>When you report a bug, you are doing so because you want the bug fixed. There is no point in swearing at the programmer or being deliberate unhelpful: it may be their fault and your problem, and you might be right to be angry with them, but the bug will get fixed faster if you help them by supplying all the information they need. Remember also that if the program is free, then the author is providing it out of kindness, so if too many people are rude to them then they may stop feeling kind.</p>
+<p>“It doesn’t work.”</p>
+<p>Give the programmer some credit for basic intelligence: if the program really didn’t work at all, they would probably have noticed. Since they haven’t noticed, it must be working for them. Therefore, either you are doing something differently from them, or your environment is different from theirs. They need information; providing this information is the purpose of a bug report. More information is almost always better than less.</p>
+<p>Many programs, particularly free ones, publish their list of known bugs. If you can find a list of known bugs, it’s worth reading it to see if the bug you’ve just found is already known or not. If it’s already known, it probably isn’t worth reporting again, but if you think you have more information than the report in the bug list, you might want to contact the programmer anyway. They might be able to fix the bug more easily if you can give them information they didn’t already have.</p>
+<p>This essay is full of guidelines. None of them is an absolute rule. Particular programmers have particular ways they like bugs to be reported. If the program comes with its own set of bug-reporting guidelines, read them. If the guidelines that come with the program contradict the guidelines in this essay, follow the ones that come with the program!</p>
+<p>If you are not reporting a bug but just asking for help using the program, you should state where you have already looked for the answer to your question. (“I looked in chapter 4 and section 5.2 but couldn’t find anything that told me if this is possible.”) This will let the programmer know where people will expect to find the answer, so they can make the documentation easier to use.</p>
+<p>“Show me.”</p>
+<p>One of the very best ways you can report a bug is by showing it to the programmer. Stand them in front of your computer, fire up their software, and demonstrate the thing that goes wrong. Let them watch you start the machine, watch you run the software, watch how you interact with the software, and watch what the software does in response to your inputs.</p>
+<p>They know that software like the back of their hand. They know which parts they trust, and they know which parts are likely to have faults. They know intuitively what to watch for. By the time the software does something obviously wrong, they may well have already noticed something subtly wrong earlier which might give them a clue. They can observe everything the computer does during the test run, and they can pick out the important bits for themselves.</p>
+<p>This may not be enough. They may decide they need more information, and ask you to show them the same thing again. They may ask you to talk them through the procedure, so that they can reproduce the bug for themselves as many times as they want. They might try varying the procedure a few times, to see whether the problem occurs in only one case or in a family of related cases. If you’re unlucky, they may need to sit down for a couple of hours with a set of development tools and really start investigating. But the most important thing is to have the programmer looking at the computer when it goes wrong. Once they can see the problem happening, they can usually take it from there and start trying to fix it.</p>
+<p>“Show me how to show myself.”</p>
+<p>This is the era of the Internet. This is the era of worldwide communication. This is the era in which I can send my software to somebody in Russia at the touch of a button, and he can send me comments about it just as easily. But if he has a problem with my program, he can’t have me standing in front of it while it fails. “Show me” is good when you can, but often you can’t.</p>
+<p>If you have to report a bug to a programmer who can’t be present in person, the aim of the exercise is to enable them to reproduce the problem. You want the programmer to run their own copy of the program, do the same things to it, and make it fail in the same way. When they can see the problem happening in front of their eyes, then they can deal with it.</p>
+<p>So tell them exactly what you did. If it’s a graphical program, tell them which buttons you pressed and what order you pressed them in. If it’s a program you run by typing a command, show them precisely what command you typed. Wherever possible, you should provide a verbatim transcript of the session, showing what commands you typed and what the computer output in response.</p>
+<p>Give the programmer all the input you can think of. If the program reads from a file, you will probably need to send a copy of the file. If the program talks to another computer over a network, you probably can’t send a copy of that computer, but you can at least say what kind of computer it is, and (if you can) what software is running on it.</p>
+<p>“Works for me. So what goes wrong?”</p>
+<p>If you give the programmer a long list of inputs and actions, and they fire up their own copy of the program and nothing goes wrong, then you haven’t given them enough information. Possibly the fault doesn’t show up on every computer; your system and theirs may differ in some way. Possibly you have misunderstood what the program is supposed to do, and you are both looking at exactly the same display but you think it’s wrong and they know it’s right.</p>
+<p>So also describe what happened. Tell them exactly what you saw. Tell them why you think what you saw is wrong; better still, tell them exactly what you expected to see. If you say “and then it went wrong”, you have left out some very important information.</p>
+<p>If you saw error messages then tell the programmer, carefully and precisely, what they were. They are important! At this stage, the programmer is not trying to fix the problem: they’re just trying to find it. They need to know what has gone wrong, and those error messages are the computer’s best effort to tell you that. Write the errors down if you have no other easy way to remember them, but it’s not worth reporting that the program generated an error unless you can also report what the error message was.</p>
+<p>In particular, if the error message has numbers in it, do let the programmer have those numbers. Just because you can’t see any meaning in them doesn’t mean there isn’t any. Numbers contain all kinds of information that can be read by programmers, and they are likely to contain vital clues. Numbers in error messages are there because the computer is too confused to report the error in words, but is doing the best it can to get the important information to you somehow.</p>
+<p>At this stage, the programmer is effectively doing detective work. They don’t know what’s happened, and they can’t get close enough to watch it happening for themselves, so they are searching for clues that might give it away. Error messages, incomprehensible strings of numbers, and even unexplained delays are all just as important as fingerprints at the scene of a crime. Keep them!</p>
+<p>If you are using Unix, the program may have produced a core dump. Core dumps are a particularly good source of clues, so don’t throw them away. On the other hand, most programmers don’t like to receive huge core files by e-mail without warning, so ask before mailing one to anybody. Also, be aware that the core file contains a record of the complete state of the program: any “secrets” involved (maybe the program was handling a personal message, or dealing with confidential data) may be contained in the core file.</p>
+<p>“So then I tried . . .”</p>
+<p>There are a lot of things you might do when an error or bug comes up. Many of them make the problem worse. A friend of mine at school deleted all her Word documents by mistake, and before calling in any expert help, she tried reinstalling Word, and then she tried running Defrag. Neither of these helped recover her files, and between them they scrambled her disk to the extent that no Undelete program in the world would have been able to recover anything. If she’d only left it alone, she might have had a chance.</p>
+<p>Users like this are like a mongoose backed into a corner: with its back to the wall and seeing certain death staring it in the face, it attacks frantically, because doing something has to be better than doing nothing. This is not well adapted to the type of problems computers produce.</p>
+<p>Instead of being a mongoose, be an antelope. When an antelope is confronted with something unexpected or frightening, it freezes. It stays absolutely still and tries not to attract any attention, while it stops and thinks and works out the best thing to do. (If antelopes had a technical support line, it would be telephoning it at this point.) Then, once it has decided what the safest thing to do is, it does it.</p>
+<p>When something goes wrong, immediately stop doing anything. Don’t touch any buttons at all. Look at the screen and notice everything out of the ordinary, and remember it or write it down. Then perhaps start cautiously pressing “OK” or “Cancel”, whichever seems safest. Try to develop a reflex reaction - if a computer does anything unexpected, freeze.</p>
+<p>If you manage to get out of the problem, whether by closing down the affected program or by rebooting the computer, a good thing to do is to try to make it happen again. Programmers like problems that they can reproduce more than once. Happy programmers fix bugs faster and more efficiently.</p>
+<p>“I think the tachyon modulation must be wrongly polarised.”</p>
+<p>It isn’t only non-programmers who produce bad bug reports. Some of the worst bug reports I’ve ever seen come from programmers, and even from good programmers.</p>
+<p>I worked with another programmer once, who kept finding bugs in his own code and trying to fix them. Every so often he’d hit a bug he couldn’t solve, and he’d call me over to help. “What’s gone wrong?” I’d ask. He would reply by telling me his current opinion of what needed to be fixed.</p>
+<p>This worked fine when his current opinion was right. It meant he’d already done half the work and we were able to finish the job together. It was efficient and useful.</p>
+<p>But quite often he was wrong. We would work for some time trying to figure out why some particular part of the program was producing incorrect data, and eventually we would discover that it wasn’t, that we’d been investigating a perfectly good piece of code for half an hour, and that the actual problem was somewhere else.</p>
+<p>I’m sure he wouldn’t do that to a doctor. “Doctor, I need a prescription for Hydroyoyodyne.” People know not to say that to a doctor: you describe the symptoms, the actual discomforts and aches and pains and rashes and fevers, and you let the doctor do the diagnosis of what the problem is and what to do about it. Otherwise the doctor dismisses you as a hypochondriac or crackpot, and quite rightly so.</p>
+<p>It’s the same with programmers. Providing your own diagnosis might be helpful sometimes, but always state the symptoms. The diagnosis is an optional extra, and not an alternative to giving the symptoms. Equally, sending a modification to the code to fix the problem is a useful addition to a bug report but not an adequate substitute for one.</p>
+<p>If a programmer asks you for extra information, don’t make it up! Somebody reported a bug to me once, and I asked him to try a command that I knew wouldn’t work. The reason I asked him to try it was that I wanted to know which of two different error messages it would give. Knowing which error message came back would give a vital clue. But he didn’t actually try it - he just mailed me back and said “No, that won’t work”. It took me some time to persuade him to try it for real.</p>
+<p>Using your intelligence to help the programmer is fine. Even if your deductions are wrong, the programmer should be grateful that you at least tried to make their life easier. But report the symptoms as well, or you may well make their life much more difficult instead.</p>
+<p>“That’s funny, it did it a moment ago.”</p>
+<p>Say “intermittent fault” to any programmer and watch their face fall. The easy problems are the ones where performing a simple sequence of actions will cause the failure to occur. The programmer can then repeat those actions under closely observed test conditions and watch what happens in great detail. Too many problems simply don’t work that way: there will be programs that fail once a week, or fail once in a blue moon, or never fail when you try them in front of the programmer but always fail when you have a deadline coming up.</p>
+<p>Most intermittent faults are not truly intermittent. Most of them have some logic somewhere. Some might occur when the machine is running out of memory, some might occur when another program tries to modify a critical file at the wrong moment, and some might occur only in the first half of every hour! (I’ve actually seen one of these.)</p>
+<p>Also, if you can reproduce the bug but the programmer can’t, it could very well be that their computer and your computer are different in some way and this difference is causing the problem. I had a program once whose window curled up into a little ball in the top left corner of the screen, and sat there and sulked. But it only did it on 800x600 screens; it was fine on my 1024x768 monitor.</p>
+<p>The programmer will want to know anything you can find out about the problem. Try it on another machine, perhaps. Try it twice or three times and see how often it fails. If it goes wrong when you’re doing serious work but not when you’re trying to demonstrate it, it might be long running times or large files that make it fall over. Try to remember as much detail as you can about what you were doing to it when it did fall over, and if you see any patterns, mention them. Anything you can provide has to be some help. Even if it’s only probabilistic (such as “it tends to crash more often when Emacs is running”), it might not provide direct clues to the cause of the problem, but it might help the programmer reproduce it.</p>
+<p>Most importantly, the programmer will want to be sure of whether they’re dealing with a true intermittent fault or a machine-specific fault. They will want to know lots of details about your computer, so they can work out how it differs from theirs. A lot of these details will depend on the particular program, but one thing you should definitely be ready to provide is version numbers. The version number of the program itself, and the version number of the operating system, and probably the version numbers of any other programs that are involved in the problem.</p>
+<p>“So I loaded the disk on to my Windows . . .”</p>
+<p>Writing clearly is essential in a bug report. If the programmer can’t tell what you meant, you might as well not have said anything.</p>
+<p>I get bug reports from all around the world. Many of them are from non-native English speakers, and a lot of those apologise for their poor English. In general, the bug reports with apologies for their poor English are actually very clear and useful. All the most unclear reports come from native English speakers who assume that I will understand them even if they don’t make any effort to be clear or precise.</p>
+<p>Be specific. If you can do the same thing two different ways, state which one you used. “I selected Load” might mean “I clicked on Load” or “I pressed Alt-L”. Say which you did. Sometimes it matters.<br>Be verbose. Give more information rather than less. If you say too much, the programmer can ignore some of it. If you say too little, they have to come back and ask more questions. One bug report I received was a single sentence; every time I asked for more information, the reporter would reply with another single sentence. It took me several weeks to get a useful amount of information, because it turned up one short sentence at a time.<br>Be careful of pronouns. Don’t use words like “it”, or references like “the window”, when it’s unclear what they mean. Consider this: “I started FooApp. It put up a warning window. I tried to close it and it crashed.” It isn’t clear what the user tried to close. Did they try to close the warning window, or the whole of FooApp? It makes a difference. Instead, you could say “I started FooApp, which put up a warning window. I tried to close the warning window, and FooApp crashed.” This is longer and more repetitive, but also clearer and less easy to misunderstand.<br>Read what you wrote. Read the report back to yourself, and see if you think it’s clear. If you have listed a sequence of actions which should produce the failure, try following them yourself, to see if you missed a step.<br>Summary</p>
+<p>The first aim of a bug report is to let the programmer see the failure with their own eyes. If you can’t be with them to make it fail in front of them, give them detailed instructions so that they can make it fail for themselves.<br>In case the first aim doesn’t succeed, and the programmer can’t see it failing themselves, the second aim of a bug report is to describe what went wrong. Describe everything in detail. State what you saw, and also state what you expected to see. Write down the error messages, especially if they have numbers in.<br>When your computer does something unexpected, freeze. Do nothing until you’re calm, and don’t do anything that you think might be dangerous.<br>By all means try to diagnose the fault yourself if you think you can, but if you do, you should still report the symptoms as well.<br>Be ready to provide extra information if the programmer needs it. If they didn’t need it, they wouldn’t be asking for it. They aren’t being deliberate awkward. Have version numbers at your fingertips, because they will probably be needed.<br>Write clearly. Say what you mean, and make sure it can’t be misinterpreted.<br>Above all, be precise. Programmers like precision.<br>Disclaimer: I’ve never actually seen a mongoose or an antelope. My zoology may be inaccurate.</p>
+<p>$Id$</p>
+<p>Copyright © 1999 Simon Tatham.<br>This document is OpenContent.<br>You may copy and use the text under the terms of the OpenContent Licence.</p>
+<p>This article is not specific to any particular program.</p>
+<p>If you have reached this page by following a link from the website for a particular program, DO NOT send bug reports for that program to me. Instead, return to the page you came from to find out where to report bugs in the program.</p>
+<p>If you have comments or criticism about this article itself, please send them to <a href="mailto:anakin@pobox.com" target="_blank" rel="noopener">anakin@pobox.com</a>.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Bugs/" rel="tag"><i class="fa fa-tag"></i> Bugs</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Program/IPCreator/Technology/Program/Advice/software-release-practice-howto/" rel="next" title="Software Release Practice HowTO">
+                  <i class="fa fa-chevron-left"></i> Software Release Practice HowTO
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Program/IPCreator/Technology/Program/Advice/how-to-ask-questions-the-smart-way/" rel="prev" title="How to Ask Questions">
+                  How to Ask Questions <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">2.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-to-Report-Bugs-Effectively"><span class="nav-number"></span> <span class="nav-text">How to Report Bugs Effectively</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

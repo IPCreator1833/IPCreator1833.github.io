@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="TensorFlow就是以张量（Tensor）在计算图（Graph）上流动（Flow）的方式的实现和执行机器学习算法的框架。">
+<meta name="keywords" content="Tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Basic Concepts of Tensorflow">
+<meta property="og:url" content="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/basic concepts of tensorflow/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="TensorFlow就是以张量（Tensor）在计算图（Graph）上流动（Flow）的方式的实现和执行机器学习算法的框架。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://p53s4d2qk.bkt.clouddn.com/frameworkoftensorflow.jpg?imageMogr2/thumbnail/!75p">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab130de8d4c.jpg?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab1363b2562.jpg?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab139ea3527.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab13ce4266c.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab13f726e2c.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab142019043.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab1434c53d1.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab144b05008.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab14667c8a4.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab147c27185.jpg?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab14a4ed60d.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab14c184e70.jpg?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab14d89159b.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab14eec76c2.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="http://www.tensorfly.cn/tfdoc/images/mnist_tensorboard.png">
+<meta property="og:image" content="http://www.tensorfly.cn/tfdoc/images/graph_vis_animation.gif">
+<meta property="og:image" content="http://www.tensorfly.cn/tfdoc/images/pool1_collapsed.png">
+<meta property="og:image" content="http://www.tensorfly.cn/tfdoc/images/pool1_expanded.png">
+<meta property="og:image" content="http://www.tensorfly.cn/tfdoc/images/conv_1.png">
+<meta property="og:image" content="http://www.tensorfly.cn/tfdoc/images/save.png">
+<meta property="og:image" content="http://www.tensorfly.cn/tfdoc/images/series.png">
+<meta property="og:image" content="http://www.tensorfly.cn/tfdoc/images/series_expanded.png">
+<meta property="og:image" content="http://www.tensorfly.cn/tfdoc/images/infocard.png">
+<meta property="og:image" content="http://www.tensorfly.cn/tfdoc/images/infocard_op.png">
+<meta property="og:image" content="http://www.tensorfly.cn/tfdoc/images/colorby_structure.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/8.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/9.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/10.png">
+<meta property="og:image" content="http://p53s4d2qk.bkt.clouddn.com/s29475322.jpg?imageMogr2/thumbnail/!75p">
+<meta property="og:image" content="http://p53s4d2qk.bkt.clouddn.com/s29683030.jpg?imageMogr2/thumbnail/!75p">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/9c506fcagw1f52tn9s36qj20n00gygnk.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/9c506fcajw1f52tqo9ss1j20ub07kju1.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/9c506fcajw1f52tsef2jsj20ud077q5t.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/9c506fcajw1f52tw0pss8j20m00ewaeu.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/9c506fcajw1f52twb8puvj20do0duq6e.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/9c506fcagw1f52tx0xx2dj20qc0ffaeh.jpg">
+<meta property="og:image" content="http://img.blog.csdn.net/20160508142108636">
+<meta property="og:updated_time" content="2018-03-23T01:34:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Basic Concepts of Tensorflow">
+<meta name="twitter:description" content="TensorFlow就是以张量（Tensor）在计算图（Graph）上流动（Flow）的方式的实现和执行机器学习算法的框架。">
+<meta name="twitter:image" content="http://p53s4d2qk.bkt.clouddn.com/frameworkoftensorflow.jpg?imageMogr2/thumbnail/!75p">
+
+<link rel="canonical" href="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/basic concepts of tensorflow/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Basic Concepts of Tensorflow | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/basic concepts of tensorflow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Basic Concepts of Tensorflow
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TensorFlow/" itemprop="url" rel="index">
+                    <span itemprop="name">TensorFlow</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/TensorFlow/IPCreator/Technology/AI/TensorFlow/basic concepts of tensorflow/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/TensorFlow/IPCreator/Technology/AI/TensorFlow/basic concepts of tensorflow/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="http://p53s4d2qk.bkt.clouddn.com/frameworkoftensorflow.jpg?imageMogr2/thumbnail/!75p" alt="frameworkoftensorflow.jpg"></p>
+<blockquote>
+<p>TensorFlow就是以张量（Tensor）在计算图（Graph）上流动（Flow）的方式的实现和执行机器学习算法的框架。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="从系统和代码实现角度解析TensorFlow的内部实现原理-深度"><a href="#从系统和代码实现角度解析TensorFlow的内部实现原理-深度" class="headerlink" title="从系统和代码实现角度解析TensorFlow的内部实现原理 | 深度"></a><a href="https://www.leiphone.com/news/201702/n0uj58iHaNpW9RJG.html?vt=4" target="_blank" rel="noopener">从系统和代码实现角度解析TensorFlow的内部实现原理 | 深度</a></h2><p>本文作者：深度学习大讲堂    2017-02-21 09:50<br>导语：Google发布深度学习框架TensorFlow并宣布开源，并迅速得到广泛关注，在图形分类、音频处理、推荐系统和自然语言处理等场景下都被大面积推广<br>雷锋网(公众号：雷锋网)按：本文作者姚健，毕业于中科院计算所网络数据实验室，曾就职于360天眼实验室，主要从事深度学习和增强学习相关研究工作。目前就职于腾讯MIG事业部，从事神经机器翻译工作。</p>
+<p>摘要</p>
+<p>2015年11月9日，Google发布深度学习框架TensorFlow并宣布开源，并迅速得到广泛关注，在图形分类、音频处理、推荐系统和自然语言处理等场景下都被大面积推广。TensorFlow系统更新快速，官方文档教程齐全，上手快速且简单易用，支持Python和C++接口。本文依据对Tensorflow（简称TF）白皮书[1]、TF Github[2]和TF官方教程[3]的理解，从系统和代码实现角度讲解TF的内部实现原理。以Tensorflow r0.8.0为基础，本文由浅入深的阐述Tensor和Flow的概念。先介绍了TensorFlow的核心概念和基本概述，然后剖析了OpKernels模块、Graph模块、Session模块。</p>
+<ol>
+<li>TF系统架构</li>
+</ol>
+<p>1.1 TF依赖视图</p>
+<p>TF的依赖视图如图1所示[4]，描述了TF的上下游关系链。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab130de8d4c.jpg?imageMogr2/format/jpg/quality/90" alt><br>图 1 TensorFlow依赖视图</p>
+<p>TF托管在github平台，有google groups和contributors共同维护。</p>
+<p>TF提供了丰富的深度学习相关的API，支持Python和C/C++接口。</p>
+<p>TF提供了可视化分析工具Tensorboard，方便分析和调整模型。</p>
+<p>TF支持Linux平台，Windows平台，Mac平台，甚至手机移动设备等各种平台。</p>
+<p>1.2 TF系统架构</p>
+<p>图2是TF的系统架构，从底向上分为设备管理和通信层、数据操作层、图计算层、API接口层、应用层。其中设备管理和通信层、数据操作层、图计算层是TF的核心层。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab1363b2562.jpg?imageMogr2/format/jpg/quality/90" alt><br>图2 TF系统架构</p>
+<p>底层设备通信层负责网络通信和设备管理。设备管理可以实现TF设备异构的特性，支持CPU、GPU、Mobile等不同设备。网络通信依赖gRPC通信协议实现不同设备间的数据传输和更新。</p>
+<p>第二层是Tensor的OpKernels实现。这些OpKernels以Tensor为处理对象，依赖网络通信和设备内存分配，实现了各种Tensor操作或计算。Opkernels不仅包含MatMul等计算操作，还包含Queue等非计算操作，这些将在第5章Kernels模块详细介绍。</p>
+<p>第三层是图计算层（Graph），包含本地计算流图和分布式计算流图的实现。Graph模块包含Graph的创建、编译、优化和执行等部分，Graph中每个节点都是OpKernels类型表示。关于图计算将在第6章Graph模块详细介绍。</p>
+<p>第四层是API接口层。Tensor C API是对TF功能模块的接口封装，便于其他语言平台调用。</p>
+<p>第四层以上是应用层。不同编程语言在应用层通过API接口层调用TF核心功能实现相关实验和应用。</p>
+<p>1.3 TF代码目录组织</p>
+<p>图3是TF的代码结构视图，下面将简单介绍TF的目录组织结构。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab139ea3527.png?imageMogr2/format/jpg/quality/90" alt><br>图3 TF代码目录组织结构</p>
+<p>Tensorflow/core目录包含了TF核心模块代码。</p>
+<p>public: API接口头文件目录，用于外部接口调用的API定义，主要是session.h 和tensor_c_api.h。</p>
+<p>client: API接口实现文件目录。</p>
+<p>platform: OS系统相关接口文件，如file system, env等。</p>
+<p>protobuf: 均为.proto文件，用于数据传输时的结构序列化.</p>
+<p>common_runtime: 公共运行库，包含session, executor, threadpool, rendezvous, memory管理, 设备分配算法等。</p>
+<p>distributed_runtime: 分布式执行模块，如rpc session, rpc master, rpc worker, graph manager。</p>
+<p>framework: 包含基础功能模块，如log, memory, tensor</p>
+<p>graph: 计算流图相关操作，如construct, partition, optimize, execute等</p>
+<p>kernels: 核心Op，如matmul, conv2d, argmax, batch_norm等</p>
+<p>lib: 公共基础库，如gif、gtl(google模板库)、hash、histogram等。</p>
+<p>ops: 基本ops运算，ops梯度运算，io相关的ops，控制流和数据流操作</p>
+<p>Tensorflow/stream_executor目录是并行计算框架，由google stream executor团队开发。</p>
+<p> Tensorflow/contrib目录是contributor开发目录。</p>
+<p>Tensroflow/python目录是python API客户端脚本。</p>
+<p>Tensorflow/tensorboard目录是可视化分析工具，不仅可以模型可视化，还可以监控模型参数变化。</p>
+<p>third_party目录是TF第三方依赖库。</p>
+<p>eigen3: eigen矩阵运算库，TF基础ops调用</p>
+<p>gpus: 封装了cuda/cudnn编程库</p>
+<ol start="2">
+<li>TF核心概念</li>
+</ol>
+<p>TF的核心是围绕Graph展开的，简而言之，就是Tensor沿着Graph传递闭包完成Flow的过程。所以在介绍Graph之前需要讲述一下符号编程、计算流图、梯度计算、控制流的概念。</p>
+<p>2.1 Tensor</p>
+<p>在数学上，Matrix表示二维线性映射，Tensor表示多维线性映射，Tensor是对Matrix的泛化，可以表示1-dim、2-dim、N-dim的高维空间。图4对比了矩阵乘法（Matrix Product）和张量积（Tensor Contract），可以看出Tensor的泛化能力，其中张量积运算在TF的MatMul和Conv2D运算中都有用到。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab13ce4266c.png?imageMogr2/format/jpg/quality/90" alt><br>图4 Tensor contract</p>
+<p>Tensor在高维空间数学运算比Matrix计算复杂，计算量也非常大，加速张量并行运算是TF优先考虑的问题，如add, contract, slice, reshape, reduce, shuffle等运算。</p>
+<p>TF中Tensor的维数描述为阶，数值是0阶，向量是1阶，矩阵是2阶，以此类推，可以表示n阶高维数据。</p>
+<p>TF中Tensor支持的数据类型有很多，如tf.float16, tf.float32, tf.float64, tf.uint8, tf.int8, tf.int16, tf.int32, tf.int64, tf.string, tf.bool, tf.complex64等，所有Tensor运算都使用泛化的数据类型表示。</p>
+<p>TF的Tensor定义和运算主要是调用Eigen矩阵计算库完成的。TF中Tensor的UML定义如图4。其中TensorBuffer指针指向Eigen::Tensor类型。其中，Eigen::Tensor[5][6]不属于Eigen官方维护的程序，由贡献者提供文档和维护，所以Tensor定义在Eigen unsupported模块中。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab13f726e2c.png?imageMogr2/format/jpg/quality/90" alt><br>图5 Tensor数据结构定义</p>
+<p>图5中，Tensor主要包含两个变量m_data和m_dimension，m_data保存了Tensor的数据块，T是泛化的数据类型，m_dimensions保存了Tensor的维度信息。</p>
+<p>Eigen:Tensor的成员变量很简单，却支持非常多的基本运算，再借助Eigen的加速机制实现快速计算，参考章节3.2。Eigen::Tensor主要包含了</p>
+<p>一元运算（Unary），如sqrt、square、exp、abs等。</p>
+<p>二元运算（Binary），如add，sub，mul，div等</p>
+<p>选择运算（Selection），即if / else条件运算</p>
+<p>归纳运算（Reduce），如reduce_sum， reduce_mean等</p>
+<p>几何运算（Geometry），如reshape，slice，shuffle，chip，reverse，pad，concatenate，extract_patches，extract_image_patches等</p>
+<p>张量积（Contract）和卷积运算（Convolve）是重点运算，后续会详细讲解。</p>
+<p>2.2 符号编程</p>
+<p>编程模式通常分为命令式编程（imperative style programs）和符号式编程（symbolic style programs）。</p>
+<p>命令式编程容易理解和调试，命令语句基本没有优化，按原有逻辑执行。符号式编程涉及较多的嵌入和优化，不容易理解和调试，但运行速度有同比提升。</p>
+<p>这两种编程模式在实际中都有应用，Torch是典型的命令式风格，caffe、theano、mxnet和Tensorflow都使用了符号式编程。其中caffe、mxnet采用了两种编程模式混合的方法，而Tensorflow是完全采用了符号式编程，Theano和Tensorflow的编程模式更相近。</p>
+<p>命令式编程是常见的编程模式，编程语言如python/C++都采用命令式编程。命令式编程明确输入变量，并根据程序逻辑逐步运算，这种模式非常在调试程序时进行单步跟踪，分析中间变量。举例来说，设A=10, B=10，计算逻辑：</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab142019043.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p>第一步计算得出C=100，第二步计算得出D=101，输出结果D=101。</p>
+<p>符号式编程将计算过程抽象为计算图，计算流图可以方便的描述计算过程，所有输入节点、运算节点、输出节点均符号化处理。计算图通过建立输入节点到输出节点的传递闭包，从输入节点出发，沿着传递闭包完成数值计算和数据流动，直到达到输出节点。这个过程经过计算图优化，以数据（计算）流方式完成，节省内存空间使用，计算速度快，但不适合程序调试，通常不用于编程语言中。举上面的例子，先根据计算逻辑编写符号式程序并生成计算图</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab1434c53d1.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p>其中A和B是输入符号变量，C和D是运算符号变量，compile函数生成计算图F，如图6所示。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab144b05008.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p>图6 符号编程的正向计算图</p>
+<p>最后得到A=10, B=10时变量D的值，这里D可以复用C的内存空间，省去了中间变量的空间存储。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab14667c8a4.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p>图 6是TF中的计算流图，C=F(Relu(Add(MatMul(W, x), b)))，其中每个节点都是符号化表示的。通过session创建graph，在调用session.run执行计算。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab147c27185.jpg?imageMogr2/format/jpg/quality/90" alt></p>
+<p>图7 TF符号计算图</p>
+<p>和目前的符号语言比起来，TF最大的特点是强化了数据流图，引入了mutation的概念。这一点是TF和包括Theano在内的符号编程框架最大的不同。所谓mutation，就是可以在计算的过程更改一个变量的值，而这个变量在计算的过程中会被带入到下一轮迭代里面去。</p>
+<p>Mutation是机器学习优化算法几乎必须要引入的东西（虽然也可以通过immutable replacement来代替，但是会有效率的问题）。 Theano的做法是引入了update statement来处理mutation。TF选择了纯符号计算的路线，并且直接把更新引入了数据流图中去。从目前的白皮书看还会支持条件和循环。这样就几乎让TF本身成为一门独立的语言。不过这一点会导致最后的API设计和使用需要特别小心，把mutation 引入到数据流图中会带来一些新的问题，比如如何处理写与写之间的依赖。[7]</p>
+<p>2.3 梯度计算</p>
+<p>梯度计算主要应用在误差反向传播和数据更新，是深度学习平台要解决的核心问题。梯度计算涉及每个计算节点，每个自定义的前向计算图都包含一个隐式的反向计算图。从数据流向上看，正向计算图是数据从输入节点到输出节点的流向过程，反向计算图是数据从输出节点到输入节点的流向过程。</p>
+<p>图8是2.2节中图6对应的反向计算图。图中，由于C=A<em>B，则dA=B</em>dC, dB=A<em>dC。在反向计算图中，输入节点dD，输出节点dA和dB，计算表达式为dA=B</em>dC=B<em>dD, dB=A</em>dC=A*dD。每一个正向计算节点对应一个隐式梯度计算节点。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab14a4ed60d.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p>图8 符号编程的反向计算图</p>
+<p>反向计算限制了符号编程中内存空间复用的优势，因为在正向计算中的计算数据在反向计算中也可能要用到。从这一点上讲，粗粒度的计算节点比细粒度的计算节点更有优势，而TF大部分为细粒度操作，虽然灵活性很强，但细粒度操作涉及到更多的优化方案，在工程实现上开销较大，不及粗粒度简单直接。在神经网络模型中，TF将逐步侧重粗粒度运算。</p>
+<p>2.4 控制流</p>
+<p>TF的计算图如同数据流一样，数据流向表示计算过程，如图9。数据流图可以很好的表达计算过程，为了扩展TF的表达能力，TF中引入控制流。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab14c184e70.jpg?imageMogr2/format/jpg/quality/90" alt></p>
+<p>图9 Graph的数据流</p>
+<p>在编程语言中，if…else…是最常见的逻辑控制，在TF的数据流中也可以通过这种方式控制数据流向。接口函数如下，pred为判别表达式，fn1和fn2为运算表达式。当pred为true是，执行fn1操作；当pred为false时，执行fn2操作。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab14d89159b.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p>TF还可以协调多个数据流，在存在依赖节点的场景下非常有用，例如节点B要读取模型参数θ更新后的值，而节点A负责更新参数θ，则节点B必须等节点A完成后才能执行，否则读取的参数θ为更新前的数值，这时需要一个运算控制器。接口函数如下，tf.control_dependencies函数可以控制多个数据流执行完成后才能执行接下来的操作，通常与tf.group函数结合使用。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58ab14eec76c2.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p>TF支持的控制算子有Switch、Merge、Enter、Leave和NextIteration等。</p>
+<p>TF不仅支持逻辑控制，还支持循环控制。TF使用和MIT Token-Tagged machine相似的表示系统，将循环的每次迭代标记为一个tag，迭代的执行状态标记为一个frame，但迭代所需的数据准备好的时候，就可以开始计算，从而多个迭代可以同时执行。</p>
+<p>未完待续……</p>
+<h2 id="TensorBoard-可视化学习"><a href="#TensorBoard-可视化学习" class="headerlink" title="TensorBoard:可视化学习"></a><a href="http://www.tensorfly.cn/tfdoc/how_tos/summaries_and_tensorboard.html" target="_blank" rel="noopener">TensorBoard:可视化学习</a></h2><p>TensorBoard 涉及到的运算，通常是在训练庞大的深度神经网络中出现的复杂而又难以理解的运算。</p>
+<p>为了更方便 TensorFlow 程序的理解、调试与优化，我们发布了一套叫做 TensorBoard 的可视化工具。你可以用 TensorBoard 来展现你的 TensorFlow 图像，绘制图像生成的定量指标图以及附加数据。</p>
+<p>当 TensorBoard 设置完成后，它应该是这样子的：</p>
+<p><img src="http://www.tensorfly.cn/tfdoc/images/mnist_tensorboard.png" alt></p>
+<p>数据序列化　<br>TensorBoard 通过读取 TensorFlow 的事件文件来运行。TensorFlow 的事件文件包括了你会在 TensorFlow 运行中涉及到的主要数据。下面是 TensorBoard 中汇总数据（Summary data）的大体生命周期。</p>
+<p>首先，创建你想汇总数据的 TensorFlow 图，然后再选择你想在哪个节点进行汇总(summary)操作。</p>
+<p>比如，假设你正在训练一个卷积神经网络，用于识别 MNISt 标签。你可能希望记录学习速度(learning rate)的如何变化，以及目标函数如何变化。通过向节点附加scalar_summary操作来分别输出学习速度和期望误差。然后你可以给每个 scalary_summary 分配一个有意义的 标签，比如 ‘learning rate’ 和 ‘loss function’。</p>
+<p>或者你还希望显示一个特殊层中激活的分布，或者梯度权重的分布。可以通过分别附加 histogram_summary 运算来收集权重变量和梯度输出。</p>
+<p>所有可用的 summary 操作详细信息，可以查看summary_operation文档。</p>
+<p>在TensorFlow中，所有的操作只有当你执行，或者另一个操作依赖于它的输出时才会运行。我们刚才创建的这些节点（summary nodes）都围绕着你的图像：没有任何操作依赖于它们的结果。因此，为了生成汇总信息，我们需要运行所有这些节点。这样的手动工作是很乏味的，因此可以使用tf.merge_all_summaries来将他们合并为一个操作。</p>
+<p>然后你可以执行合并命令，它会依据特点步骤将所有数据生成一个序列化的Summary protobuf对象。最后，为了将汇总数据写入磁盘，需要将汇总的protobuf对象传递给tf.train.Summarywriter。</p>
+<p>SummaryWriter 的构造函数中包含了参数 logdir。这个 logdir 非常重要，所有事件都会写到它所指的目录下。此外，SummaryWriter 中还包含了一个可选择的参数 GraphDef。如果输入了该参数，那么 TensorBoard 也会显示你的图像。</p>
+<p>现在已经修改了你的图，也有了 SummaryWriter，现在就可以运行你的神经网络了！如果你愿意的话，你可以每一步执行一次合并汇总，这样你会得到一大堆训练数据。这很有可能超过了你想要的数据量。你也可以每一百步执行一次合并汇总，或者如下面代码里示范的这样。</p>
+<p>merged_summary_op = tf.merge_all_summaries()<br>summary_writer = tf.train.SummaryWriter(‘/tmp/mnist_logs’, sess.graph)<br>total_step = 0<br>while training:<br>  total_step += 1<br>  session.run(training_op)<br>  if total_step % 100 == 0:<br>    summary_str = session.run(merged_summary_op)<br>    summary_writer.add_summary(summary_str, total_step)</p>
+<p>现在已经准备好用 TensorBoard 来可视化这些数据了。</p>
+<p>启动TensorBoard　<br>输入下面的指令来启动TensorBoard</p>
+<p>python tensorflow/tensorboard/tensorboard.py –logdir=path/to/log-directory<br>这里的参数 logdir 指向 SummaryWriter 序列化数据的存储路径。如果logdir目录的子目录中包含另一次运行时的数据，那么 TensorBoard 会展示所有运行的数据。一旦 TensorBoard 开始运行，你可以通过在浏览器中输入 localhost:6006 来查看 TensorBoard。</p>
+<p>如果你已经通过pip安装了 TensorBoard，你可以通过执行更为简单地命令来访问 TensorBoard</p>
+<p>tensorboard –logdir=/path/to/log-directory<br>进入 TensorBoard 的界面时，你会在右上角看到导航选项卡，每一个选项卡将展现一组可视化的序列化数据集 。对于你查看的每一个选项卡，如果 TensorBoard 中没有数据与这个选项卡相关的话，则会显示一条提示信息指示你如何序列化相关数据。</p>
+<p>更多更详细的关于如何使用 graph 选项来显示你的图像的信息。参见 TensorBoard:图表可视化</p>
+<p>原文地址：TensorBoard:Visualizing Learning 翻译：thylaco1eo 校对：lucky521</p>
+<h2 id="TensorBoard-图表可视化"><a href="#TensorBoard-图表可视化" class="headerlink" title="TensorBoard: 图表可视化"></a><a href="http://www.tensorfly.cn/tfdoc/how_tos/graph_viz.html" target="_blank" rel="noopener">TensorBoard: 图表可视化</a></h2><p>TensorFlow 图表计算强大而又复杂，图表可视化在理解和调试时显得非常有帮助。 下面是一个运作时的可式化例子。</p>
+<p><img src="http://www.tensorfly.cn/tfdoc/images/graph_vis_animation.gif" alt><br>一个TensorFlow图表的可视化 “一个TensorFlow图表的可视化”) 一个TensorFlow图表的可视化。</p>
+<p>为了显示自己的图表，需将 TensorBoard 指向此工作的日志目录并运行，点击图表顶部窗格的标签页，然后在左上角的菜单中选择合适的运行。想要深入学习关于如何运行 TensorBoard 以及如何保证所有必要信息被记录下来，请查看 Summaries 和 TensorBoard.</p>
+<p>名称域（Name scoping）和节点（Node）<br>典型的 TensorFlow 可以有数以千计的节点，如此多而难以一下全部看到，甚至无法使用标准图表工具来展示。为简单起见，我们为变量名划定范围，并且可视化把该信息用于在图表中的节点上定义一个层级。默认情况下， 只有顶层节点会显示。下面这个例子使用tf.name_scope在hidden命名域下定义了三个操作:</p>
+<p>import tensorflow as tf</p>
+<p>with tf.name_scope(‘hidden’) as scope:<br>  a = tf.constant(5, name=’alpha’)<br>  W = tf.Variable(tf.random_uniform([1, 2], -1.0, 1.0), name=’weights’)<br>  b = tf.Variable(tf.zeros([1]), name=’biases’)<br>结果是得到了下面三个操作名:</p>
+<p>hidden/alpha<br>hidden/weights<br>hidden/biases<br>默认地，三个操作名会折叠为一个节点并标注为hidden。其额外细节并没有丢失，你可以双击，或点击右上方橙色的+来展开节点，然后就会看到三个子节点alpha，weights和biases了。</p>
+<p>这有一个生动的例子，例中有一个更复杂的节点，节点处于其初始和展开状态。</p>
+<p><img src="http://www.tensorfly.cn/tfdoc/images/pool1_collapsed.png" alt><br>未展开的名称域<br><img src="http://www.tensorfly.cn/tfdoc/images/pool1_expanded.png" alt><br>展开的名称域<br>顶级名称域的初始视图pool_1，点击右上方橙色的+按钮或双击节点来展开。    展开的pool_1名称域视图，点击右上方橙色的-按钮或双击节点来收起此名称域。<br>通过名称域把节点分组来得到可读性高的图表很关键的。如果你在构建一个模型，名称域就可以用来控制可视化结果。你的名称域越好，可视性就越好。</p>
+<p>上面的图像例子说明了可视化的另一方面， TensorFlow 图表有两种连接关系：数据依赖和控制依赖。数据依赖显示两个操作之间的tensor流程，用实心箭头指示，而控制依赖用点线表示。在已展开的视图(上面的右图)中，除了用点线连接的CheckNumerics和control_dependency之外，所有连接都是数据依赖的。</p>
+<p>还有一种手段用来简化布局。大多数 TensorFlow 图表有一部分节点，这部分节点和其他节点之间有很多连接。比如，许多节点在初始化阶段可能会有一个控制依赖，而绘制所有init节点的边缘和其依赖可能会创造出一个混乱的视图。</p>
+<p>为了减少混乱，可视化把所有 high-degree 节点分离到右边的一个从属区域， 而不会绘制线条来表示他们的边缘。线条也不用来表示连接了，我们绘制了小节点图标来指示这些连接关系。分离出从属节点通常不会把关键信息删除掉，因为这些节点和内构功能是相关的。</p>
+<p>conv_1是主图表的部分    save被抽出为从属节点</p>
+<p><img src="http://www.tensorfly.cn/tfdoc/images/conv_1.png" alt><br>节点conv_1被连接到save，注意其右边save节点图标。    </p>
+<p><img src="http://www.tensorfly.cn/tfdoc/images/save.png" alt><br>save has a high degree, 并会作为从属节点出现，与conv_1的连接作为一个节点图标显示在其左边。为了继续减少杂乱，既然save有很多连接，我们则只显示前5个，而把其余的缩略为… 12 more。<br>最后一个结构上的简化法叫做序列折叠（series collapsing）。 序列基序（Sequential motifs）是拥有相同结构并且其名称结尾的数字不同的节点，它们被折叠进一个单独的节点块（stack）中。对长序列网络来说，序列折叠极大地简化了视图，对于已层叠的节点，双击会展开序列。</p>
+<p>节点序列    展开的节点序列</p>
+<p><img src="http://www.tensorfly.cn/tfdoc/images/series.png" alt><br>一个节点序列的折叠视图。<br><img src="http://www.tensorfly.cn/tfdoc/images/series_expanded.png" alt><br>视图的一小块, 双击后展开。<br>最后，针对易读性的最后一点要说到的是，可视化为常节点和摘要节点使用了特别的图标，总结起来有下面这些节点符号：</p>
+<p>符号    意义<br>名称域    High-level节点代表一个名称域，双击则展开一个高层节点。<br>断线节点序列    彼此之间不连接的有限个节点序列。<br>相连节点序列    彼此之间相连的有限个节点序列。<br>操作节点    一个单独的操作节点。<br>常量节点    一个常量结点。<br>摘要节点    一个摘要节点。<br>数据流边    显示各操作间的数据流边。<br>控制依赖边    显示各操作间的控制依赖边。<br>引用边    引用边，表示出度操作节点可以使入度tensor发生变化。<br>交互<br>通过平移和缩放来导航图表，点击和拖动用于平移，滚动手势用于缩放。双击一个节点或点击其+按钮来展开代表一组操作的名称域。右下角有一个小地图可以在缩放和平移时方便的改变当前视角。</p>
+<p>要关闭一个打开的节点，再次双击它或点击它的-按钮，你也可以只点击一次来选中一个节点，节点的颜色会加深，并且会看到节点的详情，其连接到的节点会在可视化右上角的详情卡片显现。</p>
+<p>一个名称域的详情卡片    操作节点的详情卡片</p>
+<p><img src="http://www.tensorfly.cn/tfdoc/images/infocard.png" alt><br>详情卡片展示conv2名称域的详细信息，名称域中操作节点的输入和输出被结合在一起，适用于不显示属性的名称域。    </p>
+<p><img src="http://www.tensorfly.cn/tfdoc/images/infocard_op.png" alt><br>详情卡片展示DecodeRaw操作节点，除了输入和输出，卡片也会展示与当前节点相关的设备和属性。<br>选择对于 high-degree 节点的理解也很有帮助，选择任意节点，则与它的其余连接相应的节点也会选中，这使得在进行例如查看哪一个节点是否已保存等操作时非常容易。</p>
+<p>点击详情卡片中的一个节点名称时会选中该节点，必要的话，视角会自动平移以使该节点可见。</p>
+<p>最后，使用图例上方的颜色菜单，你可以给你的图表选择两个颜色方案。默认的结构视图下，当两个 high-level 节点颜色一样时，其会以相同的彩虹色彩出现，而结构唯一的节点颜色是灰色。还有一个视图则展示了不同的操作运行于什么设备之上。名称域被恰当的根据其中的操作节点的设备片件来着色。</p>
+<p>下图是一张真实图表的图解：<br><img src="http://www.tensorfly.cn/tfdoc/images/colorby_structure.png" alt><br>按结构着色    按设备着色<br>结构视图：灰色节点的结构是唯一的。橙色的conv1和conv2节点有相同的结构, 其他颜色的节点也类似。    设备视图：名称域根据其中的操作节点的设备片件来着色，在此紫色代表GPU，绿色代表CPU。<br>原文: TensorBoard: Graph Visualization 翻译: @Warln 校对: lucky521</p>
+<h1 id="tensorflow架构"><a href="#tensorflow架构" class="headerlink" title="tensorflow架构"></a><a href="http://blog.csdn.net/stdcoutzyx/article/details/51645396" target="_blank" rel="noopener">tensorflow架构</a></h1><h2 id="Basic-Concepts"><a href="#Basic-Concepts" class="headerlink" title="Basic Concepts"></a>Basic Concepts</h2><p>本片博文是参考文献[1]的阅读笔记，特此声明</p>
+<p>TensorFlow，以下简称TF，是Google去年发布的机器学习平台，发布以后由于其速度快，扩展性好，推广速度还是蛮快的。江湖上流传着Google的大战略，Android占领了移动端，TF占领神经网络提供AI服务，未来的趋势恰好是语音图像以及AI的时代，而Google IO上发布的Gbot似乎正是这一交叉领域的初步尝试。</p>
+<p>TF的特点之一就是可以支持很多种设备，大到GPU、CPU，小到手机平板，五花八门的设备都可以跑起来TF。不得不说这一点很有前瞻性，可以预见的是，mobile-end的用户将会享受到越来越多的AI服务。说个极端，说不定以后某天，单机版的AlphaGo会出现也是可以的。</p>
+<p>话不多说，开始正文。</p>
+<p>Basic Concepts</p>
+<h3 id="张量-Tensor"><a href="#张量-Tensor" class="headerlink" title="张量(Tensor)"></a>张量(Tensor)</h3><p>名字就是TensorFlow，直观来看，就是张量的流动。张量(tensor)，即任意维度的数据，一维、二维、三维、四维等数据统称为张量。而<strong>张量的流动则是指保持计算节点不变，让数据进行流动</strong>。这样的设计是针对连接式的机器学习算法，比如逻辑斯底回归，神经网络等。连接式的机器学习算法可以把算法表达成一张图，<strong>张量从图中从前到后走一遍就完成了前向运算；而残差从后往前走一遍，就完成了后向传播。</strong></p>
+<h3 id="算子-operation"><a href="#算子-operation" class="headerlink" title="算子(operation)"></a>算子(operation)</h3><p>在TF的实现中，机器学习算法被表达成图，图中的节点是算子(operation)，节点会有0到多个输出，下图是TF实现的一些算子。</p>
+<p><img src="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/1.png" alt></p>
+<p>每个算子都会有属性，所有的属性都在建立图的时候被确定下来，比如，最常用的属性是为了支持多态，比如加法算子既能支持float32，又能支持int32计算。</p>
+<h3 id="核-kernel"><a href="#核-kernel" class="headerlink" title="核(kernel)"></a>核(kernel)</h3><p>TF中还有一个概念是kernel，<strong>kernel是operation在某种设备上的具体实现</strong>。TF的库通过注册机制来定义op和kernel，所以可以通过链接一个其他的库来进行kernel和op的扩展。</p>
+<h3 id="边-edge"><a href="#边-edge" class="headerlink" title="边(edge)"></a>边(edge)</h3><p>TF的图中的边分为两种：</p>
+<p>正常边，正常边上可以流动数据，即正常边就是tensor<br>特殊边，又称作控制依赖，(control dependencies) </p>
+<p>没有数据从特殊边上流动，但是特殊边却可以控制节点之间的依赖关系，在特殊边的起始节点完成运算之前，特殊边的结束节点不会被执行。</p>
+<p>也不仅仅非得有依赖关系才可以用特殊边，还可以有其他用法，比如为了控制内存的时候，可以让两个实际上并没有前后依赖关系的运算分开执行。</p>
+<p>特殊边可以在client端被直接使用</p>
+<h3 id="会话-Session"><a href="#会话-Session" class="headerlink" title="会话(Session)"></a>会话(Session)</h3><p>客户端使用会话来和TF系统交互，一般的模式是，建立会话，此时会生成一张空图；在会话中添加节点和边，形成一张图，然后执行。</p>
+<p>下图有一个TF的会话样例和所对应的图示。</p>
+<p><img src="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/2.png" alt></p>
+<p><img src="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/3.png" alt></p>
+<h3 id="变量-Variables"><a href="#变量-Variables" class="headerlink" title="变量(Variables)"></a>变量(Variables)</h3><p>机器学习算法都会有参数，而参数的状态是需要保存的。而参数是在图中有其固定的位置的，不能像普通数据那样正常流动。因而，TF中将Variables实现为一个特殊的算子，该算子会返回它所保存的可变tensor的句柄。</p>
+<h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>首先是实现中的几个部分：</p>
+<p>TF中最重要的Tensor被支持的非常全面，8bit到64bit， signed和unsigned，IEEE float/double，complex number等等。使用引用计数来保存tensor，当计数到0时，tensor被回收。</p>
+<p>客户端，用户会使用；与master和一些worker process交流</p>
+<p>master，用来与客户端交互，同时调度任务；</p>
+<p>worker process，工作节点，每个worker process可以访问一到多个device。</p>
+<p>device，TF的计算核心，通过将device的类型、job名称、在worker process中的索引将device命名。可以通过注册机制来添加新的device实现，每个device实现需要负责内存分配和管理调度TF系统所下达的核运算需求。</p>
+<p>TF的实现分为了单机实现和分布式实现，在分布式实现中，需要实现的是对client，master，worker process不在同一台机器上时的支持。此时，关于这些进程的调度，使用的是原始论文中参考文献51的调度方式。关于分布式和单机的不同如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/4.png" alt></p>
+<h3 id="Single-Device-Execution"><a href="#Single-Device-Execution" class="headerlink" title="Single-Device Execution"></a>Single-Device Execution</h3><p>构建好图后，使用拓扑算法来决定执行哪一个节点，即对每个节点使用一个计数，值表示所依赖的未完成的节点数目，当一个节点的运算完成时，将依赖该节点的所有节点的计数减一。如果节点的计数为0，将其放入准备队列待执行</p>
+<h3 id="Multi-Device-Execution"><a href="#Multi-Device-Execution" class="headerlink" title="Multi-Device Execution"></a>Multi-Device Execution</h3><p>当系统到了分布式情况下时，事情就变得复杂了很多，还好前述调度用了现有的框架。那么对于TF来说，剩下的事情就是：</p>
+<p>决定运算在哪个设备上运行<br>管理设备之间的数据传递</p>
+<h3 id="决定设备"><a href="#决定设备" class="headerlink" title="决定设备"></a>决定设备</h3><p>使用一个cost model算法来进行预估时间，计算后使用贪心算法来分配设备。在决定设备的时候，也可以预先设置一些约束，比如，某个op只能在GPU上执行等。</p>
+<p>预估时间有两种方法：</p>
+<p>使用启发式的算法，通过把输入和输出的类型以及tensor的大小输入进去，得到时间的预估<br>使用模拟的方法，对图的计算进行一个模拟，得到各个计算在其可用的设备上的时间。<br>寻找合适设备是TF系统区分与之前很多系统的地方，之前的系统比如Parameter Server，是参数分离出来，运算在一起，同时使用数据切分来达到分布式。而<strong>TF是把每个op都映射到某个机器上，意味着每个op可能在不同的机器上</strong>，这是对系统的进一步剖离，因而可以达到更高的可扩展性。</p>
+<h3 id="跨设备通信"><a href="#跨设备通信" class="headerlink" title="跨设备通信"></a>跨设备通信</h3><p>当两个需要通信的op在不同的机器上时，就需要跨设备通信，当它们需要通信时，TF会在它们之间的联系中添加Send和Recv节点，通过Send和Recv之间进行通信来达到op之间通信的效果。如下所示：</p>
+<p><img src="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/5.png" alt></p>
+<p>为了优化网络通信，TF会将相同的数据传送合并，如a-&gt;b和a-&gt;c的传送合并，这一点可以通过Send和Recv很方便的实现。而通过实现Send和Recv，将master节点的通信调度任务解放出来，master就只需要向图中的各个节点发出运行命令就够了，增加了系统的可扩展性。</p>
+<p>Send和Recv通过TCP或RDMA来传输数据</p>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p>在分布式系统中，常见的错误来自于两个方面：</p>
+<p>Send/Recv的网络传输<br>master和worker process之间的心跳同步</p>
+<p>当错误发生的时候，TF会将整个图的计算停止，并从上一次保存的状态重新执行。为了保存状态，每个Variable的节点都去连接一个Save的节点。这些save节点会每隔一段时间或每隔几次迭代运行一次。</p>
+<p>自从TF将op剖离之后，所有的策略都依赖于节点来实现，Variable利用节点实现，状态保存也用节点实现。感觉还是很不一样的。<br>一个节点出了错误，要停掉整个图的计算，我觉得这样的恢复模式会不会代价太大？</p>
+<h2 id="Extensions"><a href="#Extensions" class="headerlink" title="Extensions"></a>Extensions</h2><h3 id="Gradient-Computation-梯度计算"><a href="#Gradient-Computation-梯度计算" class="headerlink" title="Gradient Computation(梯度计算)"></a>Gradient Computation(梯度计算)</h3><p>连接式的机器学习算法往往需要使用梯度下降法来求取参数，TF通过扩展图的方式实现了自动求导，TF做法如下：</p>
+<p>对于每张计算图，得到从输入I到输出C的路径，并从C到I回溯，回溯过程中对于路径上的每个节点A，添加另一个节点来计算A’来计算偏导，在计算偏导的过程中，A’不仅仅将上一层传下来的反向导数作为输入，还可能将A的输入和输出也作为其输入。</p>
+<p><img src="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/6.png" alt></p>
+<p>在执行前向计算的时候，启发式的优化算法通过观察图中的节点的计算顺序，来决定哪种操作放在哪个节点上，从而帮助用户来内存重用；当启发式的算法无效的时候，用户还可以通过添加控制依赖来自行实现内存上的优化。</p>
+<p>而当反向传播加入的时候，事情变得有点复杂，在正向计算中较前位置的计算数据在反向传播的后期会被经常用到。这就需要把这些数据存在内存中，从而整个图的内存都将被占用，使得本来就少的GPU内存更加的捉襟见肘。</p>
+<p>有三种方法来对其进行优化：</p>
+<p>更加复杂的启发式算法来决定图的计算顺序<br>重新计算这些向量而不是保存下来<br>将长期在GPU内存中的tensor转移到CPU内存中</p>
+<h3 id="Partial-Execution-局部执行"><a href="#Partial-Execution-局部执行" class="headerlink" title="Partial Execution(局部执行)"></a>Partial Execution(局部执行)</h3><p>TF支持部分执行，对于多输出的TF图，可能用户只想获取一个输出，此时可以指定需要的输入(feed)和输出(fetch)值。然后TF会自动计算该输出的依赖，然后只计算必要的部分。</p>
+<p><img src="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/7.png" alt></p>
+<p>如上图所示，指定b为输入，f为输出，那么此时d、e是不会被计算的。</p>
+<h3 id="Control-Flow-控制流"><a href="#Control-Flow-控制流" class="headerlink" title="Control Flow(控制流)"></a>Control Flow(控制流)</h3><p>虽然TF的图已经有了很强的表达能力，但还不够，还需要控制流的表达，比如已经实现的Switch、Merge、Enter、Leave和NextIteration等一系列控制算子。</p>
+<p>TF使用和MIT Token-Tagged machine相似的表示系统，将循环的每次迭代标记为一个tag，迭代的执行状态标记为一个frame，但迭代所需的数据准备好的时候，就可以开始计算，从而多个迭代可以同时执行。</p>
+<p>对于分布式系统来说，控制循环的状态是一个大问题。而TF使用图重写的方式来实现它，在图切分的时候，添加一个小的状态机来监控迭代的开始和结束，</p>
+<p>而对于有梯度计算的图来说，在有控制流的情况下，需要记录各种状态，比如对于if算子，需要记录哪个分支被运行了；而对于循环，需要记录循环了几次。TF仍然使用图重写来实现记录状态的功能，细节不赘述了。</p>
+<h3 id="Input-Operations-输入操作"><a href="#Input-Operations-输入操作" class="headerlink" title="Input Operations(输入操作)"></a>Input Operations(输入操作)</h3><p>为Input也构建了一个Node，来管理数据从硬盘到内存的过程。往往需要提前将数据读入进来以减少内存瓶颈。</p>
+<h3 id="Queues-队列"><a href="#Queues-队列" class="headerlink" title="Queues(队列)"></a>Queues(队列)</h3><p>TF实现了一个队列来支持异步操作，EnQueue可以阻塞直到队列中的空间足够；DeQueue也可以阻塞直到队列中一系列的要求得到满足。</p>
+<p>队列有两个典型应用：</p>
+<p>读入数据，数据在队列中，这样可以达到数据处理和数据载入的并行<br>梯度的累加，让梯度存储在队列中，直到队列中的梯度积累到一定的数值，这样可以达到多个mini-batch组成一个大的batch<br>句子的聚合，对LSTM中的输入句子按长度来进行聚合，统一计算以提高效率。<br>除了FIFO队列外，TF还实现了一个shuffle队列。</p>
+<h3 id="Containers-容器"><a href="#Containers-容器" class="headerlink" title="Containers(容器)"></a>Containers(容器)</h3><p>普通的Cotainer可以长期的存储可变状态，但Container不止于此，用Container，甚至不同的会话中的图之间也可以通过Container来共享状态。</p>
+<h3 id="Optimizaiton"><a href="#Optimizaiton" class="headerlink" title="Optimizaiton"></a>Optimizaiton</h3><p>TF给了用户以极其易用的接口，这就需要底层来自动的做很多优化。</p>
+<h3 id="Common-Subexpression-Elimination"><a href="#Common-Subexpression-Elimination" class="headerlink" title="Common Subexpression Elimination"></a>Common Subexpression Elimination</h3><p>用户给出的图定义中可能会存在重复的计算操作，TF使用Click（原始论文参考文献12）中的算法来进行图的重复表达式的删减</p>
+<h3 id="Controlling-Data-Combination-and-Memory-Usage"><a href="#Controlling-Data-Combination-and-Memory-Usage" class="headerlink" title="Controlling Data Combination and Memory Usage"></a>Controlling Data Combination and Memory Usage</h3><p>对于复杂的网络模型，GPU是必须的；而对于GPU来说，它的内存是不足的，因而要用良好的管理来提高GPU内存的使用效率。</p>
+<p>在这一点上，TF主要关注数据的网络传输，这主要集中在Recv节点何时去远程读取数据，TF会自动分析图上的关键路径，通过设置依赖的方式来使得非关键路径上的数据传输如何不影响关键路径。</p>
+<h3 id="Asynchronous-Kernels"><a href="#Asynchronous-Kernels" class="headerlink" title="Asynchronous Kernels"></a>Asynchronous Kernels</h3><p>异步核在执行后立即返回，同时会执行一个回调函数。这样，可以防止等待计算完成的同时眼看着没有做的IO任务也不做。即异步核也可以提升并行能力。异步核的典型样例就是Recv节点和Enqueue和Dequeue操作。</p>
+<h3 id="Optimized-Libraries-for-Kernel-Implementations"><a href="#Optimized-Libraries-for-Kernel-Implementations" class="headerlink" title="Optimized Libraries for Kernel Implementations"></a>Optimized Libraries for Kernel Implementations</h3><p>对于已经存在的线性代数库自然是要利用的，但TF团队对一些库还扩展了其对任意维度的tensor的支持。</p>
+<p>常见的线性计算库包括：</p>
+<p>BLAS、cuBLAS，在很多设备上都优化了矩阵乘法<br>cuda-convnet、CuDNN，在GPU上优化</p>
+<h3 id="Lossy-Compression"><a href="#Lossy-Compression" class="headerlink" title="Lossy Compression"></a>Lossy Compression</h3><p>在数据传输过程中，为了加快传输效率，往往需要对精度进行压缩。在TF中，传输之前将32bit的float转变为16float，在传输完之后再转回来，转回来时用0补齐。</p>
+<h3 id="Common-Programming-Idioms"><a href="#Common-Programming-Idioms" class="headerlink" title="Common Programming Idioms"></a>Common Programming Idioms</h3><p>上面讲的都是一些系统级别的优化，还有一些机器学习算法所用到的技巧。这里假定用户都用SGD来求解机器学习算法。</p>
+<h3 id="Data-Parallel-Training"><a href="#Data-Parallel-Training" class="headerlink" title="Data Parallel Training"></a>Data Parallel Training</h3><p>通过数据并行的方式来提升SGD的效率，比如，假如每次SGD的mini-batch是1000个样本，那么，切成10份，每份100个，然后将模型复制10份，每份都将梯度传到参数服务器上。</p>
+<p>数据切分也分为同步和异步两种方式，同步的切分是等待每个独立的model传上来的梯度都到齐后再进行更新，这样和一个大的batch没有区别。异步的切分则是不用等待，每个独立的模型的参数更新直接更新。</p>
+<p>如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/8.png" alt></p>
+<h3 id="Model-Parallel-Training"><a href="#Model-Parallel-Training" class="headerlink" title="Model Parallel Training"></a>Model Parallel Training</h3><p>还可以对模型进行切分，让模型的不同部分执行在不同的设备上，这样可以一个迭代的样本可以在不同的设备上同时执行。如下图所示的LSTM模型：</p>
+<p><img src="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/9.png" alt></p>
+<h3 id="Concurrent-Steps-for-Model-Computation-PipeLine"><a href="#Concurrent-Steps-for-Model-Computation-PipeLine" class="headerlink" title="Concurrent Steps for Model Computation PipeLine"></a>Concurrent Steps for Model Computation PipeLine</h3><p>为了充分利用同一台设备的计算能力，TF会尽量让相邻的计算在同一台设备上，这样可以节省网络开销，比如对于模型并行来说，如果放在同一个设备上，如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs2016/imgs_tensorflow/10.png" alt></p>
+<p>我个人觉得这是TF区分与Parameter Server的一个大区别，对于TF来说，计算节点是分离的，参数也是分离的，因而其PS也是分离的。每个设备上可能分配了计算节点，然后其对应的ps也在该设备上。因而，传统的PS中，计算和参数是分开的，但计算和参数他们分别是在一起的；而TF中，计算本身是分离的，参数也是分离的，而计算和参数是在一起的。</p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><p>TF出现之前，已经有很多的类似的平台了。</p>
+<p>Theano<br>Torch<br>Caffe<br>Chainer<br>Computational Network</p>
+<p>可以这么说，TF从他们每一个中都吸取了一些feature和设计思想。根据进化论的观点，我不能说TF要优于他们，而要说，TF更能适应当前的需求。在之前写Parameter Server的时候我就隐隐的感觉到，一种设计的产生是和它的需求紧紧相关的，TF的设计可能会有很多人想到，但TF却只能由google设计和实现，因为需求。而TF的产生也是google大一统移动和PC和Server的战略需求。</p>
+<p>TF的易用性、跨平台能力是其功能亮点，而其可扩展性和高效性则是其根基。不知TF一出，下一代的平台会是什么样子？ 还是说平台的演化是否到此就像android和iOS那样已经比较成熟了？</p>
+<p>而我更感兴趣的其实是，对于这样一个大的平台，大哥是怎么调试的呢？ 恐怕这是程序员的能力所在。扯远了。</p>
+<p>TF与其他平台的区别于联系：</p>
+<p>支持符号推导，如Theano和Chainer<br>使用C++写内核，从而跨平台部署很方便，如Caffe，<br>支持跨设备计算，让用户高层表达模型，如Adam和Distbelief，但比Adam和DistBelief优越的是，更有弹性，支持更多的模型。<br>相对于Adam、DistBelief和Parameter Server，TF把参数节点化，更新操作也是图中的一个节点。而Adam等三个会有一个独立的Parameter Server。<br>Halide拥有和TF相似的中间表达但却有更高级的语义表示，在并行方面优化的更多，但却是单机的，TF有意向向此方向发展，将Halide的东西添加到TF中来。<br>其他还有很多像TF那样支持数据流图的分布式平台，比如：</p>
+<p>Dryad、Flume、CIEL（数据流调度算法从此借鉴而来）<br>Naind（分布式架构非常像）<br>Spark、Naind（在内存足够的情况下，TF和他们一样运行的很好）<br>Dandelion（跨设备）<br>TF的迭代是混合的方法：多个数据流但却一次执行，同时共享状态。多个数据流通过变量来共享，或使用图中的同步机制，比如队列。TF还支持图内的迭代，这是CIEL和Naiad的混合，简单来说，像CIEL一样每个节点只有当准备好之后才会启动；但为了效率整张图则表示为一个静态的循环的图，像Naiad一样。<br>TF内的迭代似乎是很重要的一个点，但论文中含糊不清，想必机器学习算法中的控制流都是很纠结的。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1]. Abadi M, Agarwal A, Barham P, et al. Tensorflow: Large-scale machine learning on heterogeneous distributed systems[J]. arXiv preprint arXiv:1603.04467, 2016.</p>
+<h1 id="TensorFlow技术解析与实战"><a href="#TensorFlow技术解析与实战" class="headerlink" title="TensorFlow技术解析与实战"></a><a href="https://book.douban.com/subject/27055214/" target="_blank" rel="noopener">TensorFlow技术解析与实战</a></h1><p><img src="http://p53s4d2qk.bkt.clouddn.com/s29475322.jpg?imageMogr2/thumbnail/!75p" alt="s29475322.jpg"></p>
+<p>作者: 李嘉璇<br>出版社: 人民邮电出版社<br>出版年: 2017-6-1<br>页数: 316<br>定价: 79.00元<br>装帧: 平装<br>ISBN: 9787115456137</p>
+<h2 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h2><p>TensorFlow 是谷歌公司开发的深度学习框架，也是目前深度学习的主流框架之一。本书从深度学习的基础讲起，深入TensorFlow框架原理、模型构建、源代码分析和网络实现等各个方面。全书分为基础篇、实战篇和提高篇三部分。基础篇讲解人工智能的入门知识，深度学习的方法，TensorFlow的基础原理、系统架构、设计理念、编程模型、常用API、批标准化、模型的存储与加载、队列与线程，实现一个自定义操作，并进行TensorFlow源代码解析，介绍卷积神经网络（CNN）和循环神经网络（RNN）的演化发展及其TensorFlow实现、TensorFlow的高级框架等知识；实战篇讲解如何用TensorFlow写一个神经网络程序并介绍TensorFlow实现各种网络（CNN、RNN和自编码网络等）并对MNIST数据集进行训练，讲解TensorFlow在人脸识别、自然语言处理、图像和语音的结合、生成式对抗网络等方面的应用；提高篇讲解TensorFlow的分布式原理、架构、模式、API，还会介绍TensorFlow XLA、TensorFlow Debugger、TensorFlow和Kubernetes结合、TensorFlowOnSpark、TensorFlow移动端应用，以及TensorFlow Serving、TensorFlow Fold和TensorFlow计算加速等其他特性。最后，附录中列出一些可供参考的公开数据集，并结合作者的项目经验介绍项目管理的一些建议。</p>
+<h2 id="作者简介"><a href="#作者简介" class="headerlink" title="作者简介"></a>作者简介</h2><p>李嘉璇，创建TensorFlow交流社区，活跃于国内各大技术社区，知乎编程问题回答者。致力于人工智能的研究，对深度学习框架的架构、源码分析及在不同领域的应用有浓厚兴趣。有过上百篇论文阅读和深度学习经验，处理图像、社交文本数据情感分析、数据挖掘经验，参与过基于深度学习的自动驾驶二维感知系统Hackathon竞赛，曾任职百度研发工程师。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p>第一篇　基础篇<br>第1章　人工智能概述 2<br>1.1　什么是人工智能 2<br>1.2　什么是深度学习 5<br>1.3　深度学习的入门方法 7<br>1.4　什么是TensorFlow 11<br>1.5　为什么要学TensorFlow 12<br>1.5.1　TensorFlow的特性 14<br>1.5.2　使用TensorFlow的公司 15<br>1.5.3　TensorFlow的发展 16<br>1.6　机器学习的相关赛事 16<br>1.6.1　ImageNet的ILSVRC 17<br>1.6.2　Kaggle 18<br>1.6.3　天池大数据竞赛 19<br>1.7　国内的人工智能公司 20<br>1.8　小结 22<br>第2章　TensorFlow环境的准备 23<br>2.1　下载TensorFlow 1.1.0 23<br>2.2　基于pip的安装 23<br>2.2.1　Mac OS环境准备 24<br>2.2.2　Ubuntu/Linux环境准备 25<br>2.2.3　Windows环境准备 25<br>2.3　基于Java的安装 28<br>2.4　从源代码安装 29<br>2.5　依赖的其他模块 30<br>2.5.1　numpy 30<br>2.5.2　matplotlib 31<br>2.5.3　jupyter 31<br>2.5.4　scikit-image 32<br>2.5.5　librosa 32<br>2.5.6　nltk 32<br>2.5.7　keras 33<br>2.5.8　tflearn 33<br>2.6　小结 33<br>第3章　可视化TensorFlow 34<br>3.1　PlayGround 34<br>3.1.1　数据 35<br>3.1.2　特征 36<br>3.1.3　隐藏层 36<br>3.1.4　输出 37<br>3.2　TensorBoard 39<br>3.2.1　SCALARS面板 40<br>3.2.2　IMAGES面板 41<br>3.2.3　AUDIO面板 42<br>3.2.4　GRAPHS面板 42<br>3.2.5　DISTRIBUTIONS面板 43<br>3.2.6　HISTOGRAMS面板 43<br>3.2.7　EMBEDDINGS面板 44<br>3.3　可视化的例子 44<br>3.3.1　降维分析 44<br>3.3.2　嵌入投影仪 48<br>3.4　小结 51<br>第4章　TensorFlow基础知识 52<br>4.1　系统架构 52<br>4.2　设计理念 53<br>4.3　编程模型 54<br>4.3.1　边 56<br>4.3.2　节点 57<br>4.3.3　其他概念 57<br>4.4　常用API 60<br>4.4.1　图、操作和张量 60<br>4.4.2　可视化 61<br>4.5　变量作用域 62<br>4.5.1　variable_scope示例 62<br>4.5.2　name_scope示例 64<br>4.6　批标准化 64<br>4.6.1　方法 65<br>4.6.2　优点 65<br>4.6.3　示例 65<br>4.7　神经元函数及优化方法 66<br>4.7.1　激活函数 66<br>4.7.2　卷积函数 69<br>4.7.3　池化函数 72<br>4.7.4　分类函数 73<br>4.7.5　优化方法 74<br>4.8　模型的存储与加载 79<br>4.8.1　模型的存储与加载 79<br>4.8.2　图的存储与加载 82<br>4.9　队列和线程 82<br>4.9.1　队列 82<br>4.9.2　队列管理器 85<br>4.9.3　线程和协调器 86<br>4.10　加载数据 87<br>4.10.1　预加载数据 87<br>4.10.2　填充数据 87<br>4.10.3　从文件读取数据 88<br>4.11　实现一个自定义操作 92<br>4.11.1　步骤 92<br>4.11.2　最佳实践 93<br>4.12　小结 101<br>第5章　TensorFlow源代码解析 102<br>5.1　TensorFlow的目录结构 102<br>5.1.1　contirb 103<br>5.1.2　core 104<br>5.1.3　examples 105<br>5.1.4　g3doc 105<br>5.1.5　python 105<br>5.1.6　tensorboard 105<br>5.2　TensorFlow源代码的学习方法 106<br>5.3　小结 108<br>第6章　神经网络的发展及其TensorFlow实现 109<br>6.1　卷积神经网络 109<br>6.2　卷积神经网络发展 110<br>6.2.1　网络加深 111<br>6.2.2　增强卷积层的功能 115<br>6.2.3　从分类任务到检测任务 120<br>6.2.4　增加新的功能模块 121<br>6.3　MNIST的AlexNet实现 121<br>6.3.1　加载数据 121<br>6.3.2　构建网络模型 122<br>6.3.3　训练模型和评估模型 124<br>6.4　循环神经网络 125<br>6.5　循环神经网络发展 126<br>6.5.1　增强隐藏层的功能 127<br>6.5.2　双向化及加深网络 129<br>6.6　TensorFlow Model Zoo 131<br>6.7　其他研究进展 131<br>6.7.1　强化学习 132<br>6.7.2　深度森林 132<br>6.7.3　深度学习与艺术 132<br>6.8　小结 133<br>第7章　TensorFlow的高级框架 134<br>7.1　TFLearn 134<br>7.1.1　加载数据 134<br>7.1.2　构建网络模型 135<br>7.1.3　训练模型 135<br>7.2　Keras 135<br>7.2.1　Keras的优点 136<br>7.2.2　Keras的模型 136<br>7.2.3　Keras的使用 137<br>7.3　小结 141<br>第二篇　实战篇<br>第8章　第一个TensorFlow程序 144<br>8.1　TensorFlow的运行方式 144<br>8.1.1　生成及加载数据 144<br>8.1.2　构建网络模型 145<br>8.1.3　训练模型 145<br>8.2　超参数的设定 146<br>8.3　小结 147<br>第9章　TensorFlow在MNIST中的应用 148<br>9.1　MNIST数据集简介 148<br>9.1.1　训练集的标记文件 148<br>9.1.2　训练集的图片文件 149<br>9.1.3　测试集的标记文件 149<br>9.1.4　测试集的图片文件 150<br>9.2　MNIST的分类问题 150<br>9.2.1　加载数据 150<br>9.2.2　构建回归模型 151<br>9.2.3　训练模型 151<br>9.2.4　评估模型 152<br>9.3　训练过程的可视化 152<br>9.4　MNIST的卷积神经网络 156<br>9.4.1　加载数据 157<br>9.4.2　构建模型 157<br>9.4.3　训练模型和评估模型 159<br>9.5　MNIST的循环神经网络 161<br>9.5.1　加载数据 161<br>9.5.2　构建模型 161<br>9.5.3 训练数据及评估模型 163<br>9.6　MNIST的无监督学习 164<br>9.6.1　自编码网络 164<br>9.6.2　TensorFlow的自编码网络实现 165<br>9.7　小结 169<br>第10章　人脸识别 170<br>10.1　人脸识别简介 170<br>10.2　人脸识别的技术流程 171<br>10.2.1　人脸图像采集及检测 171<br>10.2.2　人脸图像预处理 171<br>10.2.3　人脸图像特征提取 171<br>10.2.4　人脸图像匹配与识别 172<br>10.3　人脸识别的分类 172<br>10.3.1　人脸检测 172<br>10.3.2　人脸关键点检测 173<br>10.3.3　人脸验证 174<br>10.3.4　人脸属性检测 174<br>10.4　人脸检测 175<br>10.4.1　LFW数据集 175<br>10.4.2　数据预处理 175<br>10.4.3　进行检测 176<br>10.5　性别和年龄识别 178<br>10.5.1　数据预处理 179<br>10.5.2　构建模型 181<br>10.5.3　训练模型 182<br>10.5.4　验证模型 184<br>10.6　小结 185<br>第11章　自然语言处理 186<br>11.1　模型的选择 186<br>11.2　英文数字语音识别 187<br>11.2.1　定义输入数据并预处理数据 188<br>11.2.2　定义网络模型 188<br>11.2.3　训练模型 188<br>11.2.4　预测模型 189<br>11.3　智能聊天机器人 189<br>11.3.1　原理 190<br>11.3.2　最佳实践 191<br>11.4　小结 200<br>第12章　图像与语音的结合 201<br>12.1　看图说话模型 201<br>12.1.1　原理 202<br>12.1.2　最佳实践 203<br>12.2　小结 205<br>第13章　生成式对抗网络 206<br>13.1　生成式对抗网络的原理 206<br>13.2　生成式对抗网络的应用 207<br>13.3　生成式对抗网络的实现 208<br>13.4　生成式对抗网络的改进 214<br>13.5　小结 214<br>第三篇　提高篇<br>第14章　分布式TensorFlow 216<br>14.1　分布式原理 216<br>14.1.1　单机多卡和分布式 216<br>14.1.2　分布式部署方式 217<br>14.2　分布式架构 218<br>14.2.1　客户端、主节点和工作节点的关系 218<br>14.2.2　客户端、主节点和工作节点的交互过程 220<br>14.3　分布式模式 221<br>14.3.1　数据并行 221<br>14.3.2　同步更新和异步更新 222<br>14.3.3　模型并行 224<br>14.4　分布式API 225<br>14.5　分布式训练代码框架 226<br>14.6　分布式最佳实践 227<br>14.7　小结 235<br>第15章　TensorFlow线性代数编译框架XLA 236<br>15.1　XLA的优势 236<br>15.2　XLA的工作原理 237<br>15.3　JIT编译方式 238<br>15.3.1　打开JIT编译 238<br>15.3.2　将操作符放在XLA设备上 238<br>15.4　JIT编译在MNIST上的实现 239<br>15.5　小结 240<br>第16章　TensorFlow Debugger 241<br>16.1　Debugger的使用示例 241<br>16.2　远程调试方法 245<br>16.3　小结 245<br>第17章　TensorFlow和Kubernetes结合 246<br>17.1　为什么需要Kubernetes 246<br>17.2　分布式TensorFlow在Kubernetes中的运行 247<br>17.2.1　部署及运行 247<br>17.2.2　其他应用 253<br>17.3　小结 254<br>第18章　TensorFlowOnSpark 255<br>18.1　TensorFlowOnSpark的架构 255<br>18.2　TensorFlowOnSpark在MNIST上的实践 257<br>18.3　小结 261<br>第19章　TensorFlow移动端应用 262<br>19.1　移动端应用原理 262<br>19.1.1　量化 263<br>19.1.2　优化矩阵乘法运算 266<br>19.2　iOS系统实践 266<br>19.2.1　环境准备 266<br>19.2.2　编译演示程序并运行 267<br>19.2.3　自定义模型的编译及运行 269<br>19.3　Android系统实践 273<br>19.3.1　环境准备 274<br>19.3.2　编译演示程序并运行 275<br>19.3.3　自定义模型的编译及运行 277<br>19.4　树莓派实践 278<br>19.5　小结 278<br>第20章　TensorFlow的其他特性 279<br>20.1　TensorFlow Serving 279<br>20.2　TensorFlow Flod 280<br>20.3　TensorFlow计算加速 281<br>20.3.1　CPU加速 281<br>20.3.2　TPU加速和FPGA加速 282<br>20.4　小结 283<br>第21章　机器学习的评测体系 284<br>21.1　人脸识别的性能指标 284<br>21.2　聊天机器人的性能指标 284<br>21.3　机器翻译的评价方法 286<br>21.3.1　BLEU 286<br>21.3.2　METEOR 287<br>21.4　常用的通用评价指标 287<br>21.4.1　ROC和AUC 288<br>21.4.2　AP和mAP 288<br>21.5　小结 288<br>附录A　公开数据集 289<br>附录B　项目管理经验小谈 292</p>
+<h1 id="TensorFlow：实战Google深度学习框架（第2版）"><a href="#TensorFlow：实战Google深度学习框架（第2版）" class="headerlink" title="TensorFlow：实战Google深度学习框架（第2版）"></a><a href="https://book.douban.com/subject/30137062/" target="_blank" rel="noopener">TensorFlow：实战Google深度学习框架（第2版）</a></h1><p><img src="http://p53s4d2qk.bkt.clouddn.com/s29683030.jpg?imageMogr2/thumbnail/!75p" alt="s29683030.jpg"></p>
+<p>作者: 顾思宇 / 梁博文 / 郑泽宇<br>出版社: 电子工业出版社<br>出版年: 2018-2-1<br>页数: 364<br>定价: 89<br>装帧: 平装<br>丛书: 博文视点AI系列<br>ISBN: 9787121330667</p>
+<h2 id="内容简介-1"><a href="#内容简介-1" class="headerlink" title="内容简介"></a>内容简介</h2><p>TensorFlow是谷歌2015年开源的主流深度学习框架，目前已得到广泛应用。《TensorFlow：实战Google深度学习框架（第2版）》为TensorFlow入门参考书，旨在帮助读者以快速、有效的方式上手TensorFlow和深度学习。书中省略了烦琐的数学模型推导，从实际应用问题出发，通过具体的TensorFlow示例介绍如何使用深度学习解决实际问题。书中包含深度学习的入门知识和大量实践经验，是走进这个前沿、热门的人工智能领域的优选参考书。</p>
+<p>第2版将书中所有示例代码从TensorFlow 0.9.0升级到了TensorFlow 1.4.0。在升级API的同时，第2版也补充了更多只有TensorFlow 1.4.0才支持的功能。另外，第2版还新增两章分别介绍TensorFlow高层封装和深度学习在自然语言领域应用的内容。</p>
+<p>《TensorFlow：实战Google深度学习框架（第2版）》适用于想要使用深度学习或TensorFlow的数据科学家、工程师，希望了解深度学习的大数据平台工程师，对人工智能、深度学习感兴趣的计算机相关从业人员及在校学生等。</p>
+<h2 id="作者简介-1"><a href="#作者简介-1" class="headerlink" title="作者简介"></a>作者简介</h2><p>郑泽宇，2011年获北京大学计算机学士学位，2013年获卡内基梅隆大学计算机硕士学位，前谷歌高级工程师，现为才云科技(Caicloud.io)联合创始人、首席大数据科学家。针对分布式TensorFlow上手难、管理难、监控难、上线难等问题，带领团队成功开发国内成熟的分布式TensorFlow深度学习平台，在机器学习、人工智能领域有着丰富的经验。</p>
+<p>梁博文，谷歌工程师。2011年获北京大学计算机学士学位，2013年获哥伦比亚大学计算机硕士学位，同年加入谷歌翻译组，参与并领导了多个项目，负责了3个语言的翻译模型的研发工作，在自然语言处理方面有丰富经验，在统计翻译模型、神经网络翻译模型、语料数据清洗等方面均有深入研究。</p>
+<h2 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h2><p>第1章 深度学习简介<br>1.1 人工智能、机器学习与深度学习<br>1.2 深度学习的发展历程<br>1.3 深度学习的应用<br>1.3.1 计算机视觉<br>1.3.2 语音识别<br>1.3.3 自然语言处理<br>1.3.4 人机博弈<br>1.4 深度学习工具介绍和对比<br>小结<br>第2章 TensorFlow环境搭建<br>2.1 TensorFlow的主要依赖包<br>2.1.1 Protocol Buffer<br>2.1.2 Bazel<br>2.2 TensorFlow安装<br>2.2.1 使用Docker安装<br>2.2.2 使用pip安装<br>2.2.3 从源代码编译安装<br>2.3 TensorFlow测试样例<br>小结<br>第3章 TensorFlow入门<br>3.1 TensorFlow计算模型——计算图<br>3.1.1 计算图的概念<br>3.1.2 计算图的使用<br>3.2 TensorFlow数据模型——张量<br>3.2.1 张量的概念<br>3.2.2 张量的使用<br>3.3 TensorFlow运行模型——会话<br>3.4 TensorFlow实现神经网络<br>3.4.1 TensorFlow游乐场及神经网络简介<br>3.4.2 前向传播算法简介<br>3.4.3 神经网络参数与TensorFlow变量<br>3.4.4 通过TensorFlow训练神经网络模型<br>3.4.5 完整神经网络样例程序<br>小结<br>第4章 深层神经网络<br>4.1 深度学习与深层神经网络<br>4.1.1 线性模型的局限性<br>4.1.2 激活函数实现去线性化<br>4.1.3 多层网络解决异或运算<br>4.2 损失函数定义<br>4.2.1 经典损失函数<br>4.2.2 自定义损失函数<br>4.3 神经网络优化算法<br>4.4 神经网络进一步优化<br>4.4.1 学习率的设置<br>4.4.2 过拟合问题<br>4.4.3 滑动平均模型<br>小结<br>第5章 MNIST数字识别问题<br>5.1 MNIST数据处理<br>5.2 神经网络模型训练及不同模型结果对比<br>5.2.1 TensorFlow训练神经网络<br>5.2.2 使用验证数据集判断模型效果<br>5.2.3 不同模型效果比较<br>5.3 变量管理<br>5.4 TensorFlow模型持久化<br>5.4.1 持久化代码实现<br>5.4.2 持久化原理及数据格式<br>5.5 TensorFlow最佳实践样例程序<br>小结<br>第6章 图像识别与卷积神经网络<br>6.1 图像识别问题简介及经典数据集<br>6.2 卷积神经网络简介<br>6.3 卷积神经网络常用结构<br>6.3.1 卷积层<br>6.3.2 池化层<br>6.4 经典卷积网络模型<br>6.4.1 LeNet-5模型<br>6.4.2 Inception-v3模型<br>6.5 卷积神经网络迁移学习<br>6.5.1 迁移学习介绍<br>6.5.2 TensorFlow实现迁移学习<br>小结<br>第7章 图像数据处理<br>7.1 TFRecord输入数据格式<br>7.1.1 TFRecord格式介绍<br>7.1.2 TFRecord样例程序<br>7.2 图像数据处理<br>7.2.1 TensorFlow图像处理函数<br>7.2.2 图像预处理完整样例<br>7.3 多线程输入数据处理框架<br>7.3.1 队列与多线程<br>7.3.2 输入文件队列<br>7.3.3 组合训练数据（batching）<br>7.3.4 输入数据处理框架<br>7.4 数据集（Dataset）<br>7.4.1 数据集的基本使用方法<br>7.4.2 数据集的高层操作<br>小结<br>第8章 循环神经网络<br>8.1 循环神经网络简介<br>8.2 长短时记忆网络（LSTM）结构<br>8.3 循环神经网络的变种<br>8.3.1 双向循环神经网络和深层循环神经网络<br>8.3.2 循环神经网络的dropout<br>8.4 循环神经网络样例应用<br>小结<br>第9章 自然语言处理<br>9.1 语言模型的背景知识<br>9.1.1 语言模型简介<br>9.1.2 语言模型的评价方法<br>9.2 神经语言模型<br>9.2.1 PTB数据集的预处理<br>9.2.2 PTB数据的batching方法<br>9.2.3 基于循环神经网络的神经语言模型<br>9.3 神经网络机器翻译<br>9.3.1 机器翻译背景与Seq2Seq模型介绍<br>9.3.2 机器翻译文本数据的预处理<br>9.3.3 Seq2Seq模型的代码实现<br>9.3.4 注意力机制<br>小结<br>第10章 TensorFlow高层封装<br>10.1 TensorFlow高层封装总览<br>10.2 Keras介绍<br>10.2.1 Keras基本用法<br>10.2.2 Keras高级用法<br>10.3 Estimator介绍<br>10.3.1 Estimator基本用法<br>10.3.2 Estimator自定义模型<br>10.3.3 使用数据集（Dataset）作为Estimator输入<br>小结<br>第11章 TensorBoard可视化<br>11.1 TensorBoard简介<br>11.2 TensorFlow计算图可视化<br>11.2.1 命名空间与TensorBoard图上节点<br>11.2.2 节点信息<br>11.3 监控指标可视化<br>11.4 高维向量可视化<br>小结<br>第12章 TensorFlow计算加速<br>12.1 TensorFlow使用GPU<br>12.2 深度学习训练并行模式<br>12.3 多GPU并行<br>12.4 分布式TensorFlow<br>12.4.1 分布式TensorFlow原理<br>12.4.2 分布式TensorFlow模型训练<br>小结</p>
+<h2 id="理解和实现分布式TensorFlow集群完整教程"><a href="#理解和实现分布式TensorFlow集群完整教程" class="headerlink" title="理解和实现分布式TensorFlow集群完整教程"></a><a href="http://blog.csdn.net/u010159842/article/details/58605865" target="_blank" rel="noopener">理解和实现分布式TensorFlow集群完整教程</a></h2><p>手把手教你搭建分布式集群，进入生产环境的TensorFlow<br>分布式TensorFlow简介<br>前一篇《分布式TensorFlow集群local server使用详解》我们介绍了分布式TensorFlow的基本概念，现在我们可以动手搭建一个真正的分布式TensorFlow集群。</p>
+<p>分布式TensorFlow集群由多个服务端进程和客户端进程组成，在某些场景下，服务端和客户端可以写到同一个Python文件并起在同一个进程，但为了简化代码让大家更好理解分布式架构，我们将启动两个worker并使用单独的客户端进程。</p>
+<p><img src="http://ww1.sinaimg.cn/large/9c506fcagw1f52tn9s36qj20n00gygnk.jpg" alt></p>
+<p>确认TensorFlow版本<br>首先我们需要安装和确认TensorFlow的版本，注意0.8版本以前的TensorFlow不支持分布式，使用以前版本需要重新合Patch和打包。</p>
+<p>python -c  “import tensorflow; print(tensorflow.<strong>version</strong>)”</p>
+<p>使用TensorFlow容器<br>如果本地已安装Docker，通过容器使用TensorFlow环境更加简单，只需一行命令。</p>
+<p>sudo docker run -it tensorflow/tensorflow bash<br>Docker除了实现资源隔离，还可以管理不同版本的环境，例如可以很容易试用最新的RC版本。</p>
+<p>sudo docker run -it tensorflow/tensorflow:r0.9rc0 bash</p>
+<p>实现TensorFlow服务端<br>很多开发者读过TensorFlow官方的Distributed Guide，想把分布式TensorFlow运行起来却十分困难，主要原因是官方文档没有提供完整的例子，而且提供的代码片段只能在0.9中运行，因此很多人尝试修改那段代码还是跑不起来。</p>
+<p>其实分布式TensorFlow使用非常简单，我们并不需要一个通用的程序，只要用几行代码分别实现服务端和客户端即可，最简单的服务端代码如下worker1.py。</p>
+<p>import tensorflow as tf<br>worker1 = “10.235.114.12:2222”<br>worker2 = “10.235.114.12:2223”<br>worker_hosts = [worker1, worker2]<br>cluster_spec = tf.train.ClusterSpec({ “worker”: worker_hosts})<br>server = tf.train.Server(cluster_spec, job_name=”worker”, task_index=0)<br>server.join()<br>这里我们定义了两个worker，其中job名都是“worker”，官方文档中还定义了名为“ps”的job，实际上有没有都可以，而worker可以是本地不同端口的两个进程或者多台服务器上的进程。</p>
+<p><img src="http://ww4.sinaimg.cn/large/9c506fcajw1f52tqo9ss1j20ub07kju1.jpg" alt></p>
+<p>为了模拟分布式环境，我们编写worker2.py启动第二个worker，注意代码上稍有区别，因为index变了不能与前面的冲突，为了避免端口被容器隔离我们可以使用原来的Docker容器。<br>import tensorflow as tf<br>worker1 = “10.235.114.12:2222”<br>worker2 = “10.235.114.12:2223”<br>worker_hosts = [worker1, worker2]<br>cluster_spec = tf.train.ClusterSpec({ “worker”: worker_hosts})<br>server = tf.train.Server(cluster_spec, job_name=”worker”, task_index=1)<br>server.join()</p>
+<p><img src="http://ww3.sinaimg.cn/large/9c506fcajw1f52tsef2jsj20ud077q5t.jpg" alt><br>可以看到worker1和worker2分别监听本地的2222和2223端口，接下来可以单独写客户端应用，连接这两个targe即可。<br>实现TensorFlow客户端<br>Client的代码我们写得稍微复杂些，就是构造写线性数据，其中斜率是2、截距是10，如果梯度下降算法正确的话最终w和b的输出应该也接近2和10。</p>
+<p><img src="http://ww4.sinaimg.cn/large/9c506fcajw1f52tw0pss8j20m00ewaeu.jpg" alt></p>
+<p><img src="http://ww4.sinaimg.cn/large/9c506fcajw1f52twb8puvj20do0duq6e.jpg" alt></p>
+<p>如我们所料，最终结果相当接近2和10，同时指定了第一个worker的CPU来执行梯度下降的算法，通过cluster spec我们还可以定义更灵活的集群，客户端也可以通过”tf.device”来动态指定CPU和GPU计算资源。在生产环境下，官方推荐使用ps服务器存储Variables，而ps其实是和我们定义的worker一样，只是job名不同，架构可以参见官方文档的tasks图。</p>
+<p><img src="http://ww1.sinaimg.cn/large/9c506fcagw1f52tx0xx2dj20qc0ffaeh.jpg" alt></p>
+<p>最后总结<br>希望通过这个完整的使用教程，大家都能亲自实现分布式TensorFlow集群，并且编写灵活的服务端和客户端应用。</p>
+<p>而在搭建过程中，大家可能发现TensorFlow只是一个深度学习的Library，我们需要实现和部署服务端、客户端应用，而在集群定义中存在一个较严重的问题，就是cluster spec需要在进程启动时指定，无法实现动态的扩容或缩容，这个问题社区希望通过引入Kubernetes集群管理工具来解决。还有一个问题就是我们的服务端应用启动时只能bind localhost，我们也在Github建了对应Issue，如果大家都这些问题感兴趣，也请继续关注我和我们后续的文章。</p>
+<h2 id="Tensorflow-分布式部署简介"><a href="#Tensorflow-分布式部署简介" class="headerlink" title="Tensorflow 分布式部署简介"></a><a href="http://blog.csdn.net/sydpz1987/article/details/51340277" target="_blank" rel="noopener">Tensorflow 分布式部署简介</a></h2><p>tensorflow-0.8 的一大特性为可以部署在分布式的集群上，本文的内容由Tensorflow的分布式部署手册翻译而来，该手册链接为TensorFlow分布式部署手册</p>
+<p>分布式TensorFlow<br>本文介绍了如何搭建一个TensorFlow服务器的集群，并将一个计算图部署在该分布式集群上。以下操作建立在你对 TensorFlow的基础操作已经熟练掌握的基础之上。</p>
+<p>Hello world的分布式实例的编写<br>以下是一个简单的TensorFlow分布式程序的编写实例</p>
+<h1 id="Start-a-TensorFlow-server-as-a-single-process-“cluster”"><a href="#Start-a-TensorFlow-server-as-a-single-process-“cluster”" class="headerlink" title="Start a TensorFlow server as a single-process “cluster”."></a>Start a TensorFlow server as a single-process “cluster”.</h1><p>$ python</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import tensorflow as tf<br>c = tf.constant(“Hello, distributed TensorFlow!”)<br>server = tf.train.Server.create_local_server()<br>sess = tf.Session(server.target)  # Create a session on the server.<br>sess.run(c)<br>‘Hello, distributed TensorFlow!’</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>tf.train.Server.create_local_server() 会在本地创建一个单进程集群，该集群中的服务默认为启动状态。</p>
+<p>创建集群(cluster)<br>TensorFlow中的集群(cluster)指的是一系列能够对TensorFlow中的图(graph)进行分布式计算的任务(task)。每个任务是同服务(server)相关联的。TensorFlow中的服务会包含一个用于创建session的主节点和一个用于图运算的工作节点。另外, TensorFlow中的集群可以拆分成一个或多个作业(job), 每个作业可以包含一个或多个任务。下图为作者对集群内关系的理解。<br><img src="http://img.blog.csdn.net/20160508142108636" alt><br>创建集群的必要条件是为每个任务启动一个服务。这些任务可以运行在不同的机器上，但你也可以在同一台机器上启动多个任务(比如说在本地多个不同的GPU上运行)。每个任务会做如下的两步工作：</p>
+<p>创建一个 tf.train.ClusterSpec 用于对集群中的所有任务进行描述，该描述内容对于所有任务应该是相同的。<br>创建一个tf.train.Server 并将tf.train.ClusterSpec 中的参数传入构造函数，并将作业的名称和当前任务的编号写入本地任务中。<br>创建tf.train.ClusterSpec 的具体方法<br>tf.train.ClusterSpec 的传入参数是作业和任务之间的关系映射，该映射关系中的任务是通过ip地址和端口号表示的。具体映射关系如下表所示：</p>
+<p>tf.train.ClusterSpec construction    Available tasks<br>tf.train.ClusterSpec({“local”: [“localhost:2222”, “localhost:2223”]})<br>/job:local/task:0 local<br>/job:local/task:1<br>tf.train.ClusterSpec({<br>    “worker”: [<br>        “worker0.example.com:2222”,<br>        “worker1.example.com:2222”,<br>        “worker2.example.com:2222”<br>    ],<br>    “ps”: [<br>        “ps0.example.com:2222”,<br>        “ps1.example.com:2222”<br>    ]})<br>/job:worker/task:0<br>/job:worker/task:1<br>/job:worker/task:2<br>/job:ps/task:0<br>/job:ps/task:1<br>为每一个任务创建tf.train.Server 的实例<br>每一个tf.train.Server 对象都包含一个本地设备的集合, 一个向其他任务的连接集合，以及一个可以利用以上资源进行分布式计算的“会话目标”(“session target“)。每一个服务程序都是一个指定作业的一员，其在作业中拥有自己独立的任务号。每一个服务程序都可以和集群中的其他任何服务程序进行通信。<br>以下两个代码片段讲述了如何在本地的2222和2223两个端口上配置不同的任务。</p>
+<h1 id="In-task-0"><a href="#In-task-0" class="headerlink" title="In task 0:"></a>In task 0:</h1><p>cluster = tf.train.ClusterSpec({“local”: [“localhost:2222”, “localhost:2223”]})<br>server = tf.train.Server(cluster, job_name=”local”, task_index=0)</p>
+<h1 id="In-task-1"><a href="#In-task-1" class="headerlink" title="In task 1:"></a>In task 1:</h1><p>cluster = tf.train.ClusterSpec({“local”: [“localhost:2222”, “localhost:2223”]})<br>server = tf.train.Server(cluster, job_name=”local”, task_index=1)<br>1<br>2<br>3<br>注 ：当前手动配置任务节点还是一个比较初级的做法，尤其是在遇到较大的集群管理的情况下。tensorflow团队正在开发一个自动程序化配置任务的节点的工具。例如：集群管理工具Kubernetes。如果你希望tensorflow支持某个特定的管理工具，可以将该请求发到GitHub issue 里。</p>
+<p>为模型指定分布式的设备<br>为了将某些操作运行在特定的进程上，可以使用tf.device() 函数来指定代码运行在CPU或GPU上。例如：</p>
+<p>with tf.device(“/job:ps/task:0”):<br>  weights_1 = tf.Variable(…)<br>  biases_1 = tf.Variable(…)</p>
+<p>with tf.device(“/job:ps/task:1”):<br>  weights_2 = tf.Variable(…)<br>  biases_2 = tf.Variable(…)</p>
+<p>with tf.device(“/job:worker/task:7”):<br>  input, labels = …<br>  layer_1 = tf.nn.relu(tf.matmul(input, weights_1) + biases_1)<br>  logits = tf.nn.relu(tf.matmul(layer_1, weights_2) + biases_2)</p>
+<h1 id="…"><a href="#…" class="headerlink" title="…"></a>…</h1><p>  train_op = …</p>
+<p>with tf.Session(“grpc://worker7.example.com:2222”) as sess:<br>  for _ in range(10000):<br>    sess.run(train_op)</p>
+<p>在上面的例子中，参数的声明是通过ps作业中的两个任务完成的，而模型计算相关的部分则是在work作业里进行的。TensorFlow将在内部实现作业间的数据传输。(ps到work间的向前传递；work到ps的计算梯度)</p>
+<p>计算流程<br>在上面的这个称为“数据并行化”的公用训练配置项里，一般会包含多个用于对不同数据大小进行计算的任务(构成了work作业) 和 一个或多个分布在不同机器上用于不停更新共享参数的任务(构成了ps作业)。 所有的这些任务都可以运行在不同的机器上。实现这养的逻辑有很多的方法，目前TensorFlow团队采用的是构建链接库(lib)的方式来简化模型的工作，其实现了如下几种方法：</p>
+<p>图内的拷贝(In-graph replication). 在这种方法下，客户端程序会建立一个独立的tf.Graph，该图中的一系列节点 （tf.Variable）会通过ps 作业(/job:ps)声明，而计算相关的多份拷贝会通过work作业(/job:worker)来进行。<br>图间的拷贝(Between-graph replication). 在这种方法下，每一个任务(/job:worker) 都是通过独立客户端单独声明的。其相互之间结构类似，每一个客户端都会建立一个相似的图结构, 该结构中包含的参数均通过ps 作业(/job:ps)进行声明并使用tf.train.replica_device_setter() 方法将参数映射到不同的任务中。模型中每一个独立的计算单元都会映射到/job:worker的本地的任务中。<br>异步训练(Asynchronous training). 在这种方法下，每一个图的备份都会使用独立的训练逻辑进行独立训练，该方法需要配合上面的两种方法一同使用。<br>同步训练(Synchronous training). 在这种方法下，所有的计算任务会读取当前参数中相同的值并用于并行化的计算梯度，然后将计算结果合并。这种方法需要和图内的拷贝(In-graph replication)方法(例如，在CIFAR-10 multi-GPU trainer 中我们使用该方法对梯度求平均值) 和图间的拷贝(Between-graph replication)(例如，tf.train.SyncReplicasOptimizer)一同使用。<br>分布式训练程序的举例说明<br>接下来的代码是一个分布式训练程序的大致代码框架，其中实现了图间的拷贝和异步训练两种方法。该示例中包含了参数服务(parameter server)和工作任务(work task)的代码。</p>
+<p>import tensorflow as tf</p>
+<h1 id="Flags-for-defining-the-tf-train-ClusterSpec"><a href="#Flags-for-defining-the-tf-train-ClusterSpec" class="headerlink" title="Flags for defining the tf.train.ClusterSpec"></a>Flags for defining the tf.train.ClusterSpec</h1><p>tf.app.flags.DEFINE_string(“ps_hosts”, “”,<br>                           “Comma-separated list of hostname:port pairs”)<br>tf.app.flags.DEFINE_string(“worker_hosts”, “”,<br>                           “Comma-separated list of hostname:port pairs”)</p>
+<h1 id="Flags-for-defining-the-tf-train-Server"><a href="#Flags-for-defining-the-tf-train-Server" class="headerlink" title="Flags for defining the tf.train.Server"></a>Flags for defining the tf.train.Server</h1><p>tf.app.flags.DEFINE_string(“job_name”, “”, “One of ‘ps’, ‘worker’”)<br>tf.app.flags.DEFINE_integer(“task_index”, 0, “Index of task within the job”)</p>
+<p>FLAGS = tf.app.flags.FLAGS</p>
+<p>def main(_):<br>  ps_hosts = FLAGS.ps_hosts.split(“,”)<br>  worker_hosts = FLAGS.worker_hosts(“,”)</p>
+<h1 id="Create-a-cluster-from-the-parameter-server-and-worker-hosts"><a href="#Create-a-cluster-from-the-parameter-server-and-worker-hosts" class="headerlink" title="Create a cluster from the parameter server and worker hosts."></a>Create a cluster from the parameter server and worker hosts.</h1><p>  cluster = tf.train.ClusterSpec({“ps”: ps_hosts, “worker”: worker_hosts})</p>
+<h1 id="Create-and-start-a-server-for-the-local-task"><a href="#Create-and-start-a-server-for-the-local-task" class="headerlink" title="Create and start a server for the local task."></a>Create and start a server for the local task.</h1><h1 id="创建并启动服务"><a href="#创建并启动服务" class="headerlink" title="创建并启动服务"></a>创建并启动服务</h1><h1 id="其参数中使用task-index-指定任务的编号"><a href="#其参数中使用task-index-指定任务的编号" class="headerlink" title="其参数中使用task_index 指定任务的编号"></a>其参数中使用task_index 指定任务的编号</h1><p>  server = tf.train.Server(cluster,<br>                           job_name=FLAGS.job_name,<br>                           task_index=FLAGS.task_index)</p>
+<p>  if FLAGS.job_name == “ps”:<br>    server.join()<br>  elif FLAGS.job_name == “worker”:</p>
+<pre><code># Assigns ops to the local worker by default.
+# 将op 挂载到各个本地的worker上
+with tf.device(tf.train.replica_device_setter(
+    worker_device=&quot;/job:worker/task:%d&quot; % FLAGS.task_index,
+    cluster=cluster)):
+
+  # Build model...
+  loss = ...
+  global_step = tf.Variable(0)
+
+  train_op = tf.train.AdagradOptimizer(0.01).minimize(
+      loss, global_step=global_step)
+
+  saver = tf.train.Saver()
+  summary_op = tf.merge_all_summaries()
+  init_op = tf.initialize_all_variables()
+
+# Create a &quot;supervisor&quot;, which oversees the training process.
+sv = tf.train.Supervisor(is_chief=(FLAGS.task_index == 0),
+                         logdir=&quot;/tmp/train_logs&quot;,
+                         init_op=init_op,
+                         summary_op=summary_op,
+                         saver=saver,
+                         global_step=global_step,
+                         save_model_secs=600)
+
+# The supervisor takes care of session initialization, restoring from
+# a checkpoint, and closing when done or an error occurs.
+with sv.managed_session(server.target) as sess:
+  # Loop until the supervisor shuts down or 1000000 steps have completed.
+  step = 0
+  while not sv.should_stop() and step &lt; 1000000:
+    # Run a training step asynchronously.
+    # See `tf.train.SyncReplicasOptimizer` for additional details on how to
+    # perform *synchronous* training.
+    _, step = sess.run([train_op, global_step])
+
+# Ask for all the services to stop.
+sv.stop()
+</code></pre><p>if <strong>name</strong> == “<strong>main</strong>“:<br>  tf.app.run()</p>
+<p>使用以下命令可以启动两个参数服务和两个工作任务。(假设上面的python脚本名字为 train.py)</p>
+<h1 id="On-ps0-example-com"><a href="#On-ps0-example-com" class="headerlink" title="On ps0.example.com:"></a>On ps0.example.com:</h1><p>$ python trainer.py \<br>     –ps_hosts=ps0.example.com:2222,ps1.example.com:2222 \<br>     –worker_hosts=worker0.example.com:2222,worker1.example.com:2222 \<br>     –job_name=ps –task_index=0</p>
+<h1 id="On-ps1-example-com"><a href="#On-ps1-example-com" class="headerlink" title="On ps1.example.com:"></a>On ps1.example.com:</h1><p>$ python trainer.py \<br>     –ps_hosts=ps0.example.com:2222,ps1.example.com:2222 \<br>     –worker_hosts=worker0.example.com:2222,worker1.example.com:2222 \<br>     –job_name=ps –task_index=1</p>
+<h1 id="On-worker0-example-com"><a href="#On-worker0-example-com" class="headerlink" title="On worker0.example.com:"></a>On worker0.example.com:</h1><p>$ python trainer.py \<br>     –ps_hosts=ps0.example.com:2222,ps1.example.com:2222 \<br>     –worker_hosts=worker0.example.com:2222,worker1.example.com:2222 \<br>     –job_name=worker –task_index=0</p>
+<h1 id="On-worker1-example-com"><a href="#On-worker1-example-com" class="headerlink" title="On worker1.example.com:"></a>On worker1.example.com:</h1><p>$ python trainer.py \<br>     –ps_hosts=ps0.example.com:2222,ps1.example.com:2222 \<br>     –worker_hosts=worker0.example.com:2222,worker1.example.com:2222 \<br>     –job_name=worker –task_index=1</p>
+<p>名词解释<br>客户端(Client)</p>
+<p>客户端是一个用于建立TensorFlow计算图并创立与集群进行交互的会话层tensorflow::Session 的程序。一般客户端是通过python或C++实现的。一个独立的客户端进程可以同时与多个TensorFlow的服务端相连 (上面的计算流程一节)，同时一个独立的服务端也可以与多个客户端相连。<br>集群(Cluster) </p>
+<ul>
+<li>一个TensorFlow的集群里包含了一个或多个作业(job), 每一个作业又可以拆分成一个或多个任务(task)。集群的概念主要用与一个特定的高层次对象中，比如说训练神经网络，并行化操作多台机器等等。集群对象可以通过tf.train.ClusterSpec 来定义。<br>作业(Job) </li>
+<li>一个作业可以拆封成多个具有相同目的的任务(task)，比如说，一个称之为ps(parameter server，参数服务器)的作业中的任务主要是保存和更新变量，而一个名为work(工作)的作业一般是管理无状态且主要从事计算的任务。一个作业中的任务可以运行于不同的机器上，作业的角色也是灵活可变的，比如说称之为”work”的作业可以保存一些状态。<br>主节点的服务逻辑(Master service) </li>
+<li>一个RPC 服务程序可以用来远程连接一系列的分布式设备，并扮演一个会话终端的角色，主服务程序实现了一个tensorflow::Session 的借口并负责通过工作节点的服务进程(worker service)与工作的任务进行通信。所有的主服务程序都有了主节点的服务逻辑。<br>任务(Task) </li>
+<li>任务相当于是一个特定的TesnsorFlow服务端，其相当于一个独立的进程，该进程属于特定的作业并在作业中拥有对应的序号。<br>TensorFlow服务端(TensorFlow server) </li>
+<li>一个运行了tf.train.Server 实例的进程，其为集群中的一员，并有主节点和工作节点之分。<br>工作节点的服务逻辑(Worker service) </li>
+<li>其为一个可以使用本地设备对部分图进行计算的RPC 逻辑，一个工作节点的服务逻辑实现了worker_service.proto 接口， 所有的TensorFlow服务端均包含工作节点的服务逻辑。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Tensorflow/" rel="tag"><i class="fa fa-tag"></i> Tensorflow</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Company/DeepCreator/Company/Baidu/" rel="next" title="Baidu">
+                  <i class="fa fa-chevron-left"></i> Baidu
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Basic Concept/derivative/" rel="prev" title="Derivative">
+                  Derivative <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从系统和代码实现角度解析TensorFlow的内部实现原理-深度"><span class="nav-number">1.</span> <span class="nav-text">从系统和代码实现角度解析TensorFlow的内部实现原理 | 深度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorBoard-可视化学习"><span class="nav-number">2.</span> <span class="nav-text">TensorBoard:可视化学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorBoard-图表可视化"><span class="nav-number">3.</span> <span class="nav-text">TensorBoard: 图表可视化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tensorflow架构"><span class="nav-number"></span> <span class="nav-text">tensorflow架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-Concepts"><span class="nav-number">1.</span> <span class="nav-text">Basic Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#张量-Tensor"><span class="nav-number">1.1.</span> <span class="nav-text">张量(Tensor)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算子-operation"><span class="nav-number">1.2.</span> <span class="nav-text">算子(operation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核-kernel"><span class="nav-number">1.3.</span> <span class="nav-text">核(kernel)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边-edge"><span class="nav-number">1.4.</span> <span class="nav-text">边(edge)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话-Session"><span class="nav-number">1.5.</span> <span class="nav-text">会话(Session)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量-Variables"><span class="nav-number">1.6.</span> <span class="nav-text">变量(Variables)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implementation"><span class="nav-number">1.7.</span> <span class="nav-text">Implementation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Single-Device-Execution"><span class="nav-number">1.8.</span> <span class="nav-text">Single-Device Execution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-Device-Execution"><span class="nav-number">1.9.</span> <span class="nav-text">Multi-Device Execution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#决定设备"><span class="nav-number">1.10.</span> <span class="nav-text">决定设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跨设备通信"><span class="nav-number">1.11.</span> <span class="nav-text">跨设备通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误处理"><span class="nav-number">1.12.</span> <span class="nav-text">错误处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extensions"><span class="nav-number">2.</span> <span class="nav-text">Extensions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradient-Computation-梯度计算"><span class="nav-number">2.1.</span> <span class="nav-text">Gradient Computation(梯度计算)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partial-Execution-局部执行"><span class="nav-number">2.2.</span> <span class="nav-text">Partial Execution(局部执行)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-Flow-控制流"><span class="nav-number">2.3.</span> <span class="nav-text">Control Flow(控制流)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-Operations-输入操作"><span class="nav-number">2.4.</span> <span class="nav-text">Input Operations(输入操作)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Queues-队列"><span class="nav-number">2.5.</span> <span class="nav-text">Queues(队列)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Containers-容器"><span class="nav-number">2.6.</span> <span class="nav-text">Containers(容器)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optimizaiton"><span class="nav-number">2.7.</span> <span class="nav-text">Optimizaiton</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Common-Subexpression-Elimination"><span class="nav-number">2.8.</span> <span class="nav-text">Common Subexpression Elimination</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Controlling-Data-Combination-and-Memory-Usage"><span class="nav-number">2.9.</span> <span class="nav-text">Controlling Data Combination and Memory Usage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asynchronous-Kernels"><span class="nav-number">2.10.</span> <span class="nav-text">Asynchronous Kernels</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optimized-Libraries-for-Kernel-Implementations"><span class="nav-number">2.11.</span> <span class="nav-text">Optimized Libraries for Kernel Implementations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lossy-Compression"><span class="nav-number">2.12.</span> <span class="nav-text">Lossy Compression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Common-Programming-Idioms"><span class="nav-number">2.13.</span> <span class="nav-text">Common Programming Idioms</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Parallel-Training"><span class="nav-number">2.14.</span> <span class="nav-text">Data Parallel Training</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-Parallel-Training"><span class="nav-number">2.15.</span> <span class="nav-text">Model Parallel Training</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Concurrent-Steps-for-Model-Computation-PipeLine"><span class="nav-number">2.16.</span> <span class="nav-text">Concurrent Steps for Model Computation PipeLine</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Related-Work"><span class="nav-number">3.</span> <span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TensorFlow技术解析与实战"><span class="nav-number"></span> <span class="nav-text">TensorFlow技术解析与实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内容简介"><span class="nav-number">1.</span> <span class="nav-text">内容简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作者简介"><span class="nav-number">2.</span> <span class="nav-text">作者简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">3.</span> <span class="nav-text">目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TensorFlow：实战Google深度学习框架（第2版）"><span class="nav-number"></span> <span class="nav-text">TensorFlow：实战Google深度学习框架（第2版）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内容简介-1"><span class="nav-number">1.</span> <span class="nav-text">内容简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作者简介-1"><span class="nav-number">2.</span> <span class="nav-text">作者简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录-1"><span class="nav-number">3.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解和实现分布式TensorFlow集群完整教程"><span class="nav-number">4.</span> <span class="nav-text">理解和实现分布式TensorFlow集群完整教程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensorflow-分布式部署简介"><span class="nav-number">5.</span> <span class="nav-text">Tensorflow 分布式部署简介</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Start-a-TensorFlow-server-as-a-single-process-“cluster”"><span class="nav-number"></span> <span class="nav-text">Start a TensorFlow server as a single-process “cluster”.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#In-task-0"><span class="nav-number"></span> <span class="nav-text">In task 0:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#In-task-1"><span class="nav-number"></span> <span class="nav-text">In task 1:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#…"><span class="nav-number"></span> <span class="nav-text">…</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Flags-for-defining-the-tf-train-ClusterSpec"><span class="nav-number"></span> <span class="nav-text">Flags for defining the tf.train.ClusterSpec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Flags-for-defining-the-tf-train-Server"><span class="nav-number"></span> <span class="nav-text">Flags for defining the tf.train.Server</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Create-a-cluster-from-the-parameter-server-and-worker-hosts"><span class="nav-number"></span> <span class="nav-text">Create a cluster from the parameter server and worker hosts.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Create-and-start-a-server-for-the-local-task"><span class="nav-number"></span> <span class="nav-text">Create and start a server for the local task.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建并启动服务"><span class="nav-number"></span> <span class="nav-text">创建并启动服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其参数中使用task-index-指定任务的编号"><span class="nav-number"></span> <span class="nav-text">其参数中使用task_index 指定任务的编号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#On-ps0-example-com"><span class="nav-number"></span> <span class="nav-text">On ps0.example.com:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#On-ps1-example-com"><span class="nav-number"></span> <span class="nav-text">On ps1.example.com:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#On-worker0-example-com"><span class="nav-number"></span> <span class="nav-text">On worker0.example.com:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#On-worker1-example-com"><span class="nav-number"></span> <span class="nav-text">On worker1.example.com:</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

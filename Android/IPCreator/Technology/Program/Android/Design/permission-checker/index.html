@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Those pitfalls I fall into…">
+<meta name="keywords" content="Best Practice,Permission">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Permissions on Android">
+<meta property="og:url" content="https://hazyman.com/Android/IPCreator/Technology/Program/Android/Design/permission-checker/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="Those pitfalls I fall into…">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://okkntqe2h.bkt.clouddn.com/app-permission_746x545.png">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2016/11/29/4e3297fc74ee8cd6e1ef6e5a3254bdea">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2016/11/29/339bbb1c81518c1bb63fb983b74e50f4">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2016/11/29/27ce2cc22ce916c83ff8a6a2909a44e9">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2016/11/30/f8a7e90eeeacb4be86e71bd707cb4a01.png">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2016/11/29/4d928133e9f88b8dce54b645f38a78fd.png">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2016/11/29/963a5e7a0014edfffb3f5e4b6fd97436.png">
+<meta property="og:updated_time" content="2017-04-03T16:30:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Permissions on Android">
+<meta name="twitter:description" content="Those pitfalls I fall into…">
+<meta name="twitter:image" content="http://okkntqe2h.bkt.clouddn.com/app-permission_746x545.png">
+
+<link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/Design/permission-checker/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Permissions on Android | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/Design/permission-checker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Permissions on Android
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Android/IPCreator/Technology/Program/Android/Design/permission-checker/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Android/IPCreator/Technology/Program/Android/Design/permission-checker/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="http://okkntqe2h.bkt.clouddn.com/app-permission_746x545.png" alt></p>
+<p>Those pitfalls I fall into…</p>
+<a id="more"></a>
+<h2 id="Conditon"><a href="#Conditon" class="headerlink" title="Conditon"></a>Conditon</h2><ol>
+<li>危险权限</li>
+<li>Android 版本 &gt;= 6.0</li>
+<li>targetSdkVersion &gt;= 23<br>如果项目的targetSdkVersion &lt; 23, 在Android 6.0＋的手机上，会默认给予所有在AndroidManifest.xml中申请的权限。</li>
+</ol>
+<p>是不是觉得这样就完事大吉了？<br><img src="https://user-gold-cdn.xitu.io/2016/11/29/4e3297fc74ee8cd6e1ef6e5a3254bdea" alt></p>
+<p>如果用户在应用的权限页面手动收回权限，将会导致应用Crash.💔<br><img src="https://user-gold-cdn.xitu.io/2016/11/29/339bbb1c81518c1bb63fb983b74e50f4" alt></p>
+<p>稳妥的处理当然是遵循Google的权限申请机制。</p>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><p>为方便开发者实现权限管理，Google提供了4个API:</p>
+<ol>
+<li>checkSelfPermission( )    判断权限是否具有某项权限</li>
+<li>requestPermissions( )    申请权限</li>
+<li>onRequestPermissionsResult( )    申请权限回调方法</li>
+<li>shouldShowRequestPermissionRationale( )    是否要提示用户申请该权限的缘由</li>
+</ol>
+<h2 id="Pitfall"><a href="#Pitfall" class="headerlink" title="Pitfall"></a>Pitfall</h2><p>如果用户任性的勾选了“不再询问”，那么在执行requestPermissions( )后，onRequestPermissionsResult( )会永远返回PERMISSION_DENIED，这样应用原本的操作将永远无法执行。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2016/11/29/27ce2cc22ce916c83ff8a6a2909a44e9" alt></p>
+<h2 id="Right-way"><a href="#Right-way" class="headerlink" title="Right way"></a>Right way</h2><h3 id="shouldShowRequestPermissionRationale"><a href="#shouldShowRequestPermissionRationale" class="headerlink" title="shouldShowRequestPermissionRationale( )"></a>shouldShowRequestPermissionRationale( )</h3><p>如果返回为true，一般情况下，应用应该弹出Dialog说明申请该权限的缘由</p>
+<p>shouldShowRequestPermissionRationale( )只会在一种情况下返回true</p>
+<blockquote>
+<p><strong>用户上一次拒绝申请权限，但是并未勾选“不再询问”</strong></p>
+</blockquote>
+<p>如何判断用户勾选了“不再询问”？<br><img src alt></p>
+<p>从上面的表格可以看出，<u><strong>如果上次shouldShowRequestPermissionRationale( )返回了true，而这次调用该方法返回了false，则说明用户在上次勾选了“不再询问”。此时，我们需要引导用户进入设置界面进行权限授予。</strong></u></p>
+<p>由于涉及到上一次调用shouldShowRequestPermissionRationale( )的结果，所以需要将其持久化保存，SharedPreferences或者数据库均可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">requestPermission</span><span class="params">(Activity activity, <span class="keyword">final</span> String permission)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> flag = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission);</span><br><span class="line">    <span class="keyword">if</span> (getLastRequestState() &amp;&amp; !flag) &#123;</span><br><span class="line">        <span class="comment">//当用户勾选`不再询问`时, 进入设置界面</span></span><br><span class="line">        Uri uri = Uri.fromParts(<span class="string">"package"</span>, <span class="keyword">this</span>.getPackageName(), <span class="keyword">null</span>);</span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, uri);</span><br><span class="line">        startActivityForResult(intent, COME_CODE);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">        <span class="comment">//之前有过`拒绝`授权时，提醒用户需要某权限</span></span><br><span class="line">        showRationaleDialog();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//同时保存返回值</span></span><br><span class="line">        SharedPrefsUtils.setBooleanPreference(getApplicationContext(), KEY_RESUEST_SOME_PERMISSION, flag);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//第一次申请权限时，直接申请权限</span></span><br><span class="line">        ActivityCompat.requestPermissions(activity, <span class="keyword">new</span> String[]&#123;permission&#125;, REQUEST_PERMISSION_CODE);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>流程图<br><img src="https://user-gold-cdn.xitu.io/2016/11/30/f8a7e90eeeacb4be86e71bd707cb4a01.png" alt></p>
+<h2 id="Best-Practice"><a href="#Best-Practice" class="headerlink" title="Best Practice"></a>Best Practice</h2><h2 id="Process-Step"><a href="#Process-Step" class="headerlink" title="Process Step"></a>Process Step</h2><p><img src="https://user-gold-cdn.xitu.io/2016/11/29/4d928133e9f88b8dce54b645f38a78fd.png" alt></p>
+<p>上面的解决方案是可行的，但是每次申请权限需要依赖于上一次调用shouldShowRequestPermissionRationale( )方法的返回值，如果SharedPreferences被修改或者被删除，会影响正常的申请流程。</p>
+<p>Google提供了一个非常好的思路，详见<a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fgooglesamples%2Feasypermissions" target="_blank" rel="noopener">EasyPermissions</a> .</p>
+<p><img src alt></p>
+<p>EasyPermissions并没有存储上一次shouldShowRequestPermissionRationale( )的返回值，而是<u><strong>在申请权限被拒后调用shouldShowRequestPermissionRationale( )方法，如果此时返回false则说明用户勾选了“不再询问”。</strong></u></p>
+<p>简化判断“不再询问”的条件</p>
+<blockquote>
+<p>1.未获得授权<br>2.shouldShowRequestPermissionRationale( )返回false</p>
+</blockquote>
+<p><img src="https://user-gold-cdn.xitu.io/2016/11/29/963a5e7a0014edfffb3f5e4b6fd97436.png" alt></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[]<a href="https://juejin.im/entry/58253dfaa22b9d00670c8210" target="_blank" rel="noopener">Android M 权限最佳实践</a><br>[2]<a href="http://blog.csdn.net/self_study/article/details/50074781" target="_blank" rel="noopener">android permission权限与安全机制解析（上）</a><br>[3]<a href="http://blog.csdn.net/self_study/article/details/50186435" target="_blank" rel="noopener">android permission权限与安全机制解析（下）</a><br>[4]<a href="https://github.com/hotchemi/PermissionsDispatcher" target="_blank" rel="noopener">第三方库PermissionsDispatcher</a><br>[5]<a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fgooglesamples%2Feasypermissions" target="_blank" rel="noopener">EasyPermissions </a><br>[6]<a href="http://www.jianshu.com/p/3e16bda04852" target="_blank" rel="noopener">Android权限最佳实践</a><br>[7]<a href="http://blog.csdn.net/mzm489321926/article/details/50542065" target="_blank" rel="noopener">Android如何获取判断是否有悬浮窗权限</a><br><a href="http://www.cnblogs.com/mengdd/p/3824782.html" target="_blank" rel="noopener">Android悬浮窗实现 使用WindowManager</a><br><a href="https://juejin.im/entry/577f474fa633bd005b0277bb" target="_blank" rel="noopener">突破小米悬浮窗权限控制 – 不需要权限的悬浮窗</a><br><a href="http://www.jianshu.com/p/167fd5f47d5c" target="_blank" rel="noopener">Android无需权限显示悬浮窗, 兼谈逆向分析app</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Best-Practice/" rel="tag"><i class="fa fa-tag"></i> Best Practice</a>
+              <a href="/tags/Permission/" rel="tag"><i class="fa fa-tag"></i> Permission</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/Design/architecture-of-android-app/" rel="next" title="Android Architecture Blueprints">
+                  <i class="fa fa-chevron-left"></i> Android Architecture Blueprints
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Tools/Gradle/gradle/" rel="prev" title="How to Use Gradle">
+                  How to Use Gradle <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Conditon"><span class="nav-number">1.</span> <span class="nav-text">Conditon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">2.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pitfall"><span class="nav-number">3.</span> <span class="nav-text">Pitfall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Right-way"><span class="nav-number">4.</span> <span class="nav-text">Right way</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shouldShowRequestPermissionRationale"><span class="nav-number">4.1.</span> <span class="nav-text">shouldShowRequestPermissionRationale( )</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Best-Practice"><span class="nav-number">5.</span> <span class="nav-text">Best Practice</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-Step"><span class="nav-number">6.</span> <span class="nav-text">Process Step</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">7.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

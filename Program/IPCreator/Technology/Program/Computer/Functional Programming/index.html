@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="也许继”面向对象编程”之后，”函数式编程”会成为下一个编程的主流范式（paradigm）。">
+<meta name="keywords" content="Functional,Programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Functional Programming">
+<meta property="og:url" content="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/Functional Programming/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="也许继”面向对象编程”之后，”函数式编程”会成为下一个编程的主流范式（paradigm）。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012040601.png">
+<meta property="og:image" content="http://img.zhaojie.me/blog/prog-lang-trends-anders/0-thumbnail.png">
+<meta property="og:image" content="http://img.zhaojie.me/blog/prog-lang-trends-anders/1-thumbnail.png">
+<meta property="og:image" content="http://img.zhaojie.me/blog/prog-lang-trends-anders/2-thumbnail.png">
+<meta property="og:image" content="http://img.zhaojie.me/blog/prog-lang-trends-anders/3.png">
+<meta property="og:image" content="http://img.zhaojie.me/blog/prog-lang-trends-anders/4-thumbnail.png">
+<meta property="og:image" content="http://img.zhaojie.me/blog/prog-lang-trends-anders/5-thumbnail.png">
+<meta property="og:image" content="http://img.zhaojie.me/blog/prog-lang-trends-anders/6-thumbnail.png">
+<meta property="og:image" content="http://img.zhaojie.me/blog/prog-lang-trends-anders/7-thumbnail.png">
+<meta property="og:image" content="http://img.zhaojie.me/blog/prog-lang-trends-anders/8-thumbnail.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/miscellaneous/bg2010032001.jpg">
+<meta property="og:updated_time" content="2018-03-30T10:09:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Functional Programming">
+<meta name="twitter:description" content="也许继”面向对象编程”之后，”函数式编程”会成为下一个编程的主流范式（paradigm）。">
+<meta name="twitter:image" content="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012040601.png">
+
+<link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/Functional Programming/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Functional Programming | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Program/IPCreator/Technology/Program/Computer/Functional Programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Functional Programming
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Computer/Functional Programming/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Computer/Functional Programming/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012040601.png" alt="Functional Programming"></p>
+<blockquote>
+<p><a href="http://www.ruanyifeng.com/blog/2012/04/functional_programming.html" target="_blank" rel="noopener">也许继”面向对象编程”之后，”函数式编程”会成为下一个编程的主流范式（paradigm）。</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="函数式编程初探"><a href="#函数式编程初探" class="headerlink" title="函数式编程初探"></a><a href="http://www.ruanyifeng.com/blog/2012/04/functional_programming.html" target="_blank" rel="noopener">函数式编程初探</a></h2><p>作者： 阮一峰<br>日期： 2012年4月 6日</p>
+<p>诞生50多年之后，函数式编程（functional programming）开始获得越来越多的关注。</p>
+<p>不仅最古老的函数式语言Lisp重获青春，而且新的函数式语言层出不穷，比如Erlang、clojure、Scala、F#等等。目前最当红的Python、Ruby、Javascript，对函数式编程的支持都很强，就连老牌的面向对象的Java、面向过程的PHP，都忙不迭地加入对匿名函数的支持。越来越多的迹象表明，函数式编程已经不再是学术界的最爱，开始大踏步地在业界投入实用。</p>
+<p>也许继”面向对象编程”之后，”函数式编程”会成为下一个编程的主流范式（paradigm）。未来的程序员恐怕或多或少都必须懂一点。</p>
+<p>但是，”函数式编程”看上去比较难，缺乏通俗的入门教程，各种介绍文章都充斥着数学符号和专用术语，让人读了如坠云雾。就连最基本的问题”什么是函数式编程”，网上都搜不到易懂的回答。</p>
+<p>下面是我的”函数式编程”学习笔记，分享出来，与大家一起探讨。内容不涉及数学（我也不懂Lambda Calculus），也不涉及高级特性（比如lazy evaluation和currying），只求尽量简单通俗地整理和表达，我现在所理解的”函数式编程”以及它的意义。</p>
+<p>我主要参考了Slava Akhmechet的”Functional Programming For The Rest of Us”。</p>
+<p>一、定义</p>
+<blockquote>
+<p>简单说，”函数式编程”是一种”编程范式”（programming paradigm），也就是如何编写程序的方法论。</p>
+</blockquote>
+<p>它属于”结构化编程”的一种，主要思想是把运算过程尽量写成一系列嵌套的函数调用。举例来说，现在有这样一个数学表达式：</p>
+<p>　　(1 + 2) * 3 - 4</p>
+<p>传统的过程式编程，可能这样写：</p>
+<p>　　var a = 1 + 2;<br>　　var b = a * 3;<br>　　var c = b - 4;</p>
+<blockquote>
+<p>函数式编程要求使用函数，我们可以把运算过程定义为不同的函数，然后写成下面这样：</p>
+</blockquote>
+<p>　　var result = subtract(multiply(add(1,2), 3), 4);</p>
+<p>这就是函数式编程。</p>
+<p>二、特点</p>
+<p>函数式编程具有五个鲜明的特点。</p>
+<blockquote>
+<ol>
+<li>函数是”第一等公民”</li>
+</ol>
+</blockquote>
+<p>所谓”第一等公民”（first class），指的是函数与其他数据类型一样，处于平等地位，可以赋值给其他变量，也可以作为参数，传入另一个函数，或者作为别的函数的返回值。</p>
+<p>举例来说，下面代码中的print变量就是一个函数，可以作为另一个函数的参数。</p>
+<p>　　var print = function(i){ console.log(i);};</p>
+<p>　　[1,2,3].forEach(print);</p>
+<blockquote>
+<ol start="2">
+<li>只用”表达式”，不用”语句”</li>
+</ol>
+</blockquote>
+<p>“表达式”（expression）是一个单纯的运算过程，总是有返回值；”语句”（statement）是执行某种操作，没有返回值。函数式编程要求，只使用表达式，不使用语句。也就是说，<strong>每一步都是单纯的运算，而且都有返回值。</strong></p>
+<p>原因是函数式编程的开发动机，一开始就是为了处理运算（computation），不考虑系统的读写（I/O）。”语句”属于对系统的读写操作，所以就被排斥在外。</p>
+<p>当然，实际应用中，不做I/O是不可能的。因此，编程过程中，函数式编程只要求把I/O限制到最小，不要有不必要的读写行为，保持计算过程的单纯性。</p>
+<blockquote>
+<ol start="3">
+<li>没有”副作用”</li>
+</ol>
+</blockquote>
+<p>所谓”副作用”（side effect），指的是函数内部与外部互动（最典型的情况，就是修改全局变量的值），产生运算以外的其他结果。</p>
+<p>函数式编程强调没有”副作用”，意味着函数要保持独立，所有功能就是返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。</p>
+<ol start="4">
+<li>不修改状态</li>
+</ol>
+<p>上一点已经提到，函数式编程只是返回新的值，不修改系统变量。因此，不修改变量，也是它的一个重要特点。</p>
+<p>在其他类型的语言中，变量往往用来保存”状态”（state）。不修改变量，意味着状态不能保存在变量中。函数式编程使用参数保存状态，最好的例子就是递归。下面的代码是一个将字符串逆序排列的函数，它演示了不同的参数如何决定了运算所处的”状态”。</p>
+<p>　　function reverse(string) {</p>
+<p>　　　　if(string.length == 0) {</p>
+<p>　　　　　　return string;</p>
+<p>　　　　} else {</p>
+<p>　　　　　　return reverse(string.substring(1, string.length)) + string.substring(0, 1);</p>
+<p>　　　　}</p>
+<p>　　}</p>
+<blockquote>
+<p>由于使用了递归，函数式语言的运行速度比较慢，这是它长期不能在业界推广的主要原因。</p>
+</blockquote>
+<ol start="5">
+<li>引用透明</li>
+</ol>
+<p>引用透明（Referential transparency），指的是函数的运行不依赖于外部变量或”状态”，只依赖于输入的参数，任何时候只要参数相同，引用函数所得到的返回值总是相同的。</p>
+<p>有了前面的第三点和第四点，这点是很显然的。其他类型的语言，函数的返回值往往与系统状态有关，不同的状态之下，返回值是不一样的。这就叫”引用不透明”，很不利于观察和理解程序的行为。</p>
+<p>三、意义</p>
+<p>函数式编程到底有什么好处，为什么会变得越来越流行？</p>
+<ol>
+<li>代码简洁，开发快速</li>
+</ol>
+<p>函数式编程大量使用函数，减少了代码的重复，因此程序比较短，开发速度较快。</p>
+<p>Paul Graham在《黑客与画家》一书中写道：同样功能的程序，极端情况下，Lisp代码的长度可能是C代码的二十分之一。</p>
+<p>如果程序员每天所写的代码行数基本相同，这就意味着，”C语言需要一年时间完成开发某个功能，Lisp语言只需要不到三星期。反过来说，如果某个新功能，Lisp语言完成开发需要三个月，C语言需要写五年。”当然，这样的对比故意夸大了差异，但是”在一个高度竞争的市场中，即使开发速度只相差两三倍，也足以使得你永远处在落后的位置。”</p>
+<ol start="2">
+<li>接近自然语言，易于理解</li>
+</ol>
+<p>函数式编程的自由度很高，可以写出很接近自然语言的代码。</p>
+<p>前文曾经将表达式(1 + 2) * 3 - 4，写成函数式语言：</p>
+<p>　　subtract(multiply(add(1,2), 3), 4)</p>
+<p>对它进行变形，不难得到另一种写法：</p>
+<p>　　add(1,2).multiply(3).subtract(4)</p>
+<p>这基本就是自然语言的表达了。再看下面的代码，大家应该一眼就能明白它的意思吧：</p>
+<p>　　&gt;merge([1,2],[3,4]).sort().search(“2”)</p>
+<p>因此，函数式编程的代码更容易理解。</p>
+<ol start="3">
+<li>更方便的代码管理</li>
+</ol>
+<p>函数式编程不依赖、也不会改变外界的状态，只要给定输入参数，返回的结果必定相同。因此，<strong>每一个函数都可以被看做独立单元，很有利于进行单元测试（unit testing）和除错（debugging），以及模块化组合。</strong></p>
+<ol start="4">
+<li>易于”并发编程”</li>
+</ol>
+<blockquote>
+<p>函数式编程不需要考虑”死锁”（deadlock），因为它不修改变量，所以根本不存在”锁”线程的问题。不必担心一个线程的数据，被另一个线程修改，所以可以很放心地把工作分摊到多个线程，部署”并发编程”（concurrency）。</p>
+</blockquote>
+<p>请看下面的代码：</p>
+<p>　　var s1 = Op1();</p>
+<p>　　var s2 = Op2();</p>
+<p>　　var s3 = concat(s1, s2);</p>
+<p>由于s1和s2互不干扰，不会修改变量，谁先执行是无所谓的，所以可以放心地增加线程，把它们分配在两个线程上完成。其他类型的语言就做不到这一点，因为s1可能会修改系统状态，而s2可能会用到这些状态，所以必须保证s2在s1之后运行，自然也就不能部署到其他线程上了。</p>
+<blockquote>
+<p>多核CPU是将来的潮流，所以函数式编程的这个特性非常重要。</p>
+</blockquote>
+<ol start="5">
+<li>代码的热升级</li>
+</ol>
+<p>函数式编程没有副作用，只要保证接口不变，内部实现是外部无关的。所以，可以在运行状态下直接升级代码，不需要重启，也不需要停机。Erlang语言早就证明了这一点，它是瑞典爱立信公司为了管理电话系统而开发的，电话系统的升级当然是不能停机的。</p>
+<h2 id="编程语言的发展趋势及未来方向"><a href="#编程语言的发展趋势及未来方向" class="headerlink" title="编程语言的发展趋势及未来方向"></a><a href="http://blog.zhaojie.me/2010/04/trends-and-future-directions-in-programming-languages-by-anders-1-history-and-trends.html" target="_blank" rel="noopener">编程语言的发展趋势及未来方向</a></h2><h3 id="编程语言的发展趋势及未来方向（1）：历史回顾及趋势概述"><a href="#编程语言的发展趋势及未来方向（1）：历史回顾及趋势概述" class="headerlink" title="编程语言的发展趋势及未来方向（1）：历史回顾及趋势概述"></a><a href="http://blog.zhaojie.me/2010/04/trends-and-future-directions-in-programming-languages-by-anders-1-history-and-trends.html" target="_blank" rel="noopener">编程语言的发展趋势及未来方向（1）：历史回顾及趋势概述</a></h3><p>这是Anders Hejlsberg（不用介绍这是谁了吧）在比利时TechDays 2010所做的开场演讲。由于最近我在博客上关于语言的讨论比较多，出于应景，也打算将Anders的演讲完整地听写出来。我希望这个讲座可以从侧面回答某些朋友关于“语言讨论是否有价值”的疑问，并且展示出目前语言的发展状况以及微软在这方面的努力。完整内容将分为多次发表，每次一小部分，包含大约10分钟的演讲内容。等不及的朋友也和可以下载演讲视频一睹为快。现在的第1部分则包含Anders对编程语言发展的历史回顾，以及对趋势简单概述。</p>
+<p>如果没有特别说明，所有的文字都直接翻译自Anders的演讲，并使用我自己的口语习惯表达出来，对于Anders的口误及反复等情况，必要时在译文中自然也会进行忽略。为了方便理解，我也会将视频中关键部分进行截图，而某些代码演示则会直接作为文章内容发表。</p>
+<p>（听写开始）</p>
+<p><img src="http://img.zhaojie.me/blog/prog-lang-trends-anders/0-thumbnail.png" alt></p>
+<p>大家好，我是Anders Hejlsberg，现在是微软的Technical Fellow，担任C#编程语言的首席架构师，也参与并领导.NET Framework以及各种语言的开发。我现在打算谈一下……实际上是我脑海中一些影响未来5到10年编程语言设计的内容。比如C#或VB该怎么走，F#该怎么办，这次演讲主要就是讨论这些影响我们的东西。</p>
+<p><img src="http://img.zhaojie.me/blog/prog-lang-trends-anders/1-thumbnail.png" alt></p>
+<p>虽然主要内容是谈论未来的，但是我还是想先回顾一下历史。你们有些人可能对这个产品有印象，这是我大约27年前的工作内容，Turbo Pascal，这也是我进入这个领域的起点。我先在拿出这个东西是想展示当年写程序的情况，然后可以讨论目前究竟的发展到哪儿了。</p>
+<p><img src="http://img.zhaojie.me/blog/prog-lang-trends-anders/2-thumbnail.png" alt></p>
+<p>事实上，我现在的机器里正好有TURBO.COM文件，大约39K，嘿，现在还可以运行。我们现在来试着写一点程序。先来创建的程序叫做Hello.pas……（开始写代码）……一个Pascal小程序写好了，我们来运行一下……（出现编译错误）啊噢，有地方我写错了……这个特性在当年是个创新，它会自动打开编辑器，直接把我们带去出错的地方。嗯，我们现在来纠正语法错误，把双引号改成单引号。</p>
+<p><img src="http://img.zhaojie.me/blog/prog-lang-trends-anders/3.png" alt></p>
+<p>再运行一下，现在成功了，（观众掌声）呵呵，谢谢，谢谢。事实上，在27年后这个程序还能在这台机器上运行还真是挺神奇的。</p>
+<p><img src="http://img.zhaojie.me/blog/prog-lang-trends-anders/4-thumbnail.png" alt></p>
+<p>现在，我们来看一下，从那时算起硬件已经发展了……嗯，我那时写Pascal的机器是Z-80，拥有48K内存。从那时算起，我现在这台机器已经有大约10万倍的外部存储容量，1万倍的内存大小，CPU速度也有大约1000倍的提高。</p>
+<p><img src="http://img.zhaojie.me/blog/prog-lang-trends-anders/5-thumbnail.png" alt></p>
+<p>但是如果你关注一下目前的软件……过去27年里编程语言到底进步了多少？呵呵，有趣的是如果你仔细观察这些代码，会发现C#还比Turbo Pascal的版本多一行。这也给我们带来了一些值得关注的东西。</p>
+<p><img src="http://img.zhaojie.me/blog/prog-lang-trends-anders/6-thumbnail.png" alt></p>
+<p>首先，编程语言的发展非常缓慢。期间当然出现了一些东西，例如面向对象等等，但是远没有好上1000倍。另一方面，你可能会想，那么这些努力都到哪里去了呢？事实上这些努力没有体现在编程语言上，而是出现在框架及工具等方面了。如果你关注如今我们使用的框架，它们的体积的确有1000倍的增长。例如当年Turbo Pascal所带的框架大约有，比如说100个功能，而现在的.NET Framework里则有一万个类，十万个方法，的确有1000倍的增长。与此类似，如果你观察现在的IDE，我们现在已经有了无数强大的功能，例如语法提示，重构，调试器，探测器等等，这方面的新东西有很多。与此相比，编程语言的改进的确很不明显。</p>
+<p>另一方面，如.NET，Java等框架的重要性提高了许多。而编程语言往往都倾向于构建于现有的工具上，而不会从头写起。现在出现的编程语言，例如F#，如果你关注Java领域那么还有Scala，Clojure等等，它们都是基于现有框架构建的。现在已经有太多东西可以直接利用了，每次从头开始的代价实在太高。</p>
+<p><img src="http://img.zhaojie.me/blog/prog-lang-trends-anders/7-thumbnail.png" alt></p>
+<p>还有件事，便是在过去5、60年的编程历史中，我们都不断地提高抽象级别，我们都在不断地让编程语言更有表现力，让我们可以用更少的代码完成更多的工作。我们一开始先使用汇编，然后使用面向过程的语言，例如Pascal和C，然后便是面向对象语言，如C++，随后就进入了托管时代──受托管的执行环境，例如.NET，Java，它们的主要特性有自动的垃圾收集，类型安全等等。我目前还没有看出这样的趋势有停止的迹象，因此我们还会看到抽象级别越来越高的语言，而语言的设计者则必须理解并预测下一个抽象级别是什么样子的。</p>
+<p><img src="http://img.zhaojie.me/blog/prog-lang-trends-anders/8-thumbnail.png" alt></p>
+<p>我认为，现在影响力较大的趋势主要有3种。首先，我们会越来越多地使用声明式的编程风格。这里我主要会提到例如DSL（Domain Specific Language，领域特定语言）以及函数式编程。然后在过去的五年里，我发现对于动态语言的研究变得非常火热，其中对我们产生重大影响的无疑是动态语言所拥有的良好的元编程能力，还有一些非常有趣的东西，例如JavaScript引擎的发展。然后便是并发编程，无论我们愿不愿意，多核的产生都在迫使我们不得不重视并发编程。</p>
+<p>有一点值得一提，那便是随着语言的发展，原本的编程语言分类方式也要有所改变了。以前我们经常说面向对象语言，动态语言或是函数式语言。但是我们现在发现，这些边界变得越来越模糊，经常会互相学习各自的范式。静态语言中出现了动态类型，动态语言里也出现了静态能力，而如今所有主要的编程语言都受到函数式语言的影响。因此，一个越来越明显的趋势是“多范式程序设计语言”。</p>
+<p>在接下来的部分中，我将深入讨论以上提到的这些内容。</p>
+<h3 id="编程语言的发展趋势及未来方向（2）：声明式编程与DSL"><a href="#编程语言的发展趋势及未来方向（2）：声明式编程与DSL" class="headerlink" title="编程语言的发展趋势及未来方向（2）：声明式编程与DSL"></a><a href="http://blog.zhaojie.me/2010/04/trends-and-future-directions-in-programming-languages-by-anders-2-declarative-programming-and-dsl.html" target="_blank" rel="noopener">编程语言的发展趋势及未来方向（2）：声明式编程与DSL</a></h3><p>这里先从声明式（Declarative）编程谈起。</p>
+<p>目前我们在编写软件时大量使用的是命令式（Imperative）编程语言，例如C#，Java或是C++等等。这些语言的特征在于，写出的代码除了表现出“什么（What）”是你想做的事情之外，更多的代码则表现出实现的细节，也就是“如何（How）”完成工作。这部分代码有时候多到掩盖了我们原来问题的解决方案。比如，你会在代码里写for循环，if语句，a等于b，i加一等等，这体现出机器是如何处理数据。首先，这种做法让代码变得冗余，而且它也很难让执行代码的基础设施更聪明地判断该如何去执行代码。当你写出这样的命令是代码，然后把编译后的中间语言交给虚拟机去执行，此时虚拟机并没有多少空间可以影响代码的执行方式，它只能根据指令一条一条老老实实地去执行。例如，我们现在想要并行地执行程序就很困难了，因为更高层次的一些信息已经丢失了。这样，我们只能在代码里给出“How”，而不能体现出“What”的信息。</p>
+<p>有多种方式可以将“What”转化为更为“声明式”的编程风格，我们只要能够在代码中体现出更多“What”，而不是“How”的信息，这样执行环境便可以更加聪明地去适应当前的执行要求。例如，它可以决定投入多少CPU进行计算，你的当前硬件是什么样的，等等。</p>
+<p>我之前提到过，现在有两种比较重要的成果，一是DSL（Domain Specific Language，领域特定语言），另一个则是函数式编程。</p>
+<p>其实DSL不是什么新鲜的玩意儿，我们平时一直在用类似的东西，比如，SQL，CSS，正则表达式，有的可能更加专注于一个方面，例如Mathematica，LOGO等等。这些语言的目标都是特定的领域，与之相对的则是GPPL（General Purpose Programming Language，通用目的编程语言）。</p>
+<p>对于DSL而言其实并没有一个明确的定义，在这里我也不打算为它下个定义，例如UML甚至根本没有特定的语法。不过我这里会谈一些我觉得比较重要的东西。</p>
+<p>Martin Fowler提出DSL应该分为外部DSL及内部DSL两种，我认为这种划分方式还是比较有意义的。外部DSL是自我包含的语言，它们有自己特定语法、解析器和词法分析器等等，它往往是一种小型的编程语言，甚至不会像GPPL那样需要源文件。与之相对的则是内部DSL。内部DSL其实更像是种别称，它代表一类特别API及使用模式。这里我会给你们看一些示例。</p>
+<p>这些是我们平时会遇到的一些外部DSL，如这张幻灯片上表现的XSLT，SQL或是Unix脚本。外部DSL的特点是，你在构建这种DSL时，其实扮演的是编程语言设计者的角色，这个工作并不会交给普通人去做。外部DSL一般会直接针对特定的领域设计，而不考虑其他东西。James Gosling曾经说过这样的话，每个配置文件最终都会变成一门编程语言。你一开始可能只会用它表示一点点东西，然后慢慢你便会想要一些规则，而这些规则则变成了表达式，可能你还会定义变量，进行条件判断等等。而最终它就变成了一种奇怪的编程语言，这样的情况屡见不鲜。</p>
+<p>事实上，现在有一些公司也在关注DSL的开发。例如以前在微软工作的Charles Simonyi提出了Intentional Programming的概念，还有一个叫做JetBrains的公司提供一个叫做MPS（Meta Programming System）的产品。最近微软也提出了自己的Oslo项目，而在Eclipse世界里也有个叫做Xtext的东西，所以其实在这方面现在也有不少人在尝试。</p>
+<p>我在观察外部DSL时，往往会关注它的语法到底提供了多少空间，例如一种XML的方言，利用XML方言的好处在于有不少现成的工具可用，这样可以更快地定义自己的语法。</p>
+<p>而内部DSL，正像我之前说的那样，它其实只是一系列特别的API及使用模式的别称。这里则是一些LINQ查询语句，Ruby on Rails以及jQuery代码。内部DSL的特点是，它其实只是一系列API，但是你可以“假装”它们一种DSL。内部DSL往往会利用一些“流畅化”的技巧，例如像这里的LINQ或jQuery那样把一些方法通过“点”连接起来。有些则利用了元编程的方式，如这里的Ruby on Rails就涉及到了一些元编程。这种DSL可以访问语言中的代码或变量，以及利用如代码补全，重构等母语言的所有特性。</p>
+<p>现在我会花几分钟时间演示一下我所创建的DSL，也就是LINQ。我相信你们也已经用过不少LINQ了，不过这里我还是快速的展示一下我所表达的更为“声明式”的编程方式。</p>
+<p>public class Product<br>{<br>    public int ProductID { get; set; }<br>    public string ProductName { get; set; }<br>    public string CategoryName { get; set; }<br>    public int UnitPrice { get; set; }</p>
+<pre><code>public static List&lt;Product&gt; GetProducts() { /* ... */ }
+</code></pre><p>}</p>
+<p>public partial class _Default : System.Web.UI.Page<br>{<br>    protected void Page_Load(object sender, EventArgs e)<br>    {<br>        List<product> products = Product.GetProducts();</product></p>
+<pre><code>    List&lt;Product&gt; result = new List&lt;Product&gt;();
+    foreach (Product p in products)
+    {
+        if (p.UnitPrice &gt; 20) result.Add(p);
+    }
+
+    GridView1.DataSource = result;
+    GridView1.DataBind();
+}
+</code></pre><p>}<br>这里有许多Product对象，那么现在我要筛选出所有单价大于20的那些， 再把他们显示在一个GridView中。传统的做法就是这样，我先得到所有的Product对象，然后foreach遍历每个对象，再判断每个对象的单价，最终把数据绑定到GridView里。运行这个程序……（打开页面）这就是就能得到结果。</p>
+<p>好，那么现在我要做一些稍微复杂的事情。可能我不是要展示单价超过20的Product对象，而是要查看每个分类中究竟有多少个单价超过20的对象，然后根据数量进行排序。如果不用DSL完成这个工作，那么我可能会先定义一个对象来表示结果：</p>
+<p>class Grouping<br>{<br>    public string CategoryName { get; set; }<br>    public int ProductCount { get; set; }<br>}<br>这是个表示分组的对象，用于保存分类的名称和产品数量。然后我们就会写一些十分丑陋的代码：</p>
+<p>Dictionary&lt;string, Grouping&gt; groups = new Dictionary&lt;string, Grouping&gt;();<br>foreach (Product p in products)<br>{<br>    if (p.UnitPrice &gt;= 20)<br>    {<br>        if (!groups.ContainsKey(p.CategoryName))<br>        {<br>            Grouping r = new Grouping();<br>            r.CategoryName = p.CategoryName;<br>            r.ProductCount = 0;<br>            groups[p.CategoryName] = r;<br>        }<br>        groups[p.CategoryName].ProductCount++;<br>    }<br>}</p>
+<p>List<grouping> result = new List<grouping>(groups.Values);<br>result.Sort(delegate(Grouping x, Grouping y)<br>{<br>    return<br>        x.ProductCount &gt; y.ProductCount ? -1 :<br>        x.ProductCount &lt; y.ProductCount ? 1 :<br>        0;<br>});<br>我先创建一个新的字典，用于保存分类名称到分组的对应关系。然后我遍历每个Product对象，对于每个单价大于20的对象，如果字典中还没有保存对应的分组则创建一个，然后将数量加一。然后为了排序，我调用Sort方法，于是我要提供一个委托作为排序方法，然后blablablabla……执行之后……（打开页面）我自然可以得到想要的结果。</grouping></grouping></p>
+<p>但是，首先这些代码写起来需要花费一些时间，很显然。然后仔细观察，你会发现这写代码几乎都是在表示“How”，而“What”基本已经丢失了。假设我离开了，现在新来了一个程序员要维护这段代码，他会需要一点时间才能完整理解这段代码，因为他无法直接看清代码的目标。</p>
+<p>不过如果这里我们使用DSL，也就是LINQ，就像这样：</p>
+<p>var result = products<br>    .Where(p =&gt; p.UnitPrice &gt;= 20)<br>    .GroupBy(p =&gt; p.CategoryName)<br>    .OrderByDescending(g =&gt; g.Count())<br>    .Select(g =&gt; new { CategoryName = g.Key, ProductCount = g.Count() });<br>products……先调用Where……blablabla……再GroupBy等等。由于我们这里可以使用DSL来表示高阶的术语，用以体现我们想做的事情。于是这段代码则更加关注于“What”而不是“How”。我这里不会明确地指示我想要过滤的方式，我也不会明确地说我要建立字典和分类，这样基础结构就可以聪明地，或者说更加聪明地去确定具体的执行方式。你可能比较容易想到我们可以并行地执行这段代码，因为我没有显式地指定做事方式，我只是表示出我的意图。</p>
+<p>我们打开页面……（打开页面）很显然我们得到了相同的结果。</p>
+<p>这里比较有趣的是，内部DSL是如何设计进C#语法中的，为此我们为C# 3.0添加了一系列的特性，例如Lambda表达式，扩展方法，类型推断等等。这些特性统一起来之后，我们就可以设计出更为丰富的API，组合之后便成为一种内部DSL，就像这里的LINQ查询语言。</p>
+<p>除了使用API的形式之外，我们还可以这样做：</p>
+<p>var result =<br>    from p in products<br>    where p.UnitPrice &gt;= 20<br>    group p by p.CategoryName into g<br>    orderby g.Count() descending<br>    select new { CategoryName = g.Key, ProductCount = g.Count() };<br>编译器会简单地将这种形式转化为前一种形式。不过，这里我认为有意思的地方在于，你完全可以创建一门和领域编程语言完全无关的语法，然后等这种语法和API变得流行且丰富起来之后，再来创一种新的表现形式，就如这里的LINQ查询语法。我颇为中意这种语言设计的交流方式。</p>
+<p>OK，现在我们回到下面的内容。</p>
+<h3 id="编程语言的发展趋势及未来方向（3）：函数式编程"><a href="#编程语言的发展趋势及未来方向（3）：函数式编程" class="headerlink" title="编程语言的发展趋势及未来方向（3）：函数式编程"></a><a href="http://blog.zhaojie.me/2010/05/trends-and-future-directions-in-programming-languages-by-anders-3-functional-programming-and-fsharp.html" target="_blank" rel="noopener">编程语言的发展趋势及未来方向（3）：函数式编程</a></h3><h3 id="编程语言的发展趋势及未来方向（4）：动态语言"><a href="#编程语言的发展趋势及未来方向（4）：动态语言" class="headerlink" title="编程语言的发展趋势及未来方向（4）：动态语言"></a><a href="http://blog.zhaojie.me/2010/05/trends-and-future-directions-in-programming-languages-by-anders-4-dynamic-languages.html" target="_blank" rel="noopener">编程语言的发展趋势及未来方向（4）：动态语言</a></h3><h3 id="编程语言的发展趋势及未来方向（5）：元编程"><a href="#编程语言的发展趋势及未来方向（5）：元编程" class="headerlink" title="编程语言的发展趋势及未来方向（5）：元编程"></a><a href="http://blog.zhaojie.me/2010/05/trends-and-future-directions-in-programming-languages-by-anders-5-meta-programming.html" target="_blank" rel="noopener">编程语言的发展趋势及未来方向（5）：元编程</a></h3><h3 id="编程语言的发展趋势及未来方向（6）：并发"><a href="#编程语言的发展趋势及未来方向（6）：并发" class="headerlink" title="编程语言的发展趋势及未来方向（6）：并发"></a><a href="http://blog.zhaojie.me/2010/05/trends-and-future-directions-in-programming-languages-by-anders-6-concurrency.html" target="_blank" rel="noopener">编程语言的发展趋势及未来方向（6）：并发</a></h3><h3 id="编程语言的发展趋势及未来方向（7）：总结"><a href="#编程语言的发展趋势及未来方向（7）：总结" class="headerlink" title="编程语言的发展趋势及未来方向（7）：总结"></a><a href="http://blog.zhaojie.me/2010/06/trends-and-future-directions-in-programming-languages-by-anders-7-conclusion.html" target="_blank" rel="noopener">编程语言的发展趋势及未来方向（7）：总结</a></h3><h2 id="几种计算机语言的评价（修订版）"><a href="#几种计算机语言的评价（修订版）" class="headerlink" title="几种计算机语言的评价（修订版）"></a><a href="http://www.ruanyifeng.com/blog/2010/03/programming_language_evaluations_revised.html" target="_blank" rel="noopener">几种计算机语言的评价（修订版）</a></h2><p>作者： 阮一峰<br>日期： 2010年3月20日</p>
+<p>编程新手都有一个同样的问题：”我应该学习哪一种语言？”。</p>
+<p>《Unix编程艺术》（Eric Raymond著）第十四章，对各种语言进行了评价，正好可以用来回答这个问题。下面是我的笔记，整理了六种主要计算机语言的优缺点。读完就会知道，对于不同的任务，应该选择哪一种语言了。</p>
+<p>原文写于2003年。网上曾经有一个不完整的中译本，我也在这个网志中转贴过，所以今天贴的只能算修订版了。</p>
+<p>====================</p>
+<p>几种计算机语言的评价</p>
+<p>作者：Eric Raymond</p>
+<p>摘自《Unix编程艺术（第十四章）》</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/miscellaneous/bg2010032001.jpg" alt></p>
+<p>一、C</p>
+<p>C语言的优点是，运行效率高和接近机器语言。它特别适用于以下几种程序：</p>
+<p>　　1. 对运行速度要求很高的程序。<br>　　2. 与操作系统内核关系密切的程序。<br>　　3. 必须在多个操作系统上移植的程序。</p>
+<p>除此之外，学习C语言有一个最大的理由，那就是它能帮助我们学会，在硬件层次上考虑问题。如果你想以编程作为自己的人生事业，C是一定要学习的。</p>
+<p>C的最大缺点是，在编程过程中，你不得不花很多时间，考虑与你要解决的问题完全无关、且非常复杂的硬件资源管理问题。</p>
+<p>二、C++</p>
+<p>C++在80年代中期推出，支持OO（面向对象编程），原意是作为C语言的取代者。</p>
+<p>但是它没能做到做一点，原因有以下几个：</p>
+<p>　　1. 它也没有解决”内存管理”问题，虽然比C有所改善。<br>　　2. 标准化不成功。各个编译器都只支持自己选择的一个子集，导致跨平台性不如C。<br>　　3. 过分的精细和复杂了。C++的复杂度，超过了C和OO的复杂度之和。<br>　　4. OO并没有带来多少优势，反而带来了一些副作用，比如厚重的胶合层和庞大的代码体积。</p>
+<p>总的来说，C++的优势还是程序效率，以及面向对象编程能力，糟糕之处是它鼓励复杂的设计。</p>
+<p>三、Shell</p>
+<p>Shell程序写起来很容易，对于简单的任务，开发速度很快。</p>
+<p>当程序变大时，它就不太适合了，很难维护，而且将变得非常专用（只能在你自己的机器上使用），因为 Shell必须调用各种外部程序，无法保证每一台机器都同样安装了这些程序。</p>
+<p>最常见的Shell是bash，它的一些语法规则很混乱，会产生很难阅读的代码。另外，shell只能在Unix上使用，无法跨平台。</p>
+<p>Shell的最佳用途如下：</p>
+<p>　　1. 执行简单的系统管理任务。<br>　　2. 编写系统启动时的初始化脚本。<br>　　3. 作为其他语言开发的程序的包装器。</p>
+<p>四、Perl</p>
+<blockquote>
+<p>Perl发布于1987年，基本上就是一个增强的Shell。</p>
+</blockquote>
+<p>它的最大长处是强劲的文本处理能力，无以伦比的正则表达式支持，而且有全套Unix API的内部支持，显著减少了对C的需求。</p>
+<p>Perl的主要缺点是某些部分设计得非常丑陋，且无法补救，某些部分也过于复杂。当程序规模增大时，必须严格遵守约定，才能保证模块化和设计的可控性，难于维护。</p>
+<p>五、Python</p>
+<blockquote>
+<p>Python发布于1991年，是一种与C语言紧密集成的脚本语言。</p>
+</blockquote>
+<p>Python的优点是非常干净优雅，鼓励清晰易读的代码，易学易用；提供了面向对象编程的可能，但并不把这个选择强加于设计者；具有出色的模块化特性，同Java一样，适合用来做需要协同开发的大型复杂项目。在很多方面，它都比Java简单。此外，Python标准中包括了对许多网络协议的支持，因此也很适合网络管理任务。</p>
+<p>Python的缺点主要是<strong>效率低下，速度缓慢</strong>。在执行速度上，它不仅无法与C/C++竞争，而且也不如其他主要的脚本语言。但是，这其实并不是一个严重的问题，有时网络或磁盘的延迟，会完全抵消Python本身消耗的时间。而且因为Python特别容易和C结合起来，因此性能关键的 Python模块，可以很方便地转化成C语言来提高速度。</p>
+<p>总的来说，对于小型项目和大量依靠正则表达式的项目，Python不如Perl的表达能力强。至于更小的项目，Python则是大材小用，shell也许更适合。</p>
+<p>六、Java</p>
+<p>Java发布于1995年，设计目标有两个。</p>
+<p>一个是”write once, run anywhere”（一次编写，到处运行），即不依赖于特定的平台；另一个是在网页中嵌入交互程序（applet），可以在任何一个浏览器中运行。由于它的所有者Sun公司的一系列失误，第一个目标并没有完全实现，第二个目标则是彻底失败。但是Java依然在系统编程和应用编程方面非常强大，足以挑战C和 C++。</p>
+<p>Java的优点是比C++小巧简单，可以自动管理内存，支持类似C的语法和OO编程，与C程序的结合也很好。</p>
+<p>Java的缺点是某些部分过于复杂，比如内部类和匿名类的运用会产生很混乱费解的代码；某些部分功能不完善，也无法利用操作系统提供的功能接口，比如在Java中读取和处理文本文件，并不像其他语言那样容易。此外，Java配置环境和版本的混乱，也让人很头疼。</p>
+<p>总的来说，除了系统编程和某些对运行速度要求很高的编程之外，Java都是比C++更好的选择。如果和Python相比，Java可能在大型项目上有优势，但是也不是绝对的。</p>
+<p>（完）</p>
+<h2 id="为什么Lisp语言如此先进？（译文）"><a href="#为什么Lisp语言如此先进？（译文）" class="headerlink" title="为什么Lisp语言如此先进？（译文）"></a><a href="http://www.ruanyifeng.com/blog/2010/10/why_lisp_is_superior.html" target="_blank" rel="noopener">为什么Lisp语言如此先进？（译文）</a></h2><p>作者： 阮一峰<br>日期： 2010年10月14日</p>
+<p>上周，《黑客与画家》总算翻译完成，已经交给出版社了。</p>
+<p>翻译完这本书，累得像生了一场大病。把书稿交出去的时候，心里空荡荡的，也不知道自己得到了什么，失去了什么。</p>
+<p>希望这个中译本和我的努力，能得到读者认同和肯定。</p>
+<p>下面是此书中非常棒的一篇文章，原文写于八年前，至今仍然具有启发性，作者眼光之超前令人佩服。由于我不懂Lisp语言，所以田春同学帮忙校读了一遍，纠正了一些翻译不当之处，在此表示衷心感谢。</p>
+<p>============================</p>
+<p>为什么Lisp语言如此先进？</p>
+<p>作者：Paul Graham</p>
+<p>译者：阮一峰</p>
+<p>英文原文：Revenge of the Nerds</p>
+<p>（节选自即将出版的《黑客与画家》中译本）</p>
+<p>一、</p>
+<p>如果我们把流行的编程语言，以这样的顺序排列：Java、Perl、Python、Ruby。你会发现，排在越后面的语言，越像Lisp。</p>
+<p>Python模仿Lisp，甚至把许多Lisp黑客认为属于设计错误的功能，也一起模仿了。至于Ruby，如果回到1975年，你声称它是一种Lisp方言，没有人会反对。</p>
+<p>编程语言现在的发展，不过刚刚赶上1958年Lisp语言的水平。</p>
+<p>二、</p>
+<p>1958年，John McCarthy设计了Lisp语言。我认为，当前最新潮的编程语言，只是实现了他在1958年的设想而已。</p>
+<p>这怎么可能呢？计算机技术的发展，不是日新月异吗？1958年的技术，怎么可能超过今天的水平呢？</p>
+<p>让我告诉你原因。</p>
+<p>这是因为John McCarthy本来没打算把Lisp设计成编程语言，至少不是我们现在意义上的编程语言。他的原意只是想做一种理论演算，用更简洁的方式定义图灵机。</p>
+<p>所以，为什么上个世纪50年代的编程语言，到现在还没有过时？简单说，因为这种语言本质上不是一种技术，而是数学。数学是不会过时的。你不应该把Lisp语言与50年代的硬件联系在一起，而是应该把它与快速排序（Quicksort）算法进行类比。这种算法是1960年提出的，至今仍然是最快的通用排序方法。</p>
+<p>三、</p>
+<p>Fortran语言也是上个世纪50年代出现的，并且一直使用至今。它代表了语言设计的一种完全不同的方向。Lisp是无意中从纯理论发展为编程语言，而Fortran从一开始就是作为编程语言设计出来的。但是，今天我们把Lisp看成高级语言，而把Fortran看成一种相当低层次的语言。</p>
+<p>1956年，Fortran刚诞生的时候，叫做Fortran I，与今天的Fortran语言差别极大。Fortran I实际上是汇编语言加上数学，在某些方面，还不如今天的汇编语言强大。比如，它不支持子程序，只有分支跳转结构（branch）。</p>
+<blockquote>
+<p>Lisp和Fortran代表了编程语言发展的两大方向。前者的基础是数学，后者的基础是硬件架构。从那时起，这两大方向一直在互相靠拢。Lisp刚设计出来的时候，就很强大，接下来的二十年，它提高了自己的运行速度。而那些所谓的主流语言，把更快的运行速度作为设计的出发点，然后再用超过四十年的时间，一步步变得更强大。</p>
+</blockquote>
+<p>直到今天，最高级的主流语言，也只是刚刚接近Lisp的水平。虽然已经很接近了，但还是没有Lisp那样强大。</p>
+<p>四、</p>
+<p>Lisp语言诞生的时候，就包含了9种新思想。其中一些我们今天已经习以为常，另一些则刚刚在其他高级语言中出现，至今还有2种是Lisp独有的。按照被大众接受的程度，这9种思想依次是：</p>
+<p>　　1. 条件结构（即”if-then-else”结构）。现在大家都觉得这是理所当然的，但是Fortran I就没有这个结构，它只有基于底层机器指令的goto结构。</p>
+<p>　　2. <strong>函数也是一种数据类型</strong>。在Lisp语言中，函数与整数或字符串一样，也属于数据类型的一种。它有自己的字面表示形式（literal representation），能够储存在变量中，也能当作参数传递。一种数据类型应该有的功能，它都有。</p>
+<p>　　3. <strong>递归</strong>。Lisp是第一种支持递归函数的高级语言。</p>
+<p>　　4. <strong>变量的动态类型</strong>。在Lisp语言中，所有变量实际上都是指针，所指向的值有类型之分，而变量本身没有。复制变量就相当于复制指针，而不是复制它们指向的数据。</p>
+<p>　　5. <strong>垃圾回收机制</strong>。</p>
+<p>　　6. <strong>程序由表达式（expression）组成</strong>。Lisp程序是一些表达式区块的集合，每个表达式都返回一个值。这与Fortran和大多数后来的语言都截然不同，它们的程序由表达式和语句（statement）组成。</p>
+<p>区分表达式和语句，在Fortran I中是很自然的，因为它不支持语句嵌套。所以，如果你需要用数学式子计算一个值，那就只有用表达式返回这个值，没有其他语法结构可用，因为否则就无法处理这个值。</p>
+<p>后来，新的编程语言支持区块结构（block），这种限制当然也就不存在了。但是为时已晚，表达式和语句的区分已经根深蒂固。它从Fortran扩散到Algol语言，接着又扩散到它们两者的后继语言。</p>
+<p>　　7. <strong>符号（symbol）类型</strong>。符号实际上是一种指针，指向储存在哈希表中的字符串。所以，比较两个符号是否相等，只要看它们的指针是否一样就行了，不用逐个字符地比较。</p>
+<p>　　8. <strong>代码使用符号和常量组成的树形表示法（notation）</strong>。</p>
+<p>　　9. 无论什么时候，整个语言都是可用的。Lisp并不真正区分读取期、编译期和运行期。你可以在读取期编译或运行代码；也可以在编译期读取或运行代码；还可以在运行期读取或者编译代码。</p>
+<p>在读取期运行代码，使得用户可以重新调整（reprogram）Lisp的语法；在编译期运行代码，则是Lisp宏的工作基础；在运行期编译代码，使得Lisp可以在Emacs这样的程序中，充当扩展语言（extension language）；在运行期读取代码，使得程序之间可以用S-表达式（S-expression）通信，近来XML格式的出现使得这个概念被重新”发明”出来了。</p>
+<p>五、</p>
+<p>Lisp语言刚出现的时候，它的思想与其他编程语言大相径庭。后者的设计思想主要由50年代后期的硬件决定。随着时间流逝，流行的编程语言不断更新换代，语言设计思想逐渐向Lisp靠拢。</p>
+<p>思想1到思想5已经被广泛接受，思想6开始在主流编程语言中出现，思想7在Python语言中有所实现，不过似乎没有专用的语法。</p>
+<p>思想8可能是最有意思的一点。它与思想9只是由于偶然原因，才成为Lisp语言的一部分，因为它们不属于John McCarthy的原始构想，是由他的学生Steve Russell自行添加的。它们从此使得Lisp看上去很古怪，但也成为了这种语言最独一无二的特点。Lisp古怪的形式，倒不是因为它的语法很古怪，而是因为它根本没有语法，程序直接以解析树（parse tree）的形式表达出来。在其他语言中，这种形式只是经过解析在后台产生，但是Lisp直接采用它作为表达形式。它由列表构成，而列表则是Lisp的基本数据结构。</p>
+<p>用一门语言自己的数据结构来表达该语言，这被证明是非常强大的功能。思想8和思想9，意味着你可以写出一种能够自己编程的程序。这可能听起来很怪异，但是对于Lisp语言却是再普通不过。最常用的做法就是使用宏。</p>
+<p>术语”宏”在Lisp语言中，与其他语言中的意思不一样。Lisp宏无所不包，它既可能是某样表达式的缩略形式，也可能是一种新语言的编译器。如果你想真正地理解Lisp语言，或者想拓宽你的编程视野，那么你必须学习宏。</p>
+<p>就我所知，宏（采用Lisp语言的定义）目前仍然是Lisp独有的。一个原因是为了使用宏，你大概不得不让你的语言看上去像Lisp一样古怪。另一个可能的原因是，如果你想为自己的语言添上这种终极武器，你从此就不能声称自己发明了新语言，只能说发明了一种Lisp的新方言。</p>
+<p>我把这件事当作笑话说出来，但是事实就是如此。如果你创造了一种新语言，其中有car、cdr、cons、quote、cond、atom、eq这样的功能，还有一种把函数写成列表的表示方法，那么在它们的基础上，你完全可以推导出Lisp语言的所有其他部分。事实上，Lisp语言就是这样定义的，John McCarthy把语言设计成这个样子，就是为了让这种推导成为可能。</p>
+<p>六、</p>
+<p>就算Lisp确实代表了目前主流编程语言不断靠近的一个方向，这是否意味着你就应该用它编程呢？</p>
+<p>如果使用一种不那么强大的语言，你又会有多少损失呢？有时不采用最尖端的技术，不也是一种明智的选择吗？这么多人使用主流编程语言，这本身不也说明那些语言有可取之处吗？</p>
+<p>另一方面，选择哪一种编程语言，许多项目是无所谓的，反正不同的语言都能完成工作。一般来说，条件越苛刻的项目，强大的编程语言就越能发挥作用。但是，无数的项目根本没有苛刻条件的限制。大多数的编程任务，可能只要写一些很小的程序，然后用胶水语言把这些小程序连起来就行了。你可以用自己熟悉的编程语言，或者用对于特定项目来说有着最强大函数库的语言，来写这些小程序。如果你只是需要在Windows应用程序之间传递数据，使用Visual Basic照样能达到目的。</p>
+<p>那么，Lisp的编程优势体现在哪里呢？</p>
+<p>七、</p>
+<blockquote>
+<p>语言的编程能力越强大，写出来的程序就越短（当然不是指字符数量，而是指独立的语法单位）。</p>
+</blockquote>
+<p>代码的数量很重要，因为开发一个程序耗费的时间，主要取决于程序的长度。如果同一个软件，一种语言写出来的代码比另一种语言长三倍，这意味着你开发它耗费的时间也会多三倍。而且即使你多雇佣人手，也无助于减少开发时间，因为当团队规模超过某个门槛时，再增加人手只会带来净损失。Fred Brooks在他的名著《人月神话》（The Mythical Man-Month）中，描述了这种现象，我的所见所闻印证了他的说法。</p>
+<p>如果使用Lisp语言，能让程序变得多短？以Lisp和C的比较为例，我听到的大多数说法是C代码的长度是Lisp的7倍到10倍。但是最近，New Architect杂志上有一篇介绍ITA软件公司的文章，里面说”一行Lisp代码相当于20行C代码”，因为此文都是引用ITA总裁的话，所以我想这个数字来自ITA的编程实践。 如果真是这样，那么我们可以相信这句话。ITA的软件，不仅使用Lisp语言，还同时大量使用C和C++，所以这是他们的经验谈。</p>
+<p>根据上面的这个数字，如果你与ITA竞争，而且你使用C语言开发软件，那么ITA的开发速度将比你快20倍。如果你需要一年时间实现某个功能，它只需要不到三星期。反过来说，如果某个新功能，它开发了三个月，那么你需要五年才能做出来。</p>
+<p>你知道吗？上面的对比，还只是考虑到最好的情况。当我们只比较代码数量的时候，言下之意就是假设使用功能较弱的语言，也能开发出同样的软件。但是事实上，程序员使用某种语言能做到的事情，是有极限的。如果你想用一种低层次的语言，解决一个很难的问题，那么你将会面临各种情况极其复杂、乃至想不清楚的窘境。</p>
+<p>所以，当我说假定你与ITA竞争，你用五年时间做出的东西，ITA在Lisp语言的帮助下只用三个月就完成了，我指的五年还是一切顺利、没有犯错误、也没有遇到太大麻烦的五年。事实上，按照大多数公司的实际情况，计划中五年完成的项目，很可能永远都不会完成。</p>
+<p>我承认，上面的例子太极端。ITA似乎有一批非常聪明的黑客，而C语言又是一种很低层次的语言。但是，在一个高度竞争的市场中，即使开发速度只相差两三倍，也足以使得你永远处在落后的位置。</p>
+<p>附录：编程能力</p>
+<p>为了解释我所说的语言编程能力不一样，请考虑下面的问题。我们需要写一个函数，它能够生成累加器，即这个函数接受一个参数n，然后返回另一个函数，后者接受参数i，然后返回n增加（increment）了i后的值。</p>
+<p>Common Lisp的写法如下：</p>
+<p>　　(defun foo (n)<br>　　　　(lambda (i) (incf n i)))</p>
+<p>Ruby的写法几乎完全相同：</p>
+<p>　　def foo (n)<br>　　　　lambda {|i| n += i } end</p>
+<p>Perl 5的写法则是：</p>
+<p>　　sub foo {<br>　　　　my ($n) = @_;<br>　　　　sub {$n += shift}<br>　　}</p>
+<p>这比Lisp和Ruby的版本，有更多的语法元素，因为在Perl语言中，你不得不手工提取参数。</p>
+<p>Smalltalk的写法稍微比Lisp和Ruby的长一点：</p>
+<p>　　foo: n<br>　　　　|s|<br>　　　　s := n.<br>　　　　^[:i| s := s+i. ]</p>
+<p>因为在Smalltalk中，局部变量（lexical variable）是有效的，但是你无法给一个参数赋值，因此不得不设置了一个新变量，接受累加后的值。</p>
+<p>Javascript的写法也比Lisp和Ruby稍微长一点，因为Javascript依然区分语句和表达式，所以你需要明确指定return语句，来返回一个值：</p>
+<p>　　function foo (n) {<br>　　　　return function (i) {<br>　　　　　　return n += i } }</p>
+<p>（实事求是地说，Perl也保留了语句和表达式的区别，但是使用了典型的Perl方式处理，使你可以省略return。）</p>
+<p>如果想把Lisp/Ruby/Perl/Smalltalk/Javascript的版本改成Python，你会遇到一些限制。因为Python并不完全支持局部变量，你不得不创造一种数据结构，来接受n的值。而且尽管Python确实支持函数数据类型，但是没有一种字面量的表示方式（literal representation）可以生成函数（除非函数体只有一个表达式），所以你需要创造一个命名函数，把它返回。最后的写法如下：</p>
+<p>　　def foo (n):<br>　　　　s = [n]<br>　　　　def bar (i):<br>　　　　　　s[0] += i<br>　　　　　　return s[0]<br>　　　　return bar</p>
+<p>Python用户完全可以合理地质疑，为什么不能写成下面这样：</p>
+<p>　　def foo (n):<br>　　　　return lambda i: return n += i</p>
+<p>或者：</p>
+<p>　　def foo (n):<br>　　　　lambda i: n += i</p>
+<p>我猜想，Python有一天会支持这样的写法。（如果你不想等到Python慢慢进化到更像Lisp，你总是可以直接……）</p>
+<p>在面向对象编程的语言中，你能够在有限程度上模拟一个闭包（即一个函数，通过它可以引用由包含这个函数的代码所定义的变量）。你定义一个类（class），里面有一个方法和一个属性，用于替换封闭作用域（enclosing scope）中的所有变量。这有点类似于让程序员自己做代码分析，本来这应该是由支持局部作用域的编译器完成的。如果有多个函数，同时指向相同的变量，那么这种方法就会失效，但是在这个简单的例子中，它已经足够了。</p>
+<p>Python高手看来也同意，这是解决这个问题的比较好的方法，写法如下：</p>
+<p>　　def foo (n):<br>　　　　class acc:<br>　　　　　　def _ <em>init</em> _ (self, s):<br>　　　　　　　　self.s = s<br>　　　　　　def inc (self, i):<br>　　　　　　　　self.s += i<br>　　　　　　　　return self.s<br>　　　　return acc (n).inc</p>
+<p>或者</p>
+<p>　　class foo:<br>　　　　def _ <em>init</em> _ (self, n):<br>　　　　　　self.n = n<br>　　　　def _ <em>call</em> _ (self, i):<br>　　　　　　self.n += i<br>　　　　　　return self.n</p>
+<p>我添加这一段，原因是想避免Python爱好者说我误解这种语言。但是，在我看来，这两种写法好像都比第一个版本更复杂。你实际上就是在做同样的事，只不过划出了一个独立的区域，保存累加器函数，区别只是保存在对象的一个属性中，而不是保存在列表（list）的头（head）中。使用这些特殊的内部属性名（尤其是<strong>call</strong>），看上去并不像常规的解法，更像是一种破解。</p>
+<p>在Perl和Python的较量中，Python黑客的观点似乎是认为Python比Perl更优雅，但是这个例子表明，最终来说，编程能力决定了优雅。Perl的写法更简单（包含更少的语法元素），尽管它的语法有一点丑陋。</p>
+<p>其他语言怎么样？前文曾经提到过Fortran、C、C++、Java和Visual Basic，看上去使用它们，根本无法解决这个问题。Ken Anderson说，Java只能写出一个近似的解法：</p>
+<p>　　public interface Inttoint {<br>　　　　public int call (int i);<br>　　}</p>
+<p>　　public static Inttoint foo (final int n) {<br>　　　　return new Inttoint () {<br>　　　　int s = n;<br>　　　　public int call (int i) {<br>　　　　s = s + i;<br>　　　　return s;<br>　　　　}};<br>　　}</p>
+<p>这种写法不符合题目要求，因为它只对整数有效。</p>
+<p>当然，我说使用其他语言无法解决这个问题，这句话并不完全正确。所有这些语言都是图灵等价的，这意味着严格地说，你能使用它们之中的任何一种语言，写出任何一个程序。那么，怎样才能做到这一点呢？就这个小小的例子而言，你可以使用这些不那么强大的语言，写一个Lisp解释器就行了。</p>
+<p>这样做听上去好像开玩笑，但是在大型编程项目中，却不同程度地广泛存在。因此，有人把它总结出来，起名为”格林斯潘第十定律”（Greenspun’s Tenth Rule）：</p>
+<p>“任何C或Fortran程序复杂到一定程度之后，都会包含一个临时开发的、只有一半功能的、不完全符合规格的、到处都是bug的、运行速度很慢的Common Lisp实现。”</p>
+<p>如果你想解决一个困难的问题，关键不是你使用的语言是否强大，而是好几个因素同时发挥作用（a）使用一种强大的语言，（b）为这个难题写一个事实上的解释器，或者（c）你自己变成这个难题的人肉编译器。在Python的例子中，这样的处理方法已经开始出现了，我们实际上就是自己写代码，模拟出编译器实现局部变量的功能。</p>
+<p>这种实践不仅很普遍，而且已经制度化了。举例来说，在面向对象编程的世界中，我们大量听到”模式”（pattern）这个词，我觉得那些”模式”就是现实中的因素（c），也就是人肉编译器。 当我在自己的程序中，发现用到了模式，我觉得这就表明某个地方出错了。程序的形式，应该仅仅反映它所要解决的问题。代码中其他任何外加的形式，都是一个信号，（至少对我来说）表明我对问题的抽象还不够深，也经常提醒我，自己正在手工完成的事情，本应该写代码，通过宏的扩展自动实现。</p>
+<p>（完）</p>
+<h2 id="图解-Monad"><a href="#图解-Monad" class="headerlink" title="图解 Monad"></a><a href="http://www.ruanyifeng.com/blog/2015/07/monad.html" target="_blank" rel="noopener">图解 Monad</a></h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Functional/" rel="tag"><i class="fa fa-tag"></i> Functional</a>
+              <a href="/tags/Programming/" rel="tag"><i class="fa fa-tag"></i> Programming</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/IPR/IPCreator/IPR/Bit Torrent/" rel="next" title="Bit Torrent">
+                  <i class="fa fa-chevron-left"></i> Bit Torrent
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Company/IPCreator/Company/Tesla/" rel="prev" title="Tesla">
+                  Tesla <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数式编程初探"><span class="nav-number">1.</span> <span class="nav-text">函数式编程初探</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编程语言的发展趋势及未来方向"><span class="nav-number">2.</span> <span class="nav-text">编程语言的发展趋势及未来方向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编程语言的发展趋势及未来方向（1）：历史回顾及趋势概述"><span class="nav-number">2.1.</span> <span class="nav-text">编程语言的发展趋势及未来方向（1）：历史回顾及趋势概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编程语言的发展趋势及未来方向（2）：声明式编程与DSL"><span class="nav-number">2.2.</span> <span class="nav-text">编程语言的发展趋势及未来方向（2）：声明式编程与DSL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编程语言的发展趋势及未来方向（3）：函数式编程"><span class="nav-number">2.3.</span> <span class="nav-text">编程语言的发展趋势及未来方向（3）：函数式编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编程语言的发展趋势及未来方向（4）：动态语言"><span class="nav-number">2.4.</span> <span class="nav-text">编程语言的发展趋势及未来方向（4）：动态语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编程语言的发展趋势及未来方向（5）：元编程"><span class="nav-number">2.5.</span> <span class="nav-text">编程语言的发展趋势及未来方向（5）：元编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编程语言的发展趋势及未来方向（6）：并发"><span class="nav-number">2.6.</span> <span class="nav-text">编程语言的发展趋势及未来方向（6）：并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编程语言的发展趋势及未来方向（7）：总结"><span class="nav-number">2.7.</span> <span class="nav-text">编程语言的发展趋势及未来方向（7）：总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几种计算机语言的评价（修订版）"><span class="nav-number">3.</span> <span class="nav-text">几种计算机语言的评价（修订版）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么Lisp语言如此先进？（译文）"><span class="nav-number">4.</span> <span class="nav-text">为什么Lisp语言如此先进？（译文）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图解-Monad"><span class="nav-number">5.</span> <span class="nav-text">图解 Monad</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>

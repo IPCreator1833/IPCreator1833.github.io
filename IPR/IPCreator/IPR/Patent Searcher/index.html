@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hi" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="接口地址：http://v.juhe.cn/patent/search.php支持格式：json请求方式：get post请求示例：http://v.juhe.cn/patent/search.php?q=大蒜&amp;amp;key=您申请的key接口备注：该接口提供对专利的检索功能，用户输入想要查找的关键词或者符合语法规范的短语即可对专利数据进行检索。调用样例及调试工具：API测试工具">
+<meta name="keywords" content="Patent,Searcher">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Patent Searcher">
+<meta property="og:url" content="https://hazyman.com/IPR/IPCreator/IPR/Patent Searcher/index.html">
+<meta property="og:site_name" content="Hi">
+<meta property="og:description" content="接口地址：http://v.juhe.cn/patent/search.php支持格式：json请求方式：get post请求示例：http://v.juhe.cn/patent/search.php?q=大蒜&amp;amp;key=您申请的key接口备注：该接口提供对专利的检索功能，用户输入想要查找的关键词或者符合语法规范的短语即可对专利数据进行检索。调用样例及调试工具：API测试工具">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-16T13:37:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Patent Searcher">
+<meta name="twitter:description" content="接口地址：http://v.juhe.cn/patent/search.php支持格式：json请求方式：get post请求示例：http://v.juhe.cn/patent/search.php?q=大蒜&amp;amp;key=您申请的key接口备注：该接口提供对专利的检索功能，用户输入想要查找的关键词或者符合语法规范的短语即可对专利数据进行检索。调用样例及调试工具：API测试工具">
+
+<link rel="canonical" href="https://hazyman.com/IPR/IPCreator/IPR/Patent Searcher/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Patent Searcher | Hi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Attitude, Profession, Value.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/IPR/IPCreator/IPR/Patent Searcher/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/logo.jpg">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Patent Searcher
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/IPR/" itemprop="url" rel="index">
+                    <span itemprop="name">IPR</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/IPR/IPCreator/IPR/Patent Searcher/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/IPR/IPCreator/IPR/Patent Searcher/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>接口地址：<a href="http://v.juhe.cn/patent/search.php" target="_blank" rel="noopener">http://v.juhe.cn/patent/search.php</a><br>支持格式：json<br>请求方式：get post<br>请求示例：<a href="http://v.juhe.cn/patent/search.php?q=大蒜&amp;key=您申请的key" target="_blank" rel="noopener">http://v.juhe.cn/patent/search.php?q=大蒜&amp;key=您申请的key</a><br>接口备注：该接口提供对专利的检索功能，用户输入想要查找的关键词或者符合语法规范的短语即可对专利数据进行检索。<br>调用样例及调试工具：API测试工具</p>
+<a id="more"></a>
+<h2 id="请求参数说明："><a href="#请求参数说明：" class="headerlink" title="请求参数说明："></a>请求参数说明：</h2><p>名称    类型    必填    说明<br>     key    string    是    您申请的key<br>     ds    string    否    dataScope，数据范围，目前支持cn：中国，all：全球，默认cn<br>     q    string    是    用户输入的查询条件<br>     p    int    否    page页码，默认值1，最大页码为100页；系统将根据用户输入的页码返回该页的数据<br>     ps    int    否    pageSize，每页展现数据的条数，默认10条，单页最大50条；系统将根据用户指定的每页显示条数返回搜索数据<br>     s    string    否    sort，排序字段，默认值relation，有5个有效值：relation(相关度),applicationDate(申请时间)、publicationDate(公开时间)、grantDate(授权时间)、rank(专利评级)；可以在后4项前面加感叹号，感叹号表示降序，如果不加表示升序。<br>     hl    int    否    Highlight，是否高亮结果，默认0,可选值：0(不高亮数据),1(高亮数据)</p>
+<h2 id="返回参数说明："><a href="#返回参数说明：" class="headerlink" title="返回参数说明："></a>返回参数说明：</h2><p>名称    类型    说明<br>     took    double    请求耗时<br>     total    int    总条数<br>     nextPage    int    下一页<br>     totalPages    int    总页数<br>     page    int    当前页<br>     patents    list    专利列表<br>     id    string    专利唯一ID<br>     rank    int    专利评级<br>     loc    string    LOC分类号<br>     legalStatus    string    法律状态<br>     type    string    专利类型<br>     title    string    专利名称<br>     summary    string    摘要<br>     applicant    string    申请人<br>     applicationDate    string    申请日<br>     applicationNumber    string    申请号<br>     mainIpc    string    主分类号</p>
+<h2 id="JSON返回示例："><a href="#JSON返回示例：" class="headerlink" title="JSON返回示例："></a>JSON返回示例：</h2><p>{<br>  “reason”: “success”,<br>  “result”: {<br>    “took”: 0.312,<br>    “total”: 9722,<br>    “nextPage”: 2,<br>    “totalPages”: 973,<br>    “patents”: [<br>      {<br>        “id”: “CN2016177a4d76a90bef1e925d0009fbc32cb037”,<br>        “legalStatus”: “公开”,<br>        “type”: “发明专利”,<br>        “title”: “一种大蒜多糖的提取纯化方法”,<br>        “summary”: “本发明公开了一种大蒜多糖的提取纯化方法，包括以下步骤：A、鲜蒜捣碎成大蒜泥；B、向大蒜泥中加入水，然后进行蒸煮，得蒸煮混合液；C、将蒸煮混合液进行充分发酵，发酵完成后进行蒸馏，所得蒸馏液用正己烷进行萃取，得萃取液；D、将萃取液进行加热除蛋白，冷却后进行抽滤，得大蒜多糖粗提取液；E、大蒜多糖粗提液经大孔树脂处理；F、经逆流色谱一步纯化大蒜多糖；G、透析及干燥：将适量体积的上述收集液装入截留分子量为3000的透析袋中，对水透析过夜，将透析过的溶液进行冷冻干燥，得大蒜多糖精品。本发明方法简单，操作方便、效率高、价格低，优化了制备高纯度大蒜多糖的提取工艺，为规模分离纯化大蒜多糖精品提供技术支持。”,<br>        “applicant”: “徐州黎明食品有限公司”,<br>        “applicationDate”: “2016-11-14”,<br>        “mainIpc”: “C08B37/00”,<br>        “applicationNumber”: “201611000976”<br>      },<br>      {<br>        “id”: “CN20161994969b5472a8be40ba41fdbfa82ea850”,<br>        “legalStatus”: “公开”,<br>        “type”: “发明专利”,<br>        “title”: “大蒜切根机及大蒜分瓣机”,<br>        “summary”: “本发明公开了一种大蒜切根机及大蒜分瓣机，涉及大蒜加工技术领域。该大蒜切根机，包括：安装于机架的转移机构，转移机构具有抓取工位、切割工位以及卸料工位，转移机构包括多个抓手机构；用于驱动转移机构依次在抓取工位、切割工位以及卸料工位之间切换的第一驱动装置；用于驱动抓手机构在张开状态和闭合状态之间切换的第二驱动装置，用于驱动处于抓取工位的抓手机构由张开状态切换至闭合状态，且驱动处于卸料工位的抓手机构由闭合状态切换至张开状态；安装于机架、用于将待切割的大蒜输送至抓取工位的输送装置；安装于机架、动作时用于切割处于切割工位的大蒜根须的切割装置。该大蒜切根机切割大蒜根须的效率高，降低了人工的劳动强度。”,<br>        “applicant”: “杨钦海”,<br>        “applicationDate”: “2016-10-31”,<br>        “mainIpc”: “A23N15/08”,<br>        “applicationNumber”: “201610938590”<br>      },<br>      {<br>        “id”: “CN201612d3f1d528eb8c6e6f8019e0cd1a264b45”,<br>        “legalStatus”: “公开”,<br>        “type”: “发明专利”,<br>        “title”: “一种植物驱蚊液”,<br>        “summary”: “本发明公开了一种植物驱蚊液，由以下质量分数配方成分组成：维生素B6-8份、薄荷素油10-20份、高度白酒15-25份、大蒜汁10-20份、柠檬草纯露5-15份、夏枯草8-12份、甘草提取液5-7份、迷迭香2-4份、水30-50份，本发明使用多种植物提取物质，科学精制而成，户外驱避蚊虫叮咬有效时间达六小时，效果特别明显，对人体没有毒副作用及刺激作用。”,<br>        “applicant”: “张帅”,<br>        “applicationDate”: “2016-10-28”,<br>        “mainIpc”: “A61K8/9794”,<br>        “applicationNumber”: “201610960454”<br>      },<br>      {<br>        “id”: “CN20161c264e446ef63042188f05c3275e6211ce”,<br>        “legalStatus”: “公开”,<br>        “type”: “发明专利”,<br>        “title”: “一种用于治疗肝癌的组合药物及其使用方法”,<br>        “summary”: “本发明公开了一种用于治疗肝癌的组合药物，由癌细胞治疗药物、日常肝保健药物、食疗防治药物组成，所述的癌细胞治疗药物由以下中药材组成：淫羊藿5～7份、栀子10～15份、没药7～13份、西洋参15～27份、半枝莲15～30份、龙葵2～7份、蚤休5～20份、五灵脂18～37份、鳖甲4～7份、漏芦20～40份、山慈菇25～35份、麝香2～4份、川乌3～4份；所述的日常肝保健药物由以下中药材组成：葡萄籽5～10份、黑芝麻20～40份、枸杞25～35份、红枣35～45份、葛根15～25份、黑米100～130份、决明子10～15份、莲子25～40份；所述的食疗防治药物由以下中药材组成：鹅不食草25～40份、大蒜5～10份、黄芪10～20份、败酱草2～5份。本发明具有药效显著、食用方便、符合患者生活等优点。”,<br>        “applicant”: “商洛学院”,<br>        “applicationDate”: “2016-10-26”,<br>        “mainIpc”: “A61K36/898”,<br>        “applicationNumber”: “201610948825”<br>      },<br>      {<br>        “id”: “CN20161182e6255f5a33bc4a23a1ac511b4a236d”,<br>        “legalStatus”: “公开”,<br>        “type”: “发明专利”,<br>        “title”: “一种延长插花花期营养液”,<br>        “summary”: “本发明公开了一种延长插花花期营养液，所述延长插花花期营养液由以下重量份材料制成：食用菌50-100份、柠檬汁10-50份、花生麸30-50份、蚕沙10-30份、甲壳素1-5份、贝壳粉10-25份、海藻30-50份、板蓝根15-20份、绿松针25-35份、麦芽20-50份、大蒜10-20份、牡蛎粉5-10份、沸石粉20-40份、水1000-2000份、乙醇500-1000份、磷酸二氢钾10-20份；本发明中蚕沙中叶绿素可以通过提取被插花通过水中吸收保持叶子鲜绿，沸石粉、贝壳粉、牡蛎粉含有多种微量元素和矿物质元素，通过离子交换吸收能带动其他养分吸收，从而起到插花保鲜效果，延长插花花期。”,<br>        “applicant”: “广西鑫雅皇庭园林工程有限责任公,司”,<br>        “applicationDate”: “2016-10-26”,<br>        “mainIpc”: “C05G3/00”,<br>        “applicationNumber”: “201610949513”<br>      },<br>      {<br>        “id”: “CN2016193fbc0d74ceee8b1fc22bdbe1d10f74cb”,<br>        “legalStatus”: “公开”,<br>        “type”: “发明专利”,<br>        “title”: “一种用于降三高及尿酸的混合果蔬汁的制作方法”,<br>        “summary”: “本发明涉及一种用于降三高及尿酸的混合果蔬汁的制作方法，包括以下步骤：第一步、选材与预处理：大蒜去鳞片，选择无坏斑、黄白色蒜瓣；选择未变质的生姜，去皮；选择新鲜成熟红色山楂，去核；选择亮黄色的成熟柠檬；第二步、榨汁：按大蒜500g、生姜500g、山楂按250g称重，加1875g水榨汁,过滤；第三步、热处理：称取250g柠檬切片去核，与上述大蒜、生姜、山楂汁一起加热，80℃蒸发至50％体积，过滤取上清液；称取500g苹果醋与上清液混合，高火煮沸后改用缓火，保持50℃温度煮至剩下的50％体积，静置冷却；第四步、过滤调味：过滤取上清液，用槐花蜂蜜15-20g调味，制成成品。使用本发明，可以降低三高”和尿酸，增强体质、延长寿命，是现代人的福音；本发明原料国内可满足，而且工艺简便。”,<br>        “applicant”: “浙江建设职业技术学院”,<br>        “applicationDate”: “2016-10-18”,<br>        “mainIpc”: “A23L2/38”,<br>        “applicationNumber”: “201610905624”<br>      },<br>      {<br>        “id”: “CN201611da8f8c0a69b28ba04d0b6601c4737d01”,<br>        “legalStatus”: “公开”,<br>        “type”: “发明专利”,<br>        “title”: “一种甘蔗黑穗病的防治方法”,<br>        “summary”: “本发明主要涉及种植技术领域，公开了一种甘蔗黑穗病的防治方法，包括：种植前、种植时和种植后处理；整个种植过程均进行黑穗病的防治，使黑穗病的发病率降低至4%，农户经济收入提高11.7%；种植前，将土壤深翻，加入发酵甘蔗叶，并经蜂胶溶液浸泡，抗菌杀虫，促进甘蔗发芽，减少病菌增殖，降低发病率；种植时，将大蒜和甘蔗进行套种，避免重茬危害，杀灭病原微生物，减少黑穗病的发生，土壤开沟后喷洒抗菌剂溶液，杀灭土壤中的病原微生物，使甘蔗的发芽率提高7.3%；种植后，逐步调节大棚的温度和湿度，提高抗逆性，减少病虫发生率，发芽后定期喷洒抗病剂溶液，抑制黑穗病的发生，使甘蔗的产量提高12.6%。”,<br>        “applicant”: “张俊良”,<br>        “applicationDate”: “2016-10-17”,<br>        “mainIpc”: “A01G1/00”,<br>        “applicationNumber”: “201610902060”<br>      },<br>      {<br>        “id”: “CN20161e40826b1b685e2f4ffd31656dff1c34f5”,<br>        “legalStatus”: “公开”,<br>        “type”: “发明专利”,<br>        “title”: “一种贮存期长、营养保留率高的香辣菌及其制备方法”,<br>        “summary”: “本发明公开了一种贮存期长、营养保留率高的香辣菌及其制备方法。所述香辣菌配料按重量份组成包括：食用菌100份、油50~300份、盐2~8份、香辛料5~50份、护色剂0~0.3份。所述制备方法包括：选择新鲜健康食用菌，去除底端硬化部分洗净晾干破碎；香辛料去杂质，花生脱种皮；将100~600份水煮沸，加入食用菌、25~35%的盐和护色剂，煮沸1~6min后捞起冷却并沥干；将食用菌与65~85%的油、剩余的盐，及小茴香、丁香、桂皮、八角、草果混合，焖烧10~40min；将剩余油烧至180~210℃，将辣椒、大蒜、小米辣加入，加热0.5~2min制成红油；加入花生与芝麻在180~210℃下炸1~5min，再加入食用菌翻炒均匀。用所述方法加工的香辣菌便于贮存及运输，营养保留率高，提高了食用菌资源的利用率，便于大规模推广应用。”,<br>        “applicant”: “云南云菌科技(集团)有限公司”,<br>        “applicationDate”: “2016-10-17”,<br>        “mainIpc”: “A23L31/00”,<br>        “applicationNumber”: “201610900790”<br>      },<br>      {<br>        “id”: “CN2016131754d1cc00b6f0289ff581e7b9261c4d”,<br>        “legalStatus”: “公开”,<br>        “type”: “发明专利”,<br>        “title”: “一种鸡瘟预防治疗的中药组合物及其制备方法”,<br>        “summary”: “本发明涉及一种鸡瘟预防治疗的中药组合物，包括金银花、鱼腥草、野菊花、白蒿、神曲、大蒜、雄黄、生姜、食醋和小苏打。本发明将各组分按照一定的配比混匀，再与饲料混合，喂食3～5天后，对预防和治疗鸡瘟有很好的效果，经过试验，治愈率达到95%以上，预防效果达到90%以上，降低了鸡瘟大规模爆发时导致的经济损失，最大限度的保护养殖户的利益，是一种较为理想的鸡瘟预防治疗的中药组合物。”,<br>        “applicant”: “扬中牧乐药业有限公司”,<br>        “applicationDate”: “2016-10-12”,<br>        “mainIpc”: “A61K36/9068”,<br>        “applicationNumber”: “201610889390”<br>      },<br>      {<br>        “id”: “CN20161ef0da09b7e19a95e69e57fbc59426bf5d”,<br>        “legalStatus”: “公开”,<br>        “type”: “发明专利”,<br>        “title”: “一种低糖耐储存海鲜XO酱及制备方法”,<br>        “summary”: “本发明涉及食品调味品加工技术领域，具体地说是一种低糖耐储存海鲜XO酱及制备方法，其特征在于该海鲜XO酱由植物油、红葱、大蒜、干瑶柱、鱿鱼丝、海米、干海燕鱼、木糖醇、鲜红辣椒、红辣椒粉、芝麻、食用盐、五香粉、柠檬酸组成，该方法选取干瑶柱、鱿鱼丝、海米、干海燕鱼等纯天然高蛋白的海鲜干品为原料，经挑选、浸泡溶胀、清洗、油炸脱水、调味、加束水剂兼甜味剂木糖醇、酸味剂兼酸化剂柠檬酸、热灌装制得成品，具有配方科学、口味鲜香多样、口感软绵、产品开封后保存时间长等优点。”,<br>        “applicant”: “陈嘉润”,<br>        “applicationDate”: “2016-10-10”,<br>        “mainIpc”: “A23L27/60”,<br>        “applicationNumber”: “201610883205”<br>      }<br>    ],<br>    “page”: 1<br>  },<br>  “error_code”: 0<br>}</p>
+<h2 id="服务级错误码参照-error-code-："><a href="#服务级错误码参照-error-code-：" class="headerlink" title="服务级错误码参照(error_code)："></a>服务级错误码参照(error_code)：</h2><pre><code>错误码    说明
+226300    网络繁忙,请稍后重试
+226301    数据源返回相关错误信息,看接口具体返回
+226302    参数错误
+</code></pre><p>系统级错误码参照：<br>     错误码    说明    旧版本（resultcode）<br>     10001    错误的请求KEY    101<br>     10002    该KEY无请求权限    102<br>     10003    KEY过期    103<br>     10004    错误的OPENID    104<br>     10005    应用未审核超时，请提交认证    105<br>     10007    未知的请求源    107<br>     10008    被禁止的IP    108<br>     10009    被禁止的KEY    109<br>     10011    当前IP请求超过限制    111<br>     10012    请求超过次数限制    112<br>     10013    测试KEY超过请求限制    113<br>     10014    系统内部异常(调用充值类业务时，请务必联系客服或通过订单查询接口检测订单，避免造成损失)    114<br>     10020    接口维护    120<br>     10021    接口停用    121<br>错误码格式说明（示例：200201）：<br>     2    002    01<br>     服务级错误（1为系统级错误）    服务模块代码(即数据ID)    具体错误代码</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Patent/" rel="tag"><i class="fa fa-tag"></i> Patent</a>
+              <a href="/tags/Searcher/" rel="tag"><i class="fa fa-tag"></i> Searcher</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/IPR/IPCreator/IPR/Patent of Virus Detect Base on Android UI/" rel="next" title="Malicious Behaviour Detecting System Triggered by Combined Event in Android">
+                  <i class="fa fa-chevron-left"></i> Malicious Behaviour Detecting System Triggered by Combined Event in Android
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/custom-activity-on-crash/" rel="prev" title="Custom Activity On Crash">
+                  Custom Activity On Crash <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#请求参数说明："><span class="nav-number">1.</span> <span class="nav-text">请求参数说明：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#返回参数说明："><span class="nav-number">2.</span> <span class="nav-text">返回参数说明：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON返回示例："><span class="nav-number">3.</span> <span class="nav-text">JSON返回示例：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务级错误码参照-error-code-："><span class="nav-number">4.</span> <span class="nav-text">服务级错误码参照(error_code)：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/logo.jpg">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/IPCreator1833" title="GitHub &rarr; https://github.com/IPCreator1833" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:m17602171833@163.com" title="E-Mail &rarr; mailto:m17602171833@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://deepcreator.com/" title="https://deepcreator.com/" rel="noopener" target="_blank">Ai Lab</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideepai.com/" title="https://ideepai.com/" rel="noopener" target="_blank">Deep Ai</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://growupdaily.com/" title="http://growupdaily.com/" rel="noopener" target="_blank">For life</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ideeplearn.com/" title="https://ideeplearn.com/" rel="noopener" target="_blank">iDeepLearn</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://deepcreator.lofter.com/" title="http://deepcreator.lofter.com/" rel="noopener" target="_blank">Lofter Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">24.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">372:21</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+
+</body>
+</html>
