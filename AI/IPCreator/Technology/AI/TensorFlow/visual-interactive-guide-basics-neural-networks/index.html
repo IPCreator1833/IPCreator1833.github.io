@@ -33,8 +33,8 @@
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -43,7 +43,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.xml',
+    path: 'search.json',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
@@ -62,25 +62,10 @@
 <meta property="og:site_name" content="Hi">
 <meta property="og:description" content="J Alammar  MotivationI’m not a machine learning expert. I’m a software engineer by training and I’ve had little interaction with AI. I had always wanted to delve deeper into machine learning, but neve">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://jalammar.github.io/images/NNs_2_variables.png">
-<meta property="og:image" content="https://hazyman.com/images/simple_NN_1.png">
-<meta property="og:image" content="https://hazyman.com/images/NNs_formula_no_bias.png">
-<meta property="og:image" content="https://hazyman.com/images/data_points_graph_animated.gif">
-<meta property="og:image" content="https://hazyman.com/images/data_points_error_animated.gif">
-<meta property="og:image" content="https://hazyman.com/images/lines_and_errors_animated.gif">
-<meta property="og:image" content="https://hazyman.com/images/NNs_bias.png">
-<meta property="og:image" content="https://hazyman.com/images/NNs_bias_2.png">
-<meta property="og:image" content="https://hazyman.com/images/NNs_formula.png">
-<meta property="og:image" content="https://hazyman.com/images/NNs_formula_ex.png">
-<meta property="og:image" content="https://hazyman.com/images/NNs_2_variables.png">
-<meta property="og:image" content="https://hazyman.com/images/NNs_formula_two_variables.png">
-<meta property="og:image" content="https://hazyman.com/images/android_tensorflow_classifier_results.jpg">
-<meta property="og:image" content="https://hazyman.com/images/softmax-regression-scalargraph.png">
 <meta property="og:updated_time" content="2017-03-27T04:46:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A Visual and Interactive Guide to the Basics of Neural Networks">
 <meta name="twitter:description" content="J Alammar  MotivationI’m not a machine learning expert. I’m a software engineer by training and I’ve had little interaction with AI. I had always wanted to delve deeper into machine learning, but neve">
-<meta name="twitter:image" content="https://jalammar.github.io/images/NNs_2_variables.png">
 
 <link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/visual-interactive-guide-basics-neural-networks/">
 
@@ -298,17 +283,17 @@
 
       
         <p><a href="https://jalammar.github.io/visual-interactive-guide-basics-neural-networks/" target="_blank" rel="noopener">J Alammar</a></p>
-<p><img src="https://jalammar.github.io/images/NNs_2_variables.png" alt></p>
+<p><img alt data-src="https://jalammar.github.io/images/NNs_2_variables.png"></p>
 <h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>I’m not a machine learning expert. I’m a software engineer by training and I’ve had little interaction with AI. I had always wanted to delve deeper into machine learning, but never really found my “in”. That’s why when Google open sourced TensorFlow in November 2015, I got super excited and knew it was time to jump in and start the learning journey. Not to sound dramatic, but to me, it actually felt kind of like Prometheus handing down fire to mankind from the Mount Olympus of machine learning. In the back of my head was the idea that the entire field of Big Data and technologies like Hadoop were vastly accelerated when Google researchers released their Map Reduce paper. This time it’s not a paper – it’s the actual software they use internally after years and years of evolution.</p>
 <p>So I started learning what I can about the basics of the topic, and saw the need for gentler resources for people with no experience in the field. This is my attempt at that.</p>
   <a id="more"></a>
-<h2 id="start-here">Start here</h2><br><p>Let’s start with a simple example. Say you’re helping a friend who wants to buy a house. She was quoted $400,000 for a 2000 sq ft house (185 meters). Is this a good price or not?</p><br><br><p>It’s not easy to tell without a frame of reference. So you ask your friends who have bought houses in that same neighborhoods, and you end up with three data points:</p><br><br><div class="one_variable"><br><br>  <table><br>    <thead><br>      <tr><br>        <th>Area (sq ft) (x)</th><br>        <th>Price (y)</th><br>      </tr><br>    </thead><br>    <tbody><br>      <tr><br>        <td>2,104</td><br>        <td>399,900</td><br>      </tr><br>      <tr><br>        <td>1,600</td><br>        <td>329,900</td><br>      </tr><br>      <tr><br>        <td>2,400</td><br>        <td>369,000</td><br>      </tr><br>    </tbody><br>  </table><br><br></div><br><br><p>Personally, my first instinct would be to get the average price per sq ft. That comes to $180 per sq ft.</p><br><br><p>Welcome to your first neural network! Now it’s not quite at Siri level yet, but now you know the fundamental building block. And it looks like this:</p><br><br><div class="img-div"><br>    <img src="/images/simple_NN_1.png"><br></div><br><br><p>Diagrams like this show you the structure of the network and how it calculates a prediction. The calculation starts from the input node at the left. The input value flows to the right. It gets multiplied by the weight and the result becomes our output.</p><br><br><p>Multiplying 2,000 sq ft by 180 gives us $360,000. That’s all there is to it at this level. Calculating the prediction is simple multiplication. But before that, we needed to think about the weight we’ll be multiplying by. Here we started with an average, later we’ll look at better algorithms that can scale as we get more inputs and more complicated models. Finding the weight is our “training” stage. So whenever you hear of someone “training” a neural network, it just means finding the weights we use to calculate the prediction.</p><br><br><div class="img-div"><br>    <img src="/images/NNs_formula_no_bias.png"><br></div><br><br><p>This is a form of prediction. This is a simple predictive model that takes an input, does a calculation, and gives an output (since the output can be of continuous values, the technical name for what we have would be a “regression model”)</p><br><br><p>Let us visualize this process (for simplicity, let’s switch our price unit from $1 to $1000. Now our weight is 0.180 rather than 180):</p><br><br><p class="gif-space"></p><br><br><p><img src="/images/data_points_graph_animated.gif" alt></p><br><br><p class="gif-space"></p><br><br><p class="gif-space"></p><br><br><h2 id="harder-better-faster-stronger">Harder, Better, Faster, Stronger</h2>
+<h2 id="start-here">Start here</h2><br><p>Let’s start with a simple example. Say you’re helping a friend who wants to buy a house. She was quoted $400,000 for a 2000 sq ft house (185 meters). Is this a good price or not?</p><br><br><p>It’s not easy to tell without a frame of reference. So you ask your friends who have bought houses in that same neighborhoods, and you end up with three data points:</p><br><br><div class="one_variable"><br><br>  <table><br>    <thead><br>      <tr><br>        <th>Area (sq ft) (x)</th><br>        <th>Price (y)</th><br>      </tr><br>    </thead><br>    <tbody><br>      <tr><br>        <td>2,104</td><br>        <td>399,900</td><br>      </tr><br>      <tr><br>        <td>1,600</td><br>        <td>329,900</td><br>      </tr><br>      <tr><br>        <td>2,400</td><br>        <td>369,000</td><br>      </tr><br>    </tbody><br>  </table><br><br></div><br><br><p>Personally, my first instinct would be to get the average price per sq ft. That comes to $180 per sq ft.</p><br><br><p>Welcome to your first neural network! Now it’s not quite at Siri level yet, but now you know the fundamental building block. And it looks like this:</p><br><br><div class="img-div"><br>    <img data-src="/images/simple_NN_1.png"><br></div><br><br><p>Diagrams like this show you the structure of the network and how it calculates a prediction. The calculation starts from the input node at the left. The input value flows to the right. It gets multiplied by the weight and the result becomes our output.</p><br><br><p>Multiplying 2,000 sq ft by 180 gives us $360,000. That’s all there is to it at this level. Calculating the prediction is simple multiplication. But before that, we needed to think about the weight we’ll be multiplying by. Here we started with an average, later we’ll look at better algorithms that can scale as we get more inputs and more complicated models. Finding the weight is our “training” stage. So whenever you hear of someone “training” a neural network, it just means finding the weights we use to calculate the prediction.</p><br><br><div class="img-div"><br>    <img data-src="/images/NNs_formula_no_bias.png"><br></div><br><br><p>This is a form of prediction. This is a simple predictive model that takes an input, does a calculation, and gives an output (since the output can be of continuous values, the technical name for what we have would be a “regression model”)</p><br><br><p>Let us visualize this process (for simplicity, let’s switch our price unit from $1 to $1000. Now our weight is 0.180 rather than 180):</p><br><br><p class="gif-space"></p><br><br><p><img alt data-src="/images/data_points_graph_animated.gif"></p><br><br><p class="gif-space"></p><br><br><p class="gif-space"></p><br><br><h2 id="harder-better-faster-stronger">Harder, Better, Faster, Stronger</h2>
 
 <p>Can we do better than estimate the price based on the average of our data points? Let’s try. Let’s first define what it means to be better in this scenario. If we apply our model to the three data points we have, how good of a job would it do?</p>
 
 <p class="gif-space"></p>
 
-<p><img src="/images/data_points_error_animated.gif" alt></p>
+<p><img alt data-src="/images/data_points_error_animated.gif"></p>
 
 <p class="gif-space"></p>
 
@@ -325,17 +310,17 @@
 
 <p class="gif-space"></p>
 
-<p><img src="/images/lines_and_errors_animated.gif" alt></p>
+<p><img alt data-src="/images/lines_and_errors_animated.gif"></p>
 
-<div class="img-div"><br>We can’t improve much on the model by varying the weight any more. But if we add a bias we can find values that improve the model.<br></div><br><p class="gif-space"></p><br><br><p>Our lines can better approximate our values now that we have this b value added to the line formula. In this context, we call it a “bias”. This makes our neural network look like this:</p><br><br><div class="img-div"><br>    <img src="/images/NNs_bias.png"><br></div>
+<div class="img-div"><br>We can’t improve much on the model by varying the weight any more. But if we add a bias we can find values that improve the model.<br></div><br><p class="gif-space"></p><br><br><p>Our lines can better approximate our values now that we have this b value added to the line formula. In this context, we call it a “bias”. This makes our neural network look like this:</p><br><br><div class="img-div"><br>    <img data-src="/images/NNs_bias.png"><br></div>
 
 <p>We can generalize it by saying that a neural network with one input and one output (<em>spoiler warning:</em> and no hidden layers) looks like this:</p>
 
-<div class="img-div"><br>    <img src="/images/NNs_bias_2.png"><br></div><br><p>In this graph, W and b are values we find during the training process. X is the input we plug into the formula (area in sq ft in our example). Y is the predicted price.</p><br><br><p>Calculating a prediction now uses this formula:</p><br><br><div class="img-div"><br>    <img src="/images/NNs_formula.png"><br></div>
+<div class="img-div"><br>    <img data-src="/images/NNs_bias_2.png"><br></div><br><p>In this graph, W and b are values we find during the training process. X is the input we plug into the formula (area in sq ft in our example). Y is the predicted price.</p><br><br><p>Calculating a prediction now uses this formula:</p><br><br><div class="img-div"><br>    <img data-src="/images/NNs_formula.png"><br></div>
 
 <p>So our current model calculates predictions by plugging in the area of house as x in this formula:</p>
 
-<div class="img-div"><br>    <img src="/images/NNs_formula_ex.png"><br></div>
+<div class="img-div"><br>    <img data-src="/images/NNs_formula_ex.png"><br></div>
 
 <h2 id="train-your-dragon">Train Your Dragon</h2><br><p>How about you take a crack at training our toy neural network? Minimize the loss function by tweaking the weight and bias dials. Can you get an error value below 799?</p><br><br><div id="training-one-chart" class="training-chart"></div><br><table id="training-one" class="training-table"><br>    <tr><br>        <td><br>            Error<br>        </td><br>        <td colspan="2"><br>            <span id="error-value"></span><br>        </td><br>    </tr><br>    <tr><br>        <td class="error-cell" colspan="3"><br>            <span id="error-value-message"></span>&nbsp;<br>        </td><br>    </tr><br>    <tr><br>        <td><br>            Weight<br>        </td><br>        <td><br>            <input id="weightSlider" type="range" class="weight" min="0" max="0.4" step="0.001"><br>        </td><br>        <td class="slider-value"><br>            <span id="weight" class="weight">0</span><br>        </td><br>    </tr><br>    <tr><br>        <td><br>            Bias<br>        </td><br>        <td><br>            <input id="biasSlider" type="range" class="bias" min="0" max="460" step="1"><br>        </td><br>        <td class="slider-value"><br>            <span id="bias" class="bias">0</span><br>        </td><br>    </tr><br></table><br><br><div id="neural-network-graph" class="nn-graph-area"></div><br><br><h2 id="automation">Automation</h2><br><p>Congratulations on manually training your first neural network! Let’s look at how to automate this training process. Below is another example with an additional autopilot-like functionality. These are the GD Step buttons. They use an algorithm called “Gradient Descent” to try to step towards the correct weight and bias values that minimize the loss function.</p><br><br><div class="container"><br>    <div class="row"><br><br>        <div class="col-sm-6 graphs"><br>            <div id="training-one-gd-chart" class="training-chart"></div><br><br><br>                <div class="row training-chart mini-charts"><br>                    <div id="training-one-gd-error-chart" class="error-chart col-xs-6"></div><br>                    <div id="training-one-gd-heatmap" class="error-chart col-xs-6"></div><br>                </div><br><br>        </div><br><br>        <div class="col-sm-6"><br><br>            <table id="training-one-gd" class="training-table"><br>                <tr><br>                    <td colspan="3" class="gd-buttons"><br>                        <input type="button" value="GD Step" id="gradient-descent-button" class="btn btn-primary"><br>                        <input type="button" value="10 GD Steps " id="gradient-descent-10-button" class="btn btn-primary"><br>                        <input type="button" value="100 GD Steps " id="gradient-descent-100-button" class="btn btn-primary"><br>                    </td><br>                </tr><br>                <tr><br>                    <td><br>                        Error<br>                    </td><br>                    <td colspan="2"><br>                        <span id="error-value"></span><br>                    </td><br><br>                </tr><br><br>                <tr><br>                    <td class="error-cell" colspan="3"><br>                        <span id="error-value-message"></span>&nbsp;<br>                    </td><br><br>                </tr><br>                <tr><br>                    <td><br>                        Weight<br>                    </td><br>                    <td><br>                        <input id="weightSlider" type="range" class="weight" min="0" max="0.4" step="0.0001"><br>                    </td><br>                    <td class="slider-value"><br>                        <span id="weight" class="weight">0</span><br>                    </td><br>                </tr><br>                <tr><br>                    <td><br>                        Bias<br>                    </td><br>                    <td><br>                        <input id="biasSlider" type="range" class="bias" min="0" max="460" step="0.1"><br>                    </td><br>                    <td class="slider-value"><br>                        <span id="bias" class="bias">0</span><br>                    </td><br>                </tr><br>            </table><br><br>            <div id="neural-network-gd-graph" class="nn-graph-area"></div><br>        </div><br>    </div><br></div><br><br><p>The two new graphs are to help you track the error values as you fiddle with the parameters (weight and bias) of the model. It’s important to keep track of the error as the training process is all about reducing this error as much possible.</p><br><br><p>How does gradient descent know where its next step should be? Calculus. You see, knowing the function we’re minimizing (our loss function, the average of (y_ - y)² for all our data points), and knowing the current inputs into it (the current weight and bias), the derivatives of the loss function tell us which direction to nudge W and b in order to minimize the error.</p><br><br><p>Learn more about gradient descent and how to use it to calculate the new weights &amp; bias in the first lectures of Coursera’s <a href="https://www.coursera.org/learn/machine-learning" target="_blank" rel="noopener">Machine Learning</a> course.</p><br><br><h2 id="and-then-there-were-two">And Then There Were Two</h2>
 
@@ -347,13 +332,13 @@
 
 <p>Our neural network with two variables looks like this:</p>
 
-<div class="img-div"><br>    <img src="/images/NNs_2_variables.png"><br></div>
+<div class="img-div"><br>    <img data-src="/images/NNs_2_variables.png"><br></div>
 
 <p>We now have to find two weights (one for each input) and one bias to create our new model.</p>
 
 <p>Calculating Y looks like this:</p>
 
-<div class="img-div"><br>    <img src="/images/NNs_formula_two_variables.png"><br></div>
+<div class="img-div"><br>    <img data-src="/images/NNs_formula_two_variables.png"><br></div>
 
 <p>But how do we find w1 and w2? This is a little trickier than when we only had to worry about one weight value. How much does having an extra bathroom change how we predict the value of a home?</p>
 
@@ -441,7 +426,7 @@
 
 <p>The neural networks we’ve been toying around with until now are all doing “regression” – they calculate and output a “continuous” value (the output can be 4, or 100.6, or 2143.342343). In practice, however, neural networks are more often used in “classification” type problems. In these problems, the neural network’s output has to be from a set of discrete values (or “classes”) like “Good” or “Bad”. How this works out in practice, is that we’ll have a model that will say that it’s 75% sure that a house is “Good” rather than just spit out “good” or “bad”.</p>
 
-<div class="img-div"><br>    <img src="/images/android_tensorflow_classifier_results.jpg"><br>    The TensorFlow app I discussed in my <a href="https://jalammar.github.io/Supercharging-android-apps-using-tensorflow/" target="_blank" rel="noopener">previous post</a> is a good example for a classification model in practice.<br><br></div>
+<div class="img-div"><br>    <img data-src="/images/android_tensorflow_classifier_results.jpg"><br>    The TensorFlow app I discussed in my <a href="https://jalammar.github.io/Supercharging-android-apps-using-tensorflow/" target="_blank" rel="noopener">previous post</a> is a good example for a classification model in practice.<br><br></div>
 
 <p>One way we can transform the network we’ve seen into a classification network is to have it output two values – one for each class (our classes now being “good” and “bad”). We then pass these values through an operation called “<a href="https://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/" target="_blank" rel="noopener">softmax</a>”. The output of softmax is the probability of each class. For example, say that layer of the network outputs 2 for “good” and 4 for “bad”, if we feed [2, 4] to softmax, it will return [0.11,  0.88] as the output. Which translates the values to say the network is 88% sure that the inputted value is “bad” and our friend would not like that house.</p>
 
@@ -462,7 +447,7 @@
 <p></p><h2 id="true-motivation">True Motivation</h2><p></p>
 <p>If you have reached this far, I have to reveal to you another motivation of mine to write this post. This post is meant as an even gentler intro to TensorFlow tutorials. If you start working through <a href="https://www.tensorflow.org/versions/r0.10/tutorials/mnist/beginners/index.html" target="_blank" rel="noopener">MNIST For ML Beginners</a> now, and come across this graph:</p>
 
-<div class="img-div"><br>    <img src="/images/softmax-regression-scalargraph.png"><br>    I wrote this post to prepare people without machine learning experience for this graph in the TensorFlow introductory tutorial. That’s why I simulated its visual style.<br></div>
+<div class="img-div"><br>    <img data-src="/images/softmax-regression-scalargraph.png"><br>    I wrote this post to prepare people without machine learning experience for this graph in the TensorFlow introductory tutorial. That’s why I simulated its visual style.<br></div>
 
 <p>I hope you would feel prepared and that you have an understanding of this system and how it works. If you want to start tinkering with code, feel free to pick up from the intro <a href="https://www.tensorflow.org/versions/r0.10/tutorials/mnist/beginners/index.html" target="_blank" rel="noopener">tutorial</a> and teach a neural network how to detect handwritten digits.</p>
 
@@ -565,7 +550,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-count">1496</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -578,7 +563,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-count">1433</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -656,7 +641,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">372:21</span>
+    <span title="站点阅读时长">372:38</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
@@ -682,7 +667,7 @@ setInterval("createtime()",250);
 </script>
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -720,13 +705,73 @@ setInterval("createtime()",250);
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -734,7 +779,7 @@ setInterval("createtime()",250);
 
 
 
-  <script>
+  <script pjax>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
@@ -768,6 +813,7 @@ setInterval("createtime()",250);
 
 
 
+    <div id="pjax">
 
   
 
@@ -800,6 +846,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 }, window.Valine);
 </script>
 
+    </div>
 
 </body>
 </html>

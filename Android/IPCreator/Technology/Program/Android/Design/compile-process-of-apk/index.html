@@ -33,8 +33,8 @@
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -43,7 +43,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.xml',
+    path: 'search.json',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
@@ -62,17 +62,10 @@
 <meta property="og:site_name" content="Hi">
 <meta property="og:description" content="编译–&amp;gt;DEX–&amp;gt;打包–&amp;gt;签名和对齐">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://ong8f1obl.bkt.clouddn.com/android_build_detail.png">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2839011-28f3fb0ca3af7d9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2839011-58310b412bae9a01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2839011-0ba953a3e93d0d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://img.blog.csdn.net/20151027092414376">
-<meta property="og:image" content="https://gss0.baidu.com/7LsWdDW5_xN3otqbppnN2DJv/doc/pic/item/0bd162d9f2d3572c49ef6f258313632762d0c33e.jpg">
 <meta property="og:updated_time" content="2017-04-03T04:52:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Compile Process of Android Application">
 <meta name="twitter:description" content="编译–&amp;gt;DEX–&amp;gt;打包–&amp;gt;签名和对齐">
-<meta name="twitter:image" content="http://ong8f1obl.bkt.clouddn.com/android_build_detail.png">
 
 <link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/Design/compile-process-of-apk/">
 
@@ -289,12 +282,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="http://ong8f1obl.bkt.clouddn.com/android_build_detail.png" alt></p>
+        <p><img alt data-src="http://ong8f1obl.bkt.clouddn.com/android_build_detail.png"></p>
 <blockquote>
 <p>编译–&gt;DEX–&gt;打包–&gt;签名和对齐</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="Package-Process"><a href="#Package-Process" class="headerlink" title="Package Process"></a>Package Process</h2><p><img src="http://upload-images.jianshu.io/upload_images/2839011-28f3fb0ca3af7d9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="Package-Process"><a href="#Package-Process" class="headerlink" title="Package Process"></a>Package Process</h2><p><img alt data-src="http://upload-images.jianshu.io/upload_images/2839011-28f3fb0ca3af7d9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
 <p>上面这张图对上面的步骤以及每步用到的工具进行了细分，概括如下：</p>
 <p>Java编译器对工程本身的java代码进行编译，这些java代码有三个来源：app的源代码，由资源文件生成的R文件(aapt工具)，以及有aidl文件生成的java接口文件(aidl工具)。产出为.class文件。</p>
 <p>.class文件和依赖的三方库文件通过dex工具生成Delvik虚拟机可执行的.dex文件，可能有一个或多个，包含了所有的class信息，包括项目自身的class和依赖的class。产出为.dex文件。</p>
@@ -311,7 +304,7 @@
 </ol>
 <p>关于zipalign工具，根据名字就知道是个zip文件对齐的工具。使得apk中的资源文件偏离文件起始位置4个字节，从而可以通过mmap()直接访问，从而减少RAM占用。</p>
 <p>下图是谷歌官网给出的一个典型的apk构建的过程，比较概括。主要包括两个过程，首先是编译过程，编译的内容包括本工程的文件以及依赖的各种库文件，编译的输出包括dex文件和编译后的资源文件。然后是打包过程。配合Keystore对第一步的输出进行签名对齐，生成最终的apk文件。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2839011-58310b412bae9a01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/2839011-58310b412bae9a01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
 <h2 id="APK-Content"><a href="#APK-Content" class="headerlink" title="APK Content"></a>APK Content</h2><p>apk包内容包括：</p>
 <ol>
 <li>classes.dex…</li>
@@ -322,8 +315,8 @@
 <li>META-INF<br>7.<br>其中：<br>res中图片和raw文件下内容保持原样，res中其他xml文件内容均转化为二进制形式；assets文件内容保持原样<br>res中的文件会被映射到R.java文件中，访问的时候直接使用资源ID即R.id.filename；assets文件夹下的文件不会被映射到R.java中，访问的时候需要<strong>AssetManager</strong>类</li>
 </ol>
 <h2 id="Gradle-Process"><a href="#Gradle-Process" class="headerlink" title="Gradle Process"></a>Gradle Process</h2><p>Android工程通过gradle文件管理各项配置，gradle文件利用DSL（Domain Specific Language）语言描述配置，并使用Groovy语言处理编译逻辑。一个典型的Android工程结构如下：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2839011-0ba953a3e93d0d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
-<p><img src="http://img.blog.csdn.net/20151027092414376" alt></p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/2839011-0ba953a3e93d0d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p><img alt data-src="http://img.blog.csdn.net/20151027092414376"></p>
 <p>在这里gradle文件分布在几个不同的层级，Project层级以及Module层级。</p>
 <ol>
 <li>Project层级的settings.gradle描述的是该Project包含哪些Module<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include &apos;:presentation&apos;, &apos;:qamodel&apos;, &apos;:chatcommonmodule&apos;, &apos;:qa&apos;, &apos;:unlimit&apos;</span><br></pre></td></tr></table></figure>
@@ -333,7 +326,7 @@
 <ol start="2">
 <li>Module层级的build.gradle。每个Module下都有一个作用于该Module的build.gradle文件，描述了该Module相关的配置。这些配置主要包括：BuildTypes，ProductFlavors，Dependency，SigningSettings等。</li>
 </ol>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><img src="https://gss0.baidu.com/7LsWdDW5_xN3otqbppnN2DJv/doc/pic/item/0bd162d9f2d3572c49ef6f258313632762d0c33e.jpg" alt><br>[1]<a href="http://blog.csdn.net/yanbober/article/details/49408489" target="_blank" rel="noopener">Android应用开发编译框架流程与IDE及Gradle概要</a><br>[2]<a href="https://yuedu.baidu.com/ebook/14a722970740be1e640e9a3e?pn=1&amp;isFromWenku=1" target="_blank" rel="noopener">Android Gradle权威指南</a><br>[3]<a href="http://www.jianshu.com/p/9df3c3b6067a" target="_blank" rel="noopener">Gradle 完整指南（Android）</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><img alt data-src="https://gss0.baidu.com/7LsWdDW5_xN3otqbppnN2DJv/doc/pic/item/0bd162d9f2d3572c49ef6f258313632762d0c33e.jpg"><br>[1]<a href="http://blog.csdn.net/yanbober/article/details/49408489" target="_blank" rel="noopener">Android应用开发编译框架流程与IDE及Gradle概要</a><br>[2]<a href="https://yuedu.baidu.com/ebook/14a722970740be1e640e9a3e?pn=1&amp;isFromWenku=1" target="_blank" rel="noopener">Android Gradle权威指南</a><br>[3]<a href="http://www.jianshu.com/p/9df3c3b6067a" target="_blank" rel="noopener">Gradle 完整指南（Android）</a></p>
 
     </div>
 
@@ -423,7 +416,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-count">1496</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -436,7 +429,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-count">1433</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -514,7 +507,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">372:21</span>
+    <span title="站点阅读时长">372:38</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
@@ -540,7 +533,7 @@ setInterval("createtime()",250);
 </script>
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -578,13 +571,73 @@ setInterval("createtime()",250);
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -592,7 +645,7 @@ setInterval("createtime()",250);
 
 
 
-  <script>
+  <script pjax>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
@@ -626,6 +679,7 @@ setInterval("createtime()",250);
 
 
 
+    <div id="pjax">
 
   
 
@@ -658,6 +712,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 }, window.Valine);
 </script>
 
+    </div>
 
 </body>
 </html>

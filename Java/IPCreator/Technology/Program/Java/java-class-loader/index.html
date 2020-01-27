@@ -33,8 +33,8 @@
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -43,7 +43,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.xml',
+    path: 'search.json',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
@@ -62,12 +62,10 @@
 <meta property="og:site_name" content="Hi">
 <meta property="og:description" content="Source Java的核心是什么？当然是JVM了，所以说了解并熟悉JVM对于我们理解Java语言非常重要，不管你是做Java还是Android，熟悉JVM是我们每个Java、Android开发者必不可少的技能。如果你现在觉得Android的开发到了天花板的地步，那不妨往下走走，一起探索JAVA层面的内容。如果我们不了解自己写的代码是如何被执行的，那么我们只是一个会写代码的程序员，我们知其然不知其">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-7ed5dc72e8f95e41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:updated_time" content="2017-05-11T00:01:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Class Loader">
 <meta name="twitter:description" content="Source Java的核心是什么？当然是JVM了，所以说了解并熟悉JVM对于我们理解Java语言非常重要，不管你是做Java还是Android，熟悉JVM是我们每个Java、Android开发者必不可少的技能。如果你现在觉得Android的开发到了天花板的地步，那不妨往下走走，一起探索JAVA层面的内容。如果我们不了解自己写的代码是如何被执行的，那么我们只是一个会写代码的程序员，我们知其然不知其">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1986868-7ed5dc72e8f95e41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 <link rel="canonical" href="https://hazyman.com/Java/IPCreator/Technology/Program/Java/java-class-loader/">
 
@@ -284,7 +282,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="http://upload-images.jianshu.io/upload_images/1986868-7ed5dc72e8f95e41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br><a href="http://www.jianshu.com/p/b6547abd0706" target="_blank" rel="noopener">Source</a></p>
+        <p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-7ed5dc72e8f95e41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><a href="http://www.jianshu.com/p/b6547abd0706" target="_blank" rel="noopener">Source</a></p>
 <p>Java的核心是什么？当然是JVM了，所以说了解并熟悉JVM对于我们理解Java语言非常重要，不管你是做Java还是Android，熟悉JVM是我们每个Java、Android开发者必不可少的技能。如果你现在觉得Android的开发到了天花板的地步，那不妨往下走走，一起探索JAVA层面的内容。如果我们不了解自己写的代码是如何被执行的，那么我们只是一个会写代码的程序员，我们知其然不知其所以然。看到很多人说现在工作难找，真是这样吗？如果我们足够优秀，工作还难找吗？如果我们底子足够深，需要找工作吗？找不到工作多想想自己的原因，总是抱怨环境是没有用的，因为你没办法去改变坏境。如果我们一直停留在框架层面，停留在新的功能层面，那么我们的优势在哪里呢？所以说，我们不仅要学会写代码，还要知道为什么这样写代码，这才是我们的核心竞争力之一。这样我们的差异化才能够体现出来，不信？我们走着瞧……我们第一个差异化就是对JVM的掌握，而今天的内容类加载机制是JVM比较核心的部分，如果你想和别人不一样，那就一起仔细研究研究这次的内容吧。</p>
  <a id="more"></a>
 <h1 id="深入理解Java类加载机制（一）"><a href="#深入理解Java类加载机制（一）" class="headerlink" title="深入理解Java类加载机制（一）"></a>深入理解Java类加载机制（一）</h1><h2 id="1-前言："><a href="#1-前言：" class="headerlink" title="1 前言："></a>1 前言：</h2><p> 在上一篇文章一文让你明白Java字节码中,<br> 我们了解了java字节码的解析过程，那么在接下来的内容中，我们来了解一下类的加载机制。</p>
@@ -428,7 +426,7 @@ if (classLoader2==null){
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-count">1496</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -441,7 +439,7 @@ if (classLoader2==null){
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-count">1433</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -519,7 +517,7 @@ if (classLoader2==null){
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">372:21</span>
+    <span title="站点阅读时长">372:38</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
@@ -545,7 +543,7 @@ setInterval("createtime()",250);
 </script>
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -583,13 +581,73 @@ setInterval("createtime()",250);
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -597,7 +655,7 @@ setInterval("createtime()",250);
 
 
 
-  <script>
+  <script pjax>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
@@ -631,6 +689,7 @@ setInterval("createtime()",250);
 
 
 
+    <div id="pjax">
 
   
 
@@ -663,6 +722,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 }, window.Valine);
 </script>
 
+    </div>
 
 </body>
 </html>

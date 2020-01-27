@@ -33,8 +33,8 @@
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -43,7 +43,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.xml',
+    path: 'search.json',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
@@ -55,21 +55,17 @@
 </script>
 
   <meta name="description" content="A program which uses static analysis to look for bugs in Java code.  It is free software, distributed under the terms of the Lesser GNU Public License. The name FindBugs™ and the FindBugs logo are tr">
-<meta name="keywords" content="Java,Third Library,Find Bugs">
+<meta name="keywords" content="Java,Find Bugs,Third Library">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FindBugs™ - Find Bugs in Java Programs">
 <meta property="og:url" content="https://hazyman.com/Android/IPCreator/Technology/Program/Android/3rdLib/findbugs/index.html">
 <meta property="og:site_name" content="Hi">
 <meta property="og:description" content="A program which uses static analysis to look for bugs in Java code.  It is free software, distributed under the terms of the Lesser GNU Public License. The name FindBugs™ and the FindBugs logo are tr">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://findbugs.sourceforge.net/umdFindbugs.png">
-<meta property="og:image" content="http://vincentbrison.com/wp-content/uploads/2014/07/checkstyle.jpg">
-<meta property="og:image" content="http://bbsmax.ikafan.com/static/L3Byb3h5L2h0dHAvYmJzLnVtZW5nLmNvbS9kYXRhL2F0dGFjaG1lbnQvZm9ydW0vMjAxNjAyLzIyLzExNDcyOGhlYnhuOThlYjg5OWNnM2UucG5n.jpg">
 <meta property="og:updated_time" content="2017-03-31T02:00:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FindBugs™ - Find Bugs in Java Programs">
 <meta name="twitter:description" content="A program which uses static analysis to look for bugs in Java code.  It is free software, distributed under the terms of the Lesser GNU Public License. The name FindBugs™ and the FindBugs logo are tr">
-<meta name="twitter:image" content="http://findbugs.sourceforge.net/umdFindbugs.png">
 
 <link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/3rdLib/findbugs/">
 
@@ -286,14 +282,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="http://findbugs.sourceforge.net/umdFindbugs.png" alt></p>
+        <p><img alt data-src="http://findbugs.sourceforge.net/umdFindbugs.png"></p>
 <p>A program which uses static analysis to look for bugs in Java code.  It is free software, distributed under the terms of the Lesser GNU Public License. The name FindBugs™ and the FindBugs logo are trademarked by The University of Maryland. FindBugs has been downloaded more than a million times.</p>
 <a id="more"></a>
 <p>findbugs是一个分析bytecode并找出其中可疑部分的一个工具。它给项目字节码做一个全面扫描，通过一些通用规则去判断可能潜在的一些问题，比如性能，多线程安全等等。</p>
 <p>FindBugs基本上只需要一个程序来做分析的字节码，所以这是非常容易使用。它能检测到常见的错误，如错误的布尔运算符。<br>FindBugs也能够检测到由于误解语言特点的错误，如Java参数调整（这不是真的有可能因为它的参数是传值）。</p>
 <p>FindBugs是一个Java静态分析工具，用来检查类或者jar文件，用来发现可能的问题。检测完成之后会生成一份详细的报告，借助这份报告可以找到潜在的bug，比如NullPointException,特定的资源没有关闭，查询数据库没有调用Cursor.close()等，如果才用人工的方式很难才能发现类似的bug，或者这些bug永远不会发现，直到运行时才发现，还有可能是一直没有出现，别人调用的时候没有做检查就调用了…..</p>
 <p>Java的静态分析工具当然可以无难度的在Android上面运行，通过这种FindBugs的检查可以让App的运行更加的稳定。</p>
-<p><img src="http://vincentbrison.com/wp-content/uploads/2014/07/checkstyle.jpg" alt></p>
+<p><img alt data-src="http://vincentbrison.com/wp-content/uploads/2014/07/checkstyle.jpg"></p>
 <h2 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h2><p>FindBugs在Gradle中是当做一个插件存在的，可以在Android Studio中直接使用：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;findbugs&apos;</span><br><span class="line"></span><br><span class="line">// 定义生成文件目录</span><br><span class="line">def findbugsReportPath = &quot;$&#123;project.rootDir&#125;/reports/&quot;</span><br><span class="line"></span><br><span class="line">task findbugs(type: FindBugs) &#123;</span><br><span class="line">    ignoreFailures = true</span><br><span class="line">    excludeFilter = new File(&quot;findbugs.xml&quot;) // 自定义配置文件</span><br><span class="line">    classpath = files()</span><br><span class="line">    classes = fileTree(&apos;build/intermediates/classes/&apos;)</span><br><span class="line">    effort = &apos;max&apos;</span><br><span class="line"></span><br><span class="line">    source = fileTree(&apos;src&apos;)</span><br><span class="line">    include &apos;**/*.java&apos;</span><br><span class="line">    exclude &apos;**/gen/**&apos;</span><br><span class="line"></span><br><span class="line">    // 定义输出报告</span><br><span class="line">    reports &#123;</span><br><span class="line">        xml &#123;</span><br><span class="line">            enabled = false</span><br><span class="line">            destination &quot;$findbugsReportPath/FindBugs.xml&quot;</span><br><span class="line">            xml.withMessages true</span><br><span class="line">        &#125;</span><br><span class="line">        html &#123;</span><br><span class="line">            enabled = true</span><br><span class="line">            destination &quot;$findbugsReportPath/FindBugs.html&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">afterEvaluate &#123;</span><br><span class="line">    tasks.withType(Task).each &#123; task -&gt;</span><br><span class="line">        task.doLast &#123;</span><br><span class="line">            if (task.name.startsWith(&quot;assemble&quot;)) &#123;</span><br><span class="line">                tasks.findByName(&quot;findbugs&quot;).execute()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>ignoreFailures：有警告错误的时候也是允许构建。<br>reportLevel:报告的级别，Low,Medium,High一般来说我们首先关注的是高级别的报告，再关注低一级别的报告。<br>classes和source分别是对应的.classe文件夹地址，和源代码文件地址。<br>repoets指定报告类型，有两种方式xml和html，只允许一种输出格式。<br>在右侧的Gradle的对于的Module可以在Tasks中找到对应的findBugs任务，点击即可运行。</p>
@@ -315,7 +311,7 @@
 <li>第2步<br>在buildType或productFlavor中开启multiDexEnabled。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">defaultConfig &#123;</span><br><span class="line">    ...</span><br><span class="line">    multiDexEnabled true</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="http://bbsmax.ikafan.com/static/L3Byb3h5L2h0dHAvYmJzLnVtZW5nLmNvbS9kYXRhL2F0dGFjaG1lbnQvZm9ydW0vMjAxNjAyLzIyLzExNDcyOGhlYnhuOThlYjg5OWNnM2UucG5n.jpg" alt></p>
+<p><img alt data-src="http://bbsmax.ikafan.com/static/L3Byb3h5L2h0dHAvYmJzLnVtZW5nLmNvbS9kYXRhL2F0dGFjaG1lbnQvZm9ydW0vMjAxNjAyLzIyLzExNDcyOGhlYnhuOThlYjg5OWNnM2UucG5n.jpg"></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1]<a href="https://segmentfault.com/a/1190000004881029" target="_blank" rel="noopener">Android中使用FindBugs</a><br>[2]<a href="http://findbugs.sourceforge.net/" target="_blank" rel="noopener">FindBugs</a><br>[3]<a href="http://blog.csdn.net/guijiaoba/article/details/54970658" target="_blank" rel="noopener">Android静态代码分析</a><br>[4]<a href="http://www.open-open.com/lib/view/open1436497439973.html" target="_blank" rel="noopener">如何利用工具提高你的 Android 代码质量</a><br>[5]<a href="https://github.com/vincentbrison/vb-android-app-quality" target="_blank" rel="noopener">vb-android-app-quality</a><br>[6]<a href="http://www.bbsmax.com/A/q4zVwnrjJK/" target="_blank" rel="noopener">Android Studio 错误 com.android.dex.DexIndexOverflowException: method ID not in [0, 0xffff]: 65536</a><br>[7]<a href="http://vincentbrison.com/2014/07/19/how-to-improve-quality-and-syntax-of-your-android-code/" target="_blank" rel="noopener">How to improve quality and syntax of your Android code</a><br>[8]<a href="http://findbugs.sourceforge.net/" target="_blank" rel="noopener">FindBugs</a></p>
 
     </div>
@@ -327,8 +323,8 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
-              <a href="/tags/Third-Library/" rel="tag"><i class="fa fa-tag"></i> Third Library</a>
               <a href="/tags/Find-Bugs/" rel="tag"><i class="fa fa-tag"></i> Find Bugs</a>
+              <a href="/tags/Third-Library/" rel="tag"><i class="fa fa-tag"></i> Third Library</a>
           </div>
 
         
@@ -406,7 +402,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-count">1496</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -419,7 +415,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-count">1433</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -497,7 +493,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">372:21</span>
+    <span title="站点阅读时长">372:38</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
@@ -523,7 +519,7 @@ setInterval("createtime()",250);
 </script>
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -561,13 +557,73 @@ setInterval("createtime()",250);
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -575,7 +631,7 @@ setInterval("createtime()",250);
 
 
 
-  <script>
+  <script pjax>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
@@ -609,6 +665,7 @@ setInterval("createtime()",250);
 
 
 
+    <div id="pjax">
 
   
 
@@ -641,6 +698,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 }, window.Valine);
 </script>
 
+    </div>
 
 </body>
 </html>

@@ -33,8 +33,8 @@
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -43,7 +43,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.xml',
+    path: 'search.json',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
@@ -62,17 +62,10 @@
 <meta property="og:site_name" content="Hi">
 <meta property="og:description" content="I’m working on a little photography website for my Dad and thought it would be neat to extract color information from photographs. I tried a couple of different approaches before finding one that wor">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://m.charlesleifer.com/t/800x-/blog/photos/k-means_result.gif?key=M_hIqkUPMMtX6l41haEjYw">
-<meta property="og:image" content="http://m.charlesleifer.com/t/800x-/blog/photos/k-means_result.gif?key=M_hIqkUPMMtX6l41haEjYw">
-<meta property="og:image" content="http://m.charlesleifer.com/t/800x-/blog/photos/akira.jpg?key=pE0at1KYRCDKzK8sIMq-mg">
-<meta property="og:image" content="http://m.charlesleifer.com/t/800x-/blog/photos/akira-cycle-2.png?key=UjCkeYMPkmpbeJkt7KVe2Q">
-<meta property="og:image" content="http://m.charlesleifer.com/t/800x-/blog/photos/akira-neo-tokyo-6.png?key=Z9KKFjtzl1cHZUdXDsNVtQ">
-<meta property="og:image" content="http://m.charlesleifer.com/t/800x-/blog/photos/akira-neo-tokyo-7.png?key=SMr6DpSKC6VPeGLlcYacUA">
 <meta property="og:updated_time" content="2017-04-22T12:34:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Using Python and K-means to Find the Dominant Colors in Images">
 <meta name="twitter:description" content="I’m working on a little photography website for my Dad and thought it would be neat to extract color information from photographs. I tried a couple of different approaches before finding one that wor">
-<meta name="twitter:image" content="http://m.charlesleifer.com/t/800x-/blog/photos/k-means_result.gif?key=M_hIqkUPMMtX6l41haEjYw">
 
 <link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Python/using-python-and-k-means-to-find-the-dominant-colors-in-images/">
 
@@ -289,22 +282,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="http://m.charlesleifer.com/t/800x-/blog/photos/k-means_result.gif?key=M_hIqkUPMMtX6l41haEjYw" alt></p>
+        <p><img alt data-src="http://m.charlesleifer.com/t/800x-/blog/photos/k-means_result.gif?key=M_hIqkUPMMtX6l41haEjYw"></p>
 <p>I’m working on a little photography website for my Dad and thought it would be neat to extract color information from photographs. I tried a couple of different approaches before finding one that works pretty well. This approach uses k-means clustering to cluster the pixels in groups based on their color. The center of those resulting clusters are then the “dominant” colors. k-means is a great fit for this problem because it is (usually) fast. It has the caveat of requiring you to specify up-front how many clusters you want – I found that it works well when I specified around 3.</p>
 <a id="more"></a>
 <h2 id="A-warning"><a href="#A-warning" class="headerlink" title="A warning"></a>A warning</h2><p>I’m no expert on data-mining – almost all my experience comes from reading Toby Segaran’s excellent book Programming Collective Intelligence. In one of the first chapters Toby covers clustering algorithms, including a nice treatment of k-means, so if you want to really learn from an expert I’d suggest picking up a copy. You won’t be disappointed.</p>
 <h2 id="How-it-works"><a href="#How-it-works" class="headerlink" title="How it works"></a>How it works</h2><p>The way I understand it to work is you start with a bunch of data points. For simplicity let’s say they’re numbers on a number-line. You want to group the numbers into “k” clusters, so pick “k” points randomly from the data to use as your “clusters”.</p>
 <p>Now loop over every point in the data and calculate its distance to each of the “k” clusters. Find the nearest cluster and associate that point with the cluster. When you’ve looped over all the points they should all be assigned to one of the “k” clusters. Now, for each cluster recalculate its center by averaging the distances of all the associated points and start over.</p>
 <p>When the centers stop moving very much you can stop looping. You will end up with something like this – the points are colored based on what “cluster” they are in and the dark-black circles indicate the centers of each cluster.</p>
-<p><img src="http://m.charlesleifer.com/t/800x-/blog/photos/k-means_result.gif?key=M_hIqkUPMMtX6l41haEjYw" alt></p>
+<p><img alt data-src="http://m.charlesleifer.com/t/800x-/blog/photos/k-means_result.gif?key=M_hIqkUPMMtX6l41haEjYw"></p>
 <h2 id="K-Means"><a href="#K-Means" class="headerlink" title="K-Means"></a>K-Means</h2><p>Applying it to photographs</p>
 <p>The neat thing about this algorithm is, since it relies only on a simple distance calculation, you can extend it out to multi-dimensional data. Color is often represented using 3 channels, Red, Green, and Blue. So what I did was treat all the pixels in the image like points on a 3-dimensional space. That’s all there was to it!</p>
 <p>I made a few optimizations along the way:</p>
 <p>resize the image down to 200x200 or so using PIL<br>instead of storing “duplicate” points, store a count with each – saves on calculations<br>Looking at some results</p>
-<p><img src="http://m.charlesleifer.com/t/800x-/blog/photos/akira.jpg?key=pE0at1KYRCDKzK8sIMq-mg" alt><br>Akira motorcycles</p>
-<p>The results:<br><img src="http://m.charlesleifer.com/t/800x-/blog/photos/akira-cycle-2.png?key=UjCkeYMPkmpbeJkt7KVe2Q" alt><br>Akira motorcycles 2</p>
-<p>The results:<br><img src="http://m.charlesleifer.com/t/800x-/blog/photos/akira-neo-tokyo-6.png?key=Z9KKFjtzl1cHZUdXDsNVtQ" alt><br>Akira 3</p>
-<p>The results:<br><img src="http://m.charlesleifer.com/t/800x-/blog/photos/akira-neo-tokyo-7.png?key=SMr6DpSKC6VPeGLlcYacUA" alt><br>Akira 4</p>
+<p><img alt data-src="http://m.charlesleifer.com/t/800x-/blog/photos/akira.jpg?key=pE0at1KYRCDKzK8sIMq-mg"><br>Akira motorcycles</p>
+<p>The results:<br><img alt data-src="http://m.charlesleifer.com/t/800x-/blog/photos/akira-cycle-2.png?key=UjCkeYMPkmpbeJkt7KVe2Q"><br>Akira motorcycles 2</p>
+<p>The results:<br><img alt data-src="http://m.charlesleifer.com/t/800x-/blog/photos/akira-neo-tokyo-6.png?key=Z9KKFjtzl1cHZUdXDsNVtQ"><br>Akira 3</p>
+<p>The results:<br><img alt data-src="http://m.charlesleifer.com/t/800x-/blog/photos/akira-neo-tokyo-7.png?key=SMr6DpSKC6VPeGLlcYacUA"><br>Akira 4</p>
 <p>The results:                                 </p>
 <h2 id="The-source-code"><a href="#The-source-code" class="headerlink" title="The source code"></a>The source code</h2><p>Below is the source code. It requires PIL to resize the image down to 200x200 and to extract the colors/counts. The “colorz” function is the one that returns the actual color codes for a filename.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">from collections import namedtuple</span><br><span class="line">from math import sqrt</span><br><span class="line">import random</span><br><span class="line">try:</span><br><span class="line">    import Image</span><br><span class="line">except ImportError:</span><br><span class="line">    from PIL import Image</span><br><span class="line"></span><br><span class="line">Point = namedtuple(&apos;Point&apos;, (&apos;coords&apos;, &apos;n&apos;, &apos;ct&apos;))</span><br><span class="line">Cluster = namedtuple(&apos;Cluster&apos;, (&apos;points&apos;, &apos;center&apos;, &apos;n&apos;))</span><br><span class="line"></span><br><span class="line">def get_points(img):</span><br><span class="line">    points = []</span><br><span class="line">    w, h = img.size</span><br><span class="line">    for count, color in img.getcolors(w * h):</span><br><span class="line">        points.append(Point(color, 3, count))</span><br><span class="line">    return points</span><br><span class="line"></span><br><span class="line">rtoh = lambda rgb: &apos;#%s&apos; % &apos;&apos;.join((&apos;%02x&apos; % p for p in rgb))</span><br><span class="line"></span><br><span class="line">def colorz(filename, n=3):</span><br><span class="line">    img = Image.open(filename)</span><br><span class="line">    img.thumbnail((200, 200))</span><br><span class="line">    w, h = img.size</span><br><span class="line"></span><br><span class="line">    points = get_points(img)</span><br><span class="line">    clusters = kmeans(points, n, 1)</span><br><span class="line">    rgbs = [map(int, c.center.coords) for c in clusters]</span><br><span class="line">    return map(rtoh, rgbs)</span><br><span class="line"></span><br><span class="line">def euclidean(p1, p2):</span><br><span class="line">    return sqrt(sum([</span><br><span class="line">        (p1.coords[i] - p2.coords[i]) ** 2 for i in range(p1.n)</span><br><span class="line">    ]))</span><br><span class="line"></span><br><span class="line">def calculate_center(points, n):</span><br><span class="line">    vals = [0.0 for i in range(n)]</span><br><span class="line">    plen = 0</span><br><span class="line">    for p in points:</span><br><span class="line">        plen += p.ct</span><br><span class="line">        for i in range(n):</span><br><span class="line">            vals[i] += (p.coords[i] * p.ct)</span><br><span class="line">    return Point([(v / plen) for v in vals], n, 1)</span><br><span class="line"></span><br><span class="line">def kmeans(points, k, min_diff):</span><br><span class="line">    clusters = [Cluster([p], p, p.n) for p in random.sample(points, k)]</span><br><span class="line"></span><br><span class="line">    while 1:</span><br><span class="line">        plists = [[] for i in range(k)]</span><br><span class="line"></span><br><span class="line">        for p in points:</span><br><span class="line">            smallest_distance = float(&apos;Inf&apos;)</span><br><span class="line">            for i in range(k):</span><br><span class="line">                distance = euclidean(p, clusters[i].center)</span><br><span class="line">                if distance &lt; smallest_distance:</span><br><span class="line">                    smallest_distance = distance</span><br><span class="line">                    idx = i</span><br><span class="line">            plists[idx].append(p)</span><br><span class="line"></span><br><span class="line">        diff = 0</span><br><span class="line">        for i in range(k):</span><br><span class="line">            old = clusters[i]</span><br><span class="line">            center = calculate_center(plists[i], old.n)</span><br><span class="line">            new = Cluster(plists[i], center, old.n)</span><br><span class="line">            clusters[i] = new</span><br><span class="line">            diff = max(diff, euclidean(old.center, new.center))</span><br><span class="line"></span><br><span class="line">        if diff &lt; min_diff:</span><br><span class="line">            break</span><br><span class="line"></span><br><span class="line">    return clusters</span><br></pre></td></tr></table></figure>
@@ -401,7 +394,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-count">1496</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -414,7 +407,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-count">1433</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -492,7 +485,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">372:21</span>
+    <span title="站点阅读时长">372:38</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
@@ -518,7 +511,7 @@ setInterval("createtime()",250);
 </script>
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -556,13 +549,73 @@ setInterval("createtime()",250);
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -570,7 +623,7 @@ setInterval("createtime()",250);
 
 
 
-  <script>
+  <script pjax>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
@@ -604,6 +657,7 @@ setInterval("createtime()",250);
 
 
 
+    <div id="pjax">
 
   
 
@@ -636,6 +690,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 }, window.Valine);
 </script>
 
+    </div>
 
 </body>
 </html>

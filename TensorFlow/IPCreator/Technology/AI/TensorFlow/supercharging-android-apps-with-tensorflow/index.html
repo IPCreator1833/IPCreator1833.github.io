@@ -33,8 +33,8 @@
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -43,7 +43,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.xml',
+    path: 'search.json',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
@@ -62,15 +62,10 @@
 <meta property="og:site_name" content="Hi">
 <meta property="og:description" content="J Alammar Supercharging Android Apps With TensorFlow (Google’s Open Source Machine Learning Library)In November 2015, Google announced and open sourced TensorFlow, its latest and greatest machine lear">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://jalammar.github.io/images/android_tensorflow_classifier_results.jpg">
-<meta property="og:image" content="https://jalammar.github.io/images/android-tensorflow-app-structure_1.png">
-<meta property="og:image" content="https://jalammar.github.io/images/android-tensorflow-app-structure_2.png">
-<meta property="og:image" content="https://jalammar.github.io/images/input_tensor.png">
 <meta property="og:updated_time" content="2017-09-15T00:51:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Supercharging Android Apps with TensorFlow">
 <meta name="twitter:description" content="J Alammar Supercharging Android Apps With TensorFlow (Google’s Open Source Machine Learning Library)In November 2015, Google announced and open sourced TensorFlow, its latest and greatest machine lear">
-<meta name="twitter:image" content="https://jalammar.github.io/images/android_tensorflow_classifier_results.jpg">
 
 <link rel="canonical" href="https://hazyman.com/TensorFlow/IPCreator/Technology/AI/TensorFlow/supercharging-android-apps-with-tensorflow/">
 
@@ -297,15 +292,15 @@
 <p>This last reason is the operating reason for this post since we’ll be focusing on Android. If you examine the tensorflow repo on GitHub, you’ll find a little tensorflow/examples/android directory. I’ll try to shed some light on the Android TensorFlow example and some of the things going on under the hood.</p>
   <a id="more"></a>
 <h2 id="A-Look-of-Recognition"><a href="#A-Look-of-Recognition" class="headerlink" title="A Look of Recognition"></a>A Look of Recognition</h2><p>The app glances out through your camera and tries to identify the objects it sees. Sometimes it does a good job, other times it can’t quite pin down the object, and at times it leads to thought provoking guesses! Overall, it feels pretty magical.</p>
-<p><img src="https://jalammar.github.io/images/android_tensorflow_classifier_results.jpg" alt><br>android_tensorflow_classifier_results.jpg</p>
+<p><img alt data-src="https://jalammar.github.io/images/android_tensorflow_classifier_results.jpg"><br>android_tensorflow_classifier_results.jpg</p>
 <p>The app accomplishes this feat using a bundled machine learning model running in TensorFlow on the device (no network calls to a backend service). The model is trained against millions of images so that it can look at the photos the camera feeds it and classify the object into its best guess (from the 1000 object classifications it knows). Along with its best guess, it shows a confidence score to indicate how sure it is about its guess.</p>
 <p>The Android example page gives you an idea on how to build the app, and ultimately culminates in producing this <a href="https://s3.amazonaws.com/jalammar.github.io/tensorflow_demo.apk" target="_blank" rel="noopener">APK</a> (I built and uploaded the APK to save you some time since the building process requires installing the Android NDK and Bazel, Google’s build tool).</p>
 <p>NOTE: Android 5.0 or later required since the example uses the Camera2 package introduced in Android 5.0.</p>
 <p>NOTE: if your device runs Android 6.0 or later, you have to install the app with the following command (It gives the app the appropriate permissions it needs to run):</p>
 <pre><code>adb install -r -g /path/to/apk.apk
-</code></pre><h2 id="App-Structure-Walkthrough"><a href="#App-Structure-Walkthrough" class="headerlink" title="App Structure Walkthrough"></a>App Structure Walkthrough</h2><p><img src="https://jalammar.github.io/images/android-tensorflow-app-structure_1.png" alt><br>android-tensorflow-app-structure_1.png</p>
+</code></pre><h2 id="App-Structure-Walkthrough"><a href="#App-Structure-Walkthrough" class="headerlink" title="App Structure Walkthrough"></a>App Structure Walkthrough</h2><p><img alt data-src="https://jalammar.github.io/images/android-tensorflow-app-structure_1.png"><br>android-tensorflow-app-structure_1.png</p>
 <p>The core TensorFlow engine is built with C++, but programmers can write their TensorFlow software in either C++ or Python. The Android TensorFlow example uses the C++ interface in the following manner:</p>
-<p>On startup, the app launches an Android activity (CameraActivity.java) which then starts a fragment (CameraConnectionFragment.java)<br>The fragment does some setup to basically start the camera and feed the incoming stream of images to an object it instantiates (TensorflowImageListener.java)<br>The listener consults the classifier (TensorflowClassifier.java) about each image it gets, and receives the classification and confidence score for each image.<br>The good thing is that most of this logic is in normal Android Java SDK territory – so this should be familiar to most Android devs. So where is the C++?<br><img src="https://jalammar.github.io/images/android-tensorflow-app-structure_2.png" alt><br>android-tensorflow-app-structure_2.png</p>
+<p>On startup, the app launches an Android activity (CameraActivity.java) which then starts a fragment (CameraConnectionFragment.java)<br>The fragment does some setup to basically start the camera and feed the incoming stream of images to an object it instantiates (TensorflowImageListener.java)<br>The listener consults the classifier (TensorflowClassifier.java) about each image it gets, and receives the classification and confidence score for each image.<br>The good thing is that most of this logic is in normal Android Java SDK territory – so this should be familiar to most Android devs. So where is the C++?<br><img alt data-src="https://jalammar.github.io/images/android-tensorflow-app-structure_2.png"><br>android-tensorflow-app-structure_2.png</p>
 <p>If you look closely at TensorflowClassifier, you may notice the following methods:</p>
 <pre><code>public native int initializeTensorflow( );
 
@@ -326,7 +321,7 @@ TENSORFLOW_METHOD(classifyImageBmp)(...) {
 <ol>
 <li>X-index of the pixel</li>
 <li>Y-index of the pixel</li>
-<li>indication of which value this cell holds (0 for red, 1 for green, 2 for blue)<br>And the value of the cell would be the actual value of R or G or B channel for that pixel.<br><img src="https://jalammar.github.io/images/input_tensor.png" alt><br>input_tensor.png</li>
+<li>indication of which value this cell holds (0 for red, 1 for green, 2 for blue)<br>And the value of the cell would be the actual value of R or G or B channel for that pixel.<br><img alt data-src="https://jalammar.github.io/images/input_tensor.png"><br>input_tensor.png</li>
 </ol>
 <p>(This is somewhat oversimplified. I glanced over two things for simplicity’s sake. First is the conversion from the YUV format that the Android camera exports to the RGB format the model expects. Second is that the model actually takes a 4-dimensional tensor, but these three are the ones we care about)</p>
 <h2 id="The-Model"><a href="#The-Model" class="headerlink" title="The Model"></a>The Model</h2><p>As you read the example’s README.md, you’ll notice that it instructs you to download a zip file containing the TensorFlow model and add it to the assets directory. This zip file contains two files that are important for us:</p>
@@ -429,7 +424,7 @@ TENSORFLOW_METHOD(classifyImageBmp)(...) {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-count">1496</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -442,7 +437,7 @@ TENSORFLOW_METHOD(classifyImageBmp)(...) {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-count">1433</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -520,7 +515,7 @@ TENSORFLOW_METHOD(classifyImageBmp)(...) {
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">372:21</span>
+    <span title="站点阅读时长">372:38</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
@@ -546,7 +541,7 @@ setInterval("createtime()",250);
 </script>
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -584,13 +579,73 @@ setInterval("createtime()",250);
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -598,7 +653,7 @@ setInterval("createtime()",250);
 
 
 
-  <script>
+  <script pjax>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
@@ -632,6 +687,7 @@ setInterval("createtime()",250);
 
 
 
+    <div id="pjax">
 
   
 
@@ -664,6 +720,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 }, window.Valine);
 </script>
 
+    </div>
 
 </body>
 </html>

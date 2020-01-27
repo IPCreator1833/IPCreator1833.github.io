@@ -33,8 +33,8 @@
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -43,7 +43,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.xml',
+    path: 'search.json',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
@@ -62,17 +62,10 @@
 <meta property="og:site_name" content="Hi">
 <meta property="og:description" content="A transparent ui-block detection library for Android, app only needs one-line-code to setup.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/flow.png">
-<meta property="og:image" content="https://maven-badges.herokuapp.com/maven-central/com.github.markzhai/blockcanary-android/badge.svg?style=flat">
-<meta property="og:image" content="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/flow.png">
-<meta property="og:image" content="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/shot1.png">
-<meta property="og:image" content="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/shot2.png">
-<meta property="og:image" content="http://blog.zhaiyifan.cn/images/blockcanary_flow.png">
 <meta property="og:updated_time" content="2017-03-29T08:59:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Block Canary——Android Performance Monitor">
 <meta name="twitter:description" content="A transparent ui-block detection library for Android, app only needs one-line-code to setup.">
-<meta name="twitter:image" content="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/flow.png">
 
 <link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/3rdLib/block-canary/">
 
@@ -289,11 +282,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/flow.png" alt></p>
+        <p><img alt data-src="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/flow.png"></p>
 <p>A transparent ui-block detection library for Android, app only needs one-line-code to setup.</p>
 <a id="more"></a>
 <p><a href="https://github.com/markzhai/AndroidPerformanceMonitor/blob/master/README_CN.md" target="_blank" rel="noopener">Chinese README</a></p>
-<h1 id="Android-Performance-Monitor"><a href="#Android-Performance-Monitor" class="headerlink" title="Android Performance Monitor "></a>Android Performance Monitor <a href="https://maven-badges.herokuapp.com/maven-central/com.github.markzhai/blockcanary-android" target="_blank" rel="noopener"><img src="https://maven-badges.herokuapp.com/maven-central/com.github.markzhai/blockcanary-android/badge.svg?style=flat" alt="Maven Central"></a></h1><p>A transparent ui-block detection library for Android, app only needs one-line-code to setup.</p>
+<h1 id="Android-Performance-Monitor"><a href="#Android-Performance-Monitor" class="headerlink" title="Android Performance Monitor "></a>Android Performance Monitor <a href="https://maven-badges.herokuapp.com/maven-central/com.github.markzhai/blockcanary-android" target="_blank" rel="noopener"><img alt="Maven Central" data-src="https://maven-badges.herokuapp.com/maven-central/com.github.markzhai/blockcanary-android/badge.svg?style=flat"></a></h1><p>A transparent ui-block detection library for Android, app only needs one-line-code to setup.</p>
 <p>The naming is to pay respect to the great library <a href="https://github.com/square/leakcanary" target="_blank" rel="noopener">LeakCanary</a>, ui-related codes are modified from leakcanary’s ui part.</p>
 <h1 id="Getting-started"><a href="#Getting-started" class="headerlink" title="Getting started"></a>Getting started</h1><p>You may choose how to assemble them as you like.</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="comment">// most often used way, enable notification to notify block event</span></span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'com.github.markzhai:blockcanary-android:1.5.0'</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// this way you only enable BlockCanary in debug package</span></span><br><span class="line">    <span class="comment">// debugCompile 'com.github.markzhai:blockcanary-android:1.5.0'</span></span><br><span class="line">    <span class="comment">// releaseCompile 'com.github.markzhai:blockcanary-no-op:1.5.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -304,14 +297,14 @@
 <p>Implement your application <code>BlockCanaryContext</code> context (strongly recommend you to check all these configs)：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppBlockCanaryContext</span> <span class="keyword">extends</span> <span class="title">BlockCanaryContext</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Implement in your project.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Qualifier which can specify this installation, like version + flavor.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">provideQualifier</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"unknown"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Implement in your project.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> user id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">provideUid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"uid"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Network type</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> &#123;<span class="doctag">@link</span> String&#125; like 2G, 3G, 4G, wifi, etc.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">provideNetworkType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"unknown"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Config monitor duration, after this time BlockCanary will stop, use</span></span><br><span class="line"><span class="comment">     * with &#123;<span class="doctag">@code</span> BlockCanary&#125;'s isMonitorDurationEnd</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> monitor last duration (in hour)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">provideMonitorDuration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Config block threshold (in millis), dispatch over this duration is regarded as a BLOCK. You may set it</span></span><br><span class="line"><span class="comment">     * from performance of device.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> threshold in mills</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">provideBlockThreshold</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Thread stack dump interval, use when block happens, BlockCanary will dump on main thread</span></span><br><span class="line"><span class="comment">     * stack according to current sample cycle.</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * Because the implementation mechanism of Looper, real dump interval would be longer than</span></span><br><span class="line"><span class="comment">     * the period specified here (especially when cpu is busier).</span></span><br><span class="line"><span class="comment">     * &lt;/p&gt;</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> dump interval (in millis)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">provideDumpInterval</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> provideBlockThreshold();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Path to save log, like "/blockcanary/", will save to sdcard if can.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> path of log files</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">providePath</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"/blockcanary/"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * If need notification to notice block.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> true if need, else if not need.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">displayNotification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Implement in your project, bundle files into a zip file.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> src  files before compress</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dest files compressed</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> true if compression is successful</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">zip</span><span class="params">(File[] src, File dest)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Implement in your project, bundled log files.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> zippedFile zipped file</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">upload</span><span class="params">(File zippedFile)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Packages that developer concern, by default it uses process name,</span></span><br><span class="line"><span class="comment">     * put high priority one in pre-order.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> null if simply concern only package with process name.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">concernPackages</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Filter stack without any in concern package, used with @&#123;code concernPackages&#125;.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> true if filter, false it not.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">filterNonConcernStack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Provide white list, entry in white list will not be shown in ui list.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> return null if you don't need white-list filter.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">provideWhiteList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        LinkedList&lt;String&gt; whiteList = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        whiteList.add(<span class="string">"org.chromium"</span>);</span><br><span class="line">        <span class="keyword">return</span> whiteList;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Whether to delete files whose stack is in white list, used with white-list.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> true if delete, false it not.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">deleteFilesInWhiteList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Block interceptor, developer may provide their own actions.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBlock</span><span class="params">(Context context, BlockInfo blockInfo)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h1 id="How-does-it-work"><a href="#How-does-it-work" class="headerlink" title="How does it work?"></a>How does it work?</h1><p>Blog in Chinese: <a href="http://blog.zhaiyifan.cn/2016/01/16/BlockCanaryTransparentPerformanceMonitor/" target="_blank" rel="noopener">BlockCanary</a>.</p>
 <p>Principle flow picture:</p>
-<p><img src="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/flow.png" alt="flow"></p>
-<h1 id="Screenshot"><a href="#Screenshot" class="headerlink" title="Screenshot"></a>Screenshot</h1><p><img src="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/shot1.png" alt><br><img src="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/shot2.png" alt></p>
+<p><img alt="flow" data-src="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/flow.png"></p>
+<h1 id="Screenshot"><a href="#Screenshot" class="headerlink" title="Screenshot"></a>Screenshot</h1><p><img alt data-src="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/shot1.png"><br><img alt data-src="https://github.com/markzhai/AndroidPerformanceMonitor/raw/master/art/shot2.png"></p>
 <h1 id="Contributors"><a href="#Contributors" class="headerlink" title="Contributors"></a>Contributors</h1><p>This library is initially created by <a href="https://github.com/markzhai" target="_blank" rel="noopener">markzhai</a>, and maintained under the organization <a href="https://github.com/moduth" target="_blank" rel="noopener">moduth</a> with <a href="https://github.com/nimengbo" target="_blank" rel="noopener">nimengbo</a> and <a href="https://github.com/zzz40500" target="_blank" rel="noopener">zzz40500</a>.</p>
 <p>Special thanks to <a href="https://github.com/android-cjj" target="_blank" rel="noopener">android-cjj</a>, <a href="https://github.com/baoyongzhang" target="_blank" rel="noopener">Mr.Bao</a>, <a href="https://github.com/chiahaolu" target="_blank" rel="noopener">chiahaolu</a> to contribute.</p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>熟悉Message/Looper/Handler系列的同学们一定知道Looper.java中这么一段:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">private static Looper sMainLooper;  // guarded by Looper.class</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Initialize the current thread as a looper, marking it as an</span><br><span class="line"> * application&apos;s main looper. The main looper for your application</span><br><span class="line"> * is created by the Android environment, so you should never need</span><br><span class="line"> * to call this function yourself.  See also: &#123;@link #prepare()&#125;</span><br><span class="line"> */</span><br><span class="line">public static void prepareMainLooper() &#123;</span><br><span class="line">    prepare(false);</span><br><span class="line">    synchronized (Looper.class) &#123;</span><br><span class="line">        if (sMainLooper != null) &#123;</span><br><span class="line">            throw new IllegalStateException(&quot;The main Looper has already been prepared.&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        sMainLooper = myLooper();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/** Returns the application&apos;s main looper, which lives in the main thread of the application.</span><br><span class="line"> */</span><br><span class="line">public static Looper getMainLooper() &#123;</span><br><span class="line">    synchronized (Looper.class) &#123;</span><br><span class="line">        return sMainLooper;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>是的，就是这个Printer - mLogging，它在每个message处理的前后被调用，而如果<strong>主线程卡住了，不就是在dispatchMessage里卡住了吗？</strong></p>
-<p>核心流程图：<br><img src="http://blog.zhaiyifan.cn/images/blockcanary_flow.png" alt></p>
+<p>核心流程图：<br><img alt data-src="http://blog.zhaiyifan.cn/images/blockcanary_flow.png"></p>
 <p>该组件利用了主线程的消息队列处理机制，通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Looper.getMainLooper().setMessageLogging(mainLooperPrinter);</span><br></pre></td></tr></table></figure></p>
 <p>并在mainLooperPrinter中判断start和end，来获取主线程dispatch该message的开始和结束时间，并判定该时间超过阈值(如2000毫秒)为主线程卡慢发生，并dump出各种信息，提供开发者分析性能瓶颈。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void println(String x) &#123;</span><br><span class="line">    if (!mStartedPrinting) &#123;</span><br><span class="line">        mStartTimeMillis = System.currentTimeMillis();</span><br><span class="line">        mStartThreadTimeMillis = SystemClock.currentThreadTimeMillis();</span><br><span class="line">        mStartedPrinting = true;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        final long endTime = System.currentTimeMillis();</span><br><span class="line">        mStartedPrinting = false;</span><br><span class="line">        if (isBlock(endTime)) &#123;</span><br><span class="line">            notifyBlockEvent(endTime);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private boolean isBlock(long endTime) &#123;</span><br><span class="line">    return endTime - mStartTimeMillis &gt; mBlockThresholdMillis;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -406,7 +399,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-count">1496</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -419,7 +412,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-count">1433</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -497,7 +490,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">372:21</span>
+    <span title="站点阅读时长">372:38</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
@@ -523,7 +516,7 @@ setInterval("createtime()",250);
 </script>
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -561,13 +554,73 @@ setInterval("createtime()",250);
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -575,7 +628,7 @@ setInterval("createtime()",250);
 
 
 
-  <script>
+  <script pjax>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
@@ -609,6 +662,7 @@ setInterval("createtime()",250);
 
 
 
+    <div id="pjax">
 
   
 
@@ -641,6 +695,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 }, window.Valine);
 </script>
 
+    </div>
 
 </body>
 </html>

@@ -33,8 +33,8 @@
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -43,7 +43,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.xml',
+    path: 'search.json',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
@@ -62,23 +62,10 @@
 <meta property="og:site_name" content="Hi">
 <meta property="og:description" content="基于char-rnn和tensorflow生成周杰伦歌词作者：leido  最近深度学习在机器视觉CV、自然语言处理NLP领域表现出强大的潜力，各种深度学习/机器学习框架也层出不穷。TensorFlow是google于去年(2015.11)开源的深度学习框架，截止目前(2016-11-28)Github上已经有38000+的star数，称之为最近最受欢迎的深度学习框架一点也不过分。 本着学习Ten">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/455-2.jpg">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/444-2.png">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/445-2.png">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/446-2.png">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/447-2.png">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/448-1.png">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/449-1.png">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/450.png">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/451.png">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/452.png">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/453.png">
-<meta property="og:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/454-1.png">
 <meta property="og:updated_time" content="2017-03-27T10:12:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Generate Lyric from Lyrics of Jay">
 <meta name="twitter:description" content="基于char-rnn和tensorflow生成周杰伦歌词作者：leido  最近深度学习在机器视觉CV、自然语言处理NLP领域表现出强大的潜力，各种深度学习/机器学习框架也层出不穷。TensorFlow是google于去年(2015.11)开源的深度学习框架，截止目前(2016-11-28)Github上已经有38000+的star数，称之为最近最受欢迎的深度学习框架一点也不过分。 本着学习Ten">
-<meta name="twitter:image" content="http://www.36dsj.com/wp-content/uploads/2016/11/455-2.jpg">
 
 <link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/Business/generate-lyric-from-lyric-of-jay/">
 
@@ -296,7 +283,7 @@
 
       
         <h2 id="基于char-rnn和tensorflow生成周杰伦歌词"><a href="#基于char-rnn和tensorflow生成周杰伦歌词" class="headerlink" title="基于char-rnn和tensorflow生成周杰伦歌词"></a>基于char-rnn和tensorflow生成周杰伦歌词</h2><p>作者：<a href="http://www.36dsj.com/archives/70163" target="_blank" rel="noopener">leido</a></p>
-<p><img src="http://www.36dsj.com/wp-content/uploads/2016/11/455-2.jpg" alt></p>
+<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2016/11/455-2.jpg"></p>
 <p>最近深度学习在机器视觉CV、自然语言处理NLP领域表现出强大的潜力，各种深度学习/机器学习框架也层出不穷。TensorFlow是google于去年(2015.11)开源的深度学习框架，截止目前(2016-11-28)Github上已经有38000+的star数，称之为最近最受欢迎的深度学习框架一点也不过分。</p>
 <p>本着学习TensorFlow和RNN的目的，前些天发现了char-rnn这个有趣的项目，具体就是基于字符预测下一个字符，比日说已知hello的前四个字母hell，那我们就可以据此预测下一个字符很可能是o,因为是字符char级别的，并没有单词或句子层次上的特征提取，相对而言比较简单易学。</p>
   <a id="more"></a>
@@ -304,15 +291,15 @@
 <p>代码写的不够直观简洁<br>另外因为最新tensorflow的部分api有所变化<br>中英文之间有一些差异，看能否成功移植到处理中文上<br>于是打算基于以上两个项目，自己重写!</p>
 <p>基本原理</p>
 <p>拿中文举例来说，每个字与每个字并不是统计上独立的，比如说如果不爱就不要再伤害长度为10的序列，如果我们知道如，下一个字有可能是果，如果知道前两个字如果，第三个字就是不的可能性大些，依次类推，如果知道前9个字如果不爱就不要再伤，那么最后一个就有可能是害字。用图直观的表示如下。</p>
-<p><img src="http://www.36dsj.com/wp-content/uploads/2016/11/444-2.png" alt></p>
+<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2016/11/444-2.png"></p>
 <p>总的来说，这是一个seq2seq的模型，训练数据用的是周杰伦01年到11年所有歌的歌词，训练数据和代码我都放到Github上，可以从<a href="https://github.com/leido/char-rnn-cn" target="_blank" rel="noopener">这里</a>下载</p>
 <p>全部代码如下：</p>
-<p><img class="aligncenter size-full wp-image-70167" src="http://www.36dsj.com/wp-content/uploads/2016/11/445-2.png" alt="36大数据" width="602" height="875" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/445-2.png 602w, http://www.36dsj.com/wp-content/uploads/2016/11/445-2-295x429.png 295w, http://www.36dsj.com/wp-content/uploads/2016/11/445-2-433x629.png 433w" sizes="(max-width: 602px) 100vw, 602px"> <img class="aligncenter size-full wp-image-70168" src="http://www.36dsj.com/wp-content/uploads/2016/11/446-2.png" alt="36大数据" width="605" height="914" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/446-2.png 605w, http://www.36dsj.com/wp-content/uploads/2016/11/446-2-284x429.png 284w, http://www.36dsj.com/wp-content/uploads/2016/11/446-2-416x629.png 416w" sizes="(max-width: 605px) 100vw, 605px"> <img class="aligncenter size-full wp-image-70169" src="http://www.36dsj.com/wp-content/uploads/2016/11/447-2.png" alt="36大数据" width="604" height="912" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/447-2.png 604w, http://www.36dsj.com/wp-content/uploads/2016/11/447-2-284x429.png 284w, http://www.36dsj.com/wp-content/uploads/2016/11/447-2-417x629.png 417w" sizes="(max-width: 604px) 100vw, 604px"> <img class="aligncenter size-full wp-image-70170" src="http://www.36dsj.com/wp-content/uploads/2016/11/448-1.png" alt="36大数据" width="602" height="915" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/448-1.png 602w, http://www.36dsj.com/wp-content/uploads/2016/11/448-1-282x429.png 282w, http://www.36dsj.com/wp-content/uploads/2016/11/448-1-414x629.png 414w" sizes="(max-width: 602px) 100vw, 602px"> <img class="aligncenter size-full wp-image-70171" src="http://www.36dsj.com/wp-content/uploads/2016/11/449-1.png" alt="36大数据" width="603" height="915" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/449-1.png 603w, http://www.36dsj.com/wp-content/uploads/2016/11/449-1-283x429.png 283w, http://www.36dsj.com/wp-content/uploads/2016/11/449-1-415x629.png 415w" sizes="(max-width: 603px) 100vw, 603px"> <img class="aligncenter size-full wp-image-70172" src="http://www.36dsj.com/wp-content/uploads/2016/11/450.png" alt="36大数据" width="605" height="918" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/450.png 605w, http://www.36dsj.com/wp-content/uploads/2016/11/450-283x429.png 283w, http://www.36dsj.com/wp-content/uploads/2016/11/450-415x629.png 415w" sizes="(max-width: 605px) 100vw, 605px"> <img class="aligncenter size-full wp-image-70173" src="http://www.36dsj.com/wp-content/uploads/2016/11/451.png" alt="36大数据" width="603" height="913" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/451.png 603w, http://www.36dsj.com/wp-content/uploads/2016/11/451-283x429.png 283w, http://www.36dsj.com/wp-content/uploads/2016/11/451-415x629.png 415w" sizes="(max-width: 603px) 100vw, 603px"> <img class="aligncenter size-full wp-image-70174" src="http://www.36dsj.com/wp-content/uploads/2016/11/452.png" alt="36大数据" width="606" height="911" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/452.png 606w, http://www.36dsj.com/wp-content/uploads/2016/11/452-285x429.png 285w, http://www.36dsj.com/wp-content/uploads/2016/11/452-418x629.png 418w" sizes="(max-width: 606px) 100vw, 606px"> <img class="aligncenter size-full wp-image-70175" src="http://www.36dsj.com/wp-content/uploads/2016/11/453.png" alt="36大数据" width="607" height="142" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/453.png 607w, http://www.36dsj.com/wp-content/uploads/2016/11/453-600x140.png 600w" sizes="(max-width: 607px) 100vw, 607px"></p>
+<p><img class="aligncenter size-full wp-image-70167" alt="36大数据" width="602" height="875" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/445-2.png 602w, http://www.36dsj.com/wp-content/uploads/2016/11/445-2-295x429.png 295w, http://www.36dsj.com/wp-content/uploads/2016/11/445-2-433x629.png 433w" sizes="(max-width: 602px) 100vw, 602px" data-src="http://www.36dsj.com/wp-content/uploads/2016/11/445-2.png"> <img class="aligncenter size-full wp-image-70168" alt="36大数据" width="605" height="914" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/446-2.png 605w, http://www.36dsj.com/wp-content/uploads/2016/11/446-2-284x429.png 284w, http://www.36dsj.com/wp-content/uploads/2016/11/446-2-416x629.png 416w" sizes="(max-width: 605px) 100vw, 605px" data-src="http://www.36dsj.com/wp-content/uploads/2016/11/446-2.png"> <img class="aligncenter size-full wp-image-70169" alt="36大数据" width="604" height="912" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/447-2.png 604w, http://www.36dsj.com/wp-content/uploads/2016/11/447-2-284x429.png 284w, http://www.36dsj.com/wp-content/uploads/2016/11/447-2-417x629.png 417w" sizes="(max-width: 604px) 100vw, 604px" data-src="http://www.36dsj.com/wp-content/uploads/2016/11/447-2.png"> <img class="aligncenter size-full wp-image-70170" alt="36大数据" width="602" height="915" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/448-1.png 602w, http://www.36dsj.com/wp-content/uploads/2016/11/448-1-282x429.png 282w, http://www.36dsj.com/wp-content/uploads/2016/11/448-1-414x629.png 414w" sizes="(max-width: 602px) 100vw, 602px" data-src="http://www.36dsj.com/wp-content/uploads/2016/11/448-1.png"> <img class="aligncenter size-full wp-image-70171" alt="36大数据" width="603" height="915" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/449-1.png 603w, http://www.36dsj.com/wp-content/uploads/2016/11/449-1-283x429.png 283w, http://www.36dsj.com/wp-content/uploads/2016/11/449-1-415x629.png 415w" sizes="(max-width: 603px) 100vw, 603px" data-src="http://www.36dsj.com/wp-content/uploads/2016/11/449-1.png"> <img class="aligncenter size-full wp-image-70172" alt="36大数据" width="605" height="918" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/450.png 605w, http://www.36dsj.com/wp-content/uploads/2016/11/450-283x429.png 283w, http://www.36dsj.com/wp-content/uploads/2016/11/450-415x629.png 415w" sizes="(max-width: 605px) 100vw, 605px" data-src="http://www.36dsj.com/wp-content/uploads/2016/11/450.png"> <img class="aligncenter size-full wp-image-70173" alt="36大数据" width="603" height="913" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/451.png 603w, http://www.36dsj.com/wp-content/uploads/2016/11/451-283x429.png 283w, http://www.36dsj.com/wp-content/uploads/2016/11/451-415x629.png 415w" sizes="(max-width: 603px) 100vw, 603px" data-src="http://www.36dsj.com/wp-content/uploads/2016/11/451.png"> <img class="aligncenter size-full wp-image-70174" alt="36大数据" width="606" height="911" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/452.png 606w, http://www.36dsj.com/wp-content/uploads/2016/11/452-285x429.png 285w, http://www.36dsj.com/wp-content/uploads/2016/11/452-418x629.png 418w" sizes="(max-width: 606px) 100vw, 606px" data-src="http://www.36dsj.com/wp-content/uploads/2016/11/452.png"> <img class="aligncenter size-full wp-image-70175" alt="36大数据" width="607" height="142" srcset="http://www.36dsj.com/wp-content/uploads/2016/11/453.png 607w, http://www.36dsj.com/wp-content/uploads/2016/11/453-600x140.png 600w" sizes="(max-width: 607px) 100vw, 607px" data-src="http://www.36dsj.com/wp-content/uploads/2016/11/453.png"></p>
 
 
 
 <p>python3 gen_lyrics 0训练差不多10几分钟，然后运行python3 gen_lyrics.py 1生成的歌词如下：</p>
-<p><img src="http://www.36dsj.com/wp-content/uploads/2016/11/454-1.png" alt></p>
+<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2016/11/454-1.png"></p>
 <p>End.</p>
 
     </div>
@@ -403,7 +390,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-count">1496</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -416,7 +403,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-count">1433</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -494,7 +481,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">372:21</span>
+    <span title="站点阅读时长">372:38</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
@@ -520,7 +507,7 @@ setInterval("createtime()",250);
 </script>
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -558,13 +545,73 @@ setInterval("createtime()",250);
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -572,7 +619,7 @@ setInterval("createtime()",250);
 
 
 
-  <script>
+  <script pjax>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
@@ -606,6 +653,7 @@ setInterval("createtime()",250);
 
 
 
+    <div id="pjax">
 
   
 
@@ -638,6 +686,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 }, window.Valine);
 </script>
 
+    </div>
 
 </body>
 </html>

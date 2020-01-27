@@ -33,8 +33,8 @@
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -43,7 +43,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.xml',
+    path: 'search.json',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
@@ -62,38 +62,10 @@
 <meta property="og:site_name" content="Hi">
 <meta property="og:description" content="wjlkoorey  在博文“Linux系统启动过程分析”中我们了解了linux系统的启动流程，今天我们就来手动一步一步从头来构建一个最小的linux系统，然后用模拟器将其加载起来。常见的模拟器有Qemu、Bochs、VMWare、VPC、Virtual Box和Xen等，以及特殊的模拟UML(User-Mode-Linux)，这里我们选择用VMWare。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022276448d.gif">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347285972uzot.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_13472860152b32.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347286127dDXv.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347286131jGjr.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347286135MHsQ.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287650blYG.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287704pnSv.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287709zv94.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_13472877465653.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287779joj0.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287785pc6p.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287856Nm1K.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287895zW4p.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288002U90O.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288136iSA4.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288142C8Gn.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288152gMkw.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_13472882411HVV.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288291YEn1.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288378iAFa.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288420b44Z.jpg">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022276448d.gif">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022306CqJH.gif">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022354796s.gif">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022370Prdp.gif">
-<meta property="og:image" content="http://blog.chinaunix.net/attachment/201303/23/23069658_13640223868sSU.gif">
 <meta property="og:updated_time" content="2017-03-27T10:00:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Build your own Linux System">
 <meta name="twitter:description" content="wjlkoorey  在博文“Linux系统启动过程分析”中我们了解了linux系统的启动流程，今天我们就来手动一步一步从头来构建一个最小的linux系统，然后用模拟器将其加载起来。常见的模拟器有Qemu、Bochs、VMWare、VPC、Virtual Box和Xen等，以及特殊的模拟UML(User-Mode-Linux)，这里我们选择用VMWare。">
-<meta name="twitter:image" content="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022276448d.gif">
 
 <link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Linux/start-up-of-linux/">
 
@@ -311,14 +283,14 @@
 
       
         <p><a href="http://blog.chinaunix.net/uid-23069658-id-3343885.html" target="_blank" rel="noopener">wjlkoorey</a></p>
-<p><img src="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022276448d.gif" alt></p>
+<p><img alt data-src="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022276448d.gif"></p>
 <p>在博文“<a href="http://blog.chinaunix.net/uid-23069658-id-3142047.html" target="_blank" rel="noopener">Linux系统启动过程分析</a>”中我们了解了linux系统的启动流程，今天我们就来手动一步一步从头来构建一个最小的linux系统，然后用模拟器将其加载起来。常见的模拟器有Qemu、Bochs、VMWare、VPC、Virtual Box和Xen等，以及特殊的模拟UML(User-Mode-Linux)，这里我们选择用VMWare。</p>
    <a id="more"></a>
 <pre><code>我们制作的Linux系统有shell功能，支持Web Server，telnet等服务，以及ifconfig，vi等常见工具。准备工作：
 在http://www.kernel.org 下载内核源代码 linux-2.6.21.tar.bz2；
 在http://www.busybox.org 下载busybox源码 busybox-1.14.4.tar.bz2。
 在本地新建一个目录，例如/home/DIY，当然你可以随便选择，然后将下载的内核源码和busybox源码包拷贝到/home/DIY目录下；
-</code></pre><p><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347285972uzot.jpg" alt><br>    A)、构造根文件系统<br>    我们都知道标准的发行版linux其目录结构一般是如下这个样子：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_13472860152b32.jpg" alt><br>    我们制作的linux运行起来之后当然也应该有个类似的目录结构。这里我们只选择一些必须的目录，因为我们构建的是“最小”的Linux系统。<br>    在/home/DIY目录下依次执行如下命令：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347286127dDXv.jpg" alt><br>    在rootfs/etc目录下分别建立如下各个文件group、inittab、profile、protocols、<br>rcS和services：<br>点击(此处)折叠或打开</p>
+</code></pre><p><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347285972uzot.jpg"><br>    A)、构造根文件系统<br>    我们都知道标准的发行版linux其目录结构一般是如下这个样子：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_13472860152b32.jpg"><br>    我们制作的linux运行起来之后当然也应该有个类似的目录结构。这里我们只选择一些必须的目录，因为我们构建的是“最小”的Linux系统。<br>    在/home/DIY目录下依次执行如下命令：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347286127dDXv.jpg"><br>    在rootfs/etc目录下分别建立如下各个文件group、inittab、profile、protocols、<br>rcS和services：<br>点击(此处)折叠或打开</p>
 <p>###################### /etc/group ###################### from here<br>root:x:0:<br>ftp:x:800:<br>nogroup:x:65534:</p>
 <p>######################/etc/inittab ###################### from here<br>::sysinit:/etc/rcS<br>tty1::askfirst:-/bin/sh –login<br>tty2::askfirst:-/bin/sh –login<br>tty3::askfirst:-/bin/sh –login</p>
 <p>######################/etc/profile ###################### from here</p>
@@ -338,14 +310,14 @@
 <p>###################/etc/services ################# from here<br>ssh    22/tcp<br>ssh    22/udp<br>telnet    23/tcp<br>telnet    23/udp<br>http    80/tcp    www www-http<br>http    80/udp    www www-http<br>login    513/tcp<br>shell    514/tcp    cmd<br>    再在rootfs/www目录下建立一个index.html文件，内容如下：<br>点击(此处)折叠或打开</p>
 <p></p><h1>Success!</h1><p></p>
 <p></p><p>Welcome to DIY linux!</p><br>    最后rootfs目录的组织结构如下：<p></p>
-<p><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347286131jGjr.jpg" alt><br>    其他的命令行工具由接下来的busybox生成。<br>    B)、编译busybox<br>    在Linux系统中常用的工具，如 bash、grep命令、sed 命令、telnetd等，这里为了方便省事，我就用busybox来代替了。现在的busybox拥有非常多的工具，真正成为一个“Busy”的box。后面的例子将尝试只使用 busybox来充当所有应用层所需要的工具集。包括Shell，网络配置，web服务器，telnet等。而busybox也由此得到一个称号“嵌入式世界的瑞士军刀”。</p>
-<p><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347286135MHsQ.jpg" alt><br>    将修改后的“ <a href="http://blog.chinaunix.net/attachment/attach/23/06/96/5823069658e50981fdbbfec6c9bf052e2250a0fba1.txt" target="_blank" rel="noopener">busybox.config.txt</a>   ”复制到busybox-1.14.4目录下重命名为“.config”，注意文件名前面的点“.”绝对不能省略。</p>
-<p><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287650blYG.jpg" alt><br>    之后弹出如下界面：</p>
-<p><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287704pnSv.jpg" alt><br>    在配置界面下，我们依次选择：Busybox Settings =&gt; Build Options 然后选中(按空格键)，这里我们将编译生成静态库的busybox，如下图中所示选项：</p>
-<p><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287709zv94.jpg" alt><br>    配置busybox的安装目录，依次选择：Busybox Settings =&gt; Installation Options ，如下：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_13472877465653.jpg" alt><br>    保存配置后执行编译命令make：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287779joj0.jpg" alt><br>    编译完成后执行make install：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287785pc6p.jpg" alt><br>    这样我们编译的busybox工具就安装到前面我们创建的rootfs目录中了，此时rootfs目录下的组织结构就变成了如下这个样子：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287856Nm1K.jpg" alt><br>    不管是bin，sbin，usr/bin还是usr/sbin目录下的命令都是到/bin/busybox应用程序的软连接。目前rootfs这个目录结构和我们常见的linux发行版的目录结构还是有些差异，所以我们继续往rootfs中增加dev，proc，tmp，var，lib，root和sys目录：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287895zW4p.jpg" alt><br>    这样子就更像一个“标准”linux发行版的样子了。接下来我们来制作一个ramdisk的初始化文件，名为initrd。Linux内置支持以RAM磁盘的形式来启动。关于Linux系统的启动流程请参见博文“Linux系统启动过程分析”里的详细描述。<br>    C)、制作initrd文件<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288002U90O.jpg" alt><br>    D)、编译Linux内核源码<br>    解压内核源码，然后将我修改后的内核配置文件“ linux.config.txt   ”拷贝到linux-2.6.21目录下，重命名为“.config”，如下：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288136iSA4.jpg" alt><br>    执行make menuconfig可以查看哪些配置项已经被选上：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288142C8Gn.jpg" alt><br>    执行make命令开始编译内核：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288152gMkw.jpg" alt><br>    我们提供的内核配置文件linux.conf将模块已经静态编译到内核中去了，这样就会造成内核比较大，如果是采用动态加载模块的话，需要将所有模块安装到前面制作的ramdisk里。编译好的内核镜像，一般位于：<br>•    对于x86平台，压缩后的核心是 arch/x86/boot/bzImage；<br>•    对于MIPS平台，压缩后的核心是 arch/powerpc/boot/zImage；<br>•    对于arm平台，压缩后的核心是 arch/arm/boot/zImage<br>……<br>E)、用VMWare加载内核<br>将arch/x86/boot/bzImage和/home/DIY/initrd文件拷贝到linux系统的/boot目录下，然后修改/boot/grub/menu.lst，在其中添加如下一项：<br>点击(此处)折叠或打开<br>title DIY Your OS<br>   root (hd0,0)<br>   kernel /bzImage rw root=/dev/ram rootfs_size=8M<br>   initrd /initrd<br>   PS：因为我们制作的initrd文件大小就是8M，所以rootfs_size=8M。<br>    重启VMware，在启动界面我们自己built的linux系统：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_13472882411HVV.jpg" alt><br>    启动后效果如下：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288291YEn1.jpg" alt><br>    我们可以看到eth0接口已经up了，其IP地址默认为192.168.1.1，因为我虚拟机的IP地址池是192.168.6.*网段的，所以手动将eth0的接口IP设置为192.168.6.135：<br><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288378iAFa.jpg" alt><br>然后通过web和telnet访问我们自己做的系统，最终的访问结果如下：</p>
-<p><img src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288420b44Z.jpg" alt></p>
+<p><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347286131jGjr.jpg"><br>    其他的命令行工具由接下来的busybox生成。<br>    B)、编译busybox<br>    在Linux系统中常用的工具，如 bash、grep命令、sed 命令、telnetd等，这里为了方便省事，我就用busybox来代替了。现在的busybox拥有非常多的工具，真正成为一个“Busy”的box。后面的例子将尝试只使用 busybox来充当所有应用层所需要的工具集。包括Shell，网络配置，web服务器，telnet等。而busybox也由此得到一个称号“嵌入式世界的瑞士军刀”。</p>
+<p><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347286135MHsQ.jpg"><br>    将修改后的“ <a href="http://blog.chinaunix.net/attachment/attach/23/06/96/5823069658e50981fdbbfec6c9bf052e2250a0fba1.txt" target="_blank" rel="noopener">busybox.config.txt</a>   ”复制到busybox-1.14.4目录下重命名为“.config”，注意文件名前面的点“.”绝对不能省略。</p>
+<p><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287650blYG.jpg"><br>    之后弹出如下界面：</p>
+<p><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287704pnSv.jpg"><br>    在配置界面下，我们依次选择：Busybox Settings =&gt; Build Options 然后选中(按空格键)，这里我们将编译生成静态库的busybox，如下图中所示选项：</p>
+<p><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287709zv94.jpg"><br>    配置busybox的安装目录，依次选择：Busybox Settings =&gt; Installation Options ，如下：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_13472877465653.jpg"><br>    保存配置后执行编译命令make：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287779joj0.jpg"><br>    编译完成后执行make install：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287785pc6p.jpg"><br>    这样我们编译的busybox工具就安装到前面我们创建的rootfs目录中了，此时rootfs目录下的组织结构就变成了如下这个样子：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287856Nm1K.jpg"><br>    不管是bin，sbin，usr/bin还是usr/sbin目录下的命令都是到/bin/busybox应用程序的软连接。目前rootfs这个目录结构和我们常见的linux发行版的目录结构还是有些差异，所以我们继续往rootfs中增加dev，proc，tmp，var，lib，root和sys目录：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347287895zW4p.jpg"><br>    这样子就更像一个“标准”linux发行版的样子了。接下来我们来制作一个ramdisk的初始化文件，名为initrd。Linux内置支持以RAM磁盘的形式来启动。关于Linux系统的启动流程请参见博文“Linux系统启动过程分析”里的详细描述。<br>    C)、制作initrd文件<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288002U90O.jpg"><br>    D)、编译Linux内核源码<br>    解压内核源码，然后将我修改后的内核配置文件“ linux.config.txt   ”拷贝到linux-2.6.21目录下，重命名为“.config”，如下：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288136iSA4.jpg"><br>    执行make menuconfig可以查看哪些配置项已经被选上：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288142C8Gn.jpg"><br>    执行make命令开始编译内核：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288152gMkw.jpg"><br>    我们提供的内核配置文件linux.conf将模块已经静态编译到内核中去了，这样就会造成内核比较大，如果是采用动态加载模块的话，需要将所有模块安装到前面制作的ramdisk里。编译好的内核镜像，一般位于：<br>•    对于x86平台，压缩后的核心是 arch/x86/boot/bzImage；<br>•    对于MIPS平台，压缩后的核心是 arch/powerpc/boot/zImage；<br>•    对于arm平台，压缩后的核心是 arch/arm/boot/zImage<br>……<br>E)、用VMWare加载内核<br>将arch/x86/boot/bzImage和/home/DIY/initrd文件拷贝到linux系统的/boot目录下，然后修改/boot/grub/menu.lst，在其中添加如下一项：<br>点击(此处)折叠或打开<br>title DIY Your OS<br>   root (hd0,0)<br>   kernel /bzImage rw root=/dev/ram rootfs_size=8M<br>   initrd /initrd<br>   PS：因为我们制作的initrd文件大小就是8M，所以rootfs_size=8M。<br>    重启VMware，在启动界面我们自己built的linux系统：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_13472882411HVV.jpg"><br>    启动后效果如下：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288291YEn1.jpg"><br>    我们可以看到eth0接口已经up了，其IP地址默认为192.168.1.1，因为我虚拟机的IP地址池是192.168.6.*网段的，所以手动将eth0的接口IP设置为192.168.6.135：<br><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288378iAFa.jpg"><br>然后通过web和telnet访问我们自己做的系统，最终的访问结果如下：</p>
+<p><img alt data-src="http://blog.chinaunix.net/attachment/201209/10/23069658_1347288420b44Z.jpg"></p>
 <h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><p>通过今天的学习相信大家对Linux系统的运行原理和启动流程的认识又上了一个新的台阶，更重要的是学会了如何手动构建一个“最小”的Linux“发行版”系统。那么，现在回过头来再看那些商业版的Linux系统，其实本质和我们今天做工作的差不多，所以，如果有条件我们也可以发行一个自己的系统了:)。</p>
-<h2 id="Linux系统启动过程分析"><a href="#Linux系统启动过程分析" class="headerlink" title="Linux系统启动过程分析 "></a><a href="http://blog.chinaunix.net/uid-23069658-id-3142047.html" target="_blank" rel="noopener">Linux系统启动过程分析 </a></h2><p>经过对Linux系统有了一定了解和熟悉后，想对其更深层次的东西做进一步探究。这当中就包括系统的启动流程、文件系统的组成结构、基于动态库和静态库的程序在执行时的异同、协议栈的架构和原理、驱动程序的机制等等。<br>       本人在综合了现有网上大家智慧的基础上，结合对2.6.32的内核代码的研读，基于CentOS 6.0系统对Linux的启动流程做了些分析。由于才疏学浅，知识所限，有些地方分析不妥之处还请各位高手不吝赐教。<br>        OK，我们言归正传。对于一台安装了Linux系统的主机来说，当用户按下开机按钮时，一共要经历以下几个过程，如图：<br><img src="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022276448d.gif" alt></p>
+<h2 id="Linux系统启动过程分析"><a href="#Linux系统启动过程分析" class="headerlink" title="Linux系统启动过程分析 "></a><a href="http://blog.chinaunix.net/uid-23069658-id-3142047.html" target="_blank" rel="noopener">Linux系统启动过程分析 </a></h2><p>经过对Linux系统有了一定了解和熟悉后，想对其更深层次的东西做进一步探究。这当中就包括系统的启动流程、文件系统的组成结构、基于动态库和静态库的程序在执行时的异同、协议栈的架构和原理、驱动程序的机制等等。<br>       本人在综合了现有网上大家智慧的基础上，结合对2.6.32的内核代码的研读，基于CentOS 6.0系统对Linux的启动流程做了些分析。由于才疏学浅，知识所限，有些地方分析不妥之处还请各位高手不吝赐教。<br>        OK，我们言归正传。对于一台安装了Linux系统的主机来说，当用户按下开机按钮时，一共要经历以下几个过程，如图：<br><img alt data-src="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022276448d.gif"></p>
 <pre><code>其中，每个过程都执行了自己该做的初始化部分的事情，有些过程又可分为好几个子过程。接下来，我们就对每个阶段做一个详细分析和讲解。
 </code></pre><p>BIOS自检</p>
 <pre><code>稍有计算机基础的人都应该听过BIOS(Basic Input / Output System)，又称基本输入输出系统，可以视为是一个永久地记录在ROM中的一个软件，是操作系统输入输出管理系统的一部分。早期的BIOS芯片确实是&quot;只读&quot;的，里面的内容是用一种烧录器写入的，一旦写入就不能更改，除非更换芯片。现在的主机板都使用一种叫Flash EPROM的芯片来存储系统BIOS，里面的内容可通过使用主板厂商提供的擦写程序擦除后重新写入，这样就给用户升级BIOS提供了极大的方便。
@@ -355,7 +327,7 @@ BIOS的功能由两部分组成，分别是POST码和Runtime服务。POST阶段�
 </code></pre><p>至此，BIOS的任务就完成了，此后将系统启动的控制权移交到MBR部分的代码。<br>        PS: 在个人电脑中，Linux的启动是从0xFFFF0地址开始的。</p>
 <p>系统引导</p>
 <pre><code>我们首先来了解一下MBR，它是Master Boot Record的缩写。硬盘的0柱面、0磁头、1扇区称为主引导扇区。它由三个部分组成，主引导程序(Bootloader)、 硬盘分区表DPT（Disk Partition table）和硬盘有效标志（55AA），其结构图如下所示：
-</code></pre><p><img src="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022306CqJH.gif" alt></p>
+</code></pre><p><img alt data-src="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022306CqJH.gif"></p>
 <pre><code> 磁盘分区表包含以下三部分：
  1）、Partition ID  （5：延申  82：Swap   83：Linux   8e：LVM     fd：RAID）
  2）、Partition起始磁柱
@@ -371,8 +343,8 @@ grub引导也分为两个阶段stage1阶段和stage2阶段(有些较新的grub�
  假如是情形2，我们将/boot/grub目录下的内容清空，依然能成功启动grub；假如是情形1，将/boot/grub目录下stage2删除后，则系统启动过程中grub会启动失败。
 </code></pre><p>启动内核</p>
 <pre><code>当stage2被载入内存执行时，它首先会去解析grub的配置文件/boot/grub/grub.conf，然后加载内核镜像到内存中，并将控制权转交给内核。而内核会立即初始化系统中各设备并做相关的配置工作，其中包括CPU、I/O、存储设备等。
-</code></pre><p>关于Linux的设备驱动程序的加载，有一部分驱动程序直接被编译进内核镜像中，另一部分驱动程序则是以模块的形式放在initrd(ramdisk)中。<br>      Linux内核需要适应多种不同的硬件架构，但是将所有的硬件驱动编入内核又是不实际的，而且内核也不可能每新出一种硬件结构，就将该硬件的设备驱动写入内核。实际上Linux的内核镜像仅是包含了基本的硬件驱动，在系统安装过程中会检测系统硬件信息，根据安装信息和系统硬件信息将一部分设备驱动写入 initrd 。这样在以后启动系统时，一部分设备驱动就放在initrd中来加载。这里有必要给大家再多介绍一下initrd这个东东：<br>       initrd 的英文含义是 bootloader initialized RAM disk，就是由 boot loader 初始化的内存盘。在 linu2.6内核启动前，boot loader 会将存储介质中的 initrd 文件加载到内存，内核启动时会在访问真正的根文件系统前先访问该内存中的 initrd 文件系统。在 boot loader 配置了 initrd 的情况下，内核启动被分成了两个阶段，第一阶段先执行 initrd 文件系统中的init，完成加载驱动模块等任务，第二阶段才会执行真正的根文件系统中的 /sbin/init 进程。<br>      另外一个概念：initramfs<br>       initramfs 是在 kernel 2.5中引入的技术，实际上它的含义就是：在内核镜像中附加一个cpio包，这个cpio包中包含了一个小型的文件系统，当内核启动时，内核将这个 cpio包解开，并且将其中包含的文件系统释放到rootfs中，内核中的一部分初始化代码会放到这个文件系统中，作为用户层进程来执行。这样带来的明显的好处是精简了内核的初始化代码，而且使得内核的初始化过程更容易定制。<br>疑惑的是：我的内核是2.6.32-71.el6.i686版本，但在我的/boot分区下面却存在的是/boot/initramfs-2.6.32-71.el6.i686.img类型的文件，没搞明白，还望高人解惑。我只知道在2.6内核中支持两种格式的initrd，一种是2.4内核的文件系统镜像image-initrd，一种是cpio格式。接下来我们就来探究一下initramfs-2.6.32-71.el6.i686.img里到底放了那些东西。<br><img src="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022354796s.gif" alt><br>    在tmp文件夹中解压initrd.img里的内容：<br><img src="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022370Prdp.gif" alt></p>
-<p>如果initrd.img文件的格式显示为“initrd.img:ISO 9660 CD-ROM filesystem data”，则可直接输入命令“mount -o loop initrd.img /mnt/test”进行挂载。<br>         通过上的分析和我们的验证，我们确实得到了这样的结论：<br>         grub的stage2将initrd加载到内存里，让后将其中的内容释放到内容中，内核便去执行initrd中的init脚本，这时内核将控制权交给了init文件处理。我们简单浏览一下init脚本的内容，发现它也主要是加载各种存储介质相关的设备驱动程序。当所需的驱动程序加载完后，会创建一个根设备，然后将根文件系统rootfs以只读的方式挂载。这一步结束后，释放未使用的内存，转换到真正的根文件系统上面去，同时运行/sbin/init程序，执行系统的1号进程。此后系统的控制权就全权交给/sbin/init进程了。<br>l  初始化系统<br>经过千辛万苦的跋涉，我们终于接近黎明的曙光了。接下来就是最后一步了：初始化系统。/sbin/init进程是系统其他所有进程的父进程，当它接管了系统的控制权先之后，它首先会去读取/etc/inittab文件来执行相应的脚本进行系统初始化，如设置键盘、字体，装载模块，设置网络等。主要包括以下工作：<br>1)、执行系统初始化脚本(/etc/rc.d/rc.sysinit)，对系统进行基本的配置，以读写方式挂载根文件系统及其它文件系统，到此系统算是基本运行起来了，后面需要进行运行级别的确定及相应服务的启动。rc.sysinit所做的事情(不同的Linux发行版，该文件可能有些差异)如下：<br>（1）获取网络环境与主机类型。首先会读取网络环境设置文件”/etc/sysconfig/network”，获取主机名称与默认网关等网络环境。<br>（2）测试与载入内存设备/proc及usb设备/sys。除了/proc外，系统会主动检测是否有usb设备，并主动加载usb驱动，尝试载入usb文件系统。<br>（3）决定是否启动SELinux。<br>（4）接口设备的检测与即插即用（pnp）参数的测试。<br>（5）用户自定义模块的加载。用户可以再”/etc/sysconfig/modules/<em>.modules”加入自定义的模块，此时会加载到系统中。<br>（6）加载核心的相关设置。按”/etc/sysctl.conf”这个文件的设置值配置功能。<br>（7）设置系统时间（clock）。<br>（8）设置终端的控制台的字形。<br>（9）设置raid及LVM等硬盘功能。<br>（10）以方式查看检验磁盘文件系统。<br>（11）进行磁盘配额quota的转换。<br>（12）重新以读取模式载入系统磁盘。<br>（13）启动quota功能。<br>（14）启动系统随机数设备（产生随机数功能）。<br>（15）清楚启动过程中的临时文件。<br>（16）将启动信息加载到”/var/log/dmesg”文件中。<br> 当/etc/rc.d/rc.sysinit执行完后，系统就可以顺利工作了，只是还需要启动系统所需要的各种服务，这样主机才可以提供相关的网络和主机功能，因此便会执行下面的脚本。<br>2)、执行/etc/rc.d/rc脚本。该文件定义了服务启动的顺序是先K后S，而具体的每个运行级别的服务状态是放在/etc/rc.d/rc</em>.d（<em>=0~6）目录下，所有的文件均是指向/etc/init.d下相应文件的符号链接。rc.sysinit通过分析/etc/inittab文件来确定系统的启动级别，然后才去执行/etc/rc.d/rc</em>.d下的文件。<br>/etc/init.d-&gt; /etc/rc.d/init.d<br>/etc/rc -&gt;/etc/rc.d/rc<br>/etc/rc<em>.d -&gt;/etc/rc.d/rc</em>.d<br>/etc/rc.local-&gt; /etc/rc.d/rc.local<br>/etc/rc.sysinit-&gt; /etc/rc.d/rc.sysinit<br>也就是说，/etc目录下的init.d、rc、rc<em>.d、rc.local和rc.sysinit均是指向/etc/rc.d目录下相应文件和文件夹的符号链接。我们以启动级别3为例来简要说明一下。<br>/etc/rc.d/rc3.d目录，该目录下的内容全部都是以 S 或 K 开头的链接文件，都链接到”/etc/rc.d/init.d”目录下的各种shell脚本。S表示的是启动时需要start的服务内容，K表示关机时需要关闭的服务内容。/etc/rc.d/rc</em>.d中的系统服务会在系统后台启动，如果要对某个运行级别中的服务进行更具体的定制，通过chkconfig命令来操作，或者通过setup、ntsys、system-config-services来进行定制。如果我们需要自己增加启动的内容，可以在init.d目录中增加相关的shell脚本，然后在rc*.d目录中建立链接文件指向该shell脚本。这些shell脚本的启动或结束顺序是由S或K字母后面的数字决定，数字越小的脚本越先执行。例如，/etc/rc.d/rc3.d /S01sysstat就比/etc/rc.d/rc3.d /S99local先执行。<br>3)、执行用户自定义引导程序/etc/rc.d/rc.local。其实当执行/etc/rc.d/rc3.d/S99local时，它就是在执行/etc/rc.d/rc.local。S99local是指向rc.local的符号链接。就是一般来说，自定义的程序不需要执行上面所说的繁琐的建立shell增加链接文件的步骤，只需要将命令放在rc.local里面就可以了，这个shell脚本就是保留给用户自定义启动内容的。<br>4)、完成了系统所有的启动任务后，linux会启动终端或X-Window来等待用户登录。tty1,tty2,tty3…这表示在运行等级1，2，3，4的时候，都会执行”/sbin/mingetty”，而且执行了6个，所以linux会有6个纯文本终端，mingetty就是启动终端的命令。<br>除了这6个之外还会执行”/etc/X11/prefdm-nodaemon”这个主要启动X-Window<br>至此，系统就启动完毕了。以上分析不到的地方还请各位大虾不吝指正。<br>关于Linux的其他分析内容下次再继续写。<br>最后附上一张非常完整的系统启动流程图，适合各个水平阶段的读者。<br><img src="http://blog.chinaunix.net/attachment/201303/23/23069658_13640223868sSU.gif" alt></p>
+</code></pre><p>关于Linux的设备驱动程序的加载，有一部分驱动程序直接被编译进内核镜像中，另一部分驱动程序则是以模块的形式放在initrd(ramdisk)中。<br>      Linux内核需要适应多种不同的硬件架构，但是将所有的硬件驱动编入内核又是不实际的，而且内核也不可能每新出一种硬件结构，就将该硬件的设备驱动写入内核。实际上Linux的内核镜像仅是包含了基本的硬件驱动，在系统安装过程中会检测系统硬件信息，根据安装信息和系统硬件信息将一部分设备驱动写入 initrd 。这样在以后启动系统时，一部分设备驱动就放在initrd中来加载。这里有必要给大家再多介绍一下initrd这个东东：<br>       initrd 的英文含义是 bootloader initialized RAM disk，就是由 boot loader 初始化的内存盘。在 linu2.6内核启动前，boot loader 会将存储介质中的 initrd 文件加载到内存，内核启动时会在访问真正的根文件系统前先访问该内存中的 initrd 文件系统。在 boot loader 配置了 initrd 的情况下，内核启动被分成了两个阶段，第一阶段先执行 initrd 文件系统中的init，完成加载驱动模块等任务，第二阶段才会执行真正的根文件系统中的 /sbin/init 进程。<br>      另外一个概念：initramfs<br>       initramfs 是在 kernel 2.5中引入的技术，实际上它的含义就是：在内核镜像中附加一个cpio包，这个cpio包中包含了一个小型的文件系统，当内核启动时，内核将这个 cpio包解开，并且将其中包含的文件系统释放到rootfs中，内核中的一部分初始化代码会放到这个文件系统中，作为用户层进程来执行。这样带来的明显的好处是精简了内核的初始化代码，而且使得内核的初始化过程更容易定制。<br>疑惑的是：我的内核是2.6.32-71.el6.i686版本，但在我的/boot分区下面却存在的是/boot/initramfs-2.6.32-71.el6.i686.img类型的文件，没搞明白，还望高人解惑。我只知道在2.6内核中支持两种格式的initrd，一种是2.4内核的文件系统镜像image-initrd，一种是cpio格式。接下来我们就来探究一下initramfs-2.6.32-71.el6.i686.img里到底放了那些东西。<br><img alt data-src="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022354796s.gif"><br>    在tmp文件夹中解压initrd.img里的内容：<br><img alt data-src="http://blog.chinaunix.net/attachment/201303/23/23069658_1364022370Prdp.gif"></p>
+<p>如果initrd.img文件的格式显示为“initrd.img:ISO 9660 CD-ROM filesystem data”，则可直接输入命令“mount -o loop initrd.img /mnt/test”进行挂载。<br>         通过上的分析和我们的验证，我们确实得到了这样的结论：<br>         grub的stage2将initrd加载到内存里，让后将其中的内容释放到内容中，内核便去执行initrd中的init脚本，这时内核将控制权交给了init文件处理。我们简单浏览一下init脚本的内容，发现它也主要是加载各种存储介质相关的设备驱动程序。当所需的驱动程序加载完后，会创建一个根设备，然后将根文件系统rootfs以只读的方式挂载。这一步结束后，释放未使用的内存，转换到真正的根文件系统上面去，同时运行/sbin/init程序，执行系统的1号进程。此后系统的控制权就全权交给/sbin/init进程了。<br>l  初始化系统<br>经过千辛万苦的跋涉，我们终于接近黎明的曙光了。接下来就是最后一步了：初始化系统。/sbin/init进程是系统其他所有进程的父进程，当它接管了系统的控制权先之后，它首先会去读取/etc/inittab文件来执行相应的脚本进行系统初始化，如设置键盘、字体，装载模块，设置网络等。主要包括以下工作：<br>1)、执行系统初始化脚本(/etc/rc.d/rc.sysinit)，对系统进行基本的配置，以读写方式挂载根文件系统及其它文件系统，到此系统算是基本运行起来了，后面需要进行运行级别的确定及相应服务的启动。rc.sysinit所做的事情(不同的Linux发行版，该文件可能有些差异)如下：<br>（1）获取网络环境与主机类型。首先会读取网络环境设置文件”/etc/sysconfig/network”，获取主机名称与默认网关等网络环境。<br>（2）测试与载入内存设备/proc及usb设备/sys。除了/proc外，系统会主动检测是否有usb设备，并主动加载usb驱动，尝试载入usb文件系统。<br>（3）决定是否启动SELinux。<br>（4）接口设备的检测与即插即用（pnp）参数的测试。<br>（5）用户自定义模块的加载。用户可以再”/etc/sysconfig/modules/<em>.modules”加入自定义的模块，此时会加载到系统中。<br>（6）加载核心的相关设置。按”/etc/sysctl.conf”这个文件的设置值配置功能。<br>（7）设置系统时间（clock）。<br>（8）设置终端的控制台的字形。<br>（9）设置raid及LVM等硬盘功能。<br>（10）以方式查看检验磁盘文件系统。<br>（11）进行磁盘配额quota的转换。<br>（12）重新以读取模式载入系统磁盘。<br>（13）启动quota功能。<br>（14）启动系统随机数设备（产生随机数功能）。<br>（15）清楚启动过程中的临时文件。<br>（16）将启动信息加载到”/var/log/dmesg”文件中。<br> 当/etc/rc.d/rc.sysinit执行完后，系统就可以顺利工作了，只是还需要启动系统所需要的各种服务，这样主机才可以提供相关的网络和主机功能，因此便会执行下面的脚本。<br>2)、执行/etc/rc.d/rc脚本。该文件定义了服务启动的顺序是先K后S，而具体的每个运行级别的服务状态是放在/etc/rc.d/rc</em>.d（<em>=0~6）目录下，所有的文件均是指向/etc/init.d下相应文件的符号链接。rc.sysinit通过分析/etc/inittab文件来确定系统的启动级别，然后才去执行/etc/rc.d/rc</em>.d下的文件。<br>/etc/init.d-&gt; /etc/rc.d/init.d<br>/etc/rc -&gt;/etc/rc.d/rc<br>/etc/rc<em>.d -&gt;/etc/rc.d/rc</em>.d<br>/etc/rc.local-&gt; /etc/rc.d/rc.local<br>/etc/rc.sysinit-&gt; /etc/rc.d/rc.sysinit<br>也就是说，/etc目录下的init.d、rc、rc<em>.d、rc.local和rc.sysinit均是指向/etc/rc.d目录下相应文件和文件夹的符号链接。我们以启动级别3为例来简要说明一下。<br>/etc/rc.d/rc3.d目录，该目录下的内容全部都是以 S 或 K 开头的链接文件，都链接到”/etc/rc.d/init.d”目录下的各种shell脚本。S表示的是启动时需要start的服务内容，K表示关机时需要关闭的服务内容。/etc/rc.d/rc</em>.d中的系统服务会在系统后台启动，如果要对某个运行级别中的服务进行更具体的定制，通过chkconfig命令来操作，或者通过setup、ntsys、system-config-services来进行定制。如果我们需要自己增加启动的内容，可以在init.d目录中增加相关的shell脚本，然后在rc*.d目录中建立链接文件指向该shell脚本。这些shell脚本的启动或结束顺序是由S或K字母后面的数字决定，数字越小的脚本越先执行。例如，/etc/rc.d/rc3.d /S01sysstat就比/etc/rc.d/rc3.d /S99local先执行。<br>3)、执行用户自定义引导程序/etc/rc.d/rc.local。其实当执行/etc/rc.d/rc3.d/S99local时，它就是在执行/etc/rc.d/rc.local。S99local是指向rc.local的符号链接。就是一般来说，自定义的程序不需要执行上面所说的繁琐的建立shell增加链接文件的步骤，只需要将命令放在rc.local里面就可以了，这个shell脚本就是保留给用户自定义启动内容的。<br>4)、完成了系统所有的启动任务后，linux会启动终端或X-Window来等待用户登录。tty1,tty2,tty3…这表示在运行等级1，2，3，4的时候，都会执行”/sbin/mingetty”，而且执行了6个，所以linux会有6个纯文本终端，mingetty就是启动终端的命令。<br>除了这6个之外还会执行”/etc/X11/prefdm-nodaemon”这个主要启动X-Window<br>至此，系统就启动完毕了。以上分析不到的地方还请各位大虾不吝指正。<br>关于Linux的其他分析内容下次再继续写。<br>最后附上一张非常完整的系统启动流程图，适合各个水平阶段的读者。<br><img alt data-src="http://blog.chinaunix.net/attachment/201303/23/23069658_13640223868sSU.gif"></p>
 <p>参考文献：<br><a href="http://www.cnblogs.com/scnutiger/archive/2009/09/30/1576795.html" target="_blank" rel="noopener">http://www.cnblogs.com/scnutiger/archive/2009/09/30/1576795.html</a><br><a href="http://www.it.com.cn/f/edu/0411/24/51090.htm" target="_blank" rel="noopener">http://www.it.com.cn/f/edu/0411/24/51090.htm</a><br><a href="http://bbs.chinaunix.net/thread-2046548-1-1.html" target="_blank" rel="noopener">http://bbs.chinaunix.net/thread-2046548-1-1.html</a><br><a href="http://space.itpub.net/8111049/viewspace-680043" target="_blank" rel="noopener">http://space.itpub.net/8111049/viewspace-680043</a><br><a href="http://dongdiy.blog.51cto.com/1908223/366909" target="_blank" rel="noopener">http://dongdiy.blog.51cto.com/1908223/366909</a><br><a href="http://icarusli.iteye.com/blog/625755" target="_blank" rel="noopener">http://icarusli.iteye.com/blog/625755</a><br><a href="http://www.54sa.net/?p=549" target="_blank" rel="noopener">http://www.54sa.net/?p=549</a><br><a href="http://roclinux.cn/?p=1301" target="_blank" rel="noopener">http://roclinux.cn/?p=1301</a></p>
 
     </div>
@@ -462,7 +434,7 @@ grub引导也分为两个阶段stage1阶段和stage2阶段(有些较新的grub�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-count">1496</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -475,7 +447,7 @@ grub引导也分为两个阶段stage1阶段和stage2阶段(有些较新的grub�
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-count">1433</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -553,7 +525,7 @@ grub引导也分为两个阶段stage1阶段和stage2阶段(有些较新的grub�
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">372:21</span>
+    <span title="站点阅读时长">372:38</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
@@ -579,7 +551,7 @@ setInterval("createtime()",250);
 </script>
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -617,13 +589,73 @@ setInterval("createtime()",250);
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -631,7 +663,7 @@ setInterval("createtime()",250);
 
 
 
-  <script>
+  <script pjax>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
@@ -665,6 +697,7 @@ setInterval("createtime()",250);
 
 
 
+    <div id="pjax">
 
   
 
@@ -697,6 +730,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 }, window.Valine);
 </script>
 
+    </div>
 
 </body>
 </html>

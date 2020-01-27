@@ -33,8 +33,8 @@
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -43,7 +43,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.xml',
+    path: 'search.json',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
@@ -62,14 +62,10 @@
 <meta property="og:site_name" content="Hi">
 <meta property="og:description" content="深入FFM原理与实践del2z, 大龙 前言FM和FFM模型是最近几年提出的模型，凭借其在数据量比较大并且特征稀疏的情况下，仍然能够得到优秀的性能和效果的特性，屡次在各大公司举办的CTR预估比赛中获得不错的战绩。美团点评技术团队在搭建DSP的过程中，探索并使用了FM和FFM模型进行CTR和CVR预估，并且取得了不错的效果。本文旨在把我们对FM和FFM原理的探索和应用的经验介绍给有兴趣的读者。 在计">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://tech.meituan.com/img/deep-understanding-of-ffm-principle-and-practice/ffm_mf.png">
-<meta property="og:image" content="http://tech.meituan.com/img/deep-understanding-of-ffm-principle-and-practice/ffm_sgd.png">
-<meta property="og:image" content="http://tech.meituan.com/img/qrcode_for_gh.jpg">
 <meta property="og:updated_time" content="2017-03-27T09:04:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deep FFM Theory and Practice in Meituan">
 <meta name="twitter:description" content="深入FFM原理与实践del2z, 大龙 前言FM和FFM模型是最近几年提出的模型，凭借其在数据量比较大并且特征稀疏的情况下，仍然能够得到优秀的性能和效果的特性，屡次在各大公司举办的CTR预估比赛中获得不错的战绩。美团点评技术团队在搭建DSP的过程中，探索并使用了FM和FFM模型进行CTR和CVR预估，并且取得了不错的效果。本文旨在把我们对FM和FFM原理的探索和应用的经验介绍给有兴趣的读者。 在计">
-<meta name="twitter:image" content="http://tech.meituan.com/img/deep-understanding-of-ffm-principle-and-practice/ffm_mf.png">
 
 <link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/Meituan/ffm-learning-in-meituan/">
 
@@ -300,7 +296,7 @@
 <p>多项式模型是包含特征组合的最直观的模型。在多项式模型中，特征 xixi 和 xjxj 的组合采用 xixjxixj 表示，即 xixi 和 xjxj 都非零时，组合特征 xixjxixj 才有意义。从对比的角度，本文只讨论二阶多项式模型。模型的表达式如下</p>
 <p>y(x)=w0+∑i=1nwixi+∑i=1n∑j=i+1nwijxixj(1)<br>(1)y(x)=w0+∑i=1nwixi+∑i=1n∑j=i+1nwijxixj<br>其中，nn 代表样本的特征数量，xixi 是第 ii 个特征的值，w0w0、wiwi、wijwij 是模型参数。</p>
 <p>从公式(1)(1)可以看出，组合特征的参数一共有 n(n−1)2n(n−1)2 个，任意两个参数都是独立的。然而，在数据稀疏性普遍存在的实际应用场景中，二次项参数的训练是很困难的。其原因是，每个参数 wijwij 的训练需要大量 xixi 和 xjxj 都非零的样本；由于样本数据本来就比较稀疏，满足“xixi 和 xjxj 都非零”的样本将会非常少。训练样本的不足，很容易导致参数 wijwij 不准确，最终将严重影响模型的性能。</p>
-<p>那么，如何解决二次项参数的训练问题呢？矩阵分解提供了一种解决思路。在model-based的协同过滤中，一个rating矩阵可以分解为user矩阵和item矩阵，每个user和item都可以采用一个隐向量表示[8]。比如在下图中的例子中，我们把每个user表示成一个二维向量，同时把每个item表示成一个二维向量，两个向量的点积就是矩阵中user对item的打分。<br><img src="http://tech.meituan.com/img/deep-understanding-of-ffm-principle-and-practice/ffm_mf.png" alt></p>
+<p>那么，如何解决二次项参数的训练问题呢？矩阵分解提供了一种解决思路。在model-based的协同过滤中，一个rating矩阵可以分解为user矩阵和item矩阵，每个user和item都可以采用一个隐向量表示[8]。比如在下图中的例子中，我们把每个user表示成一个二维向量，同时把每个item表示成一个二维向量，两个向量的点积就是矩阵中user对item的打分。<br><img alt data-src="http://tech.meituan.com/img/deep-understanding-of-ffm-principle-and-practice/ffm_mf.png"></p>
 <p>类似地，所有二次项参数 wijwij 可以组成一个对称阵 WW（为了方便说明FM的由来，对角元素可以设置为正实数），那么这个矩阵就可以分解为 W=VTVW=VTV，VV 的第 jj 列便是第 jj 维特征的隐向量。换句话说，每个参数 wij=⟨vi,vj⟩wij=⟨vi,vj⟩，这就是FM模型的核心思想。因此，FM的模型方程为（本文不讨论FM的高阶形式）</p>
 <p>y(x)=w0+∑i=1nwixi+∑i=1n∑j=i+1n⟨vi,vj⟩xixj(2)<br>(2)y(x)=w0+∑i=1nwixi+∑i=1n∑j=i+1n⟨vi,vj⟩xixj<br>其中，vivi 是第 ii 维特征的隐向量，⟨⋅,⋅⟩⟨⋅,⋅⟩ 代表向量点积。隐向量的长度为 kk（k&lt;&lt;nk&lt;&lt;n），包含 kk 个描述特征的因子。根据公式(2)(2)，二次项的参数数量减少为 knkn个，远少于多项式模型的参数数量。另外，参数因子化使得 xhxixhxi 的参数和 xixjxixj 的参数不再是相互独立的，因此我们可以在样本稀疏的情况下相对合理地估计FM的二次项参数。具体来说，xhxixhxi 和 xixjxixj 的系数分别为 ⟨vh,vi⟩⟨vh,vi⟩ 和 ⟨vi,vj⟩⟨vi,vj⟩，它们之间有共同项 vivi。也就是说，所有包含“xixi 的非零组合特征”（存在某个 j≠ij≠i，使得 xixj≠0xixj≠0）的样本都可以用来学习隐向量 vivi，这很大程度上避免了数据稀疏性造成的影响。而在多项式模型中，whiwhi 和 wijwij 是相互独立的。</p>
 <p>显而易见，公式(2)(2)是一个通用的拟合方程，可以采用不同的损失函数用于解决回归、二元分类等问题，比如可以采用MSE（Mean Square Error）损失函数来求解回归问题，也可以采用Hinge/Cross-Entropy损失来求解分类问题。当然，在进行二元分类时，FM的输出需要经过sigmoid变换，这与Logistic回归是一样的。直观上看，FM的复杂度是 O(kn2)O(kn2)。但是，通过公式(3)(3)的等式，FM的二次项可以化简，其复杂度可以优化到 O(kn)O(kn)[7]。由此可见，FM可以在线性时间对新样本作出预测。</p>
@@ -317,7 +313,7 @@
 <p>Field name    Field index    Feature name    Feature index<br>User    1    User=YuChin    1<br>Movie    2    Movie=3Idiots    2<br>Genre    3    Genre=Comedy    3<br>Price    4    Genre=Drama    4<br>Price    5<br>那么，FFM的组合特征有10项，如下图所示。<br>⟨v1,2,v2,1⟩⋅1⋅1+⟨v1,3,v3,1⟩⋅1⋅1+⟨v1,3,v4,1⟩⋅1⋅1+⟨v1,4,v5,1⟩⋅1⋅9.99+⟨v2,3,v3,2⟩⋅1⋅1+⟨v2,3,v4,2⟩⋅1⋅1+⟨v2,4,v5,2⟩⋅1⋅9.99+⟨v3,3,v4,3⟩⋅1⋅1+⟨v3,4,v5,3⟩⋅1⋅9.99+⟨v4,4,v5,3⟩⋅1⋅9.99<br>⟨v1,2,v2,1⟩⋅1⋅1+⟨v1,3,v3,1⟩⋅1⋅1+⟨v1,3,v4,1⟩⋅1⋅1+⟨v1,4,v5,1⟩⋅1⋅9.99+⟨v2,3,v3,2⟩⋅1⋅1+⟨v2,3,v4,2⟩⋅1⋅1+⟨v2,4,v5,2⟩⋅1⋅9.99+⟨v3,3,v4,3⟩⋅1⋅1+⟨v3,4,v5,3⟩⋅1⋅9.99+⟨v4,4,v5,3⟩⋅1⋅9.99<br>其中，红色是field编号，蓝色是特征编号，绿色是此样本的特征取值。二次项的系数是通过与特征field相关的隐向量点积得到的，二次项共有 n(n−1)2n(n−1)2 个。</p>
 <p>FFM实现<br>Yu-Chin Juan实现了一个C++版的FFM模型，源码可从Github下载[10]。这个版本的FFM省略了常数项和一次项，模型方程如下。</p>
 <p>ϕ(w,x)=∑j1,j2∈C2⟨wj1,f2,wj2,f1⟩xj1xj2(5)<br>(5)ϕ(w,x)=∑j1,j2∈C2⟨wj1,f2,wj2,f1⟩xj1xj2<br>其中，C2C2 是非零特征的二元组合，j1j1 是特征，属于field f1f1，wj1,f2wj1,f2 是特征 j1j1 对field f2f2 的隐向量。此FFM模型采用logistic loss作为损失函数，和L2惩罚项，因此只能用于二元分类问题。</p>
-<p>minw∑i=1Llog(1+exp{−yiϕ(w,xi)})+λ2∥w∥2<br>minw∑i=1Llog⁡(1+exp⁡{−yiϕ(w,xi)})+λ2‖w‖2<br>其中，yi∈{−1,1}yi∈{−1,1} 是第 ii 个样本的label，LL 是训练样本数量，λλ 是惩罚项系数。模型采用SGD优化，优化流程如下。<br><img src="http://tech.meituan.com/img/deep-understanding-of-ffm-principle-and-practice/ffm_sgd.png" alt></p>
+<p>minw∑i=1Llog(1+exp{−yiϕ(w,xi)})+λ2∥w∥2<br>minw∑i=1Llog⁡(1+exp⁡{−yiϕ(w,xi)})+λ2‖w‖2<br>其中，yi∈{−1,1}yi∈{−1,1} 是第 ii 个样本的label，LL 是训练样本数量，λλ 是惩罚项系数。模型采用SGD优化，优化流程如下。<br><img alt data-src="http://tech.meituan.com/img/deep-understanding-of-ffm-principle-and-practice/ffm_sgd.png"></p>
 <p>参考 Algorithm1Algorithm1, 下面简单解释一下FFM的SGD优化过程。<br>算法的输入 trtr、vava、papa 分别是训练样本集、验证样本集和训练参数设置。</p>
 <p>根据样本特征数量（tr.ntr.n）、field的个数（tr.mtr.m）和训练参数（papa），生成初始化模型，即随机生成模型的参数；<br>如果归一化参数 pa.normpa.norm 为真，计算训练和验证样本的归一化系数，样本 ii 的归一化系数为<br>R[i]=1∥X[i]∥<br>R[i]=1‖X[i]‖<br>对每一轮迭代，如果随机更新参数 pa.randpa.rand 为真，随机打乱训练样本的顺序；<br>对每一个训练样本，执行如下操作<br>计算每一个样本的FFM项，即公式(5)(5)中的输出 ϕϕ；<br>计算每一个样本的训练误差，如算法所示，这里采用的是交叉熵损失函数 log(1+eϕ)log⁡(1+eϕ)；<br>利用单个样本的损失函数计算梯度 gΦgΦ，再根据梯度更新模型参数；<br>对每一个验证样本，计算样本的FFM输出，计算验证误差；<br>重复步骤3~5，直到迭代结束或验证误差达到最小。<br>在SGD寻优时，代码采用了一些小技巧，对于提升计算效率是非常有效的。</p>
 <p>第一，梯度分步计算。采用SGD训练FFM模型时，只采用单个样本的损失函数来计算模型参数的梯度。</p>
@@ -339,7 +335,7 @@
 <h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>本文主要介绍了FFM的思路来源和理论原理，并结合源码说明FFM的实际应用和一些小细节。从理论上分析，FFM的参数因子化方式具有一些显著的优势，特别适合处理样本稀疏性问题，且确保了较好的性能；从应用结果来看，站内CTR/CVR预估采用FFM是非常合理的，各项指标都说明了FFM在点击率预估方面的卓越表现。当然，FFM不一定适用于所有场景且具有超越其他模型的性能，合适的应用场景才能成就FFM的“威名”。</p>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="http://blog.csdn.net/lilyth_lilyth/article/details/48032119" target="_blank" rel="noopener">http://blog.csdn.net/lilyth_lilyth/article/details/48032119</a><br><a href="http://www.cnblogs.com/Matrix_Yao/p/4773221.html" target="_blank" rel="noopener">http://www.cnblogs.com/Matrix_Yao/p/4773221.html</a><br><a href="http://www.herbrich.me/papers/adclicksfacebook.pdf" target="_blank" rel="noopener">http://www.herbrich.me/papers/adclicksfacebook.pdf</a><br><a href="https://www.kaggle.com/c/criteo-display-ad-challenge" target="_blank" rel="noopener">https://www.kaggle.com/c/criteo-display-ad-challenge</a><br><a href="https://www.kaggle.com/c/avazu-ctr-prediction" target="_blank" rel="noopener">https://www.kaggle.com/c/avazu-ctr-prediction</a><br><a href="https://en.wikipedia.org/wiki/Demand-side_platform" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Demand-side_platform</a><br><a href="http://www.algo.uni-konstanz.de/members/rendle/pdf/Rendle2010FM.pdf" target="_blank" rel="noopener">http://www.algo.uni-konstanz.de/members/rendle/pdf/Rendle2010FM.pdf</a><br><a href="http://www.cs.cmu.edu/~wcohen/10-605/2015-guest-lecture/FM.pdf" target="_blank" rel="noopener">http://www.cs.cmu.edu/~wcohen/10-605/2015-guest-lecture/FM.pdf</a><br><a href="http://www.csie.ntu.edu.tw/~r01922136/slides/ffm.pdf" target="_blank" rel="noopener">http://www.csie.ntu.edu.tw/~r01922136/slides/ffm.pdf</a><br><a href="https://github.com/guestwalk/libffm" target="_blank" rel="noopener">https://github.com/guestwalk/libffm</a><br><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent#AdaGrad" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Stochastic_gradient_descent#AdaGrad</a><br><a href="http://openmp.org/wp/openmp-specifications/" target="_blank" rel="noopener">http://openmp.org/wp/openmp-specifications/</a><br><a href="http://blog.csdn.net/gengshenghong/article/details/7008704" target="_blank" rel="noopener">http://blog.csdn.net/gengshenghong/article/details/7008704</a><br><a href="https://kaggle2.blob.core.windows.net/competitions/kddcup2012/2748/media/Opera.pdf" target="_blank" rel="noopener">https://kaggle2.blob.core.windows.net/competitions/kddcup2012/2748/media/Opera.pdf</a></p>
 <p>不想错过技术博客更新？想给文章评论、和作者互动？第一时间获取技术沙龙信息？</p>
-<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>公众号二维码</p>
+<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img alt data-src="http://tech.meituan.com/img/qrcode_for_gh.jpg"><br>公众号二维码</p>
 
     </div>
 
@@ -430,7 +426,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-count">1496</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -443,7 +439,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-count">1433</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -521,7 +517,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">372:21</span>
+    <span title="站点阅读时长">372:38</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
@@ -547,7 +543,7 @@ setInterval("createtime()",250);
 </script>
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -585,13 +581,73 @@ setInterval("createtime()",250);
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -599,7 +655,7 @@ setInterval("createtime()",250);
 
 
 
-  <script>
+  <script pjax>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
@@ -633,6 +689,7 @@ setInterval("createtime()",250);
 
 
 
+    <div id="pjax">
 
   
 
@@ -665,6 +722,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 }, window.Valine);
 </script>
 
+    </div>
 
 </body>
 </html>

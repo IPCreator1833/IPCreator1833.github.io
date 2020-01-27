@@ -33,8 +33,8 @@
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -43,7 +43,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.xml',
+    path: 'search.json',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
@@ -62,14 +62,10 @@
 <meta property="og:site_name" content="Hi">
 <meta property="og:description" content="wjlkoorey Linux的老江湖们对这个概念当然不会陌生，然而刚接触Linux的新手们就会被文件系统这个概念弄得晕头转向，恰好我当年正好属于后者。 从windows下转到Linux的童鞋听到最多的应该是fat32和ntfs(在windows 2000之后所出现的一种新型的日志文件系统)，那个年代经常听到说“我要把C盘格式化成ntfs格式，D盘格式化成fat32格式”。一到Linux下，很多入">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://okkntqe2h.bkt.clouddn.com/linux%E7%9B%AE%E5%BD%95.png">
-<meta property="og:image" content="http://okkntqe2h.bkt.clouddn.com/Linux%E4%B8%8D%E5%90%8C%E7%9A%84%E5%8F%91%E8%A1%8C%E7%89%88%E9%83%BD%E5%AD%98%E5%9C%A8%E5%A6%82%E4%B8%8B%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.jpg">
-<meta property="og:image" content="http://okkntqe2h.bkt.clouddn.com/VFS%E6%9D%A5%E5%B1%8F%E8%94%BD%E4%B8%8B%E5%B1%82%E5%90%84%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82%E5%92%8C%E5%B7%AE%E5%BC%82.jpg">
 <meta property="og:updated_time" content="2017-03-27T08:55:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="File System of Linux">
 <meta name="twitter:description" content="wjlkoorey Linux的老江湖们对这个概念当然不会陌生，然而刚接触Linux的新手们就会被文件系统这个概念弄得晕头转向，恰好我当年正好属于后者。 从windows下转到Linux的童鞋听到最多的应该是fat32和ntfs(在windows 2000之后所出现的一种新型的日志文件系统)，那个年代经常听到说“我要把C盘格式化成ntfs格式，D盘格式化成fat32格式”。一到Linux下，很多入">
-<meta name="twitter:image" content="http://okkntqe2h.bkt.clouddn.com/linux%E7%9B%AE%E5%BD%95.png">
 
 <link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Linux/the-anatomy-of-file-system/">
 
@@ -289,16 +285,16 @@
         <p><a href="http://blog.chinaunix.net/uid-23069658-id-3437835.html" target="_blank" rel="noopener">wjlkoorey</a></p>
 <p>Linux的老江湖们对这个概念当然不会陌生，然而刚接触Linux的新手们就会被文件系统这个概念弄得晕头转向，恰好我当年正好属于后者。</p>
 <p>从windows下转到Linux的童鞋听到最多的应该是fat32和ntfs(在windows 2000之后所出现的一种新型的日志文件系统)，那个年代经常听到说“我要把C盘格式化成ntfs格式，D盘格式化成fat32格式”。一到Linux下，很多入门Linux的书籍中当牵扯到文件系统这个术语时，二话不说，不管三七二十一就给出了下面这个图，然后逐一解释一下每个目录是拿来干啥的、里面会放什么类型的文件就完事儿了，弄得初学者经常“丈二和尚摸不着头脑”。难道这就是Linux下的文件系统。而且新手一直被“灌输”一个思想：Linux下一切都是文件，不再像Windows那样用扩展名来为文件分类等等。这就让那些喜欢刨根问底的fresh-fish很是不爽，他们本着对学术的严谨、技术的狂热的态度，一心想弄明白：到底什么才是文件系统。本文的目的就是和大家分享一下我当初是如何学习Linux的文件系统的，也算是一个“老”油条的一些心得吧。</p>
-<p><img src="http://okkntqe2h.bkt.clouddn.com/linux%E7%9B%AE%E5%BD%95.png" alt></p>
+<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/linux%E7%9B%AE%E5%BD%95.png"></p>
    <a id="more"></a>
 <h3 id="更多参考："><a href="#更多参考：" class="headerlink" title="更多参考："></a>更多参考：</h3><p>   <a href="http://blog.chinaunix.net/uid-23069658-id-3468489.html" target="_blank" rel="noopener"> 戏说文件系统之ext2【上】</a><br>   <a href="http://blog.chinaunix.net/uid-23069658-id-3475672.html" target="_blank" rel="noopener"> 戏说文件系统之ext2【下】</a><br>   <a href="http://blog.chinaunix.net/uid-23069658-id-3499922.html" target="_blank" rel="noopener"> 戏说文件系统之ext2【续】</a><br>   <a href="http://blog.chinaunix.net/uid-23069658-id-3529783.html" target="_blank" rel="noopener">戏说文件系统之ext3【上】 </a></p>
 <p>“文件系统”的主语是“文件”，那么文件系统的意思就是“用于管理文件的(管理)系统”，而这套管理系统所管理的对象当然就是文件了。在大多数操作系统里，“文件是数据的集合”这个基本点是一致的，而这些数据最终都是存储在存储介质里，如硬盘、光盘、U盘等。</p>
 <p>另一方面，用户在管理数据时也是文件为基本单位，他们所关心的问题是：<br>1、我的文件在什么地方放着？<br>2、我如何将数据存入某个文件？<br>3、如何从文件里将数据读出来？<br>3、不再需要的文件怎么将其删除？</p>
 <p>简而言之，文件系统就是一套用于定义文件的命名和组织数据的规范，其根本目的是便对文件进行查询和存取。</p>
 <p>Unix/Linux系统中的文件系统有个很重要的特性就挂载，即文件系统在使用前必须被挂载在一个实际的目录下才能使用，这是因为类Unix系统中的文件系统都遵循了FHS(Filesystem Hierarchy Standard)。在FHS中详细定义了类Unix操作系统中各种应用软件、管理工具、开发工具、脚本和帮助文件所处的位置。这样，通过该标准，软件发布商和用户在不同的发行版的linux系统里都能预测软件安装后，文件和目录所处的位置。</p>
-<p>文件系统为了实现对文件更好的管理、组织方式，引入了目录的概念。目录里不但可以保存文件还可以保存目录，以目录为依托，最终会形成一个目录树的结构。根据FHS的规定，Linux不同的发行版都存在如下的目录结构：<br><img src="http://okkntqe2h.bkt.clouddn.com/Linux%E4%B8%8D%E5%90%8C%E7%9A%84%E5%8F%91%E8%A1%8C%E7%89%88%E9%83%BD%E5%AD%98%E5%9C%A8%E5%A6%82%E4%B8%8B%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.jpg" alt><br>上图中一个比较特殊的目录就是硬盘的根目录“/”，如果我们将一块硬盘格式化成ext3或ext4格式后，通过mount命令将其挂载到根目录下，就形成了我们通常所说的“根文件系统”。根文件系统不是一个新实体，而是指挂载在根目录下的存储设备(或某个分区)实际所使用的文件系统类型。当“根文件系统”被挂载后，内存中就有了如上所示的目录结构树。这里提醒一点，千万不要以为你在命令行输入“cd /usr/src/”等命令时是在“操作”硬盘，其实你是在内存的VFS的目录树里。这里就不展开了，后面剖析VFS时再详细介绍。作为用户在使用文件系统时，对于某个具体的存储设备，例如U盘或硬盘，无非是首先执行诸如mk2fs或mkfs.xxx这样的命令对存储设备进行格式化，将其格式化成某种类型的文件系统，然后用mount命令将该存设备挂载到某个具体的目录下，然后对该目录下的文件进行“增、删、改、查”就可以实现对该存储设备上数据的操作。</p>
+<p>文件系统为了实现对文件更好的管理、组织方式，引入了目录的概念。目录里不但可以保存文件还可以保存目录，以目录为依托，最终会形成一个目录树的结构。根据FHS的规定，Linux不同的发行版都存在如下的目录结构：<br><img alt data-src="http://okkntqe2h.bkt.clouddn.com/Linux%E4%B8%8D%E5%90%8C%E7%9A%84%E5%8F%91%E8%A1%8C%E7%89%88%E9%83%BD%E5%AD%98%E5%9C%A8%E5%A6%82%E4%B8%8B%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.jpg"><br>上图中一个比较特殊的目录就是硬盘的根目录“/”，如果我们将一块硬盘格式化成ext3或ext4格式后，通过mount命令将其挂载到根目录下，就形成了我们通常所说的“根文件系统”。根文件系统不是一个新实体，而是指挂载在根目录下的存储设备(或某个分区)实际所使用的文件系统类型。当“根文件系统”被挂载后，内存中就有了如上所示的目录结构树。这里提醒一点，千万不要以为你在命令行输入“cd /usr/src/”等命令时是在“操作”硬盘，其实你是在内存的VFS的目录树里。这里就不展开了，后面剖析VFS时再详细介绍。作为用户在使用文件系统时，对于某个具体的存储设备，例如U盘或硬盘，无非是首先执行诸如mk2fs或mkfs.xxx这样的命令对存储设备进行格式化，将其格式化成某种类型的文件系统，然后用mount命令将该存设备挂载到某个具体的目录下，然后对该目录下的文件进行“增、删、改、查”就可以实现对该存储设备上数据的操作。</p>
 <p>这里就有几个关键点需要大家留意了，以便我们后面分析VSF机制时心里能做到“提前亮”。在类Unix系统中讨论文件系统，不可回避的要就要牵扯到挂载(mount)机制，在windows下这个过程已经被微软封装了，普通用户察觉不到，至少在我接触windows这么些年从来没听谁跟我提起过windows下的mount机制。所以我们在分析源码时可以留意一下挂载的实现机制。另一个就是目录，这个再熟悉不过，Unix/Linux和Windows，几乎所有的操作系统都至此，其目的就是用来对文件进行组织便于用户管理，即站在用户的角度来说就是回答了“我的文件在哪儿放着”的问题。</p>
-<p>在Linux早期设计阶段，文件系统与内核代码是整合在一起的，这样做的缺点是显而易见的。假如，我的系统只能识别ext3格式的文件系统，我的U盘是fat32格式，那么很不幸的是我的U盘将不会被我的系统所识别，所以fat32格式的U盘在我们的系统上将无法使用。为了支持不同种类的文件系统，Linux采用了在Unix系统中已经广泛采用的设计思想，通过虚拟文件系统VFS来屏蔽下层各种不同类型文件系统的实现细节和差异。<br><img src="http://okkntqe2h.bkt.clouddn.com/VFS%E6%9D%A5%E5%B1%8F%E8%94%BD%E4%B8%8B%E5%B1%82%E5%90%84%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82%E5%92%8C%E5%B7%AE%E5%BC%82.jpg" alt><br>其实VFS最早是由Sun公司提出的，目的是实现网络文件系统NFS(Network File System)，其基本思想是将各种文件系统的公共部分抽取出来，形成一个抽象层。对用户的应用程序而言，VFS提供了文件系统的系统调用接口。而对具体的文件系统来说，VFS通过一系列统一的外部接口屏蔽了实现细节，使得对文件的操作不再关心下层文件系统的类型，更不用关心具体的存储介质，这一切都是透明的。</p>
+<p>在Linux早期设计阶段，文件系统与内核代码是整合在一起的，这样做的缺点是显而易见的。假如，我的系统只能识别ext3格式的文件系统，我的U盘是fat32格式，那么很不幸的是我的U盘将不会被我的系统所识别，所以fat32格式的U盘在我们的系统上将无法使用。为了支持不同种类的文件系统，Linux采用了在Unix系统中已经广泛采用的设计思想，通过虚拟文件系统VFS来屏蔽下层各种不同类型文件系统的实现细节和差异。<br><img alt data-src="http://okkntqe2h.bkt.clouddn.com/VFS%E6%9D%A5%E5%B1%8F%E8%94%BD%E4%B8%8B%E5%B1%82%E5%90%84%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82%E5%92%8C%E5%B7%AE%E5%BC%82.jpg"><br>其实VFS最早是由Sun公司提出的，目的是实现网络文件系统NFS(Network File System)，其基本思想是将各种文件系统的公共部分抽取出来，形成一个抽象层。对用户的应用程序而言，VFS提供了文件系统的系统调用接口。而对具体的文件系统来说，VFS通过一系列统一的外部接口屏蔽了实现细节，使得对文件的操作不再关心下层文件系统的类型，更不用关心具体的存储介质，这一切都是透明的。</p>
 <h3 id="小结一下："><a href="#小结一下：" class="headerlink" title="小结一下："></a>小结一下：</h3><p>所谓文件系统就是操作系统用来明确磁盘或分区上的文件以及数据结构的一种方法，也就是磁盘上文件的组织方法。普通用户所看到的文件系统，是以目录结构而存在的一个多级分层的树状结构，但作为开发人员我们得知道其实每个目录下都可以挂载不同类型的文件系统。最后一点是，每个文件系统可以占用磁盘的一个分区，而不是整个硬盘，这一点请注意。VFS并不是一个实际的文件系统，它是类Unix操作系统给我们提供的一种用于统一管理具体文件系统的机制。当我们要开发一种新的文件系统时，需要遵照VFS的规范，才能享受VFS带来的好处。</p>
 <p>未完，待续…</p>
 
@@ -390,7 +386,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1495</span>
+          <span class="site-state-item-count">1496</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -403,7 +399,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1432</span>
+        <span class="site-state-item-count">1433</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -481,7 +477,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">372:21</span>
+    <span title="站点阅读时长">372:38</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
@@ -507,7 +503,7 @@ setInterval("createtime()",250);
 </script>
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -545,13 +541,73 @@ setInterval("createtime()",250);
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -559,7 +615,7 @@ setInterval("createtime()",250);
 
 
 
-  <script>
+  <script pjax>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
@@ -593,6 +649,7 @@ setInterval("createtime()",250);
 
 
 
+    <div id="pjax">
 
   
 
@@ -625,6 +682,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 }, window.Valine);
 </script>
 
+    </div>
 
 </body>
 </html>
