@@ -62,7 +62,7 @@
 <meta property="og:site_name" content="生命之旅">
 <meta property="og:description" content="日益趋同。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-01-29T14:08:01.014Z">
+<meta property="og:updated_time" content="2020-01-31T07:08:50.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android">
 <meta name="twitter:description" content="日益趋同。">
@@ -359,6 +359,43 @@
 <p>Android系统迭代更新10余年，在用户体验、性能、功耗、安全、隐私等方面都取得很大的进步，后续版本会持续在内存、文件系统、虚拟机、图形图像等方向优化。随着Android系统功能越来越多，系统架构中有些模块未来可能会被重构，某些服务大锁制约性能，比如Android 8.0优化过binder大锁让性能显著提升。关于图形方面，Vulkan将会是未来Android平台的一个发展方向，尤其是游戏领域。</p>
 <p>人工智能在Android系统上目前效果不太显著，Google未来应该还会持续投入，比如在AI预测用户行为加上相应后台管控策略用于提升手机续航。碎片化仍是当下最主要的问题，碎片化也导致用户隐私、安全和体验一致性方面得不到保障，Google专门成立团队致力于Android Mainline，从Android Q开始规划Mainline，未来的版本都将逐步迭代更新。最后说一点，App兼容性问题比较严重，据Google实验统计Android Q系统在全球Top 1000应用的兼容性不达标率4.3%，而中国Top 1000应用的兼容性不达标率17.6%，可见国内Android生态圈更为严峻得多，Google对隐藏API的限制就是一步长远之棋，短期内导致应用不兼容加剧，长期来看生态圈会逐步健康，最理想的情况就是Android系统大版本升级而App兼容性问题不再有，后续Google应和厂商会加强跟主流应用协作规范应用，搭建良好健康的Android生态圈。</p>
 <p>以上是笔者对Android系统及对未来的一些拙见，欢迎业界同仁一起探讨。</p>
+<h3 id="华为方舟编译器官网正式上线，写一篇你应该知道的科普文章"><a href="#华为方舟编译器官网正式上线，写一篇你应该知道的科普文章" class="headerlink" title="华为方舟编译器官网正式上线，写一篇你应该知道的科普文章"></a><a href="https://blog.csdn.net/guolin_blog/article/details/100363363" target="_blank" rel="noopener">华为方舟编译器官网正式上线，写一篇你应该知道的科普文章</a></h3><p>本文同步发表于我的微信公众号，扫一扫文章底部的二维码或在微信搜索 郭霖 即可关注，每个工作日都有文章更新。</p>
+<p>8月31日，早上9点，华为方舟编译器官网就这么悄然上线了。网上甚至没有大面积的新闻报道，我是隔天才知道的这个消息。</p>
+<p>在今年4月份华为P30系列的发布会上，华为首次对外公开了正在自主研发一款开源的统一编程平台，可以大幅提升Android应用程序在手机上的运行效率，称之为方舟编译器，随即在业内引起了轰动。当初华为给出的预计时间是，方舟编译器将会在今年8月份开源编译框架代码，11月份开源完整的方舟编译器，那么终于在8月份的最后一天，华为完成了自己的承诺，上线了方舟编译器的官网。</p>
+<p><img alt data-src="https://img-blog.csdnimg.cn/20190902194703933.png"><br>至于<code>方舟编译器的用途是什么？以及为什么可以大幅提升Android应用程序的运行效率？</code>华为也在P30发布会之后的技术沙龙会议上进行了具体的解释。从方舟编译器的工作原理上来看，虽然确实是可行的，但是技术难度非常高，如果华为真的能按照自己当初的设计方案来完成方舟编译器，或许真有可能会在Android开发界掀起一场变革。</p>
+<p>那么我是一名开发者，我的公众号的读者朋友们也都是开发者，因此这里我就站在一个开发者的角度上写一篇科普文章，让每一位看完本篇文章的读者朋友们都能更加清楚地了解方舟编译器。</p>
+<p>首先由于历史遗留问题，Android的开发与编译环境并不是完美无缺。可能是考虑到当初编程语言排行榜霸主的因素，也有可能是因为能够更加符合Android开放式合作操作系统的定位，总之Google就是采用了Java语言来作为Android应用程序开发的首选语言。</p>
+<p>虽然<code>在Android 1.5系统之后Google又引入了NDK功能来允许Java去调用一些由C/C++代码开发的so库</code>，但是Java的正统地位却从来没有被撼动过（Kotlin也是基于Java虚拟器的编程语言，因此对于方舟编译器而言Kotlin和Java没有区别，故不在本篇文章的讨论范围内）。</p>
+<p>熟悉Java的朋友应该都清楚，它是一种预编译解释型语言，每执行一行代码，会由解释器将这行代码先解释成CPU看得懂的机器码，然后再去执行。<code>解释型语言的好处是可以实现一次编译随处运行的便利性，因为对于不同平台而言只需要换用不同的解释器即可，但是坏处也很明显，就是运行效率低下。</code></p>
+<p>很多用户都抱怨过Android应用不同iOS应用流畅，当然原因可能有很多种，但是上述原因绝对是重要的原因之一。</p>
+<p><img alt data-src="https://img-blog.csdnimg.cn/20190902194731795.png"><br>在基于Java（Kotlin）编程语言的总战略思想不可动摇的前提下，Google为了提升Android应用程序的运行效率可谓是煞费苦心。在最开始的时候，Android系统中内置了一个Dalvik虚拟机，其实也就是Google自己编写的一个Java虚拟器，然后使用边解释边执行的方式来运行Java代码，这种模式运行效率极其低下，因此很快Google就引入了JIT模式来改善这种情况。</p>
+<blockquote>
+<p>JIT（Just In Time）是即时编译的意思，当用户在使用App时，会将经常使用的功能编译成机器码，这样当再次使用这个功能时就可以直接运行机器码，而不用每次都一行行翻译了。</p>
+</blockquote>
+<p>然而JIT的机制仍然不够完美，在Android 5.0系统的时候Google进行了一次大变更，废弃了Dalvik虚拟机，引入了全新开发的ART虚拟机，并使用AOT（Ahead Of Time）的方式来提升运行效率。<code>AOT就是在应用安装的时候预先将代码都编译成机器码，这样在应用运行的时候就不用再做解释工作了，直接就可以运行。</code></p>
+<p>那一年的Google I/O大会真的是慷慨激昂，Google认为自己找到了最完美的方式，Android应用的运行效率终于可以和iOS应用相媲美了。</p>
+<p><img alt data-src="https://img-blog.csdnimg.cn/2019090220045890.jpg"><br>然而最终用户实际的反馈却并不怎么好，<code>AOT机制使得安装应用变得太慢了，而且预先编译机器码还会占用额外的手机空间。</code></p>
+<p>于是在Android 7.0系统中，Google又进行了调整，这次重新引入了JIT模式。<code>应用安装的时候不会进行编译操作，以保证安装速度。在设备空闲的时候，将一些常用的代码使用AOT的方式进行编译，如果执行到还没来得及编译的代码，那么就使用JIT+解释执行的方式来顶住。这也算是Google在安装速度和运行速度之间进行的一种平衡吧。</code></p>
+<p>之后的每个系统版本虽然仍然有一些改变，但基本都是在AOT+JIT+解释执行之间进行动态调整，以找到一个更好的平衡点。可是制约Android运行效率最关键的虚拟机这个点，Google却一直都无法解决。</p>
+<blockquote>
+<p>而方舟编译器生来就是为了干掉虚拟机的。</p>
+</blockquote>
+<p>根据华为在P30发布会上所公开的资料，<code>方舟编译器所采用的机制是将Java代码转换成机器码的这个过程提前到了编译打包的时候，这样生成的安装文件所包含的代码本身就已经是机器码了，因此即便是应用程序安装后首次运行，速度也会非常流畅。</code></p>
+<p>这种方案确实可行，但是会存在一个问题。<code>在方舟编译器这种工作原理下打出来的安装包改变了Android原生的apk格式规则，有可能会变成华为自主定义的一套hpk格式的安装包。而这种安装包肯定是不被Android原生系统支持的，因此使用方舟编译器所生成的安装包大概率只能安装到华为自己的手机上，当然也不排除未来国内其他手机厂商对华为这种格式进行兼容的可能。</code></p>
+<p>上述的内容都是我当初在基于现有公开资料的基础上进行的推测，然而随着方舟编译器官网的正式上线，也证实了我之前的推测是错误的。</p>
+<p><code>方舟编译器的官网有一个代码演示功能，我尝试将它网上的Java代码示例编译并运行，结果发现输出的却是一个so库。</code></p>
+<p><img alt data-src="https://img-blog.csdnimg.cn/20190902194800907.png"><br>这让我大吃一惊！要知道，<code>so库是C/C++代码通过cmake或者ndk-build编译之后生成的本地库</code>，而方舟编译器竟然可以将Java代码直接转换成so库，不得不说华为的这套思路真的太敢想了。</p>
+<p>使用so库不仅可以解决Android应用原来的低效解释运行模式，而且还能保证最终生成的安装包文件和原生的apk文件格式一致，因为so库本身就是被Android系统所支持的。这样我之前所推测的hpk格式的安装包就已经不成立了，<code>方舟编译器的战略眼光也并没有仅仅只是放在华为自家的平台上面，而是放眼于全Android平台，因为使用方舟编译器编译出来的apk可以正常安装到所有Android手机上。</code></p>
+<p>另外，Java语言还有一个非常重要的特性，与C++不同，Java是不用手动释放内存的，Java虚拟机将会不定期自动回收不再被使用的对象，这也是Java被广大程序员喜爱的一个重要原因。<code>不过这种回收机制也造成了一个问题，当触发回收过程的时候，将会暂停所有正在运行的Java线程，虽然这个过程很短暂，但是在一些低配手机上可能就会造成了一种随机性卡顿的现象。</code></p>
+<p>而方舟编译器的工作原理天然就可以解决这个问题，因为将Java代码全部转换成so库之后，Java虚拟机的自动回收机制也就无需工作了，这样随机性卡顿的问题自然不复存在。这个过程对于我们开发者而言是透明的，但是对于方舟编译器而言，这个过程真的很难很难，<code>因为要将开发者的Java代码转换成so库，还要能自动检查并回收不再被使用的对象，在我看来根本就是不可能的事情。</code></p>
+<p>方舟编译器的设计思想的确非常先进，并且相信华为也已经攻克了无数的技术难关。但是对于华为来说，现在最缺的应该还是时间。从这次方舟编译器官网的上线就可以看出，有点赶鸭子上架的感觉，开发者文档极其简单，只有一些简短的架构描述和环境搭建流程。</p>
+<p><img alt data-src="https://img-blog.csdnimg.cn/20190902194829941.png"><br>代码演示也是预先定义好的代码模板，不支持修改后重新运行，只能预览一下预定代码的执行结果。</p>
+<p>另外编译器下载分为源代码包下载和二进制包下载两种，源代码我确实是看不懂，因为我选择下载了编译好的二进制包，但是解压之后发现只有4个编译好的二进制文件和一些sample样例，官网也并没有描述该如何使用。</p>
+<p><img alt data-src="https://img-blog.csdnimg.cn/20190902194900859.png"><br>这和我预想的并不一样，因为我本来以为方舟编译器会是一个类似于Android Studio那样的IDE开发工具。不过有朋友告诉我，<code>华为的IDE工具还正在开发当中，这次开源的只是编译器框架部分源码，但这也更加印证了方舟编译器的官网是赶在8月这个时间节点上紧急上线的一个网站。</code></p>
+<p>不管怎么说，方舟编译器的思想是超前且先进的，也非常希望看到在编译器这个领域里能有国产技术的出现，只是华为还需要更多的时间。</p>
+<p>另外一定会有朋友关心，随着未来方舟编译器的推出和不断完善，Android开发工具会迎来一场大变革吗？Android Studio会被取代吗？这种未来的事情我其实也不可能预测的准，但是<code>Google的官方开发工具Android Studio是专门用于开发Android应用程序的，而方舟编译器则是为支持多种编程语言、多种芯片平台的联合编译、运行而设计的统一编程平台</code>。它们的定位并不完全相同，因此也未必会是这种只能二选一的竞争关系。Android系统毕竟还是Google家的，华为在这上面的话语权肯定不足，与其说方舟编译器是要为了和Android Studio抢市场，<code>不如说华为这是提前在编译器的领域进行布局，倘若未来方舟编译器可以用于开发鸿蒙系统的App，这看起来就更像是一个梦幻组合了。</code></p>
+<p>虽然中国的互联网技术已经进入了世界最顶尖的行列，移动支付的普及率和便捷性更是达到了国外无法想象的程度，但是在计算机行业最基本最底层的芯片、操作系统、编程语言、编译器等领域，中国和欧美国家还存在非常大的技术差距。而华为是国内少有的几家有这个资本且愿意涉足这几个领域的企业，给它足够多的时间吧。</p>
+<p>关注我的技术公众号，每个工作日都有优质技术文章推送。</p>
 <h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><h2 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h2><h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><h3 id="今年最赞的-10-款-Android-应用，我们为你选出来了-AppSo-年度榜单"><a href="#今年最赞的-10-款-Android-应用，我们为你选出来了-AppSo-年度榜单" class="headerlink" title="今年最赞的 10 款 Android 应用，我们为你选出来了 | AppSo 年度榜单"></a><a href="http://www.ifanr.com/app/960297" target="_blank" rel="noopener">今年最赞的 10 款 Android 应用，我们为你选出来了 | AppSo 年度榜单</a></h3><p><strong>Be My Eyes</strong><br><img alt data-src="http://ifanr-cdn.b0.upaiyun.com/wp-content/uploads/2017/12/nda-2017-01.jpg"></p>
 <blockquote>
 <p>帮助过数万视障人士的这个公益 App，今年登陆了 Android。你短短数十秒的视频通话，就帮 Ta 跨越了难以逾越的障碍。</p>
@@ -409,6 +446,18 @@
 </blockquote>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><a href="https://www.ithome.com/0/470/333.htm" target="_blank" rel="noopener">Linux 5.5正式发布</a></li>
+<li><a href="https://me.csdn.net/blog/sinyu890807" target="_blank" rel="noopener">郭霖</a></li>
+<li><a href="http://www.xwood.net/docs/pdf/%E7%AC%AC%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81Android_%E7%AC%AC2%E7%89%88_2017-1121503.pdf" target="_blank" rel="noopener">第一行代码——Android（第2版）</a></li>
+<li><a href="https://github.com/guolindev" target="_blank" rel="noopener">郭霖 guolindev</a></li>
+<li><a href="https://blog.csdn.net/guolin_blog/article/details/84886691" target="_blank" rel="noopener">两年沉淀，我的开源项目已上线！</a></li>
+<li><a href="https://github.com/lizhangqu/CoreLink" target="_blank" rel="noopener">Android 开发中的日常积累</a></li>
+<li><a href="https://github.com/SenhLinsh/Android-Hot-Libraries" target="_blank" rel="noopener">Android 优秀开源项目汇总</a></li>
+<li><a href="https://github.com/open-android/Android" target="_blank" rel="noopener">GitHub上最火的Android开源项目持续更新中</a></li>
+<li><a href="https://github.com/android-cn/android-open-project-analysis" target="_blank" rel="noopener">Android 开源项目源码解析</a></li>
+<li><a href="https://blog.csdn.net/qq_36101162/article/details/97651752" target="_blank" rel="noopener">Android Studio新建时没有java class选项</a></li>
+<li><a href="https://www.zhihu.com/question/37318295" target="_blank" rel="noopener">AndroidStudio如何新建java工程？</a></li>
+<li><a href="https://www.cnblogs.com/weijuanran/p/Module.html" target="_blank" rel="noopener">Android Studio 添加引用Module项目</a></li>
+<li><a href="https://www.jianshu.com/p/716a12a854c1" target="_blank" rel="noopener">androidstudio中运行java程序的两种方式</a></li>
 </ol>
 
     </div>
@@ -489,7 +538,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Why"><span class="nav-number">1.</span> <span class="nav-text">Why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What"><span class="nav-number">2.</span> <span class="nav-text">What</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android技术架构演进与未来"><span class="nav-number">2.1.</span> <span class="nav-text">Android技术架构演进与未来</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How"><span class="nav-number">3.</span> <span class="nav-text">How</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experience"><span class="nav-number">4.</span> <span class="nav-text">Experience</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android"><span class="nav-number">4.1.</span> <span class="nav-text">Android</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#今年最赞的-10-款-Android-应用，我们为你选出来了-AppSo-年度榜单"><span class="nav-number">4.2.</span> <span class="nav-text">今年最赞的 10 款 Android 应用，我们为你选出来了 | AppSo 年度榜单</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Why"><span class="nav-number">1.</span> <span class="nav-text">Why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What"><span class="nav-number">2.</span> <span class="nav-text">What</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android技术架构演进与未来"><span class="nav-number">2.1.</span> <span class="nav-text">Android技术架构演进与未来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#华为方舟编译器官网正式上线，写一篇你应该知道的科普文章"><span class="nav-number">2.2.</span> <span class="nav-text">华为方舟编译器官网正式上线，写一篇你应该知道的科普文章</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How"><span class="nav-number">3.</span> <span class="nav-text">How</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experience"><span class="nav-number">4.</span> <span class="nav-text">Experience</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android"><span class="nav-number">4.1.</span> <span class="nav-text">Android</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#今年最赞的-10-款-Android-应用，我们为你选出来了-AppSo-年度榜单"><span class="nav-number">4.2.</span> <span class="nav-text">今年最赞的 10 款 Android 应用，我们为你选出来了 | AppSo 年度榜单</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -505,7 +554,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1509</span>
+          <span class="site-state-item-count">1510</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -573,7 +622,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">373:52</span>
+    <span title="站点阅读时长">374:32</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
