@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
+  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.json',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="作者: luoweifu 什么是线程什么是线程？线程与进程与有什么关系？这是一个非常抽象的问题，也是一个特别广的话题，涉及到非常多的知识。我不能确保能把它讲的话，也不能确保讲的内容全部都正确。即使这样，我也希望尽可能地把他讲通俗一点，讲的明白一点，因为这是个一直困扰我很久的，扑朔迷离的知识领域，希望通过我的理解揭开它一层一层神秘的面纱。">
+<meta name="keywords" content="Multithread,Multiprocess">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Concepts of Multiprocess and Multithread">
+<meta property="og:url" content="https://hazyman.com/Technology/IPCreator/Technology/Program/Java/multi-thread/index.html">
+<meta property="og:site_name" content="生命之旅">
+<meta property="og:description" content="作者: luoweifu 什么是线程什么是线程？线程与进程与有什么关系？这是一个非常抽象的问题，也是一个特别广的话题，涉及到非常多的知识。我不能确保能把它讲的话，也不能确保讲的内容全部都正确。即使这样，我也希望尽可能地把他讲通俗一点，讲的明白一点，因为这是个一直困扰我很久的，扑朔迷离的知识领域，希望通过我的理解揭开它一层一层神秘的面纱。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-22T00:35:13.805Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Concepts of Multiprocess and Multithread">
+<meta name="twitter:description" content="作者: luoweifu 什么是线程什么是线程？线程与进程与有什么关系？这是一个非常抽象的问题，也是一个特别广的话题，涉及到非常多的知识。我不能确保能把它讲的话，也不能确保讲的内容全部都正确。即使这样，我也希望尽可能地把他讲通俗一点，讲的明白一点，因为这是个一直困扰我很久的，扑朔迷离的知识领域，希望通过我的理解揭开它一层一层神秘的面纱。">
+
+<link rel="canonical" href="https://hazyman.com/Technology/IPCreator/Technology/Program/Java/multi-thread/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Concepts of Multiprocess and Multithread | 生命之旅</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">生命之旅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">常识、专业和价值。</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Technology/IPCreator/Technology/Program/Java/multi-thread/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/work-hard-life-easy.png">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="生命之旅">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Concepts of Multiprocess and Multithread
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technology/" itemprop="url" rel="index">
+                    <span itemprop="name">Technology</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Technology/IPCreator/Technology/Program/Java/multi-thread/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Technology/IPCreator/Technology/Program/Java/multi-thread/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>作者: <a href="http://blog.csdn.net/luoweifu/article/details/46595285" target="_blank" rel="noopener">luoweifu</a></p>
+<h2 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h2><p>什么是线程？线程与进程与有什么关系？这是一个非常抽象的问题，也是一个特别广的话题，涉及到非常多的知识。我不能确保能把它讲的话，也不能确保讲的内容全部都正确。即使这样，我也希望尽可能地把他讲通俗一点，讲的明白一点，因为这是个一直困扰我很久的，扑朔迷离的知识领域，希望通过我的理解揭开它一层一层神秘的面纱。</p>
+<a id="more"></a>
+<h2 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h2><p>线程是什么？要理解这个概念，须要先了解一下操作系统的一些相关概念。大部分操作系统(如Windows、Linux)的任务调度是采用<strong>时间片轮转的抢占式</strong>调度方式，也就是说一个任务执行一小段时间后强制暂停去执行下一个任务，每个任务轮流执行。任务执行的一小段时间叫做时间片，任务正在执行时的状态叫运行状态，任务执行一段时间后强制暂停去执行下一个任务，被暂停的任务就处于就绪状态等待下一个属于它的时间片的到来。这样每个任务都能得到执行，由于CPU的执行效率非常高，时间片非常短，在各个任务之间快速地切换，给人的感觉就是多个任务在“同时进行”，这也就是我们所说的并发(别觉得并发有多高深，它的实现很复杂，但它的概念很简单，就是一句话：多个任务同时执行)。多任务运行过程的示意图如下：<br><img alt data-src="http://img.blog.csdn.net/20150623201226625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"></p>
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>我们都知道计算机的核心是CPU，它承担了所有的计算任务；而操作系统是计算机的管理者，它负责任务的调度、资源的分配和管理，统领整个计算机硬件；应用程序侧是具有某种功能的程序，程序是运行于操作系统之上的。</p>
+<p><strong>进程是一个具有一定独立功能的程序在一个数据集上的一次动态执行的过程，是操作系统进行资源分配和调度的一个独立单位，是应用程序运行的载体</strong> 进程是一种抽象的概念，从来没有统一的标准定义。进程一般由<strong>程序、数据集合和进程控制块</strong>三部分组成。程序用于描述进程要完成的功能，是控制进程执行的指令集；数据集合是程序在执行时所需要的数据和工作区；<strong>程序控制块(Program Control Block，简称PCB)，包含进程的描述信息和控制信息，是进程存在的唯一标志。</strong></p>
+<p>进程具有的特征：<br><strong>动态性</strong>：进程是程序的一次执行过程，是临时的，有生命期的，是动态产生，动态消亡的；<br><strong>并发性</strong>：任何进程都可以同其他进程一起并发执行；<br><strong>独立性</strong>：进程是系统进行资源分配和调度的一个独立单位；<br><strong>结构性</strong>：进程由程序、数据和进程控制块三部分组成。</p>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p>在早期的操作系统中并没有线程的概念，进程是能拥有资源和独立运行的最小单位，也是程序执行的最小单位。任务调度采用的是时间片轮转的抢占式调度方式，而进程是任务调度的最小单位，每个进程有各自独立的一块内存，使得各个进程之间内存地址相互隔离。</p>
+<p>后来，随着计算机的发展，对CPU的要求越来越高，进程之间的切换开销较大，已经无法满足越来越复杂的程序的要求了。于是就发明了线程，<strong>线程是程序执行中一个单一的顺序控制流程，是程序执行流的最小单元，是处理器调度和分派的基本单位。</strong> 一个进程可以有一个或多个线程，<strong>各个线程之间共享程序的内存空间(也就是所在进程的内存空间)。</strong> 一个标准的<strong>线程由线程ID、当前指令指针(PC)、寄存器和堆栈组成。而进程由内存空间(代码、数据、进程空间、打开的文件)和一个或多个线程组成。</strong></p>
+<h2 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h2><p>前面讲了进程与线程，但可能你还觉得迷糊，感觉他们很类似。的确，进程与线程有着千丝万缕的关系，下面就让我们一起来理一理：<br>1.线程是程序执行的最小单位，而进程是操作系统分配资源的最小单位；<br>2.一个进程由一个或多个线程组成，线程是一个进程中代码的不同执行路线；<br>3.进程之间相互独立，但同一进程下的各个线程之间共享程序的内存空间(包括代码段、数据集、堆等)及一些进程级的资源(如打开文件和信号)，某进程内的线程在其它进程不可见；<br>4.调度和切换：线程上下文切换比进程上下文切换要快得多。</p>
+<p>线程与进程关系的示意图：<br><img alt data-src="http://img.blog.csdn.net/20150623201304175?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 2：进程与线程的资源共享关系</p>
+<p><img alt data-src="http://img.blog.csdn.net/20150623201318513?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 3：单线程与多线程的关系</p>
+<p>总之，线程和进程都是一种抽象的概念，线程是一种比进程更小的抽象，线程和进程都可用于实现并发。</p>
+<p>在早期的操作系统中并没有线程的概念，进程是能拥有资源和独立运行的最小单位，也是程序执行的最小单位。它相当于一个进程里只有一个线程，进程本身就是线程。所以线程有时被称为轻量级进程(Lightweight Process，LWP）。<br><img alt data-src="http://img.blog.csdn.net/20150623201335106?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 4：早期的操作系统只有进程，没有线程</p>
+<p>后来，随着计算机的发展，对多个任务之间上下文切换的效率要求越来越高，就抽象出一个更小的概念——线程，一般一个进程会有多个(也可是一个)线程。<br><img alt data-src="http://img.blog.csdn.net/20150623201405456?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 5：线程的出现，使得一个进程可以有多个线程</p>
+<h2 id="多线程与多核"><a href="#多线程与多核" class="headerlink" title="多线程与多核"></a>多线程与多核</h2><p>上面提到的时间片轮转的调度方式说一个任务执行一小段时间后强制暂停去执行下一个任务，每个任务轮流执行。很多操作系统的书都说“同一时间点只有一个任务在执行”。那有人可能就要问双核处理器呢？难道两个核不是同时运行吗？</p>
+<p>其实“同一时间点只有一个任务在执行”这句话是不准确的，至少它是不全面的。那多核处理器的情况下，线程是怎样执行呢？这就需要了解内核线程。<br>多核(心)处理器是指在一个处理器上集成多个运算核心从而提高计算能力，也就是有多个真正并行计算的处理核心，<strong>每一个处理核心对应一个内核线程。内核线程（Kernel Thread， KLT）就是直接由操作系统内核支持的线程，这种线程由内核来完成线程切换，内核通过操作调度器对线程进行调度，并负责将线程的任务映射到各个处理器上。一般一个处理核心对应一个内核线程，比如单核处理器对应一个内核线程，双核处理器对应两个内核线程，四核处理器对应四个内核线程。</strong></p>
+<p>现在的电脑一般是双核四线程、四核八线程，是<strong>采用超线程技术将一个物理处理核心模拟成两个逻辑处理核心，对应两个内核线程</strong>，所以在操作系统中看到的CPU数量是实际物理CPU数量的两倍，如你的电脑是双核四线程，打开“任务管理器\性能”可以看到4个CPU的监视器，四核八线程可以看到8个CPU的监视器。<br><img alt data-src="http://img.blog.csdn.net/20150623201509399?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 6：双核四线程在Windows8下查看的结果</p>
+<p>超线程技术就是利用特殊的硬件指令，把一个物理芯片模拟成两个逻辑处理核心，让单个处理器都能使用线程级并行计算，进而兼容多线程操作系统和软件，减少了CPU的闲置时间，提高的CPU的运行效率。这种超线程技术(如双核四线程)由处理器硬件的决定，同时也需要操作系统的支持才能在计算机中表现出来。</p>
+<p>程序一般不会直接去使用内核线程，而是去使用内核线程的一种高级接口——轻量级进程（Light Weight Process，LWP），轻量级进程就是我们通常意义上所讲的线程(我们在这称它为用户线程)，由于每个轻量级进程都由一个内核线程支持，因此只有先支持内核线程，才能有轻量级进程。用户线程与内核线程的对应关系有三种模型：一对一模型、多对一模型、多对多模型，在这以4个内核线程、3个用户线程为例对三种模型进行说明。</p>
+<h2 id="一对一模型"><a href="#一对一模型" class="headerlink" title="一对一模型"></a>一对一模型</h2><p>对于一对一模型来说，一个用户线程就唯一地对应一个内核线程(反过来不一定成立，一个内核线程不一定有对应的用户线程)。这样，如果CPU没有采用超线程技术(如四核四线程的计算机)，一个用户线程就唯一地映射到一个物理CPU的线程，线程之间的并发是真正的并发。一对一模型使用户线程具有与内核线程一样的优点，一个线程因某种原因阻塞时其他线程的执行不受影响；此处，一对一模型也可以让多线程程序在多处理器的系统上有更好的表现。<br>但一对一模型也有两个缺点：1.许多操作系统限制了内核线程的数量，因此一对一模型会使用户线程的数量受到限制；2.许多操作系统内核线程调度时，上下文切换的开销较大，导致用户线程的执行效率下降。<br><img alt data-src="http://img.blog.csdn.net/20150623201531159?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 7：一对一模型</p>
+<h2 id="多对一模型"><a href="#多对一模型" class="headerlink" title="多对一模型"></a>多对一模型</h2><p>多对一模型将多个用户线程映射到一个内核线程上，线程之间的切换由用户态的代码来进行，因此相对一对一模型，多对一模型的线程切换速度要快许多；此外，多对一模型对用户线程的数量几乎无限制。但多对一模型也有两个缺点：1.如果其中一个用户线程阻塞，那么其它所有线程都将无法执行，因为此时内核线程也随之阻塞了；2.在多处理器系统上，处理器数量的增加对多对一模型的线程性能不会有明显的增加，因为所有的用户线程都映射到一个处理器上了。<br><img alt data-src="http://img.blog.csdn.net/20150623201543668?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 8：多对一模型</p>
+<h2 id="多对多模型"><a href="#多对多模型" class="headerlink" title="多对多模型"></a>多对多模型</h2><p>多对多模型结合了一对一模型和多对一模型的优点，将多个用户线程映射到多个内核线程上。多对多模型的优点有：1.一个用户线程的阻塞不会导致所有线程的阻塞，因为此时还有别的内核线程被调度来执行；2.多对多模型对用户线程的数量没有限制；3.在多处理器的操作系统中，多对多模型的线程也能得到一定的性能提升，但提升的幅度不如一对一模型的高。<br>在现在流行的操作系统中，大都采用多对多的模型。<br><img alt data-src="http://img.blog.csdn.net/20150623201557825?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 9：多对多模型</p>
+<h2 id="查看进程与线程"><a href="#查看进程与线程" class="headerlink" title="查看进程与线程"></a>查看进程与线程</h2><p>一个应用程序可能是多线程的，也可能是多进程的，如何查看呢？在Windows下我们只须打开任务管理器就能查看一个应用程序的进程和线程数。按“Ctrl+Alt+Del”或右键快捷工具栏打开任务管理器。<br>查看进程数和线程数：<br><img alt data-src="http://img.blog.csdn.net/20150623201615140?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 10：查看线程数和进程数</p>
+<p>在“进程”选项卡下，我们可以看到一个应用程序包含的线程数。如果一个应用程序有多个进程，我们能看到每一个进程，如在上图中，Google的chrome浏览器就有多个进程。同时，如果打开了一个应用程序的多个实例也会有多个进程，如上图中我打开了两个cmd窗口，就有两个cmd进程。如果看不到线程数这一列，可以在点击“查看\选择列”菜单，增加监听的列。</p>
+<h2 id="查看CPU和内存的使用率："><a href="#查看CPU和内存的使用率：" class="headerlink" title="查看CPU和内存的使用率："></a>查看CPU和内存的使用率：</h2><p>在性能选项卡中，我们可以查看CPU和内存的使用率，根据CPU使用记录的监视器的个数还能看出逻辑处理核心的个数，如我的双核四线程的计算机就有四个监视器。<br><img alt data-src="http://img.blog.csdn.net/20150623201628475?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 11：查看CPU和内存的使用率</p>
+<h2 id="线程的生命周期"><a href="#线程的生命周期" class="headerlink" title="线程的生命周期"></a>线程的生命周期</h2><p>当线程的数量小于处理器的数量时，线程的并发是真正的并发，不同的线程运行在不同的处理器上。但当线程的数量大于处理器的数量时，线程的并发会受到一些阻碍，此时并不是真正的并发，因为此时至少有一个处理器会运行多个线程。<br>在单个处理器运行多个线程时，并发是一种模拟出来的状态。操作系统采用时间片轮转的方式轮流执行每一个线程。现在，几乎所有的现代操作系统采用的都是时间片轮转的抢占式调度方式，如我们熟悉的Unix、Linux、Windows及Mac OS X等流行的操作系统。<br>我们知道线程是程序执行的最小单位，也是任务执行的最小单位。在早期只有进程的操作系统中，进程有五种状态，创建、就绪、运行、阻塞(等待)、退出。早期的进程相当于现在的只有单个线程的进程，那么现在的多线程也有五种状态，现在的多线程的生命周期与早期进程的生命周期类似。<br><img alt data-src="http://img.blog.csdn.net/20150629220341018?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 12：早期进程的生命周期</p>
+<p>进程在运行过程有三种状态：就绪、运行、阻塞，创建和退出状态描述的是进程的创建过程和退出过程。<br>创建：进程正在创建，还不能运行。操作系统在创建进程时要进行的工作包括分配和建立进程控制块表项、建立资源表格并分配资源、加载程序并建立地址空间；<br>就绪：时间片已用完，此线程被强制暂停，等待下一个属于他的时间片到来；<br>运行：此线程正在执行，正在占用时间片；<br>阻塞：也叫等待状态，等待某一事件(如IO或另一个线程)执行完；<br>退出：进程已结束，所以也称结束状态，释放操作系统分配的资源。<br><img alt data-src="http://img.blog.csdn.net/20150629220354195?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVvd2VpZnU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><br>图 13：线程的生命周期</p>
+<p>创建：一个新的线程被创建，等待该线程被调用执行；<br>就绪：时间片已用完，此线程被强制暂停，等待下一个属于他的时间片到来；<br>运行：此线程正在执行，正在占用时间片；<br>阻塞：也叫等待状态，等待某一事件(如IO或另一个线程)执行完；<br>退出：一个线程完成任务或者其他终止条件发生，该线程终止进入退出状态，退出状态释放该线程所分配的资源。</p>
+<h2 id="编程思想之多线程与多进程-2-——线程优先级与线程安全"><a href="#编程思想之多线程与多进程-2-——线程优先级与线程安全" class="headerlink" title="编程思想之多线程与多进程(2)——线程优先级与线程安全"></a>编程思想之多线程与多进程(2)——线程优先级与线程安全</h2><h2 id="线程优先级"><a href="#线程优先级" class="headerlink" title="线程优先级"></a>线程优先级</h2><p>现在主流操作系统(如Windows、Linux、Mac OS X)的任务调度除了具有前面提到的时间片轮转的特点外，还有优先级调度(Priority Schedule)的特点。优先级调度决定了线程按照什么顺序轮流执行，在具有优先级调度的系统中，线程拥有各自的线程优先级(Thread Priority)。具有高优先级的线程会更早地执行，而低优先级的线程通常要等没有更高优先级的可执行线程时才会被执行。</p>
+<p>线程的优先级可以由用户手动设置，此外系统也会根据不同情形调整优先级。通常情况下，频繁地进入等待状态(进入等待状态会放弃之前仍可占用的时间份额)的线程(如IO线程)，比频繁进行大量计算以至于每次都把所有时间片全部用尽的线程更受操作系统的欢迎。因为频繁进入等待的线程只会占用很少的时间，这样操作系统可以处理更多的任务。我们把频繁等待的线程称之为IO密集型线程(IO Bound Thread)，而把很少等待的线程称之为CPU密集型线程(CPU Bound Thread)。IO密集型线程总是比CPU密集型线程更容易得到优先级的提升。</p>
+<h2 id="线程饿死"><a href="#线程饿死" class="headerlink" title="线程饿死:"></a>线程饿死:</h2><p>在优先级调度下，容易出现一种线程饿死的现象。一个线程饿死是说它的优先级较低，在它执行之前总是有比它优先级更高的线程等待执行，因此这个低优先级的线程始终得不到执行。当CPU密集型的线程优先级较高时，其它低优先级的线程就很可能出现饿死的情况；当IO密集型线程优先级较高时，其它线程相对不容易造成饿死的善，因为IO线程有大量的等待时间。为了避免线程饿死，调度系统通常会逐步提升那些等待了很久而得不到执行的线程的优先级。这样，一个线程只要它等待了足够长的时间，其优先级总会被提升到可以让它执行的程度，也就是说这种情况下线程始终会得到执行，只是时间的问题。</p>
+<p>在优先级调度环境下，线程优先级的改变有三种方式：</p>
+<ol>
+<li>用户指定优先级；</li>
+<li>根据进入等待状态的频繁程度提升或降低优先级(由操作系统完成)；</li>
+<li>长时间得不到执行而被提升优先级。</li>
+</ol>
+<h2 id="线程安全与锁"><a href="#线程安全与锁" class="headerlink" title="线程安全与锁"></a>线程安全与锁</h2><p>在多个线程并发执行访问同一个数据时，如果不采取相应的措施，将会是非常危险的。假设你在工行有一个银行账户，两张银联卡(自己手里一张，女朋友手里一张)，里面有100万。假设取钱就两个过程：1.检查账户余额，2.取出现金(如果要取出的金额 &gt; 账户余额，则取现成功，否则取现失败)。有一天你要买房想把钱取出来，而此时你女朋友也想买一辆车(假设你们事先没有商量)。两个人都在取钱，你在A号ATM机取100万，女朋友在B号ATM机取80万。这时A号ATM检查账户余额发现有100万，可以取出；而与此同时，同一时刻B号ATM也在检查账户余额发现有100万，可以取出；这样，A、B都把钱取出来了。</p>
+<p>100万的存款取出180万，银行就亏大发了(当然你就笑呵呵了……)！这就是线程并发的不安全性。为避免这种情况发生，我们要将多个线程对同一数据的访问同步，确保线程安全。</p>
+<p>所谓 <strong>同步(synchronization)</strong> 就是指一个线程访问数据时，其它线程不得对同一个数据进行访问，即同一时刻只能有一个线程访问该数据，当这一线程访问结束时其它线程才能对这它进行访问。同步最常见的方式就是使用锁(Lock)，也称为线程锁。锁是一种非强制机制，每一个线程在访问数据或资源之前，首先试图获取(Acquire)锁，并在访问结束之后释放(Release)锁。在锁被占用时试图获取锁，线程会进入等待状态，直到锁被释放再次变为可用。</p>
+<h2 id="二元信号量"><a href="#二元信号量" class="headerlink" title="二元信号量"></a>二元信号量</h2><p>二元信号量(Binary Semaphore)是一种最简单的锁，它有两种状态：占用和非占用。它 <strong>适合只能被唯一一个线程独占访问的资源</strong>。当二元信号量处于非占用状态时，第一个试图获取该二元信号量锁的线程会获得该锁，并将二元信号量锁置为占用状态，之后其它试图获取该二元信号量的线程会进入等待状态，直到该锁被释放。</p>
+<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><p>多元信号量允许多个线程访问同一个资源，多元信号量简称信号量(Semaphore)，对于允许多个线程并发访问的资源，这是一个很好的选择。一个初始值为N的信号量允许N个线程并发访问。线程访问资源时首先获取信号量锁，进行如下操作：</p>
+<ol>
+<li>将信号量的值减1；</li>
+<li>如果信号量的值小于0，则进入等待状态，否则继续执行；<br>访问资源结束之后，线程释放信号量锁，进行如下操作：</li>
+<li>将信号量的值加1；</li>
+<li>如果信号量的值小于1(等于0)，唤醒一个等待中的线程；</li>
+</ol>
+<h2 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h2><p>互斥量(Mutex)和二元信号量类似，资源仅允许一个线程访问。<strong>与二元信号量不同的是，信号量在整个系统中可以被任意线程获取和释放，也就是说，同一个信号量可以由一个线程获取而由另一线程释放。</strong> 而 <strong>互斥量则要求哪个线程获取了该互斥量锁就由哪个线程释放</strong>，其它线程越俎代庖释放互斥量是无效的。</p>
+<h2 id="临界区"><a href="#临界区" class="headerlink" title="临界区"></a>临界区</h2><p>临界区(Critical Section)是一种比互斥量更加严格的同步手段。互斥量和信号量在系统的任何进程都是可见的，也就是说一个进程创建了一个互斥量或信号量，另一进程试图获取该锁是合法的。而 <strong>临界区的作用范围仅限于本进程，其它的进程无法获取该锁。</strong> 除此之处，临界区与互斥量的性质相同。</p>
+<h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><p>读写锁(Read-Write Lock)允许多个线程同时对同一个数据进行读操作，而只允许一个线程进行写操作。这是因为读操作不会改变数据的内容，是安全的；而写操作会改变数据的内容，是不安全的。对同一个读写锁，有两种获取方式：共享的(Shared)和独占的(Exclusive)。当锁处于自由状态时，试图以任何一种方式获取锁都能成功，并将锁置为对应的状态；如果锁处于共享状态，其它线程以共享方式获取该锁，仍然能成功，此时该锁分配给了多个线程；如果其它线程试图如独占的方式获取处于共享状态的锁，它必须等待所有线程释放该锁；处于独占状态的锁阻止任何线程获取该锁，不论它们以何种方式。获取读写锁的方式总结如下：<br>读写锁的状态    以共享方式获取    以独占方式获取<br>自由    成功    成功<br>共享    成功    等待<br>独占    等待    等待<br>表 1 ：获取读写锁的方式</p>
+<h2 id="编程思想之多线程与多进程-3-——Java中的多线程"><a href="#编程思想之多线程与多进程-3-——Java中的多线程" class="headerlink" title="编程思想之多线程与多进程(3)——Java中的多线程"></a>编程思想之多线程与多进程(3)——Java中的多线程</h2><h2 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h2><p>任何程序至少有一个线程，即使你没有主动地创建线程，程序从一开始执行就有一个默认的线程，被称为主线程，只有一个线程的程序称为单线程程序。如下面这一简单的代码，没有显示地创建一个线程，<strong>程序从main开始执行，main本身就是一个线程(主线程)，单个线程从头执行到尾。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String args[]) &#123;</span><br><span class="line">   System.out.println(&quot;输出从1到100的数:&quot;);</span><br><span class="line">   for (int i = 0; i &lt; 100; i ++) &#123;</span><br><span class="line">      System.out.println(i + 1);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h2><p>单线程程序简单明了，但有时无法满足特定的需求。如一个文字处理的程序，我在打印文章的同时也要能对文字进行编辑，如果是单线程的程序则要等打印机打印完成之后你才能对文字进行编辑，但打印的过程一般比较漫长，这是我们无法容忍的。如果采用多线程，打印的时候可以单独开一个线程去打印，主线程可以继续进行文字编辑。在程序需要同时执行多个任务时，可以采用多线程。</p>
+<p>在程序需要同时执行多个任务时，可以采用多线程。<strong>Java给多线程编程提供了内置的支持，提供了两种创建线程方法：1.通过实现Runable接口；2.通过继承Thread类。</strong></p>
+<p>Thread是JDK实现的对线程支持的类，Thread类本身实现了Runnable接口，所以Runnable是显示创建线程必须实现的接口; Runnable只有一个run方法，所以不管通过哪种方式创建线程，都必须实现run方法。我们可以看一个例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created with IntelliJ IDEA.</span><br><span class="line"> * User: luoweifu</span><br><span class="line"> * Date: 15-5-24</span><br><span class="line"> * Time: 下午9:30</span><br><span class="line"> * To change this template use File | Settings | File Templates.</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 通过实现Runnable方法</span><br><span class="line"> */</span><br><span class="line">class ThreadA implements Runnable &#123;</span><br><span class="line">   private Thread thread;</span><br><span class="line">   private String threadName;</span><br><span class="line">   public ThreadA(String threadName) &#123;</span><br><span class="line">      thread = new Thread(this, threadName);</span><br><span class="line">      this.threadName = threadName;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   //实现run方法</span><br><span class="line">   public void run() &#123;</span><br><span class="line">      for (int i = 0; i &lt; 100; i ++) &#123;</span><br><span class="line">         System.out.println(threadName + &quot;: &quot; + i);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public void start() &#123;</span><br><span class="line">      thread.start();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 继承Thread的方法</span><br><span class="line"> */</span><br><span class="line">class ThreadB extends Thread &#123;</span><br><span class="line">   private String threadName;</span><br><span class="line"></span><br><span class="line">   public ThreadB(String threadName) &#123;</span><br><span class="line">      super(threadName);</span><br><span class="line">      this.threadName = threadName;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   //实现run方法</span><br><span class="line">   public void run() &#123;</span><br><span class="line">      for (int i = 0; i &lt; 100; i ++) &#123;</span><br><span class="line">         System.out.println(threadName + &quot;: &quot; + i);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Multithread&#123;</span><br><span class="line"></span><br><span class="line">   public static void main(String args[]) &#123;</span><br><span class="line">      ThreadA threadA = new ThreadA(&quot;ThreadA&quot;);</span><br><span class="line">      ThreadB threadB = new ThreadB(&quot;ThreadB&quot;);</span><br><span class="line">      threadA.start();</span><br><span class="line">      threadB.start();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说明：上面的例子中例举了两种实现线程的方式。<strong>大部分情况下选择实现Runnable接口的方式会优于继承Thread的方式</strong>，因为：</p>
+<ol>
+<li>从 Thread 类继承会强加类层次；</li>
+<li>有些类不能继承Thread类，如要作为线程运行的类已经是某一个类的子类了，但<strong>Java只支持单继承</strong>，所以不能再继承Thread类了。</li>
+</ol>
+<h2 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h2><p>线程与线程之间的关系，有几种:</p>
+<p>模型一：简单的线程，多个线程同时执行，但各个线程处理的任务毫不相干，没有数据和资源的共享，不会出现争抢资源的情况。这种情况下不管有多少个线程同时执行都是安全的，其执行模型如下：</p>
+<p><img alt data-src="http://img.blog.csdn.net/20150628203010538"><br>图 1：处理相互独立的任务</p>
+<p>模型二：复杂的线程，多个线程共享相同的数据或资源，就会出现多个线程争抢一个资源的情况。这时就容易造成数据的非预期(错误)处理，是线程不安全的，其模型如下:<br><img alt data-src="http://img.blog.csdn.net/20150628203115567"><br>图 2：多个线程共享相同的数据或资源</p>
+<p>在出现模型二的情况时就要考虑线程的同步，确保线程的安全。<strong>Java中对线程同步的支持，最常见的方式是添加synchronized同步锁。</strong></p>
+<p>我们通过一个例子来看一下线程同步的应用。</p>
+<p>买火车票是大家春节回家最为关注的事情，我们就简单模拟一下火车票的售票系统(为使程序简单，我们就抽出最简单的模型进行模拟)：有500张从北京到赣州的火车票，在8个窗口同时出售，保证系统的稳定性和数据的原子性。</p>
+<p><img alt data-src="http://img.blog.csdn.net/20150628203427692"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 模拟服务器的类</span><br><span class="line"> */</span><br><span class="line">class Service &#123;</span><br><span class="line">   private String ticketName;    //票名</span><br><span class="line">   private int totalCount;        //总票数</span><br><span class="line">   private int remaining;        //剩余票数</span><br><span class="line"></span><br><span class="line">   public Service(String ticketName, int totalCount) &#123;</span><br><span class="line">      this.ticketName = ticketName;</span><br><span class="line">      this.totalCount = totalCount;</span><br><span class="line">      this.remaining = totalCount;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public synchronized int saleTicket(int ticketNum) &#123;</span><br><span class="line">      if (remaining &gt; 0) &#123;</span><br><span class="line">         remaining -= ticketNum;</span><br><span class="line">         try &#123;        //暂停0.1秒，模拟真实系统中复杂计算所用的时间</span><br><span class="line">            Thread.sleep(100);</span><br><span class="line">         &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         if (remaining &gt;= 0) &#123;</span><br><span class="line">            return remaining;</span><br><span class="line">         &#125; else &#123;</span><br><span class="line">            remaining += ticketNum;</span><br><span class="line">            return -1;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      return -1;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public synchronized int getRemaining() &#123;</span><br><span class="line">      return remaining;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public String getTicketName() &#123;</span><br><span class="line">      return this.ticketName;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 售票程序</span><br><span class="line"> */</span><br><span class="line">class TicketSaler implements Runnable &#123;</span><br><span class="line">   private String name;</span><br><span class="line">   private Service service;</span><br><span class="line"></span><br><span class="line">   public TicketSaler(String windowName, Service service) &#123;</span><br><span class="line">      this.name = windowName;</span><br><span class="line">      this.service = service;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @Override</span><br><span class="line">   public void run() &#123;</span><br><span class="line">      while (service.getRemaining() &gt; 0) &#123;</span><br><span class="line">         synchronized (this)</span><br><span class="line">         &#123;</span><br><span class="line">            System.out.print(Thread.currentThread().getName() + &quot;出售第&quot; + service.getRemaining() + &quot;张票，&quot;);</span><br><span class="line">            int remaining = service.saleTicket(1);</span><br><span class="line">            if (remaining &gt;= 0) &#123;</span><br><span class="line">               System.out.println(&quot;出票成功!剩余&quot; + remaining + &quot;张票.&quot;);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">               System.out.println(&quot;出票失败！该票已售完。&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 测试类</span><br><span class="line"> */</span><br><span class="line">public class TicketingSystem &#123;</span><br><span class="line">   public static void main(String args[]) &#123;</span><br><span class="line">      Service service = new Service(&quot;北京--&gt;赣州&quot;, 500);</span><br><span class="line">      TicketSaler ticketSaler = new TicketSaler(&quot;售票程序&quot;, service);</span><br><span class="line">      //创建8个线程，以模拟8个窗口</span><br><span class="line">      Thread threads[] = new Thread[8];</span><br><span class="line">      for (int i = 0; i &lt; threads.length; i++) &#123;</span><br><span class="line">         threads[i] = new Thread(ticketSaler, &quot;窗口&quot; + (i + 1));</span><br><span class="line">         System.out.println(&quot;窗口&quot; + (i + 1) + &quot;开始出售 &quot; + service.getTicketName() + &quot; 的票...&quot;);</span><br><span class="line">         threads[i].start();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">窗口1开始出售 北京–&gt;赣州 的票…</span><br><span class="line">窗口2开始出售 北京–&gt;赣州 的票…</span><br><span class="line">窗口3开始出售 北京–&gt;赣州 的票…</span><br><span class="line">窗口4开始出售 北京–&gt;赣州 的票…</span><br><span class="line">窗口5开始出售 北京–&gt;赣州 的票…</span><br><span class="line">窗口6开始出售 北京–&gt;赣州 的票…</span><br><span class="line">窗口7开始出售 北京–&gt;赣州 的票…</span><br><span class="line">窗口8开始出售 北京–&gt;赣州 的票…</span><br><span class="line">窗口1出售第500张票，出票成功!剩余499张票.</span><br><span class="line">窗口1出售第499张票，出票成功!剩余498张票.</span><br><span class="line">窗口6出售第498张票，出票成功!剩余497张票.</span><br><span class="line">窗口6出售第497张票，出票成功!剩余496张票.</span><br><span class="line">窗口1出售第496张票，出票成功!剩余495张票.</span><br><span class="line">窗口1出售第495张票，出票成功!剩余494张票.</span><br><span class="line">窗口1出售第494张票，出票成功!剩余493张票.</span><br><span class="line">窗口2出售第493张票，出票成功!剩余492张票.</span><br><span class="line">窗口2出售第492张票，出票成功!剩余491张票.</span><br><span class="line">窗口2出售第491张票，出票成功!剩余490张票.</span><br><span class="line">窗口2出售第490张票，出票成功!剩余489张票.</span><br><span class="line">窗口2出售第489张票，出票成功!剩余488张票.</span><br><span class="line">窗口2出售第488张票，出票成功!剩余487张票.</span><br><span class="line">窗口6出售第487张票，出票成功!剩余486张票.</span><br><span class="line">窗口6出售第486张票，出票成功!剩余485张票.</span><br><span class="line">窗口3出售第485张票，出票成功!剩余484张票.</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>在上面的例子中，涉及到<strong>数据的更改的Service类saleTicket方法和TicketSaler类run方法都用了synchronized同步锁</strong>进行同步处理，以保证数据的准确性和原子性。</p>
+<p>关于synchronized更详细的用法请参见：<a href="http://blog.csdn.net/luoweifu/article/details/46613015" target="_blank" rel="noopener">《Java中Synchronized的用法》</a></p>
+<h2 id="线程控制"><a href="#线程控制" class="headerlink" title="线程控制"></a>线程控制</h2><p>在多线程程序中，除了最重要的线程同步外，还有其它的线程控制，如线程的中断、合并、优先级等。</p>
+<p>线程等待(wait、notify、notifyAll)</p>
+<p>Wait：使当前的线程处于等待状态；<br>Notify：唤醒其中一个等待线程；<br>notifyAll：唤醒所有等待线程。</p>
+<p>详细用法参见：<a href="http://blog.csdn.net/luoweifu/article/details/46664809" target="_blank" rel="noopener">《 Java多线程中wait, notify and notifyAll的使用》</a></p>
+<h2 id="线程中断-interrupt"><a href="#线程中断-interrupt" class="headerlink" title="线程中断(interrupt)"></a>线程中断(interrupt)</h2><p>在Java提供的线程支持类Thread中，有三个用于线程中断的方法：<br>public void interrupt(); 中断线程。<br>public static boolean interrupted(); 是一个静态方法，用于测试当前线程是否已经中断，并将线程的中断状态 清除。所以如果线程已经中断，调用两次interrupted，第二次时会返回false，因为第一次返回true后会清除中断状态。<br>public boolean isInterrupted(); 测试线程是否已经中断。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">**</span><br><span class="line"> * 打印线程</span><br><span class="line"> */</span><br><span class="line">class Printer implements Runnable &#123;</span><br><span class="line">   public void run() &#123;</span><br><span class="line">      while (!Thread.currentThread().isInterrupted()) &#123;     //如果当前线程未被中断，则执行打印工作</span><br><span class="line">         System.out.println(Thread.currentThread().getName() + &quot;打印中… …&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">      if (Thread.currentThread().isInterrupted()) &#123;</span><br><span class="line">         System.out.println(&quot;interrupted:&quot; +  Thread.interrupted());       //返回当前线程的状态，并清除状态</span><br><span class="line">         System.out.println(&quot;isInterrupted:&quot; +  Thread.currentThread().isInterrupted());</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Printer printer = new Printer();</span><br><span class="line">Thread printerThread = new Thread(printer, &quot;打印线程&quot;);</span><br><span class="line">printerThread.start();</span><br><span class="line">try &#123;</span><br><span class="line">   Thread.sleep(100);</span><br><span class="line">&#125; catch (InterruptedException e) &#123;</span><br><span class="line">   e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(&quot;有紧急任务出现，需中断打印线程.&quot;);</span><br><span class="line">System.out.println(&quot;中断前的状态：&quot; + printerThread.isInterrupted());</span><br><span class="line">printerThread.interrupt();       // 中断打印线程</span><br><span class="line">System.out.println(&quot;中断前的状态：&quot; + printerThread.isInterrupted());</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">打印线程打印中… …</span><br><span class="line">… …</span><br><span class="line">打印线程打印中… …</span><br><span class="line">有紧急任务出现，需中断打印线程.</span><br><span class="line">打印线程打印中… …</span><br><span class="line">中断前的状态：false</span><br><span class="line">打印线程打印中… …</span><br><span class="line">中断前的状态：true</span><br><span class="line">interrupted:true</span><br><span class="line">isInterrupted:false</span><br></pre></td></tr></table></figure>
+<h2 id="线程合并-join"><a href="#线程合并-join" class="headerlink" title="线程合并(join)"></a>线程合并(join)</h2><p>所谓合并，就是等待其它线程执行完，再执行当前线程，执行起来的效果就好像把其它线程合并到当前线程执行一样。其执行关系如下：</p>
+<p><img alt data-src="http://img.blog.csdn.net/20150628204041010"><br>图 4:线程合并的过程</p>
+<p>public final void join()<br>等待该线程终止</p>
+<p>public final void join(long millis);<br>等待该线程终止的时间最长为 millis 毫秒。超时为 0 意味着要一直等下去。</p>
+<p>public final void join(long millis, int nanos)<br>等待该线程终止的时间最长为 millis 毫秒 + nanos 纳秒</p>
+<p>这个常见的一个应用就是安装程序，很多大的软件都会包含多个插件，如果选择完整安装，则要等所有的插件都安装完成才能结束，且插件与插件之间还可能会有依赖关系。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 插件1</span><br><span class="line"> */</span><br><span class="line">class Plugin1 implements Runnable &#123;</span><br><span class="line"></span><br><span class="line">   @Override</span><br><span class="line">   public void run() &#123;</span><br><span class="line">      System.out.println(&quot;插件1开始安装.&quot;);</span><br><span class="line">      System.out.println(&quot;安装中...&quot;);</span><br><span class="line">      try &#123;</span><br><span class="line">         Thread.sleep(1000);</span><br><span class="line">      &#125; catch (InterruptedException e) &#123;</span><br><span class="line">         e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">      System.out.println(&quot;插件1完成安装.&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 插件2</span><br><span class="line"> */</span><br><span class="line">class Plugin2 implements Runnable &#123;</span><br><span class="line"></span><br><span class="line">   @Override</span><br><span class="line">   public void run() &#123;</span><br><span class="line">      System.out.println(&quot;插件2开始安装.&quot;);</span><br><span class="line">      System.out.println(&quot;安装中...&quot;);</span><br><span class="line">      try &#123;</span><br><span class="line">         Thread.sleep(2000);</span><br><span class="line">      &#125; catch (InterruptedException e) &#123;</span><br><span class="line">         e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">      System.out.println(&quot;插件2完成安装.&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;主线程开启...&quot;);</span><br><span class="line">Thread thread1 = new Thread(new Plugin1());</span><br><span class="line">Thread thread2 = new Thread(new Plugin2());</span><br><span class="line">try &#123;</span><br><span class="line">   thread1.start();   //开始插件1的安装</span><br><span class="line">   thread1.join();       //等插件1的安装线程结束</span><br><span class="line">   thread2.start();   //再开始插件2的安装</span><br><span class="line">   thread2.join();       //等插件2的安装线程结束,才能回到主线程</span><br><span class="line">&#125; catch (InterruptedException e) &#123;</span><br><span class="line">   e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(&quot;主线程结束，程序安装完成！&quot;);</span><br></pre></td></tr></table></figure>
+<h2 id="优先级-Priority"><a href="#优先级-Priority" class="headerlink" title="优先级(Priority)"></a>优先级(Priority)</h2><p>线程优先级是指获得CPU资源的优先程序。优先级高的容易获得CPU资源，优先级底的较难获得CPU资源，表现出来的情况就是优先级越高执行的时间越多。</p>
+<p>Java中通过getPriority和setPriority方法获取和设置线程的优先级。Thread类提供了三个表示优先级的常量：MIN_PRIORITY优先级最低，为1；NORM_PRIORITY是正常的优先级；为5，MAX_PRIORITY优先级最高，为10。我们创建线程对象后，如果不显示的设置优先级的话，默认为5。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 优先级</span><br><span class="line"> */</span><br><span class="line">class PriorityThread implements Runnable&#123;</span><br><span class="line">   @Override</span><br><span class="line">   public void run() &#123;</span><br><span class="line">      for (int i = 0; i &lt; 1000; i ++) &#123;</span><br><span class="line">         System.out.println(Thread.currentThread().getName() + &quot;: &quot; + i);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//创建三个线程</span><br><span class="line">Thread thread1 = new Thread(new PriorityThread(), &quot;Thread1&quot;);</span><br><span class="line">Thread thread2 = new Thread(new PriorityThread(), &quot;Thread2&quot;);</span><br><span class="line">Thread thread3 = new Thread(new PriorityThread(), &quot;Thread3&quot;);</span><br><span class="line">//设置优先级</span><br><span class="line">thread1.setPriority(Thread.MAX_PRIORITY);</span><br><span class="line">thread2.setPriority(8);</span><br><span class="line">//开始执行线程</span><br><span class="line">thread3.start();</span><br><span class="line">thread2.start();</span><br><span class="line">thread1.start();</span><br></pre></td></tr></table></figure>
+<p>从结果中我们可以看到线程thread1明显比线程thread3执行的快。</p>
+<h2 id="Java多线程中wait-notify-and-notifyAll的使用"><a href="#Java多线程中wait-notify-and-notifyAll的使用" class="headerlink" title="Java多线程中wait, notify and notifyAll的使用"></a>Java多线程中wait, notify and notifyAll的使用</h2><p>在Java的Object类中有三个final的方法允许线程之间进行资源对象锁的通信，他们分别是： wait(), notify() and notifyAll()。</p>
+<p>调用这些方法的当前线程必须拥有此对象监视器，否则将会报java.lang.IllegalMonitorStateException exception异常。</p>
+<h2 id="wait"><a href="#wait" class="headerlink" title="wait"></a>wait</h2><p>Object的wait方法有三个重载方法，其中一个方法wait() 是无限期(一直)等待，直到其它线程调用notify或notifyAll方法唤醒当前的线程；另外两个方法wait(long timeout) 和wait(long timeout, int nanos)允许传入 当前线程在被唤醒之前需要等待的时间，timeout为毫秒数，nanos为纳秒数。</p>
+<h2 id="notify"><a href="#notify" class="headerlink" title="notify"></a>notify</h2><p>notify方法只唤醒一个等待（对象的）线程并使该线程开始执行。所以如果有多个线程等待一个对象，这个方法只会唤醒其中一个线程，选择哪个线程取决于操作系统对多线程管理的实现。</p>
+<h2 id="notifyAll"><a href="#notifyAll" class="headerlink" title="notifyAll"></a>notifyAll</h2><p>notifyAll 会唤醒所有等待(对象的)线程，尽管哪一个线程将会第一个处理取决于操作系统的实现。</p>
+<p>这些方法可以使用于“生产者-消费者”问题，消费者是在队列中等待对象的线程，生产者是在队列中释放对象并通知其他线程的线程。</p>
+<p>让我们来看一个多线程作用于同一个对象的例子，我们使用wait, notify and notifyAll方法。</p>
+<h2 id="通过实例来理解"><a href="#通过实例来理解" class="headerlink" title="通过实例来理解"></a>通过实例来理解</h2><p>Message</p>
+<p>一个Java bean类，线程将会使用它并调用wait和notify方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package com.journaldev.concurrency;</span><br><span class="line"></span><br><span class="line">public class Message &#123;</span><br><span class="line">    private String msg;</span><br><span class="line"></span><br><span class="line">    public Message(String str)&#123;</span><br><span class="line">        this.msg=str;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getMsg() &#123;</span><br><span class="line">        return msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setMsg(String str) &#123;</span><br><span class="line">        this.msg=str;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Waiter</p>
+<p>一个Waiter类，等待其它的线程调用notify方法以唤醒线程完成处理。注意等待线程必须通过加synchronized同步锁拥有Message对象的监视器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">package com.journaldev.concurrency;</span><br><span class="line"></span><br><span class="line">public class Waiter implements Runnable&#123;</span><br><span class="line"></span><br><span class="line">    private Message msg;</span><br><span class="line"></span><br><span class="line">    public Waiter(Message m)&#123;</span><br><span class="line">        this.msg=m;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        String name = Thread.currentThread().getName();</span><br><span class="line">        synchronized (msg) &#123;</span><br><span class="line">            try&#123;</span><br><span class="line">                System.out.println(name+&quot; waiting to get notified at time:&quot;+System.currentTimeMillis());</span><br><span class="line">                msg.wait();</span><br><span class="line">            &#125;catch(InterruptedException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(name+&quot; waiter thread got notified at time:&quot;+System.currentTimeMillis());</span><br><span class="line">            //process the message now</span><br><span class="line">            System.out.println(name+&quot; processed: &quot;+msg.getMsg());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Notifier</p>
+<p>一个Notifier类，处理Message对象并调用notify方法唤醒等待Message对象的线程。注意synchronized代码块被用于持有Message对象的监视器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">package com.journaldev.concurrency;</span><br><span class="line"></span><br><span class="line">public class Notifier implements Runnable &#123;</span><br><span class="line"></span><br><span class="line">    private Message msg;</span><br><span class="line"></span><br><span class="line">    public Notifier(Message msg) &#123;</span><br><span class="line">        this.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        String name = Thread.currentThread().getName();</span><br><span class="line">        System.out.println(name+&quot; started&quot;);</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(1000);</span><br><span class="line">            synchronized (msg) &#123;</span><br><span class="line">                msg.setMsg(name+&quot; Notifier work done&quot;);</span><br><span class="line">                msg.notify();</span><br><span class="line">                // msg.notifyAll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package com.journaldev.concurrency;</span><br><span class="line"></span><br><span class="line">public class WaitNotifyTest &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Message msg = new Message(&quot;process it&quot;);</span><br><span class="line">        Waiter waiter = new Waiter(msg);</span><br><span class="line">        new Thread(waiter,&quot;waiter&quot;).start();</span><br><span class="line"></span><br><span class="line">        Waiter waiter1 = new Waiter(msg);</span><br><span class="line">        new Thread(waiter1, &quot;waiter1&quot;).start();</span><br><span class="line"></span><br><span class="line">        Notifier notifier = new Notifier(msg);</span><br><span class="line">        new Thread(notifier, &quot;notifier&quot;).start();</span><br><span class="line">        System.out.println(&quot;All the threads are started&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当我们调用以上的代码时可以看到以下的输出，但并没有结束(完成)，因为有两个线程等待同一个Message对象，但notify()方法只能唤醒一个线程，另一个线程仍然在等待被唤醒。</p>
+<p>notify()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">waiter waiting to get notified at time:1356318734009</span><br><span class="line">waiter1 waiting to get notified at time:1356318734010</span><br><span class="line">All the threads are started</span><br><span class="line">notifier started</span><br><span class="line">waiter waiter thread got notified at time:1356318735011</span><br><span class="line">waiter processed: notifier Notifying work done</span><br><span class="line">如果我们注释掉Notifier类中的notify() 方法的调用，并打开notifyAll() 方法的调用，将会有以下的输出信息。</span><br></pre></td></tr></table></figure></p>
+<p>notifyAll()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">waiter waiting to get notified at time:1356318917118</span><br><span class="line">waiter1 waiting to get notified at time:1356318917118</span><br><span class="line">All the threads are started</span><br><span class="line">notifier started</span><br><span class="line">waiter1 waiter thread got notified at time:1356318918120</span><br><span class="line">waiter1 processed: notifier Notifying work done</span><br><span class="line">waiter waiter thread got notified at time:1356318918120</span><br><span class="line">waiter processed: notifier Notifying work done</span><br></pre></td></tr></table></figure></p>
+<p>一旦notifyAll()方法唤醒所有的Waiter线程，程序将会执行完成并退出。</p>
+<p>原文地址：<a href="http://www.journaldev.com/1037/java-thread-wait-notify-and-notifyall-example" target="_blank" rel="noopener">http://www.journaldev.com/1037/java-thread-wait-notify-and-notifyall-example</a></p>
+<h2 id="参考阅读"><a href="#参考阅读" class="headerlink" title="参考阅读"></a>参考阅读</h2><p><a href="http://blog.csdn.net/luoweifu/article/details/46595285" target="_blank" rel="noopener">编程思想之多线程与多进程(1)——以操作系统的角度述说线程与进程</a><br><a href="http://blog.csdn.net/luoweifu/article/details/46701167" target="_blank" rel="noopener">编程思想之多线程与多进程(2)——线程优先级与线程安全</a><br><a href="http://blog.csdn.net/luoweifu/article/details/46673975" target="_blank" rel="noopener">编程思想之多线程与多进程(3)——Java中的多线程</a><br><a href="http://blog.csdn.net/luoweifu/article/details/46835437" target="_blank" rel="noopener">编程思想之多线程与多进程(4)——C++中的多线程</a><br><a href="http://blog.csdn.net/luoweifu/article/details/46664809" target="_blank" rel="noopener">Java多线程中wait, notify and notifyAll的使用</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Multithread/" rel="tag"><i class="fa fa-tag"></i> Multithread</a>
+              <a href="/tags/Multiprocess/" rel="tag"><i class="fa fa-tag"></i> Multiprocess</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Journey/IPCreator/Journey/Movie/Ordinary Life/" rel="next" title="Ordinary Life">
+                  <i class="fa fa-chevron-left"></i> Ordinary Life
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Android/IPCreator/Technology/Program/Android/multi-thread-in-android/" rel="prev" title="Android Thread">
+                  Android Thread <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是线程"><span class="nav-number">1.</span> <span class="nav-text">什么是线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务调度"><span class="nav-number">2.</span> <span class="nav-text">任务调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程"><span class="nav-number">3.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程"><span class="nav-number">4.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程与线程的区别"><span class="nav-number">5.</span> <span class="nav-text">进程与线程的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程与多核"><span class="nav-number">6.</span> <span class="nav-text">多线程与多核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一对一模型"><span class="nav-number">7.</span> <span class="nav-text">一对一模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多对一模型"><span class="nav-number">8.</span> <span class="nav-text">多对一模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多对多模型"><span class="nav-number">9.</span> <span class="nav-text">多对多模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看进程与线程"><span class="nav-number">10.</span> <span class="nav-text">查看进程与线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看CPU和内存的使用率："><span class="nav-number">11.</span> <span class="nav-text">查看CPU和内存的使用率：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的生命周期"><span class="nav-number">12.</span> <span class="nav-text">线程的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编程思想之多线程与多进程-2-——线程优先级与线程安全"><span class="nav-number">13.</span> <span class="nav-text">编程思想之多线程与多进程(2)——线程优先级与线程安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程优先级"><span class="nav-number">14.</span> <span class="nav-text">线程优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程饿死"><span class="nav-number">15.</span> <span class="nav-text">线程饿死:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程安全与锁"><span class="nav-number">16.</span> <span class="nav-text">线程安全与锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二元信号量"><span class="nav-number">17.</span> <span class="nav-text">二元信号量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号量"><span class="nav-number">18.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互斥量"><span class="nav-number">19.</span> <span class="nav-text">互斥量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#临界区"><span class="nav-number">20.</span> <span class="nav-text">临界区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读写锁"><span class="nav-number">21.</span> <span class="nav-text">读写锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编程思想之多线程与多进程-3-——Java中的多线程"><span class="nav-number">22.</span> <span class="nav-text">编程思想之多线程与多进程(3)——Java中的多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单线程"><span class="nav-number">23.</span> <span class="nav-text">单线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建线程"><span class="nav-number">24.</span> <span class="nav-text">创建线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程同步"><span class="nav-number">25.</span> <span class="nav-text">线程同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程控制"><span class="nav-number">26.</span> <span class="nav-text">线程控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程中断-interrupt"><span class="nav-number">27.</span> <span class="nav-text">线程中断(interrupt)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程合并-join"><span class="nav-number">28.</span> <span class="nav-text">线程合并(join)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优先级-Priority"><span class="nav-number">29.</span> <span class="nav-text">优先级(Priority)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java多线程中wait-notify-and-notifyAll的使用"><span class="nav-number">30.</span> <span class="nav-text">Java多线程中wait, notify and notifyAll的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wait"><span class="nav-number">31.</span> <span class="nav-text">wait</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#notify"><span class="nav-number">32.</span> <span class="nav-text">notify</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#notifyAll"><span class="nav-number">33.</span> <span class="nav-text">notifyAll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过实例来理解"><span class="nav-number">34.</span> <span class="nav-text">通过实例来理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考阅读"><span class="nav-number">35.</span> <span class="nav-text">参考阅读</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/work-hard-life-easy.png">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1508</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1443</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">26.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">404:10</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
+        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+  <script pjax>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+    </div>
+
+</body>
+</html>

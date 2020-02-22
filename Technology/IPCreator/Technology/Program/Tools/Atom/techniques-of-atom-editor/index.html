@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
+  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.json',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Article Author: PeterHo Atom是GitHub推出的一款编辑器, 被称为21世纪的黑客编辑器. 其主要的特点是现代, 易用, 可定制.">
+<meta name="keywords" content="Atom">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learning of Atom">
+<meta property="og:url" content="https://hazyman.com/Technology/IPCreator/Technology/Program/Tools/Atom/techniques-of-atom-editor/index.html">
+<meta property="og:site_name" content="生命之旅">
+<meta property="og:description" content="Article Author: PeterHo Atom是GitHub推出的一款编辑器, 被称为21世纪的黑客编辑器. 其主要的特点是现代, 易用, 可定制.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-22T00:19:15.441Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Learning of Atom">
+<meta name="twitter:description" content="Article Author: PeterHo Atom是GitHub推出的一款编辑器, 被称为21世纪的黑客编辑器. 其主要的特点是现代, 易用, 可定制.">
+
+<link rel="canonical" href="https://hazyman.com/Technology/IPCreator/Technology/Program/Tools/Atom/techniques-of-atom-editor/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Learning of Atom | 生命之旅</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">生命之旅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">常识、专业和价值。</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Technology/IPCreator/Technology/Program/Tools/Atom/techniques-of-atom-editor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/work-hard-life-easy.png">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="生命之旅">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Learning of Atom
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technology/" itemprop="url" rel="index">
+                    <span itemprop="name">Technology</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Technology/IPCreator/Technology/Program/Tools/Atom/techniques-of-atom-editor/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Technology/IPCreator/Technology/Program/Tools/Atom/techniques-of-atom-editor/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="http://blog.csdn.net/u010494080/article/details/50372857" target="_blank" rel="noopener">Article Author: PeterHo</a></p>
+<p>Atom是GitHub推出的一款编辑器, 被称为21世纪的黑客编辑器. 其主要的特点是现代, 易用, 可定制.</p>
+<p><img alt data-src="https://raw.githubusercontent.com/PeterHo/images/master/blog/editor/atom/atom_1/first-launch.png"></p>
+ <a id="more"></a>
+<h2 id="命令面板"><a href="#命令面板" class="headerlink" title="命令面板"></a>命令面板</h2><p>命令面板是Atom中最常用的功能之一, 当你在编辑器中使用快捷键Ctrl+Shift+P时, 就会看到它<br>在控制面板中可以输入Atom中和插件中定义的所有命令, 并且支持模糊搜索<br>比如说当你输入cboo时, 所有包含有这4个字符的命令就都列出来了<br>在列出的命令后还显示了此命令对应的快捷键(如果有的话)<br><img alt data-src="https://raw.githubusercontent.com/PeterHo/images/master/blog/editor/atom/atom_1/command-palette.png"></p>
+<p>保存文件 快捷键 Ctrl+S<br>保存所有文件: File-&gt;Save All</p>
+<p>打开文件夹是一个很实用的功能, 可以像IDE一样打开一个项目的根目录<br>可以通过在主菜单选择File-&gt;Add Project Folder…来打开或者添加一个目录,也可以使用快捷键Ctrl+Alt+O.<br>在打开一个文件夹以后该文件夹下的所有子目录和文件就会如下图一样以目录树的方式显示在主窗口左边<br>你可以通过在目录树栏中右键菜单或选中文件时使用快捷键a,m,delete来对文件进行新建,重命名,删除等操作<br>如果要切换目录树栏的显示与隐藏可以使用快捷键Ctrl+\或输入命令Tree View:Toggle<br>目录树中右键菜单中还能实现文件的复制粘贴等功能<br><img alt data-src="https://raw.githubusercontent.com/PeterHo/images/master/blog/editor/atom/atom_1/project-view.png"></p>
+<p>查找文件</p>
+<p>当打开一个或多个目录时,你可以:</p>
+<ul>
+<li>通过Ctrl+T或Ctrl+P来搜索目录中的文件</li>
+<li>通过Ctrl+B来搜索一个当前打开的文件</li>
+<li>通过Ctrl+Shift+B来搜索一个新建的或更改过的文件</li>
+</ul>
+<h2 id="文本编辑基础"><a href="#文本编辑基础" class="headerlink" title="文本编辑基础"></a>文本编辑基础</h2><p>使用Ctrl+F进行文件内查找<br>使用Ctrl+Shift+F进行工程内查找</p>
+<h2 id="代码片段-Snippets"><a href="#代码片段-Snippets" class="headerlink" title="代码片段(Snippets)"></a>代码片段(Snippets)</h2><p>代码片段(Snippets)</p>
+<blockquote>
+<p>片段（Snippet）是一个编程用语，指的是源代码、机器码、文本中可重复使用的小区块。通常它们是有正式定义的执行单位，以纳入更大的编程模块。片段经常用来明晰其他“凌乱”函式的功用，或尽量减少使用与其他函式共用的重复代码。 片段管理是某些文本编辑器、程式源代码编辑器、IDE、与相关软件的其中一项功能。其使得使用者能够在反复的编辑作业中保持和使用这些片段。</p>
+</blockquote>
+<p><strong>让我们通过一个实验来感受一下Snippets给我们带来的便利体验 </strong></p>
+<ol>
+<li>打开Atom编辑器</li>
+<li>使用Cmd+N新建一个文件</li>
+<li>使用Cmd+S保存文件,将文件名改为new.html</li>
+<li>在new.html中键入html四个字符,然后按tab键,这时你会发现html这段文本被扩展成了<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line"></span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>并且光标被移到了<title>标签之间,方便你直接输入这个html文件的标题</title></p>
+<ol start="5">
+<li>在<title>标签之间输入完成html页面标题以后,再次键入tab键<br>你会发现光标又被移到了<body>标签下面了</body></title></li>
+</ol>
+<p>Snippets,它让你可以很方便地通过一个关键词来插入一段代码块,并且还能通过tab键在这段代码块的输入点之间移动光标,达到快速编码的目的<br>不同类型的文件有不同的Snippets,你可以通过控制面板输入Snippets:available来列出当前文件所提供的所有的Snippets</p>
+<p><img alt data-src="https://raw.githubusercontent.com/PeterHo/images/master/blog/editor/atom/atom_4/snippets.png"></p>
+<h2 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h2><p>在进行Markdown文档的编辑时, 我们经常想要看一看编辑的效果. Atom默认就支持这一功能.<br>我们只需要在编辑md文件时使用Ctrl+Shift+M, 就能显示一个预览窗口, 方便我们随时查看md编辑的效果. 并且这个预览窗口还能随着我们的编辑自动刷新预览的内容和效果.</p>
+<p><img alt data-src="https://raw.githubusercontent.com/PeterHo/images/master/blog/editor/atom/atom_6/preview.png"></p>
+<p>Snippets(代码片段)</p>
+<p>Atom中内置了多个Snippets来方便Markdown文档的编辑.比如img(插入图片), table(插入表格), b(插入粗体), i(插入斜体), code(插入代码)等.<br>关于Snippets的详细使用方法请参考本系列文章的第四章Atom使用进阶.</p>
+<h2 id="CSON"><a href="#CSON" class="headerlink" title="CSON"></a>CSON</h2><p>CSON(CoffeeScript Object Notation)是Atom配置文件的文件格式, 它使用键值对的格式来存储数据. 就像下面这个样子</p>
+<p>key:<br>    key: value<br>    key: value<br>    key: [value, value]</p>
+<p>跟Python类似, CSON使用缩进来标识语句块.</p>
+<p>CSON的key的名字不能重复, 如果CSON中包含了多个同名的key, 那么最后的那个key的值会覆盖之前同名的key.<br>因此不能这样配置</p>
+<h1 id="只有第二个snippet会被载入"><a href="#只有第二个snippet会被载入" class="headerlink" title="只有第二个snippet会被载入"></a>只有第二个snippet会被载入</h1><p>‘.source.js’:<br>  ‘console.log’:<br>    ‘prefix’: ‘log’<br>    ‘body’: ‘console.log(${1:”crash”});$2’<br>‘.source.js’:<br>  ‘console.error’:<br>    ‘prefix’: ‘error’<br>    ‘body’: ‘console.error(${1:”crash”});$2’</p>
+<p>而应该这样配置</p>
+<h1 id="两个snippets都会被载入"><a href="#两个snippets都会被载入" class="headerlink" title="两个snippets都会被载入"></a>两个snippets都会被载入</h1><p>‘.source.js’:<br>  ‘console.log’:<br>    ‘prefix’: ‘log’<br>    ‘body’: ‘console.log(${1:”crash”});$2’<br>  ‘console.error’:<br>    ‘prefix’: ‘error’<br>    ‘body’: ‘console.error(${1:”crash”});$2’</p>
+<p>value可以是字符串, 数字, 对象, 布尔值, null, 或数组.</p>
+<h2 id="配置热键"><a href="#配置热键" class="headerlink" title="配置热键"></a>配置热键</h2><p>在Atom中热键的配置方式与主题类似, 举个例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&apos;atom-text-editor&apos;:</span><br><span class="line">  &apos;enter&apos;: &apos;editor:newline&apos;</span><br><span class="line"></span><br><span class="line">&apos;atom-text-editor[mini] input&apos;:</span><br><span class="line">  &apos;enter&apos;: &apos;core:confirm&apos;</span><br></pre></td></tr></table></figure>
+<p>上面的代码定义了Enter键在不同环境中的不同表现. 在正常的编辑窗口中按enter键触发editor:newline命令, 也即是普通的回车. 而当在一个编辑框中键入enter时, 则会触发core:confirm命令.</p>
+<p>在默认情况下, 当Atom启动时会加载keymap.cson文件来获取自定义热键, 并且keymap.cson是最后被加载的配置文件, 这样可以保证我们配置的热键可以覆盖Atom自身或其插件定义的热键. 这个文件同样位于~/.atom目录下, 当然也可以通过主菜单Edit-&gt;Keymap…来直接编辑这个文件.</p>
+<p>我们也可以<strong>在设置窗口的Keybindings页面查看当前所有的快捷键.</strong></p>
+<p>Atom还提供了一个窗口来帮助我们调试热键的设置, 可以使用Ctrl+.或命令Key Binding Resolver: Toggle来呼出该窗口. 此窗口可以实时显示我们按下的热键所对应的处理方法.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Atom/" rel="tag"><i class="fa fa-tag"></i> Atom</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/Business/ppt-of-andrew-ng/" rel="next" title="NIPS 2016：PPT of Andrew Ng">
+                  <i class="fa fa-chevron-left"></i> NIPS 2016：PPT of Andrew Ng
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/AI/IPCreator/Technology/AI/TensorFlow/ai-vs-machine-learning/" rel="prev" title="AI vs Machine Learning">
+                  AI vs Machine Learning <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令面板"><span class="nav-number">1.</span> <span class="nav-text">命令面板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本编辑基础"><span class="nav-number">2.</span> <span class="nav-text">文本编辑基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码片段-Snippets"><span class="nav-number">3.</span> <span class="nav-text">代码片段(Snippets)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预览"><span class="nav-number">4.</span> <span class="nav-text">预览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSON"><span class="nav-number">5.</span> <span class="nav-text">CSON</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#只有第二个snippet会被载入"><span class="nav-number"></span> <span class="nav-text">只有第二个snippet会被载入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#两个snippets都会被载入"><span class="nav-number"></span> <span class="nav-text">两个snippets都会被载入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置热键"><span class="nav-number">1.</span> <span class="nav-text">配置热键</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/work-hard-life-easy.png">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1508</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1443</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">26.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">404:10</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
+        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+  <script pjax>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+    </div>
+
+</body>
+</html>

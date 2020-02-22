@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
+  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
+    path: 'search.json',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Source Java号称是一门“一次编译到处运行”的语言，但是我们对这句话的理解深度又有多少呢？从我们写的java文件到通过编译器编译成java字节码文件（也就是.class文件），这个过程是java编译过程；而我们的java虚拟机执行的就是字节码文件。不论该字节码文件来自何方，由哪种编译器编译，甚至是手写字节码文件，只要符合java虚拟机的规范，那么它就能够执行该字节码文件。那么本文主要讲讲j">
+<meta name="keywords" content="Basic Concept,Byte Code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Byte Code">
+<meta property="og:url" content="https://hazyman.com/Technology/IPCreator/Technology/Program/Java/java-byte-code/index.html">
+<meta property="og:site_name" content="生命之旅">
+<meta property="og:description" content="Source Java号称是一门“一次编译到处运行”的语言，但是我们对这句话的理解深度又有多少呢？从我们写的java文件到通过编译器编译成java字节码文件（也就是.class文件），这个过程是java编译过程；而我们的java虚拟机执行的就是字节码文件。不论该字节码文件来自何方，由哪种编译器编译，甚至是手写字节码文件，只要符合java虚拟机的规范，那么它就能够执行该字节码文件。那么本文主要讲讲j">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-22T00:34:51.073Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Byte Code">
+<meta name="twitter:description" content="Source Java号称是一门“一次编译到处运行”的语言，但是我们对这句话的理解深度又有多少呢？从我们写的java文件到通过编译器编译成java字节码文件（也就是.class文件），这个过程是java编译过程；而我们的java虚拟机执行的就是字节码文件。不论该字节码文件来自何方，由哪种编译器编译，甚至是手写字节码文件，只要符合java虚拟机的规范，那么它就能够执行该字节码文件。那么本文主要讲讲j">
+
+<link rel="canonical" href="https://hazyman.com/Technology/IPCreator/Technology/Program/Java/java-byte-code/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Java Byte Code | 生命之旅</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">生命之旅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">常识、专业和价值。</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hazyman.com/Technology/IPCreator/Technology/Program/Java/java-byte-code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/work-hard-life-easy.png">
+      <meta itemprop="name" content="IPCreator">
+      <meta itemprop="description" content="Life is a journey.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="生命之旅">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java Byte Code
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technology/" itemprop="url" rel="index">
+                    <span itemprop="name">Technology</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Technology/IPCreator/Technology/Program/Java/java-byte-code/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Technology/IPCreator/Technology/Program/Java/java-byte-code/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-5b44e95ff7e30847.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><a href="http://www.jianshu.com/p/252f381a6bc4" target="_blank" rel="noopener">Source</a></p>
+<p>Java号称是一门“一次编译到处运行”的语言，但是我们对这句话的理解深度又有多少呢？从我们写的java文件到通过编译器编译成java字节码文件（也就是.class文件），这个过程是java编译过程；而我们的java虚拟机执行的就是字节码文件。不论该字节码文件来自何方，由哪种编译器编译，甚至是手写字节码文件，只要符合java虚拟机的规范，那么它就能够执行该字节码文件。那么本文主要讲讲java字节码文件相关知识。</p>
+ <a id="more"></a>
+<h2 id="1-首先我们来写一个java源文件"><a href="#1-首先我们来写一个java源文件" class="headerlink" title="1 首先我们来写一个java源文件"></a>1 首先我们来写一个java源文件</h2><p> <img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-ce97d3e55fe919a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br>上面是我们写的一个java程序，很简单，只有一个成员变量a以及一个方法testMethod() 。</p>
+<h2 id="接下来我们用javac命令或者ide工具将该java源文件编译成java字节码文件。"><a href="#接下来我们用javac命令或者ide工具将该java源文件编译成java字节码文件。" class="headerlink" title="接下来我们用javac命令或者ide工具将该java源文件编译成java字节码文件。"></a>接下来我们用javac命令或者ide工具将该java源文件编译成java字节码文件。</h2><p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-0993d73277575f75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p>上图是编译好的字节码文件，我们可以看到一堆16进制的字节。如果你使用IDE去打开，也许看到的是已经被反编译的我们所熟悉的java代码，而这才是纯正的字节码，这也是我们今天需要讲的内容重点。</p>
+<p>也许你会对这样一堆字节码感到头疼，不过没关系，我们慢慢试着你看懂它，或许有不一样的收获。在开始之前我们先来看一张图<br><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-5b44e95ff7e30847.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><a href="http://www.jianshu.com/p/252f381a6bc4" target="_blank" rel="noopener">Source</a></p>
+<p>这张图是一张java字节码的总览图，我们也就是按照上面的顺序来对字节码进行解读的。一共含有10部分，包含魔数，版本号，常量池等等，接下来我们按照顺序一步一步解读。</p>
+<h3 id="3-1-魔数"><a href="#3-1-魔数" class="headerlink" title="3.1 魔数"></a>3.1 魔数</h3><p>从上面的总览图中我们知道前4个字节表示的是魔数，对应我们Demo的是 0XCAFE BABE。什么是魔数？魔数是用来区分文件类型的一种标志，一般都是用文件的前几个字节来表示。比如0XCAFE BABE表示的是class文件，那么有人会问，文件类型可以通过文件名后缀来判断啊？是的，但是文件名是可以修改的（包括后缀），那么为了保证文件的安全性，讲文件类型写在文件内部来保证不被篡改。<br>从java的字节码文件类型我们看到，CAFE BABE翻译过来是咖啡宝贝之意，然后再看看java图标。</p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-bc3cf7c4693669fa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br>CAFE BABE = 咖啡。</p>
+<h3 id="3-2-版本号"><a href="#3-2-版本号" class="headerlink" title="3.2 版本号"></a>3.2 版本号</h3><p>我们识别了文件类型之后，接下来要知道版本号。版本号含主版本号和次版本号，都是各占2个字节。在此Demo种为0X0000 0033。其中前面的0000是次版本号，后面的0033是主版本号。通过进制转换得到的是次版本号为0，主版本号为51。<br>从oracle官方网站我们能够知道，51对应的正式jdk1.7，而其次版本为0，所以该文件的版本为1.7.0。如果需要验证，可以在用java –version命令输出版本号，或者修改编译目标版本–target重新编译，查看编译后的字节码文件版本号是否做了相应的修改。</p>
+<p>至此，我们共了解了前8字节的含义，下面讲讲常量池相关内容。</p>
+<h3 id="3-3-常量池"><a href="#3-3-常量池" class="headerlink" title="3.3 常量池"></a>3.3 常量池</h3><p>紧接着主版本号之后的就是常量池入口。常量池是Class文件中的资源仓库，在接下来的内容中我们会发现很多地方会涉及，如Class Name，Interfaces等。常量池中主要存储2大类常量：字面量和符号引用。字面量如文本字符串，java中声明为final的常量值等等，而符号引用如类和接口的全局限定名，字段的名称和描述符，方法的名称和描述符。</p>
+<p>为什么需要类和接口的全局限定名呢？系统引用类或者接口的时候不是通过内存地址进行操作吗？这里大家仔细想想，java虚拟机在没有将类加载到内存的时候根本都没有分配内存地址，也就不存在对内存的操作，所以java虚拟机首先需要将类加载到虚拟机中，那么这个过程设计对类的定位（需要加载A包下的B类，不能加载到别的包下面的别的类中），所以需要通过全局限定名来判别唯一性。这就是为什么叫做全局，限定的意思，也就是唯一性。</p>
+<p>在进行具体常量池分析之前，我们先来了解一下常量池的项目类型表：</p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-831993b2dc19dd90.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p>上面的表中描述了11中数据类型的结构，其实在jdk1.7之后又增加了3种（CONSTANT_MethodHandle_info,CONSTANT_MethodType_info以及CONSTANT_InvokeDynamic_info)。这样算起来一共是14种。接下来我们按照Demo的字节码进行逐一翻译。</p>
+<p>0x0015：由于常量池的数量不固定（n+2），所以需要在常量池的入口处放置一项u2类型的数据代表常量池数量。因此该16进制是21，表示有20项常量，索引范围为1~20。明明是21，为何是20呢？因为Class文件格式规定，设计者就讲第0项保留出来了，以备后患。从这里我们知道接下来我们需要翻译出20项常量。<br>Constant #1 （一共有20个常量，这是第一个，以此类推…）<br>0x0a-：从常量类型表中我们发现，第一个数据均是u1类型的tag，16进制的0a是十进制的10，对应表中的MethodRef_info。<br>0x-00 04-：Class_info索引项#4<br>0x-00 11-：NameAndType索引项#17<br>Constant #2<br>0x-09: FieldRef_info<br>0x0003 :Class_info索引项#3<br>0x0012：NameAndType索引项#18<br>Constant #3<br>0x07-: Class_info<br>0x-00 13-: 全局限定名常量索引为#19<br>Constant #4<br>0x-07 :Class_info<br>0x0014:全局限定名常量索引为#20<br>Constant #5<br>0x01:Utf-8_info<br>0x-00 01-:字符串长度为1（选择接下来的一个字节长度转义）<br>0x-61:”a”(十六进制转ASCII字符)<br>Constant #6<br>0x01:Utf-8_info<br>0x-00 01：字符串长度为1<br>0x-49:”I”<br>Constant #7<br>0x01:Utf-8_info<br>0x-00 06:字符串长度为6<br>0x-3c 696e 6974 3e-:”<init>“<br>Constant #8<br>0x01 :UTF-8_info<br>0x0003:字符串长度为3<br>0x2829 56:”()V”<br>Constant #9<br>0x-01:Utf-8_info<br>0x0004：字符串长度为4<br>0x436f 6465:”Code”<br>Constant #10<br>0x01:Utf-8_info<br>0x00 0f:字符串长度为15<br>0x4c 696e 654e 756d 6265 7254 6162 6c65:”LineNumberTable”<br>Constant #11<br>ox01: Utf-8_info<br>0x00 12字符串长度为18<br>0x-4c 6f63 616c 5661 7269 6162 6c65 5461 626c 65:”LocalVariableTable”<br>Constant #12<br>0x01:Utf-8_info<br>0x0004 字符串长度为4<br>0x7468 6973 :”this”<br>Constant #13<br>0x01:Utf-8_info<br>0x0f:字符串长度为15<br>0x4c 636f 6d2f 6465 6d6f 2f44 656d 6f3b:”Lcom/demo/Demo;”<br>Constant #14<br>0x01:Utf-8_info<br>0x00 0a:字符串长度为10<br>ox74 6573 744d 6574 686f 64:”testMethod”<br>Constant #15<br>0x01:Utf-8_info<br>0x000a:字符串长度为10<br>0x536f 7572 6365 4669 6c65 :”SourceFile”<br>Constant #16<br>0x01:Utf-8_info<br>0x0009:字符串长度为9<br>0x-44 656d 6f2e 6a61 7661 :”Demo.java”<br>Constant #17<br>0x0c :NameAndType_info<br>0x0007:字段或者名字名称常量项索引#7<br>0x0008:字段或者方法描述符常量索引#8<br>Constant #18<br>0x0c:NameAndType_info<br>0x0005:字段或者名字名称常量项索引#5<br>0x0006:字段或者方法描述符常量索引#6<br>Constant #19<br>0x01:Utf-8_info<br>0x00 0d:字符串长度为13<br>0x63 6f6d 2f64 656d 6f2f 4465 6d6f:”com/demo/Demo”<br>Constant #20<br>0x01:Utf-8_info<br>0x00 10 :字符串长度为16<br>0x6a 6176 612f 6c61 6e67 2f4f 626a 6563 74 :”java/lang/Object”<br>到这里为止我们解析了所有的常量。接下来是解析访问标志位。</init></p>
+<h3 id="3-4-Access-Flag-访问标志"><a href="#3-4-Access-Flag-访问标志" class="headerlink" title="3.4 Access_Flag 访问标志"></a>3.4 Access_Flag 访问标志</h3><p>访问标志信息包括该Class文件是类还是接口，是否被定义成public，是否是abstract，如果是类，是否被声明成final。通过上面的源代码，我们知道该文件是类并且是public。</p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-392acfe5fe81eb7b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p>0x 00 21：是0x0020和0x0001的并集。其中0x0020这个标志值涉及到了字节码指令，后期会有专题对字节码指令进行讲解。期待中……</p>
+<h3 id="3-5-类索引"><a href="#3-5-类索引" class="headerlink" title="3.5 类索引"></a>3.5 类索引</h3><p>类索引用于确定类的全限定名<br>0x00 03 表示引用第3个常量，同时第3个常量引用第19个常量，查找得”com/demo/Demo”。#3.#19</p>
+<h3 id="3-6父类索引"><a href="#3-6父类索引" class="headerlink" title="3.6父类索引"></a>3.6父类索引</h3><p>0x00 04 同理：#4.#20(java/lang/Object)</p>
+<h3 id="3-7-接口索引"><a href="#3-7-接口索引" class="headerlink" title="3.7 接口索引"></a>3.7 接口索引</h3><p>通过java_byte.jpeg图我们知道，这个接口有2+n个字节，前两个字节表示的是接口数量，后面跟着就是接口的表。我们这个类没有任何接口，所以应该是0000。果不其然，查找字节码文件得到的就是0000。</p>
+<h3 id="3-8-字段表集合"><a href="#3-8-字段表集合" class="headerlink" title="3.8 字段表集合"></a>3.8 字段表集合</h3><p>字段表用于描述类和接口中声明的变量。这里的字段包含了类级别变量以及实例变量，但是不包括方法内部声明的局部变量。<br>同样，接下来就是2+n个字段属性。我们只有一个属性a，按道理应该是0001。查找文件果不其然是0001。<br>那么接下来我们要针对这样的字段进行解析。附上字段表结构图<br><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-7c0ed3c898858129.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p>0x00 02 ：访问标志为private（自行搜索字段访问标志）<br>0x00 05 : 字段名称索引为#5，对应的是”a”<br>0x 00 06 :描述符索引为#6，对应的是”I”<br>0x 00 00 :属性表数量为0，因此没有属性表。<br>tips:一些不太重要的表（字段，方法访问标志表）可以自行搜索，这里就不贴出来了，防止篇幅过大。</p>
+<h3 id="3-9-方法"><a href="#3-9-方法" class="headerlink" title="3.9 方法"></a>3.9 方法</h3><p>我们只有一个方法testMethod，按照道理应该前2个字节是0001。通过查找发现是0x00 02。这是什么原因，这代表着有2个方法呢？且继续看……</p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-44b812e1036aaef0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p>上图是一张方法表结构图，按照这个图我们分析下面的字节码：</p>
+<h4 id="第1个方法："><a href="#第1个方法：" class="headerlink" title="第1个方法："></a>第1个方法：</h4><p>0x00 01：访问标志 ACC_PUBLIC，表明该方法是public。（可自行搜索方法访问标志表）<br>0x00 07：方法名索引为#7，对应的是”<init>“<br>0x00 08：方法描述符索引为#8，对应的是”()V”<br>0x00 01：属性表数量为1(一个属性表)<br>那么这里涉及到了属性表。什么是属性表呢？可以这么理解，它是为了描述一些专有信息的，上面的方法带有一张属性表。所有属性表的结构如下图：<br>一个u2的属性名称索引，一个u2的属性长度加上属性长度的info。<br>虚拟机规范预定义的属性有很多，比如Code，LineNumberTable，LocalVariableTable，SourceFile等等，这个网上可以搜索到。</init></p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-596dd13ddcaad809.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p>按照上面的表结构解析得到下面信息：<br>0x0009:名称索引为#9(“Code”)。<br>0x000 00038：属性长度为56字节。<br>那么接下来解析一个Code属性表，按照下图解析</p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-d2e8cabf296300fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p>前面6个字节（名称索引2字节+属性长度4字节）已经解析过了，所以接下来就是解析剩下的56-6=50字节即可。<br>0x00 02 ：max_stack=2<br>0x00 01 : max_locals=1<br>0x00 0000 0a : code_length=10<br>0x2a b700 012a 04b5 0002 b1 : 这是code代码，可以通过虚拟机字节码指令进行查找。<br>2a=aload_0(将第一个引用变量推送到栈顶)<br>b7=invokespecial(调用父类构造方法)<br>00=什么都不做<br>01 =将null推送到栈顶<br>2a=同上<br>04=iconst_1 将int型1推送到栈顶<br>b5=putfield 为指定的类的实例变量赋值<br>00= 同上<br>02=iconst_m1 将int型-1推送栈顶<br>b1=return 从当前方法返回void<br>整理，去除无动作指令得到下面<br>0 : aload_0<br>1 : invokespecial<br>4 : aload_0<br>5 : iconst_1<br>6 : putfield<br>9 : return<br>关于虚拟机字节码指令这块内容，后期会继续深入下去…… 目前只需要了解即可。接下来顺着Code属性表继续解析下去:<br>0x00 00 : exception_table_length=0<br>0x00 02 : attributes_count=2(Code属性表内部还含有2个属性表)<br>0x00 0a: 第一个属性表是”LineNumberTable”</p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-34a97d658e59f0b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p>0x00 0000 0a : “属性长度为10”<br>0x00 02 ：line_number_table_length=2<br>line_number_table是一个数量为line_number_table_length，类型为line_number_info的集合，line_number_info表包括了start_pc和line_number两个u2类型的数据项，前者是字节码行号，后者是Java源码行号<br>0x00 00 : start_pc =0<br>0x00 03 : end_pc =3<br>0x00 04 : start_pc=4<br>0x00 04 : end_pc=4</p>
+<p>0x00 0b 第二个属性表是：”LocalVariableTable”</p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-a93b62e38cdf0a4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-b30b18f2a001dc13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p>0x00 0000 0c：属性长度为12<br>0x00 01 : local_variable_table_length=1<br>然后按照local_variable_info表结构进行解析：<br>0x00 00 : start_pc=0<br>0x00 0a：length=10<br>0x000c : name_index=”this”<br>0x000d : descriptor_index #13 (“Lcom/demo/Demo”)<br>0000 index=0<br>//——-到这里第一个方法就解析完成了——-//<br>Method（<init>)–1个属性Code表-2个属性表（LineNumberTable ，LocalVariableTable）接下来解析第二个方法</init></p>
+<h4 id="第2个方法："><a href="#第2个方法：" class="headerlink" title="第2个方法："></a>第2个方法：</h4><p>0x00 04：”protected”<br>0x00 0e: #14（”testMethod”）<br>0x00 08 : “()V”<br>0x0001 ： 属性数量=1<br>0x0009 ：”Code”<br>0x0000 002b 属性长度为43<br>解析一个Code表<br>0000 :max_stack =0<br>0001 : max_local =1<br>0000 0001 : code_length =1<br>0xb1 : return(该方法返回void)<br>0x0000 异常表长度=0<br>0x0002 属性表长度为2<br>//第一个属性表<br>0x000a : #10，LineNumberTable<br>0x0000 0006 : 属性长度为6<br>0x0001 : line_number_length = 1<br>0x0000 : start_pc =0<br>0x0008 : end_pc =8<br>//第二个属性表<br>0x000b : #11 ，LocalVariableTable<br>0x0000 000c : 属性长度为12<br>0x0001 : local_variable_table_length =1<br>0x0000 :start_pc = 0<br>0x0001: length = 1<br>0x000c : name_index =#12 “this”<br>0x000d : 描述索引#13 “Lcom/demo/Demo;”<br>0000 index=0</p>
+<p>//到这里为止，方法解析都完成了，回过头看看顶部解析顺序图，我们接下来就要解析Attributes了。</p>
+<h3 id="3-10-Attribute"><a href="#3-10-Attribute" class="headerlink" title="3.10 Attribute"></a>3.10 Attribute</h3><p>0x0001 ：同样的，表示有1个Attributes了。<br>0x000f : #15(“SourceFile”)<br>0x0000 0002 attribute_length=2<br>0x0010 : sourcefile_index = #16(“Demo.java”)<br>SourceFile属性用来记录生成该Class文件的源码文件名称。</p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-7924c9639c2bf501.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<h2 id="4-另话"><a href="#4-另话" class="headerlink" title="4 另话"></a>4 另话</h2><p>其实，我们写了这么多确实很麻烦，不过这种过程自己体验一遍的所获所得还是不同的。现在，使用java自带的反编译器来解析字节码文件。<br>javap -verbose Demo //不用带后缀.class</p>
+<p><img alt data-src="http://upload-images.jianshu.io/upload_images/1986868-8b34fdb9961be90e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5 总结"></a>5 总结</h2><p>到此为止，讲解完成了class文件的解析，这样以后我们也能看懂字节码文件了。了解class文件的结构对后面进一步了解虚拟机执行引擎非常重要，所以这是基础并重要的一步。</p>
+<h2 id="6-工具"><a href="#6-工具" class="headerlink" title="6 工具"></a>6 工具</h2><p><a href="https://github.com/zxh0/classpy" target="_blank" rel="noopener">https://github.com/zxh0/classpy</a> 这是一款分析字节码文件的工具，挺好用。</p>
+<h1 id="Java类文件结构解析"><a href="#Java类文件结构解析" class="headerlink" title="Java类文件结构解析"></a><a href="https://tb-yangshu.github.io/2017/05/11/java_class_file_structure_analysis/" target="_blank" rel="noopener">Java类文件结构解析</a></h1><p>Class文件组成内容</p>
+<p>class文件是一组以8位字节为基础的二进制流，其与Java虚拟机指令集和符号表以及若干其他辅助信息相对应。</p>
+<p>该设计有如下优点：</p>
+<p>平台无关性，class文件可以运行在任意平台，无需考虑各个平台机器指令集不同的问题<br>语言无关性，不论何种语言，只要生成的class文件格式符合JVM虚拟机规范即可<br>注：如果遇到8位字节以上空间的数据，则会按照高位在前的方式分割成若干个8位字节进行存储（Big-Endian，具体是指最高位字节在地址最低位、最低位字节在地址最高位的顺序来存储数据，它是SPARC、PowerPC等处理器的默认多字节顺序，而x86等处理器则是使用了相反的 Little-Endian 顺序来存储数据）</p>
+<p>Class文件数据结构</p>
+<p>class文件采用了类似C语言结构体)的形式来存储数据，主要有以下几个特点：</p>
+<p>由无符号数和表两种数据结构组成<br>集合，用来描述同一类型但数量不定的多个数据，格式为 容量计数器 + 数据集合<br>没有任何分割符号（每个字节代表的含义，长度，先后顺序都不允许改变）<br>无符号数</p>
+<p>定义：class文件基本的数据类型，用来描述数字、索引引用、数量值或者按照UTF-8编码构成字符串值。</p>
+<p>表现形式：以u1、u2、u4、u8来分别代表1个字节、2个字节、4个字节、8个字节的无符号数。</p>
+<p>表</p>
+<p>组成：由无符号数或者其他表作为数据项构成的复合数据类型</p>
+<p>特征：以_info 结尾</p>
+<p>功能：用于描述有层次关系复合结构的数据</p>
+<p>整个class文件本质上就是一张表</p>
+<p>Class文件数据项</p>
+<p>按照class文件中字节码的顺序来介绍数据项。</p>
+<p>魔数</p>
+<p>class文件的头4个字节。</p>
+<p>功能：验证该文件是否能够被虚拟机接受</p>
+<p>扩展名可以被修改</p>
+<p>主次版本号</p>
+<p>魔数后4个字节，第5个和第6个字节是次版本号（Minor Version），第7个和第8个字节是主版本号（Major Version）。</p>
+<p>Java版本号从45开始，每个大版本发布版本号 +1</p>
+<p>虚拟机拒绝超过其版本号的Class文件</p>
+<p>常量池</p>
+<p>可以说常量池是class文件的资源仓库，主要存放两大类常量，字面量和符号引用。</p>
+<p>结构：容量计数器（u2类型） + 常量</p>
+<p>容量计数从1开始，目的是满足某些常量池的索引值的数据在特定情况下需要表达“不引用任何一个常量池”的含义。</p>
+<p>字面量（Literal）: 类似Java中的常量，如文本字符串，声明为final的常量值等。</p>
+<p>符号引用（Symbolic References）：包括类和接口的全限定名（Full Qualified Name）,字段的名称和描述符（Descriptor），方法的名称和描述符这三类常量。</p>
+<p>常量池中的表</p>
+<p>每一项常量都是一个表。到JDK1.7为止，共有14种常量表类型，表结构见文章末尾（常量池中的14种常量项的结构总表）。</p>
+<p>所有常量表开始第一位为u1类型的标志位，标识常量类型。</p>
+<p>以下是常量池的项目类型表</p>
+<p>类型    标志    描述<br>CONSTANT_Utf8_info    1    UTF-8编码的字符串<br>CONSTANT_Integer_info    3    整形字面量<br>CONSTANT_Float_info    4    浮点型字面量<br>CONSTANT_Long_info    5    长整形字面量<br>CONSTANT_Double_info    6    双精度浮点型字面量<br>CONSTANT_Class_info    7    类或接口的符号引用<br>CONSTANT_String_info    8    字符串类型字面量<br>CONSTANT_Fieldref_info    9    字段的符号引用<br>CONSTANT_Methodref_info    10    类中方法的符号引用<br>CONSTANT_InterfaceMethodref_info    11    接口中方法的符号引用<br>CONSTANT_NameAndType_info    12    字段或方法的部分符号引用<br>CONSTANT_MethodHandle_info    15    表示方法句柄<br>CONSTANT_MethodType_info    16    表示方法类型<br>CONSTANT_InvokeDynamic_info    18    表示一个动态方法调用点<br>每一种常量类型有着自己的结构，下面以CONSTANT_Class_info类型为例，它的结构如下表：</p>
+<p>类型    名称    数量<br>u1    tag    1<br>u2    name_index    1<br>上表中的tag用来区分常量类型，name_index是一个索引值，它指向常量池中一个CONSTANT_Utf8_info类型常量，代表了这个类（或者接口）的权限定名。</p>
+<p>访问标志</p>
+<p>常量池之后两个字节标识类的访问标志，用于识别一些类或者接口层次的访问信息。</p>
+<p>具体标志位及标志含义见下表</p>
+<p>标志名称    标志值    含义<br>ACC_PUBLIC    0x0001    是否为public类型<br>ACC_FINAL    0x0010    是否被声明为final，只有类可设置<br>ACC_SUPER    0x0020    是否允许使用invokespecial字节码指令的新语言，invokespecial指令的语意在JDK1.0.2发生过改变，为了区别这条指令使用哪种语意，JDK1.0.2之后编译出来的类的这个标志都必须为真<br>ACC_INTERFACE    0x0200    标识这是一个接口<br>ACC_ABSTRACT    0x0400    是否为abstract类型，对于接口或者抽象类来说，此标志值为真，其他类值为假<br>ACC_SYNTHETIC    0x1000    标识这个类并非由用户代码产生的<br>ACC_ANNOTATION    0x2000    标识这是一个注解<br>ACC_ENUM    0x4000    标识这是一个枚举<br>类索引、父类索引、接口索引</p>
+<p>类索引、父类索引</p>
+<p>类索引、父类索引都是一个u2类型的数据。它们会对应到常量池中的类描述符常量，通过常量中的索引值就可以找到类的全限定名字符串。</p>
+<p>接口索引</p>
+<p>接口索引集合是一组u2类型的数据的集合。第一项u2类型的数据为接口计数器，表示接口索引表的容量，如果该类没有实现任何接口，该计算器值为0。</p>
+<p>Class文件中由这三项数据来确定类的继承关系。</p>
+<p>字段表集合</p>
+<p>字段表用于描述接口或者类中声明的变量，包括类级变量以及实例级变量，但不包括在方法内部声明的局部变量。</p>
+<p>字段表使用标志位表示修饰符，引用常量池中的常量描述字段名及字段数据类型。</p>
+<p>字段表集合中不会列出从超类或者父接口中继承而来的字段，但可能列出原本Java代码之中不存在的字段，譬如，在内部类中为了保持对外部类的访问性，会自动添加指向外部类实例的字段。</p>
+<p>Java语言中字段是无法重载的，必须使用不同的名称，但是对于字节码来说，字段可以重名，只要字段的描述符不一致</p>
+<p>字段结构表</p>
+<p>类型    名称    数量<br>u2    access_flags    1<br>u2    name_index    1<br>u2    descriptor_index    1<br>u2    attributes_count    1<br>attribute_info    attributes    attributes_count<br>access_flags表示字段修饰符，与类的access_flags类似，并且都是一个u2的数据类型。</p>
+<p>标志位及含义见下表</p>
+<p>标志名称    标志值    含义<br>ACC_PUBLIC    0x0001    字段是否public<br>ACC_PRIVATE    0x0002    字段是否private<br>ACC_PROTECTED    0x0004    字段是否protected<br>ACC_STATIC    0x0008    字段是否static<br>ACC_FINAL    0x0010    字段是否final<br>ACC_VOLATILE    0x0040    字段是否volatile<br>ACC_TRANSIENT    0x0080    字段是否transient<br>ACC_SYNTHETIC    0x1000    字段是否由编译器自动产生的<br>ACC_ENUM    0x4000    字段是否enum<br>name_index和descriptor_index都是对常量池的引用。</p>
+<p>name_index代表字段的简单名称。</p>
+<p>descriptor_index代表字段和方法的描述符。</p>
+<p>全限定名</p>
+<p>将类全名中的“.”替换成“/”，并在最后添加一个“;”,表示全限定名结束</p>
+<p>简单名称</p>
+<p>没有类型和参数的方法或者字段名称</p>
+<p>描述符</p>
+<p>描述字段的数据类型、方法的参数列表（包括数量、类型以及顺序）和返回值</p>
+<p>描述符规则</p>
+<p>基本数据类型（byte、char、double、float、int、long、short、boolean）以及void都用一个大写字符来表示</p>
+<p>对象类型用字符L加对象的全限定名来表示</p>
+<p>数组类型，每一纬度使用一个前置的“[”字符来描述，如定义为”java.lang.String[][]”，将被表示为”[[Ljava/lang/String”，一个整形数组”int[]”将被表示为”[I”</p>
+<p>描述方法时，参数列表在前，返回值在后，且参数列表需要按顺序放在一组小括号之内</p>
+<p>​</p>
+<p>方法表集合</p>
+<p>Class文件存储格式中对方法的描述与对字段的描述几乎采用了完全一致的方式，只是在访问标志和属性表集合的可选项中有所区别。</p>
+<p>方法结构见下表</p>
+<p>类型    名称    数量<br>u2    access_flags    1<br>u2    name_index    1<br>u2    descriptor_index    1<br>u2    attributes_count    1<br>attribute_info    attributes    attributes_count<br>方法表的访问标志中没有ACC_VOLATILE 和 ACC_TRANSIENT 标志，增加了 ACC_SYNCHRONIZED、ACC_NATIVE、ACC_STRICTFP、ACC_ABSTRACT 标志。</p>
+<p>方法访问标志</p>
+<p>标志名称    标志值    含义<br>ACC_PUBLIC    0x0001    方法是否为public<br>ACC_PRIVATE    0x0002    方法是否为private<br>ACC_PROTECTED    0x0004    方法是否为protected<br>ACC_STATIC    0x0008    方法是否为static<br>ACC_FINAL    0x0010    方法是否为final<br>ACC_SYNCHRONIZED    0x0020    方法是否为synchronized<br>ACC_BRIDGE    0x0040    方法是否由编译器产生的桥接方法<br>ACC_VARARGS    0x0080    方法是否接受不定参数<br>ACC_NATIVE    0x0100    方法是否为native<br>ACC_ABSTRACT    0x0400    方法是否为abstract<br>ACC_STRICTFP    0x0800    方法是否为strictfp<br>ACC_SYNTHETIC    0x1000    方法是否是由编译器自动产生的<br>如果父类方法在子类中没有被重写，方法表集合中就不会出现来自父类的方法信息，但有可能出现由编译器自动添加的方法，如类构造器<clinit>方法和实例构造器<init>方法</init></clinit></p>
+<p>属性表集合</p>
+<p>Class文件、字段表、方法表都可以有自己的属性表集合，用于描述某些场景的专有信息。属性表集合的限制更宽松一些，不要求各个属性表具有严格顺序，并且只要不与已有属性名重复即可。</p>
+<p>Code属性</p>
+<p>用来存储Java程序方法体中的代码经过编译处理后生成的字节码指令。每个指令是一个u1类型的单字节，共可以表达256条指令。</p>
+<p>类型    名称    数量    含义<br>u2    attribute_name_index    1    指向常量池中一个CONSTANT_Utf8_info类型的常量，来表示属性名称<br>u4    attribute_length    1    属性值长度<br>u2    max_stack    1    表示操作栈深度的最大值<br>u2    max_locals    1    表示局部变量表所需的存储空间<br>u4    code_length    1    表示代码字节码长度<br>u1    code    code_length    用来存储字节码指令的一系列字节流<br>u2    exception_table_length    1    异常表长度<br>exception_info    exception_table    exception_table_length    Java代码的一部分，用来实现Java异常及finally处理机制（而不是简单的跳转命令）<br>u2    attributes_count    1    Code属性总数<br>attribute_info    attributes    attributes_count    Code属性<br>code_length类型为u4，理论上最大可以达到2^32-1，但虚拟机规定一个方法不能超过65535条字节码指令，否则Javac编译器会拒绝编译。</p>
+<p>Slot是虚拟机为局部变量分配内存所只用的最小单位，Javac编译器会根据变量的作用域来分配Slot给各个变量使用。</p>
+<p>Exception属性</p>
+<p>用于列举方法中可能抛出的受查异常（throws 关键字后面列举的异常）。</p>
+<p>LineNumberTable属性</p>
+<p>用于描述Java源代码行号与字节码行号之间的对应关系。</p>
+<p>可以在Javac中分别使用-g:none或-g:lines选项来取消或要求生成这项信息，如果选择不生成，在程序运行抛出异常时，堆栈中将不会显示出错的行号，在调试程序时也无法按照源码行设置断点</p>
+<p>LocalVariableTable属性</p>
+<p>用于描述栈帧中局部变量表中的变量与Java源码中定义的变量之间的关系。</p>
+<p>可以在Javac中分别使用-g:none或-g:vars选项来取消或要求生成这项信息,如果没有生成该属性，对程序运行没有影响，只是对代码编写带来较大不便，而且在调试期间无法根据参数名称从上下文中获得参数值</p>
+<p>SourceFile属性</p>
+<p>该属性是一个定长属性，用于记录生成这个Class文件的源码文件名称。</p>
+<p>类型    名称    数量<br>u2    attribute_name_index    1<br>u4    attribute_length    1<br>u2    sourcefile_index    1<br>可以使用Javac的-g:none或-g:source选项来关闭或要求生成这项信息，如果不生成这项属性，当抛出异常时堆栈中将不会显示出错误代码所属的文件名</p>
+<p>ConstantValue属性</p>
+<p>该属性为一个定长属性，用来通知虚拟机自动为静态变量赋值。</p>
+<p>InnnerClass属性</p>
+<p>用于记录内部类与宿主类之间的关联。</p>
+<p>Deprecated及Synthetic属性</p>
+<p>两者为标志类型的布尔属性，只存在是和否的区别，没有值的概念。</p>
+<p>Deprecated属性表示某个类、字段或方法不在被推荐使用</p>
+<p>Synthetic属性代表此字段或者方法并不是由Java源码直接产生的，而是由编译器自行添加的，比如Bridge Method</p>
+<p>StackMapTable属性</p>
+<p>Code属性中最多只能有一个StackMapTable属性，否则将抛出ClassFormatError异常</p>
+<p>Signature属性</p>
+<p>该属性是在JDK1.5发布后添加到Class文件规范的一个可选定长属性，可以出现在类、属性表和方法表的属性表中。</p>
+<p>BootstrapMethods属性</p>
+<p>该属性是在JDK1.7发布后增加到Class文件规范之中的一个复杂的变长属性，用于保存invokedynamic指令引用的引导方法限定符。</p>
+<p>常量池中的14种常量项的结构总表</p>
+<p>常量    项目    类型    描述<br>CONSTANT_Utf8_info    tag    u1    值为1<br>length    u2    UTF-8编码字符串占用的字节数<br>bytes    u1    长度为length的UTF-8编码的字符串<br>CONSTANT_Integer_info    tag    u1    值为3<br>bytes    u4    按照高位在前存储的int值<br>CONSTANT_Float_info    tag    u1    值为4<br>bytes    u4    按照高位在前存储的float值<br>CONSTANT_Long_info    tag    u1    值为5<br>bytes    u8    按照高位在前存储的long值<br>CONSTANT_Double_info    tag    u1    值为6<br>bytes    u8    按照高位在前存储的double值<br>CONSTANT_Class_info    tag    u1    值为7<br>index    u2    指向全限定名常量项的索引<br>CONSTANT_String_info    tag    u1    值为8<br>index    u2    指向字符串字面量的索引<br>CONSTANT_Fieldref_info    tag    u1    值为9<br>index    u2    指向声明字段的类或者接口描述符CONSTANT_Class_info的索引项<br>index    u2    指向字段描述符CONSTANT_NameAndType的索引项<br>CONSTANT_Methodref_info    tag    u1    值为10<br>index    u2    指向声明方法的类描述符CONSTANT_Class_info的索引项<br>index    u2    指向名称及类型描述符CONSTANT_NameAndType的索引项<br>CONSTANT_Interface_Methodref_info    tag    u1    值为11<br>index    u2    指向声明方法的接口描述符CONSTANT_Class_info的索引项<br>index    u2    指向名称及类描述符CONSTANT_NameAndType的索引项<br>CONSTANT_NameAndType_info    tag    u1    值为12<br>index    u2    指向该字段或方法名称常量的索引<br>index    u2    指向该字段或方法描述符常量项的索引<br>CONSTANT_MethodHandle_info    tag    u1    值为15<br>reference_kind    u1    值必须在1-9之间（包括1和9），它决定了方法句柄的类型。方法句柄类型的值表示方法句柄的字节码行为<br>reference_index    u2    值必须是对常量池的有效索引<br>CONSTANT_MethodType_info    tag    u1    值为16<br>descriptor_index    u2    值必须是对常量池的有效索引，常量池在该索引处的项必须是CONSTANT_Utf8_info结构，表示方法的描述符<br>CONSTANT_InvokeDynamic_info    tag    u1    值为18<br>bootstrap_method_attr_index    u2    值必须是对当前Class文件中引导方法表的bootstrap_methods[]数组的有效索引<br>name_and_type_index    u2    值必须是对当前常量池的有效索引，常量池在该索引出的项必须是CONSTANT_NameAndType_info结构，表示方法名和方法描述符<br>虚拟机规范预定义的属性</p>
+<p>属性名称    使用位置    含义<br>Code    方法表    Java代码编译成的字节码指令<br>ConstantValue    字段表    final关键字定义的常量值<br>Deprecated    类、方法表、字段表    被声明为deprecated的方法和字段<br>Exceptions    方法表    方法抛出的异常<br>EnclosingMethod    类文件    仅当一个类为局部类或者匿名类时才能拥有这个属性，这个属性用于标识这个类所在的外围方法<br>InnerClasses    类文件    内部类列表<br>LineNumberTable    Code属性    Java源码的行号与字节码指令的对应关系<br>LocalVariableTable    Code属性    方法的局部变量描述<br>StackMapTable    Code属性    JDK1.6中新增的属性，供新的类型检查验证器（Type Checker）检查和处理目标方法的局部变量和操作数栈所需要的类型是否匹配<br>Signature    类、方法表、字段表    JDK1.5中新增的属性，这个属性用于支持泛型情况下的方法签名，在Java语言中，任何类、接口，初始化方法或成员的泛型签名如果包含了类型变量（Type Variables）或参数化类型（Parameterized Type），则Signature 属性会为它记录泛型签名信息。由于Java的泛型采用擦除法实现，在为了避免类型信息被擦除后导致签名混乱，需要这个属性记录泛型中的相关信息<br>SourceFile    类文件    记录源文件名称<br>SourceDebugExtension    类文件    JDK1.6中新增的属性，SourceDebugExtension属性用于存储额外的调试信息。譬如在进行JSP文件调试时，无法通过Java堆栈来定位到JSP文件的行号，JSR-45规范为这些非Java语言编写，却需要编译成字节码并运行在Java虚拟机中的程序提供了一个进行调试的标准机制，使用SourceDebugExtension属性就可以用于存储这个标准所新加入的调试信息<br>Synthetic    类、方法表、字段表    标识方法或字段为编译器自动生成的<br>LocalvariableTypeTable    类    JDK1.5中新增的属性，它使用特征签名代替描述符，是为了引入泛型语法之后能描述泛型参数化类型而添加<br>RuntimeVisibleAnnotations    类、方法表、字段表    JDK1.5中新增的属性，为动态注解提供支持。RuntimeVisibleAnnotations属性用于指明哪些注解是运行时（实际上运行时就是进行反射调用）可见的<br>RuntimeInvisibleAnnotations    类、方法表、字段表    JDK1.5中新增的属性，作用与RuntimeVisibleAnnotations属性作用刚好相反，用于指明那些注解是运行时不可见的<br>RuntimeVisibeParameterAnnotations    方法表    JDK1.5中新增的属性，作用与RuntimeVisibleAnnotations属性类似，只不过作用对象为方法参数<br>RuntimeInvisibeParameterAnnotations    方法表    JDK1.5中新增的属性，作用与RuntimeInvisibleAnnotations属性类似，只不过作用对象为方法参数<br>AnnotationDefault    方法表    JDK1.5中新增的属性，用于记录注解类元素的默认值<br>BootstrapMethods    类文件    JDK1.7中新增的属性，用于保存invokedynamic指令引用的引导方法限定符</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Basic-Concept/" rel="tag"><i class="fa fa-tag"></i> Basic Concept</a>
+              <a href="/tags/Byte-Code/" rel="tag"><i class="fa fa-tag"></i> Byte Code</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Program/IPCreator/Technology/Program/Computer/basic-serials-of-computer/" rel="next" title="Classic Books of Computer's Basic Concept">
+                  <i class="fa fa-chevron-left"></i> Classic Books of Computer's Basic Concept
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Technology/IPCreator/Technology/Program/Java/java-class-loader/" rel="prev" title="Java Class Loader">
+                  Java Class Loader <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-首先我们来写一个java源文件"><span class="nav-number">1.</span> <span class="nav-text">1 首先我们来写一个java源文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接下来我们用javac命令或者ide工具将该java源文件编译成java字节码文件。"><span class="nav-number">2.</span> <span class="nav-text">接下来我们用javac命令或者ide工具将该java源文件编译成java字节码文件。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-魔数"><span class="nav-number">2.1.</span> <span class="nav-text">3.1 魔数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-版本号"><span class="nav-number">2.2.</span> <span class="nav-text">3.2 版本号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-常量池"><span class="nav-number">2.3.</span> <span class="nav-text">3.3 常量池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Access-Flag-访问标志"><span class="nav-number">2.4.</span> <span class="nav-text">3.4 Access_Flag 访问标志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-类索引"><span class="nav-number">2.5.</span> <span class="nav-text">3.5 类索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6父类索引"><span class="nav-number">2.6.</span> <span class="nav-text">3.6父类索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-接口索引"><span class="nav-number">2.7.</span> <span class="nav-text">3.7 接口索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-字段表集合"><span class="nav-number">2.8.</span> <span class="nav-text">3.8 字段表集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-方法"><span class="nav-number">2.9.</span> <span class="nav-text">3.9 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第1个方法："><span class="nav-number">2.9.1.</span> <span class="nav-text">第1个方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第2个方法："><span class="nav-number">2.9.2.</span> <span class="nav-text">第2个方法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-10-Attribute"><span class="nav-number">2.10.</span> <span class="nav-text">3.10 Attribute</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-另话"><span class="nav-number">3.</span> <span class="nav-text">4 另话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-总结"><span class="nav-number">4.</span> <span class="nav-text">5 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-工具"><span class="nav-number">5.</span> <span class="nav-text">6 工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java类文件结构解析"><span class="nav-number"></span> <span class="nav-text">Java类文件结构解析</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="IPCreator"
+    src="/img/work-hard-life-easy.png">
+  <p class="site-author-name" itemprop="name">IPCreator</p>
+  <div class="site-description" itemprop="description">Life is a journey.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1508</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1443</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.163.com/zhuxuanlv@126/" title="http://blog.163.com/zhuxuanlv@126/" rel="noopener" target="_blank">163 Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IPCreator</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">26.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">404:10</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
+        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+  <script pjax>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 11184,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+    </div>
+
+</body>
+</html>
