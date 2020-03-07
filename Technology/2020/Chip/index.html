@@ -62,7 +62,7 @@
 <meta property="og:site_name" content="生命之旅">
 <meta property="og:description" content="Integrated Circuit &amp;amp; System on Chip.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-29T01:16:34.931Z">
+<meta property="og:updated_time" content="2020-03-07T05:42:34.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chip">
 <meta name="twitter:description" content="Integrated Circuit &amp;amp; System on Chip.">
@@ -291,7 +291,114 @@
 <p>Integrated Circuit &amp; System on Chip.</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><h2 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h2><h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><h3 id="兵进光刻机，中国芯片血勇突围战"><a href="#兵进光刻机，中国芯片血勇突围战" class="headerlink" title="兵进光刻机，中国芯片血勇突围战"></a><a href="https://www.ithome.com/0/470/780.htm" target="_blank" rel="noopener">兵进光刻机，中国芯片血勇突围战</a></h3><p><img alt data-src="https://img.ithome.com/newsuploadfiles/2020/1/20200131_153033_551.jpeg@base@tag=imgWaterMark&amp;type=1&amp;dissolve=100&amp;gravity=SouthWest&amp;image=aHR0cDovL2ltZy5pdGhvbWUuY29tL2ltZy9xZC5wbmc=&amp;dy=10&amp;dx=10"></p>
+<h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><h3 id="什么是GPU？跟CPU有什么区别？终于有人讲明白了"><a href="#什么是GPU？跟CPU有什么区别？终于有人讲明白了" class="headerlink" title="什么是GPU？跟CPU有什么区别？终于有人讲明白了"></a><a href="https://www.toutiao.com/a6783193853814899203/" target="_blank" rel="noopener">什么是GPU？跟CPU有什么区别？终于有人讲明白了</a></h3><p>原创 华章科技 2020-01-31 14:03:55</p>
+<p>导读：一文看懂GPU的前世今生。</p>
+<p>作者：钱纲 来源：华章科技</p>
+<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/76b4873e97a24bc2add4f485e67fbb61"></p>
+<p>2016年，发生了一件震动IT界的大事。谷歌的人工智能软件阿尔法狗（AlphaGo）击败了韩国的世界围棋冠军九段选手李世石。2017年，阿尔法狗又击败了当年世界围棋排名第一的中国围棋九段选手柯洁。至此，人类在所有的棋类比赛中全部输给了计算机。</p>
+<p>阿尔法狗是一个中央处理器（Central Process Unit，CPU）和图形处理器（Graphic Process Unit，GPU）一起工作的围棋智能机器人。阿尔法狗以神经网络、深度学习、蒙特卡洛树搜索法为核心算法。其系统由四部分组成：</p>
+<p>策略网络（Policy Network），以当前局面为输入，预测下一步的走法；<br>快速走子（Fast Rollout），目标和策略网络相似，在适当牺牲质量的条件下的加速走法；<br>价值网络（Value Network），以当前局面为输入，估算胜率；<br>蒙特卡洛树搜索（Monte Carlo Tree Search），把上述三个部分整合起来，形成完整的系统。</p>
+<p>最初的阿尔法狗有176个GPU和1202个CPU。GPU能够通过内部极多进程的并行运算，取得比CPU高一个数量级的运算速度。但是GPU为了管理多进程，它需要在微架构上进行精心设计以满足深度学习计算对于带宽和缓存的需求。那么GPU和CPU有什么不同呢？</p>
+<p>01 图形处理器</p>
+<p>CPU由运算器（ALU）和控制器（CU）两大部件组成。此外，还有若干个寄存器和高速缓冲存储器及实现它们之间联系的数据、控制及状态总线。ALU用来执行算术运算、移位操作、地址运算和转换；寄存器件用于保存中间数据以及指令；CU负责对指令译码，并发出为完成每条指令所要执行的各个操作的控制信号（见图24-1）。</p>
+<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/18a1b19d940a488286bcccdeb305c8e8"><br>▲图24-1 CPU的结构图（冯·诺依曼构架）</p>
+<p>CPU的运行遵循冯·诺依曼构架：存储程序顺序执行。程序执行过程如下：CPU根据程序计数器（Program Counter，PC）从内存中得到指令，然后通过指令总线将指令送至译码器，将转译后的指令交给时序发生器与操作控制器，再从内存中取得数据并由运算器对数据进行处理，最后通过数据总线将数据存至数据缓存寄存器以及内存中。</p>
+<p>CPU是一步步来处理数据的（见图24-2）。在处理大规模与高速数据时，CPU很难满足需要。</p>
+<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/0a4fe3daba134f33b11442ac4ed265ef"><br>▲图24-2 CPU的工作原理</p>
+<p>当芯片的集成度增加后，漏电流也随之增大，但时钟频率的提高有限，而且晶体管的线宽很快就会到达物理极限，因此芯片的性能很难靠减小晶体管线宽来提高。于是，人们开始在设计上做文章，首先想到的是<code>让多个处理器并行工作，这样效率自然提高了很多，于是多核CPU和GPU由此诞生。</code></p>
+<p>另一个想法是芯片不变，而在应用系统上加人工智能，以此取得计算上的收益。随着大数据时代的到来，以人工智能为导向的应用系统也越来越多了。</p>
+<p>在现代的计算机中，图形处理越来越重要，于是一个专门处理图形的核心处理器GPU应运而生。对于处理图形数据来说，图形上的每个像素都要被处理，这就是一个大数据，因此对运算速度的要求很高。但GPU所需的功能比较单一，于是就诞生了基于优化图形处理的GPU构架（见图24-3）。</p>
+<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/783846266c274a7ab08301b27a0c04e3"><br>▲图24-3 CPU与GPU构架对比示意图</p>
+<p>CPU的功能模块多，适合复杂的运算环境，大部分晶体管用在控制电路和Cache上，少部分晶体管用来完成运算工作。GPU的控制相对简单，且不需要很大的Cache，大部分晶体管可被用于各类专用电路和流水线，GPU的计算速度因此大增，拥有强大的浮点运算能力。</p>
+<p>当前的多核CPU一般由4或6个核组成，以此模拟出8个或12个处理进程来运算。但普通的GPU就包含了几百个核，高端的有上万个核，这对于多媒体处理中大量的重复处理过程有着天生的优势，同时更重要的是，它可以用来做大规模并行数据处理。</p>
+<p>尽管，GPU是为了图像处理设计的，但它的构架并没有专门的图像处理算法，仅仅是对CPU的构架进行了优化，因此GPU不仅在图像处理中应用广泛，还在科学计算、密码破解、数值分析、大数据处理、金融分析等需要并行运算的领域中广为应用。GPU是一种较为通用的专业芯片。</p>
+<p>02 图形处理器的构成</p>
+<p>GPU的线路板一般是6层或4层PCB线路板。GPU的所有元器件都集成在它的线路板上，线路板影响着GPU的质量。</p>
+<p>GPU线路板上最大的芯片就是GPU，它上面有散热片和风扇。作为处理数据的核心，GPU大多采用单芯片设计，而专业的GPU也有采用多个GPU芯片的。</p>
+<p>GPU线路板上的另一个重要芯片是数/模转换器（RAMDAC）。它的作用是将显存中的数字信号转换成显示器能够识别的模拟信号，速度以MHz为单位，速度越快，图像越稳定，它决定了GPU能支持的最高刷新频率。为了降低成本，多数厂商都将数/模转换器整合到了GPU芯片中，但仍有一些高档GPU采用独立的数/模转换器芯片。</p>
+<p>GPU的数据是存放在显存内的，显存是用来存储等待处理的图形数据信息的。显存容量决定了GPU支持的分辨率、色深。分辨率越高，显示的像素点越多，所需显存容量越大。对目前的三维GPU来说，需要很大的显存来存储Z-Buffer数据或材质数据。</p>
+<p>显存有两大类：单端和双端显存。前者从GPU中读取数据并向数/模转换器传输数据且经过同一端口，数据的读写和传输无法同时进行；后者则可以同时进行数据的读写与传输。目前流行的显存有SDRAM、SGRAM、DDR RAM、VRAM、WRAM等。</p>
+<p>GPU线路板上采用的常见电容类型有电解电容、钽电容等，前者发热量较大，许多名牌GPU采用钽电容来获得性能上的提升。电阻也是如此，常见的金属膜电阻、碳膜电阻越来越多地让位于贴片电阻。</p>
+<p>GPU线路板上有对GPU进行供电的供电电路。它的作用是调整来自主板的电流以供GPU稳定地工作。由于GPU越来越精密，因此对GPU供电电路的要求也越来越高。</p>
+<p>GPU线路板上还有一款用于VGA BIOS的闪存。它包含了GPU和驱动程序的控制程序、产品标识等信息。该闪存可以通过专用程序进行升级，改善GPU性能，有时能给GPU带来改头换面的效果。</p>
+<p>GPU线路板上有向GPU内部提供数/模转换时钟频率的晶体振荡器等元器件。此外，由于GPU的频率越来越高，工作时热量很大，GPU线路板上还会有一个散热风扇。</p>
+<p>03 计算机图形的生成原理</p>
+<p>计算机的输出图像是模拟信号，而计算机处理的是二进制数字信号。数据离开CPU后，经过以下四个步骤，才到达显示屏成为图像。</p>
+<ol>
+<li>经总线进入GPU，将CPU送来的数据送到GPU里进行处理。（数字信号）</li>
+<li>从GPU进入显存，将GPU处理完的资料送到显存。（数字信号）</li>
+<li>从显存进入数/模转换器，从显存读取出数据然后送到数/模转换器进行数据转换。</li>
+<li>从数/模转换器进入显示器，将转换完的模拟信号送到显示屏（模拟信号）</li>
+</ol>
+<p>显示屏上显示的是最后处理的结果，显示效能的高低由以上四个步骤共同决定，它与GPU的效能不同，GPU的效能决定了中间两步。第一步是由CPU进入到GPU，最后一步是由GPU将资料送到显示屏上。</p>
+<p>近几年，人工智能中的深度学习算法大热，让GPU制造商大火。其实，深度学习的理论早在20世纪七八十年代就有了，但它的崛起主要是因为GPU的出现。英伟达公司的联合创始人与CEO黄仁勋说：“因为人工智能世界的大爆炸发生了，人工智能计算机科学家们找到了新算法，让我们能利用深度学习的技术，取得无人敢想的成果。”</p>
+<p>04 显卡的诞生</p>
+<p>提到显卡和GPU，人们会想到游戏和电影中精美的三维图形。其实，早期显卡不但不能处理三维图形，甚至连二维图形都无法处理，它仅具备显示能力。今天，GPU不但能够处理复杂的三维图形，还能作为协处理器，在通用计算中使用。</p>
+<p>电脑图形处理器的发展是从图形显示适配器开始的，到图形加速器，再到图形处理器即GPU，其功能在不断增强。</p>
+<p>从显示适配器到图形加速卡的转变是显卡历史上的重要转折点。从此，显卡开始承担计算机中的部分计算任务，这奠定了其日后与CPU分庭抗礼的基础。</p>
+<p>电脑图形学是在1962年，由麻省理工学院的伊凡·苏泽兰（Ivan Edward Sutherland）在他的博士论文中提出来的。这位香农的学生是电脑图形之父。在之后的20年里，电脑图形学一直在不断发展，但没有产生专门的图形处理芯片。</p>
+<p>在显卡出现之前，电脑中通常的图形输出工作由CPU承担。显卡的出现不是为了加速电脑的图形输出，最初的显卡是为了让游戏机上的二维图形显示加速。这款游戏是雅达利公司于1977年推出的雅达利2600。同期流行的电脑是苹果-II，而苹果-II的图形输出由CPU承担。</p>
+<p>进行图形处理时需要电脑具备较强的并行计算能力，对精度和运算强度的要求也很高，对早期的电脑来说，这很难。<code>当时的显卡仅仅是将CPU计算生成的图形翻译成显示设备能识别的信号来进行显示，不具备计算能力，被称作图形适配器（VGA Card）。</code></p>
+<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/ec943e2abe104940bf4a9f3b7892ec7b"><br>▲图24-4 Antic芯片</p>
+<p>雅达利2600拥有专门负责在电视上输出图形的8位Antic芯片和音频的CTIA芯片（见图24-2）。雅达利2600的设计者杰伊·迈纳（Jay Miner），也是20世纪80年代图形性能最强大的电脑阿米加（Amiga）的设计者。雅达利2600内部的Antic芯片是显卡的老祖宗。</p>
+<p>1981年，IBM推出了最早的装在5150个人电脑上的MDA（Monochrome Display Adapter）和CGA（Color Graghic Adapter）两款二维加速卡。</p>
+<p>MDA仅支持黑色和绿色的文字，图形内存为4KB，无法产生图形。CGA是IBM个人电脑中最早的彩色显卡，640×200的分辨率，4种颜色。由于CGA的分辨率太低，因此有了EGA增强图形适配器（Enhanced Graphics Adapter）。</p>
+<p>MDA、CGA、EGA三种标准都是以TTL数字信号输出的。IBM很快研发出了基于ISA（Industry Standard Architechture）的显卡，是最古老也是最普遍使用的VGA显卡。</p>
+<p>直到VGA标准出现，显卡才和主板分开，VGA（Video Graphic Array）即显示绘图阵列，它的数字模式可以达到720×400种颜色，绘图模式可达640×480×16种颜色，以及320×200×256种颜色。直到此时，显卡才能同时显示256种色彩。</p>
+<p>VGA标准采用了模拟信号输出，其彩色显示能力大大加强，原则上能显示无穷多种颜色，因此VGA迅速成为显示设备的标准。</p>
+<p>这个时代，出现了第一款真正的显卡——Trident 8900/9000显卡，它是ISA/16色显卡的代名词，也是三维显卡的真正鼻祖，它第一次使显卡独立于电脑，显卡从此不再是集成的一块芯片，这为以后独立显卡的发展提供了可能性。</p>
+<p>VGA之后又出现了SVGA标准。它是VGA标准的衍生产物，改良过的SVGA图形适配器已经能够支持16比特的彩色了。最早的SVGA显卡是Cirrus Logic的GD5428/5429，它集成了1～2MB显存，支持16比特的彩色。不过GD5428/5429仍使用VESA总线，因此卡身很长，成本不低。</p>
+<p>真正将SVGA发扬光大的是S3735（Tr64V）以及Trident 9680，它们能够达到1024×768的分辨率，并且在低分辨率的情况下支持32比特真彩色。</p>
+<p>1984年，硅图公司（Silicon Graghics Inc.，SGI）推出了专业的高端图形工作站，并配置了专门的图形硬件，称为图形加速器。它引入了许多经典概念，如顶点变换和纹理映射。在随后的10多年里，硅图公司又研发了很多面向专业领域的图形工作站，但它们的价格昂贵，无法进入个人电脑市场。</p>
+<p>1984年，IBM又推出了两款显卡，它们是PGC（Professional Graghics Controller）和EGA。这两款显卡能够支持二维和三维的图形加速，并被用于计算机辅助设计。</p>
+<p>1986年，德州仪器推出了第一款具有在芯片上进行图形处理功能的微处理器TMS34010。这款处理器需使用特殊的图形编程语言。1990～1992年，它是视窗加速卡中，德州仪器图形框架（Texas Instruments Graghics Architecture，TIGA）的基础。</p>
+<p>1987年，康莫多国际（Commodore International）公司推出了阿米加500电脑。该电脑拥有功能强大的图像处理专用芯片。这款芯片也是在杰伊·迈纳的倡导下加上的，这款显卡给阿米加500带来了704×576像素的图形显示功能。</p>
+<p>除了显卡外，阿米加500的音频输出性能也极好。虽然阿米加500的显卡不是第一块应用在电脑上的显卡，但该显卡是第一款真正意义上的二维加速卡。阿米加500电脑的诞生让人们意识到图形加速卡对于电脑的意义（见图24-5）。</p>
+<p><img alt data-src="http://p9.pstatp.com/large/pgc-image/182d9a5edbd04d74ad070fb148f1df71"><br>▲图24-5 阿米加500电脑用的显卡</p>
+<p>1988年，支持256种颜色显示的第一代显卡问世。它是ATI公司生产的ATI VGA Wonder显卡。这是一款真正意义上的第一代显卡，时至今日VGA一词还是显卡的代名词。</p>
+<p>05 前GPU时代</p>
+<p>1989年，多家芯片制造商联合创立了影像电子工程标准协会（Video Electronic Standards Association，VESA）。1994年年底，VESA发表了64位架构的VESA Local Bus标准，80486及以后的个人电脑大多采用该标准的显卡。</p>
+<p>1991年，英特尔推出了一种局部总线PCI（Peripheral Component Interconnect）。在结构上，PCI是在CPU和原来的系统总线之间插入的一级总线，由一个桥接电路对该层进行管理，并实现接口间的协调数据传送。管理器提供信号缓冲，使其支持10种外接设备，同时在高时钟频率下保持高性能。PCI为显卡、声卡、网卡等设备提供了接口。</p>
+<p>显卡接口制约着显卡技术的发展。为了加快显卡与总线间的传输速度，使用高带宽的接口总线势在必行。在民用市场，显卡接口的起点是最普通的ISA接口，ISA接口包含ISA总线、EISA总线和VESA总线，ISA接口是一种统称。</p>
+<p>当VGA标准流行之后，ISA接口就显得力不从心了，由PCI取而代之，但PCI接口并未持续多久就被更为先进的AGP（Accelerated Graphics Port）所淘汰。与PCI相比，AGP在带宽上有了突飞猛进的发展，还能有效利用系统内存。</p>
+<p>但AGP的半开放性格局使之不断面临兼容性的困扰。从最早的AGP 1×到AGP 8×，真正具有里程碑意义的只有AGP 4×。如今AGP 8X也开始被PCI Express×16取而代之了。</p>
+<p>1991年，支持微软视窗操作系统图形加速的第二代显卡（Graphics Card）问世。</p>
+<p>VGA的唯一功能就是输出图像，图形运算全靠CPU，当微软的视窗操作系统出现后，PC不堪重负。1991年5月，ATI发布Mach8，这是ATI第一款优化微软视窗操作系统图形界面的显卡。ATI用专用芯片进行图形运算处理，将CPU解放了出来，且让视窗操作系统的界面运行起来非常流畅，图形化操作系统的资源消耗大降、实用性大增。</p>
+<p>Mach8就是ATI 38800-1芯片。Mach8显卡由两个芯片组成，主芯片为VGA Wonder XL 24（ATI 28800-6），负责显示输出，辅助芯片是Mach8专门用于加速视窗操作系统图形界面的，通过双芯片的设计增强了绘图能力。</p>
+<p>为了与只具备显示功能的VGA相区别，具备图形处理能的显卡被称为Graphics Card，即图形加速卡，它加速了视窗的普及，加速了PC图形化界面的步伐。</p>
+<p>1991年6月，S3公司推出了一款二维图形加速卡S3 86C911。它是最早的视窗加速卡之一，支持16位256种颜色。此后，二维显卡进入了群雄争霸时代。当时，Trident、S3、Matrox三大厂商占据主导地位。</p>
+<p>这些二维显卡角逐的激烈程度丝毫不亚于今天的三维显卡的争斗。由此也产生了不少经典产品：Trident的9440、S3的Trio64V+、Matrox的Millennium等。其中性能最优的是Millennium及后继产品，但因其售价昂贵没有得到很多市场份额。当时，最成功的是S3的Trio 64V+。等到了voodoo时代，它仍是voodoo的好搭配。</p>
+<p>第一款三维显卡是三维实验室（3Dlabs）制造的GLINT 300SX（见图24-6）。它的三维图形的高洛德着色（Gouraud Shading），深度缓冲，全屏抗锯齿，Aplha混合等特性被沿用至今。300SX正式开启了计算机三维显示的大门，但它也有很多不足，比如没有数模转换芯片（RAMDAC），要加上数模转换芯片才能将内容输出到显示器上。</p>
+<p><img alt data-src="http://p9.pstatp.com/large/pgc-image/554d0c329dd644d094d13f4aa9629c12"><br>▲图24-6 300SX GPU</p>
+<p>06 多媒体时代的显卡</p>
+<p>1994年，支持视频加速的第三代显卡出现了。</p>
+<p>这时的PC已经进入了多媒体时代，二维图形处理在第二代显卡面前已不是问题了，但越来越多的视频图形解码让CPU不堪重负，因此集成了简单的视频解码器的第三代显卡出现了。</p>
+<p>ATI在1994年推出的Mach64是第一款广为人知的多媒体显卡，它的硬件支持YUVtoRGB颜色转换和硬件缩放。有了它的PC能应付基本的AVI和MPEG-1播放，而不需要昂贵的专用硬件解码器，使得多媒体PC的成本大幅下降。</p>
+<p>1994年，第四代显卡，三维加速显卡出现了。</p>
+<p>三维显卡前期，令人难忘的是3Dfx Interactive公司（简称了Dfx）。1996年，3Dfx推出的voodoo显卡奠定了3Dfx在图形显示领域的地位，但它并不普及，因为太贵了。当时的RAM很贵，而voodoo需要很大的RAM。</p>
+<p>另外voodoo要卖到500美元才能赚钱，voodoo没有二维输出能力，用户必须外加一块100美元左右的二维加速卡才能正常使用它。高昂的成本让个人电脑厂商对它避而远之。据说，3Dfx承诺免费提供半年的voodoo芯片都被拒绝了。图24-7是3Dfx推出的第一款三维显卡。</p>
+<p><img alt data-src="http://p9.pstatp.com/large/pgc-image/bebd6490de114a0d817ed73db8bc2aed"><br>▲图24-7 3Dfx的第一款三维显卡</p>
+<p>3Dfx的运气很好。1996年夏，芯片工艺的更新让RAM价格大跌，3Dfx借机得以推广，而各游戏和个人电脑生产厂家也改变了态度，开始使用voodoo。当voodoo以300美元的价格上市时，市场被引爆了。voodoo支持DVD和OpenGL，但二者还较粗糙，抑制了voodoo的性能。3Dfx只好开发图形API——Glide。</p>
+<p>20世纪末，3Dfx的崛起宣布了三维显卡进入了白热化竞争时代。S3、Matrox、3Dlabs等厂商都加入了竞争，但它们均不敌voodoo。除voodoo以外的三维显卡的代表作是ATI的3DRage II+DVD。</p>
+<p>这一款1996年秋天发布的显卡，其二维引擎来自Mach64。它具有MPEG-2硬件动态补偿功能，能在播放DVD时起到辅助作用，这是非常先进的。加上ImpacTV芯片，它还可以播放电视节目。3DRage II的驱动支持也非常好，无论是游戏用户还是专业用户都可以得到对应的驱动程序。只是ATI当时专注于OEM市场，而非零售。</p>
+<p>3Dfx为了解决voodoo没有二维加速功能的问题，于1997年开发了具有二维加速功能的voodoo rush。但是其性能很差，它以主卡加副卡的方式实现二维加速，且二维芯片来自第三方。voodoo rush成了一款二维显示很差、三维性能又比voodoo差的显卡。它对Glide的支持也很差，经常无法加速。</p>
+<p>不久，ATI研发出了3D Rage Pro。因其强大的DVD回放功能成了当时OEM多媒体电脑的首选。ATI尝试过进入零售市场，但因其很差的驱动失败了，等到ATI驱动没问题的时候，Rage Pro已过时了。3D Rage Pro是最早支持AGP接口的显卡之一。</p>
+<p>ATI在被AMD收购之前一直是计算机图形领域的领头羊之一。这是一家由三位来自中国香港的华裔在1984年于加拿大创建的计算机图形公司。其主要创始人何国源，1950年出生于中国广东省。</p>
+<p>12岁时，何国源来到香港。因家庭贫困，他20岁时只身来到学费和生活费较低的台湾就读大学。1984年，已在电脑领域有了丰富工作经验的何国源移居加拿大，创办了计算机图形公司——ATI。</p>
+<p>1998年，3Dfx推出了voodoo2。voodoo2的性能比voodoo提高了2～3倍，它还增加了大量新的画质提升技术。voodoo2降低了对CPU的依赖，很多低端的CPU也可以流畅运行大型三维游戏。</p>
+<p>voodoo2还引入了SLI技术，能让两张voodoo2显卡同时运算同一画面。有1/3以上的voodoo2用户是双卡用户。voodoo2让3Dfx成了三维显卡初期的绝对老大。</p>
+<p>1998年，3Dfx犯了两个致命的错误：一是收购了一家名为STB的公司，自行生产GPU，舍弃了第三方合作伙伴；二是对Glide API的封锁，导致游戏厂商开始对其敬而远之，表面上看3Dfx因voodoo2风光无限，但这也是其衰落的开始。</p>
+<p>3Dfx在1998年犯的错误并没有让它面临危机，这是因为没有竞争对手。到了1999年情况就不同了，几件事让3Dfx面临灭顶之灾。先是DX7带来了硬件T&amp;L，硬件T&amp;L的出现彻底解放了CPU，即便是低端CPU，搭配了支持硬件T&amp;L的显卡也可以流畅地玩游戏。大量视觉技术的添加使得Glide的优势丧失殆尽。</p>
+<p>3Dfx于1999年发布的voodoo3不支持新出现的AGP4x，仅支持2x，但只支持接口，不支持AGP的特性。voodoo3的16比特渲染在大势所趋的32比特潮流面前毫无竞争力。</p>
+<p>同时，来自英伟达的TNT2以其强大的性能干脆利落地将voodoo3打败了。与同年发布的Gefroce 256相比，它只是一款TNT的改进产品，但这未能阻碍TNT2成为一代经典。</p>
+<p>1998年2月，英特尔发布了和Real 3D合作设计的i740显卡（见图24-8）。这是迄今为止英特尔推出过的唯一一款独立显卡。i740支持2X AGP规格，核心频率为80MHz，像素填充率为55MT/s，支持DVD解压、平行信息处理、精准像素描插补等技术。</p>
+<p>i740的2D效果并不令人满意，但它的三维性能还不错，它首次在民用显卡中采用散热风扇。后来，英特尔将i740改进后集成进了810芯片组。</p>
+<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/4057b299b2974806aec280384cf9490d"><br>▲图24-8 英特尔的i740显卡</p>
+<p>关于作者：钱纲，现就职于美国德州仪器公司，从事半导体工艺及半导体器件的开发与研究工作。科学网人气作者，其作品在线获得超过千万人次的浏览量。钱纲的作品以涉及历史、科技的杂文、随笔为主。主要作品有美国历史及人物纪事《美国往事》，硅谷历史《硅谷简史》等。</p>
+<p>本文摘编自《芯片改变世界》，经出版方授权发布。</p>
+<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/b367542fbb8d4df78b8f583baf9fe6ff"><br>延伸阅读《芯片改变世界》</p>
+<p>推荐语：本书是芯片技术发展的科普图书，重点讲述了电子工业的产生，早期电子器件、半导体器件、及芯片的产生与发展的历史。把芯片技术与其发展史结合起来，描绘芯片产业与第三、第四次工业革命的兴起及发展过程。本书的主角是芯片技术的历史沿革、发明家、创业家、风险投资家及企业家。</p>
+<h2 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h2><h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><h3 id="兵进光刻机，中国芯片血勇突围战"><a href="#兵进光刻机，中国芯片血勇突围战" class="headerlink" title="兵进光刻机，中国芯片血勇突围战"></a><a href="https://www.ithome.com/0/470/780.htm" target="_blank" rel="noopener">兵进光刻机，中国芯片血勇突围战</a></h3><p><img alt data-src="https://img.ithome.com/newsuploadfiles/2020/1/20200131_153033_551.jpeg@base@tag=imgWaterMark&amp;type=1&amp;dissolve=100&amp;gravity=SouthWest&amp;image=aHR0cDovL2ltZy5pdGhvbWUuY29tL2ltZy9xZC5wbmc=&amp;dy=10&amp;dx=10"></p>
 <p>中美贸易摩擦从2018年开始不断升级，影响全球，其中技术封锁和非法断供是美国一系列施压措施的武器之一，以打击国内一批高科技企业。首当其冲就是芯片半导体产业。</p>
 <p>2018年美国制裁中兴的手段立竿见影，正是锁住了国内企业在芯片产业上无法自主的咽喉。<br>而华为能够抵挡到现在的关键，也是因为华为本身的海思芯片业务发展得风生水起。<br>但前不久，IT之家报道了台积电因美国施压可能无法向华为稳定供货14nm芯片的消息，虽然还不确定结果，但不得不令人担忧。</p>
 <p>根据美国《出口管理条例》的限制，产品涵盖硬件、软件等的美国技术含量超过25%，就会被要求禁止销售给中国。<br>哪怕国外制造，但源自美国的内容超过25%，也在限制范围内。<br>报道中称，台积电内部评估，其7nm工艺源自美国技术比重不到10%，14nm比重大约15%。<br>这意味着若美国真的将“源自美国技术”的标准从25%下调至10%，那么14nm芯片的供货将受到限制。</p>
@@ -318,7 +425,10 @@
 <p><img alt data-src="https://img.ithome.com/newsuploadfiles/2020/1/20200131_153036_676.jpeg@base@tag=imgWaterMark&amp;type=1&amp;dissolve=100&amp;gravity=SouthWest&amp;image=aHR0cDovL2ltZy5pdGhvbWUuY29tL2ltZy9xZC5wbmc=&amp;dy=10&amp;dx=10"></p>
 <p>很明显，从制程工艺的角度上看，国产光刻机目前和ASML差距非常大。不过，国际上其他国家也基本没有量产157nm及以下光刻机的，从这个角度看，国产光刻机和除ASML之外的国际水准也并未落后多少。<br>目前上海微电子还在研究为65nm制程芯片服务的光刻机，什么时候能够做出来，还不好说。<br>还有的，就是一些实验室取得的成果，以及一些媒体误读。<br>例如2019年4月，武汉光电国家研究中心的甘棕松团队成功研发出9nm工艺光刻机，这个就还是实验室里取得的成果，使用的也不是ASML的那一套方案。<br>再例如2018年11月，中国科学院光电技术研究所“超分辨光刻装备研制”项目通过验收，实现了22nm的分辨率，引起媒体一阵沸腾。<br>但其实，这个设备基本上可以说并不是用来制造芯片的，距离制造芯片也非常遥远。<br>所以这里也说明一下，光刻机不仅是用来制造芯片的，也可以用来制造一些光学领域的其他器件等。<br>总之，目前国产光刻机能实现的制程水平还卡在90nm，和ASML差距明显，高端光刻机还是要靠进口。</p>
 <p>世界局势风云变幻，现实不断催促我们必须尽快在半导体技术领域有所突破。<br>但是，在这个产业里，其实也没有什么捷径或者弯道超车的路可走，只有一个制程节点一个制程节点地去攻破，积淀技术。想要追赶国际领先的水平，只有付出更多的精力，投入更多的资源。<br>光刻机，当然至关重要，但并不是说，花钱买来一台EUV光刻机，中国半导体产业就能一跃而上。<br><img alt data-src="https://img.ithome.com/newsuploadfiles/2020/1/20200131_153036_770.jpeg"><br>同时，这个行业进化节奏之快，对于科研人员来说，也没有太多成绩上的激励，必须十年甚至几十年如一日地沉下心来去做。<br><img alt data-src="https://img.ithome.com/newsuploadfiles/2020/1/20200131_162107_224.png@base@tag=imgScale&amp;q=90&amp;w=720&amp;h=500"><br>而这，是ASML能够崛起的原因，也是我们想要实现追赶的唯一途径。</p>
-<h2 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h2><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2>
+<h2 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h2><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://www.toutiao.com/a6736373214349361416/" target="_blank" rel="noopener">将5G基带集成到cpu有多难？意味着什么？</a></li>
+</ol>
+
     </div>
 
     
@@ -397,7 +507,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What"><span class="nav-number">1.</span> <span class="nav-text">What</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why"><span class="nav-number">2.</span> <span class="nav-text">Why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How"><span class="nav-number">3.</span> <span class="nav-text">How</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#兵进光刻机，中国芯片血勇突围战"><span class="nav-number">3.1.</span> <span class="nav-text">兵进光刻机，中国芯片血勇突围战</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experience"><span class="nav-number">4.</span> <span class="nav-text">Experience</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What"><span class="nav-number">1.</span> <span class="nav-text">What</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是GPU？跟CPU有什么区别？终于有人讲明白了"><span class="nav-number">1.1.</span> <span class="nav-text">什么是GPU？跟CPU有什么区别？终于有人讲明白了</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why"><span class="nav-number">2.</span> <span class="nav-text">Why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How"><span class="nav-number">3.</span> <span class="nav-text">How</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#兵进光刻机，中国芯片血勇突围战"><span class="nav-number">3.1.</span> <span class="nav-text">兵进光刻机，中国芯片血勇突围战</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experience"><span class="nav-number">4.</span> <span class="nav-text">Experience</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -476,12 +586,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">26.7m</span>
+    <span title="站点总字数">26.8m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:10</span>
+    <span title="站点阅读时长">405:19</span>
 </div>
   <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
   </div>
