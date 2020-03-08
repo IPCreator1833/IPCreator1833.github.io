@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="The original author of MiniGUI, a full-stack engineer and an entrepreneur.">
 <meta name="keywords" content="Yong-Ming Wei">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/People/" itemprop="url" rel="index">
-                    <span itemprop="name">People</span>
-                  </a>
+                  <a href="/categories/People/" itemprop="url" rel="index"><span itemprop="name">People</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/People/IPCreator/People/Yong-Ming Wei/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/People/IPCreator/People/Yong-Ming Wei/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/People/IPCreator/People/Yong-Ming Wei/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="https://avatars3.githubusercontent.com/u/1990953?s=460&amp;v=4"></p>
+        <p><img data-src="https://avatars3.githubusercontent.com/u/1990953?s=460&amp;v=4" alt></p>
 <blockquote>
 <p><a href="https://github.com/VincentWei" target="_blank" rel="noopener">The original author of MiniGUI, a full-stack engineer and an entrepreneur.</a></p>
 </blockquote>
@@ -298,19 +268,19 @@
 <pre><code>魏永明，获清华大学工学学士、硕士学位。其主持的 MiniGUI 项目，是早期国内最知名的几大开源软件项目之一，曾广泛应用于功能手机、数码相框等嵌入式产品中。魏永明于2002年创立北京飞漫软件有限公司，成功实践了围绕开源软件的双许可证商业模式；于2015年10月联合创办北京玖柏图技术股份有限公司并担任 CEO。魏永明为 Linux 及开源软件在中国的普及和应用做了大量工作，翻译或编著若干技术著作（《Linux 实用教程》、《Linux 设备驱动程序》等）；2013年，鉴于他在开源软件领域做出的突出贡献，被“中国开源软件推进联盟”评选为“开源软件杰出贡献人物”。
 </code></pre><p>上周去深圳出差，约了几个飞漫的前同事一起吃饭喝酒，其中高总目前供职于深圳一家数控系统开发厂商。2000年开始，高总就在 TCL 和创维力推 Linux + MiniGUI 的智能电视方案，甚至还基于 MiniGUI 开发了自己的浏览器。然而大家都知道，智能电视这一类产品在十年之后（2010年）才获得了市场的认同并得到了大的发展和普及，其中 Android 从技术上保证了智能电视这类产品的成功，高总力推的方案在当时得不到产品部门的认同，其实无关技术，而是市场还不成熟。大家谈起这些往事，各个唏嘘不已。</p>
 <p>MiniGUI 作为生长于国内土壤的一款开源软件，1999年发布了第一个版本，2003年左右成熟起来，并在嵌入式产品类型蓬勃发展的 2000年到2010年之间获得了大量的应用，广泛应用于工业控制系统、功能手机、数码相框等类型的产品中，其中尤以华为的数码相框、联芯的功能手机方案、RDA 的功能手机方案为代表。本人于 2002 年成立了飞漫软件，尝试利用开源和商业并举的方式（双许可证模式）运营 MiniGUI 及其产品，获得了一定意义上的成功，期间也有很多经验教训。有关详情，大家可以在网上搜索本人在 2009 年发表的《MiniGUI 十年回顾》这篇文章:</p>
-<p><a href="http://www.fmsoft.cn/zhcn/about/blog/minigui/" target="_blank" rel="noopener">http://www.fmsoft.cn/zhcn/about/blog/minigui/</a><br><img alt data-src="http://wx-img.zhujunwu.cn/mmbiz_png/Ass1lsY6bysnib4EhL60bAmXerib8n2JEB3Zbb6EopCqjyIE6coFjf2gIIUkicfLIDODU1MPgh8ArKW9ld3ZEzKIg/0?wx_fmt=png"></p>
+<p><a href="http://www.fmsoft.cn/zhcn/about/blog/minigui/" target="_blank" rel="noopener">http://www.fmsoft.cn/zhcn/about/blog/minigui/</a><br><img data-src="http://wx-img.zhujunwu.cn/mmbiz_png/Ass1lsY6bysnib4EhL60bAmXerib8n2JEB3Zbb6EopCqjyIE6coFjf2gIIUkicfLIDODU1MPgh8ArKW9ld3ZEzKIg/0?wx_fmt=png" alt></p>
 <p>自上面这篇文章发布以来，又有八年时间过去了，斗转星移，AI 成为下一个高科技领域的竞争焦点。在操作系统及基础软件领域，Android 已经占据了除苹果之外的所有智能手机的市场份额，但并没有完全替代所有基于 Linux 的智能设备以及其他更多的嵌入式实时系统，仍然有很多客户在使用 MiniGUI 开发各类智能设备；另一方面，MiniGUI 当年的竞争对手 Qt 几易其主，但仍然在顽强生存着。当年时兴的“嵌入式系统”字眼，已被“物联网”取代，华为的 liteOS以及其他本土开发人员发展起来的 RT-Thread、SylixOS 等 RTOS（实时操作系统）产品，获得了政府部门甚至资本市场的支持，从而获得了新的发展契机。</p>
 <p>作为 MiniGUI 的原创者，本人对这款软件的感情自不必说。但是，除了我本人之外，还有更多的飞漫软件同事（包括高总这些 MiniGUI 的早期用户及开发者）为 MiniGUI 的发展倾注了诸多心血。</p>
 <p>万目前供职于深圳一家明星企业，是当年飞漫深圳研发团队的负责人，侯是架构师，现在珠海创业。2007年，飞漫深圳团队在万和侯的领导下，开始负责 MiniGUI 的维护工作。在2009年左右，这个团队为 MiniGUI 开发了一整套的动画支持框架和界面开发技术。若没有 Android 的横空出世，这些技术本可以应用于功能手机的升级改造中，为功能手机提供优秀的 UI/UX 解决方案。但 Android 的开源免费，Google 的大力推广，却让这些技术丧失了应用和发展的机会。</p>
 <p>董目前供职于小米，是 miniStudio 产品的主要开发者。miniStudio 是一个基于 Eclipse 的集成开发环境，提供了“所见即所得”的 GUI 界面编辑工具。为了实现GUI 应用的编程便利性，董改造了 MiniGUI 控件的编程框架，开发了 mGNCS（新控件集）组件，并且引入外观渲染器这样一种高级的 UI 定制体系和方案，领导团队开发了 miniStudio 产品。时隔多年的今天，当我从服务器找到 miniStudio 1.0.8 for Windows 版本，安装到电脑上并运行时，我仍然惊讶于这款软件提供的可视化编程能力，就算在今天，也是难能可贵的！但飞漫软件并没有花精力推广和发展 miniStudio，也没有基于 miniStudio 发展出可以良性循环的商业模式出来，不禁令人扼腕叹息。</p>
 <p>mDolphin 是基于 WebKit的浏览器产品，张、吕为前后两名主力开发人员，该产品的开发历时多年持续演进，甚至成功应用于联芯的功能手机方案当中。mDolphin 是 MiniGUI 上的一款典型的大型应用软件，除了其本身的应用价值之外，也有力地证明了 MiniGUI 产品的成熟性。目前，张作为技术专家供职于阿里巴巴，吕在互联网领域创业。</p>
-<p><img alt data-src="http://wx-img.zhujunwu.cn/mmbiz_png/Ass1lsY6bysnib4EhL60bAmXerib8n2JEBO7gPD7nUTaia63kWpOC2NYBvm6MfuzGMuWkWrUDiagUYakOsvYISDL8w/0?wx_fmt=png"></p>
+<p><img data-src="http://wx-img.zhujunwu.cn/mmbiz_png/Ass1lsY6bysnib4EhL60bAmXerib8n2JEBO7gPD7nUTaia63kWpOC2NYBvm6MfuzGMuWkWrUDiagUYakOsvYISDL8w/0?wx_fmt=png" alt></p>
 <p>上面提到的这些曾供职于飞漫软件的前同事，为 MiniGUI 的发展付出了自己的青春年华，他们的技术能力也得到了极大的提升和锻炼。不论他们后来从事什么行业，或打工或创业，在飞漫软件围绕 MiniGUI 所做的开发工作，仍然是其履历中重要的一笔。除了他们之外，在长达十多年的发展历程中，飞漫软件前后为业界培养了近百名优秀的高级软件工程师，限于篇幅不能一一列举。他们有的供职于腾讯、阿里等大型互联网公司的关键技术岗位，有的在移动互联网等领域创业，他们围绕着 MiniGUI 所做的开发和维护工作，让他们受益一生。</p>
 <p>上周去深圳，当万在其供职的企业熟练地向他当前的同事演示和讲述 MiniGUI 之上的动画框架和相关技术时，我才深切感受到，高、万、侯、董以及其他为 MiniGUI 的发展倾注过精力的开发人员对 MiniGUI 的感情并不比我差多少。</p>
 <p>和高总他们吃饭的时候，高总提到 MiniGUI 仍然有很旺盛的需求，仍然可以继续发展。其实就这个问题，几乎每次到深圳和高、侯他们吃饭喝酒，都会拿出来争论一番。他们认为 MiniGUI 仍然有旺盛的市场需求，应该继续发展，就这么丢下不管实在可惜；我则认为每个产品都有自己的生命周期，MiniGUI 从 1999 年到现在都已经十多年了，生命周期差不多到头了。</p>
 <p>本人从 2010 年开始，领导原飞漫软件的团队开发过 Android 上的工具类 App（领航桌面、锁屏等），定制过智能电视方案，现在则另起炉灶在智能硬件和移动互联网领域创业。大概从2012 年开始，MiniGUI 的开发处于停滞状态，除了将万、侯他们开发的最新版本以及 mDolphin 开源发布之外，几乎没有再做过大的更新。但从2015年开始，MiniGUI 的需求又变得旺盛起来，每年都会有客户主动找飞漫软件获得 MiniGUI 的商业授权。</p>
 <p>折腾多年以后，回过头来反思 MiniGUI 和飞漫软件走过的路，我之所以认为 MiniGUI 的生命周期已到，大致是由于飞漫软件未能取得心目中的成功。换句话说，我把技术和生意搞混淆了。一个生意可能无法持续按照单一的模式去运营，但技术却不会轻易过时。</p>
-<p><img alt data-src="http://wx-img.zhujunwu.cn/mmbiz_png/Ass1lsY6bysnib4EhL60bAmXerib8n2JEBiaRR91CicpwQGdOfW5MZibWnHlDRBZ7K9TO1bL3GyT1PuXPoby5rL7PXQ/0?wx_fmt=png"></p>
+<p><img data-src="http://wx-img.zhujunwu.cn/mmbiz_png/Ass1lsY6bysnib4EhL60bAmXerib8n2JEBiaRR91CicpwQGdOfW5MZibWnHlDRBZ7K9TO1bL3GyT1PuXPoby5rL7PXQ/0?wx_fmt=png" alt></p>
 <p>举个典型的例子 MySQL。MySQL的早期运营公司使用双许可证模式，获得了一定程度上的商业成功，后来被 Oracle 收购，双许可证模式基本已经完成了它的历史使命，但 MySQL 的应用却随着互联网、移动互联网、云服务的发展而越发普及，就算后来出现了诸多 NoSQL 数据库，但 MySQL 仍然展现着其旺盛的生命力。</p>
 <p>再比如 OpenGL 这类规范或者基础设施，发展了几十年，从未见过其过时。Apache、X Window 等等技术或开项目，几乎是开源世界的常青树，Linux 内核就更不用说了。</p>
 <blockquote>
@@ -456,7 +426,7 @@
 <p>4.3 快速搭建一个“自主”操作系统</p>
 <p>这里给大家介绍笔者早先和美国一家公司合作，尝试搭建的一个操作系统，其实在当年这些东西的基础上，搭建出来一个有别于 Android 的开源“自主”操作系统还是非常快的。</p>
 <p>这个系统使用了 Linux 内核和标准的 C/C++ 函数库，以及一些和 Android 体系结构类似的 C/C++ 运行库，使用了笔者公司的开源软件 MiniGUI、WebKit 浏览器核心引擎等等。基础的东西就这些。之上是开源的 Kaffe JVM（后来改成了 Cacao JVM），和符合 J2SE 规范的类库实现，再往上就是运行环境和框架了。见下图：</p>
-<p><img alt="mpeer.png" data-src="http://opb37u589.bkt.clouddn.com/mpeer.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/mpeer.png?imageMogr2/thumbnail/!75p" alt="mpeer.png"></p>
 <p>可惜的是，真正具有核心价值的运行环境和框架，是美国合作方自己开发的，我手里没有源代码。相信读者也能明白，美国合作方掌握的才是精华。</p>
 <p>如果要在这套系统基础之上快速开发一个“自主”的操作系统，我们需要：</p>
 <p>重新定义类库，也就是基础 API，让我们的系统从灵魂上有别于其他系统。必要的话，优化或替代开源的虚拟机（淘宝最近开源了一个 JDK 虚拟机，不过是针对 J2EE 的）。<br>全新设计和实现适合于智能手机的运行环境、框架。<br>全新设计基本的智能手机应用软件。<br>开发模拟器，并集成到 Eclipse 集成开发环境中。<br>还有，这个系统是 2006 年开发的，我们还需要将底层的内核、基础函数库等更新到比较新的版本。<br>要做的工作还是蛮多的，但这个系统在 2007 年的时候，就已经可以运行在主频在200M Hz 左右的手机上了。</p>
@@ -512,8 +482,11 @@
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Yong-Ming-Wei/" rel="tag"><i class="fa fa-tag"></i> Yong-Ming Wei</a>
           </div>
@@ -525,21 +498,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Company/IPCreator/Company/XiaoMi/" rel="next" title="Xiao Mi">
-                  <i class="fa fa-chevron-left"></i> Xiao Mi
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Program/IPCreator/Technology/Program/Computer/Assembly Language/" rel="prev" title="Assembly Language">
-                  Assembly Language <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Company/IPCreator/Company/XiaoMi/" rel="prev" title="Xiao Mi">
+      <i class="fa fa-chevron-left"></i> Xiao Mi
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Program/IPCreator/Technology/Program/Computer/Assembly Language/" rel="next" title="Assembly Language">
+      Assembly Language <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -552,7 +522,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -583,8 +575,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -593,14 +585,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -611,11 +603,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -649,7 +636,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -661,51 +648,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -714,18 +662,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -735,63 +677,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -799,14 +684,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -833,40 +718,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/People/IPCreator/People/Yong-Ming Wei/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

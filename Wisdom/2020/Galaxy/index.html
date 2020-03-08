@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="仰望星空，脚踏实地。">
 <meta name="keywords" content="Wisdom,Galaxy,Universe">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Wisdom/" itemprop="url" rel="index">
-                    <span itemprop="name">Wisdom</span>
-                  </a>
+                  <a href="/categories/Wisdom/" itemprop="url" rel="index"><span itemprop="name">Wisdom</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Wisdom/2020/Galaxy/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Wisdom/2020/Galaxy/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Wisdom/2020/Galaxy/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="/img/content/galaxy.jpg"></p>
+        <p><img data-src="/img/content/galaxy.jpg" alt></p>
 <blockquote>
 <p>仰望星空，脚踏实地。</p>
 </blockquote>
@@ -296,22 +266,22 @@
 <p>宇宙不过是一片巨大的黑暗，银河系是漂浮在其中一个角落的恒星群岛。<br>– 《<a href="https://book.douban.com/subject/26697350/" target="_blank" rel="noopener">极简宇宙史</a>》</p>
 <p><a href="https://tech.qq.com/a/20190907/000148.htm" target="_blank" rel="noopener">印度月球车</a>首次登陆月球，结果距离月球表面2公里时失去联系，控制中心都傻了，就这样全国直播出去了。今年4月份，以色列月球车登陆也失败，看来这件事很不容易。</p>
 <h2 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h2><p>20世纪50年代，建造月球基地是一项工程和技术挑战。 今天，它基本上是一个政治和经济挑战，难点是说服足够多的人，花时间和精力去做这件事是值得的。<br>– <a href="https://news.ycombinator.com/item?id=20539000" target="_blank" rel="noopener">HN 读者</a></p>
-<h3 id="为什么一天有两次潮汐"><a href="#为什么一天有两次潮汐" class="headerlink" title="为什么一天有两次潮汐"></a><a href="https://book.douban.com/review/6653141/" target="_blank" rel="noopener">为什么一天有两次潮汐</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019080203.jpg"></p>
+<h3 id="为什么一天有两次潮汐"><a href="#为什么一天有两次潮汐" class="headerlink" title="为什么一天有两次潮汐"></a><a href="https://book.douban.com/review/6653141/" target="_blank" rel="noopener">为什么一天有两次潮汐</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019080203.jpg" alt></p>
 <p>潮汐是月球引力引起的，这样的话，应该最靠近月球的时候，才会发生涨潮。但是事实上，地球上大多数地方，一天有两次涨潮，某个地点最远离月球的时候也会涨潮，这是为什么？</p>
 <h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><p>人类正在充分利用元素周期表。20世纪80年代的第一代手机，包含25到30种化学元素。今天的手机包含大约75种化学元素，几乎是周期表的四分之三，其中可能包括卢旺达的钽、白俄罗斯的钾、墨西哥的银、缅甸的锡、印度的碳和中国的锗。</p>
 <p>– 《<a href="https://www.bloomberg.com/news/features/2019-08-28/the-modern-triumph-of-the-periodic-table-of-elements" target="_blank" rel="noopener">元素周期表150周年</a>》</p>
 <p><a href="https://www.nature.com/news/cosmologist-claims-universe-may-not-be-expanding-1.13379" target="_blank" rel="noopener">宇宙的形状</a></p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/201905/bg2019051732.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/201905/bg2019051732.jpg" alt></p>
 <p>自从科学家观测到宇宙正在膨胀，就推断宇宙的形状像一个不断膨胀的气球。随着气球越变越大，气球内部任意两点的距离都在不断增大。</p>
 <p><a href="https://www.theguardian.com/science/2019/aug/01/most-detailed-ever-3d-map-of-milky-way-shows-warped-shape-cepheid" target="_blank" rel="noopener">一个波兰团队</a>发现，银河系的形状不是一个平的圆盘，而是像一个两端翘起的黑胶唱片，一端向上翘，另一端向下翘。</p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019080209.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019080209.jpg" alt></p>
 <p>重要的是事实，而不是证据。物理学可以在没有证据的情况下进步，但是如果没有事实，我们就不能继续前进。<br>– <a href>理查德·费曼</a></p>
 <p>你问我宇宙大爆炸之前发生的事情，就像问我南极以南是什么地方。<br>– <a href="https://www.quantamagazine.org/physicists-debate-hawkings-idea-that-the-universe-had-no-beginning-20190606/" target="_blank" rel="noopener">斯蒂芬·霍金</a></p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/201909/bg2019091603.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/201909/bg2019091603.jpg" alt></p>
 <blockquote>
 <p>哈伯望远镜2019年6月20日拍到了最新的土星全景照。</p>
 </blockquote>
-<h3 id="中秋快乐｜关于月亮，你不知道的九件事"><a href="#中秋快乐｜关于月亮，你不知道的九件事" class="headerlink" title="中秋快乐｜关于月亮，你不知道的九件事"></a><a href="http://www.luojiji.com/thread-13048-1-1.html" target="_blank" rel="noopener">中秋快乐｜关于月亮，你不知道的九件事</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201809/24/082625z8brv8st33rrtflh.jpg"><br>原创： 「罗辑思维」  罗辑思维  今天</p>
+<h3 id="中秋快乐｜关于月亮，你不知道的九件事"><a href="#中秋快乐｜关于月亮，你不知道的九件事" class="headerlink" title="中秋快乐｜关于月亮，你不知道的九件事"></a><a href="http://www.luojiji.com/thread-13048-1-1.html" target="_blank" rel="noopener">中秋快乐｜关于月亮，你不知道的九件事</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201809/24/082625z8brv8st33rrtflh.jpg" alt><br>原创： 「罗辑思维」  罗辑思维  今天</p>
 <p>中秋佳节，祝阖家团圆！</p>
 <p>虽然低头月饼，抬头满月，但对于月亮，你真的了解吗？</p>
 <p>你可能会说“当然了解啊”，不过别急，你最好先看看下面的内容。</p>
@@ -357,44 +327,44 @@
 <p>俗话说“十五的月亮十六圆”，其实不大准确。月亮最圆的时候，是被太阳照亮的那一半正对地球的瞬间，可能在农历十五、十六或十七。今年中秋的满月，出现在明天上午10点52分。不过今晚的月亮已经非常圆，肉眼完全看不出区别。最后提醒一句：天凉，赏月注意保暖。</p>
 <p>让我们对《月亮》的作者贝恩德·布伦纳、译者甘锡安、出版方北京联合出版公司，说一声感谢！</p>
 <p>祝中秋快乐，阖家团圆！</p>
-<h3 id="“硬核科学奶爸”手绘你一定能看懂的宇宙科学讲解图"><a href="#“硬核科学奶爸”手绘你一定能看懂的宇宙科学讲解图" class="headerlink" title="“硬核科学奶爸”手绘你一定能看懂的宇宙科学讲解图"></a><a href="https://tech.sina.com.cn/scientist/2019-04-18/doc-ihvhiewr6829372.shtml" target="_blank" rel="noopener">“硬核科学奶爸”手绘你一定能看懂的宇宙科学讲解图</a></h3><p><img alt data-src="https://n.sinaimg.cn/tech/transform/150/w630h1120/20190418/6sTT-hvvuiyn0346931.jpg"></p>
-<p><img alt data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/-r1R-hvvuiyn0347825.jpg"></p>
+<h3 id="“硬核科学奶爸”手绘你一定能看懂的宇宙科学讲解图"><a href="#“硬核科学奶爸”手绘你一定能看懂的宇宙科学讲解图" class="headerlink" title="“硬核科学奶爸”手绘你一定能看懂的宇宙科学讲解图"></a><a href="https://tech.sina.com.cn/scientist/2019-04-18/doc-ihvhiewr6829372.shtml" target="_blank" rel="noopener">“硬核科学奶爸”手绘你一定能看懂的宇宙科学讲解图</a></h3><p><img data-src="https://n.sinaimg.cn/tech/transform/150/w630h1120/20190418/6sTT-hvvuiyn0346931.jpg" alt></p>
+<p><img data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/-r1R-hvvuiyn0347825.jpg" alt></p>
 <blockquote>
 <p>知识点一：什么是太阳系？生命存在的条件是什么？</p>
 </blockquote>
-<p><img alt data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/PXkg-hvvuiyn0348142.jpg"></p>
+<p><img data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/PXkg-hvvuiyn0348142.jpg" alt></p>
 <blockquote>
 <p>知识点二：太阳的结构是什么？如何演化的？</p>
 </blockquote>
-<p><img alt data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/WogT-hvvuiyn0348766.jpg"></p>
+<p><img data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/WogT-hvvuiyn0348766.jpg" alt></p>
 <blockquote>
 <p>知识点三：地球的结构是什么？又是如何运动的？</p>
 </blockquote>
-<p><img alt data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/L5rl-hvvuiyn0349110.jpg"></p>
+<p><img data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/L5rl-hvvuiyn0349110.jpg" alt></p>
 <blockquote>
 <p>知识点四：如何在地下城生活？需要克服哪些困难？</p>
 </blockquote>
-<p><img alt data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/JPAX-hvvuiyn0349360.jpg"></p>
+<p><img data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/JPAX-hvvuiyn0349360.jpg" alt></p>
 <blockquote>
 <p>知识点五：光速究竟有多快？</p>
 </blockquote>
-<p><img alt data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/GBmp-hvvuiyn0349490.jpg"></p>
+<p><img data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/GBmp-hvvuiyn0349490.jpg" alt></p>
 <blockquote>
 <p>知识点六：为什么要去比邻星定居？</p>
 </blockquote>
-<p><img alt data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/-ilG-hvvuiyn0349669.jpg"></p>
+<p><img data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/-ilG-hvvuiyn0349669.jpg" alt></p>
 <blockquote>
 <p>知识点七：地球流浪计划是否可行？</p>
 </blockquote>
-<p><img alt data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/2t70-hvvuiyn0349792.jpg"></p>
+<p><img data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/2t70-hvvuiyn0349792.jpg" alt></p>
 <blockquote>
 <p>知识点八：人类真实的空间站</p>
 </blockquote>
-<p><img alt data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/tyI0-hvvuiyn0349948.jpg"></p>
+<p><img data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/tyI0-hvvuiyn0349948.jpg" alt></p>
 <blockquote>
 <p>　知识点九：空间站如何与地球进行通信？</p>
 </blockquote>
-<p><img alt data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/Z2ZL-hvvuiyn0355586.jpg"></p>
+<p><img data-src="https://n.sinaimg.cn/tech/transform/302/w630h472/20190418/Z2ZL-hvvuiyn0355586.jpg" alt></p>
 <blockquote>
 <p>知识点十：如何进行星际通信？</p>
 </blockquote>
@@ -402,27 +372,27 @@
 <h3 id="138-2亿年前，宇宙大爆炸“炸”出所有物质！那原材料来自哪？"><a href="#138-2亿年前，宇宙大爆炸“炸”出所有物质！那原材料来自哪？" class="headerlink" title="138.2亿年前，宇宙大爆炸“炸”出所有物质！那原材料来自哪？"></a><a href="https://www.toutiao.com/a6665624952030364167/" target="_blank" rel="noopener">138.2亿年前，宇宙大爆炸“炸”出所有物质！那原材料来自哪？</a></h3><p>原创 科学认识论 2019-03-07 20:29:07</p>
 <p>我们知道，宇宙大爆炸理论从上个世纪20年代末被哈勃提出来之后，得到了越来越多的证据支撑。</p>
 <p>如今的宇宙大爆炸理论已经是宇宙起源的主流理论，当然还有更多的宇宙起源学说，这里我们姑且不考虑。</p>
-<p>当哈勃通过天文望远镜发现星系的距离随着时间的推移变得越来远时，便提出了反向疑问。那就是：在过去，越遥远的时间里，宇宙天体之间的距离会不会是越来越小？直到缩小到一个点？<br><img alt data-src="https://p3.pstatp.com/large/pgc-image/3e9be349ba2f4830ac0b50f44f3850ec"></p>
+<p>当哈勃通过天文望远镜发现星系的距离随着时间的推移变得越来远时，便提出了反向疑问。那就是：在过去，越遥远的时间里，宇宙天体之间的距离会不会是越来越小？直到缩小到一个点？<br><img data-src="https://p3.pstatp.com/large/pgc-image/3e9be349ba2f4830ac0b50f44f3850ec" alt></p>
 <p>随后的一系列观测结果证实了哈勃的猜想，就连爱因斯坦也后悔自己曾在引力场方程中引入宇宙常数项，以弥合自己的宇宙静态论。</p>
 <p>按照主流说法，宇宙在138.2亿年前是一个奇点，这个奇点体积无限小，密度无限大。奇点的爆炸才生成了宇宙中所有的粒子，一开始的粒子都是轻元素，这些元素在引力的作用下才形成天体，恒星的核聚变和超新星爆发再生成更重的元素，这些重元素在超新星爆发中被释放出来，在引力的作用下又形成了行星，所以地球上的重元素，包括你血液中的铁离子，骨骼中的钙元素，都是来自远古超新星爆发的产物。</p>
-<p><img alt data-src="https://p3.pstatp.com/large/pgc-image/779adc20f30a4b79994edfa9aa7f01cc"></p>
+<p><img data-src="https://p3.pstatp.com/large/pgc-image/779adc20f30a4b79994edfa9aa7f01cc" alt></p>
 <p>如果继续追问，奇点为什么会爆炸，奇点中包含的物质原材料来自哪里？</p>
 <p>这些问题已经不是物理学研究的范畴了，而且现代物理不能给出答案，或者说现代物理学的所有理论是基于宇宙爆炸之后的自然规律建立起来的，这样的规律是不适用于解释宇宙爆炸之前的因果的。</p>
-<p><img alt data-src="https://p1.pstatp.com/large/pgc-image/7318ecadf098444aa88e94da34ffafeb"></p>
+<p><img data-src="https://p1.pstatp.com/large/pgc-image/7318ecadf098444aa88e94da34ffafeb" alt></p>
 <p>奇点的原材料来自哪里？</p>
 <p>其实这只是人类基于自我因果观提出来的疑问，即便我们说宇宙原材料来自另一个高维度宇宙，那么高维度宇宙又是怎么来的？这就是哲学家叔本华提出来的“论充足理由的四重根”。</p>
 <p>任何事物只要无限追问，必然要寻找到那个没有因果的根源为止。可是在宇宙的起源上，因果观是失效的。<br>不过我们可以把这种因果观再提前一步</p>
 <p>我们知道，现代物理学依旧存在许多乌云，比如暗物质和暗能量，万有理论的缺失等。还有一个乌云便可以从层面解释为什么奇点会爆炸，那就是正反物质不对称。</p>
-<p><img alt data-src="https://p9.pstatp.com/large/pgc-image/8ee9b17e969f47e9884f6023c1d9b6bb"></p>
+<p><img data-src="https://p9.pstatp.com/large/pgc-image/8ee9b17e969f47e9884f6023c1d9b6bb" alt></p>
 <p>科学家预测，宇宙爆炸之初，正反物质的数量是一样多的，随即它们相互湮灭。按照理论：宇宙爆炸之初的正反物质一样多，那么它们就会完全湮灭，宇宙就不会出现正物质了。但是现在的宇宙能有这么多由正物质构成的天体，也就证明一部分反物质消失了。这就是正反物质不对称，为什么会出现这种情况？这个问题依旧无解。</p>
 <p>科学家推迟，奇点之所以会爆炸，可能是由于奇点之前的“无”中包括着等量的正反物质，一种未知的机制触发了正反物质对称性瞬间破缺。这种破缺才导致物质被释放了出来。</p>
 <p>但是这种解答只是将宇宙爆炸的原因推前了一步。人们依旧可以追问：是什么导致正反物质破缺。</p>
 <p>或许是因为人类的先天综合判断中的因果观并不靠谱，或许宇宙起源本身并不拘束于人类的因果观。<br>泡泡宇宙模型可以一定程度解决宇宙爆炸之谜</p>
 <p>除了主流的宇宙起源学说——大爆炸理论，还有著名的泡泡宇宙假说，提出者就是美籍俄裔科学家——安德烈▪林德。</p>
-<p><img alt data-src="https://p3.pstatp.com/large/pgc-image/a2dbc4efaacf424db82b32f655cad8f9"></p>
+<p><img data-src="https://p3.pstatp.com/large/pgc-image/a2dbc4efaacf424db82b32f655cad8f9" alt></p>
 <p>安德烈▪林德</p>
 <p>他认为，我们的宇宙起源于其他类似泡泡的宇宙的撞击。不同宇宙的边缘撞击会产生新的宇宙。在撞击的临界边缘就是我们所说的奇点大爆炸。</p>
-<p><img alt data-src="https://p3.pstatp.com/large/pgc-image/6372f582a9034777807dcf8c0a027cfd"></p>
+<p><img data-src="https://p3.pstatp.com/large/pgc-image/6372f582a9034777807dcf8c0a027cfd" alt></p>
 <p>虽然该理论有一定的证据支持，但仍未被主流科学界接受。即便按照泡泡宇宙模型，宇宙的终极问题依旧没有解决。我们可以继续追问，泡泡宇宙来自哪里？它们又是如何诞生的？</p>
 <p>宇宙起源的终极问题，并不能通过科学解决，也未必能通过哲学解决。这是类似于哲学本体论的终极命题，或许无解！</p>
 <h3 id="想知道星星离我多远，怎么测？"><a href="#想知道星星离我多远，怎么测？" class="headerlink" title="想知道星星离我多远，怎么测？"></a><a href="http://www.luojiji.com/thread-6048-1-1.html" target="_blank" rel="noopener">想知道星星离我多远，怎么测？</a></h3><p>许多人都对天文学着迷，因为它每天都和壮丽的宇宙打交道，动不动就是百亿光年外的奇特现象，真是酷极了！但是有个问题你想过没？宇宙这么浩瀚，除了咱们的邻居月球，人类压根就没有亲身探访过别的天体，天文学家是怎么知道一个天体的距离的呢？</p>
@@ -435,46 +405,46 @@
 <p>现在你可能觉得我在逗你，明明有简单的哈勃定律就能探测到宇宙的边缘，为什么还要跟我扯这么多视差、亮度的方法呢？因为即使是看似神通广大的哈勃定律，它的原理也和我们提到的方法一样简单。而且就是以视差、亮度这些简单的方法为基础，再通过一代代人不断的分析研究和补充，才总结出来的。所以不要以为科学原理多高深，根本上都是一步一个脚印罢了。</p>
 <p>本文源自：新浪科技（宇宙的距离阶梯：我们是如何测量浩瀚宇宙的大小）</p>
 <h2 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h2><p><a href="https://www.japantimes.co.jp/news/2019/07/11/national/science-health/japans-hayabusa2-probe-makes-second-touchdown-distant-asteroid/" target="_blank" rel="noopener">日本小行星探测器</a>成功从小行星 Ryugu 获取了岩石样品，如果明年能够顺利带回地球，这将是人类第一次获取月球以外的天体岩石。下图为开发团队庆祝抓取样本成功。</p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/201907/bg2019071107.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/201907/bg2019071107.jpg" alt></p>
 <p><a href="https://www.cbsnews.com/news/alexei-leonov-died-cosmonaut-first-man-to-walk-in-space-dead-age-85-cause-of-death-not-released-2019-10-11/" target="_blank" rel="noopener">俄罗斯宇航员</a>阿列克谢·列昂诺夫（Alexei Leonov）去世，享年85岁。他是第一个太空行走的宇航员，即第一个进入太空环境的人类。</p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/201910/bg2019101204.jpg"></p>
-<h3 id="Stellarium"><a href="#Stellarium" class="headerlink" title="Stellarium"></a><a href="https://stellarium.org/" target="_blank" rel="noopener">Stellarium</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/201909/bg2019090801.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/201910/bg2019101204.jpg" alt></p>
+<h3 id="Stellarium"><a href="#Stellarium" class="headerlink" title="Stellarium"></a><a href="https://stellarium.org/" target="_blank" rel="noopener">Stellarium</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/201909/bg2019090801.jpg" alt></p>
 <p>一个开源的天文软件，显示了逼真的 3D 天空，就像用肉眼或望远镜看到的一样，有桌面版和 Web 版。</p>
-<h3 id="同一个星球下的不同生活"><a href="#同一个星球下的不同生活" class="headerlink" title="同一个星球下的不同生活"></a><a href="https://www.toutiao.com/a1631331671650311" target="_blank" rel="noopener">同一个星球下的不同生活</a></h3><p><img alt data-src="/img/content/picture001.jpeg"><br><img alt data-src="/img/content/picture002.jpeg"><br><img alt data-src="/img/content/picture003.jpeg"><br><img alt data-src="/img/content/picture004.jpeg"><br><img alt data-src="/img/content/picture005.jpeg"><br><img alt data-src="/img/content/picture006.jpeg"><br><img alt data-src="/img/content/picture007.jpeg"><br><img alt data-src="/img/content/picture008.jpeg"><br><img alt data-src="/img/content/picture009.jpeg"></p>
+<h3 id="同一个星球下的不同生活"><a href="#同一个星球下的不同生活" class="headerlink" title="同一个星球下的不同生活"></a><a href="https://www.toutiao.com/a1631331671650311" target="_blank" rel="noopener">同一个星球下的不同生活</a></h3><p><img data-src="/img/content/picture001.jpeg" alt><br><img data-src="/img/content/picture002.jpeg" alt><br><img data-src="/img/content/picture003.jpeg" alt><br><img data-src="/img/content/picture004.jpeg" alt><br><img data-src="/img/content/picture005.jpeg" alt><br><img data-src="/img/content/picture006.jpeg" alt><br><img data-src="/img/content/picture007.jpeg" alt><br><img data-src="/img/content/picture008.jpeg" alt><br><img data-src="/img/content/picture009.jpeg" alt></p>
 <h3 id="半个世纪后，我们的好奇心和勇气都去哪了？"><a href="#半个世纪后，我们的好奇心和勇气都去哪了？" class="headerlink" title="半个世纪后，我们的好奇心和勇气都去哪了？"></a><a href="https://www.toutiao.com/a6715658180711416324/" target="_blank" rel="noopener">半个世纪后，我们的好奇心和勇气都去哪了？</a></h3><p>原创 极客公园 2019-07-20 16:23:36</p>
 <p>值得欣慰的是，搁置了半个世纪之久的登月计划已被美国重提，包括中国在内的很多国家都开启了登月和太空探索计划，上一次仅仅被政治因素驱动的登月计划也会被赋予更多复杂和深刻的意义。</p>
 <p>整整五十年前的今天，人类完成了有史以来最为智慧无畏的一次壮举。1969 年 7 月 16 日，卡纳维拉尔角密密麻麻地聚集了上百万人，他们等待见证当时运载力最强的土星 5 号（Saturn V）将阿波罗 11 号三位宇航员送入另一个从未有人类涉足的天体。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/4b1a65c06ab344768d0b6539c70b2939"><br>阿波罗 11 号成员，左起阿姆斯特朗、科林斯、奥尔德林 | 维基百科</p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/4b1a65c06ab344768d0b6539c70b2939" alt><br>阿波罗 11 号成员，左起阿姆斯特朗、科林斯、奥尔德林 | 维基百科</p>
 <p>当土星 5 号点燃升空，五个巨型引擎每秒燃烧超过 1000 加仑的燃料使空气剧烈震动。英国著名科幻作家阿瑟·克拉克回忆起那次经历，「它升空时，我 20 年来只哭过这一次，40 年来也只祈祷过这一次。」四天的星际航行后，7 月 20 日阿波罗 11 号「鹰号」登月舱降落在月球「宁静海」（Sea of Tranquillity）。38 万公里之外的地球上有大约 6 亿人——当时世界人口的五分之一，从带有颗粒感的黑白电视屏幕上见证指令长尼尔·阿姆斯特朗（Neil Armstrong）爬出「鹰号」，站到「宁静海」上，告诉地球他刚刚迈出了自己的一小步，人类的一大步。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/0a591d6120bf41ee95f8b260ab77f315"><br>人们聚集在卡纳维拉尔角观看阿波罗 11 号升空 | NASA</p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/0a591d6120bf41ee95f8b260ab77f315" alt><br>人们聚集在卡纳维拉尔角观看阿波罗 11 号升空 | NASA</p>
 <p>三年之间，NASA 总共执行了 6 次载人登月计划，将 12 名宇航员送上月球表面。与太空有关的一切事物都变得流行起来，NASA 的标志随处可见，从纹身到厢式货车高顶，《星际迷航》《星球大战》等一系列太空主题电影和节目上映，一些年轻人也会故作镇定地模仿阿波罗 13 号发生氧气贮存泄露事故时，斯威格特说的那句，「休斯顿，我们遇到麻烦了。」（Houston, we’ve had a problem.）曾经在月球上行走的 12 名宇航员定义了美国世纪的伟大时刻，这样的说法毫不为过。</p>
-<p><img alt data-src="/img/content/moonman.jpg"><br>阿姆斯特朗为奥尔德林拍摄的登月照片 | 维基百科</p>
+<p><img data-src="/img/content/moonman.jpg" alt><br>阿姆斯特朗为奥尔德林拍摄的登月照片 | 维基百科</p>
 <p>美国和苏联为了争夺世界霸权而拉开了一场太空竞赛，直到阿波罗计划将美国人送上了月球，美国在这场竞赛中彻底占了上风。而随着肯尼迪看似不切实际的计划被奇迹般地实现，共产主义溃败，阿波罗没有了劲敌，美国也对进一步探索太空失去了兴趣。</p>
 <p>之后的 50 年，人类再也没有踏足月球，甚至没有离开过地球轨道。目前世界上有一半人口出生于 1972 年阿波罗 17 号实现的最后一次载人登月之后，对于他们来说，登月只是一个出现在电影中的「科幻场景」——那次登月的指令长尤金·塞尔南（Eugene Cernan）在即将飞离月球结束任务之时曾说道：我们还会带着全人类的和平与希望回到这里。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/807496a60560476faf116fdd83a2a6c6"><br>执行第三次舱外活动后，阿波罗 17 号尤金·塞尔南在登月舱里 | 维基百科</p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/807496a60560476faf116fdd83a2a6c6" alt><br>执行第三次舱外活动后，阿波罗 17 号尤金·塞尔南在登月舱里 | 维基百科</p>
 <p>值得欣慰的是，搁置了半个世纪之久的登月计划已被美国重提，包括中国在内的很多国家都开启了登月和太空探索计划，上一次仅仅被政治因素驱动的登月计划也会被赋予更多复杂和深刻的意义。</p>
 <p>最伟大的旅行从政治开始</p>
 <p>两国对峙时期，太空技术成为争夺霸权和保障安全的必要筹码。1957 年 10 月，苏联发射了首颗人造地球卫星斯普特尼克 1 号（Sputnik 1），开始了人类的航天时代，也开启了美苏的太空竞赛。作为回应，美国在 1958 年 7 月成立 NASA（美国航空航天局），并且在同年 12 月宣布首个在人航天项目水星计划（Project Mercury）。1959 年，NASA 组成了水星计划七人，从此 astronaut（宇航员）这个单词被创造了出来。</p>
 <p>另一边，苏联也加紧了太空探索的步伐。1961 年 4 月，尤里·加加林（Yuri Gagarin）乘坐东方 1 号（Восток-1）进入地球轨道，成为进入太空的第一人。</p>
 <p>5 月，美国第一位宇航员艾伦·谢泼德（Alan Shepard）进入太空，进行地球亚轨道飞行。这极大鼓舞了美国人的自信心，美国同时也将眼光放得更加长远——将人类送上月球，并取名为阿波罗计划（Apollo）。5 月，约翰·肯尼迪发表了著名的登月演讲，宣布美国要在十年内完成载人登月，并让人类成功返回地球。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/3f78900112764464938931c197cdc07b"><br>约翰·肯尼迪在莱斯大学发表关于航天计划的演讲 | 维基百科</p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/3f78900112764464938931c197cdc07b" alt><br>约翰·肯尼迪在莱斯大学发表关于航天计划的演讲 | 维基百科</p>
 <p>随着美国登月计划的推进，美国面临的状况喜忧参半。衔接水星计划和 Apollo 计划的双子座计划执行了 10 次顺利的飞行任务。1965 年苏联宇航员列克谢·列昂诺夫（Alexei Leonov）完成了人类第一次太空行走，苏联向登月也前进了一步。</p>
 <p>登月唤起了举国上下的爱国情怀。在筹备和执行登月任务的十几年中，美国动员了 2 万家制造商，40 万人为 NASA 生产太空服、火箭发动机等登月需要的设备。在位于新泽西的建造登月舱的格鲁曼工厂里，工人在下午 5 点下班后，从前门离开后绕到后门，免费工作到午夜。</p>
 <p>1969 年上半年，一切都还没达到最好的状态。阿姆斯特朗和奥尔德林每天要在卡纳维尔角的着陆模拟器里呆上四个小时，珍妮特·阿姆斯特朗说经常看见丈夫面容惨白回到家。Apollo 计划主管 Sam Phillips（山姆·菲利普斯）召开了一次飞行准备审查会议，表示担心宇航员的状态，甚至犹豫是否需要推迟发射。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/9744aaeeadf94813807506f60b8be422"><br>装载阿波罗 11 号的土星 5 号升空 | 维基百科</p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/9744aaeeadf94813807506f60b8be422" alt><br>装载阿波罗 11 号的土星 5 号升空 | 维基百科</p>
 <p>1969 年 7 月 16 日，Apollo 11 号如约升空，而在三名宇航员完成登月任务并且返回之前，一切都是未知的危险。从地球轨道来到月球轨道，与指令舱分离之后，阿姆斯特朗操纵「鹰号」登月舱下降。这时，登月舱的黄色主警报开始闪烁提示燃料储量低，阿姆斯特朗沉着冷静地操纵「鹰号」选择着陆地点，最终「鹰号」停靠在宁静海的一个角落里，油箱里剩余的燃料只够再支持几秒钟。</p>
 <p>能够被载入历史的事件往往充满戏剧性。</p>
 <p>最旺盛的好奇心也被政治终结</p>
 <p>但是「伟大时刻」很快戛然而止，1972 年，Apollo 17 号计划结束也标志着人类登月时代的暂停，人类踏足月球始于阿姆斯特朗，止于尤金·塞尔南。</p>
 <p>坠毁的探测器，着陆器部件，摄像机，更不用说人类留下的旗帜和脚印，这些让月球比与美国「相遇」之前重了 118 吨。不会受到风、雨或者细菌的影响，这些遗留物仍然保持着 50 年前的模样。作为交换，Apollo 宇航员也带回 842 磅月球岩石，并且储存在约翰逊航天中心。这些成为了 50 年之间，地球和月球之间所有往来的证据。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/5c98b1d0dbc3437e9097397bc3ff9eef"><br>阿波罗 15 号带回的月球岩石样本</p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/5c98b1d0dbc3437e9097397bc3ff9eef" alt><br>阿波罗 15 号带回的月球岩石样本</p>
 <p>1960s 的美国腹背受敌，太空探索领域的繁荣与社会的动荡形成鲜明的对比。国内掀起了一股民权运动，国际上美国深陷越战泥潭，战争拖累了国民经济发展，由越战引起的社会动乱不断，美其名曰「反战运动」。城市衰落，种族骚乱蔓延，社会矛盾就像火药桶。</p>
 <p>1966 年，美国政府将财政预算的 4.41% 拨给 NASA，而在 2012 年奥巴马任职期间，这一数字是 0.5%。耗资巨大的项目并没有为国民生计带来实质性的好处。况且，60 年代之后，在载人航天领域美国已经领先于苏联，民众对于登月和太空探索的热情似乎也大不如以前。政治和技术方面的目的都已达到。1972 年，随着 Apollo 17 号返回地球，Apollo 登月计划也被尼克松终止。</p>
 <p>即便人类已经六次踏上月球，甚至幻想登上更为遥远的天体。但是不得不承认，将人类送上太空仍是迄今为止难度系数最大的一项工程。Apollo 1 号的火灾让掉以轻心的美国付出了惨痛的代价。之后，「替代」阿波罗的航天飞机哥伦比亚号（Columbia）和挑战者号（Challenger）就像是「死亡陷阱」，夺走了 14 位宇航员的性命。2011 年，美国终止了航天飞机项目，只能通过购买俄罗斯联盟号船票将宇航员往返国际空间站。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/cdfeb3c061f24dbdac0301e4a365f75c"><br>1986 年 1 月 28 日，挑战者号航天飞机在发射后第 73 秒时解体 | 维基百科</p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/cdfeb3c061f24dbdac0301e4a365f75c" alt><br>1986 年 1 月 28 日，挑战者号航天飞机在发射后第 73 秒时解体 | 维基百科</p>
 <p>被暂停的登月计划掀起了诸多质疑，圣安德鲁大学的历史学家杰拉德·德根表示，「这项努力的最大悲剧是，美国的最佳技术和数十亿美元被用于一个对任何人都毫无益处的项目。」而这样的质疑声在于，耗尽财力和心力的阿波罗计划没有给当时的美国带来立竿见影的回报，但是有一点必须承认，任何关乎人类未来的探索都需要付出十足的耐心和远见。</p>
 <p>放弃载人登月后，人类开始了对于互联网和移动互联网技术的探索。「传统的硬科技，比如工业科技、航天科技在这十年里发展明显不如互联网科技，也不如互联网企业吸引年轻人加入。包括互联网在内的新兴科技，声浪比传统科技要大。而且互联网整体的迭代速度，行业进展相比硬科技行业要更快。」一位中国航空航天领域的创业者说道。人类的好奇心满足于在虚拟世界中创造价值，对于解决地球面临的难题以及如何安置人类未来的思考，却在原地踏步了许久。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/3e4ba3cd32c542f9afe2dc58eee1c354"><br>奥尔德林在月球留下的脚印 | 维基百科</p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/3e4ba3cd32c542f9afe2dc58eee1c354" alt><br>奥尔德林在月球留下的脚印 | 维基百科</p>
 <p>虽然 1972 年之后，再也没有人类登上过月球。但是当我们回望时发现，阿波罗计划早已经给人类生活刻上了烙印。</p>
 <p>1960s 太空技术的加速发展将社会「变革」的潜能被逐渐激发出来。美国大学的博士生，尤其在物理学领域，人数几乎增加了三倍。</p>
 <p>阿波罗计划中，NASA 意识到了导航对于软着陆于 38 万公里之外的天体的重要性，于是任命了麻省理工学院的博士生们对此进行研究。博士生们由此提出将计算机小型化「塞进」太空舱内的想法，进而想到了利用叫做集成电路的新兴发明。仙童半导体（Fairchild Semiconductor）是当时少数几家试验新型微电子元件的公司之一，NASA 从其订购了一百万个订单。1968 年，仙童半导体的两名员工诺伊斯和摩尔创建了另外一家名为英特尔的公司。</p>
@@ -485,20 +455,20 @@
 <p>如果说政治格局成为了上一次载人登月的决定性因素。过去几十年中，商业航空航天力量的崛起将成为影响接下来人类太空探索进程和走向的重要力量。</p>
 <p>NASA 公布 Artemis 计划后，宣布将与 11 家商业公司合作，其中波音和洛克希德将负责整个登月系统的改进，SpaceX 和蓝色起源负责宇航员着陆系统的开发，其他公司如劳拉空间系统公司则在自己优势领域完成其他系统的研究。今年 3 月，SpaceX 试飞了「载人龙飞船」（Crew Dragon），经历 20 多个小时的星际飞行后与国际空间站成功对接，这也预示着未来美国或摆脱对俄罗斯「联盟号」的依赖。SpaceX 和 Boeing 研发的宇宙飞船也接近执行飞行的认证。</p>
 <p>过去，美国的航空航天算得上完全由政府推动。而新一代运载火箭太空发射系统（SLS）的多次延迟和预算增加，NASA 不得已打破政府与商业公司之间的壁垒，选择合作共赢。而商业公司在太空探索领域也有了更多的话语权。阿波罗时代，2 万家制造商更多扮演设备制造，材料采购的角色，而太空探索 2.0 时代，NASA 把更多研发重任交予商业公司之手。比如不久前，NASA 与太空制造公司（Made in Space）签订了一份价值 7370 万美元的合同，以发射叫做 Archinaut One 的航天器，在太空中演示 3D 打印制造和组装航天器部件。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/325105302fca4cdbac06543e67a39663"><br>国际空间站，发现号航天飞机摄于 2011 年 3 月 7 日 | 维基百科</p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/325105302fca4cdbac06543e67a39663" alt><br>国际空间站，发现号航天飞机摄于 2011 年 3 月 7 日 | 维基百科</p>
 <p>如果说阿波罗时代，人类因为好奇心、探索精神，以及高于一切的国家荣誉感踏上了月球，当时地球上甚至没有足够先进的设备来研究从月球带回的岩石。如今类似于嫦娥四号的机器人探测器，猎鹰 9 号可重复利用火箭，标志着下一个时代的太空探索则以更加低成本的方式承担更多真正意义上的科研和探索意义。航空航天也将从单纯的「国营业务」成为政府机构和商业公司的共同责任，「巨型航天工程会慢慢地靠近商业或者靠近可持续发展的一个方向」——很多航空创业者对这样的趋势坚信不疑。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/ac8a94faa29e4b158c388739ee6af9a1"><br>首次回收的猎鹰 9 号一级火箭降落于驳船「我当然还爱你」号（Of Course I Still Love You）| 维基百科</p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/ac8a94faa29e4b158c388739ee6af9a1" alt><br>首次回收的猎鹰 9 号一级火箭降落于驳船「我当然还爱你」号（Of Course I Still Love You）| 维基百科</p>
 <p>不过有一点不会变，那就是人类不会休止的好奇心和探索精神，超越了一切意识形态的干扰，成为阿波罗计划所留下的最珍贵的遗产。如果阿波罗计划没有停止，或许人类已经踏足了火星。如果仅仅是一辆月球车着陆在月球表面，目睹人类在月球上留下第一个脚印时的悬念，激动和敬畏感就不会如此强烈。「人类的本性有一个基本真理：那就是人类必须要探索。」Apollo 15 号指令长大卫·斯科特（David Scott）通过无线电从月球哈德利山附近向休斯顿地面控制中心发出信号，「这是最伟大的探索。」</p>
-<p><img alt data-src="/img/content/Earthrise.jpg"><br>《地升》（Earthrise）由阿波罗 8 号宇航员威廉·安德斯拍摄 | 维基百科</p>
+<p><img data-src="/img/content/Earthrise.jpg" alt><br>《地升》（Earthrise）由阿波罗 8 号宇航员威廉·安德斯拍摄 | 维基百科</p>
 <p>回望 50 年前的不可思议，我们纪念、感叹、仰望，也开始<a href="https://hazyman.com/Profession/Review/">反思自省</a>这 50 年间我们自我纵容下的停滞荒废，和整个种族错失的更大野心与好奇。待到人类首次登月百年纪念的那天，除了那个依旧伟大绚烂的起点之外，我们是否会有更多的、引以为傲的探索故事可以尽情讲述？</p>
-<h3 id="如果登月失败"><a href="#如果登月失败" class="headerlink" title="如果登月失败"></a><a href="http://news.bbc.co.uk/2/hi/science/nature/390634.stm" target="_blank" rel="noopener">如果登月失败</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/201906/bg2019060711.jpg"></p>
+<h3 id="如果登月失败"><a href="#如果登月失败" class="headerlink" title="如果登月失败"></a><a href="http://news.bbc.co.uk/2/hi/science/nature/390634.stm" target="_blank" rel="noopener">如果登月失败</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/201906/bg2019060711.jpg" alt></p>
 <p>1969年7月20日，阿波罗计划第一次将人类送上月球。整个计划的安排是，宇宙飞船先进入月球轨道，再发送登月舱，让两名宇航员登上月球。但是有一个风险点，就是登月完毕以后，登月舱需要从月球起飞，将宇航员送回宇宙飞船。没人知道月球起飞能否成功，因为无法测试。万一无法起飞，两名宇航员只能在月球表面等死，因为没有为这种情况设计任何救援计划。</p>
 <p>美国政府完全了解这种风险，尼克松总统还为两名宇航员死在月球，事先准备了一份演讲稿。几十年以后，这份演讲稿才披露出来，里面的内容是：”命运已经决定，那些前往月球探索的人将会在月球上安息。这些勇敢的宇航员知道他们的获救没有希望，但他们也知道人类将从他们的牺牲中看到希望。对于每个在未来的夜晚仰望月球的人来说，会知道有人长眠在那里的某个角落。”</p>
-<h3 id="SpaceX-宇宙飞船"><a href="#SpaceX-宇宙飞船" class="headerlink" title="SpaceX 宇宙飞船"></a><a href="https://arstechnica.com/features/2019/09/after-starship-unveiling-mars-seems-a-little-closer/" target="_blank" rel="noopener">SpaceX 宇宙飞船</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/201909/bg2019093002.jpg"></p>
+<h3 id="SpaceX-宇宙飞船"><a href="#SpaceX-宇宙飞船" class="headerlink" title="SpaceX 宇宙飞船"></a><a href="https://arstechnica.com/features/2019/09/after-starship-unveiling-mars-seems-a-little-closer/" target="_blank" rel="noopener">SpaceX 宇宙飞船</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/201909/bg2019093002.jpg" alt></p>
 <p>SpaceX 公司发布自己的宇宙飞船 StarShip，这是第一家私人商业公司推出的载人航天器。这艘飞船高度为118米，使用不锈钢制作，装有几十个发动机，可以多次循环使用，一次搭载100人前往火星。</p>
 <p>SpaceX 的 CEO 马斯克预计，该飞船明年可以试飞，最快2022年前往火星。下一步要解决的问题是，前往火星的单程为半年，需要开发一个支持100人的生命保障系统。</p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/201909/bg2019093003.jpg"></p>
-<h3 id="一个持续50年的太空实验"><a href="#一个持续50年的太空实验" class="headerlink" title="一个持续50年的太空实验"></a><a href="https://spectrum.ieee.org/the-institute/ieee-history/one-apollo-11-experiment-is-still-going-50-years-later" target="_blank" rel="noopener">一个持续50年的太空实验</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019081805.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/201909/bg2019093003.jpg" alt></p>
+<h3 id="一个持续50年的太空实验"><a href="#一个持续50年的太空实验" class="headerlink" title="一个持续50年的太空实验"></a><a href="https://spectrum.ieee.org/the-institute/ieee-history/one-apollo-11-experiment-is-still-going-50-years-later" target="_blank" rel="noopener">一个持续50年的太空实验</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019081805.jpg" alt></p>
 <p>美国有些人质疑，阿波罗计划是一个骗局，宇航员从没到过月球，登月是在摄影棚拍的。下面这个已经进行50年的实验，可以证明这种怀疑是不对的。</p>
 <p>阿波罗11号登月前，美国宇航局设计了一个实验，测量地球和月球之间的精确距离，精确到厘米。</p>
 <p>1969年7月20日，阿波罗11号宇航员降落在月球上，在月球表面放置了一面1米宽的镜子。美国的四家天文台开始向镜子的方位射出激光，希望击中镜子。</p>
@@ -506,33 +476,33 @@
 <p>直到今天，科学家仍然通过这个实验，进行月球激光测距，以跟踪月球的轨道和旋转的变化。数据显示，地球到月球的距离每年增加约1.5英寸。</p>
 <p>2019年8月1日，天文台举行了该项实验50周年的庆祝活动。</p>
 <h3 id="时空旅行者宴会"><a href="#时空旅行者宴会" class="headerlink" title="时空旅行者宴会"></a><a href="https://baike.baidu.com/item/%E6%97%B6%E9%97%B4%E6%97%85%E8%A1%8C%E8%80%85%E5%AE%B4%E4%BC%9A" target="_blank" rel="noopener">时空旅行者宴会</a></h3><p>2009年6月28日，英国著名物理学家霍金举行了一次时间旅行者宴会，欢迎未来的人们回到现在，参加这个宴会。房间布置了气球、香槟和美食，挂著大大的标语，写着”欢迎时间旅行者”。</p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019081104.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019081104.jpg" alt></p>
 <p>霍金在宴会举办前没有向任何人发出邀请。宴会结束后，他才发出请帖，邀请有”穿越”能力的人士赴宴。</p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019081106.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019081106.jpg" alt></p>
 <p>请帖上写著：”诚挚邀请你参加时间旅行者的宴会。宴会由史蒂芬·霍金教授举办。”请帖不但写明宴会的举办地点为英国剑桥大学冈维尔与凯斯学院，还贴心地标明了经纬度。</p>
 <p>霍金认为，如果有未来人看到这份请帖，并且能”穿越”回到过去，那么他在那次宴会上就会见到货真价实的”时间旅行者”。</p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019081105.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019081105.jpg" alt></p>
 <p>但是，完全没有人赴会。霍金说：””我坐了很长时间，但没有人来。我用实验证明，时间旅行不可能。”</p>
 <p>1905年，爱因斯坦在相对论中断定，当接近光速的运动时，时间会很慢或静止，也就是说，当人乘坐接近光速的飞船去旅行，在旅行的过程中时间就会变慢，因此，当他再回到地球的时候就可能已经过了一个世纪。对他来 说，只要花很少的时间就能进入未来世界。但是，爱因斯坦指出：光速无法超越，时间不可能倒流。</p>
 <p>不过，霍金说：”从爱因斯坦的相对论来看，弯曲时空、回到过去的可能性的确存在。但是，让时空弯曲，可能引发能量摧毁（时空旅行所用的）飞船、甚至时空。”　</p>
-<h3 id="如何估算银河系中的外星文明的数目？（英文）"><a href="#如何估算银河系中的外星文明的数目？（英文）" class="headerlink" title="如何估算银河系中的外星文明的数目？（英文）"></a><a href="https://medium.com/cantors-paradise/how-to-estimate-the-number-of-aliens-in-the-milky-way-3e9a43c17a5" target="_blank" rel="noopener">如何估算银河系中的外星文明的数目？（英文）</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/201910/bg2019100902.jpg"></p>
+<h3 id="如何估算银河系中的外星文明的数目？（英文）"><a href="#如何估算银河系中的外星文明的数目？（英文）" class="headerlink" title="如何估算银河系中的外星文明的数目？（英文）"></a><a href="https://medium.com/cantors-paradise/how-to-estimate-the-number-of-aliens-in-the-milky-way-3e9a43c17a5" target="_blank" rel="noopener">如何估算银河系中的外星文明的数目？（英文）</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/201910/bg2019100902.jpg" alt></p>
 <p>1961年，美国天文学家弗兰克·德雷克（Frank Drake）提出一个方程，用于计算银河系中可能与地球发生无线电通信的外星文明数量，当时估计20个～5000万个之间。本文根据现在的数据计算，得出结果是46个。</p>
-<h3 id="中国的火星探索"><a href="#中国的火星探索" class="headerlink" title="中国的火星探索"></a><a href="https://news.sina.cn/2019-11-14/detail-iihnzahi0809260.d.html" target="_blank" rel="noopener">中国的火星探索</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/201911/bg2019111712.jpg"></p>
+<h3 id="中国的火星探索"><a href="#中国的火星探索" class="headerlink" title="中国的火星探索"></a><a href="https://news.sina.cn/2019-11-14/detail-iihnzahi0809260.d.html" target="_blank" rel="noopener">中国的火星探索</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/201911/bg2019111712.jpg" alt></p>
 <p>中国国家航天局透露，2020年将实施中国的第一次火星探测任务。</p>
 <p>这次任务将实现火星环绕和着陆巡视，即会有火星车着陆，开展火星全球性和综合性探测，并对火星表面重点地区精细巡视勘查。上图是河北怀来的亚洲最大的地外天体着陆综合试验场，正在进行火星着陆器悬停避障试验。</p>
-<h3 id="火星地图"><a href="#火星地图" class="headerlink" title="火星地图"></a><a href="https://trek.nasa.gov/mars/" target="_blank" rel="noopener">火星地图</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020010906.jpg"></p>
+<h3 id="火星地图"><a href="#火星地图" class="headerlink" title="火星地图"></a><a href="https://trek.nasa.gov/mars/" target="_blank" rel="noopener">火星地图</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020010906.jpg" alt></p>
 <p>美国宇航局的火星在线地图，谷歌也有一个类似的网站。</p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/201912/bg2019121006.jpg"><br><a href="https://phys.org/news/2019-12-enceladus-stripes.html" target="_blank" rel="noopener">土星的卫星土卫二</a>，表面被厚厚的冰层覆盖，已经证实冰层之下有液态水的海洋。</p>
-<h3 id="冰下探测器"><a href="#冰下探测器" class="headerlink" title="冰下探测器"></a><a href="https://www.nytimes.com/2020/01/05/science/europa-rover-antarctica.html" target="_blank" rel="noopener">冰下探测器</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020010702.jpg"><br><img alt data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020010701.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/201912/bg2019121006.jpg" alt><br><a href="https://phys.org/news/2019-12-enceladus-stripes.html" target="_blank" rel="noopener">土星的卫星土卫二</a>，表面被厚厚的冰层覆盖，已经证实冰层之下有液态水的海洋。</p>
+<h3 id="冰下探测器"><a href="#冰下探测器" class="headerlink" title="冰下探测器"></a><a href="https://www.nytimes.com/2020/01/05/science/europa-rover-antarctica.html" target="_blank" rel="noopener">冰下探测器</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020010702.jpg" alt><br><img data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020010701.jpg" alt></p>
 <p>美国宇航局正在南极冰层下面，测试冰下探测器。这个装置可以贴着冰层前进，收集各种数据。因为它主要依靠水流作为动力，所以能耗较小。不过，它不是为了探测地球，而是为了探测木星的卫星欧罗巴而准备的。</p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020010703.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020010703.jpg" alt></p>
 <p>欧罗巴，又称木卫二，是木星的卫星，发现者是伽利略。它表面有一层薄薄的冰外壳，下面有可能存在巨大的液态水海洋。如果确实有海洋，再加上合适的温度和碳物质，星球内部将有可能孕育生命。</p>
 <p>美国宇航局计划2025年发射欧罗巴飞船（Europa Clipper），需要几年时间才能到达木星。然后，一旦有机会，将从飞船发射这个探测器发射到欧罗巴，让其进入冰层下面，进行探测。</p>
-<h3 id="最清晰的太阳表面照片"><a href="#最清晰的太阳表面照片" class="headerlink" title="最清晰的太阳表面照片"></a><a href="https://www.nsf.gov/news/news_summ.jsp?cntn_id=299908&amp;linkId=81408478" target="_blank" rel="noopener">最清晰的太阳表面照片</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020013001.jpg"></p>
+<h3 id="最清晰的太阳表面照片"><a href="#最清晰的太阳表面照片" class="headerlink" title="最清晰的太阳表面照片"></a><a href="https://www.nsf.gov/news/news_summ.jsp?cntn_id=299908&amp;linkId=81408478" target="_blank" rel="noopener">最清晰的太阳表面照片</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020013001.jpg" alt></p>
 <p>2020年1月29日，美国国家科学基金会发布史上最清晰的太阳表面照片。这是直径4米的 Daniel K. Inouye 太阳望远镜拍摄的，这个望远镜在夏威夷毛伊岛一座3000米的高山顶上。</p>
 <p>这张照片拍摄于2019年12月10日，是<code>望远镜对准太阳后收到的第一束光</code>。照片上，每个类似细胞的结构都有得克萨斯州的大小，它们是太阳内部剧烈运动的标志。这些剧烈运动将能量从太阳内部，源源不断地向宇宙辐射。</p>
 <p>这个太阳望远镜由于聚焦太阳，会产生大量的热量，必须有冷却措施。超过7英里的管道将冷却剂送到整个天文台，并用夜间产生的冰块降温。</p>
-<h3 id="SpaceX-开放卫星发射服务"><a href="#SpaceX-开放卫星发射服务" class="headerlink" title="SpaceX 开放卫星发射服务"></a><a href="https://techcrunch.com/2020/02/05/spacex-will-now-let-you-book-a-rocket-launch-online-starting-at-1-million/" target="_blank" rel="noopener">SpaceX 开放卫星发射服务</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/202002/bg2020020703.jpg"></p>
+<h3 id="SpaceX-开放卫星发射服务"><a href="#SpaceX-开放卫星发射服务" class="headerlink" title="SpaceX 开放卫星发射服务"></a><a href="https://techcrunch.com/2020/02/05/spacex-will-now-let-you-book-a-rocket-launch-online-starting-at-1-million/" target="_blank" rel="noopener">SpaceX 开放卫星发射服务</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/202002/bg2020020703.jpg" alt></p>
 <p>SpaceX 开放卫星发射服务，个人可以在他们的官网交钱发卫星。目前，最早可以发射的日期是2020年6月，收费最低为100万美元，卫星重量在200公斤以下，每增加一公斤，就会增加5000美元费用。</p>
 <p>用户需要提供卫星的轨道参数，提交请求时，支付5000美元押金，剩余款项在发射前支付。该服务主要针对预算不足的小型卫星客户，利用 SpaceX 的一箭多星技术，通过火箭上的多余空间，搭载客户的卫星，为 SpaceX 占领卫星发射市场。虽然对个人来说，这笔钱并不便宜，但已经是发射卫星的最低价最简单的途径了。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
@@ -555,8 +525,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Universe/" rel="bookmark">Universe</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Quality/" rel="bookmark">Quality</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Player/" rel="bookmark">Player</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Investment/" rel="bookmark">Investment</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Freedom/" rel="bookmark">Freedom</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Wisdom/" rel="tag"><i class="fa fa-tag"></i> Wisdom</a>
               <a href="/tags/Galaxy/" rel="tag"><i class="fa fa-tag"></i> Galaxy</a>
@@ -570,21 +561,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Technology/2020/Computer/" rel="next" title="Computer">
-                  <i class="fa fa-chevron-left"></i> Computer
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Technology/2020/Telecommunications/" rel="prev" title="Telecommunications">
-                  Telecommunications <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Technology/2020/Computer/" rel="prev" title="Computer">
+      <i class="fa fa-chevron-left"></i> Computer
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Technology/2020/Telecommunications/" rel="next" title="Telecommunications">
+      Telecommunications <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -597,7 +585,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -628,8 +638,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -638,14 +648,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -656,11 +666,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -694,7 +699,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -706,51 +711,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -759,18 +725,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -780,63 +740,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -844,14 +747,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -878,40 +781,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Wisdom/2020/Galaxy/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

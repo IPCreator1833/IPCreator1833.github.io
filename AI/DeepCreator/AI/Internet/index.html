@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="以互联网对人类社会的改变为基点，从历史出发，以国际化视野和面对未来的前瞻思考，深入探寻互联网时代的本质，思考这场变革对经济、政治、社会、人性等各方面的深远影响。该作品旨在引导全社会更准确、全面地认识和理解互联网，更深刻地思考互联网，有准备地迎接一个新时代的到来。">
 <meta name="keywords" content="Internet,Web,Net">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/AI/DeepCreator/AI/Internet/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/AI/DeepCreator/AI/Internet/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/AI/DeepCreator/AI/Internet/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="internet20180801.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/internet20180801.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/internet20180801.jpg?imageMogr2/thumbnail/!75p" alt="internet20180801.jpg"></p>
 <blockquote>
 <p> 以互联网对人类社会的改变为基点，从历史出发，以国际化视野和面对未来的前瞻思考，深入探寻互联网时代的本质，思考这场变革对经济、政治、社会、人性等各方面的深远影响。该作品旨在引导全社会更准确、全面地认识和理解互联网，更深刻地思考互联网，有准备地迎接一个新时代的到来。</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt="internet20180607.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/internet20180607.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/internet20180607.jpg?imageMogr2/thumbnail/!75p" alt="internet20180607.jpg"></p>
 <h2 id="数据：2018中国互联网发展报告"><a href="#数据：2018中国互联网发展报告" class="headerlink" title="数据：2018中国互联网发展报告"></a><a href="http://www.luojiji.com/thread-12781-1-1.html" target="_blank" rel="noopener">数据：2018中国互联网发展报告</a></h2><p>中国互联网络信息中心（CNNIC）发布的互联网发展状况统计报告，是互联网行业一份很权威的报告。8月20日，CNNIC发布了第42次《中国互联网络发展状况统计报告》，报告显示，截至2018年6月30日，我国网民规模达8.02亿，这是中国网民规模首次过8亿大关。公众号“刺猬公社”总结了报告的一些重要内容，我们从中摘录了一些你可能会感兴趣的部分。</p>
 <p>首先我们看一下互联网用户在学历和经济方面的数据。在人员结构方面，中国互联网用户中学生群体最多，占比24.8%。<strong>从学历上来看，初中、高中（中专/技校）学历的网民占比62.8%</strong>。其中，初中学历网民占比为37.7%。也就是说，有很大一部分互联网用户的学历在大专以下，本科学历的用户只占10.6%。而在经济方面，月收入在5000元以上的人只占24.8%，也就是说，<strong>大部分互联网用户的经济水平并不高。</strong></p>
 <p>其次，报告的数据表明，<strong>互联网和移动互联网的用户正趋于饱和</strong>。截至2018年6月，我国手机互联网用户规模达到了7.88亿，和2017年末相比增加了4.7%；互联网用户使用手机上网的比例达到了98.3%，比2017年末提升了0.8个百分点。而在2012年底，移动互联网用户的规模只有4.2亿，在所有互联网用户中占比74.5%。此外，报告提到，截至2018年5月，中国市场上检测到的移动App在架数量达到了415万款，对应用来说，“想靠拉新来增长流量已经不太现实，必须要思考如何在已有的用户基础上，重新找到新的方式为自己赋能”。</p>
@@ -305,7 +275,7 @@
 <p>人的适应性是很强的，当趋势确定，并且某件事以超乎想象的速度发生之后，很快人们就会习以为常。</p>
 </blockquote>
 <p>陶闯举例说，在做PPTV的时候，他们专门讨论了用户是在电脑上看视频，还是在手机上看视频，当时大家都觉得，手机屏幕这么小，人们会在上面看吗？而随着移动互联网出现之后，人人都习惯在手机上看视频了。</p>
-<h2 id="沸腾十五年——中国互联网1995-2009"><a href="#沸腾十五年——中国互联网1995-2009" class="headerlink" title="沸腾十五年——中国互联网1995-2009"></a><a href="https://book.douban.com/subject/3816827/" target="_blank" rel="noopener">沸腾十五年——中国互联网1995-2009</a></h2><p><img alt="internet20180723.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/internet20180723.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="沸腾十五年——中国互联网1995-2009"><a href="#沸腾十五年——中国互联网1995-2009" class="headerlink" title="沸腾十五年——中国互联网1995-2009"></a><a href="https://book.douban.com/subject/3816827/" target="_blank" rel="noopener">沸腾十五年——中国互联网1995-2009</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/internet20180723.jpg?imageMogr2/thumbnail/!75p" alt="internet20180723.jpg"></p>
 <h3 id="一半是火焰，一半是海水"><a href="#一半是火焰，一半是海水" class="headerlink" title="一半是火焰，一半是海水"></a><a href="https://book.douban.com/review/4892614/" target="_blank" rel="noopener">一半是火焰，一半是海水</a></h3><p>我刻意把火焰放在前面，因为我认为热情更重要，而又特意用这个题目，是想表达：冷静也很重要。</p>
 <p>就象把自己切成两半，一半是热情，一半是冷静，互相观照，少一个角度的话，会有失全面。从一个横面上来讲，仅有热情或仅有冷静都是不够的，从一个纵面上来讲，一直热情也是不可能的，需要冷静来中和。</p>
 <p>想想我和互联网的缘份，是这样：<br>1998年触网。那是2月，我一直还记得，在办公室里，费了很大力气，突然之间，连上了网络，看着外面的文字和图片，在眼前一点一点地展现（网速很慢），终至完整，那种巨大的震动，以及，收到和回复第一封电子邮件时的激动。<br>1998年6月，我买了台微机，然后开始了泡网生涯。<br>2001年2月，我离开服务了八年半的中国银行。如果不是因为网络，我的命运，可能和大多数同事一样，在银行一直工作到退休。<br>2001年4月，我进入IT行业。至今。<br>2007年，我进入互联网行业。只有进入，没有退出。<br>网络对我的改变是全方位的，从生活到工作。</p>
@@ -370,9 +340,9 @@
 <p>我思考得出的结论有二：一是兴趣；二是坚持。所谓兴趣，肯定是进入某个领域的钥匙，误打误撞也好，深谋远虑也罢，没有兴趣，最终结局还是放弃；至于坚持，我想是保证兴趣良性发展的一种有效手段，它不应该是捱，不应该是长久的痛苦，而是获得更大的兴趣满足的长久之计。在这两点之下，其实已经无所谓成功了。做自己充满兴趣的事业，以此获得长久持续的快感——还有比这个更牛逼的事情吗？</p>
 <p>给林军提几个小小的意见：一是写作手法上的问题。全书以时间轴为坐标回溯的写法本来很好，但在处理不同的人和事交叉时，林校总是多些笔墨来岔到旁边做补白，让人感觉有些跳跃了，毕竟中断思路对读者来说，成本有点大啦。二是林军漏掉了若干值得一书的人物，比如高燃、李想、戴志康、茅侃侃这几位80后创业者，特别是戴志康的康盛创想，在BBS、SNS以及电子商务领域掀起了好几拨浪头，这个纰漏很是遗憾啊。</p>
 <p>最后的建议：尽管这本书足够厚重，但15年的历史中精彩的人和事确实太多，平均下来篇幅稍显不够，不如林校以本书为提纲把个中人物逐一书写吧。这个工程浩大，但是绝对值得一做。</p>
-<h2 id="IT史记3——电脑英雄篇、芯片英雄篇及通讯英雄篇"><a href="#IT史记3——电脑英雄篇、芯片英雄篇及通讯英雄篇" class="headerlink" title="IT史记3——电脑英雄篇、芯片英雄篇及通讯英雄篇"></a><a href="https://book.douban.com/subject/1147357/" target="_blank" rel="noopener">IT史记3——电脑英雄篇、芯片英雄篇及通讯英雄篇</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s1815672.jpg"></p>
+<h2 id="IT史记3——电脑英雄篇、芯片英雄篇及通讯英雄篇"><a href="#IT史记3——电脑英雄篇、芯片英雄篇及通讯英雄篇" class="headerlink" title="IT史记3——电脑英雄篇、芯片英雄篇及通讯英雄篇"></a><a href="https://book.douban.com/subject/1147357/" target="_blank" rel="noopener">IT史记3——电脑英雄篇、芯片英雄篇及通讯英雄篇</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s1815672.jpg" alt></p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>序言<br>自序 文明的探险<br>一 电脑英雄篇<br>1 史蒂夫・乔布斯 苹果公司创始人、首席执行官<br>2 罗德・卡尼恩、本・罗森 康柏创始人和投资人<br>3 路易斯・郭士纳 IBM前董事长兼首席执行官<br>4 刘易斯・普拉特 惠普前董事长兼首席执行官<br>5 特德・威特 Gateway创始人、董事人、首席执行官兼总裁<br>6 彭明盛 IBM董事长兼首席执行官<br>7 埃克・菲弗尔 康柏前首席执行官兼总裁<br>8 迈克尔・戴尔 戴尔公司创始人、董事长兼首席执行官<br>9 卡莉・菲奥莉纳 惠普董事长兼首席执行官<br>10 杰夫・霍金斯、唐娜・杜宾斯基 Palm、Handspring公司共同创始人，掌上电脑之父<br>……<br>二 芯片英雄篇<br>……<br>三 通讯英雄篇<br>……<br>后记</p>
-<h2 id="网络至死——如何在喧嚣的互联网时代重获我们的创造力和思维力"><a href="#网络至死——如何在喧嚣的互联网时代重获我们的创造力和思维力" class="headerlink" title="网络至死——如何在喧嚣的互联网时代重获我们的创造力和思维力"></a><a href="https://book.douban.com/subject/6797555/" target="_blank" rel="noopener">网络至死——如何在喧嚣的互联网时代重获我们的创造力和思维力</a></h2><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s6883269.jpg"></p>
+<h2 id="网络至死——如何在喧嚣的互联网时代重获我们的创造力和思维力"><a href="#网络至死——如何在喧嚣的互联网时代重获我们的创造力和思维力" class="headerlink" title="网络至死——如何在喧嚣的互联网时代重获我们的创造力和思维力"></a><a href="https://book.douban.com/subject/6797555/" target="_blank" rel="noopener">网络至死——如何在喧嚣的互联网时代重获我们的创造力和思维力</a></h2><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s6883269.jpg" alt></p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>《网络至死:如何在喧嚣的互联网时代重获我们的创造力和思维力》内容简介：我们也许已经晓悟，但也许并未察觉，我们正陷入空前的“网络统治一切”的危机之中，就像赫胥黎在《美丽新世界》中忧虑的那样，人们会渐渐爱上压迫，崇拜那些使他们丧失思考能力的技术，而现在这技术等同于网络。我们越来越依赖虚拟世界——网络所创造的一切，人们已经无法想象没有电脑、没有网络的生活，我们好像患上了某种强迫症，一遍遍地刷新网页，而短暂的断网也使我们心绪不宁。注意力极易分散，记忆力严重退化，想象力和创造力被极度扼杀……我们在网络越来越强大的信息世界面前，越来越措手不及，越来越被机器所主宰。</p>
 <p>“网络至死”，绝不是危言耸听，人类为机器、网络所异化已经不是简单的玩笑，而是深入我们的生活和我们的精神之中的世界难题了。怎么办？我们被迫在信息时代做我们不想做的事情，我们该如何重新掌控我们自己的思想，并最终赢得这场人与机器的网络之战？</p>
 <p>《网络至死:如何在喧嚣的互联网时代重获我们的创造力和思维力》以网络时代人类异化现象为依托，以悲天悯人的情怀，重新审视人与电脑、网络的关系，关注网络统治时代人的境遇，探寻人类心灵的困境和脱困之途。与此同时，作者文笔幽默而轻松，让读者得以在会心一笑之余，思考我们在数字化时代的生存现状和未来。</p>
@@ -402,15 +372,15 @@
 <p>上面一件事情，可以说，只要整出几个吸引人的或者热门的关键字，想制造一个谣言，该是件多么简单和容易的事情。远的来讲，当年被炒高的非典时期的板蓝根，近的来讲，日本地震后疯抢买盐的事情。若没有网络的推波助澜，还真的不会造成如此巨大的二逼影响。如果有人别有用心想搞垮一个公司，大可尽量注册一个马甲，说自己是内部人员，想赶紧走掉，然后爆出丑事。莫须有的事情也可以被快速传播起来。并且造成的影响或许是再也无法挽回了。诸如这次的韩方大战，现在似乎没有人关心这件事情到底是真是假，各执一词。但是，对双方的伤害和影响，已经再也无法挽回了。再或者可怜的舒淇，就这么躺着也中枪了。想搞垮一个人，一个利益集团，真是如此方便容易。这个世界已经没有人再去思考事件了。人言可畏。</p>
 <p>在信息洪流下，谁还去关心这条信息到底是真是假，一个屌￼丝的泰坦尼克吐槽居然被当作了真新闻让詹姆斯卡梅隆知道了。这一切是那么荒诞却那么真实。</p>
 <p>因此，网络是否像夏娃的苹果？像潘朵拉的魔盒，一旦打开，好坏无人能知？可是作为自己，网络到底对自己影响多大，或者说，我们的成长，与网络的相关，这种主观媒体(Web 2.0)存在的价值，都很值得考虑啊。</p>
-<p><img alt data-src="https://sf6-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4b0002c5512acbc8cd~2160x1080_noop.jpeg"><br><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e470003f7f216cf4b0b~2160x1080_noop.jpeg"></p>
-<p><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4b00028d2f9e899467~2160x1080_noop.jpeg"><br><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a000396b61cae02e9~2160x1080_noop.jpeg"><br><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e480003ad50d0e74df9~2160x1080_noop.jpeg"><br><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a000396b942ecbf91~2160x1080_noop.jpeg"></p>
-<h2 id="蒂姆·伯纳斯-李-Tim-Berners-Lee"><a href="#蒂姆·伯纳斯-李-Tim-Berners-Lee" class="headerlink" title="蒂姆·伯纳斯-李 Tim Berners-Lee"></a><a href="https://movie.douban.com/celebrity/1341995/" target="_blank" rel="noopener">蒂姆·伯纳斯-李 Tim Berners-Lee</a></h2><p><img alt data-src="https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1460212829.1.webp"></p>
+<p><img data-src="https://sf6-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4b0002c5512acbc8cd~2160x1080_noop.jpeg" alt><br><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e470003f7f216cf4b0b~2160x1080_noop.jpeg" alt></p>
+<p><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4b00028d2f9e899467~2160x1080_noop.jpeg" alt><br><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a000396b61cae02e9~2160x1080_noop.jpeg" alt><br><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e480003ad50d0e74df9~2160x1080_noop.jpeg" alt><br><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a000396b942ecbf91~2160x1080_noop.jpeg" alt></p>
+<h2 id="蒂姆·伯纳斯-李-Tim-Berners-Lee"><a href="#蒂姆·伯纳斯-李-Tim-Berners-Lee" class="headerlink" title="蒂姆·伯纳斯-李 Tim Berners-Lee"></a><a href="https://movie.douban.com/celebrity/1341995/" target="_blank" rel="noopener">蒂姆·伯纳斯-李 Tim Berners-Lee</a></h2><p><img data-src="https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1460212829.1.webp" alt></p>
 <p>蒂莫西·约翰·“蒂姆”·伯纳·李爵士（Tim Berners-Lee），OM，KBE，FRS，FREng，FRSA，（Sir Timothy John “Tim” Berners-Lee，1955年6月8日－），英国计算机科学家。他是万维网的发明者，麻省理工学院教授。1990年12月25日，罗伯特·卡里奥在CERN和他一起成功通过Internet实现了HTTP代理与服务器的第一次通讯。</p>
 <p>　　万维网联盟（W3C）是伯纳斯·李为关注万维网发展而创办的组织，并担任万维网联盟的主席。他也是万维网基金会的创办人。伯纳斯-李还是麻省理工学院计算机科学及人工智能实验室创办主席及高级研究员。同时，伯纳斯-李是网页科学研究倡议会的总监。最后，他是麻省理工学院集体智能中心咨询委员会成员。</p>
 <p>　　2004年，英女皇伊丽莎白二世向伯纳斯·李颁发大英帝国爵级司令勋章。2009年4月，他获选为美国国家科学院外籍院士。在2012年夏季奥林匹克运动会开幕典礼上，他获得了“万维网发明者”的美誉。伯纳斯·李本人也参与了开幕典礼，在一台NeXT计算机前工作。他在Twitter上发表消息说：“这是给所有人的”，体育馆内的LCD光管随即显示出文字来。</p>
-<p><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a0003cfdbcc5baf38~2160x1080_noop.jpeg"><br><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e490003df62d9968dbe~2160x1080_noop.jpeg"><br><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a0003cfd917d6cdcd~2160x1080_noop.image"><br><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e470003f7da6a2f7720~2160x1080_noop.jpeg"><br><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e490003df68b801184a~2160x1080_noop.jpeg"><br><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e490003df6ab8dbc1ff~2160x1080_noop.jpeg"><br><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a0003cfe72b3f8c49~2160x1080_noop.jpeg"></p>
+<p><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a0003cfdbcc5baf38~2160x1080_noop.jpeg" alt><br><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e490003df62d9968dbe~2160x1080_noop.jpeg" alt><br><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a0003cfd917d6cdcd~2160x1080_noop.image" alt><br><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e470003f7da6a2f7720~2160x1080_noop.jpeg" alt><br><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e490003df68b801184a~2160x1080_noop.jpeg" alt><br><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e490003df6ab8dbc1ff~2160x1080_noop.jpeg" alt><br><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a0003cfe72b3f8c49~2160x1080_noop.jpeg" alt></p>
 <h2 id="悼念逝去的数字罗宾汉"><a href="#悼念逝去的数字罗宾汉" class="headerlink" title="悼念逝去的数字罗宾汉"></a><a href="https://www.huxiu.com/article/9782.html?f=member_article" target="_blank" rel="noopener">悼念逝去的数字罗宾汉</a></h2><p>林华  2013-02-01 10:29</p>
-<p><img alt data-src="https://img.huxiucdn.com/portal/201302/01/102646mvuezubr8257gdqb.jpg?imageView2/1/w/1000/h/750/|imageMogr2/strip/interlace/1/quality/85/format/jpg"></p>
+<p><img data-src="https://img.huxiucdn.com/portal/201302/01/102646mvuezubr8257gdqb.jpg?imageView2/1/w/1000/h/750/|imageMogr2/strip/interlace/1/quality/85/format/jpg" alt></p>
 <p>曾以为侠是不死的。也许真是命运，最新发布的《蜘蛛侠》卡通片第700集就成了无数次出生入死却总是向死而生的主角的真正落幕。英雄再也不能回来，蜘蛛侠死了。26岁的艾伦·施瓦茨也死了，自缢在了寓所。施瓦茨是一位14岁就参加编写全世界都知道的RSS软件的天才，大红大紫的社交新闻网站Reddit联合创始人，前途无量的帅哥。施瓦茨是个不折不扣的牛人，还是个主张信息分享的数字雷锋，或者叫，数字罗宾汉。</p>
 <p>我同意施瓦茨家人和朋友所说的，他死不是简单的个人悲剧。不同的是，我认为施瓦茨是人类最深刻矛盾之一的牺牲品，他的死并不能简单归结为检察官和版权人暴政的结果。施瓦茨在去年用技术手段闯入麻省理工学院网络后台，下载了400万份JSTOR数据库（一个搜集已经发表一定时间的往期学术期刊论文的著名学术数据库，我也在其中找过英文，因为收费而作罢）论文。施瓦茨一直支持网络信息自由，主张学术信息应该共享。施瓦茨还没有把论文向维基解密一样传播到互联网上，不过可以推断下载这些论文是为了身体力自己的理念。事发后施瓦茨被捕，受到州检察院起诉和长期监禁的威胁。一颗年轻、勇敢、智慧但又时而忧郁的心没能顶住，天才选择了自杀。</p>
 <p>论文是学术研究的结晶，是学术成就最重要的载体。论文的传播越广、受众越多，就越能需要实现自身价值、越有助于提高研究水平。但论文的搜集和传播是需要大量成本的，即使JSTOR这样的非商业性数据库也需要从收费服务中赚回维持独立运作的成本，矛盾不可避免的产生了。知识在这个世界以信息形态存在着。自由是信息的天性，知识越挥发就越香醇。同时，信息在商业社会中又是无形但真实的财产，财产则意味着权利人可以严实施格控制和垄断，并且受到法律保护。<strong>知识既是自由的，又是被垄断的。落入自由和垄断之间的巨大鸿沟，知识注定生而自由，又无往不在枷锁之中。</strong></p>
@@ -527,7 +497,7 @@
 <p>如同在社会中，每个人都是平等的，在网络中，每台电脑也都是平等的，它们都可以连接网络。</p>
 <p>在当初的阿帕网中，路由器就像一个大铁柜，比电冰箱还大。现在，连接4G网络的移动路由器已经变得非常小巧。另外，苹果的iPhone 5s手机，其运算速度更是阿帕网中最快电脑的7000倍。</p>
 <p>还有，我们平时浏览的网页，其实是叫万维网。关于发明万维网的故事，推荐阅读蒂姆・伯纳斯―李所著的《编织万维网》一书。</p>
-<p><img alt data-src="https://sf6-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a0003cf01fd49ab27~2160x1080_noop.jpeg"><br><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a0003cef921abf8b9~2160x1080_noop.jpeg"><br><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e480003e55ccdc73937~2160x1080_noop.jpeg"><br><img alt data-src="https://sf6-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e490003de704793ce3d~2160x1080_noop.jpeg"><br><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e480003e560a0472396~2160x1080_noop.jpeg"><br><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e470003f6ee70c8772c~2160x1080_noop.jpeg"><br><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4b0002c459a137dcae~2160x1080_noop.jpeg"><br><img alt data-src="https://sf6-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e480003e56a48cab9e7~2160x1080_noop.jpeg"><br><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e490003de8822d7f4ff~2160x1080_noop.jpeg"></p>
+<p><img data-src="https://sf6-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a0003cf01fd49ab27~2160x1080_noop.jpeg" alt><br><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4a0003cef921abf8b9~2160x1080_noop.jpeg" alt><br><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e480003e55ccdc73937~2160x1080_noop.jpeg" alt><br><img data-src="https://sf6-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e490003de704793ce3d~2160x1080_noop.jpeg" alt><br><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e480003e560a0472396~2160x1080_noop.jpeg" alt><br><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e470003f6ee70c8772c~2160x1080_noop.jpeg" alt><br><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e4b0002c459a137dcae~2160x1080_noop.jpeg" alt><br><img data-src="https://sf6-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e480003e56a48cab9e7~2160x1080_noop.jpeg" alt><br><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/7e490003de8822d7f4ff~2160x1080_noop.jpeg" alt></p>
 <p>第二集 《浪潮》 互联网带来繁荣</p>
 <p>1、Google的名字灵感来源于googol，googol的意思是10的100次方。据说这个数字很大，比整个宇宙的原子数量还多。</p>
 <p>2、凭借互联网，网景、Yahoo和Facebook等公司迅速崛起，以超乎想象的方式发展壮大。</p>
@@ -716,8 +686,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/AI/DeepCreator/AI/Web/" rel="bookmark">Web</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Program/IPCreator/Technology/Program/Computer/Web/" rel="bookmark">Web</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Tesla/" rel="bookmark">Tesla</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Sony/" rel="bookmark">Sony</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Multimedia/" rel="bookmark">Multimedia</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Internet/" rel="tag"><i class="fa fa-tag"></i> Internet</a>
               <a href="/tags/Web/" rel="tag"><i class="fa fa-tag"></i> Web</a>
@@ -731,21 +722,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Company/DeepCreator/Company/Intel/" rel="next" title="Intel">
-                  <i class="fa fa-chevron-left"></i> Intel
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/AI/DeepCreator/AI/Deep Learning/" rel="prev" title="Deep Learning">
-                  Deep Learning <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Company/DeepCreator/Company/Intel/" rel="prev" title="Intel">
+      <i class="fa fa-chevron-left"></i> Intel
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/AI/DeepCreator/AI/Deep Learning/" rel="next" title="Deep Learning">
+      Deep Learning <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -758,7 +746,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -789,8 +799,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -799,14 +809,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -817,11 +827,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -855,7 +860,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -867,51 +872,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -920,18 +886,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -941,63 +901,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1005,14 +908,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1039,40 +942,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/AI/DeepCreator/AI/Internet/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

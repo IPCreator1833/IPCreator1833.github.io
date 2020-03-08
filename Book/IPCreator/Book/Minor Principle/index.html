@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="年轻人太相信聪明，相信取巧和走捷径，不太相信毅力">
 <meta name="keywords" content="Principle,Minor,Lun Feng">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Book/" itemprop="url" rel="index">
-                    <span itemprop="name">Book</span>
-                  </a>
+                  <a href="/categories/Book/" itemprop="url" rel="index"><span itemprop="name">Book</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Book/IPCreator/Book/Minor Principle/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Book/IPCreator/Book/Minor Principle/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Book/IPCreator/Book/Minor Principle/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="https://img1.doubanio.com/lpic/s29218197.jpg"></p>
+        <p><img data-src="https://img1.doubanio.com/lpic/s29218197.jpg" alt></p>
 <blockquote>
 <p>年轻人太相信聪明，相信取巧和走捷径，不太相信毅力</p>
 </blockquote>
@@ -343,18 +313,39 @@
 <p>20.企业家的责任就是让企业活下去，好比刮风下雨，天气不好那不是我管的，我管的是即使天气不好我也不生病。天怎么变是天气预报的事，但能做到夏天、冬天都活着，就算有本事了。<br>21.领跑是一个打铁的活儿，一定要自身硬，自身跑得好跑得快成绩好，才能让追随者有信心。</p>
 <p>22.企业发展就像飞机起飞，目标和航线是企业的战略，动力系统是资本与企业家的能力，气候环境是市场环境与政策法规，客舱服务是企业的管理运营，机组成员是企业的团队。</p>
 <p>23.<strong>良好的价值观是软实力的一种。一个人谦虚谨慎、随和大度、诚实守信等，这都是个人的软实力。</strong><br>24.万通的四化方针：资本社会化、公司专业化、经理职业化、发展本土化。<br>25.守正出奇。如果遇事就想着变通，一遇事就变通，不断地变，最后就变邪了。要把变通的事减到最少，先按照常规来办，再想着去玩花样才行。凡是变通多的地方，一定活不下来，没变通的，现在也没什么问题。<br>26.东方人把人的是非看得很模糊，把时间拉得很长，拉得长了，是非就开始变，昨是今非，此是彼非，彼是此非。因此成为一种思维习惯。<br>27.面子是熟人之间的通行证，但如果过犹不及，倒容易导致制度形同虚设。<br>28.只有真实才不怕简单，复杂的东西表面上好看，但好看的后面往往是荒唐和陷阱。<br>29.公司股权配比差不多也不好，太稳定会导致多极化。公司力量多极化的结果，就是什么事也做不成，公司随时可能重组。公司内部的最好状态是既有制约纠错能力，同时又有相对连续性，这是一门艺术。<br>30.结构关乎生死，规模只在乎体面。<br>31.<strong>深耕、深根。</strong><br>32.市场规模对企业能否持续发展来说非常重要。如果你所从事的行业很小，即使你增长得再大，也会被它的市场规模所限制。<br>33.企业家能够平衡自己的能力和欲望，这个企业才能朝着稳定发展的道路上走。没有金刚钻，就不要揽瓷器活。欲望太大，能力太小，这是企业家常犯的错误。<br>34.<strong>承认失败是对自己勇敢，真正的勇敢是拿刀砍自己。</strong><br>35.你可以证明我们是笨蛋，但不能说我们是坏蛋。<br>36.我们每天醒来第一件事，是应该感恩，我竟然还活着，活着真好。<br>37.离婚的三个阶段的心理状态：惊怒、虐心、无奈。<br>38.<strong>恐惧来源于未知、无知和歪知，来源于对未来结果的不能预期，所以小孩比老人的恐惧多，女人比男人的恐惧多，弱者比强者的恐惧多。人必自强而后强人。</strong><br>39.每个群众给你一口，你就饿不死。如果巴结领导，领导又不待见你，你就饿死了。<br>40.不自信的男人，没有女人会欣赏，直接就跑了；装自信的男人，女人刚开始不跑，以后还得跑。自信是人生的一个重要品质。女人花那么多工夫去打扮自己，就是要多一份自信。而男人穿的周正，身板挺直了，别人也会多看你几眼。<br>41.我们见法国总统时，总统是坐着说话的。而我们的企业家无一例外都习惯了站着说话，显得很恭敬，但你想我们四十多个人啊，这种情况下，法国总统很有压力。这让我觉得，虽然现在中国民营企业家能够在国际上受到礼遇，但在权利面前显得还是不太自信。<br>42.满眼是爱情的教材，却处处可见不幸的情史；满街都是企业管理的书籍，到处都有破产的企业。<br>43.把合适的人放在合适的地方，人人都是人才。<br>44.企业要知人善任，还要给员工提供良好的外部环境。公司的领导人每天要算的就是在分配资源的时候，把多少分配给现在，把多少分配给未来。<br>45.事情越做得大的时候越有用。频道越多，在大舞台上表演就越没压力，越有优势。<br>46.<strong>心平才能气和，气和才能人顺，人顺才能做事。</strong><br>47.大肚能容，容天下难容之事。<br>48.发上等愿、结中等缘，享下等福。择高处立，就平处坐，向宽处行。<br>49.破旧才能立新，把不挣钱的全部甩掉，剩下的就都是挣钱的了。<br>50.<strong>只有跑在时间前面的人，才能赢到最后。而有效投资时间，是为了更好地支配时间、消费时间、享受生活。</strong></p>
-<p>学历是铜牌，能力是银牌，性格是金牌，理想是王牌。<br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p46053283-1.jpg"></p>
-<p>看市场还可开发的空间，看资源配置，都很重要。第一个确定是否为用户的刚需非常有必要。<br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p43842282-1.jpg"></p>
-<p>看供需变化的表征还是合理的。<br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p43842256-1.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p43842256-2.jpg"></p>
+<p>学历是铜牌，能力是银牌，性格是金牌，理想是王牌。<br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p46053283-1.jpg" alt></p>
+<p>看市场还可开发的空间，看资源配置，都很重要。第一个确定是否为用户的刚需非常有必要。<br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p43842282-1.jpg" alt></p>
+<p>看供需变化的表征还是合理的。<br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p43842256-1.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p43842256-2.jpg" alt></p>
 
     </div>
 
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Principle/" rel="bookmark">Principle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Health/iDeepLearn/Health/Health/" rel="bookmark">Principle of Health</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Principle/" rel="bookmark">Principle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/P/Principle/" rel="bookmark">Principle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/IPCreator/Alisa/Educational Principle for Alisa/" rel="bookmark">Education Principle for Alisa</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Principle/" rel="tag"><i class="fa fa-tag"></i> Principle</a>
               <a href="/tags/Minor/" rel="tag"><i class="fa fa-tag"></i> Minor</a>
@@ -368,21 +359,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/English/IPCreator/English/Use Your English！！Dialysis/" rel="next" title="Use Your English——Dialysis">
-                  <i class="fa fa-chevron-left"></i> Use Your English——Dialysis
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Book/IPCreator/Book/I Understand your Anxiety of Knowledge/" rel="prev" title="I Understand Your Anxiety of Knowledge">
-                  I Understand Your Anxiety of Knowledge <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/English/IPCreator/English/Use Your English！！Dialysis/" rel="prev" title="Use Your English——Dialysis">
+      <i class="fa fa-chevron-left"></i> Use Your English——Dialysis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Book/IPCreator/Book/I Understand your Anxiety of Knowledge/" rel="next" title="I Understand Your Anxiety of Knowledge">
+      I Understand Your Anxiety of Knowledge <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -395,7 +383,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -426,8 +436,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -436,14 +446,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -454,11 +464,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -492,7 +497,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -504,51 +509,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -557,18 +523,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -578,63 +538,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -642,14 +545,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -676,40 +579,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Book/IPCreator/Book/Minor Principle/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

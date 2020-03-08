@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="一种交流的工具而已，用起来！——DeepCreator">
 <meta name="keywords" content="English">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/English/" itemprop="url" rel="index">
-                    <span itemprop="name">English</span>
-                  </a>
+                  <a href="/categories/English/" itemprop="url" rel="index"><span itemprop="name">English</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/English/DeepCreator/MVP/English/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/English/DeepCreator/MVP/English/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/English/DeepCreator/MVP/English/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="/img/content/English-Cover.jpg"></p>
+        <p><img data-src="/img/content/English-Cover.jpg" alt></p>
 <blockquote>
 <p>一种交流的工具而已，用起来！——DeepCreator</p>
 </blockquote>
@@ -301,24 +271,24 @@
 </ul>
 </blockquote>
 <p>Think about it.<br>Just do it.<br>Just do it right.<br>Just do it right now.<br>Tomorrow is another day.</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20180426b.jpg"></p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20180426b.jpg" alt></p>
 <blockquote>
 <p>If life is divided by two,the former is “no hesitation” and the latter is “no regret”.<br>若将人生一分为二，前半段叫做 “不犹豫”，后半段叫做 “不后悔”。</p>
 </blockquote>
 <p>很多程序员都很不喜欢英文，哎……怎么说呢？如果你今天对英文还很害怕的话，这只能怪我们的教育制度的失败。但如果你以此为借口的话，那只能怪你自己了。没有英文的能力，你的技术和认知仅限于中文圈中，而中文圈中基本上都是产商的文化。有人说，“功夫网”让我们的internet成为了局域网，而我想说，让我们成为局域网的不是那个墙，而是我们自己的<strong>世界观和英文能力</strong>。——<a href="https://coolshell.cn/articles/3301.html" target="_blank" rel="noopener">陈皓</a></p>
-<p><img alt="agoalwithoutaplayisjustawish20180514.JPG" data-src="http://p53s4d2qk.bkt.clouddn.com/agoalwithoutaplayisjustawish20180514.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/agoalwithoutaplayisjustawish20180514.JPG?imageMogr2/thumbnail/!75p" alt="agoalwithoutaplayisjustawish20180514.JPG"></p>
 <blockquote>
 <p>A plan without action is just an empty talk</p>
 </blockquote>
-<p><img alt="mountainwater20180427.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/mountainwater20180427.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/mountainwater20180427.jpg?imageMogr2/thumbnail/!75p" alt="mountainwater20180427.jpg"></p>
 <blockquote>
 <p>A true man loves the mountains. A wise man loves the sea.</p>
 </blockquote>
-<h2 id="人人都能用英语"><a href="#人人都能用英语" class="headerlink" title="人人都能用英语"></a><a href="http://zhibimo.com/books/xiaolai/everyone-can-use-english" target="_blank" rel="noopener">人人都能用英语</a></h2><p><img alt data-src="http://zhibimo.com/uploads/books/covers/everyone-can-use-english/preview_cover.jpg"></p>
-<h2 id="新编英语阅读手册"><a href="#新编英语阅读手册" class="headerlink" title="新编英语阅读手册"></a><a href="http://zhibimo.com/books/xiaolai/a-new-english-reading-handbook" target="_blank" rel="noopener">新编英语阅读手册</a></h2><p><img alt data-src="http://zhibimo.com/uploads/books/covers/a-new-english-reading-handbook/preview_s1839875.jpg"></p>
-<h2 id="TOEFL-iBT-高分作文"><a href="#TOEFL-iBT-高分作文" class="headerlink" title="TOEFL iBT 高分作文"></a><a href="http://zhibimo.com/books/xiaolai/twe185" target="_blank" rel="noopener">TOEFL iBT 高分作文</a></h2><p><img alt data-src="http://zhibimo.com/uploads/books/covers/twe185/preview_cover.png"></p>
-<h2 id="如何写好英文书面比较句"><a href="#如何写好英文书面比较句" class="headerlink" title="如何写好英文书面比较句"></a><a href="http://zhibimo.com/books/xiaolai/ru-he-xie-hao-ying-wen-shu-mian-bi-jiao-ju" target="_blank" rel="noopener">如何写好英文书面比较句</a></h2><p><img alt data-src="http://zhibimo.com/uploads/books/covers/ru-he-xie-hao-ying-wen-shu-mian-bi-jiao-ju/preview_cover.jpg"></p>
-<h2 id="如何开发孩子的英语潜力"><a href="#如何开发孩子的英语潜力" class="headerlink" title="如何开发孩子的英语潜力"></a><a href>如何开发孩子的英语潜力</a></h2><p><img alt="english20180723.png" data-src="http://p53s4d2qk.bkt.clouddn.com/english20180723.png?imageMogr2/thumbnail/!75p"></p>
+<h2 id="人人都能用英语"><a href="#人人都能用英语" class="headerlink" title="人人都能用英语"></a><a href="http://zhibimo.com/books/xiaolai/everyone-can-use-english" target="_blank" rel="noopener">人人都能用英语</a></h2><p><img data-src="http://zhibimo.com/uploads/books/covers/everyone-can-use-english/preview_cover.jpg" alt></p>
+<h2 id="新编英语阅读手册"><a href="#新编英语阅读手册" class="headerlink" title="新编英语阅读手册"></a><a href="http://zhibimo.com/books/xiaolai/a-new-english-reading-handbook" target="_blank" rel="noopener">新编英语阅读手册</a></h2><p><img data-src="http://zhibimo.com/uploads/books/covers/a-new-english-reading-handbook/preview_s1839875.jpg" alt></p>
+<h2 id="TOEFL-iBT-高分作文"><a href="#TOEFL-iBT-高分作文" class="headerlink" title="TOEFL iBT 高分作文"></a><a href="http://zhibimo.com/books/xiaolai/twe185" target="_blank" rel="noopener">TOEFL iBT 高分作文</a></h2><p><img data-src="http://zhibimo.com/uploads/books/covers/twe185/preview_cover.png" alt></p>
+<h2 id="如何写好英文书面比较句"><a href="#如何写好英文书面比较句" class="headerlink" title="如何写好英文书面比较句"></a><a href="http://zhibimo.com/books/xiaolai/ru-he-xie-hao-ying-wen-shu-mian-bi-jiao-ju" target="_blank" rel="noopener">如何写好英文书面比较句</a></h2><p><img data-src="http://zhibimo.com/uploads/books/covers/ru-he-xie-hao-ying-wen-shu-mian-bi-jiao-ju/preview_cover.jpg" alt></p>
+<h2 id="如何开发孩子的英语潜力"><a href="#如何开发孩子的英语潜力" class="headerlink" title="如何开发孩子的英语潜力"></a><a href>如何开发孩子的英语潜力</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/english20180723.png?imageMogr2/thumbnail/!75p" alt="english20180723.png"></p>
 <h3 id="【试听】英语启蒙，我不是教你抢跑"><a href="#【试听】英语启蒙，我不是教你抢跑" class="headerlink" title="【试听】英语启蒙，我不是教你抢跑"></a>【试听】英语启蒙，我不是教你抢跑</h3><p>你好，我是范蕙萍，欢迎来到我的得到课程《如何开发孩子的英语潜力》。<br>我在儿童英语培训行业做了将近10年。这些年来，我接触过成千上万的家长，其实每一年，我都会被问到各种重复度很高的问题，比如：</p>
 <p>孩子几岁开始学英语最好？<br>我自己英语不好，能教孩子吗？<br>一定要给孩子报英语培训班吗？<br>什么绘本对孩子的英语学习最有用？<br>要不要请外教？<br>要不要上在线一对一的外教课？</p>
 <p>在回答这些问题之前，我先做个自我介绍。</p>
@@ -611,12 +581,12 @@
 <p>孩子的学习就是这样一个循序渐进的路径。你要把目标设定清楚，然后把步骤拆分得非常细致。孩子在这个过程中一点一点建立成就感。我一直强调，就学习而言，兴趣可能没有你想象的那么重要。什么东西最重要？就是成就感。孩子只要有源源不断的成就感，就会有源源不断的学习动机。</p>
 <p>除了循序渐进，还要寓教于乐。什么叫启蒙？启蒙就不是死学。孩子还没上学，你就把他逼厌学了，咱将来还怎么整啊，没法弄了，对吧？所以启蒙阶段一定是寓教于乐。千万不要把孩子当个小狗一样训练，或者是在学校里面老师对孩子那样。希望通过我的课，你跟你的孩子，会有一个享受的，循序渐进的，寓教于乐的英语启蒙。</p>
 <p>学习一种语言，就是开启一个新的世界，希望你和你的孩子，从中发现星辰大海。</p>
-<h2 id="经典翻译"><a href="#经典翻译" class="headerlink" title="经典翻译"></a>经典翻译</h2><p><img alt data-src="https://sf6-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/7e110f809912480aab2a30eb88c72046~1728x2304_noop.jpeg"></p>
-<p><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/19b140b32ae940c989ebb3fec7bdab7c~1728x2304_noop.jpeg"></p>
-<p><img alt data-src="https://sf6-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/f4afe72a976748c7856a8062dd0bea3a~1728x2304_noop.jpeg"></p>
-<p><img alt data-src="https://sf6-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/097cd2fadae54dae843a3d182b1fdbcd~1728x2304_noop.jpeg"></p>
+<h2 id="经典翻译"><a href="#经典翻译" class="headerlink" title="经典翻译"></a>经典翻译</h2><p><img data-src="https://sf6-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/7e110f809912480aab2a30eb88c72046~1728x2304_noop.jpeg" alt></p>
+<p><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/19b140b32ae940c989ebb3fec7bdab7c~1728x2304_noop.jpeg" alt></p>
+<p><img data-src="https://sf6-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/f4afe72a976748c7856a8062dd0bea3a~1728x2304_noop.jpeg" alt></p>
+<p><img data-src="https://sf6-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/097cd2fadae54dae843a3d182b1fdbcd~1728x2304_noop.jpeg" alt></p>
 <h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a><a href>方法论</a></h2><p>想到什么，不知道是什么，善用image.google.com和image.bing.com等。</p>
-<p><img alt="blacktea20180413.JPG" data-src="http://p53s4d2qk.bkt.clouddn.com/blacktea20180413.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/blacktea20180413.JPG?imageMogr2/thumbnail/!75p" alt="blacktea20180413.JPG"></p>
 <blockquote>
 <p>Black Tea —— 红茶</p>
 </blockquote>
@@ -697,7 +667,7 @@
 <li>并且它自始至终都是可塑的；</li>
 <li>甚至它还会重新组织自己（Reorganizing），通过恰当的训练，它能用另外一个区域习得已被毁坏区域的能力……</li>
 </ol>
-<p>请读者猜猜下图中，这个正在美国UAB康复中心治疗的小女孩受伤的是左臂还是右臂？<br><img alt data-src="http://zhibimo.com/read/xiaolai/everyone-can-use-english/figure05.png"><br>其实她的左臂没有受伤，而之所以把左臂固定起来就是因为那是一条没有受伤的手臂，而右臂才是受伤、需要通过训练恢复的……咦？这是怎么回事儿？可是从生理上来看，大脑受损的部分是没办法恢复的，她又怎么能通过训练来让已经受伤的右臂恢复正常呢？</p>
+<p>请读者猜猜下图中，这个正在美国UAB康复中心治疗的小女孩受伤的是左臂还是右臂？<br><img data-src="http://zhibimo.com/read/xiaolai/everyone-can-use-english/figure05.png" alt><br>其实她的左臂没有受伤，而之所以把左臂固定起来就是因为那是一条没有受伤的手臂，而右臂才是受伤、需要通过训练恢复的……咦？这是怎么回事儿？可是从生理上来看，大脑受损的部分是没办法恢复的，她又怎么能通过训练来让已经受伤的右臂恢复正常呢？</p>
 <p>大脑的神奇之处在于它可以利用其它未受损的部分重新习得受损部分的功能（学术上叫做“remap”、“reroute”、或者“rewire”）。之所以要把行动自如的左臂绑起来，是因为如果不这么做的话，面对任何需求，大脑中负责控制左臂的部分（或称为“左臂脑图”）都会“优先启动”；因为这部分是未受损的，而原本控制右臂的部分已经受损了。换言之，这时，大脑中尚不存在一个能够控制右臂的部分。而把左臂固定住之后，尽管负责控制左臂的大脑部分依然“优先启动”，但实际上却无法自如操纵左臂。而在这种情况下，就可以通过让大脑的其他部分慢慢专注于右臂，进而习得控制右臂的方法——即，可以通过这样的训练，慢慢使大脑未受损的某个区域“习得”原本只有那个已经受损的区域所负责的功能。没有多久，这个女孩子的右臂就恢复了，活动起来与原来没什么两样。可是她的大脑不再是原来的样子了，尽管某一部分受损且不可恢复，但她大脑的另外一个区域已经被开发，能够别无二致地完成受损区域曾经可以完成的功能。</p>
 <p>脑图之间存在着相互竞争——所以，为了治好受损的右臂，要先把未受损的左臂给限制住。如果不把未受损的左臂给限制住的话，那么左臂的脑图将永远处于优势，进而，使得大脑对已经受损的右臂产生“习得之弃用”（Learned Nonuse）。</p>
 <p>这最后一条可以用来清楚地解释原本用“关键期论”错误地解释的现象：为什么成年后学习第二语言显得更为困难？</p>
@@ -708,12 +678,12 @@
 <li>只要方法得当，并加以时日，一定能学好。</li>
 <li>甚至，第二语言也可能超越母语成为主导语言。</li>
 </ol>
-<p><img alt data-src="https://img3.doubanio.com/lpic/s26696783.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/lpic/s26696783.jpg" alt></p>
 <p>透析法原理：对英文原著中的生词等语言知识进行滤膜分析-英语的所有单词都”溶解“在英文原著的巨大”海洋“中，透析法就是对”海水“持续进行淡化处理，以电子词典为滤膜，定量析出”海水“中的生词，输入大脑记忆中枢。生词遗忘相当于“回渗”，但只要持续透析，原著的单词就会反复出现，结合原文背景，将进大脑的长期记忆，从而增加个人的词汇量。</p>
-<h3 id="行动清单｜新东方名师的英语快速提升秘笈"><a href="#行动清单｜新东方名师的英语快速提升秘笈" class="headerlink" title="行动清单｜新东方名师的英语快速提升秘笈"></a><a href="http://www.luojiji.com/thread-9593-1-1.html" target="_blank" rel="noopener">行动清单｜新东方名师的英语快速提升秘笈</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/23/074156zkuj95l86k6oob71.jpg"></p>
+<h3 id="行动清单｜新东方名师的英语快速提升秘笈"><a href="#行动清单｜新东方名师的英语快速提升秘笈" class="headerlink" title="行动清单｜新东方名师的英语快速提升秘笈"></a><a href="http://www.luojiji.com/thread-9593-1-1.html" target="_blank" rel="noopener">行动清单｜新东方名师的英语快速提升秘笈</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201708/23/074156zkuj95l86k6oob71.jpg" alt></p>
 <p>2017-08-23 「得到」 罗辑思维<br>引言</p>
 <p>是不是学了很多年英语，却还是张不开嘴？既听不懂口语，又看不懂文章。有可能不是你不努力，只是学习方法出了问题。</p>
-<p>原新东方名师马徐骏把自己的学习和教学经验整理成这篇清单，供你参考。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/23/074217ja9hx361zyyg8uyh.jpg"></p>
+<p>原新东方名师马徐骏把自己的学习和教学经验整理成这篇清单，供你参考。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201708/23/074217ja9hx361zyyg8uyh.jpg" alt></p>
 <ol>
 <li><p>只要你学英语的目的不是为了刷考试刷分，就要紧紧围绕<strong><a href="https://deepcreator.com/2017/09/29/Concept/Communication/" target="_blank" rel="noopener">沟通</a>、表达和理解</strong>文化三个方向。</p>
 </li>
@@ -751,7 +721,7 @@
 <p>比如李彦宏，“拂菻坊”给了10分——“几乎听不出来他是中国人”；<br>给张朝阳打了8.5分——“不愧是MIT博士”；<br>也有不太好的，比如雷军，小伙给了1分——“听得汗都出来了，他不会说英语”；<br>杨元庆给了4分，贾跃亭给了3分；<br>但是，即便高分如9分的马云——“有语法问题，但这不影响他的魅力和观众的理解。”<br>小伙儿给了俞敏洪8分——“讲得很溜，但是在语音语调上，属于纯粹的中式英语。</p>
 <p>我朋友看完开玩笑地转给我——你看，即使4分的英语水平，也能做全球型的跨国企业，8分的中式英语都能在海外上市，你的英语是不是也没必要非得那么好？这并不是孤例——很多亚非拉国家的总统，英语口语发音相当够呛，但是语法严密、思维清晰，完美地利用了英语的作用——沟通。</p>
 <p>其实我认同他的说法。 把英语还原到本质，并不是什么神圣的东西，只是一种用来沟通的工具 。<strong>既然是沟通，本身就有场景、难度和频次</strong>，你期待做的很多事，并不需要成为英语高手才能完成，你完全可以操着一口“破英语”，先开始用起来。我列了一个英语使用场景和难度的关系图表，你可以对照下图，看看你应用的场景，需要什么英语水平。</p>
-<p><img alt="1504768493123.png" data-src="http://opb37u589.bkt.clouddn.com/1504768493123.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/1504768493123.png?imageMogr2/thumbnail/!75p" alt="1504768493123.png"></p>
 <p>图中黑色的框框的水平，就被我称为破英语。什么算破英语呢？</p>
 <p>只要你基本有高中词汇量、语法基本懂、口音很糟糕、说话断断续续蹦词——这样的水平就是破英语。如果你有破英语水平——恭喜你，你已经足够暂时不用学英语，而是把精力放在用英语看资料、看视频、出国旅游上去。</p>
 <p>6种英语沟通工具</p>
@@ -771,16 +741,16 @@
 <p>其实“破英语”的破，不是破破烂烂的破，而是破局的破，突破的破——破的就是一种中国人学英语的心理障碍。我们总是希望把英语学好了才开始沟通，但是越学却越远离，越学越自卑——学了这么久还不能开口，于是更加想躲避，也更加自卑。这种死循环让我们没法真正达成学习语言的本质——交流。</p>
 <p>今天的科技发达了，我们已经可以用各种方式沟通、表达和理解不同文化的人群， 我们不妨先试着用破英语打破这种内在的自我设限，打破英语的光环 。真正学习英语的人，都曾经是操着破英语开始沟通的人。他们越是沟通、越是了解，越是理解英语背后承载的丰富信息，越容易产生认真学习英语的动力，而不仅仅为了完成童年梦想，或者仅仅是羡慕别人英语说得好。</p>
 <p>这就是“破英语”的魅力。</p>
-<p><img alt="1504746000492.png" data-src="http://opb37u589.bkt.clouddn.com/1504746000492.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/1504746000492.png?imageMogr2/thumbnail/!75p" alt="1504746000492.png"></p>
 <p>今日思考题<br>你见过哪些“原来这样也可以”的破英语案例？在留言区分享给我们吧！<br>如果你身边有一些一直想学英语，但从来不敢开口说的朋友，一定要把今天的文章分享给他，让他知道，破英语的魅力。</p>
-<h2 id="Word"><a href="#Word" class="headerlink" title="Word"></a>Word</h2><p><a href="https://book.douban.com/subject/25981535/" target="_blank" rel="noopener">1368个单词就够了</a><br><img alt data-src="https://img3.doubanio.com/lpic/s27527225.jpg"></p>
+<h2 id="Word"><a href="#Word" class="headerlink" title="Word"></a>Word</h2><p><a href="https://book.douban.com/subject/25981535/" target="_blank" rel="noopener">1368个单词就够了</a><br><img data-src="https://img3.doubanio.com/lpic/s27527225.jpg" alt></p>
 <blockquote>
 <p>中国人英语学习的困境在于缺乏英语思维！<br>运用英语思维，1368个单词就够你表达所有你想要表达的内容！</p>
 </blockquote>
 <p>小儿子继承了她所有的财产</p>
 <p>Her youngest son  inherited all her property.</p>
 <p>Her youngest son got all her property.<br>She gave all the property to her youngest son.<br>All her property goes to her youngest son.<br>She gave her youngest son all she had.</p>
-<p><a href="http://news.iciba.com/study/bilingual/1576034.shtml" target="_blank" rel="noopener">美国人口语常用的10个英语形容词</a><br><img alt data-src="http://cdn.iciba.com/news/2017/0417/20170417110842300.jpg"><br>美国人比较喜欢夸张，常常用这些词来表达赞叹，也可表达对人和事的赞美。如果别人问起你对某事或某人的印象，或者问起你的日子过得如何，你都可以随时脱口而出其中一个词!</p>
+<p><a href="http://news.iciba.com/study/bilingual/1576034.shtml" target="_blank" rel="noopener">美国人口语常用的10个英语形容词</a><br><img data-src="http://cdn.iciba.com/news/2017/0417/20170417110842300.jpg" alt><br>美国人比较喜欢夸张，常常用这些词来表达赞叹，也可表达对人和事的赞美。如果别人问起你对某事或某人的印象，或者问起你的日子过得如何，你都可以随时脱口而出其中一个词!</p>
 <ol>
 <li><p>amazing: 使人十分惊奇的;令人惊讶的<br>Your English is amazing. 你的英语太让人吃惊了。</p>
 </li>
@@ -803,7 +773,7 @@
 <li><p>wonderful: 精彩的;绝妙的;令人惊奇的<br>She has a wonderful memory. 她的记忆力惊人。<br>内容来源：英语语法网<br>图片来源：高品图像</p>
 </li>
 </ol>
-<h2 id="Pronunciation"><a href="#Pronunciation" class="headerlink" title="Pronunciation"></a>Pronunciation</h2><h3 id="你为什么要学好英语口语"><a href="#你为什么要学好英语口语" class="headerlink" title="你为什么要学好英语口语"></a><a href>你为什么要学好英语口语</a></h3><p><img alt="spokeenglish20180508.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/spokeenglish20180508.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="Pronunciation"><a href="#Pronunciation" class="headerlink" title="Pronunciation"></a>Pronunciation</h2><h3 id="你为什么要学好英语口语"><a href="#你为什么要学好英语口语" class="headerlink" title="你为什么要学好英语口语"></a><a href>你为什么要学好英语口语</a></h3><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/spokeenglish20180508.jpg?imageMogr2/thumbnail/!75p" alt="spokeenglish20180508.jpg"></p>
 <p>Hi, welcome to my oral English course.<br>你好，欢迎来到得到精品课《怎样快速提升英语口语能力》，我是马徐骏。我的职业是英语翻译，同时也是得到App订阅专栏《马徐骏 · 世界名刊速读》的主理人。<br>我是英语专业出身，有十多年英语培训的经验，是新东方8年的明星教师，专门教授口语和听力，担任过杭州新航道的校长。可以说对英语，尤其是口语学习，我是一个行家里手。<br>很多人觉得学好英语很难，尤其是口语，投入了很多时间、精力，花了很多钱，就是不敢开口。你可能会自我检讨，这是词汇量不够、没有语言环境、没有天赋……<br>其实可能是你用错了方法，缺少一个让你建立信心的kindle时刻。 Kindle，就是亚马逊公司出品的阅读器的那个单词，它有点燃和激发的意思。Kindle时刻也就是点亮你潜能的转折点。<br>我在得到App开设这门精品课，就是为了用最快的速度帮你找到你的kindle时刻。跟着我，你会发现突破口语并不难。<br>你可能不敢相信，听一个小时就能改善口语？我想向你强调，这门口语课和市面上的口语课至少有两点不同。</p>
 <ol>
 <li>这门课立竿见影。 我会把英语口语中常见的错误，和正确的方式都通过示范告诉你。听完这一个多小时，只要你在听课的过程中跟着我练，你就会感受到自己发音地道了，能摆脱你的中式英语发音。</li>
@@ -852,20 +822,20 @@
 <p>要了解语法的本质。本质上来看，语法并不是“规定你应该怎么说”，而是“尽量”“系统地”解释“人们为什么普遍这么说”。所以，不能把语法规则当作数学公式，语法规则并不保证按照它拼凑出来的句子一定有意义并且正确。</p>
 <p>学英语或者干脆直接用英语没有什么捷径，但肯定有窍门。重要的窍门之一就是保持耐心。这么说太笼统。重要的是，凭什么保持耐心呢？凭了解，透彻的了解。刚刚提到语法的本质只是解释“人们为什么普遍这么说”，如此看来，就真没有什么理由去“背”语法规则了；应该做的是去尝试着<strong>“理解”语法规则</strong>，理解了，就等于记住了。采用“理解”这个动作的人，显然比采用“背”这个动作的人更容易拥有耐心。再比如，了解到语法不过是“<strong>尽量地系统化了的有例外的规则之集合</strong>”，就更容易保持耐心了。不再会觉得那些例外可恨了，只觉得那些例外只是自然存在的而已。不再为语法书的体系而感到困惑了，而是清楚能做到这样“颇有体系”已经非常不容易了。</p>
 <h2 id="英语语法超图解"><a href="#英语语法超图解" class="headerlink" title="英语语法超图解"></a>英语语法超图解</h2><p>我们都相信学习是必须的，是生活中每天都要做的事。但正因为如此，学习应该是一件轻松且容易达成的事，而不是一件一想到就痛苦而难以坚持的事。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_082418.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_082418.jpg" alt></p>
 <blockquote>
 <p>英语语法，指英语中语言的结构规律，主要包括“单词、短语、句型和语法”四个要素。以下就根据这四个要素做细节说明：</p>
 </blockquote>
 <h3 id="1-单词"><a href="#1-单词" class="headerlink" title="1. 单词"></a>1. 单词</h3><p>英语单词依据在句子中的作用，可分为八大词类，分别为名词、代词、形容词、动词、副词、介词、连词和感叹词。</p>
 <h4 id="1-1-名词"><a href="#1-1-名词" class="headerlink" title="1-1. 名词"></a>1-1. 名词</h4><p>表示人、地、事、物等的词。名词分为可数名词和不可数名词，可数名词前要加冠词a/an，不可数名词前要加定冠词the，例如：a book,an apple, the air。</p>
-<h4 id="1-2-代名词"><a href="#1-2-代名词" class="headerlink" title="1-2. 代名词"></a>1-2. 代名词</h4><p>表示代替名词或名词短语的形式用词。代名词可以分为：<br><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_082656.jpg"></p>
-<h4 id="1-3-形容词"><a href="#1-3-形容词" class="headerlink" title="1-3. 形容词"></a>1-3. 形容词</h4><p>用来修饰名词或代词的词。形容词可分为：<br><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_083205.jpg"></p>
-<h4 id="1-4-动词"><a href="#1-4-动词" class="headerlink" title="1-4. 动词"></a>1-4. 动词</h4><p>是用以表示动作或状态的词，例如：be, go, get, have, run, send等。另外，动词在使用上，要特别注意时态和语态的变化。<br><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_083321.jpg"></p>
-<h4 id="1-5-副词"><a href="#1-5-副词" class="headerlink" title="1-5. 副词"></a>1-5. 副词</h4><p>可用来修饰动词、形容词和其他副词，也可以用来修饰短语。副词分为：<br><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_083408.jpg"></p>
-<h4 id="1-6-介词"><a href="#1-6-介词" class="headerlink" title="1-6. 介词"></a>1-6. 介词</h4><p>通常放在名词和代词之前，用来表示名词或代词和其前面词的关系。介词从形式上来分有四种：<br><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_083455.jpg"></p>
-<h4 id="1-7-连词"><a href="#1-7-连词" class="headerlink" title="1-7. 连词"></a>1-7. 连词</h4><p>用来连接单词、短语、从句和句子的词。连词分为：<br><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_083541.jpg"></p>
+<h4 id="1-2-代名词"><a href="#1-2-代名词" class="headerlink" title="1-2. 代名词"></a>1-2. 代名词</h4><p>表示代替名词或名词短语的形式用词。代名词可以分为：<br><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_082656.jpg" alt></p>
+<h4 id="1-3-形容词"><a href="#1-3-形容词" class="headerlink" title="1-3. 形容词"></a>1-3. 形容词</h4><p>用来修饰名词或代词的词。形容词可分为：<br><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_083205.jpg" alt></p>
+<h4 id="1-4-动词"><a href="#1-4-动词" class="headerlink" title="1-4. 动词"></a>1-4. 动词</h4><p>是用以表示动作或状态的词，例如：be, go, get, have, run, send等。另外，动词在使用上，要特别注意时态和语态的变化。<br><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_083321.jpg" alt></p>
+<h4 id="1-5-副词"><a href="#1-5-副词" class="headerlink" title="1-5. 副词"></a>1-5. 副词</h4><p>可用来修饰动词、形容词和其他副词，也可以用来修饰短语。副词分为：<br><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_083408.jpg" alt></p>
+<h4 id="1-6-介词"><a href="#1-6-介词" class="headerlink" title="1-6. 介词"></a>1-6. 介词</h4><p>通常放在名词和代词之前，用来表示名词或代词和其前面词的关系。介词从形式上来分有四种：<br><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_083455.jpg" alt></p>
+<h4 id="1-7-连词"><a href="#1-7-连词" class="headerlink" title="1-7. 连词"></a>1-7. 连词</h4><p>用来连接单词、短语、从句和句子的词。连词分为：<br><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_083541.jpg" alt></p>
 <h4 id="1-8-感叹词"><a href="#1-8-感叹词" class="headerlink" title="1-8. 感叹词"></a>1-8. 感叹词</h4><p>用以表示强烈的情绪和感情的一种声音或叫喊。例如：Hello! Hurrah! Hi! Oh!等等。</p>
-<h3 id="2-短语"><a href="#2-短语" class="headerlink" title="2.短语"></a>2.短语</h3><p>短语是由两个或两个以上的英语单词所组合的词语，不包含主语和动词，可以构成句子的一部分，也可以用来当名词、形容词和副词使用。短语主要分为以下五大种类：<br><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_084025.jpg"></p>
+<h3 id="2-短语"><a href="#2-短语" class="headerlink" title="2.短语"></a>2.短语</h3><p>短语是由两个或两个以上的英语单词所组合的词语，不包含主语和动词，可以构成句子的一部分，也可以用来当名词、形容词和副词使用。短语主要分为以下五大种类：<br><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_084025.jpg" alt></p>
 <h3 id="3-句型"><a href="#3-句型" class="headerlink" title="3. 句型"></a>3. 句型</h3><p>句子是按照一定的语法规律组成的，表达一个完整的意义。一个句子一般由两部分构成，即主语部分和动词部分，这两部分也是句子中最主要的成分。而句子的次要成分包括宾语，形容词，副词，主语补语等。首先介绍一下，在一般语法说明中容易使用到的英语缩写：</p>
 <p>S subject 主语</p>
 <p>V verb 动词</p>
@@ -926,46 +896,46 @@
 <h4 id="规则08：特殊动词随主语变化，另外，英语中有些动词因主语不同而有所变形，例如-be-动词。"><a href="#规则08：特殊动词随主语变化，另外，英语中有些动词因主语不同而有所变形，例如-be-动词。" class="headerlink" title="规则08：特殊动词随主语变化，另外，英语中有些动词因主语不同而有所变形，例如 be 动词。"></a>规则08：特殊动词随主语变化，另外，英语中有些动词因主语不同而有所变形，例如 be 动词。</h4><blockquote>
 <p>I am a good student.（我是一位好学生。）<br>She has a big heart.（她有宽大的胸襟。）<br>They have been to Paris.（他们去过巴黎。）</p>
 </blockquote>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_093109.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_093109.jpg" alt></p>
 <h3 id="一般现在时-vs-一般过去时"><a href="#一般现在时-vs-一般过去时" class="headerlink" title="一般现在时 vs. 一般过去时"></a>一般现在时 vs. 一般过去时</h3><p>一般现在时表示经常性、习惯性的动作、行为或者现在的某种状况；一般过去时表示过去某一时间内发生的动作或存在的状态，常与表示过去的时间副词连用，例如：yesterday, last night/week, amonth ago, in 1990’s等。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_093249.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_093249.jpg" alt></p>
 <h3 id="将来时"><a href="#将来时" class="headerlink" title="将来时"></a>将来时</h3><p>将来时表示将来某个时间要发生的动作或存在的状态，也表示将来经常或者重复发生的动作，常与表示将来的时间副词连用，例如：tomorrow,soon, next week, this afternoon…。</p>
-<h3 id="现在进行时vs-过去进行时vs-将来进行时"><a href="#现在进行时vs-过去进行时vs-将来进行时" class="headerlink" title="现在进行时vs.过去进行时vs.将来进行时"></a>现在进行时vs.过去进行时vs.将来进行时</h3><p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_093444.jpg"></p>
-<h4 id="进行时的句型构成"><a href="#进行时的句型构成" class="headerlink" title="进行时的句型构成"></a>进行时的句型构成</h4><p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_093544.jpg"></p>
-<h4 id="进行时的使用时机"><a href="#进行时的使用时机" class="headerlink" title="进行时的使用时机"></a>进行时的使用时机</h4><h3 id="现在完成时vs-过去完成时vs-将来完成时"><a href="#现在完成时vs-过去完成时vs-将来完成时" class="headerlink" title="现在完成时vs.过去完成时vs.将来完成时"></a>现在完成时vs.过去完成时vs.将来完成时</h3><p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_093739.jpg"></p>
-<h4 id="完成时的句型构成"><a href="#完成时的句型构成" class="headerlink" title="完成时的句型构成"></a>完成时的句型构成</h4><p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_094053.jpg"></p>
-<h4 id="完成时的使用时机"><a href="#完成时的使用时机" class="headerlink" title="完成时的使用时机"></a>完成时的使用时机</h4><h3 id="完成进行时（现在-vs-过去-vs-将来）"><a href="#完成进行时（现在-vs-过去-vs-将来）" class="headerlink" title="完成进行时（现在 vs. 过去 vs. 将来）"></a>完成进行时（现在 vs. 过去 vs. 将来）</h3><p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_094030.jpg"></p>
-<h4 id="完成时的句型构成-1"><a href="#完成时的句型构成-1" class="headerlink" title="完成时的句型构成"></a>完成时的句型构成</h4><p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_094906.jpg"></p>
-<h4 id="完成时的使用时机-1"><a href="#完成时的使用时机-1" class="headerlink" title="完成时的使用时机"></a>完成时的使用时机</h4><h3 id="形容词（含比较级-amp-最高级）"><a href="#形容词（含比较级-amp-最高级）" class="headerlink" title="形容词（含比较级&amp;最高级）"></a>形容词（含比较级&amp;最高级）</h3><p>形容词主要用来修饰名词或不定代词，表示人或事物的性质、状态和特征的词。形容词在句中作定语、补语及修饰从句等。<br><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_095854.jpg"></p>
-<h4 id="形容词的用法"><a href="#形容词的用法" class="headerlink" title="形容词的用法"></a>形容词的用法</h4><p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_100452.jpg"></p>
-<h4 id="形容词的比较级、最高级"><a href="#形容词的比较级、最高级" class="headerlink" title="形容词的比较级、最高级"></a>形容词的比较级、最高级</h4><p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_101509.jpg"></p>
+<h3 id="现在进行时vs-过去进行时vs-将来进行时"><a href="#现在进行时vs-过去进行时vs-将来进行时" class="headerlink" title="现在进行时vs.过去进行时vs.将来进行时"></a>现在进行时vs.过去进行时vs.将来进行时</h3><p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_093444.jpg" alt></p>
+<h4 id="进行时的句型构成"><a href="#进行时的句型构成" class="headerlink" title="进行时的句型构成"></a>进行时的句型构成</h4><p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_093544.jpg" alt></p>
+<h4 id="进行时的使用时机"><a href="#进行时的使用时机" class="headerlink" title="进行时的使用时机"></a>进行时的使用时机</h4><h3 id="现在完成时vs-过去完成时vs-将来完成时"><a href="#现在完成时vs-过去完成时vs-将来完成时" class="headerlink" title="现在完成时vs.过去完成时vs.将来完成时"></a>现在完成时vs.过去完成时vs.将来完成时</h3><p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_093739.jpg" alt></p>
+<h4 id="完成时的句型构成"><a href="#完成时的句型构成" class="headerlink" title="完成时的句型构成"></a>完成时的句型构成</h4><p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_094053.jpg" alt></p>
+<h4 id="完成时的使用时机"><a href="#完成时的使用时机" class="headerlink" title="完成时的使用时机"></a>完成时的使用时机</h4><h3 id="完成进行时（现在-vs-过去-vs-将来）"><a href="#完成进行时（现在-vs-过去-vs-将来）" class="headerlink" title="完成进行时（现在 vs. 过去 vs. 将来）"></a>完成进行时（现在 vs. 过去 vs. 将来）</h3><p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_094030.jpg" alt></p>
+<h4 id="完成时的句型构成-1"><a href="#完成时的句型构成-1" class="headerlink" title="完成时的句型构成"></a>完成时的句型构成</h4><p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_094906.jpg" alt></p>
+<h4 id="完成时的使用时机-1"><a href="#完成时的使用时机-1" class="headerlink" title="完成时的使用时机"></a>完成时的使用时机</h4><h3 id="形容词（含比较级-amp-最高级）"><a href="#形容词（含比较级-amp-最高级）" class="headerlink" title="形容词（含比较级&amp;最高级）"></a>形容词（含比较级&amp;最高级）</h3><p>形容词主要用来修饰名词或不定代词，表示人或事物的性质、状态和特征的词。形容词在句中作定语、补语及修饰从句等。<br><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_095854.jpg" alt></p>
+<h4 id="形容词的用法"><a href="#形容词的用法" class="headerlink" title="形容词的用法"></a>形容词的用法</h4><p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_100452.jpg" alt></p>
+<h4 id="形容词的比较级、最高级"><a href="#形容词的比较级、最高级" class="headerlink" title="形容词的比较级、最高级"></a>形容词的比较级、最高级</h4><p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_101509.jpg" alt></p>
 <h3 id="副词（含比较级-amp-最高级）"><a href="#副词（含比较级-amp-最高级）" class="headerlink" title="副词（含比较级&amp;最高级）"></a>副词（含比较级&amp;最高级）</h3><p>副词主要用来修饰动词、形容词、其他副词或全句，用来说明时间、地点、程度、方式等概念的词。副词在句中主要作状语。副词可以分为时间副词、地点副词、方式副词、程度副词、频率副词等。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_102148.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_102148.jpg" alt></p>
 <h3 id="动词短语（不可分离vs-可分离）"><a href="#动词短语（不可分离vs-可分离）" class="headerlink" title="动词短语（不可分离vs.可分离）"></a>动词短语（不可分离vs.可分离）</h3><p>所谓的动词短语，是指由动词加上介词∕副词所组成的短语。其短语意义有时与原先单独动词的字义不同，并且有多种字义。英语中的动词短语依照结构分为两种：不可分离的动词短语（动词＋介词），及可分离的动词短语（动词＋副词）。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_102328.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_102328.jpg" alt></p>
 <h3 id="系动词vs-感官动词"><a href="#系动词vs-感官动词" class="headerlink" title="系动词vs.感官动词"></a>系动词vs.感官动词</h3><p>系动词是用来补充描述和指明事物的，常用形容词来补充说明主语的不足，使得整句意思更完整，常用的系动词有seem, appear, look, feel,sound ,taste, become, get ,turn, smell, grow等；</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_102444.jpg"><br>感官动词是表示人的感觉的动词, 常见的感官动词有feel, hear, sound ,see, taste, smell, look at等。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_102859.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_102444.jpg" alt><br>感官动词是表示人的感觉的动词, 常见的感官动词有feel, hear, sound ,see, taste, smell, look at等。</p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_102859.jpg" alt></p>
 <h3 id="动名词与不定式"><a href="#动名词与不定式" class="headerlink" title="动名词与不定式"></a>动名词与不定式</h3><p>当一个句子中出现两个动词时，通常会用两种形式呈现。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_103306.jpg"><br>一、动名词：动词＋ing→具有动词及名词的特性，在句子中作为名词使用。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_103332.jpg"><br>二、不定式：to＋动词原形→具有名词、形容</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_103445.jpg"></p>
-<h3 id="连词"><a href="#连词" class="headerlink" title="连词"></a>连词</h3><p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_103528.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_103306.jpg" alt><br>一、动名词：动词＋ing→具有动词及名词的特性，在句子中作为名词使用。</p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_103332.jpg" alt><br>二、不定式：to＋动词原形→具有名词、形容</p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_103445.jpg" alt></p>
+<h3 id="连词"><a href="#连词" class="headerlink" title="连词"></a>连词</h3><p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_103528.jpg" alt></p>
 <h3 id="介词"><a href="#介词" class="headerlink" title="介词"></a>介词</h3><p>介词。是用来表明单词与单词之间的各种关系，主要是用来引出具有名词作用的单词，例如名词、动名词、代名词及名词从句。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_103848.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_103848.jpg" alt></p>
 <h3 id="短语"><a href="#短语" class="headerlink" title="短语"></a>短语</h3><p>短语是指由两个或两个以上的英语单词所组合的词语，其中不包含主语和动词，连在一起具有类似一种词类作用的字群。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_104033.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_104033.jpg" alt></p>
 <h3 id="虚拟语气"><a href="#虚拟语气" class="headerlink" title="虚拟语气"></a>虚拟语气</h3><p>虚拟语气用来表示说的话不是事实或者是不可能发生的情况，而是一种愿望、建议、假设。虚拟语气有三种基本类型：与现在事实相反，与过去事实相反，与将来事实相反。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105324.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105324.jpg" alt></p>
 <h3 id="被动语态"><a href="#被动语态" class="headerlink" title="被动语态"></a>被动语态</h3><p>英语中有两种语态：主动语态和被动语态。主动语态表示主语是动作的执行者。被动语态表示主语是动作的承受者，即行为动作的物件。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105418.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105418.jpg" alt></p>
 <h3 id="附加问句"><a href="#附加问句" class="headerlink" title="附加问句"></a>附加问句</h3><h3 id="关系代名词"><a href="#关系代名词" class="headerlink" title="关系代名词"></a>关系代名词</h3><p>关系代名词是指兼具代名词与连词双重作用的代名词。关系代名词所代表的名词或代名词就做“先行词”，句中该用何种代名词视先行词的种类而定。关系代名词的人称、格、数应该与先行词一致。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105518.jpg"></p>
-<h4 id="普通关系代名词"><a href="#普通关系代名词" class="headerlink" title="普通关系代名词"></a>普通关系代名词</h4><p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105601.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105518.jpg" alt></p>
+<h4 id="普通关系代名词"><a href="#普通关系代名词" class="headerlink" title="普通关系代名词"></a>普通关系代名词</h4><p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105601.jpg" alt></p>
 <h4 id="表示人和物品的关系代名词－that"><a href="#表示人和物品的关系代名词－that" class="headerlink" title="表示人和物品的关系代名词－that"></a>表示人和物品的关系代名词－that</h4><p>关系代名词that 既可以表示人又可以表示物，可以做主格或宾格，不能为所有格。有些场合关系代名词只能用 that，有的场合则不能用that。</p>
-<p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105828.jpg"></p>
-<h3 id="从句（名词从句、形容词从句、副词从句……）"><a href="#从句（名词从句、形容词从句、副词从句……）" class="headerlink" title="从句（名词从句、形容词从句、副词从句……）"></a>从句（名词从句、形容词从句、副词从句……）</h3><h3 id="倒装句"><a href="#倒装句" class="headerlink" title="倒装句"></a>倒装句</h3><p>英语句子通常有两种语序：一种是自然语序，一种是倒装语序。将谓语的一部分或全部置于主语之前的语序叫做倒装语序。<br><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105856.jpg"></p>
-<h4 id="全部倒装"><a href="#全部倒装" class="headerlink" title="全部倒装"></a>全部倒装</h4><p><img alt data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_110004.jpg"></p>
+<p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105828.jpg" alt></p>
+<h3 id="从句（名词从句、形容词从句、副词从句……）"><a href="#从句（名词从句、形容词从句、副词从句……）" class="headerlink" title="从句（名词从句、形容词从句、副词从句……）"></a>从句（名词从句、形容词从句、副词从句……）</h3><h3 id="倒装句"><a href="#倒装句" class="headerlink" title="倒装句"></a>倒装句</h3><p>英语句子通常有两种语序：一种是自然语序，一种是倒装语序。将谓语的一部分或全部置于主语之前的语序叫做倒装语序。<br><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_105856.jpg" alt></p>
+<h4 id="全部倒装"><a href="#全部倒装" class="headerlink" title="全部倒装"></a>全部倒装</h4><p><img data-src="http://oo851m2j1.bkt.clouddn.com/2017-04-11_110004.jpg" alt></p>
 <h4 id="部分倒装"><a href="#部分倒装" class="headerlink" title="部分倒装"></a>部分倒装</h4><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p>[1]<a href="http://zhibimo.com/read/xiaolai/everyone-can-use-english/" target="_blank" rel="noopener">everyone-can-use-english</a><br>[2]<a href="http://zhibimo.com/read/xiaolai/a-new-english-reading-handbook/" target="_blank" rel="noopener">a-new-english-reading-handbook</a><br>[3]<a href="http://www.duokan.com/reader/www/app.html?id=96b2fcc60e3b442595c87aa4f289908c" target="_blank" rel="noopener">英语语法超图解</a><br>[4]<a href="http://www.duokan.com/reader/www/app.html?id=151c181f133e4bf795835e5f05e6780d" target="_blank" rel="noopener">零基础英语语法</a><br>[5]<a href="http://www.duokan.com/reader/www/app.html?id=47e26632bb224d89891b2c58590dad01" target="_blank" rel="noopener">新东方·英语语法新思维</a></p>
 <h2 id="Sentence"><a href="#Sentence" class="headerlink" title="Sentence"></a>Sentence</h2><p><strong>自知者明  自胜者强</strong></p>
 <blockquote>
@@ -987,19 +957,19 @@
 <li>Don’t forget why start off, otherwise it is difficult to achieve the ultimate goal.</li>
 </ul>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170218b.jpg"></p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170218b.jpg" alt></p>
 <p>Many people start a career with a dream, then get busy forgetting it.<br>很多人一开始为了梦想而忙，后来忙得忘了梦想。</p>
 <p>You are never too old to set another goal or to dream a new dream.</p>
 <p>再设一个目标或拥有一个新梦想永远都不晚。</p>
-<p><img alt="0016034196847945444092.png" data-src="http://opb37u589.bkt.clouddn.com/0016034196847945444092.png?imageMogr2/thumbnail/!75p"><br>“Without purpose, the days would have ended, as such days always end, in disintegration.”<br>– Explorer<br>「少了目标，一天还是会结束，它总是以支离破碎的形式结束。」<br>– 理查‧伯德 (探险家)</p>
-<p><img alt="0028581314080288521671.png" data-src="http://opb37u589.bkt.clouddn.com/0028581314080288521671.png?imageMogr2/thumbnail/!75p"><br>“If you set your goals ridiculously high and it’s a failure, you will fail above everyone else’s success.”<br>– James Cameron, Filmmaker<br>「如果你把目标设的不可思议的高，然后失败了，你的失败也会是在别人的成功之上。」<br>– 詹姆斯·卡麦隆 (导演)</p>
-<p><img alt="0037695275231959726851.png" data-src="http://opb37u589.bkt.clouddn.com/0037695275231959726851.png?imageMogr2/thumbnail/!75p"><br>“Our plans miscarry because they have no aim. If one does not know to which port one is sailing, no wind is favorable.”<br>– Lucius Annaeus Seneca, Philosopher<br>「我们的计划不成功是因为没有目标，一个人若不知道他要航向哪个港口，没有风向会是顺风的。」<br>– 塞内卡 (哲学家)</p>
-<p><img alt="004234138419591281972.png" data-src="http://opb37u589.bkt.clouddn.com/004234138419591281972.png?imageMogr2/thumbnail/!75p"><br><img alt="0056596642226613339853.png" data-src="http://opb37u589.bkt.clouddn.com/0056596642226613339853.png?imageMogr2/thumbnail/!75p"><br><img alt="0065723311090119425446.png" data-src="http://opb37u589.bkt.clouddn.com/0065723311090119425446.png?imageMogr2/thumbnail/!75p"></p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170215b.jpg"><br>Be yourself, don’t change for anyone. If they don’t like you at your worst, then they don’t deserve you at your best.<br>勇敢的做自己，不要为任何人而改变。如果他们不能接受最差的你，也不配拥有最好的你。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170216b.jpg"><br>Life is like angry birds.There are always several pigs laughing when you lose.<br>人生就像愤怒的小鸟，当你失败时，总有几头猪在笑！</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170221b.jpg"><br>A reader lives a thousand lives before he dies… The man who never reads lives only one.<br>阅读的人在临终前经历了一千个人生…… 从不阅读的人只经历一个人生。</p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/0016034196847945444092.png?imageMogr2/thumbnail/!75p" alt="0016034196847945444092.png"><br>“Without purpose, the days would have ended, as such days always end, in disintegration.”<br>– Explorer<br>「少了目标，一天还是会结束，它总是以支离破碎的形式结束。」<br>– 理查‧伯德 (探险家)</p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/0028581314080288521671.png?imageMogr2/thumbnail/!75p" alt="0028581314080288521671.png"><br>“If you set your goals ridiculously high and it’s a failure, you will fail above everyone else’s success.”<br>– James Cameron, Filmmaker<br>「如果你把目标设的不可思议的高，然后失败了，你的失败也会是在别人的成功之上。」<br>– 詹姆斯·卡麦隆 (导演)</p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/0037695275231959726851.png?imageMogr2/thumbnail/!75p" alt="0037695275231959726851.png"><br>“Our plans miscarry because they have no aim. If one does not know to which port one is sailing, no wind is favorable.”<br>– Lucius Annaeus Seneca, Philosopher<br>「我们的计划不成功是因为没有目标，一个人若不知道他要航向哪个港口，没有风向会是顺风的。」<br>– 塞内卡 (哲学家)</p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/004234138419591281972.png?imageMogr2/thumbnail/!75p" alt="004234138419591281972.png"><br><img data-src="http://opb37u589.bkt.clouddn.com/0056596642226613339853.png?imageMogr2/thumbnail/!75p" alt="0056596642226613339853.png"><br><img data-src="http://opb37u589.bkt.clouddn.com/0065723311090119425446.png?imageMogr2/thumbnail/!75p" alt="0065723311090119425446.png"></p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170215b.jpg" alt><br>Be yourself, don’t change for anyone. If they don’t like you at your worst, then they don’t deserve you at your best.<br>勇敢的做自己，不要为任何人而改变。如果他们不能接受最差的你，也不配拥有最好的你。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170216b.jpg" alt><br>Life is like angry birds.There are always several pigs laughing when you lose.<br>人生就像愤怒的小鸟，当你失败时，总有几头猪在笑！</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170221b.jpg" alt><br>A reader lives a thousand lives before he dies… The man who never reads lives only one.<br>阅读的人在临终前经历了一千个人生…… 从不阅读的人只经历一个人生。</p>
 <p><strong>“一日不读书，无人看得出；一周不读书，开始会爆粗；一月不读书，智商输给猪。”</strong></p>
-<h2 id="The-Sayings-of-Confucius"><a href="#The-Sayings-of-Confucius" class="headerlink" title="The Sayings of Confucius"></a><a href="http://xue.youdao.com/sw/m/1305739?keyfrom=dict2.index" target="_blank" rel="noopener">The Sayings of Confucius</a></h2><p><img alt data-src="https://oimagec5.ydstatic.com/image?id=-5119860809705078677&amp;product=dict&amp;_w=1000&amp;_h=365&amp;originWidth=1000&amp;originHeight=365"></p>
+<h2 id="The-Sayings-of-Confucius"><a href="#The-Sayings-of-Confucius" class="headerlink" title="The Sayings of Confucius"></a><a href="http://xue.youdao.com/sw/m/1305739?keyfrom=dict2.index" target="_blank" rel="noopener">The Sayings of Confucius</a></h2><p><img data-src="https://oimagec5.ydstatic.com/image?id=-5119860809705078677&amp;product=dict&amp;_w=1000&amp;_h=365&amp;originWidth=1000&amp;originHeight=365" alt></p>
 <p>性相近也，习相远也。</p>
 <p>By nature, men are nearly alike; by practice, they get to be wide apart.</p>
 <p>过而不改，是谓过矣。</p>
@@ -1008,7 +978,7 @@
 <p>What you do not want done to yourself, do not do to others.</p>
 <p>言必信，行必果。</p>
 <p>Keep what you say and carry out what you do.</p>
-<p><img alt data-src="https://oimageb8.ydstatic.com/image?id=-1835166686911985959&amp;product=dict&amp;_w=640&amp;_h=344&amp;originWidth=640&amp;originHeight=344"></p>
+<p><img data-src="https://oimageb8.ydstatic.com/image?id=-1835166686911985959&amp;product=dict&amp;_w=640&amp;_h=344&amp;originWidth=640&amp;originHeight=344" alt></p>
 <p>君子以文会友，以友辅仁。</p>
 <p>The superior man on grounds of culture meets with his friends, and by their friendship helps his virtue.</p>
 <p>三军可夺帅也，匹夫不可夺志也。</p>
@@ -1017,7 +987,7 @@
 <p>A youth is to be regarded with respect. How do you know that his future will not be equal to our present?</p>
 <p>有朋自远方来，不亦乐乎？</p>
 <p>Is it not delightful to have friends coming from distant quarters?</p>
-<p><img alt data-src="https://oimageb2.ydstatic.com/image?id=-8262356735949712465&amp;product=dict&amp;_w=1000&amp;_h=989&amp;originWidth=1000&amp;originHeight=989"></p>
+<p><img data-src="https://oimageb2.ydstatic.com/image?id=-8262356735949712465&amp;product=dict&amp;_w=1000&amp;_h=989&amp;originWidth=1000&amp;originHeight=989" alt></p>
 <p>人不知而不愠，不亦君子乎？</p>
 <p>Is he not a man of complete virtue, who feels no discomposure though men may take no note of him?</p>
 <p>父在，观其志。父没，观其行。三年无改于父之道，可谓孝矣。</p>
@@ -1028,7 +998,7 @@
 <p>In the Book of Poetry are three hundred pieces, but the design of them all may be embraced in one sentence– “Having no depraved thoughts.”</p>
 <p>关睢乐而不淫，哀而不伤。</p>
 <p>The Kwan Tsu is expressive of enjoyment without being licentious, and of grief without being hurtfully excessive.</p>
-<p><img alt data-src="https://oimagec7.ydstatic.com/image?id=-675694024399797857&amp;product=dict&amp;_w=368&amp;_h=373&amp;originWidth=368&amp;originHeight=373"></p>
+<p><img data-src="https://oimagec7.ydstatic.com/image?id=-675694024399797857&amp;product=dict&amp;_w=368&amp;_h=373&amp;originWidth=368&amp;originHeight=373" alt></p>
 <p>父母在，不远游，游必有方。</p>
 <p>While his parents are alive, the son may not go abroad to a distance. If he does go abroad, he must have a fixed place to which he goes.</p>
 <p>德不孤，必有邻。</p>
@@ -1039,7 +1009,7 @@
 <p>Incomparable indeed was Hui! A handful of rice to eat, a gourdful of water to drink, living in a mean street. Others would have found it unendurable depressing, but to Hui’s cheerfulness it made no difference at all. Incomparable indeed was Hui.</p>
 <p>知者乐水，仁者乐山。知者动，仁者静。知者乐，仁者寿。</p>
 <p>The wise find pleasure in water; the virtuous find pleasure in hills. The wise are active; the virtuous are tranquil. The wise are joyful; the virtuous are long-lived.</p>
-<p><img alt data-src="https://oimageb2.ydstatic.com/image?id=5385143214236594374&amp;product=dict&amp;_w=640&amp;_h=641&amp;originWidth=640&amp;originHeight=641"></p>
+<p><img data-src="https://oimageb2.ydstatic.com/image?id=5385143214236594374&amp;product=dict&amp;_w=640&amp;_h=641&amp;originWidth=640&amp;originHeight=641" alt></p>
 <p>逝者如斯夫，不舍昼夜。</p>
 <p>It passes on just like this, not ceasing day or night!</p>
 <p>食不厌精，脍不厌细。</p>
@@ -1050,356 +1020,356 @@
 <p>If a man take no thought about what is distant, he will find sorrow near at hand.</p>
 <p>君子有三戒。少之时，血气未定，戒之在色。及其壮也，血气方刚，戒之在斗。及其老也，血气既衰，戒之在得。</p>
 <p>There are three things which the superior man guards against. In youth, when the physical powers, are not yet settled, he guards against lust. When he is strong and the physical powers are full of vigor, he guards against quarrelsomeness. When he is old, and the animal powers are decayed, he guards against covetousness.</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171005b.jpg"><br>The easiest thing to be in the world is you. The most difficult thing to be is what other people want you to be. Don’t let them put you in that position.</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171005b.jpg" alt><br>The easiest thing to be in the world is you. The most difficult thing to be is what other people want you to be. Don’t let them put you in that position.</p>
 <blockquote>
 <p>世上最简单的事就是做自己，最困难的事是成为别人眼中的自己。别让他人使自己陷入困难的境地。</p>
 </blockquote>
 <blockquote>
 <p>词霸小编：<br>【心情不好时对自己说】<br>1、用心做自己该做的事；<br>2、每个人都有自己的活法；<br>3、别总是自己跟自己过不去；<br>4、不要过于计较别人的评价；<br>5、不妨暂时丢开烦心事；<br>6、自己感觉幸福就是幸福。<br>7、最重要的是今天开心；<br>8、木已成舟便要顺其自然；<br>9、不必一味讨好别人；<br>10、喜欢自己才会拥抱生活。</p>
 </blockquote>
-<p><img alt data-src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D250/sign=8dba0a375d6034a82de2bf84fb1249d9/b812c8fcc3cec3fde89c2443d788d43f87942761.jpg"><br>We wish each other a long life so as to share the beauty of this graceful moonlight, even though miles apart.</p>
+<p><img data-src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D250/sign=8dba0a375d6034a82de2bf84fb1249d9/b812c8fcc3cec3fde89c2443d788d43f87942761.jpg" alt><br>We wish each other a long life so as to share the beauty of this graceful moonlight, even though miles apart.</p>
 <blockquote>
 <p>但愿人长久，千里共婵娟</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171118b.jpg"><br>The most important thing is to enjoy life - to be happy.<br>最重要的是享受生活 - 要快乐。——赫本<br>词霸小编：我爱哭的时候便哭，想笑的时候便笑，只要这一切出于自然。我不求深刻，只求简单。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171210b.jpg"><br>A good head and a good heart are always a formidable combination.</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171118b.jpg" alt><br>The most important thing is to enjoy life - to be happy.<br>最重要的是享受生活 - 要快乐。——赫本<br>词霸小编：我爱哭的时候便哭，想笑的时候便笑，只要这一切出于自然。我不求深刻，只求简单。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171210b.jpg" alt><br>A good head and a good heart are always a formidable combination.</p>
 <blockquote>
 <p>强大的头脑加上善良的内心永远是令人敬畏的。</p>
 </blockquote>
 <p>词霸小编：有一天你会明白，善良比聪明更难。聪明是一种天赋，而善良是一种选择。善良拔掉牙齿就是软弱，善良带上武器就是恶意。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171224b.jpg"><br>If you work really hard and you’re kind, amazing things will happen.<br>你若勤勤恳恳，又善良，那好事总会发生在你身上的。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171223b.jpg"><br>From small beginning come great things.<br>伟大始于渺小。<br>词霸小编：千万不要忘记：我们飞翔得越高，我们在那些不能飞翔的人眼中的形象越是渺小。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171230b.jpg"><br>If you helped others, never say it. If you were helped, never forget it.<br>施人之恩，不发于言。受人之惠，不忘于心。<br>词霸小编：滴水之恩涌泉相报，涌泉之恩无以为报，江湖的规矩是，无以为报时我们一般以身相许。我不干，你们干吗？</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171228b.jpg"><br>Love does not consist of gazing at each other, but in looking outward together in the same direction.<br>爱不是彼此凝视，而是一起注视同一个方向。<br>词霸小编：下大雪的时候，我们不打伞一直走，是不是就可以一路到白头?</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20180127b.jpg"><br>There are both views and traps everywhere in life.Make yourself strong enough to endure impending storms.<br>人生处处是风景，也处处是陷阱。努力使自己变得强大起来，当风雨来时才能够抵挡。<br>词霸小编：人生就是在不断做选择题，对了就是风景，错了便是陷阱，你的选择就是你的人生，你的人生就是你的选择。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171227b.jpg"><br>When it is dark enough, you can see the stars.<br>只有足够黑暗的时候，才能看见星星。<br>词霸小编：生活坏到一定程度就会好起来，挺一挺，就过去了！某一天再回首，你能明白给你痛苦的人和事，却也是你的救赎。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171121b.jpg"><br>Let Plato be your friend, and Aristotle, but more let your friend be truth.<br>与亚里士多德为友,与柏拉图为友,更与真理为友。——《哈佛大学校训》<br>词霸小编：终于知道为什么一读书就困了，因为读书，是梦开始的地方…</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171115b.jpg"><br>Everyone’s heart is a piece of sea, shining bottomless blue.<br>每个人的心都是一片海，闪耀着深不见底的幽蓝。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171224b.jpg" alt><br>If you work really hard and you’re kind, amazing things will happen.<br>你若勤勤恳恳，又善良，那好事总会发生在你身上的。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171223b.jpg" alt><br>From small beginning come great things.<br>伟大始于渺小。<br>词霸小编：千万不要忘记：我们飞翔得越高，我们在那些不能飞翔的人眼中的形象越是渺小。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171230b.jpg" alt><br>If you helped others, never say it. If you were helped, never forget it.<br>施人之恩，不发于言。受人之惠，不忘于心。<br>词霸小编：滴水之恩涌泉相报，涌泉之恩无以为报，江湖的规矩是，无以为报时我们一般以身相许。我不干，你们干吗？</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171228b.jpg" alt><br>Love does not consist of gazing at each other, but in looking outward together in the same direction.<br>爱不是彼此凝视，而是一起注视同一个方向。<br>词霸小编：下大雪的时候，我们不打伞一直走，是不是就可以一路到白头?</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20180127b.jpg" alt><br>There are both views and traps everywhere in life.Make yourself strong enough to endure impending storms.<br>人生处处是风景，也处处是陷阱。努力使自己变得强大起来，当风雨来时才能够抵挡。<br>词霸小编：人生就是在不断做选择题，对了就是风景，错了便是陷阱，你的选择就是你的人生，你的人生就是你的选择。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171227b.jpg" alt><br>When it is dark enough, you can see the stars.<br>只有足够黑暗的时候，才能看见星星。<br>词霸小编：生活坏到一定程度就会好起来，挺一挺，就过去了！某一天再回首，你能明白给你痛苦的人和事，却也是你的救赎。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171121b.jpg" alt><br>Let Plato be your friend, and Aristotle, but more let your friend be truth.<br>与亚里士多德为友,与柏拉图为友,更与真理为友。——《哈佛大学校训》<br>词霸小编：终于知道为什么一读书就困了，因为读书，是梦开始的地方…</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171115b.jpg" alt><br>Everyone’s heart is a piece of sea, shining bottomless blue.<br>每个人的心都是一片海，闪耀着深不见底的幽蓝。</p>
 <blockquote>
 <p>词霸小编：心小了，所有的小事就大了；心大了，所有的大事都小了；看淡世事沧桑，内心安然无恙。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171027b.jpg"><br>Before you talk, listen; before you react, think; before you spend, earn; before you quit, try.<br>在你说话之前，先听；在你回应之前，先想；在你消费之前，先挣；在你退出之前，先试。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171026b.jpg"><br>Let us always meet each other with a smile,for the smile is the beginning of love.<br>遇到对方的时候都微笑一下吧，因为微笑是爱的开始。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171010b.jpg"><br>No matter when you start, it is important that you do not stop after starting. No matter when you end, it is more important that you do not regret after ending.<br>不论你什么时候开始，重要的是开始之后就不要轻言放弃;不论你什么时候结束，重要的是结束之后就不要后悔。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171027b.jpg" alt><br>Before you talk, listen; before you react, think; before you spend, earn; before you quit, try.<br>在你说话之前，先听；在你回应之前，先想；在你消费之前，先挣；在你退出之前，先试。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171026b.jpg" alt><br>Let us always meet each other with a smile,for the smile is the beginning of love.<br>遇到对方的时候都微笑一下吧，因为微笑是爱的开始。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171010b.jpg" alt><br>No matter when you start, it is important that you do not stop after starting. No matter when you end, it is more important that you do not regret after ending.<br>不论你什么时候开始，重要的是开始之后就不要轻言放弃;不论你什么时候结束，重要的是结束之后就不要后悔。</p>
 <blockquote>
 <p>词霸小编：放弃该放弃的是无奈；放弃不该放弃的是无能；不放弃该放弃的是无知；不放弃不该放弃的是执着。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20180120b.jpg"><br>When you’re down and out, remember to <strong>keep your head up</strong>. When you’re up and well, remember to <strong>keep your feet down</strong>.<br>穷困潦倒时，要抬头挺胸；春风得意时，要脚踏实地。<br>词霸小编：失意与得意，是人生必不可的章节，唯有做的就是不忘初心，脚踏实地。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171009b.jpg"><br>Crouch down and hold your knees when you are depressed. Forgive others and yourself.<br>郁闷的时候蹲下来抱抱自己，原谅别人也原谅自己。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20180120b.jpg" alt><br>When you’re down and out, remember to <strong>keep your head up</strong>. When you’re up and well, remember to <strong>keep your feet down</strong>.<br>穷困潦倒时，要抬头挺胸；春风得意时，要脚踏实地。<br>词霸小编：失意与得意，是人生必不可的章节，唯有做的就是不忘初心，脚踏实地。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171009b.jpg" alt><br>Crouch down and hold your knees when you are depressed. Forgive others and yourself.<br>郁闷的时候蹲下来抱抱自己，原谅别人也原谅自己。</p>
 <blockquote>
 <p>词霸小编：习惯郁闷，便一直郁闷！习惯阳光，便会阳光！</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171014b.jpg"><br>If you’re lucky enough to be different, don’t ever change.<br>与众不同的你是幸运的，何必让自己变得与别人一样。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171014b.jpg" alt><br>If you’re lucky enough to be different, don’t ever change.<br>与众不同的你是幸运的，何必让自己变得与别人一样。</p>
 <blockquote>
 <p>词霸小编：当你自己选择了与众不同的生活方式之后，又何必去在乎别人以与众不同的眼光来看你。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171101b.jpg"><br>Each moment in history is a fleeting time, precious and unique.<br>历史巨轮飞转，分分秒秒的时间都十分宝贵，也独具意义。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171101b.jpg" alt><br>Each moment in history is a fleeting time, precious and unique.<br>历史巨轮飞转，分分秒秒的时间都十分宝贵，也独具意义。</p>
 <blockquote>
 <p>词霸小编：少年的时间就是晃。用大把的时间彷徨，只用几个瞬间来成长。不知你现在在彷徨还是成长？</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171006b.jpg"><br>Life’s like a play: It’s not the length, but the excellence of the acting that matters.<br>生活如一个剧本：重要的不是长度而是演出精彩与否。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171006b.jpg" alt><br>Life’s like a play: It’s not the length, but the excellence of the acting that matters.<br>生活如一个剧本：重要的不是长度而是演出精彩与否。</p>
 <blockquote>
 <p>词霸小编：别在生活里找你想要的，要去感受生活里发生的东西。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170903b.jpg"><br>Love yourself. It is important to stay positive because beauty comes from the inside.<br>爱自己，保持乐观很重要，因为美丽是由内而外散发出来的。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170903b.jpg" alt><br>Love yourself. It is important to stay positive because beauty comes from the inside.<br>爱自己，保持乐观很重要，因为美丽是由内而外散发出来的。</p>
 <blockquote>
 <p>词霸小编：美丽的女人经得起时间的推敲。时间不是美丽的敌人，而只是美丽的代理人。它让美丽在不同的时刻呈现出不同的状态，从单纯走向深邃。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171004b.jpg"><br>As the bright moon shines over the sea,From far away you share this moment with me.<br>海上生明月，天涯共此时。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171004b.jpg" alt><br>As the bright moon shines over the sea,From far away you share this moment with me.<br>海上生明月，天涯共此时。</p>
 <blockquote>
 <p>词霸小编：一斤花生二斤枣，好运经常跟你跑；三斤苹果四斤梨，吉祥和你不分离；五斤橘子六斤蕉，大捆钞票进腰包；祝中秋快乐！</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170928b.jpg"><br>To be a happy man: read, travel, work hard and care for the body and mind.<br>做一个幸福的人，读书，旅行，努力工作，关心身体和心情。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170928b.jpg" alt><br>To be a happy man: read, travel, work hard and care for the body and mind.<br>做一个幸福的人，读书，旅行，努力工作，关心身体和心情。</p>
 <blockquote>
 <p>词霸小编：待到老了，坐在摇椅上，戴上花镜读书看报，品茗喝茶，看夕阳西下，幸福足矣~~~</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170929b.jpg"><br>The best way to find out if you can trust somebody is to trust them. - Hemingway<br>确认某些人是否可以信任的最好的办法，就是信任他们。——海明威</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170929b.jpg" alt><br>The best way to find out if you can trust somebody is to trust them. - Hemingway<br>确认某些人是否可以信任的最好的办法，就是信任他们。——海明威</p>
 <blockquote>
 <p>词霸小编：如果你信任我，就不需要我说什么，也不需要费心求证。因为你的心会告诉你，这种事我不屑于做。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170927b.jpg"><br>We laughed and kept saying “See you soon”. But inside we both knew we’d never see each other again.<br>虽然我们互相笑着说“回头见”，但是我们都心知肚明，分离即永别。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170927b.jpg" alt><br>We laughed and kept saying “See you soon”. But inside we both knew we’d never see each other again.<br>虽然我们互相笑着说“回头见”，但是我们都心知肚明，分离即永别。</p>
 <blockquote>
 <p>词霸小编：当你真的学会了放手，那纵算是一生云水漂泊，亦是可淡若清风，自在安宁。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170924b.jpg"><br>My life didn’t please me, so I created my life. - Coco Chanel<br>我的生活不曾取悦于我，所以我创造了自己的生活。——加布里埃·香奈儿</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170924b.jpg" alt><br>My life didn’t please me, so I created my life. - Coco Chanel<br>我的生活不曾取悦于我，所以我创造了自己的生活。——加布里埃·香奈儿</p>
 <blockquote>
 <p>词霸小编：生活总是这样，不能叫人处处都满意。但我们还要热情地活下去。人活一生，值得爱的东西很多，不要因为一个不满意，就灰心。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170922b.jpg"><br>You have to believe in yourself. That’s the secret of success.–Chaplin<br>人必须相信自己，这是成功的秘诀。——卓别林</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170922b.jpg" alt><br>You have to believe in yourself. That’s the secret of success.–Chaplin<br>人必须相信自己，这是成功的秘诀。——卓别林</p>
 <blockquote>
 <p>词霸小编：【词汇辨析】1. believe sb与believe in sb区别：believe sb：可译为”相信……说的是真的“；believe in sb：可译为“信任，信赖，对……有信心”。如：I believe him, though his story sounds unlikely. 我相信他说的话，尽管听起来不大可能。 ；Some of his supporters have stopped believing in him. 他的一些支持者已经对他失去信心。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170921b.jpg"><br>Unless you try to do something beyond what you have already mastered, you will never grow.<br>只有去尝试做一些你不熟悉的事情你才能有所成长。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170921b.jpg" alt><br>Unless you try to do something beyond what you have already mastered, you will never grow.<br>只有去尝试做一些你不熟悉的事情你才能有所成长。</p>
 <blockquote>
 <p>词霸小编：一个从未犯错的人是因为他不曾尝试新鲜事物。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170920b.jpg"><br>He, who is content with the least, is the richest, for content is the wealth of nature.<br>知足常乐者最富有，因为知足本身就是天然的财富。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170920b.jpg" alt><br>He, who is content with the least, is the richest, for content is the wealth of nature.<br>知足常乐者最富有，因为知足本身就是天然的财富。</p>
 <blockquote>
 <p>词霸小编：生活上要知足，学习上要不知足，工作上要知不足。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170918b.jpg"><br>Don’t let your pride leave you all alone.<br>别让你的骄傲使你孤独一人。——《吸血鬼日记》</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170918b.jpg" alt><br>Don’t let your pride leave you all alone.<br>别让你的骄傲使你孤独一人。——《吸血鬼日记》</p>
 <blockquote>
 <p>词霸小编：一个骄傲的人，结果总是在骄傲里毁灭了自己。——莎士比亚</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170919b.jpg"><br>Some scenery, once to see into the heart, even in the moment, is eternal.<br>有些风景，一旦入眼入心，即便刹那，也是永恒。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170919b.jpg" alt><br>Some scenery, once to see into the heart, even in the moment, is eternal.<br>有些风景，一旦入眼入心，即便刹那，也是永恒。</p>
 <blockquote>
 <p>词霸小编：有些人的生命没有风景，是因为他只在别人造好的、最方便的水管里流过来流过去。你不要理那些水管，你要真的流经一个又一个风景，你才会是一条河。——蔡康永</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170914b.jpg"><br>Be strong, believe in who you are. Be strong, believe in what you feel.<br>强大一些，要相信你自己。坚定一些，要相信自己的感觉。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170914b.jpg" alt><br>Be strong, believe in who you are. Be strong, believe in what you feel.<br>强大一些，要相信你自己。坚定一些，要相信自己的感觉。</p>
 <blockquote>
 <p>词霸小编：<strong>张牙舞爪的人，往往是脆弱的。因为真正强大的人，是自信的，自信就会温和，温和就会坚定。</strong></p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170915b.jpg"><br>I can’t give you the world,but I can give you my world.<br>我不能给你全世界，但是我的世界可以全部给你。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170915b.jpg" alt><br>I can’t give you the world,but I can give you my world.<br>我不能给你全世界，但是我的世界可以全部给你。</p>
 <blockquote>
 <p>词霸小编：人的生存只有两种：“美丽的活着”，亦或“为美丽的人活着”。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170916b.jpg"><br>Sometimes you just have to hold your head up high, try not to cry, and say goodbye！<br>有时候，你要做的就是，昂起自己的头，不让眼泪掉下来，然后潇洒的说一声：再见……</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170916b.jpg" alt><br>Sometimes you just have to hold your head up high, try not to cry, and say goodbye！<br>有时候，你要做的就是，昂起自己的头，不让眼泪掉下来，然后潇洒的说一声：再见……</p>
 <blockquote>
 <p>词霸小编：红尘潇洒，独自前行，但尽人事，莫问前程。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170911b.jpg"><br>Anything is possible if you have got enough nerve.<br>如果你有足够的勇气，那么一切皆有可能。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170911b.jpg" alt><br>Anything is possible if you have got enough nerve.<br>如果你有足够的勇气，那么一切皆有可能。</p>
 <blockquote>
 <p>词霸小编：你以为挑起生活的担子是勇气，其实去过自己真正想要的生活才更需要勇气。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170912b.jpg"><br>Try to hold the right hand with your left hand, and give yourself the most simple warmth. We should learn to get it by ourselves instead of craving for warmth from others.<br>试着用左手握住右手，给自己最简单的温暖，不再奢求别人的给予，开始学着自己给自己。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170912b.jpg" alt><br>Try to hold the right hand with your left hand, and give yourself the most simple warmth. We should learn to get it by ourselves instead of craving for warmth from others.<br>试着用左手握住右手，给自己最简单的温暖，不再奢求别人的给予，开始学着自己给自己。</p>
 <blockquote>
 <p>词霸小编：当你长大时，你会发现你有两只手，一只用来帮助自己，一只用来帮助别人。我不要奢求别人的帮助，而要慷慨地给予别人帮助。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170913b.jpg"><br>I don’t really know where I’m going, but I hope I can go far.<br>我不太肯定我的方向，但是我希望自己能走的远一点。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170913b.jpg" alt><br>I don’t really know where I’m going, but I hope I can go far.<br>我不太肯定我的方向，但是我希望自己能走的远一点。</p>
 <blockquote>
 <p>词霸小编：你一定得认识到自己想往哪个方向发展，然后一定要对准那个方向出发，要马上。你再也浪费不起多一秒的时间了，你浪费不起。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170914b.jpg"><br>Be strong, believe in who you are. Be strong, believe in what you feel.<br>强大一些，要相信你自己。坚定一些，要相信自己的感觉。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170914b.jpg" alt><br>Be strong, believe in who you are. Be strong, believe in what you feel.<br>强大一些，要相信你自己。坚定一些，要相信自己的感觉。</p>
 <blockquote>
 <p>词霸小编：张牙舞爪的人，往往是脆弱的。因为真正强大的人，是自信的，自信就会温和，温和就会坚定。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170821b.jpg"><br>Don’t try so hard, the best things come when you least expect them to.<br>不要着急，最好的总会在最不经意的时候出现。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170821b.jpg" alt><br>Don’t try so hard, the best things come when you least expect them to.<br>不要着急，最好的总会在最不经意的时候出现。</p>
 <blockquote>
 <p>词霸小编：所有故事都会有一个好的结局，如果没有，别急，说明故事还没到结局。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170822b.jpg"><br>For many things, you only need to close your eyes and feel them with your heart.<br>对于很多事情，你只需紧闭双眼，用心去感受。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170822b.jpg" alt><br>For many things, you only need to close your eyes and feel them with your heart.<br>对于很多事情，你只需紧闭双眼，用心去感受。</p>
 <blockquote>
 <p>词霸小编：用心倾听，生活中的点点快乐，用心感受，生活中的滴滴浓情，留住每一个精彩瞬间！</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170725b.jpg"><br>From tomorrow on, I will be a happy man; grooming, chopping,and traveling all over the world.<br>从明天起，做一个幸福的人；喂马，劈柴，周游世界。——《面朝大海 春暖花开》</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170725b.jpg" alt><br>From tomorrow on, I will be a happy man; grooming, chopping,and traveling all over the world.<br>从明天起，做一个幸福的人；喂马，劈柴，周游世界。——《面朝大海 春暖花开》</p>
 <blockquote>
 <p>词霸小编：【背景知识】《面朝大海，春暖花开》是海子于1989年所写的一首抒情诗。全诗共三节，第一节表现了诗人对质朴、单纯而自由的人生境界的向往，对“永恒”、未知世界的探寻精神。第二节写诗人找到幸福后无法抑制的喜悦之情。第三节写诗人对世界的祝福。诗人将直抒胸臆与暗示、象征手法结合起来，使全诗既清澈又深厚，既明朗又含蓄，畅快淋漓而又凝重、丰富，抒发了诗人的向往幸福而又孤独凄凉之情。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170825b.jpg"><br>Don’t wait for the perfect moment. Take the moment and make it perfect.<br>不要去等待完美的时刻，把握好现在，让此刻变完美。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170825b.jpg" alt><br>Don’t wait for the perfect moment. Take the moment and make it perfect.<br>不要去等待完美的时刻，把握好现在，让此刻变完美。</p>
 <blockquote>
 <p>词霸小编：世界上的事情，最忌讳的就是十全十美，你看那天上的月亮，一旦圆满了，马上就要亏厌；树上的果子，一旦熟透了，马上就要坠落。凡事总要稍留欠缺，才能持恒。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170827b.jpg"><br>Always forgive your enemies - nothing annoys them so much.<br>永远宽恕你的敌人，没有什么能比这个更让他们恼怒的了。——王尔德</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170827b.jpg" alt><br>Always forgive your enemies - nothing annoys them so much.<br>永远宽恕你的敌人，没有什么能比这个更让他们恼怒的了。——王尔德</p>
 <blockquote>
 <p>词霸小编：原谅他人的错误，不一定全是美德。漠视自己的错误，倒是一种最不负责的释放。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170823b.jpg"><br>Complaining is like vomiting. Afterwards you feel better but everyone around you feels sick.<br>抱怨就跟呕吐一样。你自己是爽了，可你周围的人都得跟着遭殃。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170823b.jpg" alt><br>Complaining is like vomiting. Afterwards you feel better but everyone around you feels sick.<br>抱怨就跟呕吐一样。你自己是爽了，可你周围的人都得跟着遭殃。</p>
 <blockquote>
 <p>词霸小编：不要再抱怨这个社会有多么虚伪和不公，因为我们都是帮凶。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170824b.jpg"><br>Most of the shadows of life are caused by standing in our own sunshine.<br>生活中大多数的阴霾归咎于我们挡住了自己的阳光。——爱默生</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170824b.jpg" alt><br>Most of the shadows of life are caused by standing in our own sunshine.<br>生活中大多数的阴霾归咎于我们挡住了自己的阳光。——爱默生</p>
 <blockquote>
 <p>词霸小编：大部份的痛苦，都是不肯离场的结果，没有命定的不幸，只有死不放手的执着。优雅的放手，一切将云开雾散！！！</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170825b.jpg"><br>Don’t wait for the perfect moment. Take the moment and make it perfect.<br>不要去等待完美的时刻，把握好现在，让此刻变完美。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170825b.jpg" alt><br>Don’t wait for the perfect moment. Take the moment and make it perfect.<br>不要去等待完美的时刻，把握好现在，让此刻变完美。</p>
 <blockquote>
 <p>词霸小编：世界上的事情，最忌讳的就是十全十美，你看那天上的月亮，一旦圆满了，马上就要亏厌；树上的果子，一旦熟透了，马上就要坠落。凡事总要稍留欠缺，才能持恒。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170818b.jpg"><br>If you’re prepared to adapt and learn, you can transform.<br>如果你愿意改变和学习，你就能脱胎换骨。——《王牌特工》</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170818b.jpg" alt><br>If you’re prepared to adapt and learn, you can transform.<br>如果你愿意改变和学习，你就能脱胎换骨。——《王牌特工》</p>
 <blockquote>
 <p>词霸小编：此刻打盹，你将做梦；而此刻学习，你将圆梦。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170817b.jpg"><br>挑战愈艰钜，胜利愈辉煌。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170817b.jpg" alt><br>挑战愈艰钜，胜利愈辉煌。</p>
 <blockquote>
 <p>词霸小编：有时候，我们做出的最艰难的决定，最终成为我们做过的最漂亮的事。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170810b.jpg"><br>At the end of your life, you regret the stuff you didn’t do more than the stuff that you did.<br>人到了暮年，比起自己干过的事，会更后悔没有干过的。——《生活大爆炸》</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170810b.jpg" alt><br>At the end of your life, you regret the stuff you didn’t do more than the stuff that you did.<br>人到了暮年，比起自己干过的事，会更后悔没有干过的。——《生活大爆炸》</p>
 <blockquote>
 <p>词霸小编：哪怕是冲动，也就是后悔一阵子，但要是活得太怂呢，就会后悔一辈子。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170716b.jpg"><br>You’ll be amazed at how high you can fly when you leave some of the baggage behind!<br>丢下一些包袱后，你会惊讶到，自己竟能飞得那么高。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170716b.jpg" alt><br>You’ll be amazed at how high you can fly when you leave some of the baggage behind!<br>丢下一些包袱后，你会惊讶到，自己竟能飞得那么高。</p>
 <blockquote>
 <p>词霸小编：我知道何时止步，何时放手，何时前行。但是，我“知道”不代表我“能够”。臣妾做不到啊，你们说怎么办？</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170702b.jpg"><br>I can accept failure,but I can’t accept not trying.<br>我可以接受失败，但我不能接受从不去尝试。——迈克尔·乔丹</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170702b.jpg" alt><br>I can accept failure,but I can’t accept not trying.<br>我可以接受失败，但我不能接受从不去尝试。——迈克尔·乔丹</p>
 <blockquote>
 <p>词霸小编:当你连尝试的勇气都没有，你就不配拥有幸福，也永远不会得到幸福，伤过，痛过，才知道有多深刻。——三毛</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170726b.jpg"><br>The talent for being happy is appreciating and liking what you have, instead of what you don’t have.<br>欣赏和喜欢你拥有的东西，而不是你没有的东西，你才能快乐。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170726b.jpg" alt><br>The talent for being happy is appreciating and liking what you have, instead of what you don’t have.<br>欣赏和喜欢你拥有的东西，而不是你没有的东西，你才能快乐。</p>
 <blockquote>
 <p>词霸小编：【词汇辨析】instead 与 instead of 的区别：1.instead意为“代替”“替代”,作副词用,通常位于句尾。如位于句首时常用逗号与后面隔开。instead 在顺接句子中作“代替”讲,而在转折句子中作“然而”讲。如：Lily isn’t here.Ask Lucy instead.Lily不在这儿,去问Lucy吧。She didn’t answer me,instead,she asked me another question.她没有回答我,反而问了我另外一个问题.2.inst</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170730b.jpg"><br>When you are grateful, fear disappears and abundance appears.<br>当你心存感恩，恐惧会消失，内心也会感到丰裕富足。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170730b.jpg" alt><br>When you are grateful, fear disappears and abundance appears.<br>当你心存感恩，恐惧会消失，内心也会感到丰裕富足。</p>
 <blockquote>
 <p>词霸小编：生活欠我们一个“满意”，我们欠生活一个“知足”。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170805b.jpg"><br>I leave softly, gently,exactly as I came.<br>轻轻的我走了，正如我轻轻的来。——《再别康桥 》</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170805b.jpg" alt><br>I leave softly, gently,exactly as I came.<br>轻轻的我走了，正如我轻轻的来。——《再别康桥 》</p>
 <blockquote>
 <p>词霸小编：《再别康桥》是现代诗人徐志摩脍炙人口的诗篇，是新月派诗歌的代表作品。全诗以离别康桥时感情起伏为线索，抒发了对康桥依依惜别的深情。语言轻盈柔和，形式精巧圆熟，诗人用虚实相间的手法，描绘了一幅幅流动的画面，构成了一处处美妙的意境，细致入微地将诗人对康桥的爱恋，对往昔生活的憧憬，对眼前的无可奈何的离愁，表现得真挚、浓郁、隽永，是徐志摩诗作中的绝唱。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170718b.jpg"><br>The good thing about being young is that you are not experienced enough to know you cannot possibly do the things you are doing.<br>年轻的好处在于，你还没有太多经验，并天生相信一切皆可能。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170718b.jpg" alt><br>The good thing about being young is that you are not experienced enough to know you cannot possibly do the things you are doing.<br>年轻的好处在于，你还没有太多经验，并天生相信一切皆可能。</p>
 <blockquote>
 <p>词霸小编：因为年轻,才有的是时间;因为年轻,才更容易接受新事物;因为年轻,才有最为饱满的激情与最智慧的大脑。趁年轻,相信希望,相信梦想,为自己的梦想拼搏闯一次！！！</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170807b.jpg"><br>Forget all the reasons why it won’t work, and believe the one reason why it will.<br>忘掉所有那些“不可能”的借口，去坚持那一个“可能”的理由。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170807b.jpg" alt><br>Forget all the reasons why it won’t work, and believe the one reason why it will.<br>忘掉所有那些“不可能”的借口，去坚持那一个“可能”的理由。</p>
 <blockquote>
 <p>词霸小编：你可以有一万个理由一蹶不振，但是只要有一个理由你就要坚强站起！</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170812b.jpg"><br>When something bad happens, there’s no point in wishing it had not happened. The only option is to minimize the damage.<br>事情已经发生了，还希望事情不要发生没有意义，当务之急是减少损失。——《唐顿庄园》</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170812b.jpg" alt><br>When something bad happens, there’s no point in wishing it had not happened. The only option is to minimize the damage.<br>事情已经发生了，还希望事情不要发生没有意义，当务之急是减少损失。——《唐顿庄园》</p>
 <blockquote>
 <p>词霸小编：【固定搭配】there is no point in doing something表示“做某事无意义”，类似的搭配还有：“It’s no use doing something”，意思是“做某事没用”。这个句型里的真正的主语是动名词，it为形式主语。如：It is no use crying over spilt milk. / There is no point in crying over spilt milk.</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170809b.jpg"><br>Meet success like a gentleman and disaster like a man.<br>优雅地迎接成功，勇敢地面对挫折。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170809b.jpg" alt><br>Meet success like a gentleman and disaster like a man.<br>优雅地迎接成功，勇敢地面对挫折。</p>
 <blockquote>
 <p>词霸小编：当我们面对一个害怕的人，一桩恐惧的事，一份使人不安的心境时，唯一克服这种感觉的态度，便是面对它。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170722b.jpg"><br>Life is sad at times, but it is up to you to make your own life happy.<br>生活有时是令人沮丧的，但你可以努力让自己过得开心。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170722b.jpg" alt><br>Life is sad at times, but it is up to you to make your own life happy.<br>生活有时是令人沮丧的，但你可以努力让自己过得开心。</p>
 <blockquote>
 <p>词霸小编：很多人不快乐，因为总觉得过去太美好，现在太糟糕，将来又太飘渺。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170723b.jpg"><br>It’s better to try hard to love yourself more than to wait someone to love you.<br>与其等着别人来爱你，不如自己努力爱自己。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170723b.jpg" alt><br>It’s better to try hard to love yourself more than to wait someone to love you.<br>与其等着别人来爱你，不如自己努力爱自己。</p>
 <blockquote>
 <p>词霸小编：对自己好点，因为一辈子不长；对身边的人好点，因为下辈子不一定能够遇见！</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170715b.jpg"><br>May there be enough clouds in your life to make a beautiful sunset.<br>愿你生命中有够多的云翳，来造就一个美丽的黄昏。——冰心</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170715b.jpg" alt><br>May there be enough clouds in your life to make a beautiful sunset.<br>愿你生命中有够多的云翳，来造就一个美丽的黄昏。——冰心</p>
 <blockquote>
 <p>词霸小编：此句是个比喻句，意思是说希望你有一个丰富多彩的人生经历，唯此你才能真正体会到人生的美好。这里的“云翳”喻指丰富多彩的经历，体验。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170625b.jpg"><br>You have to believe in yourself when no one else does.<br>你必须在没有人相信你时相信自己。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170625b.jpg" alt><br>You have to believe in yourself when no one else does.<br>你必须在没有人相信你时相信自己。</p>
 <blockquote>
 <p>词霸小编：你要做的是相信自己，你能作茧自缚，那么你也就能破茧成蝶。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170630b.jpg"><br>The best feeling in the world is when you know your heart is smiling.<br>世间最好的感受，就是发现自己的心在微笑。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170630b.jpg" alt><br>The best feeling in the world is when you know your heart is smiling.<br>世间最好的感受，就是发现自己的心在微笑。</p>
 <blockquote>
 <p>词霸小编：想吃了不要嫌贵，想穿了不要说浪费，保持心态的平和永远是最美，天天快乐才对。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170627b.jpg"><br>No matter how hard the past is, you can always begin again. - Jack Kornfield<br>不管过去有多么困难，你都可以重新开始。– 杰克．康菲尔德</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170627b.jpg" alt><br>No matter how hard the past is, you can always begin again. - Jack Kornfield<br>不管过去有多么困难，你都可以重新开始。– 杰克．康菲尔德</p>
 <blockquote>
 <p>词霸小编：没有不会谢的花，没有不会退的浪，没有不会暗的光，没有不会好的伤，没有不会停下来的绝望。那么，你在烦恼什么？</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170629b.jpg"><br>The best make-up is smile. The best jewelry is modesty. The best clothing is confidence.<br>最好的妆容是微笑，最好的饰品是谦虚，最好的衣裳是自信。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170626b.jpg"><br>Time would heal almost all wounds. If your wounds have not been healed up, please wait for a short while.<br>时间几乎会愈合所有伤口，如果你的伤口还没有愈合，请给时间一点时间！</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170629b.jpg" alt><br>The best make-up is smile. The best jewelry is modesty. The best clothing is confidence.<br>最好的妆容是微笑，最好的饰品是谦虚，最好的衣裳是自信。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170626b.jpg" alt><br>Time would heal almost all wounds. If your wounds have not been healed up, please wait for a short while.<br>时间几乎会愈合所有伤口，如果你的伤口还没有愈合，请给时间一点时间！</p>
 <blockquote>
 <p>词霸小编：给时间一点时间，让过去成为过去。给过去一点时间，让时间成为过去。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170619b.jpg"><br>Don’t let yourself be controlled by these three things: your past, people, and money.<br>不要让自己被这三件事所控制：过去、别人和金钱。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170619b.jpg" alt><br>Don’t let yourself be controlled by these three things: your past, people, and money.<br>不要让自己被这三件事所控制：过去、别人和金钱。</p>
 <blockquote>
 <p>词霸小编：你要学会捂上自己的耳朵，不去听那些熙熙攘攘的声音；这个世界上没有不苦逼的人，真正能治愈自己的，只有你自己。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170620b.jpg"><br>Man needs his difficulties because they are necessary to enjoy success.<br>人们需要困难，因为有困难才能享受成功。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170620b.jpg" alt><br>Man needs his difficulties because they are necessary to enjoy success.<br>人们需要困难，因为有困难才能享受成功。</p>
 <blockquote>
 <p>词霸小编：油条：不受煎熬，你就不会成熟；总受煎熬，你终究会成为老油条</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170623b.jpg"><br>Running away from your problems is a race you’ll never win.<br>逃避困难是一场永远跑不赢的比赛。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170623b.jpg" alt><br>Running away from your problems is a race you’ll never win.<br>逃避困难是一场永远跑不赢的比赛。</p>
 <blockquote>
 <p>词霸小编：六点起床很困难，背单词很困难，静下心很困难……但是总有一些人，五点可以起床，一天背六课单词，耐心读完一本书。你以为没有了路，事实上路可能就在前方一点点。那些比我们强大的人都在迎难而上，你有什么理由止步不前？</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170622b.jpg"></p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170622b.jpg" alt></p>
 <p>Elegance is the only beauty that never fades. - Audrey Hepburn<br>优雅是唯一不会褪色的美。——奥黛丽赫本</p>
 <blockquote>
 <p>词霸小编：人生的优雅并非训练或装扮出来的，而是百千阅历后的坦然，饱受沧桑后的睿智，无数沉浮后的淡泊。是把尘事看轻些，学会舍得与放下；是把人际看浅些，少些倾轧与争斗；是把得失看淡些，宠辱不惊来去无意，如此心宁静，优雅随之。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20160828b.jpg"></p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20160828b.jpg" alt></p>
 <p>How deep I love you, the moon represents my heart.<br>你问我爱你有多深，月亮代表我的心。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170606b.jpg"><br>It is one of the most beautiful compensations of life that no man can sincerely try to help another without helping himself.<br>任何一个人，如果真诚地试着帮助他人，必然也同时帮助了自己，这乃是人生中最优美的补偿之一。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170606b.jpg" alt><br>It is one of the most beautiful compensations of life that no man can sincerely try to help another without helping himself.<br>任何一个人，如果真诚地试着帮助他人，必然也同时帮助了自己，这乃是人生中最优美的补偿之一。</p>
 <blockquote>
 <p>语法扩充】英语句子中常可见到两个表示否定意义的词连用的情况，这一现象常称为双重否定。这种句子形式上虽为否定，实则表示强烈的肯定语气。英语双重否定句常见的有如下三种句型：1.否定词 no/not等＋表示否定意义的形容词。如：Nothing is unnecessary.没有什么是不必要的。 2.否定词 no/not/never等＋without…如：They never meet without quarreling．他们每次见面必吵架。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170607b.png"><br>Yesterday is history. Tomorrow is a mystery. But today is a gift. All you can do is to grasp it.<br>昨天已成历史，明天仍是未知，但今天是上天赐予我们的礼物，你能做的就是把握今天！</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170607b.png" alt><br>Yesterday is history. Tomorrow is a mystery. But today is a gift. All you can do is to grasp it.<br>昨天已成历史，明天仍是未知，但今天是上天赐予我们的礼物，你能做的就是把握今天！</p>
 <blockquote>
 <p>词霸小编：致高考：愿你们合上笔盖的那一刻有武士将刀收回剑鞘般的骄傲！高考加油！！！</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170608b.jpg"><br>Don’t count on others rashly, so they don’t have the chance to betray you; Don’t make rash promises either, in case you may regret.<br>诺不轻信，故人不负我；诺不轻许，故我不负人。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170608b.jpg" alt><br>Don’t count on others rashly, so they don’t have the chance to betray you; Don’t make rash promises either, in case you may regret.<br>诺不轻信，故人不负我；诺不轻许，故我不负人。</p>
 <blockquote>
 <p>词霸小编：不要做让自己后悔的事，要做，就做让别人后悔的事。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170609b.jpg"><br>Dare and the world always yields. If it beats you sometimes, dare it again and again and it will succumb.<br>你勇敢，世界就会让步。如果有时它战胜你，你要不断地勇敢再勇敢，它就会屈服。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170609b.jpg" alt><br>Dare and the world always yields. If it beats you sometimes, dare it again and again and it will succumb.<br>你勇敢，世界就会让步。如果有时它战胜你，你要不断地勇敢再勇敢，它就会屈服。</p>
 <blockquote>
 <p>词霸小编：我哭，你说我不勇敢；你勇敢，为什么不敢哭？</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170611b.jpg"><br>It’s okay to have flaws, which make you real.<br>有点缺点没关系，这样才真实。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170611b.jpg" alt><br>It’s okay to have flaws, which make you real.<br>有点缺点没关系，这样才真实。</p>
 <blockquote>
 <p>词霸小编：我的优点是：我很帅。我的缺点是：我帅的不明显。——张伟《爱情公寓》</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170610b.jpg"><br>Life is not lack of beauty, but lack of the eyes to find beauty.<br>生活中不是没有美，而是缺少发现美的眼睛。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170610b.jpg" alt><br>Life is not lack of beauty, but lack of the eyes to find beauty.<br>生活中不是没有美，而是缺少发现美的眼睛。</p>
 <blockquote>
 <p>词霸小编：【lack相关短语的区别】1.lack n.缺乏 (a) lack of sth（物质上的,具体的）如：a lack of money 缺乏资金；There was no lack of wolunteers.志愿者不乏其人。2.lack vt.缺乏,不足,短缺 lack sth 如：He lacks confidence.他缺乏信心.3.lacking adj. 缺乏的 be lacking in （某一方面,抽象的）如：She’s not usually lacking in confide</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170612b.jpg"><br>No one but ourselves can degrade us.<br>没人能够贬低我们，除非是我们自己。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170612b.jpg" alt><br>No one but ourselves can degrade us.<br>没人能够贬低我们，除非是我们自己。</p>
 <blockquote>
 <p>词霸小编：自己选择45°仰视别人，就休怪他人135°俯视着看你。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170613b.jpg"><br>想想你目前拥有的幸福，这每人都有很多 – 別回想以前的不幸，这每人或多或少都有一点。——查尔斯·狄更斯</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170613b.jpg" alt><br>想想你目前拥有的幸福，这每人都有很多 – 別回想以前的不幸，这每人或多或少都有一点。——查尔斯·狄更斯</p>
 <blockquote>
 <p>词霸小编：你的问题主要在于读书不多，而想得太多。——杨绛  </p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170614b.jpg"><br>Give everything a shot. You never know what or who is going to change your life.<br>任何事情都应该去尝试一下，因为你无法知道，什么样的事或者什么样的人将会改变你的一生。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170614b.jpg" alt><br>Give everything a shot. You never know what or who is going to change your life.<br>任何事情都应该去尝试一下，因为你无法知道，什么样的事或者什么样的人将会改变你的一生。</p>
 <blockquote>
 <p>词霸小编：我不会逃避也不会迟疑，愿去尝试生命不同的绮丽。——《疯狂动物城》</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170530b.jpg"><br>Chinese Dragon Boat Festival is also known as Duanwu Festival, which falls on the fifth day of the fifth lunar month every year.<br>每年农历五月初五为“龙舟节”又称端午节。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170530b.jpg" alt><br>Chinese Dragon Boat Festival is also known as Duanwu Festival, which falls on the fifth day of the fifth lunar month every year.<br>每年农历五月初五为“龙舟节”又称端午节。</p>
 <blockquote>
 <p>词霸小编：叶叶层叠，好运不绝；米米紧粘，幸福绵绵；线线缠绕，快乐拥抱；粽粽连结，祝福不歇！端午佳节祝你幸福安康！</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170531b.jpg"><br>To exist is to change, to change is to mature, to mature is to go on creating oneself endlessly.<br>要生存就要变化，要变化就要成长，要成长就要不断地自我创新。——亨利·柏格森</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170531b.jpg" alt><br>To exist is to change, to change is to mature, to mature is to go on creating oneself endlessly.<br>要生存就要变化，要变化就要成长，要成长就要不断地自我创新。——亨利·柏格森</p>
 <blockquote>
 <p>词霸小编：个人不创新，会被公司淘汰；公司不创新，会被行业淘汰；行业不创新，会被社会淘汰；社会不创新，会被历史淘汰。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170601b.jpg"><br>All grown-ups were once children… but only few of them remember it.<br>所有大人都曾是小孩, 可惜只有少数人记得这件事。——《小王子》</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170601b.jpg" alt><br>All grown-ups were once children… but only few of them remember it.<br>所有大人都曾是小孩, 可惜只有少数人记得这件事。——《小王子》</p>
 <blockquote>
 <p>霸小编：人老心不老，热情是宝;身老容不老，青春永葆。有童心，没烦恼，六一儿童节快乐最好!</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170602b.jpg"><br>I am who I am today because of the choices I made yesterday.<br>过往的选择成就今时之日的我。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170603b.jpg"><br>Freedom is not letting you do whatever you wanna but teaching you not to do the things you don’t wanna do. - Kant<br>自由不是让你想做什么就做什么，自由是教你不想做什么，就可以不做什么。——康德</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170602b.jpg" alt><br>I am who I am today because of the choices I made yesterday.<br>过往的选择成就今时之日的我。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170603b.jpg" alt><br>Freedom is not letting you do whatever you wanna but teaching you not to do the things you don’t wanna do. - Kant<br>自由不是让你想做什么就做什么，自由是教你不想做什么，就可以不做什么。——康德</p>
 <blockquote>
 <p>词霸小编：做学生的时候，身是不自由的，但心却很自由，有多远梦多远。而今，身是自由的，但心已经无法自由。有多少梦，就有多远。——七堇年</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170605b.jpg"><br>Never trouble trouble till trouble troubles you.<br>麻烦没来找你，就别去自找麻烦。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170605b.jpg" alt><br>Never trouble trouble till trouble troubles you.<br>麻烦没来找你，就别去自找麻烦。</p>
 <blockquote>
 <p>词霸小编：不该看的不看，不该说的不说，不该听的不听，不该想的不想，该干什么干什么去。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170305b.jpg"><br>Your present circumstances don’t determine where you can go; they merely determine where you start.<br>你目前的处境并不决定你的未来，它只决定你的起点。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170404b.jpg"><br>Smile and silence are two powerful tools. Smile is the way to solve many problems and silence is the way to avoid many problems.<br>微笑和沉默是两把利器：微笑解决很多问题，沉默避免许多问题。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170405b.jpg"><br>Ordinary people merely think how they shall spend their time; a man of talent tries to use it.<br>普通人只想如何度过时间，有才能的人试图利用时间。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170305b.jpg" alt><br>Your present circumstances don’t determine where you can go; they merely determine where you start.<br>你目前的处境并不决定你的未来，它只决定你的起点。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170404b.jpg" alt><br>Smile and silence are two powerful tools. Smile is the way to solve many problems and silence is the way to avoid many problems.<br>微笑和沉默是两把利器：微笑解决很多问题，沉默避免许多问题。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170405b.jpg" alt><br>Ordinary people merely think how they shall spend their time; a man of talent tries to use it.<br>普通人只想如何度过时间，有才能的人试图利用时间。</p>
 <p>腾不出时间学习的人，迟早会腾出时间来伤悲；腾不出时间思考的人，迟早会腾出时间来后悔；腾不出时间运动的人，迟早会腾出时间来减肥；腾不出时间呵护亲情的人，迟早会腾出时间来流泪；腾不出时间恋爱的人，迟早会腾出时间来相亲；腾不出时间睡的人，迟早会腾出时间来生病。——刘同</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170412b.jpg"><br>Be yourself, everyone else is already taken. – Oscar Wilde<br>做你自己，其他角色都已经有人了。——奥斯卡•王尔德</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170412b.jpg" alt><br>Be yourself, everyone else is already taken. – Oscar Wilde<br>做你自己，其他角色都已经有人了。——奥斯卡•王尔德</p>
 <blockquote>
 <p>词霸小编：不要活在别人的嘴里， 也不要活在别人的眼里， 而是把命运握在自己手里。——几米</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170408b.jpg"><br><a href="http://news.iciba.com/views/dailysentence/daily.html#!/detail/title/2017-04-08" target="_blank" rel="noopener">I am prepared for the worst, but hope for the best.– Benjamin Disraeli </a><br>我期待最好的，但为最坏的做好准备。– 班杰明‧迪斯雷利</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170408b.jpg" alt><br><a href="http://news.iciba.com/views/dailysentence/daily.html#!/detail/title/2017-04-08" target="_blank" rel="noopener">I am prepared for the worst, but hope for the best.– Benjamin Disraeli </a><br>我期待最好的，但为最坏的做好准备。– 班杰明‧迪斯雷利</p>
 <blockquote>
 <p>词霸小编：一个人只有一个心脏，却有两个心房。一个住着快乐；一个住着悲伤。不要笑得太大声，不然会吵醒旁边的悲伤。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170409b.jpg"><br><a href="http://news.iciba.com/views/dailysentence/daily.html#!/detail/title/2017-04-09" target="_blank" rel="noopener">My motto is: Contented with little, yet wishing for more.– Charles Lamb </a><br>我的座右銘是：为一点点感到滿足，但希望获得更多。– 查尔斯·兰姆</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170409b.jpg" alt><br><a href="http://news.iciba.com/views/dailysentence/daily.html#!/detail/title/2017-04-09" target="_blank" rel="noopener">My motto is: Contented with little, yet wishing for more.– Charles Lamb </a><br>我的座右銘是：为一点点感到滿足，但希望获得更多。– 查尔斯·兰姆</p>
 <blockquote>
 <p>词霸小编：老子曰：“祸莫大於不知足，咎莫大於欲得，故知足之足常足矣。”所以说我们要：知足常乐，乐在其中； 知乐常足，足以开怀；知足知乐，常乐常足！</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170416b.jpg"><br>In every adversity there lies the seed of an equivalent advantage. In every defeat there is a lesson showing you how to win the victory next time.</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170416b.jpg" alt><br>In every adversity there lies the seed of an equivalent advantage. In every defeat there is a lesson showing you how to win the victory next time.</p>
 <p>每个逆境都有一粒种子，藏着对等的有利条件；每个挫败都有一个教训，教你下次如何取得胜利。</p>
 <blockquote>
 <p>词霸小编：此句简言之是“失败是成功他妈”，道理我都懂，剩下的就看你们了……</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170417b.jpg"><br>I don’t want the fear of failure to stop me from doing what I really care about. - Emma Watson<br>我不想失败的恐惧阻碍做我真正想做的事情。——艾玛·沃森</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170417b.jpg" alt><br>I don’t want the fear of failure to stop me from doing what I really care about. - Emma Watson<br>我不想失败的恐惧阻碍做我真正想做的事情。——艾玛·沃森</p>
 <blockquote>
 <p>词霸小编：【用法分析】1.stop…from doing sth.意思是“阻止/防止……做某事”，在主动结构中，from可以被省去。如： The heavy rain stopped us (from) arriving there on time. 大雨阻止了我们按时到达那里。2.stop to do sth. 是“停止正在做的事，为了开始做某事”。 如：I have to stop to write an important article. 我得停下手中的事，先写一篇重要的文章。</p>
 </blockquote>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170419b.jpg"><br>Trust is the easiest thing in the world to lose,and the hardest thing in the world to get back.<br>信任是这个世界上最容易失去的东西，也是最难挽回的东西。</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170419b.jpg" alt><br>Trust is the easiest thing in the world to lose,and the hardest thing in the world to get back.<br>信任是这个世界上最容易失去的东西，也是最难挽回的东西。</p>
 <blockquote>
 <p>词霸小编：我不问，你不说，这就是距离； 我问了，你不说，这就是隔阂； 我问了，你说了，这就是信任； 你不说，我不问，这就是默契； 我不问，你说了，这就是依赖。</p>
 </blockquote>
 <p><a href="http://news.iciba.com/study/oral/1575707.shtml" target="_blank" rel="noopener">BBC英语教学</a></p>
-<p><img alt data-src="http://cdn.iciba.com/news/2017/0210/20170210094146362.jpg"></p>
+<p><img data-src="http://cdn.iciba.com/news/2017/0210/20170210094146362.jpg" alt></p>
 <p>英国，不同地区的人们会用和动物有关的词汇来称呼他人。这些称呼十分有爱，也很友好。有些人认为这个称呼来源于 duke 公爵。</p>
 <p>Feifei<br>‘Hen’ is used in Glasgow – but only when talking to women. 在苏格兰格拉斯哥，人们会用 hen 来称呼女性。</p>
 <p>Neil<br>Alright, hen? And then we have ‘pet’…</p>
 <p>Feifei<br>‘Pet’ is used in the North East of England. 在英格兰纽卡斯尔，人们会互相称呼 pet。</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20170223b.jpg"></p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20170223b.jpg" alt></p>
 <p>The happiness of life is made up of minute fractions – the little soon forgotten charities of a kiss, a smile, a kind look, a heartfelt compliment.</p>
 <p>生活中的快乐是由一些小片断组成——很快被遗忘的亲吻、微笑、关爱的眼神、由衷的赞美等小善举。</p>
 <blockquote>
 <p>词霸小编: 快乐似蒲公英的种子飘落在任意角落，你需要的只是一双发现它的眼睛……【词汇扩充】heartfelt adj. 衷心的，真诚的。如 heartfelt thanks 由衷的感谢。同义词为：sincere。</p>
 </blockquote>
-<h2 id="Paragraph"><a href="#Paragraph" class="headerlink" title="Paragraph"></a>Paragraph</h2><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/youthDev.jpg"></p>
+<h2 id="Paragraph"><a href="#Paragraph" class="headerlink" title="Paragraph"></a>Paragraph</h2><p><img data-src="http://okkntqe2h.bkt.clouddn.com/youthDev.jpg" alt></p>
 <p><a href="http://www.tingclass.net/show-6613-109419-1.html?sid=AZGF5i1d9MuL8E57a0CHYor0" target="_blank" rel="noopener">Youth</a></p>
 <h3 id="001-Youth"><a href="#001-Youth" class="headerlink" title="001 Youth"></a>001 Youth</h3><p><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/01-youth.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/01-youth.mp3</a></p>
 <p>Youth is not a time of life; it is a state of mind; it is not a matter of rosy cheeks, red lips and supple knees; it is a matter of the will, a quality of the imagination, a vigor of the emotions; it is the freshness of the deep springs of life.</p>
@@ -1413,7 +1383,7 @@
 <p>无论年届花甲，拟或二八芳龄，心中皆有生命之欢乐，奇迹之诱惑，孩童般天真久盛不衰。人人心中皆有一台天线，只要你从天上人间接受美好、希望、欢乐、勇气和力量的信号，你就青春永驻，风华常存。</p>
 <p>When your aerials are down, and your spirit is covered with snows of cynicism and the ice of pessimism, then you’ve grown old, even at 20; but as long as your aerials are up, to catch waves of optimism, there’s hope you may die young at 80.</p>
 <p>一旦天线下降，锐气便被冰雪覆盖，玩世不恭、自暴自弃油然而生，即使年方二十，实已垂垂老矣；然则只要树起天线，捕捉乐观信号，你就有望在八十高龄告别尘寰时仍觉年轻。</p>
-<h3 id="002-Three-Days-to-See-Excerpts-假如给我三天光明-节选"><a href="#002-Three-Days-to-See-Excerpts-假如给我三天光明-节选" class="headerlink" title="002 Three Days to See(Excerpts)假如给我三天光明(节选)"></a>002 Three Days to See(Excerpts)假如给我三天光明(节选)</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/20091221%E5%81%87%E5%A6%82%E7%BB%99%E6%88%91%E4%B8%89%E5%A4%A9%E5%85%89%E6%98%8E.jpg"></p>
+<h3 id="002-Three-Days-to-See-Excerpts-假如给我三天光明-节选"><a href="#002-Three-Days-to-See-Excerpts-假如给我三天光明-节选" class="headerlink" title="002 Three Days to See(Excerpts)假如给我三天光明(节选)"></a>002 Three Days to See(Excerpts)假如给我三天光明(节选)</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/20091221%E5%81%87%E5%A6%82%E7%BB%99%E6%88%91%E4%B8%89%E5%A4%A9%E5%85%89%E6%98%8E.jpg" alt></p>
 <p><a href="http://www.tingclass.net/show-6613-35141-1.html" target="_blank" rel="noopener">Three Days to See</a><br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/02-three_days_to_see.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/02-three_days_to_see.mp3</a></p>
 <p>All of us have read thrilling stories in which the hero had only a limited and specified time to live. Sometimes it was as long as a year, sometimes as short as 24 hours. But always we were interested in discovering just how the doomed hero chose to spend his last days or his last hours. I speak, of course, of free men who have a choice, not condemned criminals whose sphere of activities is strictly delimited.</p>
 <p>我们都读过震撼人心的故事，故事中的主人公只能再活一段很有限的时光，有时长达一年，有时却短至一日。但我们总是想要知道，注定要离世人的会选择如何度过自己最后的时光。当然，我说的是那些有选择权利的自由人，而不是那些活动范围受到严格限定的死囚。</p>
@@ -1429,7 +1399,7 @@
 <p>我担心同样的冷漠也存在于我们对自己官能和意识的运用上。只有聋子才理解听力的重要，只有盲人才明白视觉的可贵，这尤其适用于那些成年后才失去视力或听力之苦的人很少充分利用这些宝贵的能力。他们的眼睛和耳朵模糊地感受着周围的景物与声音，心不在焉，也无所感激。这正好我们只有在失去后才懂得珍惜一样，我们只有在生病后才意识到健康的可贵。</p>
 <p>I have often thought it would be a blessing if each human being were stricken blind and deaf for a few days at some time during his early adult life. <strong>Darkness would make him more appreciative of sight; silence would teach him the joys of sound.</strong></p>
 <p>我经常想，如果每个人在年轻的时候都有几天失时失聪，也不失为一件幸事。黑暗将使他更加感激光明，寂静将告诉他声音的美妙。</p>
-<h3 id="003-Companionship-of-Books-以书为伴"><a href="#003-Companionship-of-Books-以书为伴" class="headerlink" title="003 Companionship of Books 以书为伴"></a>003 Companionship of Books 以书为伴</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/003-quote-my-soul-found-ease-and-rest-in-the-companionship-of-books-pat-conroy-48-40-77.jpg"></p>
+<h3 id="003-Companionship-of-Books-以书为伴"><a href="#003-Companionship-of-Books-以书为伴" class="headerlink" title="003 Companionship of Books 以书为伴"></a>003 Companionship of Books 以书为伴</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/003-quote-my-soul-found-ease-and-rest-in-the-companionship-of-books-pat-conroy-48-40-77.jpg" alt></p>
 <p>Companionship of Books<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/03-companionship_of_books.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/03-companionship_of_books.mp3</a></p>
 <p><strong>A man may usually be known by the books he reads as well as by the company he keeps</strong>; for there is a companionship of books as well as of men; and one should always live in the best company, whether it be of books or of men.</p>
 <p>通常看一个读些什么书就可知道他的为人，就像看他同什么人交往就可知道他的为人一样，因为有人以人为伴，也有人以书为伴。无论是书友还是朋友，我们都应该以最好的为伴。</p>
@@ -1445,7 +1415,7 @@
 <p>书籍介绍我们与最优秀的人为伍，使我们置身于历代伟人巨匠之间，如闻其声，如观其行，如见其人，同他们情感交融，悲喜与共，感同身受。我们觉得自己仿佛在作者所描绘的舞台上和他们一起粉墨登场。</p>
 <p>The great and good do not die, even in this world. Embalmed in books, their spirits walk abroad. The book is a living voice. It is an intellect to which on still listens.</p>
 <p>即使在人世间，伟大杰出的人物也永生不来。他们的精神被载入书册，传于四海。书是人生至今仍在聆听的智慧之声，永远充满着活力。</p>
-<h3 id="004-If-I-Rest-I-Rust-如果我休息，我就会生锈"><a href="#004-If-I-Rest-I-Rust-如果我休息，我就会生锈" class="headerlink" title="004 If I Rest,I Rust 如果我休息，我就会生锈"></a>004 If I Rest,I Rust 如果我休息，我就会生锈</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/004.jpg"></p>
+<h3 id="004-If-I-Rest-I-Rust-如果我休息，我就会生锈"><a href="#004-If-I-Rest-I-Rust-如果我休息，我就会生锈" class="headerlink" title="004 If I Rest,I Rust 如果我休息，我就会生锈"></a>004 If I Rest,I Rust 如果我休息，我就会生锈</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/004.jpg" alt></p>
 <p>If I Rest, I Rust<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/04-if_i_rest,i_rust.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/04-if_i_rest,i_rust.mp3</a></p>
 <p>The significant inscription found on an old key—“If I rest, I rust”—would be an excellent motto for those who are afflicted with the slightest bit of idleness. Even the most industrious person might adopt it with advantage to serve as a reminder that, if one allows his faculties to rest, like the iron in the unused key, they will soon show signs of rust and, ultimately, cannot do the work required of them.</p>
 <p>在一把旧钥匙上发现了一则意义深远的铭文——如果我休息，我就会生锈。对于那些懒散而烦恼的人来说，这将是至理名言。甚至最为勤勉的人也以此作为警示：如果一个人有才能而不用，就像废弃钥匙上的铁一样，这些才能就会很快生锈，并最终无法完成安排给自己的工作。</p>
@@ -1455,7 +1425,7 @@
 <p>勤奋使开启成功宝库的钥匙保持光亮。如果休·米勒在采石场劳作一天后，晚上的时光用来休息消遣的话，他就不会成为名垂青史的地质学家。著名数学家爱德蒙·斯通如果闲暇时无所事事，就不会出版数学词典，也不会发现开启数学之门的钥匙。如果苏格兰青年弗格森在山坡上放羊时，让他那思维活跃的大脑处于休息状态，而不是借助一串珠子计算星星的位置，他就不会成为著名的天文学家。</p>
 <p><strong>Labor vanquishes all—not inconstant, spasmodic, or ill-directed labor; but faithful, unremitting, daily effort toward a well-directed purpose.</strong> Just as truly as eternal vigilance is the price of liberty, so is eternal industry the price of noble and enduring success.</p>
 <p>劳动征服一切。这里所指的劳动不是断断续续的，间歇性的或方向偏差的劳动，而是坚定的，不懈的，方向正确的每日劳动。正如要想拥有自由就要时刻保持警惕一样，要想取得伟大的，持久的成功，就必须坚持不懈地努力。</p>
-<h3 id="005-Ambition-抱负"><a href="#005-Ambition-抱负" class="headerlink" title="005 Ambition 抱负"></a>005 Ambition 抱负</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/005%20196ul3xois8xwjpg.jpg"></p>
+<h3 id="005-Ambition-抱负"><a href="#005-Ambition-抱负" class="headerlink" title="005 Ambition 抱负"></a>005 Ambition 抱负</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/005%20196ul3xois8xwjpg.jpg" alt></p>
 <p>Ambition<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/05-ambition.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/05-ambition.mp3</a></p>
 <p>It is not difficult to imagine a world short of ambition. It would probably be a kinder world: with out demands, without abrasions, without disappointments. People would have time for reflection. Such work as they did would not be for themselves but for the collectivity. Competition would never enter in. conflict would be eliminated, tension become a thing of the past. The stress of creation would be at an end. Art would no longer be troubling, but purely celebratory in its functions. Longevity would be increased, for fewer people would die of heart attack or stroke caused by tumultuous endeavor. Anxiety would be extinct. Time would stretch on and on, with ambition long departed from the human heart.</p>
 <p>一个缺乏抱负的世界将会怎样，这不难想象。或许，这将是一个更为友善的世界：没有渴求，没有磨擦，没有失望。人们将有时间进行反思。他们所从事的工作将不是为了他们自身，而是为了整个集体。竞争永远不会介入；冲突将被消除。人们的紧张关系将成为过往云烟。创造的重压将得以终结。艺术将不再惹人费神，其功能将纯粹为了庆典。人的寿命将会更长，因为由激烈拼争引起的心脏病和中风所导致的死亡将越来越少。焦虑将会消失。时光流逝，抱负却早已远离人心。</p>
@@ -1465,7 +1435,7 @@
 <p>有一种盛行的观点认为，成功是一种神话，因此抱负亦属虚幻。这是不是说实际上并不丰在成功？成就本身就是一场空？与诸多运动和事件的力量相比，男男女女的努力显得微不足？显然，并非所有的成功都值得景仰，也并非所有的抱负都值得追求。对值得和不值得的选择，一个人自然而然很快就能学会。但即使是最为愤世嫉俗的人暗地里也承认，成功确实存在，成就的意义举足轻重，而把世上男男女女的所作所为说成是徒劳无功才是真正的无稽之谈。认为成功不存在的观点很可能造成混乱。这种观点的本意是一笔勾销所有提高能力的动机，求取业绩的兴趣和对子孙后代的关注。</p>
 <p>We do not choose to be born. We do not choose our parents. We do not choose our historical epoch, the country of our birth, or the immediate circumstances of our upbringing. We do not, most of us, choose to die; nor do we choose the time or conditions of our death. <strong>But within all this realm of choicelessness, we do choose how we shall live: courageously or in cowardice, honorably or dishonorably, with purpose or in drift. We decide what is important and what is trivial in life. We decide that what makes us significant is either what we do or what we refuse to do. But no matter how indifferent the universe may be to our choices and decisions, these choices and decisions are ours to make. We decide. We choose. And as we decide and choose, so are our lives formed. In the end, forming our own destiny is what ambition is about.</strong></p>
 <p>我们无法选择出生，无法选择父母，无法选择出生的历史时期与国家，或是成长的周遭环境。我们大多数人都无法选择死亡，无法选择死亡的时间或条件。但是在这些无法选择之中，我们的确可以选择自己的生活方式：是勇敢无畏还是胆小怯懦，是光明磊落还是厚颜无耻，是目标坚定还是随波逐流。我们决定生活中哪些至关重要，哪些微不足道。我们决定，用以显示我们自身重要性的，不是我们做了什么，就是我们拒绝做些什么。但是不论世界对我们所做的选择和决定有多么漠不关心，这些选择和决定终究是我们自己做出的。我们决定，我们选择。而当我们决定和选择时，我们的生活便得以形成。最终构筑我们命运的就是抱负之所在。</p>
-<h3 id="006-What-I-have-Lived-for-我为何而生"><a href="#006-What-I-have-Lived-for-我为何而生" class="headerlink" title="006 What I have Lived for 我为何而生"></a>006 What I have Lived for 我为何而生</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/006%20bertrand-russell-quotes-sayings-meaningful-life-love-cute.jpg"></p>
+<h3 id="006-What-I-have-Lived-for-我为何而生"><a href="#006-What-I-have-Lived-for-我为何而生" class="headerlink" title="006 What I have Lived for 我为何而生"></a>006 What I have Lived for 我为何而生</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/006%20bertrand-russell-quotes-sayings-meaningful-life-love-cute.jpg" alt></p>
 <p>What I Have Lived For<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/06-what_i_have_lived_for.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/06-what_i_have_lived_for.mp3</a></p>
 <p>Three passions, simple but overwhelmingly strong, have governed my life: the longing for love, the search for knowledge, and unbearable pity for the suffering of mankind. These passions, like great winds, have blown me hither and thither, in a wayward course, over a deep ocean of anguish, reaching to the very verge of despair.</p>
 <p>我的一生被三种简单却又无比强烈的激情所控制：对爱的渴望，对知识的探索和对人类苦难难以抑制的怜悯。这些激情像狂风，把我恣情吹向四方，掠过苦痛的大海，迫使我濒临绝望的边缘。</p>
@@ -1477,7 +1447,7 @@
 <p>爱和知识，用它们的力量把人引向天堂。但是同情却总把人又拽回到尘世中来。痛苦的呼喊声回荡在我的内心。饥饿的孩子，受压迫的难民，贫穷和痛苦的世界，都是对人类所憧憬的美好生活的无情嘲弄。我渴望能够减少邪恶，但是我无能为力，我也难逃其折磨。</p>
 <p>This has been my life. I have found it worth living, and would gladly live it again if the chance were offered me.</p>
 <p>这就是我的一生。我已经找到它的价值。而且如果有机会，我很愿意能再活它一次。</p>
-<h3 id="007-When-Love-Beckons-You-爱的召唤"><a href="#007-When-Love-Beckons-You-爱的召唤" class="headerlink" title="007 When Love Beckons You 爱的召唤"></a>007 When Love Beckons You 爱的召唤</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/007%20quote-when-love-beckons-to-you-follow-him-though-his-ways-are-hard-and-steep-and-when-his-wings-enfold-khalil-gibran-70810.jpg"></p>
+<h3 id="007-When-Love-Beckons-You-爱的召唤"><a href="#007-When-Love-Beckons-You-爱的召唤" class="headerlink" title="007 When Love Beckons You 爱的召唤"></a>007 When Love Beckons You 爱的召唤</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/007%20quote-when-love-beckons-to-you-follow-him-though-his-ways-are-hard-and-steep-and-when-his-wings-enfold-khalil-gibran-70810.jpg" alt></p>
 <p>When Love Beckons You<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/07-when_love_beckons_you.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/07-when_love_beckons_you.mp3</a></p>
 <p><strong>When love beckons to you, follow him, though his ways are hard and steep. And when his wings enfold you, yield to him, though the sword hidden among his pinions may wound you. And when he speaks to you, believe in him, though his voice may shatter your dreams as the north wind lays waste the garden.</strong></p>
 <p>当爱召唤你时，请追随她，尽管爱的道路艰难险峻。当爱的羽翼拥抱你时，请顺从她，尽管隐藏在其羽翼之下的剑可能会伤到你。当爱向你诉说时，请相信她，尽管她的声音可能打破你的梦想，就如同北风吹落花园里所有的花瓣。</p>
@@ -1503,7 +1473,7 @@
 <p>在黄昏怀着感恩之心回家；</p>
 <p>And then to sleep with a payer for the beloved in your heart and a song of praise upon your lips.</p>
 <p>然后为内心所爱之人祈祷，吟唱赞美之歌，并带着祷告和歌声入眠。</p>
-<h3 id="008-The-Road-to-Success-成功之道"><a href="#008-The-Road-to-Success-成功之道" class="headerlink" title="008 The Road to Success 成功之道"></a>008 The Road to Success 成功之道</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/008%20quote-the-road-to-success-is-through-commitment-will-smith-86-33-32.jpg"></p>
+<h3 id="008-The-Road-to-Success-成功之道"><a href="#008-The-Road-to-Success-成功之道" class="headerlink" title="008 The Road to Success 成功之道"></a>008 The Road to Success 成功之道</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/008%20quote-the-road-to-success-is-through-commitment-will-smith-86-33-32.jpg" alt></p>
 <p>The Road to Success<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/08-the_road_to_success.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/08-the_road_to_success.mp3</a></p>
 <p>It is well that young men should begin at the beginning and occupy the most subordinate positions. Many of the leading businessmen of Pittsburgh had a serious responsibility thrust upon them at the very threshold of their career. They were introduced to the broom, and spent the first hours of their business lives sweeping out the office. I notice we have janitors and janitresses now in offices, and our young men unfortunately miss that salutary branch of business education. But if by chance the professional sweeper is absent any morning, the boy who has the genius of the future partner in him will not hesitate to try his hand at the broom. It does not hurt the newest comer to sweep out the office if necessary. I was one of those sweepers myself.</p>
 <p>年轻人创业之初，应该从最底层干起，这是件好事。匹兹保有很多商业巨头，在他们创业之初，都肩负过“重任”：他们以扫帚相伴，以打扫办公室的方式度过了他们商业生涯中最初的时光。我注意到我们现在办公室里都有工友，于是年轻人就不幸错过了商业教育中这个有益的环节。如果碰巧哪天上午专职扫地的工友没有来，某个具有未来合伙人气质的年轻人会毫不犹豫地试着拿起扫帚。在必要时新来的员工扫扫地也无妨，不会因为而有什么损失。我自己就曾经扫过地。</p>
@@ -1515,13 +1485,13 @@
 <p>一些公司的失败就在于他们分散了资金，因为这就意味着分散了他们的精力。他们向这方面投资，又向那方面投资；在这里投资，在那里投资，到处都投资。“不要把所有的鸡蛋放在一个篮子里”的说法大错特错。我要对你说：“把所有的鸡蛋都放在一个篮子里，然后小心地看好那个篮子。”看看你周围，你会注意到：这么做的人其实很少失败。看管和携带一个篮子并不太难。人们总是试图提很多篮子，所以才打破这个国家的大部分鸡蛋。提三个篮子的人，必须把一个顶在头上，而这个篮子很可能倒下来，把他自己绊倒。美国商人的一个缺点就是不够专注。</p>
 <p>To summarize what I have said: aim for the highest; never enter a bar room; do not touch liquor, or if at all only at meals; never speculate; never indorse beyond your surplus cash fund; make the firm’s interest yours; break orders always to save owners; concentrate; put all your eggs in one basket, and watch that basket; expenditure always within revenue; lastly, be not impatient, for as Emerson says, “<strong>no one can cheat you out of ultimate success but yourselves.</strong>”</p>
 <p>把我的话归纳一下：要志存高远；不要出入酒吧；要滴酒不沾，或要喝也只在用餐时喝少许；不要做投机买卖；不要寅吃卯粮；要把公司的利益当作自己的利益；取消订货的目的永远是为了挽救货主；要专注；要把所有的鸡蛋放在一个篮子里，然后小心地看好它；要量入为出；最后，要有耐心，正如爱默生所言，“谁都无法阻止你最终成功，除非你自己承认自己失败。”</p>
-<h3 id="009-On-Meeting-the-Celebrated-论见名人"><a href="#009-On-Meeting-the-Celebrated-论见名人" class="headerlink" title="009 On Meeting the Celebrated 论见名人"></a>009 On Meeting the Celebrated 论见名人</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/009%207B2646AE-5967-417B-B130-C09B76E6AE9C_500.jpg"></p>
+<h3 id="009-On-Meeting-the-Celebrated-论见名人"><a href="#009-On-Meeting-the-Celebrated-论见名人" class="headerlink" title="009 On Meeting the Celebrated 论见名人"></a>009 On Meeting the Celebrated 论见名人</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/009%207B2646AE-5967-417B-B130-C09B76E6AE9C_500.jpg" alt></p>
 <p>On Meeting the Celebrated<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/09-on_meeting_the_celebrated.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/09-on_meeting_the_celebrated.mp3</a></p>
 <p>I have always wondered at the passion many people have to meet the celebrated. The prestige you acquire by being able to tell your friends that you know famous men proves only that you are yourself of small account. The celebrated develop a technique to deal with the persons they come across. They show the world a mask, often an impressive on, but take care to conceal their real selves. <strong>They play the part that is expected from them, and with practice learn to play it very well, but you are stupid if you think that this public performance of theirs corresponds with the man within.</strong></p>
 <p>许多人热衷于见名人，我始终不得其解。在朋友面前吹嘘自己认识某某名人，同此而来的声望只能证明自己的微不足道。名人个个练就了一套处世高招，无论遇上谁，都能应付自如。他们给世人展现的是一副面具，常常是美好难忘的面具，但他们会小心翼翼地掩盖自己的真相。他们扮演的是大家期待的角色，演得多了，最后都能演得惟妙惟肖。如果你还以为他们在公众面前的表演就是他们的真实自我，那就你傻了。</p>
 <p>I have been attached, deeply attached, to a few people; but I have been interested in men in general not for their own sakes, but for the sake of my work. I have not, as Kant enjoined, regarded each man as an end in himself, but as material that might be useful to me as a writer. I have been more concerned with the obscure than with the famous. They are more often themselves. They have had no need to create a figure to protect themselves from the world or to impress it. Their idiosyncrasies have had more chance to develop in the limited circle of their activity, and since they have never been in the public eye it has never occurred to them that they have anything to conceal. They display their oddities because it has never struck them that they are odd. And after all it is with the common run of men that we writers have to deal; kings, dictators, commercial magnates are from our point of view very unsatisfactory. To write about them is a venture that has often tempted writers, but the failure that has attended their efforts shows that such beings are too exceptional to form a proper ground for a work of art. They cannot be made real. The ordinary is the writer’s richer field. Its unexpectedness, its singularity, its infinite variety afford unending material. The great man is too often all of a piece; it is the little man that is a bundle of contradictory elements. He is inexhaustible. You never come to the end of the surprises he has in store for you. For my part I would much sooner spend a month on a desert island with a veterinary surgeon than with a prime minister.</p>
 <p>我自己就喜欢一些人，非常喜欢他们。但我对人感兴趣一般不是因为他们自身的缘故，而是出于我工作需求。正如康德劝告的那样，我从来没有把认识某人作为目的，而是将其当作对一个作家有用的创作素材。比之名流显士，我更加关注无名小卒。他们常常显得较为自然真实，他们无须再创造另一个人物形象，用他来保护自己不受世人干扰，或者用他来感动世人。他们的社交圈子有限，自己的种种癖性也就越有可能得到滋长。因为他们从来没有引起公众的关注，也就从来没有想到过要隐瞒什么。他们会表露他们古怪的一面，因为他们从来就没有觉得有何古怪。总之，作家要写的是普通人。在我们看来，国王，独裁者和商界大亨等都是不符合条件的。去撰写这些人物经常是作家们难以抗拒的冒险之举，可为此付出的努力不免以失败告终，这说明这些人物都过于特殊，无法成为一件艺术作品的创作根基，作家也不可能把他们写得真真切切。老百姓才是作家的创作沃土，他们或变幻无常，或难觅其二，各式人物应有尽有，这些都给作家提供了无限的创作素材。大人物经常是千人一面，小人物身上才有一组组矛盾元素，是取之不尽的创作源泉，让你惊喜不断。就我而言，如果在孤岛上度过一个月，我宁愿和一名兽医相守，也不愿同一位首相做伴。</p>
-<h3 id="010-The-50-Percent-Theory-of-Life-生活理论半对半"><a href="#010-The-50-Percent-Theory-of-Life-生活理论半对半" class="headerlink" title="010 The 50-Percent Theory of Life 生活理论半对半"></a>010 The 50-Percent Theory of Life 生活理论半对半</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/010%209781427203847.jpg"></p>
+<h3 id="010-The-50-Percent-Theory-of-Life-生活理论半对半"><a href="#010-The-50-Percent-Theory-of-Life-生活理论半对半" class="headerlink" title="010 The 50-Percent Theory of Life 生活理论半对半"></a>010 The 50-Percent Theory of Life 生活理论半对半</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/010%209781427203847.jpg" alt></p>
 <p>The 50-Percent Theory of Life<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/10-the_50-percent_theory_of_life.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/10-the_50-percent_theory_of_life.mp3</a></p>
 <p>I believe in the 50-percent theory. <strong>Half the time things are better than normal; the other half, they re worse. I believe life is a pendulum swing. It takes time and experience to understand what normal is, and that gives me the perspective to deal with the surprises of the future.</strong></p>
 <p>我信奉对半理论。生活时而无比顺畅，时而倒霉透顶。我觉得生活就像来回摆的钟摆。读懂生活的常态需要时间和阅历，而读懂它也练就了我面对未来的生活态度。</p>
@@ -1539,7 +1509,7 @@
 <p>那个夏天天气酷热，地而湿度适宜，提早播种就可以在热浪打蔫植尖之前完成授粉，同于干旱更没有爆发洪水，产在田里的玉米得以保存。因此那个冬天我的粮仓堆满了玉米-丰满，健康，一颗三穗且从头到脚都是饱满的玉米粒的玉米穗-而我的邻居们收获的只是晒黑的空壳。</p>
 <p>Although plantings past may have fallen below the 50-percent expectation, and they probably will again in the future, I am still sustained by the crop that flourishes during the drought.</p>
 <p>尽管过去的播种可能没有达到50%的收获期望，而且将来也可能是这样，但我仍然能靠着在旱季繁茂生长的庄稼而生存下去。</p>
-<h3 id="011-What-is-Your-Recovery-Rate-你的恢复速率是多少？"><a href="#011-What-is-Your-Recovery-Rate-你的恢复速率是多少？" class="headerlink" title="011 What is Your Recovery Rate? 你的恢复速率是多少？"></a>011 What is Your Recovery Rate? 你的恢复速率是多少？</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/011%20slide_7.jpg"></p>
+<h3 id="011-What-is-Your-Recovery-Rate-你的恢复速率是多少？"><a href="#011-What-is-Your-Recovery-Rate-你的恢复速率是多少？" class="headerlink" title="011 What is Your Recovery Rate? 你的恢复速率是多少？"></a>011 What is Your Recovery Rate? 你的恢复速率是多少？</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/011%20slide_7.jpg" alt></p>
 <p>What is Your Recovery Rate?<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/11-what_is_your_recovery_rate.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/11-what_is_your_recovery_rate.mp3</a></p>
 <p>What is your recovery rate? How long does it take you to recover from actions and behaviors that upset you? Minutes? Hours? Days? Weeks? The longer it takes you to recover, the more influence that incident has on your actions, and the less able you are to perform to your personal best. <strong>In a nutshell, the longer it takes you to recover, the weaker you are and the poorer your performance.</strong></p>
 <p>你的恢复速率是多少？你需要多长时间才能从让你烦恼的行为中恢复？几分钟？几小时？几天？几星期？你需要的恢复时间越长，那个事件对你的影响越大，你也就越不能做到最好。简言之，你的恢复时间越长，你就越软弱，你的表现也就越差劲。</p>
@@ -1553,7 +1523,7 @@
 <p>记住，罗马不是一日建成的。每天都反思自己的恢复速率；每天上床睡觉前，都看看自己的进步；不要躺在床上对自己说：“我那个做错了。”“我应该做到更好。”不要那样做；回想自己的一天，并注意努力给某个事件画上句号的时刻。这就是一个成功，你在控制自己的生活。记住这是一个循序渐进的过程。这不是简单的修修补补。你正在进行的是真正的改变，你的目标是减少用在恢复上的时间。</p>
 <p>The way forward? 将来该怎么做呢？</p>
 <p><strong>Live in the present. Not in the precedent.</strong> 生活在现在，而不是从前。</p>
-<h3 id="012-Clear-Your-Mental-Space-清理心灵的空间"><a href="#012-Clear-Your-Mental-Space-清理心灵的空间" class="headerlink" title="012 Clear Your Mental Space 清理心灵的空间"></a>012 Clear Your Mental Space 清理心灵的空间</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/012%20Clearing-Mental-Space-w-Button.jpg"></p>
+<h3 id="012-Clear-Your-Mental-Space-清理心灵的空间"><a href="#012-Clear-Your-Mental-Space-清理心灵的空间" class="headerlink" title="012 Clear Your Mental Space 清理心灵的空间"></a>012 Clear Your Mental Space 清理心灵的空间</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/012%20Clearing-Mental-Space-w-Button.jpg" alt></p>
 <p>Clear Your Mental Space<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/12-clear_your_mental_space.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/12-clear_your_mental_space.mp3</a></p>
 <p>Think about the last time you felt a negative emotion—like stress, anger, or frustration. What was going through your mind as you were going through that negativity? Was your mind cluttered with thoughts? Or was it paralyzed, unable to think?</p>
 <p>想下你最近一次感受到的消极情绪，例如压力，愤怒或挫折。当你处于那种消极情绪时你在想些什么？是充满了混乱的思绪？还是陷于麻木，无法思考？</p>
@@ -1577,7 +1547,7 @@
 <p>停下来。沉浸一分钟。我想保持这种消极情绪吗？深吸气，呼气，放松。继续做事！</p>
 <p>This will remind you of the steps to the process. Remember; take the time you need to really immerse yourself in the emotion. Then, when you feel you’ve felt it enough, release it—really let go of it. You will be surprised at how quickly you can move on from a negative situation and get to what you really want to do!</p>
 <p>这会提醒你该怎样去做。记住，要花你所需要的时间去真正沉浸于那种情绪之中。然后，当你感到自己已经充分体会到了它。你会惊奇地发现，你很快就能摆脱消极情绪，并开始做你真正想做的事情！</p>
-<h3 id="013-Be-Happy-快乐"><a href="#013-Be-Happy-快乐" class="headerlink" title="013 Be Happy 快乐"></a>013 Be Happy 快乐</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/013%20quote-the-days-that-make-us-happy-make-us-wise-john-masefield-36-76-95.jpg"></p>
+<h3 id="013-Be-Happy-快乐"><a href="#013-Be-Happy-快乐" class="headerlink" title="013 Be Happy 快乐"></a>013 Be Happy 快乐</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/013%20quote-the-days-that-make-us-happy-make-us-wise-john-masefield-36-76-95.jpg" alt></p>
 <p>Be Happy!<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/13-be_happy.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/13-be_happy.mp3</a></p>
 <p>“<strong>The days that make us happy make us wise.</strong>”—-John Masefield</p>
 <p>“快乐的日子使人睿智。”<br>              — 约翰·梅斯菲尔德</p>
@@ -1591,7 +1561,7 @@
 <p>快乐的视野并不仅限于你周围的事物。当你不快乐时，你的思维陷入情感上的悲哀，你的眼界就像是被一道墙给阻隔了，而当你快乐时，这道墙就会砰然倒塌。</p>
 <p>The long vista is there for the seeing. The ground at your feet, the world about you—-people, thoughts, emotions, pressures—are now fitted into the larger scene. Everything assumes a fairer proportion. And here is the beginning of wisdom.</p>
 <p>你的眼界变得更为宽广。你脚下的大地，你身边的世界，包括人，思想，情感和压力，现在都融入了更为广阔的景象之中，其间每件事物 的比例都更加合理。而这就是睿智的起始。</p>
-<h3 id="014-The-Goodness-of-life-生命的美好"><a href="#014-The-Goodness-of-life-生命的美好" class="headerlink" title="014 The Goodness of life 生命的美好"></a>014 The Goodness of life 生命的美好</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/014%20rise-above-the-storm-and-you-will-find-the-sunshine-quote-quotes-about-life-goodness-930x697.jpg"></p>
+<h3 id="014-The-Goodness-of-life-生命的美好"><a href="#014-The-Goodness-of-life-生命的美好" class="headerlink" title="014 The Goodness of life 生命的美好"></a>014 The Goodness of life 生命的美好</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/014%20rise-above-the-storm-and-you-will-find-the-sunshine-quote-quotes-about-life-goodness-930x697.jpg" alt></p>
 <p>The Goodness of Life<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/14-the_goodness_of_life.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/14-the_goodness_of_life.mp3</a></p>
 <p>Though there is much to be concerned about, there is far, far more for which to be thankful. Though life’s goodness can at times be overshadowed, it is never outweighed.</p>
 <p>尽管有很多事让人忧虑，但相比而言，值得感激的事要多得多。尽管生命的美好有时被蒙上阴影，但它却永远不会被埋没。</p>
@@ -1612,7 +1582,7 @@
 <p>花些时间让生命的美好感动自己的灵魂，放松自己的思绪。然后，把你的幸运与他人分享。因为生命的美好会在每次给予之间变得越来越壮观。</p>
 <p>Though the problems constantly scream for attention and the conflicts appear to rage ever stronger, the goodness of life grows stronger still, quietly, peacefully, with more purpose and meaning than ever before.</p>
 <p>尽管总是有问题让你去关注，冲突也似乎愈演愈烈，但生命的美好却总是静静地，平和地，带着比以往更强的意志和更多的价值变得更加强大。</p>
-<h3 id="015-Facing-the-Enemies-Within-直面内在的敌人"><a href="#015-Facing-the-Enemies-Within-直面内在的敌人" class="headerlink" title="015 Facing the Enemies Within 直面内在的敌人"></a>015 Facing the Enemies Within 直面内在的敌人</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/015%20quote-when-there-is-no-enemy-within-the-enemies-outside-cannot-hurt-you-winston-churchill-40-49-02.jpg"></p>
+<h3 id="015-Facing-the-Enemies-Within-直面内在的敌人"><a href="#015-Facing-the-Enemies-Within-直面内在的敌人" class="headerlink" title="015 Facing the Enemies Within 直面内在的敌人"></a>015 Facing the Enemies Within 直面内在的敌人</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/015%20quote-when-there-is-no-enemy-within-the-enemies-outside-cannot-hurt-you-winston-churchill-40-49-02.jpg" alt></p>
 <p>Facing the Enemies Within<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/15-facing_the_enemies_within.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/15-facing_the_enemies_within.mp3</a></p>
 <p>We are not born with courage, but neither are we born with fear. Maybe some of our fears are brought on by your own experiences, by what someone has told you, by what you’ve read in the papers. Some fears are valid, like walking alone in a bad part of town at two o’clock in the morning. But once you learn to avoid that situation, you won’t need to live in fear of it.</p>
 <p>我们的勇气并不是与生俱来的，我们的恐惧也不是。也许有些恐惧来自你的亲身经历，别人告诉你的故事，或你在报纸上读到的东西。有些恐惧可以理解，例如在凌晨两点独自走在城里不安全的地段。但是一旦你学会避免那种情况，你就不必生活在恐惧之中。</p>
@@ -1631,7 +1601,7 @@
 <p>第五个内在的敌人是过分谨慎。那是胆小的生活方式。胆怯不是美德，而是一种疾病。如果你不理会它，它就会将你征服。胆怯的人不会得到提拔，他们在市场中不会前进，不会成长，不会变得强大。你要避免过分谨慎。</p>
 <p>Do battle with the enemy. Do battle with your fears. Build your courage to fight what’s holding ou back, what’s keeping you from your goals and dreams. <strong>Be courageous in your life and in your pursuit of the things you want and the person you want to become.</strong></p>
 <p>一定要向这引起敌人开战。一定要向恐惧开战。鼓起勇气抗击阻挡你的事物，与阻止你实现目标和梦想的事物作斗争。要勇敢地生活，勇敢地追求你想要的事物并勇敢地成为你想成为的人。</p>
-<h3 id="016-Abundance-is-a-Life-Style-富足的生活方式"><a href="#016-Abundance-is-a-Life-Style-富足的生活方式" class="headerlink" title="016 Abundance is a Life Style 富足的生活方式"></a>016 Abundance is a Life Style 富足的生活方式</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/016%202119c1d35a4b4ef5ed55f81be7e16b27.jpg"></p>
+<h3 id="016-Abundance-is-a-Life-Style-富足的生活方式"><a href="#016-Abundance-is-a-Life-Style-富足的生活方式" class="headerlink" title="016 Abundance is a Life Style 富足的生活方式"></a>016 Abundance is a Life Style 富足的生活方式</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/016%202119c1d35a4b4ef5ed55f81be7e16b27.jpg" alt></p>
 <p>Abundance is a Life Style<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/16-abundance_is_a_life_style.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/16-abundance_is_a_life_style.mp3</a></p>
 <p>Abundance is a life style, a way of living your life. It isn’t something you buy now and then or pull down from the cupboard, dust off and use once or twice, and then return to the cupboard.</p>
 <p>富足是一种生活方式。它不是你偶尔买来，从架子上拿下来，抹去灰尘用上一两次然后又放回到架子上的东西。</p>
@@ -1649,7 +1619,7 @@
 <p>要处于你已经拥有的事物的富足状态。我保证它们就在那儿，深藏不露却从未远离。将其看成空气，吸入体内，因为它们是你的。放开暂并不富足的东西。把你富足的所有天赋写在橱柜里的鞋盒子上，如果需要就每天早晨拉开橱柜，知道你的天赋都在那儿。</p>
 <p>Learning to trust in your own abundance is required. When you begin to be within your own space of abundance, whatever you need will appear whenever you need it. That’s just the way the higher powers set this universe up to work. Trust the universal energy. The knowing of it all will humble you to its power yet let the brightness of you shine everywhere it needs to. Just by being from a state of abundance, it is being you.</p>
 <p>你需要学会信任自己的富足。当你开始处在自己富足的空间之内时，你需要的东西都会在你需要的时刻出现。这就是更高的力量设置这个宇宙动转的方式。要相信宇宙的能量。知道这一点会让你在其力量面前保持谦卑，但也会让你的光亮闪耀在所有需要的地方。只要处于富足的状态，就是做你自己。</p>
-<h3 id="017-Human-Life-a-Poem-人生如诗"><a href="#017-Human-Life-a-Poem-人生如诗" class="headerlink" title="017 Human Life a Poem 人生如诗"></a>017 Human Life a Poem 人生如诗</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/017%20quote-human-life-without-some-form-of-poetry-is-not-human-life-but-animal-existence-randall-jarrell-240276.jpg"></p>
+<h3 id="017-Human-Life-a-Poem-人生如诗"><a href="#017-Human-Life-a-Poem-人生如诗" class="headerlink" title="017 Human Life a Poem 人生如诗"></a>017 Human Life a Poem 人生如诗</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/017%20quote-human-life-without-some-form-of-poetry-is-not-human-life-but-animal-existence-randall-jarrell-240276.jpg" alt></p>
 <p>Human Life a Poem<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/17-human_life_a_poem.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/17-human_life_a_poem.mp3</a></p>
 <p>I think that, from a biological standpoint, <strong>human life almost reads like a poem. It has its own rhythm and beat, its internal cycles of growth and decay. It begins with innocent childhood, followed by awkward adolescence trying awkwardly to adapt itself to mature society, with its young passions and follies, its ideals and ambitions; then it reaches a manhood of intense activities, profiting from experience and learning more about society and human nature; at middle age, there is a slight easing of tension, a mellowing of character like the ripening of fruit or the mellowing of good wine, and the gradual acquiring of a more tolerant, more cynical and at the same time a kindlier view of life; then In the sunset of our life, the endocrine glands decrease their activity, and if we have a true philosophy of old age and have ordered our life pattern according to it, it is for us the age of peace and security and leisure and contentment; finally, life flickers out and one goes into eternal sleep, never to wake up again.</strong></p>
 <p>我以为，从生物学角度看，人的一生恰如诗歌。人生自有其韵律和节奏，自有内在的生成与衰亡。人生始于无邪的童年，经过少年的青涩，带着激情与无知，理想与雄心，笨拙而努力地走向成熟；后来人到壮年，经历渐广，阅人渐多，涉世渐深，收益也渐大；及至中年，人生的紧张得以舒缓，人的性格日渐成熟，如芳馥之果实，如醇美之佳酿，更具容忍之心，处世虽更悲观，但对人生的态度趋于和善；再后来就是人生迟暮，内分泌系统活动减少，若此时吾辈已经悟得老年真谛，并据此安排残年，那生活将和平，宁静，安详而知足；终于，生命之烛摇曳而终熄灭，人开始永恒的长眠，不再醒来。</p>
@@ -1659,7 +1629,7 @@
 <p>在某些人心中，不和谐音会越来越刺耳，最终竟然能掩盖主曲；有时不和谐音会积蓄巨大的能量，令乐曲不能继续，这时人们或举枪自杀或投河自尽。 这是他最初的主题被无望地遮蔽，只因他缺少自我教育。否则，常人将以体面的运动和进程走向既定的终点。在我们多数人胸中常常会有太多的断奏或强音，那是因为节奏错了，生命的乐曲因此而不再悦耳。我们应该如恒河，学她气势恢弘而豪迈地缓缓流向大海。</p>
 <p><strong>No one can say that life with childhood, manhood and old age is not a beautiful arrangement; the day has its morning, noon and sunset, and the year has its seasons, and it is good that it is so. There is no good or bad in life, except what is good according to its own season. And if we take this biological view of life and try to live according to the seasons, no one but a conceited fool or an impossible idealist can deny that human life can be lived like a poem.</strong> Shakespeare has expressed this idea more graphically in his passage about the seven stages of life, and a good many Chinese writers have said about the same thing. It is curious that Shakespeare was never very religious, or very much concerned with religion. I think this was his greatness; he took human life largely as it was, and intruded himself as little upon the general scheme of things as he did upon the characters of his plays. <strong>Shakespeare was like Nature itself, and that is the greatest compliment we can pay to a writer or thinker. He merely lived, observed life and went away.</strong></p>
 <p>人生有童年、少年和老年，谁也不能否认这是一种美好的安排，一天要有清晨、正午和日落，一年要有四季之分，如此才好。人生本无好坏之分，只是各个季节有各自的好处。如若我们持此种生物学的观点，并循着季节去生活，除了狂妄自大的傻瓜和无可救药的理想主义者，谁能说人生不能像诗一般度过呢。莎翁在他的一段话中形象地阐述了人生分七个阶段的观点，很多中国作家也说过类似的话。奇怪的是，莎士比亚并不是虔诚的宗教徒，也不怎么关心宗教。我想这正是他的伟大之处，他对人生秉着顺其自然的态度，他对生活之事的干涉和改动很少，正如他对戏剧人物那样。莎翁就像自然一样，这是我们能给作家或思想家的最高褒奖。对人生，他只是一路经历着，观察着，离我们远去了。</p>
-<h3 id="018-Solitude-独处"><a href="#018-Solitude-独处" class="headerlink" title="018 Solitude 独处"></a>018 Solitude 独处</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/018%20maysarton1.jpg"></p>
+<h3 id="018-Solitude-独处"><a href="#018-Solitude-独处" class="headerlink" title="018 Solitude 独处"></a>018 Solitude 独处</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/018%20maysarton1.jpg" alt></p>
 <p>Solitude<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/18-solitude.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/18-solitude.mp3</a></p>
 <p>I find it wholesome to be alone the greater part of the time. To be in company, even with the best, is soon wearisome and dissipating. I love to be alone. I never found the companion that was so companionable as solitude. We are for the most part more lonely when we go abroad among men than when we stay in our chambers. A man thinking or working is always alone, let him be where he will. Solitude is not measured by the miles of space that intervene between a man and his fellows. The really diligent student in one of the crowded hives of Cambridge College is as solitary as a dervish in the desert. The farmer can work alone in the field or the woods all day, hoeing or chopping, and not feel lonesome, because he is employed; but when he comes home at night he cannot sit down in a room alone, at the mercy of his thoughts, but must be where he can :see the folks,:” and recreate, and, as he thinks, remunerate himself for his day’s solitude; and hence he wonders how the student can sit alone in the house all night and most of the day without ennui and :the blues:; but he does not realize that the student, though in the house, is still at work in his field, and chopping in his woods, as the farmer in his, and in turn seeks the same recreation and society that the latter does, though it may be a more condensed form of it.</p>
 <p>我发现人若大部分时间用于独处，将有益身心。与人为伴，即使是挚友，也很快会有厌烦或虚度光阴的感觉。我爱独处，我发现没有比独处更好的伴侣了。出国，身在熙攘人群中，要比退守陋室更让人寂寞。心有所想，身有所系的人总是孤身一人，不论他身处何地。独处与否也不是由人与人之间的距离来确定。在剑桥苦读的学子虽身处蜂巢般拥挤的教室，实际上却和沙漠中的苦行僧一样，是在独处。家人终日耕于田间，伐于山野，此时他虽孤单但并不寂寞，因他专心于工作；但待到他日暮而息，却未必能忍受形影相吊，空有思绪做伴的时光，他必到“可以看见大伙儿”的去处去找乐子，如他所认为的那样以补偿白日里的孤独；因此他无法理解学子如何能竟夜终日独坐而不心生厌倦或倍感凄凉；然而他没意识到，学子虽身在学堂，但心系劳作，但是耕于心田，伐于学林，这正和农人一样，学子在寻求的无非是和他一样的快乐与陪伴，只是形式更简洁罢了。</p>
@@ -1667,7 +1637,7 @@
 <p>与人交往通常都因唾手可得而毫无价值，在频繁的相处中，我们无暇从彼此获取新价值。我们每日三餐相聚，反复让彼此重新审视的也是依旧故我，并无新奇之处。为此我们要循规蹈矩，称其为懂礼仪，讲礼貌，以便在这些频繁的接触中相安无事，无须论战而有辱斯文。我们相遇在邮局，邂逅在社交场所，围坐在夜晚的炉火旁，交情甚笃，彼此干扰着，纠缠着；实际上我认为这样我们都或多或少失去了对彼此的尊重。对于所有重要的倾心交流，相见不必过频。想想工厂里的女孩，她们虽从不落单，但也少有梦想。像这样方圆一英里仅一人居住，那情况会更好。人的价值非在肌肤相亲，而在心有灵犀。</p>
 <p>I have a great deal of company in my house; especially in the morning, when nobody calls. Let me suggest a few comparisons, that some one may convey an idea of my situation. I am no more lonely than the loon in the pond that laughs so loud, or than Walden Pond itself. What company has that lonely lake, I pray?And yet it has not the blue devils, but the blue angels in it, in the azure tint of its waters. The sun is alone, except in thick weather, when there sometimes appear to be two, but one is a mock sun. <strong>god is alone—but the devil, he is far from being alone; he sees a great deal of company; he is legion.</strong> I am no more lonely than a single mullein or dandelion in a pasture, or a bean leaf, or sorrel, or a horse-fly, or a bumblebee. I am no more lonely than the Millbrook, or a weathercock, or the north star, or the south wind, or an April shower, or a January thaw, or the first spider in a new house.</p>
 <p>我的房子里有很多伙伴，尤其在无人造访的清晨。我把自己和周围事物对比一下，你或许能窥见我生活的一斑。比起那湖中长笑的潜鸟，还有那湖，我并不比它们孤独多少。你看：这孤单的湖又何以为伴呢？然而它那一湾天蓝的湖水里有的却是天使的纯净，而非魔鬼的忧郁。太阳是孤独的，虽然时而在阴郁的天气里会出现两个太阳，但其中之一为幻日；上帝是孤独的 – 魔鬼才从不孤单，他永远不乏伙伴，因从他都甚众。比起牧场上的一朵毛蕊花，一支蒲公英，一片豆叶，一束酢浆草，一只牛虻或大黄蜂来，我并不孤单多少；比想密尔溪，风标，北极星，南风，四月春雨，正月融雪，或者新房中的第一只蜘蛛，我也并不更加孤单。</p>
-<h3 id="019-Giving-Life-Meaning-给生命以意义"><a href="#019-Giving-Life-Meaning-给生命以意义" class="headerlink" title="019 Giving Life Meaning 给生命以意义"></a>019 Giving Life Meaning 给生命以意义</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/019%20quote-the-meaning-of-life-is-to-give-life-meaning-ken-hudgins-344710.jpg"></p>
+<h3 id="019-Giving-Life-Meaning-给生命以意义"><a href="#019-Giving-Life-Meaning-给生命以意义" class="headerlink" title="019 Giving Life Meaning 给生命以意义"></a>019 Giving Life Meaning 给生命以意义</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/019%20quote-the-meaning-of-life-is-to-give-life-meaning-ken-hudgins-344710.jpg" alt></p>
 <p>Giving Life Meaning<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/19-giving_life_meaning.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/19-giving_life_meaning.mp3</a></p>
 <p>Have you thought about what you want people to say about you after you’re gone? Can you hear the voice saying, “He was a great man.” Or “She really will be missed.” What else do they say?</p>
 <p>你有没有想过，你希望人们在你死后怎样评论你？你能否听到这样的说，“他是个伟大的人”或“人们的确会怀念她”，他们还会说些什么？</p>
@@ -1685,7 +1655,7 @@
 <p>当生命戏剧般地一幕幕拉开时，其中隐含的意义是什么？当我们周围所有其他都似乎随着时间而消逝时，我们能够掌握哪个真理并依靠它来生活呢？</p>
 <p><strong>These moments are strung together in a series we call events. These events are strung together in a series we call life.When we seize the moment and bend it according to our will, a will driven by the spirit deep inside us, then we have discovered the meaning of life, a meaning for us that shall go on long after we depart this Earth.</strong></p>
 <p>这些瞬间串联在一起，我们称之为事件。这些事件串联系在一起， 我们称之为生活。当我们抓住那个瞬间并按照我们的意志来改变它-这意志受到我们内心深处的精神的驱使，我们就发现了生命的意义-这意义将在我们离开地球之后长久存在。</p>
-<h3 id="020-Relish-the-Moment-品位现在"><a href="#020-Relish-the-Moment-品位现在" class="headerlink" title="020 Relish the Moment 品位现在"></a>020 Relish the Moment 品位现在</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/020%20think-big-thoughts-but-relish-small-pleasures-quote-1.jpg"></p>
+<h3 id="020-Relish-the-Moment-品位现在"><a href="#020-Relish-the-Moment-品位现在" class="headerlink" title="020 Relish the Moment 品位现在"></a>020 Relish the Moment 品位现在</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/020%20think-big-thoughts-but-relish-small-pleasures-quote-1.jpg" alt></p>
 <p>Relish the Moment<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/20-relish_the_moment.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/20-relish_the_moment.mp3</a></p>
 <p>Tucked away in our subconsciousness is an idyllic vision. We see ourselves on a long trip that spans the moment. We are traveling by train. Out the windows, we drink in the passing scene of cars on nearby highways, of children waving at a crossing, of cattle grazing on a distant hillside, of smoke pouring from a power plant, of row upon row of corn ad wheat, of flatlands and valleys, of mountains and rolling hillsides, of city skylines and village halls.</p>
 <p>我们的潜意识里藏着一派田园诗般的风光! 我们仿佛身处一次横贯大陆的漫漫旅程之中! 乘着火车, 我们领略着窗外流动的景色：附近高速公路上奔驰的汽车、十字路口处招手的孩童、远山上吃草的牛群、源源不断地从电厂排放出的烟尘、一片片的玉米和小麦、平原与山谷、群山与绵延的丘陵、天空映衬下城市的轮廓, 以及乡间的庄园宅第!</p>
@@ -1699,7 +1669,7 @@
 <p>真正令人发疯的不是今日的负担, 而是对昨日的悔恨及对明日的恐惧! 悔恨与恐惧是一对孪生窃贼, 将今天从你我身边偷走!</p>
 <p>So stop pacing the aisles and counting the miles. Instead, climb more mountains, eat more ice cream, go barefoot more often, swim more rivers, watch more sunsets, laugh more, cry less. Life must be lived as we go along. The station will come soon enough.</p>
 <p>那么就不要在过道里徘徊吧, 别老惦记着你离车站还有多远! 何不换一种活法, 将更多的高山攀爬, 多吃点儿冰淇淋甜甜嘴巴, 经常光着脚板儿溜达, 在更多的河流里畅游, 多看看夕阳西下, 多点欢笑哈哈, 少让泪水滴答! 生活得一边过一边瞧! 车站就会很快到达!</p>
-<h3 id="021-The-Love-of-Beauty-爱美"><a href="#021-The-Love-of-Beauty-爱美" class="headerlink" title="021 The Love of Beauty 爱美"></a>021 The Love of Beauty 爱美</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/021%200787a35ee8b6482a2da72214a405aa42.jpg"></p>
+<h3 id="021-The-Love-of-Beauty-爱美"><a href="#021-The-Love-of-Beauty-爱美" class="headerlink" title="021 The Love of Beauty 爱美"></a>021 The Love of Beauty 爱美</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/021%200787a35ee8b6482a2da72214a405aa42.jpg" alt></p>
 <p>The Love of Beauty<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/21-the_love_of_beauty.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/21-the_love_of_beauty.mp3</a></p>
 <p>The love of beauty is an essential part of all healthy human nature. It is a moral quality. The absence of it is not an assured ground of condemnation, but the presence of it is an invariable sign of goodness of heart. <strong>In proportion to the degree in which it is felt will probably be the degree in which nobleness and beauty of character will be attained.</strong></p>
 <p>爱美及是整个健全人性不可或缺之一部分。它是一种道德品质。缺乏这种品质并不能作为受到责难的充分理由，但是拥有这种品质则是心灵美好的永恒标志。品德的高尚与美好所达到的程度可能与对美的感受程度成正比。</p>
@@ -1707,7 +1677,7 @@
 <p>大自然的美无处不在，整个宇宙就是美的殿堂。美，在春日百花中绽放；美，在绿叶嫩枝间摇曳；美，在深海幽谷里游弋；美，在奇石与贝壳的缤纷色彩中闪烁。不只是这些细微之物，还有海洋，山川，云彩，繁星，日升日落 – 一切都是洋溢着美。这样的美是如此珍贵，与我们最温柔，最高尚的情愫是如此相宜。然而，想到很多人置身于美之中，却几乎对它熟视无睹，真是令人痛心不已。</p>
 <p>All persons should seek to become acquainted with the beauty in nature. There is not a worm we tread upon, nor a leaf that dances merrily as it falls before the autumn winds, but calls for our study and admiration. <strong>The power to appreciated beauty not merely increases our sources of happiness—it enlarges our moral nature, too. Beauty calms our restlessness and dispels our cares. Go into the fields or the woods, spend a summer day by the sea or the mountains, and all your little perplexities and anxieties will vanish. Listen to sweet music, and your foolish fears and petty jealousies will pass away. The beauty of the world helps us to seek and find the beauty of goodness.</strong></p>
 <p>所有的人都应该去认识大自然之美。没有一条我们踩过的小虫，没有一片在秋风拂掠之际飞舞的树叶不值得我们研究与赞赏。欣赏美的能力不仅增加了我们快乐的来源，也加强了我们德性的修养。美使我们不安的心平静下来，也驱散了我们的忧虑。到田野或森林去，在夏日的海边或山上呆上一天，那么你所有微不足道的困惑与焦虑都会烟消云散。倾听悦耳的音乐，你那愚蠢的恐惧与狭隘的嫉妒都会过去。世界之美将有助于我们找到为善之美。</p>
-<h3 id="022-The-Happy-Door-快乐之门"><a href="#022-The-Happy-Door-快乐之门" class="headerlink" title="022 The Happy Door 快乐之门"></a>022 The Happy Door 快乐之门</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/022%20ddeb6bd8f7ed6598b165c7a200256265.jpg"></p>
+<h3 id="022-The-Happy-Door-快乐之门"><a href="#022-The-Happy-Door-快乐之门" class="headerlink" title="022 The Happy Door 快乐之门"></a>022 The Happy Door 快乐之门</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/022%20ddeb6bd8f7ed6598b165c7a200256265.jpg" alt></p>
 <p>The Happy door<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/22-the_happy_door.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/22-the_happy_door.mp3</a></p>
 <p><strong>Happiness is like a pebble dropped into a pool to set in motion an ever-widening circle of ripples. As Stevenson has said, being happy is a duty.</strong></p>
 <p>快乐就像一块为了激起阵阵涟漪而丢进池塘的小石头。正好史蒂文森所说，快乐是一种责任。</p>
@@ -1723,7 +1693,7 @@
 <p>然后假装就变成了现实。你拥有了使心灵平静的秘密，会因帮助他人而忘我。</p>
 <p>Being happy, once it is realized as a duty and established as a habit, opens doors into unimaginable gardens thronged with grateful friends.</p>
 <p>一旦你认识到快乐是一种责任并使快乐成为习惯，通向不可思议的乐园的大门就会向你敞开，那里满是感激你的朋友。</p>
-<h3 id="023-Born-to-Win-生而为赢"><a href="#023-Born-to-Win-生而为赢" class="headerlink" title="023 Born to Win 生而为赢"></a>023 Born to Win 生而为赢</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/023%20zig-ziglar-author-quote-you-were-born-to-win-but-to-be-a-winner-you.jpg"></p>
+<h3 id="023-Born-to-Win-生而为赢"><a href="#023-Born-to-Win-生而为赢" class="headerlink" title="023 Born to Win 生而为赢"></a>023 Born to Win 生而为赢</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/023%20zig-ziglar-author-quote-you-were-born-to-win-but-to-be-a-winner-you.jpg" alt></p>
 <p>Born to Win<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/23-born_to_win.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/23-born_to_win.mp3</a></p>
 <p>Each human being is born as something new, something that never existed before. Each is born with the capacity to win at life. Each person has a unique way of seeing, hearing, touching, tasting and thinking. Each has his or her own unique potentials—capabilities and limitations. Each can be a significant, thinking, aware, and creative being—a productive person, a winner.</p>
 <p>人皆生而为新，为前所未有之所存在；人皆生而能赢。人皆有其特立独行之方式去审视，聆听，触摸，品味及思考，因而都具备独特潜质-能力和局限。人皆能举足轻重，思虑明达，洞察秋毫，富有创意，成就功业。</p>
@@ -1741,13 +1711,13 @@
 <p>尽管成者可以自由享乐，但他更知如何推迟享乐，适时自律，以期将来乐趣更盛。成者并不忌惮追求所想，但取之有道，也并不靠控制他们而获取安然之感。他们总是使自己立于不败。</p>
 <p>A winner cares about the world and its peoples. A winner is not isolated from the general problems of society, but is concerned, compassionate, and committed to improving the quality of life. Even in the face of national and international adversity, a winner’s self-image is not one of a powerless individual. <strong>A winner works to make the world a better place.</strong></p>
 <p>成者心忧天下，并不孤立尘世弊病之外，而是置身事内，满腔热情，致力于改善民生。即使面对民族，国家之危亡，成者亦非无力回天之个体。他总是努力令世界更好。</p>
-<h3 id="024-Work-and-Pleasure-工作和娱乐"><a href="#024-Work-and-Pleasure-工作和娱乐" class="headerlink" title="024 Work and Pleasure 工作和娱乐"></a>024 Work and Pleasure 工作和娱乐</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/024%20quote-if-you-re-interested-in-balancing-work-and-pleasure-stop-trying-to-balance-them-instead-donald-trump-29-74-41.jpg"></p>
+<h3 id="024-Work-and-Pleasure-工作和娱乐"><a href="#024-Work-and-Pleasure-工作和娱乐" class="headerlink" title="024 Work and Pleasure 工作和娱乐"></a>024 Work and Pleasure 工作和娱乐</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/024%20quote-if-you-re-interested-in-balancing-work-and-pleasure-stop-trying-to-balance-them-instead-donald-trump-29-74-41.jpg" alt></p>
 <p>Work and Pleasure<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/24-work_and_pleasure.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/24-work_and_pleasure.mp3</a></p>
 <p>To be really happy and really safe, one ought to have at least two or three hobbies, and they must all be real. It is no use starting late in life to say: “I will take an interest in this or that.” Such an attempt only aggravates the strain of mental effort. A man may acquire great knowledge of topics unconnected with his daily work, and yet hardly get any benefit or relief. It is no use doing what you like; you have got to like what you do. Broadly speaking, human being may be divided into three classes: those who are toiled to death, those who are worried to death, and those who are bored to death. It is no use offering the manual laborer, tired out with a hard week’s sweat and effort, the chance of playing a game of football or baseball on Saturday afternoon. It is no use inviting the politician or the professional or business man, who has been working or worrying about serious things for six days, to work or worry about trifling things at the weekend.</p>
 <p>要想真正生活得幸福和平安，一个人至少应该有两三种业余爱好，而且必须是真正的爱好。到了晚年才开始说“我要培养这个或那个兴趣”是毫无用处的，种这种尝试只会增加精神上的负担。在与自己日常工作无关的领域中，一个人可以获得渊博的知识，但却很难有所收益或得到放松。做自己喜欢的事是无益的，你得喜欢自己所做的事。广言之，人可以分为三个类别：劳累而死的人，忧虑而死的人和无聊而死的人。对于那些体力劳动者来说，一周辛苦的工作使他们精疾力竭，因此在周六下午给他们提供踢足球或者打棒球的机会是没有意义的。对于政界人士，专业人士或者商人来说，他们已经为棘手的事务操劳或者烦恼了六天，因此在周末请他们为琐事劳神同样毫无意义。</p>
 <p>It may also be said that rational, industrious, useful human beings are divided into two classes: first, those whose work is work and whose pleasure is pleasure; and secondly, those whose work and pleasure are one. Of these the former are the majority. They have their compensations. The long hours in the office or the factory bring with them as their reward, not only the means of sustenance, but a keen appetite for pleasure even in its simplest and most modest forms. But Fortune’s favored children belong to the second class. Their life is a natural harmony. For them the working hours are never long enough. Each day is a holiday, and ordinary holidays when they come are grudged as enforced interruptions in an absorbing vacation. Yet to both classes the need of an alternative outlook, of a change of atmosphere, of a diversion of effort, is essential. Indeed, it may well be that those whose work is their pleasure are those who most need the means of banishing it at intervals from their minds.</p>
 <p>或者可以这么说，理智的，勤奋的，有用的人可以分为两类：对第一类人而言，工作就是工作，娱乐就是娱乐；对于第二类人而言，工作和娱乐是合二为一的。很大一部分人属于前者。他们可以得到相应的补偿。在办公室或工厂里长时间的工作，不仅带给他们维持生计的金钱，还带给他们一种渴求娱乐的强烈欲望，哪怕这种娱乐消遣是以最简单，最淳朴的方式进行的。而第二类人则是命运的宠儿。他们的生活自然而和谐。在他们看来，工作时间永远不够多，每天都是假期；而当正常的假日到来时，他们总会抱怨自己有趣的休假被强行中断。然而，有一些东西对于这两类人来说都十分必要，那就是变换一下视角，改变一下氛围，尝试做点不同的事情。事实上，那些把工作看作娱乐的人可能是需要以某种方式将工作不时地驱赶出自己的大脑。</p>
-<h3 id="025-Mirror-Mirror–What-do-I-see镜子-镜子-告诉我"><a href="#025-Mirror-Mirror–What-do-I-see镜子-镜子-告诉我" class="headerlink" title="025 Mirror, Mirror–What do I see镜子,镜子,告诉我"></a>025 Mirror, Mirror–What do I see镜子,镜子,告诉我</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/025%20quote-when-you-look-in-the-mirror-what-do-you-see-do-you-see-the-real-you-or-what-you-have-david-icke-14-5-0540.jpg"></p>
+<h3 id="025-Mirror-Mirror–What-do-I-see镜子-镜子-告诉我"><a href="#025-Mirror-Mirror–What-do-I-see镜子-镜子-告诉我" class="headerlink" title="025 Mirror, Mirror–What do I see镜子,镜子,告诉我"></a>025 Mirror, Mirror–What do I see镜子,镜子,告诉我</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/025%20quote-when-you-look-in-the-mirror-what-do-you-see-do-you-see-the-real-you-or-what-you-have-david-icke-14-5-0540.jpg" alt></p>
 <p>Mirror, Mirror—What do I See?<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/25-mirror_mirror__what_do_i_see.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/25-mirror_mirror__what_do_i_see.mp3</a></p>
 <p><strong>A loving person lives in a loving world. A hostile person lives in a hostile world. Everyone you meet is your mirror.</strong></p>
 <p>充满爱意人的生活在充满爱意的世界里，充满敌意的人则生活在充满敌意的世界里。你所遇到的每一个人都是你的镜子。</p>
@@ -1765,7 +1735,7 @@
 <p>这意味着，就像我会对其他人身上令我厌恶的特质感到恼怒或不安一样，我应该更好地重新审视自己的特质，并考虑做一些改变。即使我不想做大的改变，至少我会考虑该如何修正自己正在做的一些事情。</p>
 <p>At times we meet someone new and feel distant, disconnected, or disgusted. Although we don’t want to believe it, and it’s not easy or desirable to look further, it can be a great learning lesson to figure out what part of the person is being reflected in you. It’s simply just another way to create more self-awareness.</p>
 <p>我们时常会遇到陌生人，并感到疏远或厌恶。尽管我们不想去相信，不容易也不想去深究，但是弄清楚别人的哪些特质在自己身上有所体现是非常有意义的一课，这也正是增强自我意识的另一个途径。</p>
-<h3 id="026-On-Motes-and-Beams-微尘与栋梁"><a href="#026-On-Motes-and-Beams-微尘与栋梁" class="headerlink" title="026 On Motes and Beams 微尘与栋梁"></a>026 On Motes and Beams 微尘与栋梁</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/026%20quote-why-beholdest-thou-the-mote-that-is-in-thy-brother-s-eye-but-considerest-not-the-beam-that-is-in-bible-303549.jpg"></p>
+<h3 id="026-On-Motes-and-Beams-微尘与栋梁"><a href="#026-On-Motes-and-Beams-微尘与栋梁" class="headerlink" title="026 On Motes and Beams 微尘与栋梁"></a>026 On Motes and Beams 微尘与栋梁</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/026%20quote-why-beholdest-thou-the-mote-that-is-in-thy-brother-s-eye-but-considerest-not-the-beam-that-is-in-bible-303549.jpg" alt></p>
 <p>On Motes and Beams<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/26-on_motes_and_beams.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/26-on_motes_and_beams.mp3</a></p>
 <p><strong>It is curious that our own offenses should seem so much less heinous than the offenses of others. I suppose the reason is that we know all the circumstances that have occasioned them and so manage to excuse in ourselves what we cannot excuse in others. We turn our attention away from our own defects, and when we are forced by untoward events to consider them, find it easy to condone them. For all I know we are right to do this; they are part of us and we must accept the good and bad in ourselves together.</strong></p>
 <p>让人奇怪的是，和别人的过错比起来，我们自身的过错往往不是那样的可恶。我想，其原因应该是我们知晓一切导致自己犯错的情况，因此能够设法谅解自己的错误，而别人的错误却不能谅解。我们对自己的缺点不甚关注，即便是深陷困境而不得不正视它们的时候，我们也会很容易就宽恕自己。据我所知，我们这样做是正确的。缺点是我们自身的一部分，我们必须接纳自己的好和坏。</p>
@@ -1773,7 +1743,7 @@
 <p>但是当我们评判别人的时候，情况就不同了。我们不是通过真实的自我来评判别人，而是用一种自我形象来评判，这种自我形象完全摒弃了在任何世人眼中会伤害到自己的虚荣或者体面的东西。举一个小例子来说：当觉察到别人说谎时，我们是多么地蔑视他啊！但是，谁能够说自从未说过谎？可能还不止一百次呢。</p>
 <p>There is not much to choose between men. They are all a hotchpotch of greatness and littleness, of virtue and vice, of nobility and baseness. Some have more strength of character, or more opportunity, and so in one direction or another give their instincts freer play, but potentially they are the same. For my part, I do not think I am any better or any worse than most people, but I know that if I set down every action in my life and every thought that has crossed my mind, the world would consider me a monster of depravity. The knowledge that these reveries are common to all men should inspire one with tolerance to oneself as well as to others. It is well also if they enable us to look upon our fellows, even the most eminent and respectable, with humor, and if they lead us to take ourselves not too seriously.</p>
 <p>人和人之间没什么大的差别。他们皆是伟大与渺小，善良与邪恶，高尚与低俗的混合体。有的人性格比较坚毅，机会也比较多，因而达个或那个方面，能够更自由地发挥自己的禀赋，但是人类的潜能却都是相同的。至于我自己，我认为自己并不比大多数人更好或者更差，但是我知道，假如我记下我生命中每一次举动和每一个掠过我脑海的想法的话，世界就会将我视为一个邪恶的怪物。每个人都会有这样的怪念头，这样的认识应当能够启发我们宽容自己，也宽容他人。同时，假如因此我们得以用幽默的态度看待他人，即使是天下最优秀最令人尊敬的人，而且假如我们也因此不把自己看得过于重要，那是很有裨益的。</p>
-<h3 id="027-An-October-Sunrise-十月的日出"><a href="#027-An-October-Sunrise-十月的日出" class="headerlink" title="027 An October Sunrise 十月的日出"></a>027 An October Sunrise 十月的日出</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/027%20b126c5834e46c4e0f5f5679ba8c5c012.jpg"></p>
+<h3 id="027-An-October-Sunrise-十月的日出"><a href="#027-An-October-Sunrise-十月的日出" class="headerlink" title="027 An October Sunrise 十月的日出"></a>027 An October Sunrise 十月的日出</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/027%20b126c5834e46c4e0f5f5679ba8c5c012.jpg" alt></p>
 <p>An October Sunrise<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/27-an_october_sunrise.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/27-an_october_sunrise.mp3</a></p>
 <p>I was up the next morning be fore the October sunrise, and away through the wild and the woodland. The rising of the sun was noble in the cold and warmth of it peeping down the spread of light, he raised his shoulder heavily over the edge of grey mountain and wavering length of upland. Beneath his gaze the dew-fogs dipped, and crept to crept to the hollow places; then stole away in line and column, holding skirts, and clinging subtly at the sheltering corners where rock hung over grassland, while the brave lines of the hills came forth, one beyond other gliding.</p>
 <p>第二天凌晨，在十月的太阳升起之前，我已经起身并穿过了旷野和丛林。十月的清晨乍寒还暖，日出的景象非常壮观。透过一片晨曦，朝日从朦胧的山冈和起伏连绵的高地过际，沉重地抬起肩头。在它的逼视下，蒙蒙的雾气向下沉降，落到洼地里去，接着一丝丝一缕缕地悄悄飘散，而在草地之上悬岩之下的那些隐秘角落里，雾气却还不愿散去，同时群山的雄姿接二连三地显现出来。</p>
@@ -1783,7 +1753,7 @@
 <p>然而，在树林那流动的景色逝去之前，欢悦的晨光突然跃出了峰峦和山谷，光线所及，把照到的地方和周围的森林分别染成青色，紫色，琥珀色和富丽的红玫瑰色。光线照到哪里，那里就如同一幅幕布被掀开。而所有的一切都同样在驱散恐惧和黑暗的魔影；所有的一切都展开希望的翅膀，向前习翔，并大声宣告：“上帝在这里！”于是生命和欢乐从每一个蜷伏的洞穴里信心十足地欣然跃出；一切花朵，蓓蕾和鸟雀都感到了生命和欢乐而抖动起来；上帝的凝视汇合成温柔的恩泽。</p>
 <p>So, perhaps, shall break upon us that eternal morning, when crag and chasm shall be no more, neither hill and valley, nor great unvintaged ocean; but all things shall arise, and shine in the light of the Father’s countenance, because itself is risen.</p>
 <p>也许，那永恒的晨光就会这样降临人间，那时不再有险崖沟壑，不再有峰峦山谷，也不再有浩瀚无际的海洋；万物都将踊跃升腾，在造物主慈爱的光芒中生辉，因为太阳已经升起。</p>
-<h3 id="028-To-Be-or-Not-to-Be-生存还是毁灭"><a href="#028-To-Be-or-Not-to-Be-生存还是毁灭" class="headerlink" title="028 To Be or Not to Be 生存还是毁灭"></a>028 To Be or Not to Be 生存还是毁灭</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/028%20quote-to-be-or-not-to-be-that-is-the-question-william-shakespeare-168147.jpg"></p>
+<h3 id="028-To-Be-or-Not-to-Be-生存还是毁灭"><a href="#028-To-Be-or-Not-to-Be-生存还是毁灭" class="headerlink" title="028 To Be or Not to Be 生存还是毁灭"></a>028 To Be or Not to Be 生存还是毁灭</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/028%20quote-to-be-or-not-to-be-that-is-the-question-william-shakespeare-168147.jpg" alt></p>
 <p>To be or not to be<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/28-to_be_or_not_to_be.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/28-to_be_or_not_to_be.mp3</a></p>
 <p>Outside the Bible, these six words are the most famous in all the literature of the world. They were spoken by Hamlet when he was thinking aloud, and they are the most famous words in Shakespeare because Hamlet was speaking not only for himself but also for every thinking man and woman. <strong>To be or not to be, to live or not to live, to live richly and abundantly and eagerly, or to live dully and meanly and scarcely.</strong> A philosopher once wanted to know whether he was alive or not, which is a good question for everyone to put to himself occasionally. He answered it by saying: “I think, therefore am.”</p>
 <p>“生存还是毁灭。”如果把《圣经》除外，这六个字便是整个世界文学中最有名的六个字了。这六个字是哈姆雷特一次喃喃自语时说的，而这六个字也就成了莎士比亚作品中最有名的几个字了，因为这里哈姆雷特不仅道出了他自己的心声，同时也代表了一切有思想的男男女女。是活还是不活——是要生活还是不要生活，是要生活得丰满充实，兴致勃勃，还是只是活得枯燥委琐，贫乏无味。一位哲人一次曾想弄清他自己是否是在活着，这个问题我们每个人也大可不时地问问我们自己。这位哲学家对此的答案是： “我思故我在。”</p>
@@ -1795,7 +1765,7 @@
 <p>培根曾讲过，一个人失去朋友即是死亡。但是凭着交往，凭着新朋，我们就能获得再生。这条对于活人可谓千真万确的道理在一定程度上也完全适用于人的思想，它们也都是活的。你的思想所在，你的生命便也在那里。如果你的思想不出你的业务范围，不出你的物质利益，不出你所在城镇的狭隘圈子，那么你的一生便也只是多方受着局限的狭隘的一生。但是如果你对当前中国那里所发生的种种感到兴趣，那么你便可说也活在中国；如果你对一本佳妙小说中的人物感到兴趣，你便是活在一批极有趣的人们中间；如果你能全神贯注地听点好的音乐，你就会超脱出你的周围环境而活在一个充满激情与想象的神奇世界之中。</p>
 <p><strong>To be or not to be–to live intensely and richly, merely to exist, that depends on ourselves. Let widen and intensify our relations. While we live, let live!</strong></p>
 <p>生存还是毁灭——活得热烈活得丰富，还是只是简单存在，这就全在我们自己。但愿我们都能不断扩展和增强我们的各种联系。只要一天我们活着，就要一天是在活着。</p>
-<h3 id="029-Gettysburg-Address-葛底斯堡演说"><a href="#029-Gettysburg-Address-葛底斯堡演说" class="headerlink" title="029 Gettysburg Address 葛底斯堡演说"></a>029 Gettysburg Address 葛底斯堡演说</h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/029%20summary-gettysburg-address_cbf403733088963f.jpg"></p>
+<h3 id="029-Gettysburg-Address-葛底斯堡演说"><a href="#029-Gettysburg-Address-葛底斯堡演说" class="headerlink" title="029 Gettysburg Address 葛底斯堡演说"></a>029 Gettysburg Address 葛底斯堡演说</h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/029%20summary-gettysburg-address_cbf403733088963f.jpg" alt></p>
 <p>Gettysburg Address<br><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/29-gettysburg_address.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/29-gettysburg_address.mp3</a></p>
 <p>Fourscore and seven years ago, our fathers brought forth upon this continent a new nation, conceived in liberty and dedicated to the proposition that all men are created equal.</p>
 <p>87年前，我们的先辈们在这个大陆上创立了一个新国家，它孕育于自由之中，奉行一切人生来平等的原则。</p>
@@ -1804,7 +1774,7 @@
 <p>But, in a larger sense, we cannot dedicate, we cannot consecrate, we cannot hallow this ground. The brave men, living and dead, who struggled here, have consecrated it far above our poor power to add or detract. The world will little note nor long remember what we say here, but it can never forget what they did here. It is for us, the living, rather, to be dedicated here to the unfinished work which they who fought here have thus far so nobly advanced. It is rather for us to be here dedicated to the great task remaining before us—that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion; that we here highly resolve that these dead shall not have died in vain; <strong>that this nation, under God, shall have a new birth of freedom; and that government of the people, by the people, and for the people, shall not perish from the earth.</strong></p>
 <p>但是，从更广泛的意义上来说，这块土地我们不能够奉献，不能够圣化，不能够神化。那些曾在这里战斗过的勇士们，活着的和去世的，已经把这块土地圣化了，这远不是我们微薄的力量所能增减的。我们今天在这里所说的话，全世界不大会注意，也不会长久地记住，但勇士们在这里所做过的事，全世界却永远不会忘记。毋宁说，倒是我们这些还活着的人，应该在这里把自己奉献于勇士们已经如此崇高地向前推进但尚未完成的事业。倒是我们应该在这里把自己奉献于仍然留在我们面前的伟大任务——我们要从这些光荣的死者身上汲取更多的献身精神，来完成他们已经完全彻底为之献身的事业；我们要在这里下定最大的决心，不让这些死者白白牺牲；我们要使国家在上帝福佑下得到自由的新生，要使这个民有、民治、民享的政府永世长存。</p>
 <h3 id="030-First-Inaugural-Address"><a href="#030-First-Inaugural-Address" class="headerlink" title="030 First Inaugural Address"></a>030 First Inaugural Address</h3><p>就职演讲(节选)</p>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/030%20jfk-inauguration_31390.jpg"></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/030%20jfk-inauguration_31390.jpg" alt></p>
 <p><a href="http://down010702.tingclass.net/lesson/shi0529/0001/1613/30-first_inaugural_address_.mp3" target="_blank" rel="noopener">http://down010702.tingclass.net/lesson/shi0529/0001/1613/30-first_inaugural_address_.mp3</a></p>
 <p>We observe today not a victory of party, but a celebration of freedom, symbolizing an end, as well as a beginning; signifying renewal, as well as change. For I have sworn before you and Almighty God the same solemn oath our forebears prescribed nearly a century and three quarters ago.</p>
 <p>今天我们庆祝的不是政党的胜利，而是自由的胜利。这象征着一个结束，也象征着一个开端;意味着延续也意味看变革。因为我已在你们和全能的上帝面前，宣读了我们的先辈在170多年前拟定的庄严誓言。</p>
@@ -1822,7 +1792,7 @@
 <p>全世界的公民们，不要问美国将为你们做些计人，而要问我们共同能为人类的自由做些什么。</p>
 <p>Finally, whether you are citizens of America or citizens of the world, ask of us here the same high standards of strength and sacrifice which we ask of you. <strong>With a good conscience our only sure reward, with history the final judge of our deeds,</strong> let us go forth to lead the land we love, asking His blessing and His help, but knowing that here on earth, God’s work must truly be our own.</p>
 <p>最后，不论你们是美国公民还是其他国家的公民，你们应要求我们献出我们同样要求于你们的高度力量和牺牲。问心无愧是我们唯一可靠的奖赏，历史是我们行动的最终裁判，让我们走向前去，引导我们所热爱的国家。我们祈求上帝的福佑和帮助，但我们知道，确切地说，上帝在尘世的工作必定是我们自己的工作。</p>
-<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><p><img alt="English-football-names-2012-13.jpg" data-src="http://opb37u589.bkt.clouddn.com/English-football-names-2012-13.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><p><img data-src="http://opb37u589.bkt.clouddn.com/English-football-names-2012-13.jpg?imageMogr2/thumbnail/!75p" alt="English-football-names-2012-13.jpg"></p>
 <blockquote>
 <p>教名（Given Name）+自取名（中间名，Middle Name）+姓（Family Name）。<br>如George Walker Bush–&gt;George W. Bush/G. W. Bush/Bush G. W.</p>
 </blockquote>
@@ -1904,13 +1874,13 @@
 <p>但有些特殊情况：<br>(1)Maeve O’Conner, 正确缩写应为O’Conner M, 有人会按英文的构词习惯认为是印刷错 误，认为Oconner<br>M (2)国外也有复姓，如Julie<br>C. Fanbury-Smith, Hartly Lorberboum-Galski等分别缩写 为Fanbury-Smith JC,<br>Lorbertoum-Galski HL (3)姓名中含前缀De,<br>Des, Du, La, Dal, La, Von, Van, den, der等，将前缀和姓作为一个整体，按字顺排列，词间空格和大小写字母不影响排列，如Kinder Von Werder缩写为Von<br>Werder K，不可写为Werder KV.</p>
 <p>(4)国外杂志要求作者署名后给出作者学位和加入的学会，学位与学会名也是用缩写。学 位常见的有PhD（哲学博士）, SM(理科硕士）MBA（管理学硕士）等，学会名称的缩写一 般采用首字母缩写，如Royal Society of Chemistry缩写为RSC等。一篇论文作者署名为 Edward J. Huth, MD, PhD, ICMJE则表示Edward J. Huth是作者名，MD和PhD表示该作者是医学博士和哲学博士，ICMJE表示该作者是国际医学期刊编辑委员会委员。在著录参考 文献时，该作者缩写Huth EJ。</p>
 <p>附上链接：<a href="https://wenku.baidu.com/view/86ff8c040740be1e640e9a00.html###" target="_blank" rel="noopener">英文人名的缩写和参考文献写法</a></p>
-<h3 id="IPCreator’s-Using-of-English"><a href="#IPCreator’s-Using-of-English" class="headerlink" title="IPCreator’s Using of English"></a><a href>IPCreator’s Using of English</a></h3><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/language-v-population.png"><br>Top Languages of the Internet, Today and Tomorrow<sup>[1]</sup></p>
+<h3 id="IPCreator’s-Using-of-English"><a href="#IPCreator’s-Using-of-English" class="headerlink" title="IPCreator’s Using of English"></a><a href>IPCreator’s Using of English</a></h3><p><img data-src="http://okkntqe2h.bkt.clouddn.com/language-v-population.png" alt><br>Top Languages of the Internet, Today and Tomorrow<sup>[1]</sup></p>
 <blockquote>
 <p>Learning. Teaching. Using. Enjoying English!</p>
 </blockquote>
 <p>Whether it’s easy or difficult , just do it right now.</p>
 <p>Why I Insist on Using English</p>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/Learn-English.jpg"></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/Learn-English.jpg" alt></p>
 <blockquote>
 <p>Using  is the only and the best way of learning English.<br>Program skills depend  on English.<br>You can appreciate and taste more precious beauty things , such as great mind, good books, fabulous music, touching movies…</p>
 </blockquote>
@@ -1926,12 +1896,12 @@
 <h4 id="Movie"><a href="#Movie" class="headerlink" title="Movie"></a>Movie</h4><p>Appreciate the wonderful Movie</p>
 <h4 id="Reference-1"><a href="#Reference-1" class="headerlink" title="Reference"></a>Reference</h4><p>[1]<a href="https://unbabel.com/blog/top-languages-of-the-internet/#" target="_blank" rel="noopener">Top Languages of the Internet, Today and Tomorrow</a></p>
 <h3 id="IPCreator’s-Translation"><a href="#IPCreator’s-Translation" class="headerlink" title="IPCreator’s Translation"></a><a href>IPCreator’s Translation</a></h3><p>from <a href="http://www.azquotes.com" target="_blank" rel="noopener">az quotes</a></p>
-<p><img alt data-src="http://www.azquotes.com/picture-quotes/quote-a-person-who-never-made-a-mistake-never-tried-anything-new-albert-einstein-8-72-86.jpg"></p>
+<p><img data-src="http://www.azquotes.com/picture-quotes/quote-a-person-who-never-made-a-mistake-never-tried-anything-new-albert-einstein-8-72-86.jpg" alt></p>
 <blockquote>
 <p>A person who never made a mistake never tried anything new.<br>——Albert Einstein</p>
 </blockquote>
 <p>从不犯错的人也从不尝试新事物。<br>——艾尔伯特 爱因斯坦</p>
-<p>【17.11.19】<br><img alt="miltonberle1-2x.jpg" data-src="http://opb37u589.bkt.clouddn.com/miltonberle1-2x.jpg?imageMogr2/thumbnail/!75p"><br>If opportunity doesn’t knock, build a door.</p>
+<p>【17.11.19】<br><img data-src="http://opb37u589.bkt.clouddn.com/miltonberle1-2x.jpg?imageMogr2/thumbnail/!75p" alt="miltonberle1-2x.jpg"><br>If opportunity doesn’t knock, build a door.</p>
 <blockquote>
 <p>如果机会没敲门，先建一道门。</p>
 </blockquote>
@@ -1947,12 +1917,12 @@
 <blockquote>
 <p>Don’t be the same, be better.<br>重复的生活不要再过第二次。</p>
 </blockquote>
-<p><img alt data-src="http://www.azquotes.com/picture-quotes/quote-i-didn-t-fail-the-test-i-just-found-100-ways-to-do-it-wrong-benjamin-franklin-10-19-28.jpg"></p>
+<p><img data-src="http://www.azquotes.com/picture-quotes/quote-i-didn-t-fail-the-test-i-just-found-100-ways-to-do-it-wrong-benjamin-franklin-10-19-28.jpg" alt></p>
 <blockquote>
 <p>I didn’t fail the test, I just found 100 ways to do it wrong.<br>——Benjamin Franklin</p>
 </blockquote>
 <p>我并没有失败，只是找到了100种错误的方法。<br>——本杰明 富兰克林</p>
-<p><img alt data-src="http://www.azquotes.com/picture-quotes/quote-don-t-find-fault-find-a-remedy-henry-ford-9-91-53.jpg"></p>
+<p><img data-src="http://www.azquotes.com/picture-quotes/quote-don-t-find-fault-find-a-remedy-henry-ford-9-91-53.jpg" alt></p>
 <blockquote>
 <p>Don’t find fault, find a remedy.<br>——Henry Ford</p>
 </blockquote>
@@ -1966,7 +1936,7 @@
 <blockquote>
 <p>不做决定也是决定</p>
 </blockquote>
-<p><img alt="comfortzone.JPG" data-src="http://opb37u589.bkt.clouddn.com/comfortzone.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/comfortzone.JPG?imageMogr2/thumbnail/!75p" alt="comfortzone.JPG"></p>
 <p>Open your Mind</p>
 <blockquote>
 <p>开窍</p>
@@ -1985,7 +1955,7 @@
 <p>停止空想动手实施。</p>
 </blockquote>
 <p>【17.9.25】</p>
-<p><img alt="Capture1.JPG" data-src="http://opb37u589.bkt.clouddn.com/Capture1.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Capture1.JPG?imageMogr2/thumbnail/!75p" alt="Capture1.JPG"></p>
 <blockquote>
 </blockquote>
 <p>We are as happy as we make up our minds to be.</p>
@@ -2008,7 +1978,7 @@
 <blockquote>
 <p>今日之所受磨难为日后所需之力量。</p>
 </blockquote>
-<p>【17.9.22】<br><img alt="Capture.JPG" data-src="http://opb37u589.bkt.clouddn.com/Capture.JPG?imageMogr2/thumbnail/!75p"><br>Push yourself because no one else is going to do it for you.</p>
+<p>【17.9.22】<br><img data-src="http://opb37u589.bkt.clouddn.com/Capture.JPG?imageMogr2/thumbnail/!75p" alt="Capture.JPG"><br>Push yourself because no one else is going to do it for you.</p>
 <blockquote>
 <p>自我成长，因为没有人能为你做这事。</p>
 </blockquote>
@@ -2129,7 +2099,7 @@
 <blockquote>
 <p>生命不是等待风暴过去，而是要学会在雨中跳舞。</p>
 </blockquote>
-<p><img alt data-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8z8CEb-tpsVvKeCvCsg_nzW5lFeW0d2cbDkZWfIv-4utL5CyXuA"><br>Give a man a fish and you feed him for a day.<br>Teach a man to fish and you feed him for a lifetime.</p>
+<p><img data-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8z8CEb-tpsVvKeCvCsg_nzW5lFeW0d2cbDkZWfIv-4utL5CyXuA" alt><br>Give a man a fish and you feed him for a day.<br>Teach a man to fish and you feed him for a lifetime.</p>
 <blockquote>
 <p>授人以鱼不如授人以渔</p>
 </blockquote>
@@ -2161,32 +2131,32 @@
 <p>“A small leak will sink a great ship.”<br>—— Benjamin Franklin  </p>
 </blockquote>
 <p>千里之堤，溃于蚁穴<br>——本杰明 富兰克林</p>
-<p><img alt data-src="http://izquotes.com/quotes-pictures/quote-life-is-not-easy-for-any-of-us-but-what-of-that-we-must-have-perseverance-and-above-all-marie-curie-45454.jpg"></p>
+<p><img data-src="http://izquotes.com/quotes-pictures/quote-life-is-not-easy-for-any-of-us-but-what-of-that-we-must-have-perseverance-and-above-all-marie-curie-45454.jpg" alt></p>
 <blockquote>
 <p>“Life is not easy for any of us. But what of that? We must have perseverance and above all confidence in ourselves. We must believe that we are gifted for something and that this thing must be attained.”<br>——Marie Curie</p>
 </blockquote>
 <p>生活对每人而言均不易，但那又如何？我们对自己必须要坚持不懈和充满信心，我们必须要相信自己在某些方面拥有天赋并且一定能够有所实现。<br>——玛丽·居里</p>
-<p><img alt data-src="http://izquotes.com/quotes-pictures/quote-it-is-godlike-ever-to-think-on-something-beautiful-and-on-something-new-democritus-49344.jpg"></p>
+<p><img data-src="http://izquotes.com/quotes-pictures/quote-it-is-godlike-ever-to-think-on-something-beautiful-and-on-something-new-democritus-49344.jpg" alt></p>
 <blockquote>
 <p>“It is godlike ever to think on something beautiful and on something new.”<br>——Democritus</p>
 </blockquote>
 <p>思考美丽的事物永远是神圣的，思考新事物也如此。<br>——德谟克利特（古希腊哲学家）</p>
-<p><img alt data-src="http://izquotes.com/quotes-pictures/quote-i-don-t-want-to-be-the-next-michael-jordan-i-only-want-to-be-kobe-bryant-kobe-bryant-26125.jpg"><br>“I don’t want to be the next Michael Jordan, I only want to be Kobe Bryant.”<br>——Kobe Bryant</p>
+<p><img data-src="http://izquotes.com/quotes-pictures/quote-i-don-t-want-to-be-the-next-michael-jordan-i-only-want-to-be-kobe-bryant-kobe-bryant-26125.jpg" alt><br>“I don’t want to be the next Michael Jordan, I only want to be Kobe Bryant.”<br>——Kobe Bryant</p>
 <p>我不想成为下一个迈克尔 乔丹，我只想成为科比 布莱恩特<br>——科比 布莱恩特</p>
-<p><img alt data-src="http://izquotes.com/quotes-pictures/quote-if-somebody-says-no-to-you-or-if-you-get-cut-michael-jordan-was-cut-his-first-year-but-he-came-magic-johnson-95765.jpg"><br>“If somebody says no to you, or if you get cut, Michael Jordan was cut his first year, but he came back and he was the best ever. That is what you have to have. The attitude that I’m going to show everybody, I’m going to work hard to get better and better.”<br>——Magic Johnson</p>
+<p><img data-src="http://izquotes.com/quotes-pictures/quote-if-somebody-says-no-to-you-or-if-you-get-cut-michael-jordan-was-cut-his-first-year-but-he-came-magic-johnson-95765.jpg" alt><br>“If somebody says no to you, or if you get cut, Michael Jordan was cut his first year, but he came back and he was the best ever. That is what you have to have. The attitude that I’m going to show everybody, I’m going to work hard to get better and better.”<br>——Magic Johnson</p>
 <p>如果有人拒绝你，或者你遭受打击，迈克尔 乔丹在菜鸟赛季被人欺凌，但是他重返赛场并展现最好状态，这就是你必须要拥有的态度：向每个人表明我会更加努力，使之越来越好！<br>——魔术师 约翰逊</p>
-<p><img alt data-src="http://www.azquotes.com/picture-quotes/quote-when-everything-seems-to-be-going-against-you-remember-that-the-airplane-takes-off-against-henry-ford-9-91-57.jpg"></p>
+<p><img data-src="http://www.azquotes.com/picture-quotes/quote-when-everything-seems-to-be-going-against-you-remember-that-the-airplane-takes-off-against-henry-ford-9-91-57.jpg" alt></p>
 <blockquote>
 <p>When everything seems to be going against you, remember that the airplane takes off against the wind, not with it.<br>——Henry Ford</p>
 </blockquote>
 <p>当看似一切都在和你作对时，记得飞机就是迎风起飞的，不必在意。<br>——亨利 福特</p>
-<p><img alt data-src="http://www.azquotes.com/picture-quotes/quote-my-mission-in-life-is-not-merely-to-survive-but-to-thrive-and-to-do-so-with-some-passion-maya-angelou-34-70-30.jpg"></p>
+<p><img data-src="http://www.azquotes.com/picture-quotes/quote-my-mission-in-life-is-not-merely-to-survive-but-to-thrive-and-to-do-so-with-some-passion-maya-angelou-34-70-30.jpg" alt></p>
 <blockquote>
 <p>My mission in life is not merely to survive, but to thrive; and to do so with some passion, some compassion, some humor, and some style<br>——Maya Angelou</p>
 </blockquote>
 <p>我的人生使命不只是生存，而是带有激情、同情、幽默和时尚的生活。<br>——玛雅·安吉罗</p>
 <p><a href="http://www.hjenglish.com/new/p742101/" target="_blank" rel="noopener">TV Series for Learning English</a></p>
-<p><img alt data-src="http://i2.w.hjfile.cn/doc/201508/87eba8a0ad974a24b24b7eb8eb9daef3.png"></p>
+<p><img data-src="http://i2.w.hjfile.cn/doc/201508/87eba8a0ad974a24b24b7eb8eb9daef3.png" alt></p>
 <ol>
 <li>Friends</li>
 <li>How I Met Your Mother</li>
@@ -2200,11 +2170,11 @@
 <p>全球领先、AI 驱动的教育科技公司</p>
 <p>英语流利说由中央「千人计划」专家、普林斯顿大学计算机博士、Google 前产品经理王翌和胡哲人、林晖在 2012 年 9 月共同创立。英语流利说拥有一支业内领先的人工智能科学家团队，致力于用 AI 技术和大数据提升学习效率，实现教育的个性化和公平性。「英语流利说」拥有全球最大的中国人英语语音数据库，领先的英语口语评测引擎，以及中国最活跃的语言学习社区。2016 年 7 月，推出历时两年斥巨资打造的世界领先的人工智能老师——「懂你英语」，为每个用户提供个性化的学习内容和计划，把英语学习的效率提高了三倍，被业界称为是一次语言学习的革命。目前，英语流利说已完成 C 轮投资。</p>
 <p>颠覆传统知识图谱体系，构建全新的学生模型和教学模型。<br>像 AlphaGo 一样不断自我学习，自我进化。</p>
-<p>全球领先的英语口语测评引擎<br>覆盖所有口语维度，权威测试，科学评估<br><img alt data-src="https://cdn.llscdn.com/website/liulishuo.com/images/tech/level@2x.png?t=1504702763816"><br><img alt data-src="https://cdn.llscdn.com/website/liulishuo.com/images/tech/dimension@2x.png?t=1504702763816"></p>
+<p>全球领先的英语口语测评引擎<br>覆盖所有口语维度，权威测试，科学评估<br><img data-src="https://cdn.llscdn.com/website/liulishuo.com/images/tech/level@2x.png?t=1504702763816" alt><br><img data-src="https://cdn.llscdn.com/website/liulishuo.com/images/tech/dimension@2x.png?t=1504702763816" alt></p>
 <blockquote>
 <p>英语快速提升秘笈</p>
 </blockquote>
-<p><img alt="promotion.jpg" data-src="http://opb37u589.bkt.clouddn.com/promotion.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/promotion.jpg?imageMogr2/thumbnail/!75p" alt="promotion.jpg"></p>
 <p>1.如果不是为了应付考试刷分数，那你就应该紧紧围绕“沟通、交流、理解文化”这个目标来重新设计学习方法。<br>2.很多时候不是学得不够多，而是学会的没用好。先从存量上下功夫，梳理一遍你的英语库存，把已经会的英语先用好。</p>
 <ol start="3">
 <li>英文好不好，体现在对小词的积累和掌握。小词使用场所多，生活化，一词多意，范围广，杂志原文里出现频率也非常高。</li>
@@ -2247,8 +2217,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/English/" rel="bookmark">English</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/English/IPCreator/English/English Joke/" rel="bookmark">English Joke</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/English/IPCreator/English/English Speech/" rel="bookmark">English Speech</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/English/IPCreator/English/English/" rel="bookmark">English</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Movie/House of Cards/" rel="bookmark">House of Cards</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/English/" rel="tag"><i class="fa fa-tag"></i> English</a>
           </div>
@@ -2260,21 +2251,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Business/Trend/" rel="next" title="Trend">
-                  <i class="fa fa-chevron-left"></i> Trend
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Viewpoint/" rel="prev" title="Viewpoint">
-                  Viewpoint <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Business/Trend/" rel="prev" title="Trend">
+      <i class="fa fa-chevron-left"></i> Trend
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Viewpoint/" rel="next" title="Viewpoint">
+      Viewpoint <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -2287,7 +2275,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -2318,8 +2328,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -2328,14 +2338,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -2346,11 +2356,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -2384,7 +2389,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -2396,51 +2401,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -2449,18 +2415,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -2470,63 +2430,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -2534,14 +2437,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -2568,40 +2471,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/English/DeepCreator/MVP/English/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

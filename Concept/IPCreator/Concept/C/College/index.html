@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="阅读思考、交友旅行、试错成长。">
 <meta name="keywords" content="College">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/C/College/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/C/College/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/C/College/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,13 +256,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="article-57fca2cf18b44.jpg" data-src="http://opb37u589.bkt.clouddn.com/article-57fca2cf18b44.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/article-57fca2cf18b44.jpg?imageMogr2/thumbnail/!75p" alt="article-57fca2cf18b44.jpg"></p>
 <blockquote>
 <p>阅读思考、交友旅行、试错成长。</p>
 </blockquote>
 <a id="more"></a>
 <p>我和我的同事开玩笑说，昨天晚上发生了一次全国范围的大规模数据删除事件。就是高考结束的学生们终于可以把很多没用的知识点忘掉啦，哈开玩笑的哈。我想起我自己高考前几天的一件事儿。我爸呀一直让我好好学习，将来可以得诺贝尔奖金。我就问呐，诺贝尔奖金那是多少钱啊？那个时候大概是五十万美金吧。于是我就算，如果我得了诺贝尔奖换成人民币是多少。存在银行，每年能拿多少利息，昂，于是就好好学习有了动力。隔了二十多年回想当年的这件事儿啊，我对诺贝尔奖的认识已经深化了无数层。所以啊，<strong><a href="http://www.luojiji.com/thread-2611-1-1.html" target="_blank" rel="noopener">啥叫学习，不是知识越来越多，而是对同一个知识已经可以用更高的视野去看它了</a></strong>。那祝贺那些高考结束的年轻人，从今天开始自由提升视野的人生，终于开始啦。</p>
-<h2 id="吴军关于高考志愿填报的指导清单"><a href="#吴军关于高考志愿填报的指导清单" class="headerlink" title="吴军关于高考志愿填报的指导清单"></a><a href="http://www.luojiji.com/thread-8935-1-1.html" target="_blank" rel="noopener">吴军关于高考志愿填报的指导清单</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201706/22/225228f421szrisswi9s91.jpg"></p>
+<h2 id="吴军关于高考志愿填报的指导清单"><a href="#吴军关于高考志愿填报的指导清单" class="headerlink" title="吴军关于高考志愿填报的指导清单"></a><a href="http://www.luojiji.com/thread-8935-1-1.html" target="_blank" rel="noopener">吴军关于高考志愿填报的指导清单</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201706/22/225228f421szrisswi9s91.jpg" alt></p>
 <p>2017-06-22 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>作为学霸，吴军长期关注中美教育，写有畅销书《大学之路》。作为父亲，吴军曾陪女儿遍访美国名校，确定专业方向。</p>
@@ -334,10 +304,10 @@
 <p>不仅”学霸”扎堆，更过分的是，美国老师往往更关照美国学生，中国学生更多沦为学术“苦力”。很多中国学生在这种环境下不丧失信心都不错了，想要有所成就几乎是难于上青天。</p>
 <p>有人要说了，这三十年来，不也有不少中国学生成了美国院士吗？你得注意，20多个华人院士里有5个是植物生物学家。是因为中国学生在植物学上天分更高吗？当然不是，是因为美国农产品长期过剩，美国的优秀学生很少愿意学植物学，中国学生能脱颖而出，是<strong>田忌赛马</strong>的道理而已。</p>
 <p>所以，对中国学生来说，选择顶尖学校的顶尖系科不一定是什么好事，次一级学校的顶尖科系，反而能获得更好的发展。</p>
-<h2 id="关于进入大学前如何过好暑假的清单"><a href="#关于进入大学前如何过好暑假的清单" class="headerlink" title="关于进入大学前如何过好暑假的清单"></a><a href="http://www.luojiji.com/thread-9031-1-1.html" target="_blank" rel="noopener">关于进入大学前如何过好暑假的清单</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201707/01/225256v8he6o8zp4epnpgg.jpg"></p>
+<h2 id="关于进入大学前如何过好暑假的清单"><a href="#关于进入大学前如何过好暑假的清单" class="headerlink" title="关于进入大学前如何过好暑假的清单"></a><a href="http://www.luojiji.com/thread-9031-1-1.html" target="_blank" rel="noopener">关于进入大学前如何过好暑假的清单</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201707/01/225256v8he6o8zp4epnpgg.jpg" alt></p>
 <p>2017-07-01 「得到」 罗辑思维<br>引言</p>
 <p>进入大学前，除了玩，如何将这个暑假过得既轻松又有意义呢？</p>
-<p>「得到」App《硅谷来信》的主理人吴军老师创作了这张清单，并为中学生列了一份推荐阅读书单，供你参考。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201707/01/225309xvbzua9iup7vazf9.jpg"></p>
+<p>「得到」App《硅谷来信》的主理人吴军老师创作了这张清单，并为中学生列了一份推荐阅读书单，供你参考。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201707/01/225309xvbzua9iup7vazf9.jpg" alt></p>
 <ol>
 <li><p>告别过去。如果说人生是一本书，一章翻过去了，就不会再回头读，但是在开始新的内容之前，总要有个总结，对过去的一些事总要有个了断。</p>
 </li>
@@ -365,12 +335,12 @@
 </li>
 </ol>
 <p>吴军不仅是计算机科学家、畅销书作家、硅谷风险投资人，还是把女儿培养进美国名校MIT的父亲，在教育、成长问题上，他既是行动者，也是思想者。</p>
-<h2 id="行动清单｜错过这12件事，大学就算白上了"><a href="#行动清单｜错过这12件事，大学就算白上了" class="headerlink" title="行动清单｜错过这12件事，大学就算白上了"></a><a href="http://www.luojiji.com/thread-9717-1-1.html" target="_blank" rel="noopener">行动清单｜错过这12件事，大学就算白上了</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/06/010726uufu240psurq2j7f.jpg"></p>
+<h2 id="行动清单｜错过这12件事，大学就算白上了"><a href="#行动清单｜错过这12件事，大学就算白上了" class="headerlink" title="行动清单｜错过这12件事，大学就算白上了"></a><a href="http://www.luojiji.com/thread-9717-1-1.html" target="_blank" rel="noopener">行动清单｜错过这12件事，大学就算白上了</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201709/06/010726uufu240psurq2j7f.jpg" alt></p>
 <p>2017-09-04 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>开学季，终于进入大学。可是，你真的做好准备了吗？</p>
 <p>「得到」订阅作者吴军，与斯坦福、芝加哥和约翰·霍普金斯大学的几位教授，对大学教育进行了交流，下面的12条建议送给你。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/06/010741wboo71rgjcqvom6w.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201709/06/010741wboo71rgjcqvom6w.jpg" alt></p>
 <ol>
 <li><p>首先，明确受教育的目的：<strong>对于大学生，分数远没有技能重要</strong>，这一点用人单位已经给出了答案——一个毕业生通不过它的技能测试，成绩再好也没用。</p>
 </li>
@@ -438,40 +408,40 @@
 <p>1、</p>
 <p>有一年，我在台湾环岛旅行。</p>
 <p>花莲的海边，我遇到一对台湾青年夫妻，带着女儿在海滩上玩。我们聊了起来。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110702.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110702.jpg" alt></p>
 <p>当时，我还在高校当老师。他们问我，是否觉得台湾的孩子很幸福。我说为什么？爸爸指着女儿说：“这些小孩没有升学压力啊。”</p>
 <p>这倒是事实。台湾有100多所高校，可是生育率不断萎缩，导致很多大学招不到学生。有一篇报道说：</p>
 <p>2006年，台湾考生每科只需考到15分就可以上大学，2007年这个纪录被打破，4科加起来只需18分，2008年更夸张，总分7分就能当大学生了。7分就能上大学，因此成为年度笑话。有人调侃：“即使什么都不会，选择题全部猜 C 都能上不错的学校吧！”</p>
 <p>但是，这不能解释一个现象。我想了一会，对那位爸爸道出我的疑惑：“如果考大学如此容易，为什么台湾有那么多补习班呢？”</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110703.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110703.jpg" alt></p>
 <p>没到过台湾的人，想象不到补习班可以做成一个这么大的产业：台湾最热闹的商业街上，都是补习班的霓虹广告；补习班老师是高收入行业，名师就是富豪，也是全社会的知名人物。我不明白，为什么补习班有那么多学生，明明没有升学压力啊？</p>
 <p>爸爸答不出来，想了半天，只说“父母都希望孩子出人头地啊”。</p>
 <p>2、</p>
 <p>旅行回来后，我发现大陆的补习班行业也蓬勃兴起了，比台湾有过之而无不及。</p>
 <p>每个居住小区的周围，都有好几家补习班公司，招生对象从两三岁的娃娃到十几岁的中学生，全部通吃。补习科目无所不包，从语数外到艺术和体育，寒暑假还提供美日欧的游学项目，供家长选择。每到夜晚，灯火通明，门口都是接送孩子的家长。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110704.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110704.jpg" alt></p>
 <p>我们的补习班公司，还上市了。从最早的新东方，到后来的达内科技、正保教育、学而思、51Talk都是绩优公司，在纽约交易所上市，受到投资者追捧。后面还有一大批培训类创业公司，排队等着上市。这在全世界恐怕也是绝无仅有。</p>
 <p>3、</p>
 <p>历史最悠久、市场需求最大的培训项目，就是外语培训。</p>
 <p>我读中学时，同学里面流行上《新概念英语》和口语补习班。到了大学，流行的是托福和 GRE 补习班。大家认定，英语好，人生才有出路。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110705.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110705.jpg" alt></p>
 <p>那时，外企的收入高，比国企要高好几倍，还有出国的机会。如果能拿到美国大学的奖学金，那就是“鱼跃龙门，过而为龙”了。大家都想走这条路。马克思的名言“外语是人生斗争的武器”，是大家的座右铭。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110706.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110706.jpg" alt></p>
 <p>外语改变了很多中国人的人生。马云说，他小时候整天就在西湖边，跟外国人搭讪练习口语，因此认识了澳大利亚的一家人，受邀出国去澳大利亚待了一个月。他大学读的是英语系，第一个创业项目是翻译社，1995年第一次去美国，在西雅图见到了互联网，觉得这玩意有前途，开始互联网创业。也是因为英语，结识了雅虎的创始人杨致远，得到了一笔对于阿里巴巴最为关键的投资。</p>
 <p>4、</p>
 <p>中国人对于英语的学习热情，造就了新东方这样的补习班巨头。但是，20年过去了，我渐渐发现，英语学习没有以前那么重要了。</p>
 <p>一方面，国内的机会和收入越来越多，不比国外少。更重要的是，技术的快速发展，使得语言的壁垒越来越低，甚至消失。</p>
 <p>最早的时候是词典软件，只要鼠标一指，就有中文解释，省得查字典了。后来有了翻译软件，都不需要鼠标指来指去了，直接把全文翻译成中文。到了现在，机器翻译已经很可靠了，语法规则的文献，机器翻译的质量接近人工翻译。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110707.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110707.png" alt></p>
 <p>最新的技术成果是，谷歌公司推出了一款实时翻译耳机 Buds，已经上市了。你把耳机戴上，对方说英语，你会实时听到翻译后的中文；你用中文回答，对方会听到英文！有了这个东西，未来还有必要去上口语补习班吗？</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110708.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110708.jpg" alt></p>
 <p>我曾经一个人在摩洛哥旅行两周。当地的官方语言是阿拉伯语，上层人士说法语，底层民众说柏柏语，我就会一点英语，大多数时候都无法进行语言交流。但是居然没遇到一点困难，顺利地把这个非洲国家玩了一圈，还在撒哈拉沙漠住了两个晚上。这要感谢两样东西，一是遍及摩洛哥全国的3G网络（华为的功劳），可以随时查交通和酒店的信息，二是准确的地图软件，使我不用问路。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110709.jpg"><br>（图片说明：我在撒哈拉沙漠住的营地）</p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110709.jpg" alt><br>（图片说明：我在撒哈拉沙漠住的营地）</p>
 <blockquote>
 <p>技术使得学好外语，不再那么重要了。对于多数人，这不啻于一个福音，因为外语学习非常耗费生命。</p>
 </blockquote>
 <p>2004年，新加坡领导人李光耀承认了一个错误。独立之初，他决定所有新加坡人不管智商如何，都要学习两门语言，一门是英语，另一门是该人的母语（马来语或汉语）。后来，他发现这个决定有大问题，熟练掌握两门语言，对于人民的要求实在太高了。大多数人根本做不到双语，哪怕学习多年英语，一开口还是结结巴巴，词不达意。强迫所有人学英语，实在是浪费国民的生命。于是，这一年新加坡政府改变规定，只要求人民学习一门语言即可。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110710.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017110710.png" alt></p>
 <p>5、</p>
 <p>随着外语培训的重要性下降，我认为，培训的重头将转为技术培训。以前大家排队去上外语补习班，将来会排队去上技术补习班。</p>
 <p>原因就是技术正变得比语言更重要。回到20年前，掌握流利的英语，你会比别人有更多的机会；如今，轮到了技术。谁掌握了技术，谁就有大把的机会。许多家长已经意识到了这一点，小朋友从小不仅要教 ABC，还要教一点编程。</p>
@@ -484,8 +454,11 @@
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/College/" rel="tag"><i class="fa fa-tag"></i> College</a>
           </div>
@@ -497,21 +470,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/E/Economics/" rel="next" title="Economics">
-                  <i class="fa fa-chevron-left"></i> Economics
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/P/Principle/" rel="prev" title="Principle">
-                  Principle <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/E/Economics/" rel="prev" title="Economics">
+      <i class="fa fa-chevron-left"></i> Economics
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/P/Principle/" rel="next" title="Principle">
+      Principle <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -524,7 +494,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -555,8 +547,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -565,14 +557,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -583,11 +575,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -621,7 +608,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -633,51 +620,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -686,18 +634,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -707,63 +649,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -771,14 +656,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -805,40 +690,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/C/College/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="经过复盘并吸取了经验教训的失败才是成功之母，否则可能就是陷入泥潭的第一步。——DeepCreator">
 <meta name="keywords" content="Failure,Mistake,Lose">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Failure/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Failure/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Failure/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="failure20180729.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/failure20180729.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/failure20180729.jpg?imageMogr2/thumbnail/!75p" alt="failure20180729.jpg"></p>
 <blockquote>
 <p>经过复盘并吸取了经验教训的失败才是成功之母，否则可能就是陷入泥潭的第一步。——DeepCreator</p>
 </blockquote>
@@ -309,7 +279,7 @@
 <p>想清楚了核心价值，背后就是围绕着这个核心价值做体系建设。每家优秀的公司，确定的核心价值都不同。比如海底捞会围绕着“<strong>服务好</strong>”来做体系建设；麦当劳会围绕着“<strong>快</strong>”来做体系建设，背后整个组织能力就是围绕“快”做标准化和流程化。苹果的核心价值是<strong>创造极致的人机交互体验</strong>，所以会牺牲“便宜”这个维度；小米则是追求<strong>极致性价比</strong>。</p>
 <p>总之，公司最重要的事情，就是定位好核心的用户价值创造，然后，定义好怎么去衡量它，接下来，围绕着它去建设自己的组织能力。“绝大多数最成功的商业、产品在用户价值上面都是思考的很到位的，且做的很极致的。”程维说，这就是滴滴最底层的经验和方法。</p>
 <h2 id="关于如何把失败变得有价值的清单"><a href="#关于如何把失败变得有价值的清单" class="headerlink" title="关于如何把失败变得有价值的清单"></a><a href="http://www.luojiji.com/thread-9458-1-1.html" target="_blank" rel="noopener">关于如何把失败变得有价值的清单</a></h2><p>失败这件事是好是坏，取决于你能否从中收获价值。那怎么做才能从失败中获得好的经验呢？</p>
-<p>「得到」App的几位专栏作者来为你支招，助你提升“失败回报率”。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/10/072303yxs3peaea8d238ld.jpg"></p>
+<p>「得到」App的几位专栏作者来为你支招，助你提升“失败回报率”。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201708/10/072303yxs3peaea8d238ld.jpg" alt></p>
 <ol>
 <li><p>把“失败”的概念替换成“暂时不成功”，面对挫折的时候，就会更加淡定。短时间内，没人能轻易摆脱失败，不过这个纠正观念的小技巧，已经足够帮助你缓解焦虑了。</p>
 </li>
@@ -324,7 +294,7 @@
 <li><p>运用“抛物线”思考，在失败前转弯。管理哲学家查尔斯·汉迪说，每个公司的领导者都应该在办公室画一道抛物线，天天想一想你的公司目前处于抛物线的哪个地方，在左边还是在右边。个人的成功往往也是这样，当你特别顺的时候，你应该提醒自己，我已经离右边那半条线非常近了，这个时候你需要干一件事——培育一条新的抛物线。</p>
 </li>
 </ol>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/10/072325meqg8gq0u4wquffq.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201708/10/072325meqg8gq0u4wquffq.jpg" alt></p>
 <ol start="7">
 <li><p>凡事做记录，包括失败。任何人都会遇到难题，解决难题就进步了。记录的过程中还可以再一次思考，进步会更快。</p>
 </li>
@@ -337,7 +307,7 @@
 <li><p>面对失败，请记得尼采说过的：“凡不能毁灭我的，必使我更强大。”</p>
 </li>
 </ol>
-<h2 id="如何优雅应对生活的暴击？"><a href="#如何优雅应对生活的暴击？" class="headerlink" title="如何优雅应对生活的暴击？"></a><a href="http://www.luojiji.com/thread-12836-1-1.html" target="_blank" rel="noopener">如何优雅应对生活的暴击？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201808/29/093443zj0cmcj9frfpn2pn.jpg"></p>
+<h2 id="如何优雅应对生活的暴击？"><a href="#如何优雅应对生活的暴击？" class="headerlink" title="如何优雅应对生活的暴击？"></a><a href="http://www.luojiji.com/thread-12836-1-1.html" target="_blank" rel="noopener">如何优雅应对生活的暴击？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201808/29/093443zj0cmcj9frfpn2pn.jpg" alt></p>
 <p>巴顿将军曾说：</p>
 <blockquote>
 <p>“衡量一个人<a href="https://deepcreator.com/Concept/Success.html" target="_blank" rel="noopener">成功</a>的标志，不是看他到达顶峰的高度，而是看他跌落谷底时的<a href="https://deepcreator.com/Concept/Flexibility.html" target="_blank" rel="noopener">反弹力</a>。”</p>
@@ -345,7 +315,7 @@
 <p>人生有一帆风顺，也有逆水行舟。</p>
 <p>身处挫折时，该如何让自己快速恢复，逆流而上呢？</p>
 <p>今天这本书，给你一套应对逆境的方法——</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29561150.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29561150.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/27102701/" target="_blank" rel="noopener">《另一种选择》</a></p>
 </blockquote>
@@ -413,7 +383,7 @@
 <p>《开讲啦》拥抱新征程系列第三期邀请到了“中国创业者大学的校长”、创业服务领域开拓者、创业黑马董事长牛文文先生，分享关于创业以及青春的故事。</p>
 <p>牛文文：“我们国家现在处于一个年轻人创造力迸发的时代，年轻人的创造力可以把国家推向新的高度，只要你准备好了，创业是你一生的机会。”</p>
 <p>创业是一件需要勇气的事<br>在牛文文眼中<br>创业是中国这一代年轻人的特权<br>因为我们国家现在处于<br>一个年轻人创造力迸发的时代<br>虽然说创业是年轻人的特权<br>但只要有一颗想创业的心<br>什么时候都不晚<br>偷偷告诉你<br>我们的牛文文“校长”42岁才开始创业的哦！</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/153354738203570069d4d70"><br>撒贝宁：那创业究竟是什么呢？</p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/153354738203570069d4d70" alt><br>撒贝宁：那创业究竟是什么呢？</p>
 <blockquote>
 <p>牛文文：创业这件事，就是自己挖坑，自己掉进去，自己再扽着头发爬出来。</p>
 </blockquote>
@@ -453,7 +423,7 @@
 <p>失败是非常痛苦的一件事儿，一个年轻人，如果创业失败，他会带来很大的信心磨损，信誉磨损，和社会成本的。所以当我面对创业者的时候，我都会问，你上一轮是怎么回事？因为投资者给你钱，你的伙伴给你的信任，你的用户也同样用钱支持了你。你要败的明明白白，你要给自己失败一个交代，你要复盘你的失败，你才能再出发。可是我们今天很多年轻的创业者，甚至一些资深的创业者，都在这个事情上，没有回答好自己的人生问题。我们知道一些著名的人物，公司，都会一地鸡毛自己跑了，跑路了。老板跑路，是对这个社会最大的伤害；一个创业者跑路，是对自己和社会，最大的不负责任。现在该是创业者接受磨难，体现责任，坚持到胜利的时候了。</p>
 <p>我们听了太多的梦想，我们要看到创业者的至暗时刻。如果你现在没准备好，不着急，准备好，当那团火烧得你难耐的时候，你再开始。当充满机会的一个时代，你应该谨慎选择，少做选择，一旦做选择就要多做坚持。你频繁选择，最后你会习惯性地选择，而不是习惯性地坚持。我说坚持比选择更重要，大家不要把不是机会的，当做机会。大家还是要准备好了再开始，一旦开始以后，绝不轻言放弃。</p>
 <p>感谢大家，感谢大家，谢谢。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/1533547381960ff66a50cc3"></p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/1533547381960ff66a50cc3" alt></p>
 <p>现场有位青年代表从事送外卖行业三年，见到了许多深夜还奋斗在北京写字楼里的工作者。小哥每天从早晨六点工作到半夜三点，一天最多可以送一百多单。此外，他还会亲自去落实每一个小区的位置，了解每一个小区的环境，为所有的意外做好准备，这份汗水和奋斗为他换来了属于自己的港湾。撒贝宁打趣，“科比说，都说我成功，你见过凌晨四点的洛杉矶吗？下回你就反问科比，你见过半夜三点的外卖小哥吗？见过你就成功了。”</p>
 <p>无论是这位外卖小哥，还是那些奋斗到半夜的年轻人，他们的人生也是创业的人生，自己为自己投资，收获属于自己的幸福。即使这个过程充满疲倦，洒尽汗水，最后迎来的是别人无法体会的激动和快乐，这是专属奋斗者的幸福。</p>
 <p>在节目的尾声，牛文文收到节目组的一份礼物——三十年前他毕业证书上的照片。当看到大屏幕上青春无比的自己时，牛校长不禁感慨，时光飞逝。</p>
@@ -466,7 +436,7 @@
 <p>这是一本研究在复杂系统下我们为什么会失败的书。作者用计算机模拟游戏程序，借鉴了实验心理学了方式，揭示了我们失败的原因。</p>
 <p>核心内容</p>
 <p>一、为什么说大多数问题都是一个复杂的系统？<br>二、为什么说有时候失败从一开始就注定了？<br>三、为什么我们在预测未来时总是失败？</p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p46160291-1.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p46160291-1.jpg" alt></p>
 <p>一、大多数问题都是一个复杂的系统</p>
 <p>1．复杂系统</p>
 <p>对于一个给定的问题，其实存在很多个变量影响着结果，而且这些变量之间它们彼此又有相互联系的，这样的一个系统就是复杂系统。比如，鱼缸发臭的问题就是一个复杂系统的问题。</p>
@@ -519,10 +489,10 @@
 <p>莱昂内11岁时移民到美国，在新的环境中，他几乎每时每刻、方方面面都饱受打击和轻视。童年的经历让他能够诚实坦率地审视自己，他争强好胜，但也明白自己的局限所在，“如果你能坦诚面对自己的弱点，就能汇聚一群比你更优秀的人才，去追求更伟大的目标”。莱昂内的思维方式属于线性思维，在提出问题的瞬间，他的大脑就会自动构建起思维的树形结构，不过这种思维方式无法跳出常规，缺乏发散性。于是，莱昂内常常会逼自己做不擅长的事，去锻炼大脑的各个部位。比如，坐在钢琴前面瞎弹；跟不同类型的人相处、聆听，开阔自己的思维。</p>
 <p>莱昂内经常会犯错，不过他也会经常改变自己的想法，改变想法时，他不是基于情绪，而是完全从数据出发。莱昂内说：“你可以是个天才，然后常常作出正确的决断；你也可以允许自己犯错，然后在自己身边汇聚一群能人精英，组成一个强大的团队促使你不断前进。我相当肯定的一点是：胜利总落在团队手中。”</p>
 <p>莱昂内认为，没有人能保证自己在每一秒钟都能做到最好，所以不能只关注每一秒或每一个小时，而是要从战略的高度出发。最好以一年为单位做规划，因为在一年中，你有足够的时间去犯错，去找到正确的道路。</p>
-<h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><p><img alt="failure20180416.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/failure20180416.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/failure20180416.jpg?imageMogr2/thumbnail/!75p" alt="failure20180416.jpg"></p>
 <p>畏惧失败的人已经失败了——《权力的游戏》<br>放弃是最大的失败——DeepCreator</p>
 <p>一路上你肯定能够会经历痛苦的失败。你需要认识到，失败既能化为动力，驱动你个人进化，也能毁掉你，这取决于你<a href="https://book.douban.com/review/9168916/" target="_blank" rel="noopener">如何应对失败</a>。</p>
-<p><img alt="learnfromfailure20180704.JPG" data-src="http://p53s4d2qk.bkt.clouddn.com/learnfromfailure20180704.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/learnfromfailure20180704.JPG?imageMogr2/thumbnail/!75p" alt="learnfromfailure20180704.JPG"></p>
 <h3 id="阿里失败课：破碎与重建"><a href="#阿里失败课：破碎与重建" class="headerlink" title="阿里失败课：破碎与重建"></a><a href="http://www.luojiji.com/thread-8429-1-1.html" target="_blank" rel="noopener">阿里失败课：破碎与重建</a></h3><p>阿里巴巴集团培养领导力的方法，就是遇到事情碎掉以后再重建。</p>
 <p>在大多数人的观念里，失败是羞耻的事，创业者对自己的失败经验从来都是略过不谈，对外呈现的永远都是幸运的一面。但是失败是创新者的宿命，如果缺乏失败经验的分享，就会对别人的幸运和顺利夸大想象，觉得自己特别倒霉。</p>
 <p>前不久，旅人网创始人梁宁写了篇文章，分享了她从前阿里副总裁王民明那里听来的经验，阿里怎么培养领导力，就是失败的时候碎掉，然后重建。我来给你转述一下。</p>
@@ -558,7 +528,7 @@
 <li><p>运用“抛物线”思考，在失败前转弯。管理哲学家查尔斯·汉迪说，每个公司的领导者都应该在办公室画一道抛物线，天天想一想你的公司目前处于抛物线的哪个地方，在左边还是在右边。<strong>个人的成功往往也是这样，当你特别顺的时候，你应该提醒自己，我已经离右边那半条线非常近了，这个时候你需要干一件事——培育一条新的抛物线。</strong></p>
 </li>
 </ol>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/10/072325meqg8gq0u4wquffq.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201708/10/072325meqg8gq0u4wquffq.jpg" alt></p>
 <p>——DeepCreator：连级跳</p>
 <ol start="7">
 <li><p>凡事做<strong>记录</strong>，包括失败。任何人都会遇到难题，解决难题就进步了。记录的过程中还可以再一次思考，进步会更快。</p>
@@ -616,14 +586,14 @@
 <p>那这三场战役之间有没有共同点呢？还真就有一个，都是以少胜多的战役。</p>
 <p>袁绍身上最大的谜题就是官渡之战。大家对于官渡之战都觉得有点匪夷所思，为啥？因为袁绍的优势实在是太大了，他的地盘占整个中国北方的三分之二，叫冀、青、幽、并四州。更重要的是，他的地点非常好，身后并没有其他的威胁。</p>
 <p>反观曹操，不仅地盘小、粮食少，更重要的是，他的地盘乃四战之地，四边的人斗能来揍他。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201610/10/145738sxosu7gsuoppslds.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201610/10/145738sxosu7gsuoppslds.jpg" alt></p>
 <p>02</p>
 <p>对袁绍所有的恶评当中，最为著名的几句话是他的发小，之后的战友，后来的死对头曹操说的。</p>
 <p>严格地说，是罗贯中再《三国演义》这部小说里借着曹操的嘴说出来的，也就是著名的“青梅煮酒论英雄”。</p>
 <p>当时，曹操和刘备再背后八卦天下英雄，普遍的英雄一两句就打发了。唯独对袁绍，曹操花了四句半。</p>
 <p>哪四句半？</p>
 <p>“色厉而胆薄，好谋而无断，干大事而惜身，见小利而忘命，非英雄也。”</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201610/10/145738uqh2pnjqm4hb1x4m.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201610/10/145738uqh2pnjqm4hb1x4m.jpg" alt></p>
 <p>03</p>
 <p>东汉王朝的历史，我们平时不大爱聊它，特别枯燥，因为它是一个死循环。</p>
 <p>那在这一个世纪里面出了啥问题呢？是他们老刘家的基因不行。生不出儿子，生出儿子养不大，养大活不长。外戚和宦官轮流执政，轮流把持皇帝，互相之间还砍杀。</p>
@@ -645,7 +615,7 @@
 <p>这种正统的作用旦在长期的政治博奔当中释放开来，作用是非常大的。</p>
 <p>有点像个磁场，它虽然没有力量，但是每个在现场的那个小铁片，都受它点点的影响发生行为的偏转。从长期的博弈来看，是个巨大的优势。</p>
 <p>你看，曹操南下打赤壁的时候，为什么荆州的刘表死，下面所有人都要投降？那就代表当地士大夫要回归中央的意志。为什么江东的那些士族也要投降？也是要回归中央，因为那个毕竟叫正统，曹操在这方面是占了大便宜的。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201610/10/145738wfom434e4k7qmlq7.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201610/10/145738wfom434e4k7qmlq7.jpg" alt></p>
 <p>06</p>
 <p>袁绍为什么不挟天子呢？</p>
 <p>两个原因：</p>
@@ -680,7 +650,7 @@
 <p>就是在过去的静态结构的麻烦里面，你筹划个不停，但你绝对没有胆量去承担下一个挑战。</p>
 <h3 id="第372期｜小心那些失败者"><a href="#第372期｜小心那些失败者" class="headerlink" title="第372期｜小心那些失败者"></a><a href="http://www.luojiji.com/thread-7840-1-1.html" target="_blank" rel="noopener">第372期｜小心那些失败者</a></h3><p>策划人：张笑宇</p>
 <p>最近，我们栏目的策划人张笑宇老师推荐我看了一本书，叫《五角大楼之脑》，说到越南战争中的一件事。</p>
-<p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29345059.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/subject/l/public/s29345059.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/26974867/" target="_blank" rel="noopener">《The Pentagon’s Brain: An Uncensored History of DARPA, America’s Top-Secret Military Research Agency》</a>讲述了DARPA的历史、现在和未来，集科技、经济、军事、政治等前沿性问题于一身。本书不仅阐述了互联网、人造卫星、计算机、星球大战、GPS、虚拟现实（VR）、人工智能、基因工程、穿戴设备等是DARPA首先发明和研究的前沿问题，而且对囚徒困境、最大最小理论、博弈论等相关政治军事理论进行了创新性的论述，让读者更加清楚地了解那个时代推动社会发展的人、事和不为人知的故事，前沿科技的发生、发展和魅力！</p>
 </blockquote>
@@ -723,7 +693,7 @@
 <p>我今天回顾这个过程，起因是最近在一个媒体人的微信群里看到一场讨论。当时有人在嘲笑，所谓用人工智能写作，写出来的东西根本没法看，所以肯定没有前途，人工智能替代记者是痴心妄想。</p>
 <p>当时，我就跟他们讲了这个故事。最后我说，嘲笑技术的时候，一定要小心，它们一开始可能会败，但是千万别让它们学会了人的基本逻辑。一旦逻辑对了，技术进步的速度是难以想象的，它们卷土重来的速度比你的想象要快得多。</p>
 <p>所以说，要小心那些<strong>走对路的失败者。</strong></p>
-<p>把下图分享出去，与更多的朋友一起终身学习。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/27/102024xbw0rb0cbngck4nv.jpg"></p>
+<p>把下图分享出去，与更多的朋友一起终身学习。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/27/102024xbw0rb0cbngck4nv.jpg" alt></p>
 <h3 id="失败原因：技术失败和认知缺陷"><a href="#失败原因：技术失败和认知缺陷" class="headerlink" title="失败原因：技术失败和认知缺陷"></a><a href="http://www.luojiji.com/thread-10145-1-1.html" target="_blank" rel="noopener">失败原因：技术失败和认知缺陷</a></h3><p>微信公众号“创业邦”分享了投资人徐小平在内部的一个演讲，演讲的主题是如何看待失败。徐小平的真格基金还专门成立了一个失败研修院来研究失败。</p>
 <p>在分享中，徐小平说，创业失败，有一种是技术上的失败。比如他曾经遇到的一个案例，两个发小合伙创业，股份五五分成，但是3个月后就吵起来了。他给出的方案是，让一个创业者多拿20%，如果联合创始人做得好，再把这20%还给他。“创业学上有一个基本原则：一个创业公司绝对不能有两个利益主体。”</p>
 <p>另一种失败是认知缺陷导致的，<strong>认知缺陷让人无法判断什么是对，什么是错</strong>。比如，徐小平说，创业者具备四重人格，分别是创始人、股东、董事和高管，“作为CEO的你万一干得不好，你就得罪了作为股东的你。作为董事的你，假如对作为CEO的你有不满意，这两个身份是不是会打架，会给你带来困扰？”他以自己为例，1996年他加入新东方和俞敏洪一起创业，后来，俞敏洪召集部分股东开会，决定要请他离开，“我朝俞敏洪走了过去，其他人都以为我要杀了俞敏洪，但我抱了俞敏洪一下就走了。其他股东觉得把我赶走对他们有好处，保护了作为股东的权益，那也就保护了作为股东的徐小平。”<strong>对创业者多重人格的认知，让徐小平作为股东，可以接受自己不再做管理者。</strong></p>
@@ -1377,7 +1347,7 @@
 <p>一个真正能干成的大事，它的特征是什么？就是你要制造一个利益结构。在这个利益结构当中，所有的人都能够得利，这才叫真正的大事。张勋复辟为什么干不成？因为他制造了这个利益结构，而在这个结构里，除了他和那个皇上，剩下人没有利益。各省的督军说，这个地盘本来就是我的，现在你封我一个总督，封我一个巡抚，我有啥好处呢？而你当的官，比我们原来认为你应该当的那个官还要大。那分赃不均，对不起，哥们儿就不跟你干了。前面我们讲的所谓的那个多米诺骨牌，就是这么一张一张地倒下来的。所以张勋的大事最终是干不成的。</p>
 <p>好，最后我们总结一下，在不确定性的时代，什么东西是不可信的？从连接的方式上来讲，用权力去固化的那个纵向的连接是不可信的，那个用契约固化下来的正式的连接是不可信的。</p>
 <p>什么是可信的？是用那种横向的人际间的随时调整的非正式的连接，一点一点地调整你的利益结构，让它变得对所有人有利。你有能力去造福你干的这件大事，这个新构建的利益结构里面的所有人，这个时候才是可信的，非正式的横向连接。</p>
-<h2 id="激荡人生"><a href="#激荡人生" class="headerlink" title="激荡人生"></a><a href="https://book.douban.com/subject/3327884/" target="_blank" rel="noopener">激荡人生</a></h2><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s3396779.jpg"></p>
+<h2 id="激荡人生"><a href="#激荡人生" class="headerlink" title="激荡人生"></a><a href="https://book.douban.com/subject/3327884/" target="_blank" rel="noopener">激荡人生</a></h2><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s3396779.jpg" alt></p>
 <p>《激荡人生》是著名财经作家吴晓波继《大败局》、《激荡三十年》之后的又一力作。《激荡人生：一起走过三十年》描写了上世纪80年代至21世纪初，三个不同历史阶段30位企业家的人生历程，出色地将改革开放三十年的激荡与繁华汇聚到了这些业界领袖最惊心动魄的人生片段上，生动地展示了个人在大时代变动中的复杂与魅力。</p>
 <p>三十年商海沉浮，无数公司的兴亡、企业家的起落，编织成了这段独特的历史。他们在推动中国重新振兴的同时，也留下了无数精彩的故事。唐骏、史玉柱、柳传志、郭台铭……这些企业家个人历程中重要的转折时刻，汇聚成了我们这个国家前进的方向。更重要的是，他们在当代中国的成长经历和人生经验，必将给无数后来者提供丰富的启示和教益。</p>
 <h2 id="林书豪：我最大的成长，来自我最大的挫败"><a href="#林书豪：我最大的成长，来自我最大的挫败" class="headerlink" title="林书豪：我最大的成长，来自我最大的挫败"></a><a href="http://www.luojiji.com/thread-12205-1-1.html" target="_blank" rel="noopener">林书豪：我最大的成长，来自我最大的挫败</a></h2><p>NBA布鲁克林篮网队球员林书豪毕业于哈佛大学，曾经入选2012《时代》周刊全球百大最有影响力人物榜单。6月9日，在台湾政治大学的毕业典礼上，林书豪发表了演讲，分享了他给毕业生的建议，我们从中为你选出了三条：</p>
@@ -1406,8 +1376,23 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Failure/" rel="bookmark">Failure</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/F/Failure/" rel="bookmark">Failure</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/M/Mistake/" rel="bookmark">Mistake</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Failure/" rel="tag"><i class="fa fa-tag"></i> Failure</a>
               <a href="/tags/Mistake/" rel="tag"><i class="fa fa-tag"></i> Mistake</a>
@@ -1421,21 +1406,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Choice/" rel="next" title="Choice">
-                  <i class="fa fa-chevron-left"></i> Choice
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Gentleman/" rel="prev" title="Gentleman">
-                  Gentleman <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Choice/" rel="prev" title="Choice">
+      <i class="fa fa-chevron-left"></i> Choice
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Gentleman/" rel="next" title="Gentleman">
+      Gentleman <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -1448,7 +1430,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -1479,8 +1483,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -1489,14 +1493,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1507,11 +1511,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -1545,7 +1544,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -1557,51 +1556,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -1610,18 +1570,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1631,63 +1585,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1695,14 +1592,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1729,40 +1626,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Failure/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

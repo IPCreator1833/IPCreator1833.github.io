@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="用户思维，是指在价值链各个环节中都要“以顾客为中心”去考虑问题。">
 <meta name="keywords" content="Thinking,User">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/DeepCreator/Business/User Thinking/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/DeepCreator/Business/User Thinking/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/DeepCreator/Business/User Thinking/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="user20180723.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/user20180723.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/user20180723.jpg?imageMogr2/thumbnail/!75p" alt="user20180723.jpg"></p>
 <blockquote>
 <p>用户思维，是指在价值链各个环节中都要“以顾客为中心”去考虑问题。</p>
 </blockquote>
@@ -313,7 +283,7 @@
 <h2 id="用户思维-：好产品让用户为自己尖叫"><a href="#用户思维-：好产品让用户为自己尖叫" class="headerlink" title="用户思维+：好产品让用户为自己尖叫"></a><a href="https://book.douban.com/subject/27129563/" target="_blank" rel="noopener">用户思维+：好产品让用户为自己尖叫</a></h2><h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>畅销产品与普通产品的本质区别是什么？若没有巨额预算、不爱营销噱头、不开奢华的产品发布会，如何打造可持续成功的产品？本书针对上述问题提出了新颖的观点：用户并不关心产品本身有多棒，而是关心使用产品时自己有多棒。作者利用其多年的交互设计经验，生动阐释了这一观点背后的科学。可贵的是，本书并不止步于解释“为什么”，还清晰呈现了“怎么做”。</p>
 <p>本书风格活泼、图文并茂，其对话式内容既引人入胜，又引人深思，适合于所有立志打造优秀产品的人。想在自己的专业领域里持续进步的读者也会有所收获。</p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>挑战<br>序幕　　1<br>关于成就用户的思考　　53<br>用户之旅　　62<br>专家如何做<br>表现卓越的科学　　80<br>构建技能　　98<br>感性接触 127<br>帮助用户前进<br>排除障碍　　156<br>进步 + 回报　　186<br>维护认知资源<br>设计　　215<br>减少认知泄漏　　228<br>穿越大脑的垃圾过滤器　　251<br>尾声　　277</p>
-<h2 id="用户力：需求驱动的产品、运营和商业模式"><a href="#用户力：需求驱动的产品、运营和商业模式" class="headerlink" title="用户力：需求驱动的产品、运营和商业模式"></a><a href="https://book.douban.com/subject/26685458/" target="_blank" rel="noopener">用户力：需求驱动的产品、运营和商业模式</a></h2><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s28361769.jpg"></p>
+<h2 id="用户力：需求驱动的产品、运营和商业模式"><a href="#用户力：需求驱动的产品、运营和商业模式" class="headerlink" title="用户力：需求驱动的产品、运营和商业模式"></a><a href="https://book.douban.com/subject/26685458/" target="_blank" rel="noopener">用户力：需求驱动的产品、运营和商业模式</a></h2><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s28361769.jpg" alt></p>
 <h3 id="内容简介-1"><a href="#内容简介-1" class="headerlink" title="内容简介"></a>内容简介</h3><p>《用户力：需求驱动的产品、运营和商业模式》从用户需求角度深刻阐释了互联网产品设计、网络运营、商业模式构建的本质与方法论！</p>
 <p>本书以“用户需求”为主线，先用逆向思维进行倒推，从本质的角度分析了用户的需求是如何驱动企业的产品设计、网络运营和商业模式构建的，将这三个重要部分进行了系统性和结构化的串联，然后用顺向思维进行铺陈，从实践和方法论的角度总结了企业究竟应该如围绕用户的真实需求来进行产品设计、网络运营和商业模式构建，这是作者15年互联网行业从业经验的结晶。</p>
 <p>产品部分讲解了以用户需求为中心的产品设计，包括用户需求驱动的产品定位、用户分析、产品决策、功能设计、用户体验、很优产品设计等；运营部分强调了“运营的是用户不是产品”的核心观点，包含运营流程、运营模型、运营指标、指标的关联与驱动、指标的提升、用户运营的周期和方法等内容；商业模式部分则强调了“现有用户再有收入”的观点，包括现有公司收入分析、向谁收费、收入的4种手段、产生收入的4种手段和3个步骤、商业模式的3种结构等内容。</p>
@@ -324,7 +294,7 @@
 <p>第3章　产品设计：核心是用户需求驱动 060<br>3.1　产品定位：一句话说明白 061<br>3.2　产品决策：有时决定不做比做更重要 065<br>3.2.1　用户需求驱动决策：3个方面 066<br>3.2.2　竞争分析：领先者致命的弱点 078<br>3.2.3　内部资源与其他因素 080<br>3.3　功能设计：核心功能是产品立身之本 085<br>3.3.1　功能重点 086<br>3.3.2　关键因素 088<br>3.3.3　确定核心功能：加强，再加强 090<br>3.4　用户体验：让用户用得爽 092<br>3.4.1　不强迫用户 093<br>3.4.2　不要让用户思考 095<br>3.4.3　简单易操作 103<br>3.4.4　不破坏用户习惯 108<br>3.4.5　超出用户预期 113<br>3.5　总结：一张图看清产品设计 116<br>3.6　“互联网+”和创业建议：4点 117</p>
 <p>第4章　网络运营：只有好产品才能运营成功 120<br>4.1　通过酷6看网络运营 121<br>4.2　网络运营是个体系 125<br>4.2.1　网络运营定义： 不是网络推广 125<br>4.2.2　网络运营目标：用户量和活跃度 126<br>4.2.3　网络运营体系：不是一个部门的事情 127<br>4.2.4　网络运营类型：产品型驱动效率最高 129<br>4.3　网络运营模型：4大运营指标 130<br>4.3.1　来源量：持续发展的动力 132<br>4.3.2　转化率：决定运营的效率 134<br>4.3.3　活跃度：用户真正的评价 136<br>4.3.4　留存率：运营成功的关键 138<br>4.4　运营周期：种子期是关键 140<br>4.4.1　种子期运营：关注留存率 142<br>4.4.2　爆发期运营：提高来源量 153<br>4.4.3　平台期运营：只为活跃度 158<br>4.5　网络推广：盯住烦琐细节的事 163<br>4.5.1　合作方式：3种 165<br>4.5.2　渠道优化：增加来源量 169<br>4.5.3　推广优化：提升转化率 176<br>4.6　总结：一张图看清网络运营 184<br>4.7　“互联网+”和创业建议：5点 184</p>
 <p>第5章　商业模式：等于用户价值模式 188<br>5.1　收入是商业模式的结果 189<br>5.1.1　搜狐：两条腿走路 189<br>5.1.2　360：互联网鲶鱼 190<br>5.1.3　百度：流量入口 191<br>5.1.4　阿里：电商帝国 192<br>5.1.5　腾讯：用户生态圈 194<br>5.2　3个步骤：用户是收入的前提 197<br>5.2.1　好的产品 198<br>5.2.2　获取用户 199<br>5.2.3　产生收入 201<br>5.3　2种收入：广告和电商 204<br>5.3.1　广告：把用户卖给别人 205<br>5.3.2　电商：向用户卖东西 207<br>5.3.3　用户需求产生收入 208<br>5.4　3类结构：产品决定结构 213<br>5.4.1　单边型：卖方和买方 213<br>5.4.2　平台型：平台和买卖双方 215<br>5.4.3　增值型：核心产品和多业务方 217<br>5.5　总结：一张图看清互联网商业模式 218<br>5.6　“互联网+”和创业建议：3点 219<br>后记　感谢名单 221</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p58140.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p58140.jpg" alt></p>
 <h3 id="十分钟读完《需求驱动的产品、运营和商业模式》"><a href="#十分钟读完《需求驱动的产品、运营和商业模式》" class="headerlink" title="十分钟读完《需求驱动的产品、运营和商业模式》"></a><a href="https://book.douban.com/review/7946826/" target="_blank" rel="noopener">十分钟读完《需求驱动的产品、运营和商业模式》</a></h3><p>马上踏出校园，步入互联网行业，医疗互联网行业，因此最近阅读偏向于互联网方面的书。<br>《用户力：需求驱动的产品、运营和商业模式》这本书简明清晰而又不失生动的阐述了互联网生态系统的全方位知识，涉及用户、产品、运营、盈利等方面。书中多次强调用户需求是核心，产品本身好坏是关键，运营是推动，盈利模式刚开始一般很难设计出来，但是一旦有了用户数，商业模式就水到渠成了。<br>核心的核心归根到底是用户需求，摸清用户需求，设计出真正满足需求的产品，努力做到行业老大，赢，就指日可待。</p>
 <p>文章摘要：<br>互联网生态系统，就能一目了然地发现，这个系统是由互联网新技术加资本构建而成的，它包括6个重要的组成部分：用户、终端、应用、公司、收入及理念。在新技术和资本的基础上，伴随着各种互联网“理念”，“用户”通过不同的“终端”，获取不同的“应用”，互联网“公司”为用户提供这些应用，获得用户而最终形成“收入”。</p>
 <p>再正确的概念也解决不了用户需求，不要因为概念而去做互联网，互联网层出不穷的概念都应回归“用户需求”。</p>
@@ -353,7 +323,7 @@
 <p>来源量、转化率、活跃度和留存率是网络运营的4大指标，虽然因为产品类型不同，运营指标定义略有不同，但总体都遵循同样的规律，4个运营指标都是用户指标，都是在描述网络运营中用户使用产品的状态和过程。</p>
 <p>老用户由产品决定，新用户由运营决定，所以运营部门的关键是，集中提高新用户的运营指标，同时提高新用户留存，将其转化为老用户，形成新用户不断沉淀为老用户的运营体系，这是健康的运营模型。产品、技术、运营、市场等部门，一起持续提升老用户的数量，提升用户活跃度，这是网络运营的关键目标。</p>
 <p>网络运营周期总结：<br>·种子期是产品最难的阶段，留存率是关键，不在乎来多少人，而在乎有多少人留下来。种子期成功，产品成功一半。<br> ·爆发期是产品成功的标志，来源量是关键，产品形成口碑影响力，能成功的产品一定有爆发期。<br>      ·平台期是用户爆发增长后有意控制产品节奏的时期，活跃度是关键，重点做好系统稳定和产品用户体验。<br> ·爆发期和平台期交替出现，产品才能不断稳定增长。<br>   ·产品上线后就是运营，运营的重点是完善产品功能，是加强流量推广，还是构建用户体系，根据产品发展阶段，要采用不用的运营策略。网络运营周期的难点在种子期运营，新产品启动最难，所以新<br> 产品上线不要急于推广，而要投入更多时间讨论运营方法和策略，因为绝大多数产品是死在种子期。</p>
-<h2 id="罗胖60秒：理解你客户的客户"><a href="#罗胖60秒：理解你客户的客户" class="headerlink" title="罗胖60秒：理解你客户的客户"></a><a href="http://www.luojiji.com/thread-12520-1-1.html" target="_blank" rel="noopener">罗胖60秒：理解你客户的客户</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201807/23/090603aeiyy0t04ainesy6.jpg"></p>
+<h2 id="罗胖60秒：理解你客户的客户"><a href="#罗胖60秒：理解你客户的客户" class="headerlink" title="罗胖60秒：理解你客户的客户"></a><a href="http://www.luojiji.com/thread-12520-1-1.html" target="_blank" rel="noopener">罗胖60秒：理解你客户的客户</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201807/23/090603aeiyy0t04ainesy6.jpg" alt></p>
 <ol>
 <li><p>昨天我看见一个小镇墙上刷的广告，是卖长城哈弗汽车的。一共两句：第一句，今天老爹开哈弗汽车，第二句，明天儿子考哈佛大学。</p>
 </li>
@@ -437,7 +407,7 @@
 <p>而且，消费者是不会知道自己愿意为一个产品付多少钱的。只有当你标出了价格，然后再来到一个具体的场景和销售场合，消费者才知道，自己是不是愿意掏钱。而且，不同的场景里，消费者愿意掏的钱也是不一样的。比如，在便利店3块钱买一瓶可乐你都会觉得贵，但是在五星级酒店大堂喝一罐可乐30块钱你觉得可以接受。</p>
 <p>以上就是品牌营销专家华杉和华楠总结出的，在调研过程中的四个陷阱，以及他们认为应该怎么做。希望对你有启发。</p>
 <p>本期内容参考来源：《超级符号就是超级创意》；作者：华杉、华楠；江苏凤凰文艺出版社出版。</p>
-<p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29032547.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/subject/l/public/s29032547.jpg" alt></p>
 <blockquote>
 <p>[超级符号就是超级创意（全彩增订版）]  (<a href="https://book.douban.com/subject/26870611/" target="_blank" rel="noopener">https://book.douban.com/subject/26870611/</a>)</p>
 </blockquote>
@@ -460,8 +430,8 @@
 <p>第一个变化是人口结构的变化。到2027年，市场上的消费者将分为六代，其中有两代人对消费的影响力将非常有限，包括“沉默的一代”（1928-1945年出生）和“智能时代的新生儿”（2017年以后出生），其他四个年龄组对消费市场影响比较大：即40/50后、60/70后、<strong>千禧一代（1981-1997年出生）和互联网原住民（1998-2016年出生）</strong>。而未来十年最重要的人口趋势，是互联网原住民一代陆续成年。2027年，互联网原住民将占世界总人口的30%，其中有15亿将步入成年。在中国，互联网原住民的占比将达到20%。</p>
 <p>第二个变化是价值观的变化。报告认为，互联网原住民这一代的价值观是相通的，他们都喜欢通过网络平台来表达和传播自己的观点。和追求“酷”的千禧一代相比，互联网原住民一代的座右铭是“<strong>独特即是新酷</strong>”。另外，互联网原住民一代消费者将产品当成“酷”的表现工具，表达他们的个性和独特性。这一代对教育的观念跟以往也不一样，他们认为网上有很多免费的信息，世界就是他们学习的课堂。他们也会更多地考虑自由职业，他们的偶像大多是颠覆性企业的创始人，比如谷歌、苹果、阿里巴巴、腾讯。对于他们来说，创业精神是人生的重要价值和社会的推动力。</p>
 <p>第三个变化是<strong>超级连接与影响力模式</strong>的兴起。如今，一个人可以随时跟很多人连接。亚马逊CEO贝佐斯说过：“在线下世界，如果一个客户不满意，他会告诉6个朋友。在互联网世界，他会告诉6000个人。”消费者之间的超级互联极大地提升了影响力模式的重要性，个人的声音通过网络放大，从而影响市场动态。而当每个人都能随时跟别人连接时，影响力模式的兴起就具备了成熟的条件。</p>
-<h2 id="移动互联时代的思维革命-互联网思维"><a href="#移动互联时代的思维革命-互联网思维" class="headerlink" title="移动互联时代的思维革命 互联网思维"></a><a href="http://slidesplayer.com/slide/11557310/" target="_blank" rel="noopener">移动互联时代的思维革命 互联网思维</a></h2><p><img alt="userthinking.jpg" data-src="http://opb37u589.bkt.clouddn.com/userthinking.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="Capture20180204.JPG" data-src="http://opb37u589.bkt.clouddn.com/Capture20180204.JPG?imageMogr2/thumbnail/!75p"></p>
+<h2 id="移动互联时代的思维革命-互联网思维"><a href="#移动互联时代的思维革命-互联网思维" class="headerlink" title="移动互联时代的思维革命 互联网思维"></a><a href="http://slidesplayer.com/slide/11557310/" target="_blank" rel="noopener">移动互联时代的思维革命 互联网思维</a></h2><p><img data-src="http://opb37u589.bkt.clouddn.com/userthinking.jpg?imageMogr2/thumbnail/!75p" alt="userthinking.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Capture20180204.JPG?imageMogr2/thumbnail/!75p" alt="Capture20180204.JPG"></p>
 <p>互联网思维<br>关于互联网思维</p>
 <p>互联网不仅仅是一种技术，不仅仅是一种产业，更是一种思想，是一种价值观。互联网将是创造明天的外在动力。<strong>创造明天最重要的是改变思想，通过改变思想创造明天。</strong><br>——阿里巴巴董事局主席 马云</p>
 <p>互联网其实不是技术，互联网其实是一种观念，互联网是一种方法论，我把它总结成七个字，“<strong>专注、极致、口碑、快</strong>”。<br>——小米公司董事长 雷军</p>
@@ -645,8 +615,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/IPCreator/YOTA/User thinking/" rel="bookmark">User Thinking</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Model/" rel="bookmark">Model</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/ABCDE/" rel="bookmark">ABCDE</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Problem/" rel="bookmark">Problem</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Thinking/" rel="bookmark">Thinking</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Thinking/" rel="tag"><i class="fa fa-tag"></i> Thinking</a>
               <a href="/tags/User/" rel="tag"><i class="fa fa-tag"></i> User</a>
@@ -659,21 +650,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/D/Digital/" rel="next" title="Digital">
-                  <i class="fa fa-chevron-left"></i> Digital
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Technology/IPCreator/YOTA/User thinking/" rel="prev" title="User Thinking">
-                  User Thinking <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/D/Digital/" rel="prev" title="Digital">
+      <i class="fa fa-chevron-left"></i> Digital
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Technology/IPCreator/YOTA/User thinking/" rel="next" title="User Thinking">
+      User Thinking <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -686,7 +674,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -717,8 +727,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -727,14 +737,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -745,11 +755,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -783,7 +788,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -795,51 +800,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -848,18 +814,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -869,63 +829,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -933,14 +836,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -967,40 +870,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/DeepCreator/Business/User Thinking/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

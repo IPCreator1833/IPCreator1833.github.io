@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="父母就是最好的教育和榜样。">
 <meta name="keywords" content="Parent">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/P/Parent/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/P/Parent/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/P/Parent/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="parents-abused-child-cartoon-scolded-stands-sign-help-35951326.jpg" data-src="http://opb37u589.bkt.clouddn.com/parents-abused-child-cartoon-scolded-stands-sign-help-35951326.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/parents-abused-child-cartoon-scolded-stands-sign-help-35951326.jpg?imageMogr2/thumbnail/!75p" alt="parents-abused-child-cartoon-scolded-stands-sign-help-35951326.jpg"></p>
 <blockquote>
 <p>父母就是最好的教育和榜样。</p>
 </blockquote>
@@ -311,57 +281,57 @@
 <p><strong>成为一个好家长的第一课：找到自我。</strong></p>
 <p>【父母辈的典型悲剧，没<a href="http://deepcreator.com/2017/10/16/Concept/Capability/" target="_blank" rel="noopener">量力而行</a>又一意孤行】<br>捉襟见肘的经济局限了<a href="http://deepcreator.com/2017/10/14/Concept/Wisedom/" target="_blank" rel="noopener">学识和见识</a><br>肩上的重担压弯了原本挺直的脊梁<br>积劳成疾重击了原本的雄心壮志<br>落后<a href="http://deepcreator.com/2017/10/04/Concept/Pattern/" target="_blank" rel="noopener">思维观念</a>成为<a href="http://deepcreator.com/2017/09/29/Concept/Happiness/" target="_blank" rel="noopener">幸福</a>生活的障碍<br>是因为是为了成为<a href="http://deepcreator.com/2017/10/16/Concept/Control/" target="_blank" rel="noopener">控制</a>下一代利器<br>恶性循还周而复始直至被社会淘汰</p>
 <p>透支——出来混，迟早是要还的。</p>
-<h2 id="扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点"><a href="#扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点" class="headerlink" title="扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点"></a><a href="http://www.xinli001.com/info/100363750?from=shouye" target="_blank" rel="noopener">扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点</a></h2><p><img alt data-src="https://ossimg.xinli001.com/20170207/0475b1d725f1747e2367f6103c3d2550.jpg"></p>
-<p><img alt data-src="https://ossimg.xinli001.com/20170207/10006e77b444727103931c37cd80f029.jpg"></p>
+<h2 id="扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点"><a href="#扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点" class="headerlink" title="扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点"></a><a href="http://www.xinli001.com/info/100363750?from=shouye" target="_blank" rel="noopener">扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点</a></h2><p><img data-src="https://ossimg.xinli001.com/20170207/0475b1d725f1747e2367f6103c3d2550.jpg" alt></p>
+<p><img data-src="https://ossimg.xinli001.com/20170207/10006e77b444727103931c37cd80f029.jpg" alt></p>
 <blockquote>
 <p>如果你的孩子总是故意打扰你，其实是因为你和他缺乏肢体接触，缺乏亲密感。</p>
 </blockquote>
-<p><img alt data-src="https://ossimg.xinli001.com/20170207/897a101cf5b20a58ecf2ef944dcf0eb8.jpg"></p>
+<p><img data-src="https://ossimg.xinli001.com/20170207/897a101cf5b20a58ecf2ef944dcf0eb8.jpg" alt></p>
 <blockquote>
 <p>如果你的孩子撒谎，其实这说明你曾经对他犯过的错误反应过度。</p>
 </blockquote>
-<p><img alt data-src="https://ossimg.xinli001.com/20170207/eac6235aa8602abd3a846ce32070e091.jpg"></p>
+<p><img data-src="https://ossimg.xinli001.com/20170207/eac6235aa8602abd3a846ce32070e091.jpg" alt></p>
 <blockquote>
 <p>如果你的孩子缺乏自信心，其实是因为你给他们的建议多过了鼓励。</p>
 </blockquote>
-<p><img alt data-src="https://ossimg.xinli001.com/20170207/0cb6add79738c45f97f6bfeaac1da878.jpg"></p>
+<p><img data-src="https://ossimg.xinli001.com/20170207/0cb6add79738c45f97f6bfeaac1da878.jpg" alt></p>
 <blockquote>
 <p>如果你的孩子不能坚持自我，其实是因为他们小时候你总是在公共场合教育批评他们。</p>
 </blockquote>
-<p><img alt data-src="https://ossimg.xinli001.com/20170207/6a9b3a4c1e7269b38b249e0f57ee0ffe.jpg"></p>
+<p><img data-src="https://ossimg.xinli001.com/20170207/6a9b3a4c1e7269b38b249e0f57ee0ffe.jpg" alt></p>
 <blockquote>
 <p>如果你什么东西都给孩子买可他们还是会去拿不属于他们的东西，其实是因为你不让他们自己选择想要的东西。</p>
 </blockquote>
-<p><img alt data-src="https://ossimg.xinli001.com/20170207/2e442a003f0826049d50c1d6d16dffe5.jpg"></p>
+<p><img data-src="https://ossimg.xinli001.com/20170207/2e442a003f0826049d50c1d6d16dffe5.jpg" alt></p>
 <blockquote>
 <p>如果你的孩子很懦弱，那其实是因为你帮助他们的速度太快了。不要帮你的孩子清扫他们成长道路上的每一个障碍。</p>
 </blockquote>
-<p><img alt data-src="https://ossimg.xinli001.com/20170207/d3d3bdfec5a6fb837c88ae8c5ddc1578.jpg"></p>
+<p><img data-src="https://ossimg.xinli001.com/20170207/d3d3bdfec5a6fb837c88ae8c5ddc1578.jpg" alt></p>
 <blockquote>
 <p>如果你的孩子嫉妒心很重，那可能是因为你总是拿别的孩子和他们比较。</p>
 </blockquote>
-<p><img alt data-src="https://ossimg.xinli001.com/20170207/b5fa5dafab4054ecbbacef0365d2dc70.jpg"></p>
+<p><img data-src="https://ossimg.xinli001.com/20170207/b5fa5dafab4054ecbbacef0365d2dc70.jpg" alt></p>
 <blockquote>
 <p>如果你的孩子很容易生气，那其实是因为你给了他们的赞扬不够，他们只有行为不当的时候才能得到注意。</p>
 </blockquote>
-<p><img alt data-src="https://ossimg.xinli001.com/20170207/cecc7f31cfea9c46e8a5b796596a695b.jpg"></p>
+<p><img data-src="https://ossimg.xinli001.com/20170207/cecc7f31cfea9c46e8a5b796596a695b.jpg" alt></p>
 <blockquote>
 <p>如果你的孩子不会尊重别人的感受，那是因为你总是命令他们，不尊重他们的感受。</p>
 </blockquote>
-<p><img alt data-src="https://ossimg.xinli001.com/20170207/20706b148062eeab12e7580585ac54b5.jpg"></p>
+<p><img data-src="https://ossimg.xinli001.com/20170207/20706b148062eeab12e7580585ac54b5.jpg" alt></p>
 <blockquote>
 <p>如果你的孩子总是神神秘秘的，什么都不告诉你，那是因为你总是爱打击他们。</p>
 </blockquote>
-<p><img alt data-src="https://ossimg.xinli001.com/20170207/793bda071900bce08da4cee5a4ad4c33.jpg"></p>
+<p><img data-src="https://ossimg.xinli001.com/20170207/793bda071900bce08da4cee5a4ad4c33.jpg" alt></p>
 <blockquote>
 <p>如果你的孩子总是行为粗鲁没有礼貌，那其实是从家长或者身边的人那里学来的。</p>
 </blockquote>
-<h2 id="春节回家，-一定要陪父母做的十件事"><a href="#春节回家，-一定要陪父母做的十件事" class="headerlink" title="春节回家， 一定要陪父母做的十件事"></a><a href="http://www.luojiji.com/thread-11205-1-1.html" target="_blank" rel="noopener">春节回家， 一定要陪父母做的十件事</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/15/103337unf6n07i9m07nrxr.jpg"></p>
+<h2 id="春节回家，-一定要陪父母做的十件事"><a href="#春节回家，-一定要陪父母做的十件事" class="headerlink" title="春节回家， 一定要陪父母做的十件事"></a><a href="http://www.luojiji.com/thread-11205-1-1.html" target="_blank" rel="noopener">春节回家， 一定要陪父母做的十件事</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201802/15/103337unf6n07i9m07nrxr.jpg" alt></p>
 <p>2018-02-15 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>平时工作忙，对父母关心少；春节假期，终于有了大块团聚时光。但除了吃吃喝喝，还能陪父母做点儿啥？如何让这个春节变得不一样？</p>
 <p>「得到」专栏作者武志红，为你列出这个假期里，一定要陪父母做的十件事，让“陪伴”不再只是一句空话。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/15/103355ig2261k0i6xy01sr.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201802/15/103355ig2261k0i6xy01sr.jpg" alt></p>
 <ol>
 <li>请父母给你讲讲你三岁以前的事儿</li>
 </ol>
@@ -407,7 +377,7 @@
 <p>第一，<strong>碰触你的伴侣</strong>。比如，拉手就可以给你们的情感加分。这一点被一项实验证明了。在实验中，其中一些人被要求不要在看视频的时候触碰伴侣，另一些人则被要求以一种“温暖、舒适和积极的方式”去触碰对方。被触碰的人表现出对伴侣的爱有更多信心。而且，就算他们知道伴侣是被要求这么做的，也会产生这种效果。</p>
 <p>第二，<strong>不要急着下糟糕的结论</strong>。如果你的伴侣做错了事情，比如没及时回你电话，不要过度解读。研究人员发现，幸福和不幸福的夫妻之间最大的不同在于，他们在解释一个伴侣的过错时所采用的“<strong><a href="http://deepcreator.com/2017/10/04/Concept/Pattern/" target="_blank" rel="noopener">归因方式</a></strong>”。面对伴侣的错误时，不幸福的夫妻会把错误归咎于伴侣的永久性缺陷，比如他太自私了，不关心我；而不是去想想有没有什么外部情况，比如他可能是今天工作太忙了。所以遇到问题不要急着下结论，想想有没有别的可能性。</p>
 <p>第三，从<a href="http://deepcreator.com/2017/10/15/Concept/Observer/" target="_blank" rel="noopener">外人的视角</a>看待一场争吵。芬克尔做过一次实验，在两年的时间里调研了120对夫妻。第一年里，这些夫妻对婚姻的满意度下降了。到了第二年，芬克尔要求一些夫妻在争吵的时候尝试一个新做法：“从第三方的中立视角来看待你和伴侣的争执，这个人希望看到的是皆大欢喜的场面，这个人还是一个用中立的眼光看事情的人。那么，这个人会怎么看这场争执呢？他或她从中能看到什么好的东西？”结果在第二年里，这样做的夫妻的婚姻满意度保持了稳定，而没有被要求这么做的夫妻，满意度在继续下降。</p>
-<h2 id="写给无比焦虑的父母们"><a href="#写给无比焦虑的父母们" class="headerlink" title="写给无比焦虑的父母们"></a><a href="http://www.luojiji.com/thread-2794-1-1.html" target="_blank" rel="noopener">写给无比焦虑的父母们</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/26/175649mzojrb2w2irh0mzb.jpg"><br>何帆</p>
+<h2 id="写给无比焦虑的父母们"><a href="#写给无比焦虑的父母们" class="headerlink" title="写给无比焦虑的父母们"></a><a href="http://www.luojiji.com/thread-2794-1-1.html" target="_blank" rel="noopener">写给无比焦虑的父母们</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/26/175649mzojrb2w2irh0mzb.jpg" alt><br>何帆</p>
 <p>我们这一代做父母的，个个都无比焦虑。</p>
 <p>孩子该上幼儿园的，找不到幼儿园。“幼升小”“小升初”的规则变来变去，越变越怪异。“中考”之后，孩子开始准备高考，家长也要陪着提心吊胆。</p>
 <p>好不容易考上了大学，中国的大学又怎么样呢？北大、清华、复旦，这算是中国最好的大学了吧。要问这些学校究竟怎么样？这么说吧，他们的楼都盖得很壮。</p>
@@ -450,11 +420,11 @@
 <li>没啥可耽误的。我在不在，他都在疯长。</li>
 <li>并不是孩子需要我。我每周急匆匆地回家，是因为我需要他。</li>
 </ol>
-<h2 id="一图说明：什么对孩子最重要，父母爱孩子的正确表达方式"><a href="#一图说明：什么对孩子最重要，父母爱孩子的正确表达方式" class="headerlink" title="一图说明：什么对孩子最重要，父母爱孩子的正确表达方式"></a><a href="http://www.toutiao.com/a6247253172440842497/" target="_blank" rel="noopener">一图说明：什么对孩子最重要，父母爱孩子的正确表达方式</a></h2><p><img alt data-src="http://p3.pstatp.com/large/10900070f83a16f4dcd"></p>
+<h2 id="一图说明：什么对孩子最重要，父母爱孩子的正确表达方式"><a href="#一图说明：什么对孩子最重要，父母爱孩子的正确表达方式" class="headerlink" title="一图说明：什么对孩子最重要，父母爱孩子的正确表达方式"></a><a href="http://www.toutiao.com/a6247253172440842497/" target="_blank" rel="noopener">一图说明：什么对孩子最重要，父母爱孩子的正确表达方式</a></h2><p><img data-src="http://p3.pstatp.com/large/10900070f83a16f4dcd" alt></p>
 <h2 id="行动清单-长假最后一天，是时候拯救爸妈的朋友圈了"><a href="#行动清单-长假最后一天，是时候拯救爸妈的朋友圈了" class="headerlink" title="行动清单 | 长假最后一天，是时候拯救爸妈的朋友圈了"></a><a href="http://www.luojiji.com/thread-10067-1-1.html" target="_blank" rel="noopener">行动清单 | 长假最后一天，是时候拯救爸妈的朋友圈了</a></h2><p>2017-10-08 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>给父母粉碎谣言，从来不是一件简单的事。激烈反对，效果未必好；如果无视，恰恰给了这些谣言侵害父母的机会。那到底怎么办？</p>
-<p>科学达人卓克帮你分析父母的心思，告诉你正确的辟谣姿势，一起来守护爸妈的朋友圈。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/08/073500uac09yojrtcscvro.jpg"></p>
+<p>科学达人卓克帮你分析父母的心思，告诉你正确的辟谣姿势，一起来守护爸妈的朋友圈。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/08/073500uac09yojrtcscvro.jpg" alt></p>
 <ol>
 <li><p>给父母辟谣的目的，不是粉碎父母的价值观，而是让父母接收到正确信息。改变其他成年人的认知、价值观是件难度很大的事情，不要带着对立心态去沟通。</p>
 </li>
@@ -488,37 +458,37 @@
 <h2 id="心智成熟的旅程"><a href="#心智成熟的旅程" class="headerlink" title="心智成熟的旅程"></a><a href="https://book.douban.com/review/1135401/" target="_blank" rel="noopener">心智成熟的旅程</a></h2><p>爱的名义<br> 有一次，去儿子的学校听心理健康的公开课，家长们都去了。<br> 有个孩子在日记中写到：他的父亲，因为他考试没有达到要求，而用皮带抽他。他一直都记忆犹新。<br> 孩子的家长按耐不住，跑上讲台，说道：我也心痛啊，我也是为了他好啊！<br> 中国有句古话：黄金棍下出好人。那意思是，不打不成器！<br> 我想，我们这一代，我们的孩子这一代，我们的孙子这一代，还有多少的棍棒的教育，要以爱的名义进行！<br> 孩子就是家长的宠物，家长的面子，或是未来。<br> 以未来的名义，以爱的名义，家长们怎么样的行为都可以得到解释，可以得到谅解。<br> 但是，这时候，爱意味着什么呢？<br> 意味着：爱是一种权力，一种单方面的要求；<br> 意味着：爱是强制的，暴虐的，严格地近乎苛求，让人感到没有人性！<br> 意味着：在压力下，对权威的盲从。<br> 意味着：不关心对方的独立存在，只关心自己内心的结果。<br> 明白了这些，就会理解现在社会中的年轻人，为什么有那么多的不满或不幸：<br> 他们已经习惯于按部就班地前进，他们有自己的想法，却不敢或不能追求自己的生活希望和想象。</p>
 <p>为什么我们的教育，不能有这样的一些课程，去教会孩子们：<br> 如何去观察和发现周围的一切，并用自己的语言表达出来？<br> 如何勇敢地面对困难和变故，说出不，和老师讨论教材的错误和立场？<br> 如何去倾听朋友的谈话和倾诉，和家长探讨和交流？<br> 如何没有限制地想象和赋予自己神圣的使命？<br> 回首人生，我们需要一种心灵的力量和支持，我们到底要学习怎么样的一种本领去面对：恐惧、懒惰、威胁和爱的压力。</p>
 <h2 id="1分钟心理学：人人都是“关系户”"><a href="#1分钟心理学：人人都是“关系户”" class="headerlink" title="1分钟心理学：人人都是“关系户”"></a><a href="http://www.xinli001.com/info/100015425" target="_blank" rel="noopener">1分钟心理学：人人都是“关系户”</a></h2><p>壹心理导读：你说自己是灰头土脸的穷屌丝？不，其实你也是一个有头有脸的“关系户”！你知道自己储备了哪些关系吗？你真的了解这些关系吗？ —— <a href="http://www.xinli001.com" target="_blank" rel="noopener">www.xinli001.com</a></p>
-<p><img alt data-src="http://image.xinli001.com/20150606/2159188a3fa37eec095bdc.jpg!600"><br><img alt data-src="http://image.xinli001.com/20150606/215923560a6b91c9c83e49.jpg!600"><br><img alt data-src="http://image.xinli001.com/20150606/215928ff334c36ce7ea6c8.jpg!600"><br><img alt data-src="http://image.xinli001.com/20151010/101708m9lnh86diwv8kfc6.jpg!600"><br><img alt data-src="http://image.xinli001.com/20150606/215937955566fbc380998e.jpg!600"><br><img alt data-src="http://image.xinli001.com/20150606/215941ac020c17308f244a.jpg!600"></p>
+<p><img data-src="http://image.xinli001.com/20150606/2159188a3fa37eec095bdc.jpg!600" alt><br><img data-src="http://image.xinli001.com/20150606/215923560a6b91c9c83e49.jpg!600" alt><br><img data-src="http://image.xinli001.com/20150606/215928ff334c36ce7ea6c8.jpg!600" alt><br><img data-src="http://image.xinli001.com/20151010/101708m9lnh86diwv8kfc6.jpg!600" alt><br><img data-src="http://image.xinli001.com/20150606/215937955566fbc380998e.jpg!600" alt><br><img data-src="http://image.xinli001.com/20150606/215941ac020c17308f244a.jpg!600" alt></p>
 <h2 id="1分钟心理学：你与妈妈的关系将决定你的爱情？"><a href="#1分钟心理学：你与妈妈的关系将决定你的爱情？" class="headerlink" title="1分钟心理学：你与妈妈的关系将决定你的爱情？"></a><a href="http://www.xinli001.com/info/100016858" target="_blank" rel="noopener">1分钟心理学：你与妈妈的关系将决定你的爱情？</a></h2><p>壹心理导读：母婴关系书写着最初的依恋蓝图，而亲密关系又将唤醒这份蓝图，让你又爱又痛，又痛又爱。—— <a href="http://www.xinli001.com" target="_blank" rel="noopener">www.xinli001.com</a></p>
-<p><img alt data-src="http://image.xinli001.com/20151002/1505419ac3028uzn778hht.jpg!600"><br><img alt data-src="http://image.xinli001.com/20151002/1505557whqqgmyvofxazs4.jpg!600"><br><img alt data-src="http://image.xinli001.com/20151002/150601sggcqt2rzgi2p6r5.jpg!600"><br><img alt data-src="http://image.xinli001.com/20151002/150607a7zykjm60gg2y0cc.jpg!600"><br><img alt data-src="http://image.xinli001.com/20151002/150612ccmbgcm0vxt7o6h9.jpg!600"><br><img alt data-src="http://image.xinli001.com/20151002/150640bqjgxdebtosick1b.jpg!600"></p>
+<p><img data-src="http://image.xinli001.com/20151002/1505419ac3028uzn778hht.jpg!600" alt><br><img data-src="http://image.xinli001.com/20151002/1505557whqqgmyvofxazs4.jpg!600" alt><br><img data-src="http://image.xinli001.com/20151002/150601sggcqt2rzgi2p6r5.jpg!600" alt><br><img data-src="http://image.xinli001.com/20151002/150607a7zykjm60gg2y0cc.jpg!600" alt><br><img data-src="http://image.xinli001.com/20151002/150612ccmbgcm0vxt7o6h9.jpg!600" alt><br><img data-src="http://image.xinli001.com/20151002/150640bqjgxdebtosick1b.jpg!600" alt></p>
 <h2 id="1分钟心理学：为何只在父亲节，才会重视他？"><a href="#1分钟心理学：为何只在父亲节，才会重视他？" class="headerlink" title="1分钟心理学：为何只在父亲节，才会重视他？"></a><a href="http://www.xinli001.com/info/100015547" target="_blank" rel="noopener">1分钟心理学：为何只在父亲节，才会重视他？</a></h2><p>壹心理导读：父亲的角色被过分地低估了。人们普遍认为，做父亲比做母亲容易，即便是同样的庆典，母亲节也比父亲节享有更多的热闹与掌声。那么，父亲究竟是一种怎样的存在？我们又该如何解读父亲？—— <a href="http://www.xinli001.com" target="_blank" rel="noopener">www.xinli001.com</a></p>
-<p><img alt data-src="http://image.xinli001.com/20151010/1022319u1bfopfb2ypz6br.jpg!600"><br><img alt data-src="http://image.xinli001.com/20150620/0033002d079066ee98c46a.jpg!600"><br><img alt data-src="http://image.xinli001.com/20150620/103627286fbab9d668fa0c.jpg!600"></p>
-<h2 id="扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点-1"><a href="#扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点-1" class="headerlink" title="扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点"></a><a href="http://www.xinli001.com/info/100363750?from=shouye" target="_blank" rel="noopener">扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点</a></h2><p><img alt data-src="http://ossimg.xinli001.com/20170207/0475b1d725f1747e2367f6103c3d2550.jpg"></p>
+<p><img data-src="http://image.xinli001.com/20151010/1022319u1bfopfb2ypz6br.jpg!600" alt><br><img data-src="http://image.xinli001.com/20150620/0033002d079066ee98c46a.jpg!600" alt><br><img data-src="http://image.xinli001.com/20150620/103627286fbab9d668fa0c.jpg!600" alt></p>
+<h2 id="扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点-1"><a href="#扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点-1" class="headerlink" title="扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点"></a><a href="http://www.xinli001.com/info/100363750?from=shouye" target="_blank" rel="noopener">扎克伯格刚发的一组漫画，深深戳中了中国式父母的痛点</a></h2><p><img data-src="http://ossimg.xinli001.com/20170207/0475b1d725f1747e2367f6103c3d2550.jpg" alt></p>
 <p>最近，小扎童鞋就在 Facebook 上发表了一组漫画，列举了“坏父母的11种表现”，快跟小壹君一起来看看你有没有哦</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20170207/10006e77b444727103931c37cd80f029.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20170207/10006e77b444727103931c37cd80f029.jpg" alt></p>
 <p>如果你的孩子总是故意打扰你，其实是因为你和他缺乏肢体接触，缺乏亲密感。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20170207/897a101cf5b20a58ecf2ef944dcf0eb8.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20170207/897a101cf5b20a58ecf2ef944dcf0eb8.jpg" alt></p>
 <p>如果你的孩子撒谎，其实这说明你曾经对他犯过的错误反应过度。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20170207/eac6235aa8602abd3a846ce32070e091.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20170207/eac6235aa8602abd3a846ce32070e091.jpg" alt></p>
 <p>如果你的孩子缺乏自信心，其实是因为你给他们的建议多过了鼓励。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20170207/0cb6add79738c45f97f6bfeaac1da878.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20170207/0cb6add79738c45f97f6bfeaac1da878.jpg" alt></p>
 <p>如果你的孩子不能坚持自我，其实是因为他们小时候你总是在公共场合教育批评他们。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20170207/6a9b3a4c1e7269b38b249e0f57ee0ffe.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20170207/6a9b3a4c1e7269b38b249e0f57ee0ffe.jpg" alt></p>
 <p>如果你什么东西都给孩子买可他们还是会去拿不属于他们的东西，其实是因为你不让他们自己选择想要的东西。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20170207/2e442a003f0826049d50c1d6d16dffe5.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20170207/2e442a003f0826049d50c1d6d16dffe5.jpg" alt></p>
 <p>如果你的孩子很懦弱，那其实是因为你帮助他们的速度太快了。不要帮你的孩子清扫他们成长道路上的每一个障碍。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20170207/d3d3bdfec5a6fb837c88ae8c5ddc1578.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20170207/d3d3bdfec5a6fb837c88ae8c5ddc1578.jpg" alt></p>
 <p>如果你的孩子嫉妒心很重，那可能是因为你总是拿别的孩子和他们比较。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20170207/b5fa5dafab4054ecbbacef0365d2dc70.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20170207/b5fa5dafab4054ecbbacef0365d2dc70.jpg" alt></p>
 <p>如果你的孩子很容易生气，那其实是因为你给了他们的赞扬不够，他们只有行为不当的时候才能得到注意。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20170207/cecc7f31cfea9c46e8a5b796596a695b.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20170207/cecc7f31cfea9c46e8a5b796596a695b.jpg" alt></p>
 <p>如果你的孩子不会尊重别人的感受，那是因为你总是命令他们，不尊重他们的感受。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20170207/20706b148062eeab12e7580585ac54b5.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20170207/20706b148062eeab12e7580585ac54b5.jpg" alt></p>
 <p>如果你的孩子总是神神秘秘的，什么都不告诉你，那是因为你总是爱打击他们。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20170207/793bda071900bce08da4cee5a4ad4c33.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20170207/793bda071900bce08da4cee5a4ad4c33.jpg" alt></p>
 <p>如果你的孩子总是行为粗鲁没有礼貌，那其实是从家长或者身边的人那里学来的。</p>
 <p>上面这11种的行为，作为粑粑麻麻的你有没有躺中，孩子是一张白纸，你如何对他，他就会如何回应你，只有粑粑麻麻拥有相对健康成熟独立的人格，才可能让孩子拥有一个独立健康的人格</p>
-<h2 id="改善亲子关系的十句话"><a href="#改善亲子关系的十句话" class="headerlink" title="改善亲子关系的十句话"></a><a href="http://www.luojiji.com/thread-3042-1-1.html" target="_blank" rel="noopener">改善亲子关系的十句话</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/29/173203smampssc4vppabqb.jpg"><br>2015-12-23方柏林</p>
+<h2 id="改善亲子关系的十句话"><a href="#改善亲子关系的十句话" class="headerlink" title="改善亲子关系的十句话"></a><a href="http://www.luojiji.com/thread-3042-1-1.html" target="_blank" rel="noopener">改善亲子关系的十句话</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/29/173203smampssc4vppabqb.jpg" alt><br>2015-12-23方柏林</p>
 <p><strong>I care.<br>我在乎。</strong></p>
 <p>家庭成员之间说“我不在乎”是很危险的事。</p>
 <p>爱的对立面不是恨，而是冷漠和无所谓。父母和孩子之间，理应相互关心对方的福祉，看有什么事情让对方开心，尽量避免让对方难过，让对方摔跟头。如果一切都不在乎，家庭成员之间就会各顾各，相互孤立，如水上浮萍。而在乎，如同纽带，让家庭成为一个紧密的集体。</p>
@@ -554,7 +524,7 @@
 <p>带孩子长大不易，珍惜吧。有朝一日，回头的时候，你会发现，他们已经长大了，离开了，我们想影响他们，再无机会。</p>
 <p>本文由罗友杨文推荐。作者方柏林，选自微信公众号fangberlin。</p>
 <p>罗胖日：<br>按照《基因战争》的说法——<br>一切家庭冲突的根源，都源于由基因设定的认知模式。<br>基因的世界，充满了“自私”和“诡计”。<br>所以传统亲子关系才会在“爱”的旗帜下有那么多伤害。<br><strong>美国式的亲子关系，控制力转弱，帮助力转强。</strong><br>这其实谈不上是好是坏。<br>它只是更适应现代社会。<br>现代社会的基本特征是——<br><strong>每一代人遭遇的世界，他的父母都不曾见过。</strong></p>
-<h2 id="女儿与妈妈的五场战争"><a href="#女儿与妈妈的五场战争" class="headerlink" title="女儿与妈妈的五场战争"></a><a href="http://www.luojiji.com/thread-1751-1-1.html" target="_blank" rel="noopener">女儿与妈妈的五场战争</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/19/154155xrtmwmqoortiewrq.jpg"></p>
+<h2 id="女儿与妈妈的五场战争"><a href="#女儿与妈妈的五场战争" class="headerlink" title="女儿与妈妈的五场战争"></a><a href="http://www.luojiji.com/thread-1751-1-1.html" target="_blank" rel="noopener">女儿与妈妈的五场战争</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/19/154155xrtmwmqoortiewrq.jpg" alt></p>
 <p>作者：宋涵</p>
 <p>几乎所有的女儿都抱怨过母亲的“控制欲”。从年少时期的不穿秋裤绝对不准出门，偷翻抽屉偷看日记，到工作以后的连环夺命call，“我安排了老同事儿子和你相亲，你一定要去”等等。</p>
 <p>我的许多女朋友们能如数家珍地道出母亲给自己留下的心理阴影。有些母亲还反抗不得，被女儿一顶嘴就以泪洗面、甚至绝食，让战争的另一方憋了一肚子火没地方撒。这让很多女儿们暗暗下了决心：以后绝对不做像她这样专制的妈妈。当然，能不能做到，那是后话了。</p>
@@ -608,7 +578,7 @@
 <p>三是建立良好的互动关系，亲子互动对情绪有很大的影响。</p>
 <p>以上观点，供你参考。</p>
 <p>本文源自：公众号“爱贝睿学堂”（黄扬名：爸妈有毒吗？| 聪明养育峰会主题演讲）</p>
-<h2 id="收藏清单-脱不花的高质量婚姻操作指南"><a href="#收藏清单-脱不花的高质量婚姻操作指南" class="headerlink" title="收藏清单 | 脱不花的高质量婚姻操作指南"></a><a href="http://www.luojiji.com/thread-9645-1-1.html" target="_blank" rel="noopener">收藏清单 | 脱不花的高质量婚姻操作指南</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/28/073911y5p10p0zfpj7m027.jpg"><br>2017-08-28 「得到」 罗辑思维<br>引言</p>
+<h2 id="收藏清单-脱不花的高质量婚姻操作指南"><a href="#收藏清单-脱不花的高质量婚姻操作指南" class="headerlink" title="收藏清单 | 脱不花的高质量婚姻操作指南"></a><a href="http://www.luojiji.com/thread-9645-1-1.html" target="_blank" rel="noopener">收藏清单 | 脱不花的高质量婚姻操作指南</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201708/28/073911y5p10p0zfpj7m027.jpg" alt><br>2017-08-28 「得到」 罗辑思维<br>引言</p>
 <p>今天七夕情人节，我们特别请到一位高手，分享她的婚姻之道。</p>
 <p>希望对你有帮助，祝你婚姻和谐，恋情顺利。</p>
 <ol>
@@ -649,12 +619,12 @@
 <li><p>结婚不见得是个好<a href="http://deepcreator.com/2017/09/17/Concept/Choose/" target="_blank" rel="noopener">选择</a>。但是想结却没结，或者结了没过好，确实对人的精神世界消耗很大。那么，就做个高手。</p>
 </li>
 </ol>
-<h2 id="关于成为好爸爸的清单"><a href="#关于成为好爸爸的清单" class="headerlink" title="关于成为好爸爸的清单"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=8891" target="_blank" rel="noopener">关于成为好爸爸的清单</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201706/18/114240bs5jajd2rad2rphr.jpg"></p>
+<h2 id="关于成为好爸爸的清单"><a href="#关于成为好爸爸的清单" class="headerlink" title="关于成为好爸爸的清单"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=8891" target="_blank" rel="noopener">关于成为好爸爸的清单</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201706/18/114240bs5jajd2rad2rphr.jpg" alt></p>
 <p>2017-06-18 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>今天是父亲节，科学育儿专家Dr. 魏给有孩子的家庭，准备了11条好爸爸秘诀。</p>
 <p>妈妈可以把这份清单转发给孩子他爸，让爸爸成为你的育儿好伙伴；转发到朋友圈，让更多爸爸看到，参与到育儿中来。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201706/18/114250zzf332utkk2cuusp.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201706/18/114250zzf332utkk2cuusp.jpg" alt></p>
 <ol>
 <li><p>爸爸是孩子最好的玩伴。应该发挥自身体能好、爱运动的优势，带孩子多做体育运动。运动影响孩子的时间感知、动作预测以及抽象思维能力的发展。家有小宝宝，可以多玩<strong>抛高高、荡秋千、滑滑梯</strong>之类的游戏。孩子大一些，可以带他跑步、打球、游泳、户外登山。<strong>养成孩子运动习惯的同时，锻炼他的冒险精神。</strong></p>
 </li>
@@ -684,7 +654,7 @@
 <li><p>如果因为其他原因，孩子的家庭教育中缺失了“父亲”这个角色，千万不要对孩子隐瞒“爸爸缺位”这个事实。因为对待单亲家庭的态度，比单亲家庭本身更重要，可以借助家族、朋友、媒体中的“父亲”榜样，讲给孩子听，让他感知到什么是父亲。</p>
 </li>
 </ol>
-<h2 id="你那么听父母的话，然后呢"><a href="#你那么听父母的话，然后呢" class="headerlink" title="你那么听父母的话，然后呢"></a><a href="http://www.luojiji.com/thread-2854-1-1.html" target="_blank" rel="noopener">你那么听父母的话，然后呢</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/28/171209yqj91qz316x6ga1q.jpg"><br>艾小玛</p>
+<h2 id="你那么听父母的话，然后呢"><a href="#你那么听父母的话，然后呢" class="headerlink" title="你那么听父母的话，然后呢"></a><a href="http://www.luojiji.com/thread-2854-1-1.html" target="_blank" rel="noopener">你那么听父母的话，然后呢</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/28/171209yqj91qz316x6ga1q.jpg" alt><br>艾小玛</p>
 <p>［一］</p>
 <p>前几天看一篇文章，大概是说有很多年轻人常年被父母所困扰。</p>
 <p>这种困扰有时候是软性的，有时候是硬性的。软性的大概是指父母常年念叨“你怎么不结婚”“你看看别人家的孩子”等精神上的压力；硬性的是指当你决心做什么事情，他们就以性命作为威胁，“从此以后我们断绝关系”，以种种为你好的理由迫使你放弃梦想。</p>
@@ -723,8 +693,11 @@
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Parent/" rel="tag"><i class="fa fa-tag"></i> Parent</a>
           </div>
@@ -736,21 +709,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/P/Proper/" rel="next" title="Proper">
-                  <i class="fa fa-chevron-left"></i> Proper
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Book/IPCreator/Book/The Power of Habit/" rel="prev" title="The Power of Habit">
-                  The Power of Habit <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/P/Proper/" rel="prev" title="Proper">
+      <i class="fa fa-chevron-left"></i> Proper
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Book/IPCreator/Book/The Power of Habit/" rel="next" title="The Power of Habit">
+      The Power of Habit <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -763,7 +733,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -794,8 +786,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -804,14 +796,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -822,11 +814,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -860,7 +847,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -872,51 +859,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -925,18 +873,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -946,63 +888,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1010,14 +895,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1044,40 +929,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/P/Parent/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

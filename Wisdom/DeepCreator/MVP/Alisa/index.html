@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="SMART+HWPM+MVP">
 <meta name="keywords" content="Alisa">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Wisdom/" itemprop="url" rel="index">
-                    <span itemprop="name">Wisdom</span>
-                  </a>
+                  <a href="/categories/Wisdom/" itemprop="url" rel="index"><span itemprop="name">Wisdom</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Wisdom/DeepCreator/MVP/Alisa/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Wisdom/DeepCreator/MVP/Alisa/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Wisdom/DeepCreator/MVP/Alisa/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="alisa20180502.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/alisa20180502.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/alisa20180502.jpg?imageMogr2/thumbnail/!75p" alt="alisa20180502.jpg"></p>
 <blockquote>
 <p>SMART+HWPM+MVP</p>
 </blockquote>
@@ -310,9 +280,9 @@
 <li>自己思考/选择/学习/实践/负责/总结/成长</li>
 </ol>
 <p>给Alisa讲故事：——和她一起玩，一起参与<br>1，父母是小孩最好的榜样；<br>2，巧虎，小猪佩奇，超级飞侠；——小孩子的共同语言<br>3，救蝌蚪，救小鹿，讲道理。——就成长而言，结果不重要，思维方式和过程才重要</p>
-<p><img alt="qiaohu.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/qiaohu.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="e3t4g6wgd3z8uq0.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/e3t4g6wgd3z8uq0.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170122024824900.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/20170122024824900.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/qiaohu.jpg?imageMogr2/thumbnail/!75p" alt="qiaohu.jpg"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/e3t4g6wgd3z8uq0.jpg?imageMogr2/thumbnail/!75p" alt="e3t4g6wgd3z8uq0.jpg"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/20170122024824900.jpg?imageMogr2/thumbnail/!75p" alt="20170122024824900.jpg"></p>
 <h2 id="罗胖60秒：好孩子是怎么夸出来的？"><a href="#罗胖60秒：好孩子是怎么夸出来的？" class="headerlink" title="罗胖60秒：好孩子是怎么夸出来的？"></a><a href="http://www.luojiji.com/thread-12837-1-1.html" target="_blank" rel="noopener">罗胖60秒：好孩子是怎么夸出来的？</a></h2><ol>
 <li><p>我们都知道一句话，好孩子是夸出来的。那天我听王凯讲到这个话题的时候，他说，这话没错，但是怎么夸，还是有学问的。</p>
 </li>
@@ -334,19 +304,19 @@
 <blockquote>
 <p>如果被肯定的是现状，他就会倾向于维持现状。如果被肯定的是方向，他就会维持努力的方向。</p>
 </blockquote>
-<p><img alt="Image_20180219084543.jpg" data-src="http://opb37u589.bkt.clouddn.com/Image_20180219084543.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Image_20180219084543.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180219084543.jpg"></p>
 <p><a href="http://hukui-blog.logdown.com/posts/2017/03/24/march-23-2017-orid-serendipity" target="_blank" rel="noopener">应对「不讲理」熊孩子的黄金法则</a>。</p>
 <p>今天实际应用了一次：大宝就今天就因为搭积木没达到自己想要的样子，结果嚎啕大哭。要是在以前，我肯定会跟他说：「没出息，这有什么大不了的，咱们再来搭就好啦。」</p>
 <p>但是今天学习了黄金法则之后，其中有一点就是先接纳孩子的情绪，然后再应对。我就轻轻的抱起他，把他带到一个安静的房间。也不批评，不说话，不表露出鄙视的眼神，就是单纯的抱着他，给他轻轻的哼歌。没想到才十几秒，他就自己停止了哭泣。或许是感受到了我好像跟以前不一样了。</p>
 <p>而且我发现，经过这样处理之后，我和孩子之间好像更容易沟通了。就是我不带有任何情绪和反感去和孩子沟通的时候，他也愿意敞开心扉。真是孩子”不讲理“的时候是表达爱和教育的最好时机。而且也正印证了笑来老师的一句话「当问题出现的时候，大多数时候，钥匙在别处。」</p>
 <p>以前的我在遇到孩子哭闹的时候，太关注这个问题本身了，解决办法就是恐吓，命令，讲道理。然而就是忘了给孩子爱和理解。这或许才是孩子最需要的，如果孩子感受到你是爱他和理解他的，你再找机会教育，效果才会明显。如果在他最伤心的时候，作为至亲都是冷眼旁观甚至恶语相向，你会是什么感觉？</p>
 <p>所以我决定从今天开始，对待孩子的问题的时候，好好思考和运用这些黄金法则。</p>
-<h2 id="孩子所有的不合理，都是因为家长不学习"><a href="#孩子所有的不合理，都是因为家长不学习" class="headerlink" title="孩子所有的不合理，都是因为家长不学习"></a><a href="http://www.luojiji.com/thread-12763-1-1.html" target="_blank" rel="noopener">孩子所有的不合理，都是因为家长不学习</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201808/21/105502oh969znu4j5t4t7z.jpg"></p>
+<h2 id="孩子所有的不合理，都是因为家长不学习"><a href="#孩子所有的不合理，都是因为家长不学习" class="headerlink" title="孩子所有的不合理，都是因为家长不学习"></a><a href="http://www.luojiji.com/thread-12763-1-1.html" target="_blank" rel="noopener">孩子所有的不合理，都是因为家长不学习</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201808/21/105502oh969znu4j5t4t7z.jpg" alt></p>
 <p>生活中，有人说孩子童言无忌、天真无邪，也有人说孩子不守纪律、无责任感……</p>
 <p>但这里有个问题，你想过没有：所有这些，都是成人的观感。</p>
 <p>孩子究竟是什么样的？家长如何教育孩子才最科学呢？</p>
 <p>今天要介绍的这本书来帮你——</p>
-<p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29708817.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/subject/l/public/s29708817.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/30162958/" target="_blank" rel="noopener">《童年的秘密》</a></p>
 </blockquote>
@@ -386,7 +356,7 @@
 <h2 id="玩是最好的教养——教出活泼自信好孩子的198个创意游戏"><a href="#玩是最好的教养——教出活泼自信好孩子的198个创意游戏" class="headerlink" title="玩是最好的教养——教出活泼自信好孩子的198个创意游戏"></a><a href="https://book.douban.com/subject/24714171/" target="_blank" rel="noopener">玩是最好的教养——教出活泼自信好孩子的198个创意游戏</a></h2><blockquote>
 <p>最好的关爱就是真心的陪伴。</p>
 </blockquote>
-<p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s26653919.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/subject/l/public/s26653919.jpg" alt></p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>《玩是最好的教养》内容简介：</p>
 <p>快乐童年是一生幸福的起点。好性格能让孩子受益一生。</p>
 <p>对孩子来说，最好的性格养成方式是什么呢？玩!没有享受到游戏快乐的孩子，就失去了真正意义上的童年。父母是孩子最初的老师，更是孩子最好的玩伴。</p>
@@ -400,7 +370,7 @@
 <p>第四是洞察（perspective）。洞察需要人们批判性地看待不同的观点。在具体问题上，真正有洞察的人，既能批判某个立场，也能为这个立场辩护，也就是说，洞察需要我们客观地看待具体的观点，理解它的适用范围和局限所在。</p>
 <p>第五是神入（empathy）。神入可以理解为，从精神层面进入另一个人的视角。神入用更常见的词翻译就是移情或同理心，说的是代入他人视角、理解他人立场的能力。神入要求的不是全面的、客观的、总领全局的理解，而是从人的角度考虑，能够从其他人看似古怪、奇特的观点中发现价值。</p>
 <p>最后是自知（self-knowledge）。自知就是学习领域一直在强调的元认知，也就是认识自己的认知过程，观察自己是怎么理解的，有没有什么预设信息、个人偏见、思维习惯等影响了自己对事物的理解。知道自己如何知道、如何不知道，这也是苏格拉底说的“人的智慧”。</p>
-<h2 id="教养大震撼"><a href="#教养大震撼" class="headerlink" title="教养大震撼"></a><a href="https://book.douban.com/subject/6773363/" target="_blank" rel="noopener">教养大震撼</a></h2><p><img alt="nurtureshock20180710.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/nurtureshock20180710.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="教养大震撼"><a href="#教养大震撼" class="headerlink" title="教养大震撼"></a><a href="https://book.douban.com/subject/6773363/" target="_blank" rel="noopener">教养大震撼</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/nurtureshock20180710.jpg?imageMogr2/thumbnail/!75p" alt="nurtureshock20180710.jpg"></p>
 <h3 id="内容简介-1"><a href="#内容简介-1" class="headerlink" title="内容简介"></a>内容简介</h3><p>常夸孩子“宝贝你好聪明”会对孩子有什么影响？我的孩子吃得不多啊，怎么就是瘦不下来？看《喜羊羊和灰太狼》对孩子是好是坏？多跟宝宝说话能帮他快快学会说话吗？孩子周末晚睡晚起可以吗？教育孩子的方式有千千万，但是正确的教养观念只有一种！本书一次披露近十年来儿童发展领域的无数惊奇发现，涵盖年龄层1到18岁。章章都是教养观念的大震撼、大洗脑。本书并非一家之言，两位作者在全世界近百位顶尖学者的鼎力相助下完成本书。</p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>目录</p>
 <p>第1章 表扬危机四伏，可以摧毁孩子的自信<br>表扬孩子也有错吗<br>怎样表扬才对<br>如何戒掉表扬孩子的瘾</p>
@@ -580,7 +550,7 @@
 <p>为什么要这么做呢？严伯钧说，对于刚开始学乐器的小孩来说，他早期练的练习曲，其实是非常枯燥无味的东西，所以，在家中听什么，就变得非常重要了。如果能让孩子知道，通过枯燥的基础的练习之后，自己可以演奏出来非常优美的音乐的话，这就是一个巨大的激励。相反，如果你直接把孩子送到老师那里去学琴，对孩子来说，这就成了一个苦差事，很难坚持下来。</p>
 <p>第三点，<strong>通过听音乐，观察孩子的音乐偏好</strong>。人对音乐是有偏好的，在学乐器之前，你不光是要给孩子听音乐，还要从中观察你的孩子喜欢什么样的音乐。有的孩子觉得钢琴曲特别优美，有的孩子听到小提琴协奏曲就很陶醉，如果你发现孩子喜欢某些特定乐器音乐的话，很有可能，他就是对这件乐器的音色特别敏感。</p>
 <p>严伯钧总结，在孩子开始正式学习音乐之前，一定要建立他对音乐的<strong>感性认知</strong>，<strong>最好能够激发起他对音乐的兴趣</strong>。</p>
-<h2 id="和孩子一起学习与时间做朋友"><a href="#和孩子一起学习与时间做朋友" class="headerlink" title="和孩子一起学习与时间做朋友"></a><a href="http://www.ftchinese.com/story/001077385?full=y" target="_blank" rel="noopener">和孩子一起学习与时间做朋友</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F4%2F000077334_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover&amp;from=next001"></p>
+<h2 id="和孩子一起学习与时间做朋友"><a href="#和孩子一起学习与时间做朋友" class="headerlink" title="和孩子一起学习与时间做朋友"></a><a href="http://www.ftchinese.com/story/001077385?full=y" target="_blank" rel="noopener">和孩子一起学习与时间做朋友</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F4%2F000077334_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover&amp;from=next001" alt></p>
 <blockquote>
 <p>楼夷：人的一生中会面临各种境遇，也许有人陪伴，也可能独自一人。我希望我的孩子，不用依赖太多外部条件也可以从容地过好日子，并感受到生活的喜悦。</p>
 </blockquote>
@@ -631,7 +601,7 @@
 </blockquote>
 <p><strong>时间，是人最宝贵的财富。但是如何处理这笔财富，需要强大的智慧、情商和执行力，也需要不断去尝试与磨合。</strong></p>
 <p>今天我们只是迈出了第一步。</p>
-<h2 id="孩子成长，我们成长"><a href="#孩子成长，我们成长" class="headerlink" title="孩子成长，我们成长"></a><a href>孩子成长，我们成长</a></h2><p><img alt="childrengrowup20180508.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/childrengrowup20180508.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="孩子成长，我们成长"><a href="#孩子成长，我们成长" class="headerlink" title="孩子成长，我们成长"></a><a href>孩子成长，我们成长</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/childrengrowup20180508.jpg?imageMogr2/thumbnail/!75p" alt="childrengrowup20180508.jpg"></p>
 <p>《如何培养面向未来的孩子》。</p>
 <p>我是一个互联网行业的技术管理者。2006年，从硅谷回到北京，现在在一家美国视频媒体公司Hulu，担任全球副总裁，中国区研发中心总经理。</p>
 <p>同时，我是两个男孩子的妈妈。老大在英国剑桥读书，老二在上高中。</p>
@@ -703,7 +673,7 @@
 <p>二、面向未来的四类技能</p>
 <p>我总结了工作中需要的那些年轻人的优秀特质，把它概括成四类，这四类技能的关系，就像一棵树。</p>
 <p>形象地说，作为父母，要帮助你的孩子，长成这样一棵树。</p>
-<p><img alt="basicskill20180508.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/basicskill20180508.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/basicskill20180508.jpg?imageMogr2/thumbnail/!75p" alt="basicskill20180508.jpg"></p>
 <p>技能树示意图</p>
 <p>这是一棵顶上有星星的圣诞树，树身分成上下两段。底下宽的那段，叫做<strong>基础技能</strong>，上面尖的那段，叫<strong>综合能力</strong>。树的树干为<strong>成长心态</strong>，而树顶上的星星，指的是<strong>身心健康</strong>。</p>
 <p>下面我会分别跟你说说这四种技能：</p>
@@ -1140,7 +1110,7 @@
 <p>当下，育儿领域里有各种“迷思”——虽然是错误的认知，却被人们普遍认同。它们比谣言的传播更广，相信的人更多。</p>
 <p>美国两位心理学家，进行了大量的学术和文献研究，综合了当今学界的主流共识，创作了《儿童成长的重大迷思》这本书。</p>
 <p>书中提出了50个儿童成长的迷思，「得到」作者万维钢，从中选取了10个代表性的观点，为你一一解读。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201805/10/094752j1zglfkyulup1ekk.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201805/10/094752j1zglfkyulup1ekk.jpg" alt></p>
 <ol>
 <li>加强与孩子的亲密联系，有利于亲子关系的发展？</li>
 </ol>
@@ -1209,7 +1179,7 @@
 <p>孩子在8岁左右就开始形成自己解释事情的逻辑了。在这个阶段，引导孩子形成<strong>乐观</strong>的价值取向非常重要。</p>
 </blockquote>
 <p>有三个原因会决定孩子的价值取向：<strong>父母对日常生活事件的因果分析，孩子失败时父母批评的方式，以及童年生活中的重大负面事件</strong>。如果没有正确的引导，孩子就会觉得不论自己怎么努力，坏的结果总会出现，就更容易选择放弃。所以父母在解释一件事时，一定要注意方法，尽量把概括化和个人化的因素和好事联系起来，而不要把坏事归结在这些因素上。比如，孩子算不出算术题，你不能说“女孩子数学就是学不好”，或者“我们孩子就是数学不行”，这样孩子就会慢慢形成悲观的解释方式。但是如果孩子表现得好，比如他讲了个精彩的故事，你就可以夸他的表达能力特别强，或者表扬他之前读的故事书很有用。<strong>提醒孩子之前的学习过程对结果的积极影响，这样孩子在将来遇到困难时，就会更愿意去付出努力。</strong></p>
-<h2 id="你是木匠型还是园丁型家长？"><a href="#你是木匠型还是园丁型家长？" class="headerlink" title="你是木匠型还是园丁型家长？"></a><a href="http://www.luojiji.com/thread-12038-1-1.html" target="_blank" rel="noopener">你是木匠型还是园丁型家长？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201805/29/105254nlzqt1wzh9nq9qw9.jpg"></p>
+<h2 id="你是木匠型还是园丁型家长？"><a href="#你是木匠型还是园丁型家长？" class="headerlink" title="你是木匠型还是园丁型家长？"></a><a href="http://www.luojiji.com/thread-12038-1-1.html" target="_blank" rel="noopener">你是木匠型还是园丁型家长？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201805/29/105254nlzqt1wzh9nq9qw9.jpg" alt></p>
 <blockquote>
 <p>《园丁与木匠》(The Gardener and the Carpenter)</p>
 </blockquote>
@@ -1245,7 +1215,7 @@
 <li><p>在教育中，家长应当是“脚手架”，引导孩子自主搭建知识大厦。刻意地教导，反而容易让孩子只吸收、模仿，而不去探索和创造。对于一般家长来说：<strong>不过多干预，可能就是最简单有效的方法。</strong></p>
 </li>
 </ol>
-<h2 id="《吴金黛·音乐有意思》"><a href="#《吴金黛·音乐有意思》" class="headerlink" title="《吴金黛·音乐有意思》"></a><a href="http://www.luojiji.com/thread-12054-1-1.html" target="_blank" rel="noopener">《吴金黛·音乐有意思》</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201805/31/100106ugze0q3t13kk1qzt.jpg"></p>
+<h2 id="《吴金黛·音乐有意思》"><a href="#《吴金黛·音乐有意思》" class="headerlink" title="《吴金黛·音乐有意思》"></a><a href="http://www.luojiji.com/thread-12054-1-1.html" target="_blank" rel="noopener">《吴金黛·音乐有意思》</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201805/31/100106ugze0q3t13kk1qzt.jpg" alt></p>
 <p>现在的家长重视素质教育，大部分孩子都会专门学习一种乐器，但是为什么学习效果不一样？</p>
 <p>吴老师说：区别不在于技巧，而在于懂不懂音乐的原理——乐理。</p>
 <p>乐理，正是这门课的重点。课程里，吴老师将每天讲透一个乐理知识，系统培养起孩子的审美能力和音乐感受力。</p>
@@ -1286,7 +1256,7 @@
 <p>为了抵消荧屏曝光带来的负面影响，书里建议家长采取以下几个步骤：</p>
 <p>1.不要毫无目的地看一个电视节目；<br>2.别把电视放在孩子的房间；<br>3.家长提前观看影片，了解影片内容是否适合孩子的年龄；<br>4.不要把孩子单独地放在荧幕前，不要把荧屏当保姆；<br>5.当孩子在看荧屏时，要确保孩子积极参与他们在荧幕上所看的，而不只是入迷的观看者；<br>6.家长应该花一定时间和孩子一起看书，也要花额外的时间和孩子一起看荧屏；<br>7.教会孩子控制自己看电视的习惯，要学会一看完电视后就关掉，帮助孩子避免成为电视的奴隶。</p>
 <p>总之，如果家长能正确选择电视节目，并且更好地引导孩子，孩子就能从荧幕中受益。</p>
-<h2 id="故事知道怎么办——如何让孩子有令人惊喜的改变"><a href="#故事知道怎么办——如何让孩子有令人惊喜的改变" class="headerlink" title="故事知道怎么办——如何让孩子有令人惊喜的改变"></a><a href="https://book.douban.com/subject/6800784/" target="_blank" rel="noopener">故事知道怎么办——如何让孩子有令人惊喜的改变</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s6880273.jpg"></p>
+<h2 id="故事知道怎么办——如何让孩子有令人惊喜的改变"><a href="#故事知道怎么办——如何让孩子有令人惊喜的改变" class="headerlink" title="故事知道怎么办——如何让孩子有令人惊喜的改变"></a><a href="https://book.douban.com/subject/6800784/" target="_blank" rel="noopener">故事知道怎么办——如何让孩子有令人惊喜的改变</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s6880273.jpg" alt></p>
 <p>故事犹如通往孩子内心的幽径，故事中的隐喻可以作用于孩子的心灵，让他们的行为发生正向的转变。如果一个故事以充满想象力的方式如实呈现孩子的心灵状态，并带着爱和鼓励，提供一种解决方案，或提供一个看待事物的新视角，孩子就会接收到故事中的讯息，令人惊喜的改变会由此而发生。作者根据自己的经验，以丰富的事例，讲述了如何在家庭和学校生活中，通过故事来化解孩子的各种挑战性行为。</p>
 <p>目录  · · · · · ·<br>引言 故事的疗愈之光<br>第一部分 我的故事之旅<br>从干瘪的梅干到水灵灵的鲜梅——故事的作用<br>故事与想象力<br>鲜活的思考从故事开始<br>建立对故事及自己的信心<br>天生的国王<br>列出你的问题和担忧<br>第二部分 治疗故事的创作<br>第六章 不同的年龄，不同的故事<br>押韵的故事、童谣<br>自然故事和“日常”故事<br>第三部分 针对挑战行为的故事<br>第十章 不诚实和小偷小摸<br>鸽子和鬣狗<br>不诚实的野狗<br>阿兰西和雕像<br>阿金巴与魔法牛<br>樱桃红<br>第十三章 急躁或缺乏耐心<br>胡闹小鹈鹕<br>着急的斑马<br>第十六章 掐人、伤害别人或喜欢打斗<br>张牙舞爪的小螃蟹<br>很长很长的指甲<br>杰米和魔法棒<br>美丽的女王<br>一袋钉子<br>第十七章 害羞或内向<br>小男孩去航海<br>害羞小草莓和野生小树莓<br>南瓜小小<br>最小的水泡<br>第十八章 嘲弄或欺负<br>光之公主<br>湖中的羽毛<br>隐形的猎人<br>杜鹃的故事<br>甲壳虫的颜色从哪里来<br>三只山羊<br>第二十章 粗野或躁动<br>乱跑乱跳没个停的小红马<br>蜗牛和南瓜<br>星星草人<br>小佳和仙蛋<br>第五部分：讲故事的艺术<br>第二十九章 针对不同听众和场合讲故事<br>不同“极”的故事<br>听众和场所<br>混龄听众<br>即兴发挥讲故事</p>
 <h2 id="请不要总对孩子说“我生气了”！"><a href="#请不要总对孩子说“我生气了”！" class="headerlink" title="请不要总对孩子说“我生气了”！"></a><a href="https://mp.weixin.qq.com/s?__biz=MzA3NTU2MTcyMg==&amp;mid=2247485581&amp;idx=1&amp;sn=f2ad815ff75c71e0fe3a3bdc7e751ab3&amp;chksm=9f6fe718a8186e0eb570acbc55e6d5399ff2e24f99a7e3b94b04cc8ca034e4e1f3323312c866&amp;mpshare=1&amp;scene=1&amp;srcid=0705IleuXkecd8NZl5EvHHh3#rd" target="_blank" rel="noopener">请不要总对孩子说“我生气了”！</a></h2><p>小猪佩奇儿童英语 今天</p>
@@ -1326,7 +1296,7 @@
 <p>6.<strong>让孩子学会准备plan-B</strong>。你问问孩子，“如果事情没有按你希望的方式发展，你的备份计划是什么？” 有一个备用计划能帮助缓解压力，孩子也就更有勇气去做一件事。家长需要帮助孩子，练习寻找灵活解决方案的技能，这能让孩子更有韧性和自信，能去驾驭混乱和不确定性。</p>
 <p>以上就是让孩子更自觉、更有自我驱动力的建议，希望对你有帮助。</p>
 <p>本期文章参考来源：微信公众号“周成刚在路上”《养娃养到筋疲力尽，如何让孩子拥有自我驱动力？》</p>
-<h2 id="不成熟的父母——Adult-Children-of-Emotionally-Immature-Parents-How-to-Heal-from-Distant-Rejecting-or-Self-Involved-Parents"><a href="#不成熟的父母——Adult-Children-of-Emotionally-Immature-Parents-How-to-Heal-from-Distant-Rejecting-or-Self-Involved-Parents" class="headerlink" title="不成熟的父母——Adult Children of Emotionally Immature Parents: How to Heal from Distant, Rejecting, or Self-Involved Parents"></a><a href="https://book.douban.com/subject/27045252/" target="_blank" rel="noopener">不成熟的父母——Adult Children of Emotionally Immature Parents: How to Heal from Distant, Rejecting, or Self-Involved Parents</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29451236.jpg"></p>
+<h2 id="不成熟的父母——Adult-Children-of-Emotionally-Immature-Parents-How-to-Heal-from-Distant-Rejecting-or-Self-Involved-Parents"><a href="#不成熟的父母——Adult-Children-of-Emotionally-Immature-Parents-How-to-Heal-from-Distant-Rejecting-or-Self-Involved-Parents" class="headerlink" title="不成熟的父母——Adult Children of Emotionally Immature Parents: How to Heal from Distant, Rejecting, or Self-Involved Parents"></a><a href="https://book.douban.com/subject/27045252/" target="_blank" rel="noopener">不成熟的父母——Adult Children of Emotionally Immature Parents: How to Heal from Distant, Rejecting, or Self-Involved Parents</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29451236.jpg" alt></p>
 <h3 id="内容简介-2"><a href="#内容简介-2" class="headerlink" title="内容简介"></a>内容简介</h3><p>【内容介绍】</p>
 <p>如果一个孩子在童年时</p>
 <p>渴望与父母亲密，却常常被疏远和拒绝；</p>
@@ -1401,7 +1371,7 @@
 <p>“这样的孩子成长起来，抗打击能力和冒险能力也会水到渠成。老外这样培养训练孩子的背后，其实是让孩子养成独立、自由、勇敢的习惯，不仅是身体的健康，更加是精神的强大。”</p>
 </blockquote>
 <p>俞敏洪说：“反观中国人带孩子，完全是温室模式，各种宠爱和对危险的屏蔽，到最后孩子只要吹个风就感冒，沾点水就发烧，风吹草动就进医院，长大后个个弱不禁风的样子。中国人带孩子，表面上爱护了孩子，实际上伤害了孩子，<strong>我们用爱的名义，把孩子们本来面对世界应该拥有的强大和独立剥夺了</strong>。”也正是因为如此，才会有人感慨，中国人在培养孩子上，是“全民富二代”。</p>
-<h2 id="特别耐心特别爱——儿童情绪管理与性格培养"><a href="#特别耐心特别爱——儿童情绪管理与性格培养" class="headerlink" title="特别耐心特别爱——儿童情绪管理与性格培养"></a><a href="https://book.douban.com/subject/26811645/" target="_blank" rel="noopener">特别耐心特别爱——儿童情绪管理与性格培养</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s28790335.jpg"></p>
+<h2 id="特别耐心特别爱——儿童情绪管理与性格培养"><a href="#特别耐心特别爱——儿童情绪管理与性格培养" class="headerlink" title="特别耐心特别爱——儿童情绪管理与性格培养"></a><a href="https://book.douban.com/subject/26811645/" target="_blank" rel="noopener">特别耐心特别爱——儿童情绪管理与性格培养</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s28790335.jpg" alt></p>
 <h3 id="内容简介-3"><a href="#内容简介-3" class="headerlink" title="内容简介"></a>内容简介</h3><p>台湾著名教育心理学博士7年心血之作，儿童情绪管理与性格培养。经典读本，持续热销。</p>
 <p>少儿的情绪管理是当前较为流行的一个教养议题。本书作者以两个孩子母亲的身份，从教育心理学博士的角度出发，为读者们讲了36堂儿童情绪教育课程，帮助父母理解孩子的内心世界，以淡定的态度陪伴孩子经历成长中的各种问题，营造正向的亲子关系，帮助孩子诚实面对、表达、抒发自己的情绪，学习与父母、他人及自己相处。</p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>第一篇　认识孩子内在的原始风暴<br>我打你哟！——面对孩子总爱动手打人　/ 3<br>不要！不要！不要！——面对孩子的第一个叛逆期　/ 9<br>我不管，我要生气！——面对孩子无理取闹的情绪　/ 16<br>起床也要因材施教——面对孩子的起床气　/ 22<br>大灰狼会来吗？——面对孩子想象中的害怕　/ 28<br>为什么玩具坏掉了？——面对孩子的失落　/ 33<br>你们不可以笑！——面对孩子的敏感与爱面子　/ 39<br>爱咬手指和抠指甲的孩子——面对孩子内在的焦虑感　/ 44<br>为什么说再见，你不要我了吗？——面对孩子的分离焦虑　/ 50<br>后记　/ 56</p>
@@ -1432,8 +1402,20 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/M/Museum/" rel="bookmark">Museum</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/Book List of Education for Alisa/" rel="bookmark">Book List of Education for Alisa</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Alisa/" rel="tag"><i class="fa fa-tag"></i> Alisa</a>
           </div>
@@ -1445,21 +1427,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Fear/" rel="next" title="Fear">
-                  <i class="fa fa-chevron-left"></i> Fear
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Company/DeepCreator/Company/HuaWei/" rel="prev" title="HuaWei">
-                  HuaWei <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Fear/" rel="prev" title="Fear">
+      <i class="fa fa-chevron-left"></i> Fear
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Company/DeepCreator/Company/HuaWei/" rel="next" title="HuaWei">
+      HuaWei <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -1472,7 +1451,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -1503,8 +1504,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -1513,14 +1514,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1531,11 +1532,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -1569,7 +1565,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -1581,51 +1577,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -1634,18 +1591,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1655,63 +1606,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1719,14 +1613,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1753,40 +1647,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Wisdom/DeepCreator/MVP/Alisa/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

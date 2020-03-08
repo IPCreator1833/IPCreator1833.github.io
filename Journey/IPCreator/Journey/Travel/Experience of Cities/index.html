@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="见多才能识广读万卷书–&amp;gt;阅读思考行万里路–&amp;gt;践行旅行识万千人–&amp;gt;交流分享">
 <meta name="keywords" content="Experience,City,IPCreator">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Journey/" itemprop="url" rel="index">
-                    <span itemprop="name">Journey</span>
-                  </a>
+                  <a href="/categories/Journey/" itemprop="url" rel="index"><span itemprop="name">Journey</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Journey/IPCreator/Journey/Travel/Experience of Cities/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Journey/IPCreator/Journey/Travel/Experience of Cities/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Journey/IPCreator/Journey/Travel/Experience of Cities/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,20 +256,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://opb37u589.bkt.clouddn.com/20170920_150401.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/20170920_150401.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p><strong>见多才能识广</strong><br>读万卷书–&gt;阅读思考<br>行万里路–&gt;践行旅行<br>识万千人–&gt;交流分享</p>
 </blockquote>
  <a id="more"></a>
-<p> <img alt="chinamap.jpg" data-src="http://opb37u589.bkt.clouddn.com/chinamap.jpg?imageMogr2/thumbnail/!75p"></p>
+<p> <img data-src="http://opb37u589.bkt.clouddn.com/chinamap.jpg?imageMogr2/thumbnail/!75p" alt="chinamap.jpg"></p>
 <blockquote>
 <p>立足中国</p>
 </blockquote>
-<p><img alt="worldmap.jpg" data-src="http://opb37u589.bkt.clouddn.com/worldmap.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/worldmap.jpg?imageMogr2/thumbnail/!75p" alt="worldmap.jpg"></p>
 <blockquote>
 <p>放眼全球</p>
 </blockquote>
-<p> <img alt data-src="http://omj173lhw.bkt.clouddn.com/world.jpg"></p>
+<p> <img data-src="http://omj173lhw.bkt.clouddn.com/world.jpg" alt></p>
 <p>体验、观察、深思、践行<br>靠自己双手挣钱，<br>靠自己双腿行走，<br>靠自己双眼欣赏</p>
 <p>吃–&gt;美食<br>穿–&gt;时尚、品牌<br>住–&gt;租/买<br>行–&gt;交通、旅行<br>文化–&gt;读书、音乐、影视、人文、摄影</p>
 <h2 id="香港"><a href="#香港" class="headerlink" title="香港"></a>香港</h2><p>>1months</p>
@@ -308,12 +278,12 @@
 </blockquote>
 <p>爱香港，香港是国际化第一站<br>越了解，越深入，越有兴趣，也就越喜爱</p>
 <p>常用路线：深圳湾口岸–&gt;B3X–&gt;屯门–&gt;E33–&gt;东涌</p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170404_143314.jpg"></p>
-<h3 id="山"><a href="#山" class="headerlink" title="山"></a>山</h3><h4 id="太平山顶"><a href="#太平山顶" class="headerlink" title="太平山顶"></a><strong>太平山顶</strong></h4><p><img alt="20170715_170454.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170715_170454.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170404_143314.jpg" alt></p>
+<h3 id="山"><a href="#山" class="headerlink" title="山"></a>山</h3><h4 id="太平山顶"><a href="#太平山顶" class="headerlink" title="太平山顶"></a><strong>太平山顶</strong></h4><p><img data-src="http://opb37u589.bkt.clouddn.com/20170715_170454.jpg?imageMogr2/thumbnail/!75p" alt="20170715_170454.jpg"></p>
 <blockquote>
 <p>俯瞰维多利亚港</p>
 </blockquote>
-<p><img alt="20170715_171648.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170715_171648.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170715_171648.jpg?imageMogr2/thumbnail/!75p" alt="20170715_171648.jpg"></p>
 <blockquote>
 <p>俯瞰维多利亚港</p>
 </blockquote>
@@ -325,16 +295,16 @@
 <p>“深圳”地名始见史籍于1410年（明永乐八年），于清朝初年建墟。当地的方言客家话俗称田野间的水沟为“圳”或“涌”。深圳正因其水泽密布，村落边有一条深水沟而得名。</p>
 </blockquote>
 <p>时间就是金钱、效率就是生命</p>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/20170217_133024.jpg"></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/20170217_133024.jpg" alt></p>
 <blockquote>
 <p>生活中不缺少美，而是缺少发现。Life is not the lack of beauty, but the lack of discovery.</p>
 </blockquote>
-<p><img alt data-src="http://omj173lhw.bkt.clouddn.com/20170322_165410.jpg"></p>
+<p><img data-src="http://omj173lhw.bkt.clouddn.com/20170322_165410.jpg" alt></p>
 <blockquote>
 <p>创新是主旋律；Innovation is the main theme;</p>
 </blockquote>
-<p><img alt="20170508_135452.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170508_135452.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170509_102146.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170509_102146.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170508_135452.jpg?imageMogr2/thumbnail/!75p" alt="20170508_135452.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170509_102146.jpg?imageMogr2/thumbnail/!75p" alt="20170509_102146.jpg"></p>
 <blockquote>
 <p>不受诱惑，心无旁骛，专注是一种品格，它是通往成功与辉煌的真正捷径；Not tempted,Heartless,Focus is a character,It is a real shortcut to success and glory;</p>
 </blockquote>
@@ -348,148 +318,148 @@
 <p><strong>水</strong><br>梅沙踏浪（大梅沙、小梅沙）</p>
 <p><strong>新</strong><br>侨城锦绣（华侨城）<br>深南溢彩（深南大道）</p>
 <p><strong>旧</strong><br>大鹏所城（大鹏所城）<br>一街两制（“中英街”）</p>
-<h4 id="一景-梅沙踏浪"><a href="#一景-梅沙踏浪" class="headerlink" title="一景 梅沙踏浪"></a>一景 梅沙踏浪</h4><p><img alt data-src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=7bd51f728526cffc6d2ab8b089004a7d/63d0f703918fa0ecc46a0de6219759ee3c6ddba8.jpg"><br>大小梅沙海滩位于深圳市大鹏湾畔，大梅沙湾口宽约2000米，小梅沙湾口宽约800米，海沙黄白细腻，平坦柔软，犹如一弯新月镶嵌在苍山碧海之间，人称“东方夏威夷”。</p>
-<h4 id="二景-莲山春早"><a href="#二景-莲山春早" class="headerlink" title="二景 莲山春早"></a>二景 莲山春早</h4><p><img alt data-src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=2647fe197a1ed21b7dc929e79d6cddae/8326cffc1e178a8218d2104bf103738da877e86b.jpg"><br>莲花古有圣名，以美而清纯著称。莲花山位于深圳市中心区北端，因山形似莲花而得名。山顶广场建有邓小平塑像，可以俯看中心区全貌。</p>
-<p><img alt="20170908_172830.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170908_172830.jpg?imageMogr2/thumbnail/!75p"></p>
+<h4 id="一景-梅沙踏浪"><a href="#一景-梅沙踏浪" class="headerlink" title="一景 梅沙踏浪"></a>一景 梅沙踏浪</h4><p><img data-src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=7bd51f728526cffc6d2ab8b089004a7d/63d0f703918fa0ecc46a0de6219759ee3c6ddba8.jpg" alt><br>大小梅沙海滩位于深圳市大鹏湾畔，大梅沙湾口宽约2000米，小梅沙湾口宽约800米，海沙黄白细腻，平坦柔软，犹如一弯新月镶嵌在苍山碧海之间，人称“东方夏威夷”。</p>
+<h4 id="二景-莲山春早"><a href="#二景-莲山春早" class="headerlink" title="二景 莲山春早"></a>二景 莲山春早</h4><p><img data-src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=2647fe197a1ed21b7dc929e79d6cddae/8326cffc1e178a8218d2104bf103738da877e86b.jpg" alt><br>莲花古有圣名，以美而清纯著称。莲花山位于深圳市中心区北端，因山形似莲花而得名。山顶广场建有邓小平塑像，可以俯看中心区全貌。</p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170908_172830.jpg?imageMogr2/thumbnail/!75p" alt="20170908_172830.jpg"></p>
 <blockquote>
 <p>邓小平铜像</p>
 </blockquote>
-<p><img alt="20170908_180533.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170908_180533.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170908_180533.jpg?imageMogr2/thumbnail/!75p" alt="20170908_180533.jpg"></p>
 <blockquote>
 <p>人工湖</p>
 </blockquote>
-<p><img alt="20170908_172624.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170908_172624.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170908_172624.jpg?imageMogr2/thumbnail/!75p" alt="20170908_172624.jpg"></p>
 <blockquote>
 <p>莲花山公园俯瞰大鹏展翅</p>
 </blockquote>
-<h4 id="三景-深南溢彩"><a href="#三景-深南溢彩" class="headerlink" title="三景 深南溢彩"></a>三景 深南溢彩</h4><p><img alt data-src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=08a50ae6219759ee4e5067c982fa434e/342ac65c10385343fbade9ca9413b07ecb8088fe.jpg"><br>横贯深圳市区中心地段的深南大道是深圳最繁华的道路。东起沿河路口的三九大酒店，西至南头检查站，为双向8车道，两车道间为宽阔的绿化带，全长17.2公里。深南大道沿线集中了深圳建筑的精华，集中了深圳最重要的旅游景区和著名的企业，是国内少有的具有高度现代化特征的景观街道，其中京基100为深圳最高建筑。</p>
-<h4 id="四景-侨城锦绣"><a href="#四景-侨城锦绣" class="headerlink" title="四景 侨城锦绣"></a>四景 侨城锦绣</h4><p><img alt data-src="https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=1aee8eb98235e5dd942ca2dd46c7a7f5/4034970a304e251fc0e68a13a086c9177e3e53c3.jpg"><br>位于深圳市区西部的华侨城景区，包括“锦绣中华”、“中国民俗文化村”、“世界之窗”和“欢乐谷”等主题公园。</p>
-<h4 id="五景-梧桐烟云"><a href="#五景-梧桐烟云" class="headerlink" title="五景 梧桐烟云"></a>五景 梧桐烟云</h4><p><img alt data-src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=4c16932719178a82ca3c78a2c602737f/908fa0ec08fa513de8a705353a6d55fbb3fbd9c8.jpg"><br><strong>梧桐山主峰高944米，为珠三角第一峰</strong>，上有“梧岭天池”。现建有仙湖植物园、东湖公园、森林公园、体育公园等，是登山观光的最佳点之一。站在好汉坡一带，迎着晨晖眺望香港、大鹏湾、盐田港和沙头角，海阔天空，心旷神怡。山脚下的弘法寺为深圳最大佛教寺院。</p>
-<h4 id="六景-羊台叠翠"><a href="#六景-羊台叠翠" class="headerlink" title="六景 羊台叠翠"></a>六景 羊台叠翠</h4><p><img alt data-src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=731f532f1cd5ad6eaef963e8b1ca39a3/8b82b9014a90f603d289f4ac3e12b31bb051ed24.jpg"><br>位于宝安区的羊台山，<strong>主峰海拔587.3米</strong>，雨量充沛，气候宜人，是深圳河流的重要发源地，山上林木繁茂，野生动物出没其间。抗日战争期间，羊台山游击队从日寇占领下的香港，拯救出以茅盾、邹韬奋、何香凝等为首的数百名中外闻名的文化界人士和爱国民主人士，并安全转移、隐蔽到羊台山区，故羊台山有“英雄山”的美誉。</p>
-<h4 id="七景-大鹏所城"><a href="#七景-大鹏所城" class="headerlink" title="七景 大鹏所城"></a>七景 大鹏所城</h4><p><img alt data-src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=096ecb54a7ec08fa220014a569ef3d4d/3bf33a87e950352a38314ae35443fbf2b3118b8d.jpg"><br>位于深圳市东部龙岗区大鹏镇的大鹏所城，全称“大鹏守御千户所城”，为抗击倭寇而设立，占地11万平方米，始建于明洪武二十七年（1394年），是深圳目前唯一的国家级重点文物保护单位。</p>
-<p><img alt="20170911_134452.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170911_134452.jpg?imageMogr2/thumbnail/!75p"></p>
+<h4 id="三景-深南溢彩"><a href="#三景-深南溢彩" class="headerlink" title="三景 深南溢彩"></a>三景 深南溢彩</h4><p><img data-src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=08a50ae6219759ee4e5067c982fa434e/342ac65c10385343fbade9ca9413b07ecb8088fe.jpg" alt><br>横贯深圳市区中心地段的深南大道是深圳最繁华的道路。东起沿河路口的三九大酒店，西至南头检查站，为双向8车道，两车道间为宽阔的绿化带，全长17.2公里。深南大道沿线集中了深圳建筑的精华，集中了深圳最重要的旅游景区和著名的企业，是国内少有的具有高度现代化特征的景观街道，其中京基100为深圳最高建筑。</p>
+<h4 id="四景-侨城锦绣"><a href="#四景-侨城锦绣" class="headerlink" title="四景 侨城锦绣"></a>四景 侨城锦绣</h4><p><img data-src="https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=1aee8eb98235e5dd942ca2dd46c7a7f5/4034970a304e251fc0e68a13a086c9177e3e53c3.jpg" alt><br>位于深圳市区西部的华侨城景区，包括“锦绣中华”、“中国民俗文化村”、“世界之窗”和“欢乐谷”等主题公园。</p>
+<h4 id="五景-梧桐烟云"><a href="#五景-梧桐烟云" class="headerlink" title="五景 梧桐烟云"></a>五景 梧桐烟云</h4><p><img data-src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=4c16932719178a82ca3c78a2c602737f/908fa0ec08fa513de8a705353a6d55fbb3fbd9c8.jpg" alt><br><strong>梧桐山主峰高944米，为珠三角第一峰</strong>，上有“梧岭天池”。现建有仙湖植物园、东湖公园、森林公园、体育公园等，是登山观光的最佳点之一。站在好汉坡一带，迎着晨晖眺望香港、大鹏湾、盐田港和沙头角，海阔天空，心旷神怡。山脚下的弘法寺为深圳最大佛教寺院。</p>
+<h4 id="六景-羊台叠翠"><a href="#六景-羊台叠翠" class="headerlink" title="六景 羊台叠翠"></a>六景 羊台叠翠</h4><p><img data-src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=731f532f1cd5ad6eaef963e8b1ca39a3/8b82b9014a90f603d289f4ac3e12b31bb051ed24.jpg" alt><br>位于宝安区的羊台山，<strong>主峰海拔587.3米</strong>，雨量充沛，气候宜人，是深圳河流的重要发源地，山上林木繁茂，野生动物出没其间。抗日战争期间，羊台山游击队从日寇占领下的香港，拯救出以茅盾、邹韬奋、何香凝等为首的数百名中外闻名的文化界人士和爱国民主人士，并安全转移、隐蔽到羊台山区，故羊台山有“英雄山”的美誉。</p>
+<h4 id="七景-大鹏所城"><a href="#七景-大鹏所城" class="headerlink" title="七景 大鹏所城"></a>七景 大鹏所城</h4><p><img data-src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=096ecb54a7ec08fa220014a569ef3d4d/3bf33a87e950352a38314ae35443fbf2b3118b8d.jpg" alt><br>位于深圳市东部龙岗区大鹏镇的大鹏所城，全称“大鹏守御千户所城”，为抗击倭寇而设立，占地11万平方米，始建于明洪武二十七年（1394年），是深圳目前唯一的国家级重点文物保护单位。</p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170911_134452.jpg?imageMogr2/thumbnail/!75p" alt="20170911_134452.jpg"></p>
 <blockquote>
 <p>大鹏所城</p>
 </blockquote>
-<p><img alt="20170911_135337.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170911_135337.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170911_135337.jpg?imageMogr2/thumbnail/!75p" alt="20170911_135337.jpg"></p>
 <blockquote>
 <p>北门</p>
 </blockquote>
-<p>较场尾<br><img alt="20170911_155648.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170911_155648.jpg?imageMogr2/thumbnail/!75p"></p>
+<p>较场尾<br><img data-src="http://opb37u589.bkt.clouddn.com/20170911_155648.jpg?imageMogr2/thumbnail/!75p" alt="20170911_155648.jpg"></p>
 <blockquote>
 <p>快艇上拍摄人工小岛</p>
 </blockquote>
-<p><img alt="20170911_152139.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170911_152139.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170911_152139.jpg?imageMogr2/thumbnail/!75p" alt="20170911_152139.jpg"></p>
 <blockquote>
 <p>较场尾海滩</p>
 </blockquote>
-<h4 id="八景-一街两制"><a href="#八景-一街两制" class="headerlink" title="八景 一街两制"></a>八景 一街两制</h4><p><img alt data-src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=b9861e7cde33c895a27e9f79e1127397/267f9e2f07082838a992b5ffbf99a9014d08f1ba.jpg"><br>中英街位于深圳市盐田区沙头角镇。1898年刻立的“光绪二十四年中英地界第×号”的界碑树于街中心，将原沙头角一分为二，东侧为华界沙头角，西侧为英（港）界沙头角，故名“中英街”。至今仍为“一国两制”分界线的标志。中英街以其“一街两制”的独特政治历史闻名于世。</p>
-<p><img alt="20170912_131138.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170912_131138.jpg?imageMogr2/thumbnail/!75p"></p>
+<h4 id="八景-一街两制"><a href="#八景-一街两制" class="headerlink" title="八景 一街两制"></a>八景 一街两制</h4><p><img data-src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=b9861e7cde33c895a27e9f79e1127397/267f9e2f07082838a992b5ffbf99a9014d08f1ba.jpg" alt><br>中英街位于深圳市盐田区沙头角镇。1898年刻立的“光绪二十四年中英地界第×号”的界碑树于街中心，将原沙头角一分为二，东侧为华界沙头角，西侧为英（港）界沙头角，故名“中英街”。至今仍为“一国两制”分界线的标志。中英街以其“一街两制”的独特政治历史闻名于世。</p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170912_131138.jpg?imageMogr2/thumbnail/!75p" alt="20170912_131138.jpg"></p>
 <blockquote>
 <p>中英街界碑</p>
 </blockquote>
-<p><img alt="20170912_131558.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170912_131558.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170912_131558.jpg?imageMogr2/thumbnail/!75p" alt="20170912_131558.jpg"></p>
 <blockquote>
 <p>深港合作、共创繁荣</p>
 </blockquote>
-<p><img alt="20170912_132046.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170912_132046.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170912_132046.jpg?imageMogr2/thumbnail/!75p" alt="20170912_132046.jpg"></p>
 <blockquote>
 <p>3.18 中英街 警示日</p>
 </blockquote>
-<p><img alt="20170912_132140.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170912_132140.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170912_132140.jpg?imageMogr2/thumbnail/!75p" alt="20170912_132140.jpg"></p>
 <blockquote>
 <p>7.1 百年梦圆 珠归合浦</p>
 </blockquote>
-<p><img alt="20170912_134302.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170912_134302.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170912_134302.jpg?imageMogr2/thumbnail/!75p" alt="20170912_134302.jpg"></p>
 <blockquote>
 <p>古塔上俯瞰盐田港</p>
 </blockquote>
-<p><img alt="20170912_134245.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170912_134245.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170912_134245.jpg?imageMogr2/thumbnail/!75p" alt="20170912_134245.jpg"></p>
 <blockquote>
 <p>古塔上俯瞰盐田港</p>
 </blockquote>
-<h3 id="深圳的公园"><a href="#深圳的公园" class="headerlink" title="深圳的公园"></a>深圳的公园</h3><h4 id="深圳莲花山公园"><a href="#深圳莲花山公园" class="headerlink" title="深圳莲花山公园"></a><a href>深圳莲花山公园</a></h4><p><img alt="e67f193587806781f7890ff29add711f.jpg" data-src="http://opb37u589.bkt.clouddn.com/e67f193587806781f7890ff29add711f.jpg?imageMogr2/thumbnail/!75p"><br><img alt="0c6fe786ec15ed99bbb927c396157ea0.jpg" data-src="http://opb37u589.bkt.clouddn.com/0c6fe786ec15ed99bbb927c396157ea0.jpg?imageMogr2/thumbnail/!75p"><br><img alt="61269a7737d0f5d471cbc1c3f3ebcd1c.jpg" data-src="http://opb37u589.bkt.clouddn.com/61269a7737d0f5d471cbc1c3f3ebcd1c.jpg?imageMogr2/thumbnail/!75p"><br><img alt="cea0f01757c2935cb1642d56cc68adff.jpg" data-src="http://opb37u589.bkt.clouddn.com/cea0f01757c2935cb1642d56cc68adff.jpg?imageMogr2/thumbnail/!75p"></p>
-<h4 id="香蜜公园"><a href="#香蜜公园" class="headerlink" title="香蜜公园"></a><a href>香蜜公园</a></h4><p><img alt="20171004_112757.jpg" data-src="http://opb37u589.bkt.clouddn.com/20171004_112757.jpg?imageMogr2/thumbnail/!75p"><br><img alt="20171004_115536.jpg" data-src="http://opb37u589.bkt.clouddn.com/20171004_115536.jpg?imageMogr2/thumbnail/!75p"><br><img alt="20171004_114050.jpg" data-src="http://opb37u589.bkt.clouddn.com/20171004_114050.jpg?imageMogr2/thumbnail/!75p"></p>
+<h3 id="深圳的公园"><a href="#深圳的公园" class="headerlink" title="深圳的公园"></a>深圳的公园</h3><h4 id="深圳莲花山公园"><a href="#深圳莲花山公园" class="headerlink" title="深圳莲花山公园"></a><a href>深圳莲花山公园</a></h4><p><img data-src="http://opb37u589.bkt.clouddn.com/e67f193587806781f7890ff29add711f.jpg?imageMogr2/thumbnail/!75p" alt="e67f193587806781f7890ff29add711f.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/0c6fe786ec15ed99bbb927c396157ea0.jpg?imageMogr2/thumbnail/!75p" alt="0c6fe786ec15ed99bbb927c396157ea0.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/61269a7737d0f5d471cbc1c3f3ebcd1c.jpg?imageMogr2/thumbnail/!75p" alt="61269a7737d0f5d471cbc1c3f3ebcd1c.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/cea0f01757c2935cb1642d56cc68adff.jpg?imageMogr2/thumbnail/!75p" alt="cea0f01757c2935cb1642d56cc68adff.jpg"></p>
+<h4 id="香蜜公园"><a href="#香蜜公园" class="headerlink" title="香蜜公园"></a><a href>香蜜公园</a></h4><p><img data-src="http://opb37u589.bkt.clouddn.com/20171004_112757.jpg?imageMogr2/thumbnail/!75p" alt="20171004_112757.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/20171004_115536.jpg?imageMogr2/thumbnail/!75p" alt="20171004_115536.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/20171004_114050.jpg?imageMogr2/thumbnail/!75p" alt="20171004_114050.jpg"></p>
 <h4 id="深圳市人才公园"><a href="#深圳市人才公园" class="headerlink" title="深圳市人才公园"></a><a href>深圳市人才公园</a></h4><p>——“深爱人才，圳等您来”</p>
 <p><a href="http://news.xinhuanet.com/fortune/2017-11/01/c_1121891218.htm" target="_blank" rel="noopener">11月1日是首个深圳人才日，《深圳经济特区人才工作条例》在这一天开始实施。同日，新建成的深圳人才公园开园。</a></p>
 <p><a href="http://www.sz.gov.cn/wtlyjnew/lyfw/lyxw/201710/t20171026_9417643.htm" target="_blank" rel="noopener">深圳人才公园地处南山区后海片区，位于科苑南路以东，沙河西路以西，东滨路以北，海德三道以南，与深圳湾滨海休闲带相连，毗邻深圳湾超级总部基地，占地面积约77万平方米，其中水体面积约30万平方米，是全国首个以“人才”命名的主题公园。</a></p>
 <p>深圳人才公园规划建设有两栋主建筑，分别为<strong>尚贤阁</strong>、<strong>群英荟</strong>，尚贤阁功能定位为公园会务中心，设有多功能厅、院士讲堂、人才书吧、人才咖啡、办公区域等，主要功能包括举办学术报告、项目路演、人才沙龙、研修交流、大型会议等。群英荟功能定位为公园活动中心，设有创客空间、健身中心、人才体验馆等，主要功能包括杰出人才和人才创新成果交流、展示、体验、互动，人才政策宣传。</p>
 <p>“深爱人才”体验馆设于群英荟，以“赋能于人，创造无限”为核心布展理念，以“公园是个大型展厅，展厅是个缩微公园”为布展原则，“人文性、科技性、互动性、趣味性”为布展理念，划分为5大功能区域：智造梦想、智汇政通、智创传奇、智联世界、智享未来，充分展现深圳、人才、公园特质，充分体现。</p>
 <p><a href="http://www.sz.gov.cn/wtlyjnew/lyfw/lyxw/201711/t20171102_9517590.htm" target="_blank" rel="noopener">人才公园地处南山区后海片区，毗邻深圳湾超级总部基地，周边都是“高大上”的企业，包括腾讯、阿里、百度、华润、恒大、迈瑞等。人才公园与深圳湾滨海休闲带相连，占地面积77万平方米。人才公园遵从“人才赋予公园灵魂，公园彰显城市精神”理念，按照“一湖一岸四轴”思路规划建设。所谓“一湖”，指的是公园内湖，该湖湖体面积达30万平方米；“一岸”指的是15公里深圳湾滨海休闲带犹如“项链”，人才公园犹如“吊坠”镶嵌其中，互联互通、浑然天成；“四轴”指的是人才科技轴(科苑南路超级总部基地街区)、人才景观轴（登良路公园主入口街区）、人才艺术轴（创业路商业文化街区）和人才运动轴（海德三道深圳湾体育中心街区）。</a></p>
-<p><img alt="5f1489123e27aabdf8012dd66a962dc5.jpg" data-src="http://opb37u589.bkt.clouddn.com/5f1489123e27aabdf8012dd66a962dc5.jpg?imageMogr2/thumbnail/!75p"><br><img alt="282da1af7c19b7fa5b1bbe2b00d4609e.jpg" data-src="http://opb37u589.bkt.clouddn.com/282da1af7c19b7fa5b1bbe2b00d4609e.jpg?imageMogr2/thumbnail/!75p"><br><img alt="b73513ef43f0426c3d156f6d8c4f7857.jpg" data-src="http://opb37u589.bkt.clouddn.com/b73513ef43f0426c3d156f6d8c4f7857.jpg?imageMogr2/thumbnail/!75p"><br><img alt="d573fac6a7fc59094e2b4798ec38bad6.jpg" data-src="http://opb37u589.bkt.clouddn.com/d573fac6a7fc59094e2b4798ec38bad6.jpg?imageMogr2/thumbnail/!75p"><br><img alt="663d1333fe72c085fd1712da13c1025e.jpg" data-src="http://opb37u589.bkt.clouddn.com/663d1333fe72c085fd1712da13c1025e.jpg?imageMogr2/thumbnail/!75p"><br><img alt="4f6f98a1ebd6b396ab42ef3a2a45a5eb.jpg" data-src="http://opb37u589.bkt.clouddn.com/4f6f98a1ebd6b396ab42ef3a2a45a5eb.jpg?imageMogr2/thumbnail/!75p"><br><img alt="80be4846c4502dac6ddc1079763293a5.jpg" data-src="http://opb37u589.bkt.clouddn.com/80be4846c4502dac6ddc1079763293a5.jpg?imageMogr2/thumbnail/!75p"><br><img alt="4af0c1ecb2614eb95bfc3be4b5f81869.jpg" data-src="http://opb37u589.bkt.clouddn.com/4af0c1ecb2614eb95bfc3be4b5f81869.jpg?imageMogr2/thumbnail/!75p"><br><img alt="8da34572676ea1247c2815907f966769.jpg" data-src="http://opb37u589.bkt.clouddn.com/8da34572676ea1247c2815907f966769.jpg?imageMogr2/thumbnail/!75p"><br><img alt="d8123552f1bba41166fcbe21b9a5c71b.jpg" data-src="http://opb37u589.bkt.clouddn.com/d8123552f1bba41166fcbe21b9a5c71b.jpg?imageMogr2/thumbnail/!75p"><br><img alt="e2ff288d8b204906b8f1957cec54740f.jpg" data-src="http://opb37u589.bkt.clouddn.com/e2ff288d8b204906b8f1957cec54740f.jpg?imageMogr2/thumbnail/!75p"><br><img alt="7e5a7a12e5b5c7ebd8ae783e6f1ad5bc.jpg" data-src="http://opb37u589.bkt.clouddn.com/7e5a7a12e5b5c7ebd8ae783e6f1ad5bc.jpg?imageMogr2/thumbnail/!75p"><br><img alt="abeb55200d49d743f16eec80bb4911b5.jpg" data-src="http://opb37u589.bkt.clouddn.com/abeb55200d49d743f16eec80bb4911b5.jpg?imageMogr2/thumbnail/!75p"><br><img alt="62c6f454c0ed54a30eb31d343d0c5d20.jpg" data-src="http://opb37u589.bkt.clouddn.com/62c6f454c0ed54a30eb31d343d0c5d20.jpg?imageMogr2/thumbnail/!75p"><br><img alt="b5e049ca51facb3a487c4f60796daaaf.jpg" data-src="http://opb37u589.bkt.clouddn.com/b5e049ca51facb3a487c4f60796daaaf.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/5f1489123e27aabdf8012dd66a962dc5.jpg?imageMogr2/thumbnail/!75p" alt="5f1489123e27aabdf8012dd66a962dc5.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/282da1af7c19b7fa5b1bbe2b00d4609e.jpg?imageMogr2/thumbnail/!75p" alt="282da1af7c19b7fa5b1bbe2b00d4609e.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/b73513ef43f0426c3d156f6d8c4f7857.jpg?imageMogr2/thumbnail/!75p" alt="b73513ef43f0426c3d156f6d8c4f7857.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/d573fac6a7fc59094e2b4798ec38bad6.jpg?imageMogr2/thumbnail/!75p" alt="d573fac6a7fc59094e2b4798ec38bad6.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/663d1333fe72c085fd1712da13c1025e.jpg?imageMogr2/thumbnail/!75p" alt="663d1333fe72c085fd1712da13c1025e.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/4f6f98a1ebd6b396ab42ef3a2a45a5eb.jpg?imageMogr2/thumbnail/!75p" alt="4f6f98a1ebd6b396ab42ef3a2a45a5eb.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/80be4846c4502dac6ddc1079763293a5.jpg?imageMogr2/thumbnail/!75p" alt="80be4846c4502dac6ddc1079763293a5.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/4af0c1ecb2614eb95bfc3be4b5f81869.jpg?imageMogr2/thumbnail/!75p" alt="4af0c1ecb2614eb95bfc3be4b5f81869.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/8da34572676ea1247c2815907f966769.jpg?imageMogr2/thumbnail/!75p" alt="8da34572676ea1247c2815907f966769.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/d8123552f1bba41166fcbe21b9a5c71b.jpg?imageMogr2/thumbnail/!75p" alt="d8123552f1bba41166fcbe21b9a5c71b.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/e2ff288d8b204906b8f1957cec54740f.jpg?imageMogr2/thumbnail/!75p" alt="e2ff288d8b204906b8f1957cec54740f.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/7e5a7a12e5b5c7ebd8ae783e6f1ad5bc.jpg?imageMogr2/thumbnail/!75p" alt="7e5a7a12e5b5c7ebd8ae783e6f1ad5bc.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/abeb55200d49d743f16eec80bb4911b5.jpg?imageMogr2/thumbnail/!75p" alt="abeb55200d49d743f16eec80bb4911b5.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/62c6f454c0ed54a30eb31d343d0c5d20.jpg?imageMogr2/thumbnail/!75p" alt="62c6f454c0ed54a30eb31d343d0c5d20.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/b5e049ca51facb3a487c4f60796daaaf.jpg?imageMogr2/thumbnail/!75p" alt="b5e049ca51facb3a487c4f60796daaaf.jpg"></p>
 <h4 id="儿童乐园"><a href="#儿童乐园" class="headerlink" title="儿童乐园"></a><a href="http://jingyan.baidu.com/article/425e69e695ddf5be14fc1645.html" target="_blank" rel="noopener">儿童乐园</a></h4><blockquote>
 <p>地点：<a href="http://map.baidu.com/?shareurl=1&amp;poiShareUid=c2442c7db98a1c7cc51b75f3" target="_blank" rel="noopener">侨香路以南，广深高速以北，农林路以西</a><br>特色：儿童、游乐场、免费<br>推荐指数：★★★★★</p>
 </blockquote>
-<p><img alt="20171002_122809.jpg" data-src="http://opb37u589.bkt.clouddn.com/20171002_122809.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20171002_122822.jpg" data-src="http://opb37u589.bkt.clouddn.com/20171002_122822.jpg?imageMogr2/thumbnail/!75p"></p>
-<p> <img alt data-src="http://okkntqe2h.bkt.clouddn.com/20170217_133433.jpg"></p>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/20170217_133024.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20171002_122809.jpg?imageMogr2/thumbnail/!75p" alt="20171002_122809.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20171002_122822.jpg?imageMogr2/thumbnail/!75p" alt="20171002_122822.jpg"></p>
+<p> <img data-src="http://okkntqe2h.bkt.clouddn.com/20170217_133433.jpg" alt></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/20170217_133024.jpg" alt></p>
 <h4 id="大沙河公园"><a href="#大沙河公园" class="headerlink" title="大沙河公园"></a><a href="http://baike.baidu.com/link?url=RQtJ4fiAPylBMSRGQ8qx_HM-6U6fB-gGRU427Q4lHJ_xTesdtLQsHGWBKxmhbDRf-h5L_NPUdQ9XHasE5PQMf8OK_lohGwubr3UXvnlG1U2CinO3Uw-S_0AgBzsLfU2k44eIityPX3MBdEyDrRFQI_iQoZGzhAbKxIDXprNHstu" target="_blank" rel="noopener">大沙河公园</a></h4><blockquote>
 <p>地点：<a href="http://j.map.baidu.com/yVUQo" target="_blank" rel="noopener">北环大道与沙河东路交叉口附近</a><br>特色：广场、草地、运动<br>推荐指数：★★★★★</p>
 </blockquote>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/20161229_122901.jpg"></p>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/20161229_122923.jpg"></p>
-<p><img alt="20170813_145903.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170813_145903.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/20161229_122901.jpg" alt></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/20161229_122923.jpg" alt></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170813_145903.jpg?imageMogr2/thumbnail/!75p" alt="20170813_145903.jpg"></p>
 <blockquote>
 <p>生活、生命、生态，三生广场</p>
 </blockquote>
-<p><img alt="20170813_145921.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170813_145921.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170813_145921.jpg?imageMogr2/thumbnail/!75p" alt="20170813_145921.jpg"></p>
 <blockquote>
 <p>登山道</p>
 </blockquote>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170409_120747.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170409_113116.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170409_112751.jpg"></p>
-<p><img alt data-src="http://omj173lhw.bkt.clouddn.com/20170322_170225.jpg"></p>
-<h4 id="百草园"><a href="#百草园" class="headerlink" title="百草园"></a><a href>百草园</a></h4><p><img alt="20170819_165009.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170819_165009.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170409_120747.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170409_113116.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170409_112751.jpg" alt></p>
+<p><img data-src="http://omj173lhw.bkt.clouddn.com/20170322_170225.jpg" alt></p>
+<h4 id="百草园"><a href="#百草园" class="headerlink" title="百草园"></a><a href>百草园</a></h4><p><img data-src="http://opb37u589.bkt.clouddn.com/20170819_165009.jpg?imageMogr2/thumbnail/!75p" alt="20170819_165009.jpg"></p>
 <blockquote>
 <p>与大学同学坚持了近10年的篮球运动</p>
 </blockquote>
 <h4 id="仙湖植物园简介"><a href="#仙湖植物园简介" class="headerlink" title="仙湖植物园简介"></a><a href="http://baike.baidu.com/link?url=ccPvU0-zjmjSHdJQJsvoHonmUMw1C7AF-zOU1A7VHBRE_eHU-s4SMmt9D680ZIk0Kdr-EWfNFD_JlXzJXVZuGZrIdAfh-5k2XX6W9r33pt7JBZO_G7x0qtG0SqQj7aKUu-cnphGdokXZTVfWipyBFa" target="_blank" rel="noopener">仙湖植物园简介</a></h4><blockquote>
 <p>地点：<a href="http://j.map.baidu.com/AJQ6F" target="_blank" rel="noopener">罗湖区莲塘仙湖路</a><br>特色：弘法寺、植物<br>推荐指数：★★★★★</p>
 </blockquote>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/20170202_141051.jpg"></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/20170202_141051.jpg" alt></p>
 <h4 id="月亮湾公园简介"><a href="#月亮湾公园简介" class="headerlink" title="月亮湾公园简介"></a><a href="http://blog.sina.com.cn/s/blog_bc9f8f830102v7wb.html" target="_blank" rel="noopener">月亮湾公园简介</a></h4><blockquote>
 <p>地点：<a href="http://j.map.baidu.com/WjOxj" target="_blank" rel="noopener">南山青青世界下边</a><br>特色：百年荔枝古树、廉政主题<br>推荐指数：★★★☆☆</p>
 </blockquote>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/moonpark.jpg"></p>
-<h4 id="红树林"><a href="#红树林" class="headerlink" title="红树林"></a>红树林</h4><p><img alt="20170920_152951.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170920_152951.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170920_152749.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170920_152749.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20171003_105019.jpg" data-src="http://opb37u589.bkt.clouddn.com/20171003_105019.jpg?imageMogr2/thumbnail/!75p"></p>
-<h4 id="中心公园"><a href="#中心公园" class="headerlink" title="中心公园"></a>中心公园</h4><p><img alt="20171006_101654.jpg" data-src="http://opb37u589.bkt.clouddn.com/20171006_101654.jpg?imageMogr2/thumbnail/!75p"></p>
-<h4 id="仙桐体育公园"><a href="#仙桐体育公园" class="headerlink" title="仙桐体育公园"></a>仙桐体育公园</h4><p><img alt="20171007_172646.jpg" data-src="http://opb37u589.bkt.clouddn.com/20171007_172646.jpg?imageMogr2/thumbnail/!75p"></p>
-<h3 id="人文景点"><a href="#人文景点" class="headerlink" title="人文景点"></a>人文景点</h3><h4 id="深圳书城-Book-City"><a href="#深圳书城-Book-City" class="headerlink" title="深圳书城 Book City"></a><a href>深圳书城 Book City</a></h4><p><img alt="20170509_121432.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170509_121432.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170508_105847.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170508_105847.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170508_114120.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170508_114120.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170508_114202.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170508_114202.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170508_122425.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170508_122425.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170508_135516.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170508_135516.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170509_142754.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170509_142754.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170509_143019.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170509_143019.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170509_151413.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170509_151413.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170510_134152.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170510_134152.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170510_134825.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170510_134825.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170527_104843.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170527_104843.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170529_115131.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170529_115131.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170529_115159.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170529_115159.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170508_113941.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170508_113941.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="20170820_143738.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170820_143738.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/moonpark.jpg" alt></p>
+<h4 id="红树林"><a href="#红树林" class="headerlink" title="红树林"></a>红树林</h4><p><img data-src="http://opb37u589.bkt.clouddn.com/20170920_152951.jpg?imageMogr2/thumbnail/!75p" alt="20170920_152951.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170920_152749.jpg?imageMogr2/thumbnail/!75p" alt="20170920_152749.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20171003_105019.jpg?imageMogr2/thumbnail/!75p" alt="20171003_105019.jpg"></p>
+<h4 id="中心公园"><a href="#中心公园" class="headerlink" title="中心公园"></a>中心公园</h4><p><img data-src="http://opb37u589.bkt.clouddn.com/20171006_101654.jpg?imageMogr2/thumbnail/!75p" alt="20171006_101654.jpg"></p>
+<h4 id="仙桐体育公园"><a href="#仙桐体育公园" class="headerlink" title="仙桐体育公园"></a>仙桐体育公园</h4><p><img data-src="http://opb37u589.bkt.clouddn.com/20171007_172646.jpg?imageMogr2/thumbnail/!75p" alt="20171007_172646.jpg"></p>
+<h3 id="人文景点"><a href="#人文景点" class="headerlink" title="人文景点"></a>人文景点</h3><h4 id="深圳书城-Book-City"><a href="#深圳书城-Book-City" class="headerlink" title="深圳书城 Book City"></a><a href>深圳书城 Book City</a></h4><p><img data-src="http://opb37u589.bkt.clouddn.com/20170509_121432.jpg?imageMogr2/thumbnail/!75p" alt="20170509_121432.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170508_105847.jpg?imageMogr2/thumbnail/!75p" alt="20170508_105847.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170508_114120.jpg?imageMogr2/thumbnail/!75p" alt="20170508_114120.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170508_114202.jpg?imageMogr2/thumbnail/!75p" alt="20170508_114202.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170508_122425.jpg?imageMogr2/thumbnail/!75p" alt="20170508_122425.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170508_135516.jpg?imageMogr2/thumbnail/!75p" alt="20170508_135516.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170509_142754.jpg?imageMogr2/thumbnail/!75p" alt="20170509_142754.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170509_143019.jpg?imageMogr2/thumbnail/!75p" alt="20170509_143019.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170509_151413.jpg?imageMogr2/thumbnail/!75p" alt="20170509_151413.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170510_134152.jpg?imageMogr2/thumbnail/!75p" alt="20170510_134152.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170510_134825.jpg?imageMogr2/thumbnail/!75p" alt="20170510_134825.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170527_104843.jpg?imageMogr2/thumbnail/!75p" alt="20170527_104843.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170529_115131.jpg?imageMogr2/thumbnail/!75p" alt="20170529_115131.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170529_115159.jpg?imageMogr2/thumbnail/!75p" alt="20170529_115159.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170508_113941.jpg?imageMogr2/thumbnail/!75p" alt="20170508_113941.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170820_143738.jpg?imageMogr2/thumbnail/!75p" alt="20170820_143738.jpg"></p>
 <blockquote>
 <p>深圳书城活动</p>
 </blockquote>
-<p><img alt="20170820_150926.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170820_150926.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170820_150926.jpg?imageMogr2/thumbnail/!75p" alt="20170820_150926.jpg"></p>
 <blockquote>
 <p>用耳朵阅读，缺失的一角</p>
 </blockquote>
-<p><img alt="20170908_134208.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170908_134208.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170908_134208.jpg?imageMogr2/thumbnail/!75p" alt="20170908_134208.jpg"></p>
 <blockquote>
 <p>深圳图书馆及大鹏展翅</p>
 </blockquote>
-<p><img alt="20170908_193401.jpg" data-src="http://opb37u589.bkt.clouddn.com/20170908_193401.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/20170908_193401.jpg?imageMogr2/thumbnail/!75p" alt="20170908_193401.jpg"></p>
 <blockquote>
 <p>王立新教授 孔子奋进的一生</p>
 </blockquote>
-<h4 id="深圳深度游Follow-Me（第二版）"><a href="#深圳深度游Follow-Me（第二版）" class="headerlink" title="深圳深度游Follow Me（第二版）"></a><a href="http://product.dangdang.com/24015395.html" target="_blank" rel="noopener">深圳深度游Follow Me（第二版）</a></h4><p><img alt="followme.JPG" data-src="http://opb37u589.bkt.clouddn.com/followme.JPG?imageMogr2/thumbnail/!75p"></p>
+<h4 id="深圳深度游Follow-Me（第二版）"><a href="#深圳深度游Follow-Me（第二版）" class="headerlink" title="深圳深度游Follow Me（第二版）"></a><a href="http://product.dangdang.com/24015395.html" target="_blank" rel="noopener">深圳深度游Follow Me（第二版）</a></h4><p><img data-src="http://opb37u589.bkt.clouddn.com/followme.JPG?imageMogr2/thumbnail/!75p" alt="followme.JPG"></p>
 <p><strong>目录</strong></p>
 <p>速读深圳<br>爱上深圳<br>摩天大楼俯瞰特区风光 008<br>椰树蓝天下的黄金海岸 010<br>狂欢胜地之都市游乐园 012<br>车马流水间的静谧时光 014<br>读懂深圳<br>特区翘楚：改革开放第一特区 016<br><strong>书香城市：因读书而受人尊重</strong> 017<br>设计之都：灵感激荡的先锋地 018<br>创客之城：新兴企业的孵化器 018<br>狂欢乐园：老少咸宜的华侨城 020<br>度假天堂：沙滩浴场都市田园 021<br>义工家园：守望互助爱传鹏城 022</p>
 <p><strong>前言</strong></p>
@@ -500,26 +470,26 @@
 <p>如果你是一位资深老饕，那么深圳便是你的美食天堂。八卦路美食街、东门美食街、南澳海鲜街等各具特色、网罗天下美食的食街怎可错过？没有你吃不到的，只有你想不到的。</p>
 <p>如果你是刚来深圳不久的异乡客，那么请跟随我们的脚步，选一个阳光明媚的周末，轻装上阵，用单车或双脚，仔细丈量这座城市的宽度，发现你从未了解过的别样深圳。</p>
 <p>如果你仅仅只是路过这里的常旅客，也不要放弃和深圳对视的机会。哪怕只是沿着深南大道漫步一段，哪怕只是在南澳岛上扎营一晚，哪怕只是在华侨城周边随意闲逛……深圳都能让你的旅途充满无限的惊喜。</p>
-<p><img alt data-src="http://img58.ddimg.cn/99999990000383138.jpg"></p>
-<h4 id="深圳旅行Let’s-Go-第二版"><a href="#深圳旅行Let’s-Go-第二版" class="headerlink" title="深圳旅行Let’s Go(第二版)"></a><a href="http://product.dangdang.com/23972624.html" target="_blank" rel="noopener">深圳旅行Let’s Go(第二版)</a></h4><p><img alt="letusgo.JPG" data-src="http://opb37u589.bkt.clouddn.com/letusgo.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://img58.ddimg.cn/99999990000383138.jpg" alt></p>
+<h4 id="深圳旅行Let’s-Go-第二版"><a href="#深圳旅行Let’s-Go-第二版" class="headerlink" title="深圳旅行Let’s Go(第二版)"></a><a href="http://product.dangdang.com/23972624.html" target="_blank" rel="noopener">深圳旅行Let’s Go(第二版)</a></h4><p><img data-src="http://opb37u589.bkt.clouddn.com/letusgo.JPG?imageMogr2/thumbnail/!75p" alt="letusgo.JPG"></p>
 <p><strong>目录</strong></p>
 <p>导读<br>360°看深圳</p>
 <p>人文：深圳速览 002<br>历史 002<br>文化 004<br>语言 004<br>节日 005<br>自然：深圳概貌 007<br>地理 007<br>气候 008<br>游季 009<br>亮点：深圳TOP榜 010<br>不可错过的10大旅游景点 010</p>
 <p><strong>前言</strong><br>提起深圳，人们都会惊叹于它那举世瞩目的“深圳速度”。作为中国第一个经济特区，它从一个不为人知的小渔村，华丽蜕变为具有国际影响力的新兴现代化城市。来到这个璀璨的城市，你可以欣赏它美丽动人的风光，可以一睹它经济发达的身姿，可以领略它淡雅的书香，可以游览它多样的景点。</p>
 <p>深圳是一个充满都市风情的地方，旅游资源极为丰富。这里被冠予<strong>“主题公园之都”</strong>的美誉，无论是市区内的华侨城景区，还是郊外的东部华侨城景区，没有一个不是由主题公园构成；从红树林到南山的滨海休闲带，再到赤湾，面对静默的伶仃洋，你可以追逐文天祥当年的足迹；在拥有中国最美八大海岸线之一的大鹏半岛，你可以沿着深圳驴友乐而忘返的路线去寻找属于自己的美好时光；在充满浪漫风情的大梅沙、小梅沙，感受其独特的蓝色风韵，相信你一定会发出“不辞长作海边人”的感慨。</p>
 <p>深圳还是一个时尚之都，从高档的国际品牌到普通的大众商品应有尽有，从不会让来此购物的人失望。这里集中了华侨城、东门、华强北、南山、人民南、深南中、宝安、龙岗八大商圈，分布着众多商场、精品店、时装店、电影院等。无论在哪个区域，都能让人满载而归。<br>除了观景、购物，深圳还拥有无尽的特色美食。<strong>深圳作为一座典型的移民城市，可谓是美食家的天下，无论你是多么挑剔的“吃货”，都能在这里得到最大的满足。</strong> 来到这里，除了可以尝遍全国各地的美食，还有泰国菜、越南菜以及各种西式快餐等任你品尝。当然在靠海的深圳，来一顿海鲜大餐也是一件很美的事情。</p>
-<p><img alt data-src="http://img59.ddimg.cn/99999990000288259.jpg"></p>
+<p><img data-src="http://img59.ddimg.cn/99999990000288259.jpg" alt></p>
 <h3 id="游乐场"><a href="#游乐场" class="headerlink" title="游乐场"></a>游乐场</h3><h4 id="锦绣中华民俗村"><a href="#锦绣中华民俗村" class="headerlink" title="锦绣中华民俗村"></a><a href="http://baike.baidu.com/link?url=4VzseT6I5S5KEuc8EmwxvmqYotlhnc6d-e2_rk9CouhEspOwUwcowbrCaZ1bNLhA84SXRGM_ITJj-N5e3287U1BOj0BjTn-LCZRuXzIc_uJ-DI1ZgjHXXb0elo2Le3nVVcu5n7l74igGqgzSvKgHWa" target="_blank" rel="noopener">锦绣中华民俗村</a></h4><blockquote>
 <p>地点：<a href="http://j.map.baidu.com/tZcBz" target="_blank" rel="noopener">南山区深南大道中段西端华侨城</a><br>特色：古建筑、山水名胜、民居民俗<br>推荐指数：★★★★★</p>
 </blockquote>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170312_130814.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170312_135059.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170312_122935.jpg"></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170312_130814.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170312_135059.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170312_122935.jpg" alt></p>
 <h4 id="欢乐海岸"><a href="#欢乐海岸" class="headerlink" title="欢乐海岸"></a><a href="http://baike.baidu.com/link?url=g5N6inQzetaZNNinKTWr_x-sfg_TDVPB26aHdp6uOTD_CSt5mYHxg_Sa0mJ8CjY1ykZGQ8ncTXqqiQF_emulF6Z018i1OvLg1Zv-VZ2Sltkpq_ncQ0w7QFkKHZkSaZaC" target="_blank" rel="noopener">欢乐海岸</a></h4><blockquote>
 <p>地点：<a href="http://j.map.baidu.com/9zLrM" target="_blank" rel="noopener">南山区白石路8号与海园二路交界</a><br>  特色：彩灯、喷泉、酒吧<br>  推荐指数：★★★★★</p>
 </blockquote>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/20170207_191817.jpg"></p>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/20170207_190609.jpg"></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/20170207_191817.jpg" alt></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/20170207_190609.jpg" alt></p>
 <h2 id="长沙"><a href="#长沙" class="headerlink" title="长沙"></a>长沙</h2><p>2000~2007</p>
 <blockquote>
 <p>高校、美食、慢节奏</p>
@@ -529,26 +499,26 @@
 <blockquote>
 <p>地点：<a href="http://j.map.baidu.com/Dfx09" target="_blank" rel="noopener">岳麓区麓山南路932号</a><br>特色：知行合一 经世致用 敬业、勤奋、求实、创新<br>推荐指数：★★★★</p>
 </blockquote>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170318_104202.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170318_104423.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170318_104651.jpg"></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170318_104202.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170318_104423.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170318_104651.jpg" alt></p>
 <p><a href="http://baike.baidu.com/item/%E5%B2%B3%E9%BA%93%E4%B9%A6%E9%99%A2/206944?sefr=cr" target="_blank" rel="noopener">岳麓书院</a></p>
 <blockquote>
 <p>地点：<a href="http://j.map.baidu.com/OuAVk" target="_blank" rel="noopener">岳麓区麓山路273号</a><br>特色：千年古校<br>推荐指数：★★★★</p>
 </blockquote>
-<p><img alt data-src="http://opb37u589.bkt.clouddn.com/50da81cb39dbb6fd3e86b43d0224ab18962b37cf.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170317_120617.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170317_100711.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170317_101547.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170317_100135.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/50da81cb39dbb6fd3e86b43d0224ab18962b37cf.jpg?imageMogr2/thumbnail/!75p" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170317_120617.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170317_100711.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170317_101547.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170317_100135.jpg" alt></p>
 <p><a href="http://baike.baidu.com/item/%E6%A9%98%E5%AD%90%E6%B4%B2%E5%A4%B4" target="_blank" rel="noopener">橘子洲头</a></p>
 <blockquote>
 <p>地点：<a href="http://j.map.baidu.com/-EPPk" target="_blank" rel="noopener">橘子洲大桥</a><br>特色：毛泽东、月季花、沿江道<br>推荐指数：★★★★★</p>
 </blockquote>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170316_104447.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170316_104237.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170316_120117.jpg"></p>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/20170316_114841.jpg"></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170316_104447.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170316_104237.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170316_120117.jpg" alt></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/20170316_114841.jpg" alt></p>
 <blockquote>
 <p>【沁园春·长沙】（一九二五年）<br>      独立寒秋，<br>　　湘江北去，<br>　　橘子洲头。<br>　　看万山红遍，<br>　　层林尽染；<br>　　漫江碧透，<br>　　百舸争流。<br>　　鹰击长空，<br>　　鱼翔浅底，<br>　　万类霜天竞自由。<br>　　怅寥廓，<br>　　问苍茫大地，<br>　　谁主沉浮<br>       携来百侣曾游，<br>　　忆往昔，<br>　　峥嵘岁月稠。<br>　　恰同学少年，<br>　　风华正茂；<br>　　书生意气，<br>　　挥斥方遒。<br>　　指点江山，<br>　　激扬文字，<br>　　粪土当年万户侯。<br>　　曾记否，<br>　　到中流击水，<br>　　浪遏飞舟。</p>
 </blockquote>
@@ -560,8 +530,8 @@
 <blockquote>
 <p>地点：<a href="http://j.map.baidu.com/UIOxj" target="_blank" rel="noopener">惠州市惠东县的大亚湾畔</a><br> 特色：石奇美、水奇清、沙奇白<br> 推荐指数：★★★★★</p>
 </blockquote>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/20170201_155605.jpg"></p>
-<p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/20170201_173907.jpg"></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/20170201_155605.jpg" alt></p>
+<p><img data-src="http://okkntqe2h.bkt.clouddn.com/20170201_173907.jpg" alt></p>
 <h2 id="大庆"><a href="#大庆" class="headerlink" title="大庆"></a>大庆</h2><p>>3months</p>
 <blockquote>
 <p>石油、关系、面子</p>
@@ -618,43 +588,43 @@
 <p>毛泽东故居</p>
 </blockquote>
 <p>东方红，太阳升，中国出了个毛泽东</p>
-<h2 id="春节旅游去哪玩？旅游局发布前十名城市，三亚哈尔滨杭州前三名"><a href="#春节旅游去哪玩？旅游局发布前十名城市，三亚哈尔滨杭州前三名" class="headerlink" title="春节旅游去哪玩？旅游局发布前十名城市，三亚哈尔滨杭州前三名"></a><a href="https://www.toutiao.com/a6522386441014608388/#p=10" target="_blank" rel="noopener">春节旅游去哪玩？旅游局发布前十名城市，三亚哈尔滨杭州前三名</a></h2><p><img alt="0016172000292806666da22.jpg" data-src="http://opb37u589.bkt.clouddn.com/0016172000292806666da22.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="春节旅游去哪玩？旅游局发布前十名城市，三亚哈尔滨杭州前三名"><a href="#春节旅游去哪玩？旅游局发布前十名城市，三亚哈尔滨杭州前三名" class="headerlink" title="春节旅游去哪玩？旅游局发布前十名城市，三亚哈尔滨杭州前三名"></a><a href="https://www.toutiao.com/a6522386441014608388/#p=10" target="_blank" rel="noopener">春节旅游去哪玩？旅游局发布前十名城市，三亚哈尔滨杭州前三名</a></h2><p><img data-src="http://opb37u589.bkt.clouddn.com/0016172000292806666da22.jpg?imageMogr2/thumbnail/!75p" alt="0016172000292806666da22.jpg"></p>
 <blockquote>
 <p>No.1三亚</p>
 </blockquote>
-<p><img alt="00261730001985fd27394e7.jpg" data-src="http://opb37u589.bkt.clouddn.com/00261730001985fd27394e7.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/00261730001985fd27394e7.jpg?imageMogr2/thumbnail/!75p" alt="00261730001985fd27394e7.jpg"></p>
 <blockquote>
 <p>No.2哈尔滨</p>
 </blockquote>
-<p><img alt="003616f00040680780d8779.jpg" data-src="http://opb37u589.bkt.clouddn.com/003616f00040680780d8779.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/003616f00040680780d8779.jpg?imageMogr2/thumbnail/!75p" alt="003616f00040680780d8779.jpg"></p>
 <blockquote>
 <p>No.3杭州</p>
 </blockquote>
-<p><img alt="00461700003d9333f7404b4.jpg" data-src="http://opb37u589.bkt.clouddn.com/00461700003d9333f7404b4.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/00461700003d9333f7404b4.jpg?imageMogr2/thumbnail/!75p" alt="00461700003d9333f7404b4.jpg"></p>
 <blockquote>
 <p>No.4厦门</p>
 </blockquote>
-<p><img alt="005616e00041fd90aae9ae2.jpg" data-src="http://opb37u589.bkt.clouddn.com/005616e00041fd90aae9ae2.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/005616e00041fd90aae9ae2.jpg?imageMogr2/thumbnail/!75p" alt="005616e00041fd90aae9ae2.jpg"></p>
 <blockquote>
 <p>No.5张家界</p>
 </blockquote>
-<p><img alt="006617100036c3dd1415776.jpg" data-src="http://opb37u589.bkt.clouddn.com/006617100036c3dd1415776.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/006617100036c3dd1415776.jpg?imageMogr2/thumbnail/!75p" alt="006617100036c3dd1415776.jpg"></p>
 <blockquote>
 <p>No.6北京</p>
 </blockquote>
-<p><img alt="007617400019854f8171cc6.jpg" data-src="http://opb37u589.bkt.clouddn.com/007617400019854f8171cc6.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/007617400019854f8171cc6.jpg?imageMogr2/thumbnail/!75p" alt="007617400019854f8171cc6.jpg"></p>
 <blockquote>
 <p>No.7上海</p>
 </blockquote>
-<p><img alt="00861730001991c51b97ed7.jpg" data-src="http://opb37u589.bkt.clouddn.com/00861730001991c51b97ed7.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/00861730001991c51b97ed7.jpg?imageMogr2/thumbnail/!75p" alt="00861730001991c51b97ed7.jpg"></p>
 <blockquote>
 <p>No.8昆明</p>
 </blockquote>
-<p><img alt="00961700003d9eabeae7c27.jpg" data-src="http://opb37u589.bkt.clouddn.com/00961700003d9eabeae7c27.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/00961700003d9eabeae7c27.jpg?imageMogr2/thumbnail/!75p" alt="00961700003d9eabeae7c27.jpg"></p>
 <blockquote>
 <p>No.9成都</p>
 </blockquote>
-<p><img alt="0106172000293aee842711b.jpg" data-src="http://opb37u589.bkt.clouddn.com/0106172000293aee842711b.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/0106172000293aee842711b.jpg?imageMogr2/thumbnail/!75p" alt="0106172000293aee842711b.jpg"></p>
 <blockquote>
 <p>No.10重庆。</p>
 </blockquote>
@@ -664,8 +634,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Player/" rel="bookmark">Player</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/HWPM/" rel="bookmark">HWPM</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/ABCDE/" rel="bookmark">ABCDE</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/3C/" rel="bookmark">3C</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/System/" rel="bookmark">System</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Experience/" rel="tag"><i class="fa fa-tag"></i> Experience</a>
               <a href="/tags/City/" rel="tag"><i class="fa fa-tag"></i> City</a>
@@ -679,21 +670,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Movie/Hacksaw Ridge/" rel="next" title="Hacksaw Ridge">
-                  <i class="fa fa-chevron-left"></i> Hacksaw Ridge
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Movie/To Live/" rel="prev" title="To Live">
-                  To Live <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Movie/Hacksaw Ridge/" rel="prev" title="Hacksaw Ridge">
+      <i class="fa fa-chevron-left"></i> Hacksaw Ridge
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Movie/To Live/" rel="next" title="To Live">
+      To Live <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -706,7 +694,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -737,8 +747,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -747,14 +757,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -765,11 +775,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -803,7 +808,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -815,51 +820,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -868,18 +834,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -889,63 +849,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -953,14 +856,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -987,40 +890,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Journey/IPCreator/Journey/Travel/Experience of Cities/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

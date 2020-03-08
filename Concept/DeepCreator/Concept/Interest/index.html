@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="人可以无才无能，但不要无趣。——DeepCreator">
 <meta name="keywords" content="Humor,Interest,Funny">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Interest/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Interest/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Interest/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="interest20180721.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/interest20180721.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/interest20180721.jpg?imageMogr2/thumbnail/!75p" alt="interest20180721.jpg"></p>
 <blockquote>
 <p>人可以无才无能，但不要无趣。——DeepCreator</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt="Image_20180824202315.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/Image_20180824202315.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/Image_20180824202315.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180824202315.jpg"></p>
 <p>学之者不如好之者，好之者不如乐之者，兴趣是最好的老师</p>
 <p><a href="http://zhibimo.com/read/xiaolai/reborn-every-7-years/A04.html" target="_blank" rel="noopener">认真给自己找乐子的人没办法不招别人喜欢。新鲜感其实完全是可以自己创造的麽！</a></p>
 <h2 id="做一个有趣的人——开讲啦-人文卷"><a href="#做一个有趣的人——开讲啦-人文卷" class="headerlink" title="做一个有趣的人——开讲啦.人文卷"></a><a href="https://book.douban.com/subject/27036093/" target="_blank" rel="noopener">做一个有趣的人——开讲啦.人文卷</a></h2><h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>你要成为什么样的人？</p>
@@ -300,7 +270,7 @@
 <p>本书中，记录了青年榜样对于生活和生命的感悟，从怎样做人，怎样做一个有趣的人，怎样做一个有价值的人，到怎样改变这个世界。嘉宾们分享了自己关于青春、成长、梦想、奋斗的所思所想，他们也用实际行动告诉青年一代：有信念、有梦想、有奋斗、有奉献的人生，才是有意义的人生。</p>
 <p>《开讲啦》官方授权图书，书中收录了嘉宾们自己的人生经历与成长故事，充满了正能量的演讲中包含他们关于人生的思考，对于未来的憧憬，同时解答了青年们心中的困惑。他们阐释了我们应该怎样改变自己的生活，怎样听从内心的声音，找到属于自己的人生方向。在他们的人生中，我们或许能看到未来的路。</p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>序 / VI<br>画一辈子不重样，因为我双脚踏在土地上<br>清华大学美术学院教授，韩美林 / X<br>汉子就要顶天立地 / 2<br>艺术家就要到基层去 / 4<br>让中国文化“杀”到西方去 / 7<br>让梦想回到开始的地方<br>京东集团首席执行官，刘强东 / 10<br>我出身于穷苦的农村 / 12<br>怀揣周游世界的梦想 / 14<br>渴望公平的农村娃 / 17<br>物质上的匮乏难掩精神上的愉悦 / 19<br>故乡，世界的起点<br>著名作家、茅盾文学奖获得者，阿来 / 22<br>想逃，却逃不出的故乡 / 24<br>书写，让我与故乡达成和解 / 27<br>家风，从《谢觉哉家书》谈起<br>中国著名导演，谢飞 / 34<br>我从未真正了解我的父亲 / 36<br>父亲的乡愁 / 37<br>清廉的家风 / 39<br>亲情的根本 / 40<br>在不被人注意的角落起飞<br>著名作曲家，赵季平 / 44<br>心胸有多大，世界就有多大 / 46<br>逆向思考并持之以恒 / 49<br>我想重新出发，坐船去伦敦<br>当代著名小说家、编剧，麦家 / 54<br>有时候，慢比快更考验一个人 / 56<br>在可以顺流而下的时候，依然逆流而上 / 60<br>人类为什么输给了机器<br>中国著名围棋职业运动员，聂卫平 / 64<br>人机大战，颠覆了我对电脑的看法 / 66<br>无论做什么，平常心最重要 / 69<br>你为什么学不好数学？<br>哈佛大学终身教授、国际知名数学家，丘成桐 / 74<br>做什么学问都要凭兴趣 / 76<br>不懂不怕，慢慢就会懂了 / 78<br>灵感不是无缘无故来的 / 80<br>每个人都应该走进博物馆<br>中国国家博物馆副馆长，陈履生 / 84<br>博物馆是国家和城市文化的窗口 / 86<br>博物馆应该成为公众的文化依赖 / 89<br>博物馆的“中国梦” / 90<br>命悬一线的选择<br>全国知名排爆专家，王百姓 / 94<br>30多年，20000多枚炸弹 / 96<br>背负亲人的牵挂，一路前行 / 101<br>我为什么要再出发<br>勇攀珠峰的无腿老人，夏伯渝 / 106<br>做出放弃的决定比登山还难 / 108<br>什么也阻挡不了梦想的脚步 / 112<br>信仰的力量<br>中国人民解放军高级将领，朱和平 / 116<br>信仰就是一个人前进的明灯 / 118<br>把握信仰高地，传承我们的中国魂 / 120<br>不要轻易放弃<br>奥运冠军、李宁品牌创始人，李宁 / 124<br>梦想，贵在坚持 / 126<br>奥运会点火，对我来说是个挑战 / 129<br>体育让我成为一个更好的人<br>国际奥委会委员、我国首枚冬奥会金牌获得者，杨扬 / 134<br>改变不了别人，就改变自己 / 136<br>重回国家队，重新看待体育 / 140<br>掀翻东道主，我们不设退路<br>中国女排队员，惠若琪、丁霞、袁心玥 / 146<br>惠若琪：两次手术，两次从头开始 / 148<br>丁霞：团队让我忘记紧张 / 153<br>袁心玥：大嗓门背后的背水一战 / 155<br>拥抱世界，共享未来<br>“21世纪海上丝绸之路”特别节目第一站 新加坡（之一） / 160<br>陈祝全：打破你内心的局限 / 162<br>高福：合作助推创新 / 168<br>创新发展，引领未来<br>“21世纪海上丝绸之路”特别节目第一站 新加坡（之二） / 174<br>董明珠：创新，改变中国制造 / 176<br>徐冠林：创新，新加坡不可抗拒的动力 / 182<br>触摸历史，对话未来<br>“21世纪海上丝绸之路”特别节目第二站 埃及 / 188<br>扎西•哈瓦斯：古埃及的秘密 / 190<br>王巍：中华文明5000年，并非“只是个传说” / 195<br>仰望星空，筑梦未来<br>“21世纪海上丝绸之路”特别节目第三站 希腊 / 204<br>吴季：仰望群星，筑梦未来 / 206<br>色诺芬•莫塞斯：穿越时空2000年 / 210<br>你有责任让自己健康<br>原卫生部副部长，王陇德 / 214<br>你的身体不仅属于你自己，更属于这个社会 / 216<br>生活习惯和行为是影响健康和寿命的首要因素 / 219<br>负重锻炼是保住肌肉的最好办法 / 221<br>医学是科学，更是人学<br>中日友好医院院长，王辰 / 224<br>医学不是万能的 / 226<br>20世纪最不争的医学结论就是，吸烟危害健康 / 228<br>医患关系是人际间最美好的关系之一 / 231<br>舌尖上的安全<br>香料与食品添加剂专家，孙宝国 / 236<br>味料同源 / 238<br>正确认识食品添加剂 / 241<br>一个医生的内心独白<br>解放军总医院老年心内科主任医师，李小鹰 / 246<br>好医生就是把病人放到第一位 / 248<br>病人有事，随叫随到 / 251<br>学成归来酬故土 / 252<br>好医生，要有爱 / 255</p>
-<h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h3 id="为什么你需要幽默感"><a href="#为什么你需要幽默感" class="headerlink" title="为什么你需要幽默感"></a><a href>为什么你需要幽默感</a></h3><p><img alt="lixinhumor20180508.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/lixinhumor20180508.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h3 id="为什么你需要幽默感"><a href="#为什么你需要幽默感" class="headerlink" title="为什么你需要幽默感"></a><a href>为什么你需要幽默感</a></h3><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/lixinhumor20180508.jpg?imageMogr2/thumbnail/!75p" alt="lixinhumor20180508.jpg"></p>
 <p>我是鲜榨喜剧的创始人，也是一名喜剧编剧和导演。我的工作涉及到写段子、编段子，以及教别人怎么演喜剧。<br>大家都喜欢幽默的人，总以为他们聪明、机智、情商高，但其实，他们就是聪明、机智、情商高。<br>你可以回想一下，小到家人、朋友、同事的聚会，大到公众演讲、商务谈判，那些被大多数人喜欢、认可的，留下深刻印象的，都是有幽默感的人。哪怕是那些招黑体质的名人，只要他幽默，也能让别人路转粉。<br>幽默机智的反应会让人产生一种“好聪明”的感叹，哪里都会欢迎你。你成为危机的解决者，也成为聚会或者闲聊的焦点。你可以让人发笑，也可以帮助别人解围。都说女生很容易被有幽默感的男生吸引，你想想啊，你都让她开怀大笑了，投怀送抱还会远吗？<br>你打开了这个音频，说明你已经意识到，你也许需要幽默，把它作为一项贴身技能。<br>在生活中，我们多多少少都会遭遇尴尬。你有没有那种时候，突然被人呛了一句，一下没有反应过来，等你想到怎么怼回去，已经两三个小时过去了，你总不能再打个电话怼过去吧。<br>我简单举个例子：男同胞有时候会遇到女同事说：“请个客都不愿意，你还是男的嘛？”虽然是一句玩笑话，但是请呢，不情愿，不请呢，又显得小气。<br>怎么破呢？我的一个同事是这么回答的，我来重现一下这个场景：“请个客都不愿意，你还是男的吗？”<br>“我只请暗恋我的人吃饭。”<br>听到这句话，女同事脸都红了，这其实就是个套路，也就是“把你有问题变成对方有问题”。<br>还有一个同事，面对这种情况，他是这么回答的：<br>等一下，我来看看我的身份证！<br>这也是个套路，我们把它叫做“顺接”。<br>其实，每个尴尬情境都有不止一种解决思路。幽默是一种特殊的思维方式。所以说，幽默可以学习，搞笑是有套路的，甚至段子还有公式！<br>我经常开玩笑说未来最有可能被人工智能取代的职业就是段子手。如果你了解了幽默是怎么产生的，你也能秒变反应高手，遇到尴尬的时候就能够快速反应，火力全开。<br>我们在这堂课里会分析十多种核心的幽默技巧，让你从此告别尬聊。<br>如果你会了这些方法。很快你会发现，久了，你的幽默感就像腹肌一样，从一块变成六块。不管怼、Diss、自黑、吐槽你都轻松驾驭。时间长了，机智聪明就真的进入你的DNA。<br>在接下来这一个小时，我会分六讲，一步步帮你训练幽默感和幽默能力：<br>第一讲，我会从发笑的机理入手，让你抓住幽默的本质；<br>第二讲，我会告诉你段子的基本公式是什么；<br>第三讲，我会来给你讲，怎么幽默地表达观点，把自己变成一个既机智又犀利的人；<br>第四讲，我会告诉你，怎样吐槽和自嘲，可以让你更受欢迎；<br>第五讲，我会告诉你怎么用幽默来化解尴尬；<br>第六讲也就是最后一讲，我会专门给女性朋友一些建议。<br>非常期待，一个小时后，看到一个妙趣横生的你。</p>
 <h4 id="1-幽默的本质"><a href="#1-幽默的本质" class="headerlink" title="1. 幽默的本质"></a>1. 幽默的本质</h4><p>这堂课的最开始，我想先给你讲讲，人为什么会发笑。<br>发笑的三种机理<br>总的来说，发笑的机理有三个。它们分别是：意外感、优越感、宣泄感。<br>首先，意外感让人发笑。<br>你可能听说过一个叫康德的大哲学家，他就说过这么一句话：在一切大笑里，肯定有荒谬、背理的东西。这句话是什么意思呢？就是说，因为笑话中的逻辑，跟我们平时认知的逻辑不一致、存在矛盾，所以幽默才产生的。<br>举个例子，脱口秀演员黄西在表演的时候说过这样一句话：<br>上帝让我成为了无神论者。<br>在这句话中，“上帝”和“无神论者”就是一对经典的矛盾。再举个例子:<br>我最讨厌两种人，一种是地域歧视的人，一种是北京人。</p>
 <p>相信你一定反应过来了：讨厌北京人本身就是地域歧视，所以这个表达存在着明显的逻辑矛盾，这是我们产生笑声的根源。<br>说完了意外感，我们再来说说发笑的第二个机理，也就是优越感。<br>托马斯·霍布斯说过：“笑，是发现事物的弱点，突然想到自己的某种优越感时，那种突然的荣耀感。”听起来很绕，其实意思是每次当你看到有人尴尬或者被羞辱的时候，你会在对比下会产生一种优胜心理。<br>比如说，你在路上看到有人踩到了香蕉皮，摔了个四脚朝天，你可能会忍不住发笑。这种情况就属于优越感，你走的好好的，而他就踩到了香蕉皮，而且摔得很难看，你的优越感一产生，笑也就产生了。<br>再比如雷军的Are you ok的鬼畜视频，为什么大家会觉得这个好笑，因为他被全世界发现英文发音很不标准，但你没有，你就产生了优越感。<br>最后，宣泄感也能让人发笑。哲学家斯宾塞说过：笑是对压抑神经的释放。这个意思，是宣泄也能产生笑，产生幽默。<br>给人宣泄感的典型例子，就是那些禁忌或者敏感话题的段子，比如说，荤段子、政治段子。政治段子为什么能让人产生宣泄感呢？因为他向上攻击了，向上攻击， Target Up，指的就是要吐槽身份、地位比自己高的人。你看全世界的段子手都喜欢吐槽川普，为什么？因为他又有钱又是美国总统。<br>我再用一个例子来解释为什么宣泄感能产生笑：<br>我家楼下新开了一家拉面馆，拉面一上，肉片特别薄，我就叫：“老板，关门！”老板问：“为什么？”我说：“再不关门这些肉片就被风刮跑啦。”<br>“老板，关门！” 是一个异常信号，一句很不客气的话。这个信号会令人一惊，感到紧张。你听到会想，哎呀，可能顾客和店家要发生冲突了。可是后面一解释，原来是虚惊一场。<br>你想达到最后的宣泄和释放，你就要先营造一种紧张感，后面再解除。也就是说，你前面冒犯得越过分，后面解除的就越爽。<br>幽默不是讲笑话<br>好了，了解到笑是怎么产生的，我们再来讲幽默是什么。可能这时候你会想，幽默，不就是让人发笑嘛？这么说没错。<br>但是你想想，能让人发笑的东西很多，如果你仅仅是为了让人发笑而让人发笑，那其实不能叫做真正的幽默。<br>打个比方，你的生活中是不是会遇到这种人，他会给你讲很多网上的段子和笑话，可是你并不会觉得这个人幽默，可能还有点烦，对不对?<br>所以就算你变成一个笑话集锦，别人也不会觉得你幽默。<br>那么幽默是什么呢？如果让我对幽默下一个定义的话，我会说：幽默是从一个有趣的视角来讲述真相和痛苦。这个定义里面有三个元素：<br>第一，有趣的视角。幽默是一种POV， Point of view，也就是世界观的意思，就是你要站在一个独特的视角去观察这个世界，这个视角跟正常的视角是有偏差的，这个偏差的角度造成了新奇感、意外感和幽默感。<br>你可能知道《乡村爱情故事》这部电视剧，里面有这么一个桥段，护士问赵四：“你在找什么呢？”赵四说：“请问厕所在哪个科？”这是赵四这个人物的POV，他所站的位置决定了他会理解不了一些东西，这跟我们是不一样的，所以他的视角，是独特的、有趣的。<br>说完了有趣的视角，我们来说幽默的第二个元素，就是真相和痛苦。幽默是关于真相和痛苦的表达。正常说话大家会说自己喜欢什么、擅长什么，但是幽默是，你要告诉别人你痛恨什么、你不擅长什么，你搞砸了什么。<br>所以，失败是幽默的好朋友。你记不记得有那样的时候：你给好朋友讲自己的囧事，好朋友被逗得哈哈大笑？越囧越好笑？比如一次失败的表白，比如越想讨好一个人越是说错话，比如当众出糗，或者考不上大学的经历，找不着女朋友的经历，等等。<br>当时这些你觉得很囧的东西，在喜剧里面叫做真相。所以你要幽默，你就要从真相中寻找素材。<br>而痛苦是你从真相中提炼的主题。痛苦让你的段子产生了深度，让你的段子在深层与观众产生了强烈共鸣。<br>这也就是说，幽默有个特质：你要观察自己的失败经历，你要关注一个事物矛盾的、消极的、负面的点，喜剧很多时候是从负面出的，往往痛苦在哪里，笑点就在哪里。<br>我的同事小乙有这样一个段子：<br>小时候我家特别穷。有多穷呢？不管每次我生什么病，我妈都从抽屉里拿出风油精。<br>怎么样，听起来是不是又心酸又好笑。这就是我们说的：痛苦在哪里，笑点就在哪里。<br>还有一个笑话是这样的：<br>一群男人上了天堂，在天堂的门口，上帝说：“活着时候怕老婆的，站到左边来，不怕的，站到右边。”几乎所有人都站到了左边，只有一个小老头站到了右边。上帝非常惊讶地说：“其他的男人都站左边，你怎么站右边呢？“老头说：“人多的地方不要去，我老婆交代过我。”<br>在这个例子中，真相是男人有时会怕老婆，痛苦是，这种恐惧对于一些人来说终生挥之不去——你看看，上了天堂还要听老婆的。<br>当然并不是只有生、老、病、死这种大真相和大痛苦，有些生活中的小真相和小痛苦也是可以表达的，只要大家能够产生普遍共鸣就可以。真相和痛苦无时不在，只要你意识到这一点，就能随时调动你的幽默感。<br>比如说，老板在新年大餐前跟全体员工开了一个冗长的会，副总上来做总结陈词，他意识到大家都坐了很久，都很期待接下来的大餐。他是这样开头的：<br>我知道大家都坐了很久，也很着急去吃新年大餐，所以我尽量简短。谢谢大家！我们出发吧！<br>大家哄堂大笑。所以，有时你不用非得讲个笑话才能赢得笑声，审时度势，你简单地点出这个情镜中的真相就可以。<br>最后，我们来说说幽默的第三个元素，也就是幽默往往是原创的，它是你即兴应对世界的一种表达方式，你可以通过幽默，告诉这个世界，你对于很多东西的独特观点。好的段子不光是让人觉得好玩，同时也让人了解你，建立起一种对话感。所以不要讲别人的段子，幽默最好是真实的，而且能反应你的个性。<br>说到这里，你就明白了，为什么幽默不是讲笑话，不是讲别人的笑话，它比讲笑话，要有智慧和有力量得多。<br>本讲小结<br>这一讲我们说了发笑的三个来源：意外感、优越感和宣泄感。所有让你感觉到好笑的事物，都是因为给你带来了这三类感受中的一个或多个。<br>而幽默，是从一个有趣的视角来讲述真相和痛苦，是一种有智慧且有力量的自我表达。<br>留作业<br>分享一个自己的囧事，或者一次失败经历，看看是不是好笑。欢迎你在留言区跟我和其他用户互动。<br>添加到知识账本<br>划重点<br>发笑的三种机理分别是：意外感、优越感和宣泄感。<br>幽默不是讲笑话，幽默是从一个有趣的视角来讲述真相和痛苦，是一种智慧且有力量的自我表达。</p>
@@ -318,16 +288,16 @@
 <h2 id="事实案例"><a href="#事实案例" class="headerlink" title="事实案例"></a>事实案例</h2><h3 id="2018年度“抄袭奖”颁奖中国企业包揽前三名"><a href="#2018年度“抄袭奖”颁奖中国企业包揽前三名" class="headerlink" title=" 2018年度“抄袭奖”颁奖中国企业包揽前三名"></a><a href="http://www.huasun.org/ipnews/579" target="_blank" rel="noopener"> 2018年度“抄袭奖”颁奖中国企业包揽前三名</a></h3><p>德国华孙专利律师和律师事务所，2018年3月23日，德国慕尼黑<br>文字：许亚芹（HUASUN） 审校：何侃（HUASUN）</p>
 <p>2018年2月9日，在德国法兰克福消费产品展览会的国际新闻发布会上，德国Aktion Plagiarius协会公布了第42届“抄袭奖”的获奖名单。该奖项是由设计师Rido Busse博士最初发起设立，自1977年以来，已经有四十余年的历史。今年中国企业的产品包揽前三名，成为本次颁奖活动的“最大赢家”。</p>
 <p>年度“抄袭奖”由德国Aktion Plagiarius协会主办。该协会设立的宗旨是向全球公众展示抄袭和假冒的商业活动，使工业、政治以及消费者意识到抄袭和假冒问题。该奖奖杯是一个镶有金色鼻子的黑色小矮人，象征着抄袭者是以设计师和企业的创造为代价而取得利益。</p>
-<p><img alt data-src="http://www.plagiarius.com/bilder/Header_2_27.jpg"></p>
+<p><img data-src="http://www.plagiarius.com/bilder/Header_2_27.jpg" alt></p>
 <p>为引起中国企业对知识产权保护的更多重视，本年度“抄袭奖”的评选结果我们概述如下：</p>
 <p>2018年度“抄袭奖”评审委员会共评出三个主要奖项（前三名）和七个一般奖项（排名不分先后），涉及十余家生产企业、电子商务交易平台和销售企业。其中，中国企业包揽了前三名，在七个一般奖项中也占据了三个名额（其中一家企业位于中国台湾）。其中第一名由一家浙江温州生产礼品的企业获得。其生产的厨房多功能切菜器几乎原样照抄了德国Genius GmbH企业的设计，评审委员会指出，仿制品抄袭原品牌“Genius”及产品名称“Nicer Dicer Plus”，不同的是假货的刀片很钝、易断，而且使用的材料含有害健康的成分。（见图片1，左边为原件，右边为仿制品）。第二名由一家玩具生产企业获得。其生产的充气水上乐园玩具套装与德国企业Wibit Sports GmbH的产品基本一致，甚至模仿了整个水上乐园的所有细节（包括救生衣），仅在产品宣传背景图上略有不同。（见图片2，左边为原件，右边为仿制品）第三名由一家河北的玩具生产企业获得，其生产的玩具车与德国PUKY GmbH &amp; Co. KG公司的产品惊人一致，从外观上看，将企业标识用“QIDONG”代替了“PUKY”。（见图片3，左边为原件，右边为仿制品）。其他获得普通奖的中国企业，其产品涉及浴室用品、厨房用品等。</p>
-<p><img alt data-src="http://www.huasun.org/sites/default/files/20180323%20-%2001.jpg"><br>（图片1，图片来源：©Aktion Plagiarius）</p>
-<p><img alt data-src="http://www.huasun.org/sites/default/files/20180323%20-%2002.jpg"><br>（图片2，图片来源：©Aktion Plagiarius）</p>
-<p><img alt data-src="http://www.huasun.org/sites/default/files/20180323%20-%2003.jpg"><br>（图片3，图片来源：©Aktion Plagiarius）</p>
+<p><img data-src="http://www.huasun.org/sites/default/files/20180323%20-%2001.jpg" alt><br>（图片1，图片来源：©Aktion Plagiarius）</p>
+<p><img data-src="http://www.huasun.org/sites/default/files/20180323%20-%2002.jpg" alt><br>（图片2，图片来源：©Aktion Plagiarius）</p>
+<p><img data-src="http://www.huasun.org/sites/default/files/20180323%20-%2003.jpg" alt><br>（图片3，图片来源：©Aktion Plagiarius）</p>
 <p>本活动只显示了抄袭和仿冒制品的冰山一角，从本年度揭晓的“抄袭奖”评选结果来看，中国仍是德国市场假冒产品来源国的头号国家，这对中国企业在国际市场上的声誉造成了一定影响。如何提升中国企业在全球市场竞争中的自主创新能力仍然是中国政府和中国企业必须面对的一个严峻问题。但同样的，也有越来越多的中国企业逐渐成为世界市场的竞争对手，打造了众多知名品牌。就保护这些知名品牌和产品，为了最大限度地防范品牌被抄袭和产品被仿冒，中国企业仍然应该采取法律手段，充分利用知识产权制度维护其竞争优势，促进自身发展。</p>
 <p>本年度的具体奖项报告以及原件与仿冒产品的照片可以从以下链接找到：</p>
 <p><a href="http://www.plagiarius.com/index.php?ID=47&amp;SETSPRACHE=2" target="_blank" rel="noopener">http://www.plagiarius.com/index.php?ID=47&amp;SETSPRACHE=2</a></p>
-<h2 id="迷茫的旅行商——一个无处不在的计算机算法问题"><a href="#迷茫的旅行商——一个无处不在的计算机算法问题" class="headerlink" title="迷茫的旅行商——一个无处不在的计算机算法问题"></a><a href="https://book.douban.com/subject/25713498/" target="_blank" rel="noopener">迷茫的旅行商——一个无处不在的计算机算法问题</a></h2><p><img alt="travel20180726.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/travel20180726.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="迷茫的旅行商——一个无处不在的计算机算法问题"><a href="#迷茫的旅行商——一个无处不在的计算机算法问题" class="headerlink" title="迷茫的旅行商——一个无处不在的计算机算法问题"></a><a href="https://book.douban.com/subject/25713498/" target="_blank" rel="noopener">迷茫的旅行商——一个无处不在的计算机算法问题</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/travel20180726.jpg?imageMogr2/thumbnail/!75p" alt="travel20180726.jpg"></p>
 <p>In pursuit of the traveling salesman:Mathematics at the limits of computation</p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>目 录<br>第 1 章　难题大挑战　　1<br>1.1 　环游美国之旅　　2<br>1.2 　不可能的任务吗　　7<br>1.2.1 　好算法，坏算法　　8<br>1.2.2 　复杂度类P与NP　　10<br>1.2.3 　终极问题　　11<br>1.3 　循序渐进，各个击破　　12<br>1.3.1 　从49到85 900　　12<br>1.3.2 　世界旅行商问题　　15<br>1.3.3 《蒙娜丽莎》一笔画　　17<br>1.4 　本书路线一览　　18<br>第 2 章　历史渊源　　21<br>2.1 　数学家出场之前　　21<br>2.1.1 　商人　　21<br>2.1.2 　律师　　27<br>2.1.3 　牧师　　28<br>2.2 　欧拉和哈密顿　　30<br>2.2.1 　图论与哥尼斯堡七桥问题　　30<br>2.2.2 　骑士周游问题　　33<br>2.2.3 　Icosian图　　34<br>2.2.4 　哈密顿回路　　37<br>2.2.5 　数学谱系　　39<br>2.3 　维也纳—哈佛—普林斯顿　　40<br>2.4 　兰德公司　　43<br>2.5 　统计学观点　　45<br>2.5.1 　孟加拉黄麻农田　　45<br>2.5.2 　证实路线估计值　　47<br>2.5.3 　TSP常数　　47<br>第 3 章　旅行商的用武之地　　50<br>3.1 　公路旅行　　50<br>3.1.1 　数字化时代的推销员　　50<br>3.1.2 　取货与送货　　51<br>3.1.3 　送餐到家　　52<br>3.1.4 　农场、油田、蓝蟹　　53<br>3.1.5 　巡回售书　　53<br>3.1.6 “多走一里路”　　54<br>3.1.7 　摩托车拉力赛　　54<br>3.1.8 　飞行时间　　55<br>3.2 　绘制基因组图谱　　56<br>3.3 　望远镜、X射线、激光方向瞄准　　57<br>3.3.1 　搜寻行星　　58<br>3.3.2 　X射线晶体学　　59<br>3.3.3 　激光雕刻水晶工艺品　　60<br>3.4 　操控工业机械　　61<br>3.4.1 　印制电路板钻孔　　61<br>3.4.2 　印制电路板焊锡　　62<br>3.4.3 　黄铜雕刻　　62<br>3.4.4 　定制计算机芯片　　62<br>3.4.5 　清理硅晶片缺陷　　63<br>3.5 　组织数据　　63<br>3.5.1 　音乐之旅　　64<br>3.5.2 　电子游戏速度优化　　66<br>3.6 　微处理器测试　　67<br>3.7 　安排生产作业任务　　68<br>3.8 　其他应用　　68<br>第 4 章　探寻路线　　70<br>4.1 　周游48州问题　　70<br>4.2 　扩充构造树与路线　　73<br>4.2.1 　最近邻算法　　73<br>4.2.2 　贪心算法　　75<br>4.2.3 　插入算法　　77<br>4.2.4 　数学概念：树　　79<br>4.2.5 　Christofides算法　　82<br>4.2.6 　新思路　　84<br>4.3 　改进路线？立等可取！　　85<br>4.3.1 　边交换算法　　86<br>4.3.2 　Lin-Kernighan算法　　89<br>4.3.3 　Lin-Kernighan-Helsgaun算法　　92<br>4.3.4 　翻煎饼、比尔·盖茨和大步搜索的LKH算法　　93<br>4.4 　借鉴物理和生物思想　　95<br>4.4.1 　局部搜索与爬山算法　　95<br>4.4.2 　模拟退火算法　　97<br>4.4.3 　链式局部最优化　　97<br>4.4.4 　遗传算法　　99<br>4.4.5 　蚁群算法　　101<br>4.4.6 　其他　　102<br>4.5 　DIMACS挑战赛　　103<br>4.6 　路线之王　　104<br>第 5 章　线性规划　　106<br>5.1 　通用模型　　106<br>5.1.1 　线性规划　　107<br>5.1.2 　引入产品　　109<br>5.1.3 　线性的世界　　110<br>5.1.4 　应用　　111<br>5.2 　单纯形算法　　112<br>5.2.1 　主元法求解　　113<br>5.2.2 　多项式时间的选主元规则　　116<br>5.2.3 　百万倍大提速　　117<br>5.2.4 　名字背后的故事　　118<br>5.3 　买一赠一：线性规划的对偶性　　119<br>5.4 　TSP对应的度约束线性规划的松弛　　122<br>5.4.1 　度约束条件　　124<br>5.4.2 　控制区　　125<br>5.5 　消去子回路　　127<br>5.5.1 　子回路不等式　　129<br>5.5.2 　“4/3猜想”　　131<br>5.5.3 　变量取值的上界　　132<br>5.6 　完美松弛　　133<br>5.6.1 　线性规划的几何本质　　133<br>5.6.2 　闵可夫斯基定理　　135<br>5.6.3 　TSP多面体　　137<br>5.7 　整数规划　　137<br>5.7.1 　TSP的整数规划模型　　139<br>5.7.2 　整数规划的求解程序　　140<br>5.8 　运筹学　　140<br>第 6 章　割平面法　　143<br>6.1 　割平面法　　143<br>6.2 　TSP不等式一览　　148<br>6.2.1 　梳子不等式　　149<br>6.2.2 　TSP多面体的小平面定义不等式　　152<br>6.3 　TSP不等式的分离问题　　155<br>6.3.1 　最大流与最小割　　155<br>6.3.2 　梳子分离问题　　157<br>6.3.3 　不自交的线性规划解　　159<br>6.4 　Edmonds的“天堂之光”　　161<br>6.5 　整数规划的割平面　　163<br>第 7 章　分支　　165<br>7.1 　拆分　　165<br>7.2 　搜索队　　168<br>7.2.1 　分支切割法　　168<br>7.2.2 　强分支　　170<br>7.3 　整数规划的分支定界法　　171<br>第 8 章　大计算　　173<br>8.1 　世界纪录　　173<br>8.1.1 　随机选取的64个地点　　174<br>8.1.2 　随机选取的80个地点　　175<br>8.1.3 　德国的120座城市　　177<br>8.1.4 　电路板上的318个孔洞　　178<br>8.1.5 　全世界的666个地点　　179<br>8.1.6 　电路板上的2392个孔洞　　180<br>8.1.7 　电路板上的3038个孔洞　　181<br>8.1.8 　美国的13 509座城市　　183<br>8.1.9 　计算机芯片上的85 900个门电路　　183<br>8.2 　规模宏大的TSP　　185<br>8.2.1 　Bosch的艺术收藏品　　186<br>8.2.2 　世界　　187<br>8.2.3 　恒星　　188<br>第 9 章　复杂性　　190<br>9.1 　计算模型　　191<br>9.2 　Jack Edmonds的奋战　　193<br>9.3 　Cook定理和Karp问题列表　　196<br>9.3.1 　复杂性类　　196<br>9.3.2 　问题归约　　198<br>9.3.3 　21个NP完全问题　　199<br>9.3.4 　百万美金　　200<br>9.4 　TSP研究现状　　200<br>9.4.1 　哈密顿回路　　201<br>9.4.2 　几何问题　　202<br>9.4.3 　Held-Karp纪录　　203<br>9.4.4 　割平面　　205<br>9.4.5 　近优路线　　206<br>9.4.6 　Arora定理　　207<br>9.5 　非计算机不可吗　　208<br>9.5.1 　DNA计算TSP　　208<br>9.5.2 　细菌　　210<br>9.5.3 　变形虫计算　　211<br>9.5.4 　光学　　212<br>9.5.5 　量子计算机　　213<br>9.5.6 　闭合类时曲线　　214<br>9.5.7 　绳子和钉子　　215<br>第 10 章　谋事在人　　216<br>10.1 　人机对战　　216<br>10.2 　寻找路线的策略　　217<br>10.2.1 　路线之格式塔　　218<br>10.2.2 　儿童找到的路线　　218<br>10.2.3 　凸包假说　　219<br>10.2.4 　实地TSP题目　　220<br>10.3 　神经科学中的TSP　　221<br>10.4 　动物解题高手　　223<br>第 11 章　错综之美　　225<br>11.1 　Julian Lethbridge　　225<br>11.2 　若尔当曲线　　228<br>11.3 　连续曲线一笔画　　231<br>11.4 　艺术与数学　　234<br>第 12 章 　超越极限　　238<br>参考文献　　240</p>
 <h3 id="我得到的科普…"><a href="#我得到的科普…" class="headerlink" title="我得到的科普…"></a><a href="https://book.douban.com/review/6230529/" target="_blank" rel="noopener">我得到的科普…</a></h3><ol>
@@ -493,8 +463,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Hobby/" rel="bookmark">Hobby</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Chat/" rel="bookmark">Chat</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Humor/" rel="bookmark">Humor</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/A/Amusing/" rel="bookmark">Amusing</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/S/Smile/" rel="bookmark">Smile</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Humor/" rel="tag"><i class="fa fa-tag"></i> Humor</a>
               <a href="/tags/Interest/" rel="tag"><i class="fa fa-tag"></i> Interest</a>
@@ -508,21 +499,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Innovation/" rel="next" title="Innovation">
-                  <i class="fa fa-chevron-left"></i> Innovation
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Knowledge/" rel="prev" title="Knowledge">
-                  Knowledge <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Innovation/" rel="prev" title="Innovation">
+      <i class="fa fa-chevron-left"></i> Innovation
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Knowledge/" rel="next" title="Knowledge">
+      Knowledge <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -535,7 +523,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -566,8 +576,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -576,14 +586,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -594,11 +604,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -632,7 +637,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -644,51 +649,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -697,18 +663,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -718,63 +678,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -782,14 +685,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -816,40 +719,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Interest/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

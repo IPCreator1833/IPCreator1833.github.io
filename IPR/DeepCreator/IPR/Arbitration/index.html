@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="仲裁(Arbitration)是指由双方当事人协议将争议提交（具有公认地位的）第三者，由该第三者对争议的是非曲直进行评判并作出裁决的一种解决争议的方法。仲裁异于诉讼和审判，仲裁需要双方自愿，也异于强制调解，是一种特殊调解，是自愿型公断，区别于诉讼等强制型公断。">
 <meta name="keywords" content="Law,Arbitration">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/IPR/" itemprop="url" rel="index">
-                    <span itemprop="name">IPR</span>
-                  </a>
+                  <a href="/categories/IPR/" itemprop="url" rel="index"><span itemprop="name">IPR</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/IPR/DeepCreator/IPR/Arbitration/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/IPR/DeepCreator/IPR/Arbitration/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/IPR/DeepCreator/IPR/Arbitration/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,14 +256,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="Arbitration20180705.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Arbitration20180705.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Arbitration20180705.jpg?imageMogr2/thumbnail/!75p" alt="Arbitration20180705.jpg"></p>
 <blockquote>
 <p>  <a href="https://baike.baidu.com/item/%E4%BB%B2%E8%A3%81/515081?fr=aladdin" target="_blank" rel="noopener">仲裁(Arbitration)</a>是指由双方当事人协议将争议提交（具有公认地位的）第三者，由该第三者对争议的是非曲直进行评判并作出裁决的一种解决争议的方法。仲裁异于诉讼和审判，仲裁需要双方自愿，也异于强制调解，是一种特殊调解，是自愿型公断，区别于诉讼等强制型公断。</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt="arbitrationflowchat20180705.png" data-src="http://p53s4d2qk.bkt.clouddn.com/arbitrationflowchat20180705.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/arbitrationflowchat20180705.png?imageMogr2/thumbnail/!75p" alt="arbitrationflowchat20180705.png"></p>
 <p>仲裁一般是当事人根据他们之间订立的仲裁协议，自愿将其争议提交由非司法机构的仲裁员组成的仲裁庭进行裁判，并受该裁判约束的一种制度。仲裁活动和法院的审判活动一样，关乎当事人的实体权益，是解决民事争议的方式之一。</p>
-<p><img alt data-src="http://imgf.66law.cn/upload/f/201506/27/807.jpg"></p>
+<p><img data-src="http://imgf.66law.cn/upload/f/201506/27/807.jpg" alt></p>
 <p><a href="https://baike.baidu.com/item/%E5%8A%B3%E5%8A%A8%E4%BB%B2%E8%A3%81/8432392?fr=aladdin" target="_blank" rel="noopener">监察与仲裁二者的区别，主要有六个方面</a>：</p>
 <p>执法主体</p>
 <p>劳动监察的执法主体是劳动行政部门，其执法机关的执法活动是代表劳动行政机关实行行政执法；而劳动仲裁的执法主体是依照国家劳动立法建立的特定机构——劳动争议仲裁委员会。仲裁委员会由劳动行政部门代表、工会代表及用人单位三方面的代表组成。</p>
@@ -304,7 +274,7 @@
 <p>法律地位<br>在劳动监察过程中，劳动行政部门同接受监督检查的单位和个人之间是行政管理关系；而在劳动仲裁的所有程序中，仲裁机构是一种“中间人”，不作为当事人而处于“第三者”的地位。</p>
 <p>法律后果<br>当事人对劳动争议仲裁的仲裁裁决不服的。</p>
 <p>执法手段<br>劳动监察既包括事后矫正，也包括事前预防；而劳动仲裁则属于事后矫正。</p>
-<h2 id="仲裁法"><a href="#仲裁法" class="headerlink" title="仲裁法"></a><a href="https://baike.baidu.com/item/%E4%BB%B2%E8%A3%81%E6%B3%95" target="_blank" rel="noopener">仲裁法</a></h2><p><img alt data-src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=44624664c88065386fe7ac41f6b4ca21/fd039245d688d43f50e552d87f1ed21b0ef43b48.jpg"></p>
+<h2 id="仲裁法"><a href="#仲裁法" class="headerlink" title="仲裁法"></a><a href="https://baike.baidu.com/item/%E4%BB%B2%E8%A3%81%E6%B3%95" target="_blank" rel="noopener">仲裁法</a></h2><p><img data-src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=44624664c88065386fe7ac41f6b4ca21/fd039245d688d43f50e552d87f1ed21b0ef43b48.jpg" alt></p>
 <p>《中华人民共和国仲裁法》已由中华人民共和国第八届全国人民代表大会常务委员会第九次会议于1994年8月31日通过，现予公布，自1995年9月1日起施行。</p>
 <p>第一章 总则　</p>
 <p>第1条 为保证公正、及时地仲裁经济纠纷，保护当事人的合法权益，保障社会主义市场经济健康发展，制定本法  。<br>第2条 平等主体的公民、法人和其他组织之间发生的合同纠纷和其他财产权益纠纷，可以仲裁。<br>第3条 下列纠纷不能仲裁：<br>（一）婚姻、收养、监护、扶养、继承纠纷；<br>（二）依法应当由行政机关处理的行政争议。<br>第4条 当事人采用仲裁方式解决纠纷，应当双方自愿，达成仲裁协议。没有仲裁协议，一方申请仲裁的，仲裁委员会不予受理。<br>第5条 当事人达成仲裁协议，一方向人民法院起诉的，人民法院不予受理，但仲裁协议无效的除外。<br>第6条 仲裁委员会应当由当事人协议选定。<br><strong>仲裁不实行级别管辖和地域管辖</strong>。<br>第7条 仲裁应当根据事实，符合法律规定，公平合理地解决纠纷。<br>第8条 仲裁依法独立进行，不受行政机关、社会团体和个人的干涉。<br>第9条 仲裁实行的一裁终局制度。裁决作出后，当事人就同一纠纷再申请仲裁或者向人民法院起诉的，仲裁委员会或者人民法院不予受理。<br>裁决被人民法院依法裁定撤销或者不予执行的，当事人就该纠纷可以根据双方重新达成的仲裁协议申请仲裁，也可以向人民法院起诉。<br>第二章 仲裁委员会和仲裁协会<br>第10条 仲裁委员会可以在直辖市和省、自治区人民政府所在地的市设立，也可以根据需要在其他设区的市设立，不按行政区划层层设立。<br><strong>仲裁委员会由前款规定的市的人民政府组织有关部门和商会统一组建。</strong><br>设立仲裁委员会，应当经省、自治区、直辖市的司法行政部门登记。<br>第11条 仲裁委员会应当具备下列条件：<br>（一）有自己的名称、住所和章程；<br>（二）有必要的财产；<br>（三）有该委员会的组成人员；<br>（四）有聘任的仲裁员。<br>仲裁委员会的章程应当依照本法制定。</p>
@@ -333,7 +303,7 @@
 <p>附：民事诉讼法有关条款</p>
 <p>第217条被申请人提出证据证明仲裁裁决有下列情形之一的，经人民法院组成合议庭审查核实，裁定不予执行：<br>（一）当事人在合同中没有订有仲裁条款或者事后没有达成书面仲裁协议的；<br>（二）裁决的事项不属于仲裁协议的范围或者仲裁机构无权仲裁的；<br>（三）仲裁庭的组成或者仲裁的程序违反法定程序的；<br>（四）认定事实的主要证据不足的；<br>（五）适用法律确有错误的；<br>（六）仲裁员在仲裁该案时有贪污受贿，徇私舞弊，枉法裁决行为的。</p>
 <p>第260条 对中华人民共和国涉外仲裁机构作出的裁决，被申请人提出证据证明仲裁裁决有下列情形之一的，经人民法院组成合议庭审查核实，裁定不予执行：<br>（一）当事人在合同中没有订有仲裁条款或者事后没有达成书面仲裁协议的；<br>（二）被申请人没有得到指定仲裁员或者进行仲裁程序的通知，或者由于其他不属于被申请人负责的原因未能陈述意见的；<br>（三）仲裁庭的组成或者仲裁的程序与仲裁规则不符的；<br>（四）裁决的事项不属于仲裁协议的范围或者仲裁机构无权仲裁的。</p>
-<h2 id="中华人民共和国劳动合同法"><a href="#中华人民共和国劳动合同法" class="headerlink" title="中华人民共和国劳动合同法"></a><a href="https://baike.baidu.com/item/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8A%B3%E5%8A%A8%E5%90%88%E5%90%8C%E6%B3%95/911?fr=aladdin" target="_blank" rel="noopener">中华人民共和国劳动合同法</a></h2><p><img alt data-src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=4dd3644828381f308a1485fbc868276d/58ee3d6d55fbb2fb90ea0e624f4a20a44723dcf9.jpg"></p>
+<h2 id="中华人民共和国劳动合同法"><a href="#中华人民共和国劳动合同法" class="headerlink" title="中华人民共和国劳动合同法"></a><a href="https://baike.baidu.com/item/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8A%B3%E5%8A%A8%E5%90%88%E5%90%8C%E6%B3%95/911?fr=aladdin" target="_blank" rel="noopener">中华人民共和国劳动合同法</a></h2><p><img data-src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=4dd3644828381f308a1485fbc868276d/58ee3d6d55fbb2fb90ea0e624f4a20a44723dcf9.jpg" alt></p>
 <p>《中华人民共和国劳动合同法》已由中华人民共和国第十届全国人民代表大会常务委员会第二十八次会议于2007年6月29日通过，现予公布，自2008年1月1日起施行。</p>
 <p>《全国人民代表大会常务委员会关于修改〈中华人民共和国劳动合同法〉的决定》已由中华人民共和国第十一届全国人民代表大会常务委员会第三十次会议于2012年12月28日通过，自2013年7月1日起施行。</p>
 <p>总则</p>
@@ -520,7 +490,7 @@
 <p>第四节　集体劳动人事争议处理<br>第六十二条 处理劳动者一方在十人以上并有共同请求的争议案件，或者因履行集体合同发生的劳动争议案件，适用本节规定。<br>符合本规则第五十六条第一款规定情形之一的集体劳动人事争议案件，可以简易处理，不受本节规定的限制。<br>第六十三条　发生劳动者一方在十人以上并有共同请求的争议的，劳动者可以推举三至五名代表参加仲裁活动。代表人参加仲裁的行为对其所代表的当事人发生效力，但代表人变更、放弃仲裁请求或者承认对方当事人的仲裁请求，进行和解，必须经被代表的当事人同意。<br>因履行集体合同发生的劳动争议，经协商解决不成的，工会可以依法申请仲裁；尚未建立工会的，由上级工会指导劳动者推举产生的代表依法申请仲裁。<br>第六十四条 仲裁委员会应当自收到当事人集体劳动人事争议仲裁申请之日起五日内作出受理或者不予受理的决定。决定受理的，应当自受理之日起五日内将仲裁庭组成人员、答辩期限、举证期限、开庭日期和地点等事项一次性通知当事人。<br>第六十五条 仲裁委员会处理集体劳动人事争议案件，应当由三名仲裁员组成仲裁庭，设首席仲裁员。<br>仲裁委员会处理因履行集体合同发生的劳动争议，应当按照三方原则组成仲裁庭处理。<br>第六十六条 仲裁庭处理集体劳动人事争议，开庭前应当引导当事人自行协商，或者先行调解。<br>仲裁庭处理集体劳动人事争议案件，可以邀请法律工作者、律师、专家学者等第三方共同参与调解。<br>协商或者调解未能达成协议的，仲裁庭应当及时裁决。<br>第六十七条 仲裁庭开庭场所可以设在发生争议的用人单位或者其他便于及时处理争议的地点。</p>
 <p>第四章　调解程序<br>第一节　仲裁调解<br>第六十八条 仲裁委员会处理争议案件，应当坚持调解优先，引导当事人通过协商、调解方式解决争议，给予必要的法律释明以及风险提示。<br>第六十九条 对未经调解、当事人直接申请仲裁的争议，仲裁委员会可以向当事人发出调解建议书，引导其到调解组织进行调解。当事人同意先行调解的，应当暂缓受理；当事人不同意先行调解的，应当依法受理。<br>第七十条 开庭之前，经双方当事人同意，仲裁庭可以委托调解组织或者其他具有调解能力的组织、个人进行调解。<br>自当事人同意之日起十日内未达成调解协议的，应当开庭审理。<br>第七十一条 仲裁庭审理争议案件时，应当进行调解。必要时可以邀请有关单位、组织或者个人参与调解。<br>第七十二条 仲裁调解达成协议的，仲裁庭应当制作调解书。<br>调解书应当写明仲裁请求和当事人协议的结果。调解书由仲裁员签名，加盖仲裁委员会印章，送达双方当事人。调解书经双方当事人签收后，发生法律效力。<br>调解不成或者调解书送达前，一方当事人反悔的，仲裁庭应当及时作出裁决。<br>第七十三条 当事人就部分仲裁请求达成调解协议的，仲裁庭可以就该部分先行出具调解书。<br>第二节　调解协议的仲裁审查<br>第七十四条 经调解组织调解达成调解协议的，双方当事人可以自调解协议生效之日起十五日内，共同向有管辖权的仲裁委员会提出仲裁审查申请。<br>当事人申请审查调解协议，应当向仲裁委员会提交仲裁审查申请书、调解协议和身份证明、资格证明以及其他与调解协议相关的证明材料，并提供双方当事人的送达地址、电话号码等联系方式。<br>第七十五条 仲裁委员会收到当事人仲裁审查申请，应当及时决定是否受理。决定受理的，应当出具受理通知书。<br>有下列情形之一的，仲裁委员会不予受理：<br>（一）不属于仲裁委员会受理争议范围的；<br>（二）不属于本仲裁委员会管辖的；<br>（三）超出规定的仲裁审查申请期间的；<br>（四）确认劳动关系的；<br>（五）调解协议已经人民法院司法确认的。<br>第七十六条 仲裁委员会审查调解协议，应当自受理仲裁审查申请之日起五日内结束。因特殊情况需要延期的，经仲裁委员会主任或者其委托的仲裁院负责人批准，可以延长五日。<br>调解书送达前，一方或者双方当事人撤回仲裁审查申请的，仲裁委员会应当准许。<br>第七十七条 仲裁委员会受理仲裁审查申请后，应当指定仲裁员对调解协议进行审查。<br>仲裁委员会经审查认为调解协议的形式和内容合法有效的，应当制作调解书。调解书的内容应当与调解协议的内容相一致。调解书经双方当事人签收后，发生法律效力。<br>第七十八条 调解协议具有下列情形之一的，仲裁委员会不予制作调解书：<br>（一）违反法律、行政法规强制性规定的；<br>（二）损害国家利益、社会公共利益或者公民、法人、其他组织合法权益的；<br>（三）当事人提供证据材料有弄虚作假嫌疑的；<br>（四）违反自愿原则的；<br>（五）内容不明确的；<br>（六）其他不能制作调解书的情形。<br>仲裁委员会决定不予制作调解书的，应当书面通知当事人。<br>第七十九条 当事人撤回仲裁审查申请或者仲裁委员会决定不予制作调解书的，应当终止仲裁审查。</p>
 <p>第五章　附　则<br>第八十条 本规则规定的“三日”、“五日”、“十日”指工作日，“十五日”、“四十五日”指<strong>自然日</strong>。<br>第八十一条 本规则自2017年7月1日起施行。2009年1月1日人力资源社会保障部公布的《劳动人事争议仲裁办案规则》（人力资源和社会保障部令第2号）同时废止。</p>
-<h2 id="劳动争议调解仲裁法"><a href="#劳动争议调解仲裁法" class="headerlink" title="劳动争议调解仲裁法"></a><a href="https://baike.baidu.com/item/%E5%8A%B3%E5%8A%A8%E4%BA%89%E8%AE%AE%E8%B0%83%E8%A7%A3%E4%BB%B2%E8%A3%81%E6%B3%95/1711776?fr=aladdin" target="_blank" rel="noopener">劳动争议调解仲裁法</a></h2><p><img alt="laborarbitration20180705.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/laborarbitration20180705.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="劳动争议调解仲裁法"><a href="#劳动争议调解仲裁法" class="headerlink" title="劳动争议调解仲裁法"></a><a href="https://baike.baidu.com/item/%E5%8A%B3%E5%8A%A8%E4%BA%89%E8%AE%AE%E8%B0%83%E8%A7%A3%E4%BB%B2%E8%A3%81%E6%B3%95/1711776?fr=aladdin" target="_blank" rel="noopener">劳动争议调解仲裁法</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/laborarbitration20180705.jpg?imageMogr2/thumbnail/!75p" alt="laborarbitration20180705.jpg"></p>
 <p>《中华人民共和国劳动争议调解仲裁法》   已由中华人民共和国第十届全国人民代表大会常务委员会第三十一次会议于2007年12月29日通过，现予公布，自2008年5月1日起施行。<br>中华人民共和国主席 胡锦涛<br>2007年12月29日</p>
 <p>中华人民共和国劳动争议调解仲裁法<br>（2007年12月29日第十届全国人民代表大会常务委员会第三十一次会议通过）</p>
 <p>内容</p>
@@ -692,7 +662,7 @@
 
 <h3 id="深圳市各劳动人事争议仲裁委员会地址及联系方式"><a href="#深圳市各劳动人事争议仲裁委员会地址及联系方式" class="headerlink" title="深圳市各劳动人事争议仲裁委员会地址及联系方式"></a><a href="http://www.sz.gov.cn/szrbj/wsbs/xfjc/zc/201209/t20120904_2005185.htm" target="_blank" rel="noopener">深圳市各劳动人事争议仲裁委员会地址及联系方式</a></h3><table width="884" style="width: 664pt; border-collapse: collapse" border="0" cellspacing="0" cellpadding="0"><br><tbody><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="height: 30pt; width: 50pt">行政区域</td><br><td width="241" class="xl65" style="width: 181pt; border-left: medium none">名称</td><br><td width="383" class="xl65" style="width: 287pt; border-left: medium none">地址</td><br><td width="76" class="xl65" style="width: 57pt; border-left: medium none">电话</td><br><td width="118" class="xl65" style="width: 89pt; border-left: medium none">服务时间</td><br></tr><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="border-top: medium none; height: 30pt; width: 50pt">市级</td><br><td width="241" class="xl65" style="border-top: medium none; width: 181pt; border-left: medium none">深圳市劳动人事争议仲裁委员会</td><br><td width="383" class="xl65" style="border-top: medium none; width: 287pt; border-left: medium none">深圳市福田区深南大道8005号深圳人才园（福田交通枢纽西侧）北区二楼</td><br><td width="76" class="xl65" style="border-top: medium none; width: 57pt; border-left: medium none">88123510</td><br><td width="118" class="xl65" style="border-top: medium none; width: 89pt; border-left: medium none">9:00—12:00、<br><br>14:00—18:00</td><br></tr><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="border-top: medium none; height: 30pt; width: 50pt">福田区</td><br><td width="241" class="xl67" style="width: 181pt">福田区劳动人事争议仲裁委员会</td><br><td width="383" class="xl65" style="border-top: medium none; width: 287pt">深圳市福田区福强路金地工业区111栋1楼</td><br><td width="76" class="xl65" style="border-top: medium none; width: 57pt; border-left: medium none">23610716</td><br><td width="118" class="xl65" style="border-top: medium none; width: 89pt; border-left: medium none">9:00—12:00、<br><br>14:00—18:00</td><br></tr><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="border-top: medium none; height: 30pt; width: 50pt">罗湖区</td><br><td width="241" class="xl65" style="width: 181pt; border-left: medium none">罗湖区劳动人事争议仲裁委员会</td><br><td width="383" class="xl65" style="border-top: medium none; width: 287pt; border-left: medium none">深圳市罗湖区莲塘国威路72号高新技术产业第1园区综合楼4楼</td><br><td width="76" class="xl65" style="border-top: medium none; width: 57pt; border-left: medium none">25438335</td><br><td width="118" class="xl65" style="border-top: medium none; width: 89pt; border-left: medium none">9:00—12:00、<br><br>14:00—18:00</td><br></tr><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="border-top: medium none; height: 30pt; width: 50pt">南山区</td><br><td width="241" class="xl65" style="border-top: medium none; width: 181pt; border-left: medium none">南山区劳动人事争议仲裁委员会</td><br><td width="383" class="xl65" style="border-top: medium none; width: 287pt; border-left: medium none">深圳市南山区红花园89号（南山劳动大厦南停车场东侧）</td><br><td width="76" class="xl65" style="border-top: medium none; width: 57pt; border-left: medium none">26667278</td><br><td width="118" class="xl65" style="border-top: medium none; width: 89pt; border-left: medium none">9:00—12:00、<br><br>14:00—18:00</td><br></tr><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="border-top: medium none; height: 30pt; width: 50pt">盐田区</td><br><td width="241" class="xl65" style="border-top: medium none; width: 181pt; border-left: medium none">盐田区劳动人事争议仲裁委员会</td><br><td width="383" class="xl65" style="border-top: medium none; width: 287pt; border-left: medium none">深圳市盐田区行政文化中心（盐田区政府广场）东南侧</td><br><td width="76" class="xl65" style="border-top: medium none; width: 57pt; border-left: medium none">25221393</td><br><td width="118" class="xl65" style="border-top: medium none; width: 89pt; border-left: medium none">9:00—12:00、<br><br>14:00—18:00</td><br></tr><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="border-top: medium none; height: 30pt; width: 50pt">宝安区</td><br><td width="241" class="xl65" style="border-top: medium none; width: 181pt; border-left: medium none">宝安区劳动人事争议仲裁委员会</td><br><td width="383" class="xl65" style="border-top: medium none; width: 287pt; border-left: medium none">深圳市宝安区宝城6区前进一路91号（新安公园对面）</td><br><td width="76" class="xl65" style="border-top: medium none; width: 57pt; border-left: medium none">27664443</td><br><td width="118" class="xl65" style="border-top: medium none; width: 89pt; border-left: medium none">9:00—12:00、<br><br>14:00—18:00</td><br></tr><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="border-top: medium none; height: 30pt; width: 50pt">龙岗区</td><br><td width="241" class="xl65" style="border-top: medium none; width: 181pt; border-left: medium none">龙岗区劳动人事争议仲裁委员会</td><br><td width="383" class="xl65" style="border-top: medium none; width: 287pt; border-left: medium none">深圳市龙岗区中心城龙翔大道8027号3楼</td><br><td width="76" class="xl65" style="border-top: medium none; width: 57pt; border-left: medium none">28917181</td><br><td width="118" class="xl65" style="border-top: medium none; width: 89pt; border-left: medium none">9:00—12:00、<br><br>14:00—18:00</td><br></tr><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="border-top: medium none; height: 30pt; width: 50pt">龙华区</td><br><td width="241" class="xl65" style="border-top: medium none; width: 181pt; border-left: medium none">龙华区劳动人事争议仲裁委员会&nbsp;</td><br><td width="383" class="xl65" style="border-top: medium none; width: 287pt; border-left: medium none">深圳市龙华区龙华街道清龙路8号劳动诉求服务大厅&nbsp;</td><br><td width="76" class="xl65" style="border-top: medium none; width: 57pt; border-left: medium none">23336191&nbsp;</td><br><td width="118" class="xl65" style="border-top: medium none; width: 89pt; border-left: medium none">&nbsp;9:00—12:00、<br><p align="justify"></p><br><p align="justify">14:00—18:00</p><br></td><br></tr><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="border-top: medium none; height: 30pt; width: 50pt">坪山区</td><br><td width="241" class="xl65" style="border-top: medium none; width: 181pt; border-left: medium none">坪山区劳动人事争议仲裁委员会</td><br><td width="383" class="xl65" style="border-top: medium none; width: 287pt; border-left: medium none">深圳市坪山区深汕路坪山段333号管委会309室</td><br><td width="76" class="xl65" style="border-top: medium none; width: 57pt; border-left: medium none">28318987</td><br><td width="118" class="xl65" style="border-top: medium none; width: 89pt; border-left: medium none">9:00—12:00、<br><br>14:00—18:00</td><br></tr><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="border-top: medium none; height: 30pt; width: 50pt">光明新区</td><br><td width="241" class="xl65" style="border-top: medium none; width: 181pt; border-left: medium none">光明新区劳动人事争议仲裁委员会</td><br><td width="383" class="xl65" style="border-top: medium none; width: 287pt; border-left: medium none">深圳市光明新区华夏二路光明商会大厦三楼</td><br><td width="76" class="xl65" style="border-top: medium none; width: 57pt; border-left: medium none">23421880</td><br><td width="118" class="xl65" style="border-top: medium none; width: 89pt; border-left: medium none">9:00—12:00、<br><br>14:00—18:00</td><br></tr><br><tr height="40" style="height: 30pt"><br><td width="66" height="40" class="xl65" style="border-top: medium none; height: 30pt; width: 50pt">大鹏新区</td><br><td width="241" class="xl65" style="border-top: medium none; width: 181pt; border-left: medium none">大鹏新区劳动人事争议仲裁委员会</td><br><td width="383" class="xl65" style="border-top: medium none; width: 287pt; border-left: medium none">深圳市大鹏新区金岭路1号大鹏管委会1217A室</td><br><td width="76" class="xl65" style="border-top: medium none; width: 57pt; border-left: medium none">28333167</td><br><td width="118" class="xl65" style="border-top: medium none; width: 89pt; border-left: medium none">9:00—12:00、<br><br>14:00—18:00</td><br></tr><br></tbody><br></table>
 
-<h2 id="HR管理高手秘笈——劳动人事管理全程法律指南"><a href="#HR管理高手秘笈——劳动人事管理全程法律指南" class="headerlink" title="HR管理高手秘笈——劳动人事管理全程法律指南"></a><a href="https://book.douban.com/subject/26835192/" target="_blank" rel="noopener">HR管理高手秘笈——劳动人事管理全程法律指南</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s28889640.jpg"></p>
+<h2 id="HR管理高手秘笈——劳动人事管理全程法律指南"><a href="#HR管理高手秘笈——劳动人事管理全程法律指南" class="headerlink" title="HR管理高手秘笈——劳动人事管理全程法律指南"></a><a href="https://book.douban.com/subject/26835192/" target="_blank" rel="noopener">HR管理高手秘笈——劳动人事管理全程法律指南</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s28889640.jpg" alt></p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>第一章招聘管理中的”风险”</p>
 <p>第一节招聘广告中的风险及对策<br>风险警示<br>一、用人单位招聘中的就业歧视现象凸显<br>二、招聘简章中的录用条件模糊<br>三、应聘者信息真伪难以甄别<br>案例说法<br>案例：女职工故意隐瞒婚姻状况，公司是否有权解除<br>专家锦囊<br>一、招聘简章中的必备内容必不可少<br>二、任职条件和岗位职责明确公开<br>三、就业歧视性条款一律剔除<br>四、招聘流程全套资料存档备份<br>五、招聘简章范本</p>
 <p>第二节面试中的风险及对策<br>风险警示<br>一、面试之前的审查<br>二、面试之中的核查<br>三、面试之后的追查<br>案例说法<br>案例：员工学历造假，用人单位可否索回高额劳动报酬<br>专家锦囊<br>一、基本信息审查<br>二、劳动关系状态审查<br>三、竞业限制审查<br>四、身体状况审查<br>五、其他信息审查<br>六、审查注意事项</p>
@@ -714,8 +684,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Self/" rel="bookmark">Self</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Steep/" rel="bookmark">Steep</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Scene/" rel="bookmark">Scene</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Circuit/" rel="bookmark">Circuit</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Model/" rel="bookmark">Model</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Law/" rel="tag"><i class="fa fa-tag"></i> Law</a>
               <a href="/tags/Arbitration/" rel="tag"><i class="fa fa-tag"></i> Arbitration</a>
@@ -728,21 +719,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Passion/" rel="next" title="Passion">
-                  <i class="fa fa-chevron-left"></i> Passion
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/Bankruptcy/" rel="prev" title="Bankruptcy">
-                  Bankruptcy <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Passion/" rel="prev" title="Passion">
+      <i class="fa fa-chevron-left"></i> Passion
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/Bankruptcy/" rel="next" title="Bankruptcy">
+      Bankruptcy <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -755,7 +743,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -786,8 +796,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -796,14 +806,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -814,11 +824,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -852,7 +857,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -864,51 +869,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -917,18 +883,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -938,63 +898,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1002,14 +905,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1036,40 +939,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/IPR/DeepCreator/IPR/Arbitration/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

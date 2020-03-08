@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="最好的礼物——能带给人成长的礼物。">
 <meta name="keywords" content="Gift">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/G/Gift/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/G/Gift/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/G/Gift/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="timggift.jpg" data-src="http://opb37u589.bkt.clouddn.com/timggift.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/timggift.jpg?imageMogr2/thumbnail/!75p" alt="timggift.jpg"></p>
 <blockquote>
 <p>最好的礼物——能带给人成长的礼物。</p>
 </blockquote>
@@ -295,12 +265,12 @@
 <p>转眼到了假期最后一天，又将踏上新的征程。</p>
 <p>过去一年和你并肩作战的同事们，你们共同进退，彼此成就。2018年，把这10本书送给你的同事，帮助你们充满斗志，共同精进。祝开工大吉。</p>
 <ol>
-<li>《智能时代》/ 吴军<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102226g8y8i8qq8qdp5vnf.jpg"></li>
+<li>《智能时代》/ 吴军<br><img data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102226g8y8i8qq8qdp5vnf.jpg" alt></li>
 </ol>
 <p>每个人的事业，都依托于一个时代。时势造英雄，是英雄能看清局势。智能时代已来，我们能做的，就是拥抱它，不断精进。</p>
 <p>面对人工智能的冲击，我们又该如何及时调整自己的前进方向呢？计算机科学家、「得到」专栏《吴军的谷歌方法论》的主理人吴军，将给我们答案。</p>
 <ol start="2">
-<li>《选择卓越》/ 吉姆∙柯林斯<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102227coyi7o8vicz8kian.jpg"></li>
+<li>《选择卓越》/ 吉姆∙柯林斯<br><img data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102227coyi7o8vicz8kian.jpg" alt></li>
 </ol>
 <p>是什么造就卓越，是苦干还是运气？都不是，管理学大师吉姆∙柯林斯通过对7家卓越企业的长期研究后发现：卓越不是运气带来的，而是选择带来的。<strong>卓越=1%的选择+99%的谨慎和坚持</strong>。卓越的企业面对选择时往往表现出三个特点：</p>
 <blockquote>
@@ -308,44 +278,44 @@
 </blockquote>
 <p>卓越是一种习惯，这本书送给你，助你早日成为现在和未来的领导者。</p>
 <ol start="3">
-<li>《发现你的天赋》/ 肯∙罗宾逊 / 卢∙阿罗尼卡<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102227d1xj01igstkkt5kt.jpg"></li>
+<li>《发现你的天赋》/ 肯∙罗宾逊 / 卢∙阿罗尼卡<br><img data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102227d1xj01igstkkt5kt.jpg" alt></li>
 </ol>
 <p>顺应自己的天赋，找到热情所在，我们的工作将从困难模式转变成简单模式。虽然每个人的天赋各不相同，发现它的过程也因人而异，但还是有一些普适性的原则、技巧和策略可以供我们参考。在这本书中，作者就为我们发现自己的天赋提供了很多有用的建议。</p>
 <p>就像乔布斯所说，“<strong>找到自己爱的东西，如果没有找到，请继续，别停下来，你总会找到的。</strong>”</p>
 <ol start="4">
-<li>《心流》/ 米哈里·契克森米哈赖<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102227cq49brapz7uglf7l.jpg"></li>
+<li>《心流》/ 米哈里·契克森米哈赖<br><img data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102227cq49brapz7uglf7l.jpg" alt></li>
 </ol>
 <p><strong>所谓“心流”，说的是人们在全神贯注做一件事的时候，那种沉浸其中的忘我状态</strong>。这并不是一种玄学，在做你喜欢的事时，你会忘记时间、忘记吃饭、忘记上洗手间，其实你已经处在心流当中。</p>
 <p>这是一本提升<strong>幸福感</strong>和<strong>效率</strong>的行动指南。本书的作者告诉你，心流能够给我们带来一种积极的生命体验，从而给我们注入源源不断的精神力量，提升生活和工作质量。</p>
 <ol start="5">
-<li>《深度工作》/ 卡尔·纽波特<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102227x34iz7ossrytamss.jpg"></li>
+<li>《深度工作》/ 卡尔·纽波特<br><img data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102227x34iz7ossrytamss.jpg" alt></li>
 </ol>
 <p>我们要如何理解眼前的工作从而更好地处理，是每一个精英会关心的问题。在碎片化时代，该如何有效使用每一点脑力？在工作中如何成为一个不可替代的人？这本书将给你答案。</p>
 <blockquote>
 <p>深度工作，它可以把你的认知能力推向极限，最终得到具有创造性和高价值的工作结果。</p>
 </blockquote>
 <ol start="6">
-<li>《清单革命》/ 阿图·葛文德<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102228cbyw3qcs21bplsn2.jpg"></li>
+<li>《清单革命》/ 阿图·葛文德<br><img data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102228cbyw3qcs21bplsn2.jpg" alt></li>
 </ol>
 <p>这是一本医生写的书，但对于职场的你，一定有帮助。作者阿图·葛文德，是白宫最年轻的健康政策顾问，受到查理·芒格大力褒奖的医学工作者。作者一直在寻找怎么样才能减少犯错、提高做事情的准确率，直到发现了“清单”。</p>
 <p>事实上医疗、建筑、飞行、金融、行政等领域都受益于清单革命。看完这本书，打造一张你的清单。</p>
 <ol start="7">
-<li>《逆转》/ 马尔科姆·格拉德威尔<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102228ecljlnkp4p4kln12.jpg"></li>
+<li>《逆转》/ 马尔科姆·格拉德威尔<br><img data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102228ecljlnkp4p4kln12.jpg" alt></li>
 </ol>
 <p>在工作中，我们经常会遇到特别大的困难，或者要实现一个看起来完全不可能的目标，这本书将给你启发。作者马尔科姆·格拉德威尔是畅销书之王。他告诉你，<strong>随着环境变化，有些劣势可以转化为优势，有些旁人看来的优势其实是劣势。</strong></p>
 <p>掌握了“以弱胜强”的内在逻辑，历史书上的故事就可以被复制，你就能完成不可能。</p>
 <ol start="8">
-<li>《财务自由之路》/ 博多·舍费尔<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102228x64o9bsbzyloqxxb.jpg"></li>
+<li>《财务自由之路》/ 博多·舍费尔<br><img data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102228x64o9bsbzyloqxxb.jpg" alt></li>
 </ol>
 <p><strong>所谓财务自由，即你不再是一台赚钱机器，而是拥有一台为你赚钱的机器</strong>。让它为你赢得的利息收入，且等于或者是远远大于日常支出。博多·舍费尔认为，想要取得财务自由，只需要转变理财观念、掌握投资理财的方法以及7年的时间。</p>
 <p>这本书是理财入门书籍，改变了很多人的理财观念，投资理财的必读书之一，被翻译成了33种语言，全球销量超过一千万册。</p>
 <ol start="9">
-<li>《我们时代的神经症人格》/ 卡伦·霍尼<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102229yzghh2y2288hprmv.jpg"></li>
+<li>《我们时代的神经症人格》/ 卡伦·霍尼<br><img data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102229yzghh2y2288hprmv.jpg" alt></li>
 </ol>
 <p>工作压力大，难免会焦虑。学会抗焦虑，才会更有效率。本书作者是一位能与阿德勒、荣格、弗洛姆这些心理大咖比肩而论的心理学大师。在她看来，今天我们所经历的种种内心冲突和焦虑事件，一定程度上是我们所在社会文化的产物。如果你想要有效地对抗焦虑并恢复到一个健康的状态，洞察社会文化与神经症人格的关系对理解焦虑必不可少。</p>
 <p>通过阅读这本书，将会对现代人的内心世界和人格养成一个更深刻的认识，进而更好地认识我们自己。</p>
 <ol start="10">
-<li>《哲学的慰藉》/ 阿兰·德波顿<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102229efbww0546plwjdej.jpg"></li>
+<li>《哲学的慰藉》/ 阿兰·德波顿<br><img data-src="http://www.luojiji.com/data/attachment/forum/201802/21/102229efbww0546plwjdej.jpg" alt></li>
 </ol>
 <p>也许你会觉得，哲学离你很远，但在作者看来，</p>
 <blockquote>
@@ -358,8 +328,11 @@
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Gift/" rel="tag"><i class="fa fa-tag"></i> Gift</a>
           </div>
@@ -371,21 +344,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/H/Hobby/" rel="next" title="Hobby">
-                  <i class="fa fa-chevron-left"></i> Hobby
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/R/Relationship/" rel="prev" title="Relationship">
-                  Relationship <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/H/Hobby/" rel="prev" title="Hobby">
+      <i class="fa fa-chevron-left"></i> Hobby
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/R/Relationship/" rel="next" title="Relationship">
+      Relationship <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -398,7 +368,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -429,8 +421,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -439,14 +431,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -457,11 +449,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -495,7 +482,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -507,51 +494,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -560,18 +508,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -581,63 +523,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -645,14 +530,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -679,40 +564,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/G/Gift/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

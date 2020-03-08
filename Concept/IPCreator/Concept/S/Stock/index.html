@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="FT中文网格隆汇雪球">
 <meta name="keywords" content="Stock">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/S/Stock/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/S/Stock/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/S/Stock/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="global-equity-markets.jpg" data-src="http://opb37u589.bkt.clouddn.com/global-equity-markets.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/global-equity-markets.jpg?imageMogr2/thumbnail/!75p" alt="global-equity-markets.jpg"></p>
 <blockquote>
 <p><a href="http://www.ftchinese.com/" target="_blank" rel="noopener">FT中文网</a><br><a href="http://www.gelonghui.com/" target="_blank" rel="noopener">格隆汇</a><br><a href="https://xueqiu.com/" target="_blank" rel="noopener">雪球</a></p>
 </blockquote>
 <a id="more"></a>
-<h2 id="股价不可预测"><a href="#股价不可预测" class="headerlink" title="股价不可预测"></a><a href="http://www.luojiji.com/thread-2954-1-1.html" target="_blank" rel="noopener">股价不可预测</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/29/142012k3l7d6f3b3f734lq.jpg"></p>
+<h2 id="股价不可预测"><a href="#股价不可预测" class="headerlink" title="股价不可预测"></a><a href="http://www.luojiji.com/thread-2954-1-1.html" target="_blank" rel="noopener">股价不可预测</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/29/142012k3l7d6f3b3f734lq.jpg" alt></p>
 <p>2015-11-14薛兆丰</p>
 <p>股价是否可以预测？研究股价的历史变化，是否有助于推测其未来变化？这是耐人寻味的问题。</p>
 <p>1.首先要明确的是，股票是一种耐用品</p>
@@ -342,7 +312,7 @@
 <p>这时候我们面临的是两个世界：</p>
 <p>一个世界是我们真实的世界、物理的世界，看得见摸得着的那个世界。一棵树会长大、会开花、会结果，在这个世界里面，事物是根据现实世界的发展规律在发展变化的。</p>
 <p>但与此同时，我们有另外一个世界，抽象的世界、思想的世界、预期中的世界或者说经济的世界。在那个世界里面，每一项资产它都有现值。这个现值取决于预期中收入流的折现和。预期变了，现值就变；如果预期不变，资产的现值就不变，它会是一条直线。</p>
-<p>这是两个世界。真实世界里面的事物在变化，但是在那个抽象的经济世界里面，事物的价格服从另外一个规律，它只取决于一个因素——预期有没有变。如果预期没有变，所有资产的价格会是一条直线，永远不变。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201711/05/104349zulannu4saniqugt.jpg"></p>
+<p>这是两个世界。真实世界里面的事物在变化，但是在那个抽象的经济世界里面，事物的价格服从另外一个规律，它只取决于一个因素——预期有没有变。如果预期没有变，所有资产的价格会是一条直线，永远不变。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201711/05/104349zulannu4saniqugt.jpg" alt></p>
 <p>3.消息披露过程决定价格变化节奏</p>
 <blockquote>
 <p>什么才会改变预期呢？新的知识。只要有新的知识，预期就会发生改变，也只有新的知识才能改变预期。</p>
@@ -365,8 +335,8 @@
 <p>为什么它是随机的？因为消息披露出来的这个过程，本身是随机的，是不可预测的，所以我们看到，价格的波动是随机的。虽然它背后蕴含了对科学规律的消化过程。</p>
 <p>5.人们对新消息做出反应需要多长时间？</p>
 <p>有意思的是，人们从接收到新的消息，到根据过往的经验和事物发展的规律，对资产进行重新评估，确定资产新的价格，这整个过程需要多少时间？你觉得，需要的时间是一年、一个月、一个礼拜、一天、一小时、一分钟还是一秒钟？</p>
-<p>我给你举一个例子。在2013年9月18日的那一天下午两点钟，美国联邦储备局要宣布一个重大的货币政策，这个货币政策肯定会对当天的市场交易产生重大的影响。预先说好了，这个货币政策是在下午两点整宣布的，那天两点整消息一宣布，两点钟刚过市场就做出了剧烈的反应。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201711/05/104731fvnz96azxun98jjy.jpg"></p>
-<p>你看看我给你准备的上面那个图表就清楚地显示，两点钟刚过市场就开始做出剧烈的反应。但那一天，有一个奇怪的现象，那就是在芝加哥的市场反应，竟然比纽约的市场反应要快那么几毫秒。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201711/05/104749cj53ajf7jvn047na.jpg"></p>
+<p>我给你举一个例子。在2013年9月18日的那一天下午两点钟，美国联邦储备局要宣布一个重大的货币政策，这个货币政策肯定会对当天的市场交易产生重大的影响。预先说好了，这个货币政策是在下午两点整宣布的，那天两点整消息一宣布，两点钟刚过市场就做出了剧烈的反应。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201711/05/104731fvnz96azxun98jjy.jpg" alt></p>
+<p>你看看我给你准备的上面那个图表就清楚地显示，两点钟刚过市场就开始做出剧烈的反应。但那一天，有一个奇怪的现象，那就是在芝加哥的市场反应，竟然比纽约的市场反应要快那么几毫秒。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201711/05/104749cj53ajf7jvn047na.jpg" alt></p>
 <p>你要知道，消息是在美国首都华盛顿联邦储备局的总部发出的，这个消息传到纽约需要两毫秒，传到芝加哥需要7毫秒。所以通常每一次在华盛顿发出新的消息，都是纽约市场要比芝加哥市场早那么几毫秒做出反应。</p>
 <p>但是这一次，芝加哥的反应比纽约的快，这是一个反常的现象。最后联邦储备局成立了一个专门的委员会调查这件事情，看是不是消息事前就被走漏了。</p>
 <p>几毫秒，消化一条消息的时间只需要几毫秒，再晚就完全晚了。所以你想想，每天你辛苦加班，回到家里洗个澡，把饭菜热一热，打开电视，听听里面股评家怎么分析未来股市的变化，太晚了，黄花菜都凉了。</p>
@@ -374,7 +344,7 @@
 <p>今天我们讲的一个道理是，<strong>只有新的消息才可能对资产价格的变化产生影响。而新的消息，顾名思义就是今天不能知道的消息，所以新的消息一定是以随机的方式出现的，因为我们事先不能预测。</strong></p>
 <p>所以价格的变动也是随机的，尽管事物发展和变化是有规律的。而人们根据已经掌握的自然规律和社会规律，来消化新的知识、新的信息，所需要的时间是极短的。</p>
 <h2 id="股市学会适应特朗普Twitter言论"><a href="#股市学会适应特朗普Twitter言论" class="headerlink" title="股市学会适应特朗普Twitter言论"></a><a href="http://www.ftchinese.com/story/001071335" target="_blank" rel="noopener">股市学会适应特朗普Twitter言论</a></h2><p>邰蒂：FT分析了今年以来特朗普评论企业的30个Twitter帖子，<strong>发现美国总统的言论对股价影响都出乎意料地低。</strong></p>
-<p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F6%2F000068016_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"><br>更新于2017年2月13日 07:06 英国《金融时报》专栏作家 吉莲•邰蒂</p>
+<p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F6%2F000068016_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt><br>更新于2017年2月13日 07:06 英国《金融时报》专栏作家 吉莲•邰蒂</p>
 <p>直至上周以前，关注伊万卡•特朗普(Ivanka Trump)服装品牌王国的，主要是时尚博客写手。如今再也不是这样了。最近，在特朗普(Trump)时尚品牌的销量大幅下滑之后，美国零售连锁店诺思通(Nordstrom)决定停止销售伊万卡的服装。</p>
 <p>伊万卡的父亲通过其id为@realDonaldTrump的Twitter账号实施了反击。他发消息称：</p>
 <p>“@Nordstrom对我的女儿如此不公……太差劲了！”</p>
@@ -424,13 +394,13 @@
 <p>投资者对投机性押注于科技等估值偏高的板块失去胃口，这些股票有强劲的增长故事，但缺乏有说服力的财务数据。</p>
 </blockquote>
 <p>一个相关的问题是投机者对上市壳公司兴趣下降，这类公司此前是急于上市的集团的目标。中国监管机构严格控制上海和深圳的首次公开发行(IPO)流量，导致数百家公司排队等候（往往一等就是几年）发行新股的“特权”。</p>
-<p><img alt data-src="http://i.ftimg.net/picture/5/000071585_piclink.jpg"></p>
+<p><img data-src="http://i.ftimg.net/picture/5/000071585_piclink.jpg" alt></p>
 <p>借壳上市已成为企业规避排队的一种流行方式。<br>然而，在过去一年里，监管机构加快了对创业板IPO的审批，此举降低了潜在壳公司的价值，阻止了潜在的投机者。</p>
 <p>另一个不利于行情的因素是，作为收购交易的一部分，自2014年以来针对创业板公司发行的新股的锁定期即将结束。<br>典型的锁定期是三年，所以一波新股票将在未来一年流入市场。</p>
 <h1 id="沪港通-深港通"><a href="#沪港通-深港通" class="headerlink" title="沪港通/深港通"></a>沪港通/深港通</h1><h2 id="陆港股市互通后AH股溢价的变化"><a href="#陆港股市互通后AH股溢价的变化" class="headerlink" title="陆港股市互通后AH股溢价的变化"></a><a href="http://www.ftchinese.com/story/001073675?full=y" target="_blank" rel="noopener">陆港股市互通后AH股溢价的变化</a></h2><blockquote>
 <p>欧阳辉、孟茹静：尽管AH公司在香港市场存在折价，但它相对于同行业港股的估值仍较高。基于H股比其A股便宜就得出结论H股是价值洼地的推测是不可取的。</p>
 </blockquote>
-<p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F1%2F000048371_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F1%2F000048371_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <h2 id="我为什么从来不炒股"><a href="#我为什么从来不炒股" class="headerlink" title="我为什么从来不炒股"></a><a href="http://comments.caijing.com.cn/20141210/3771228.shtml" target="_blank" rel="noopener">我为什么从来不炒股</a></h2><blockquote>
 <p>这个股市的基本表现，不但与上市公司的基本表现没有关系，甚至与中国宏观经济的基本表现也没有关系，它是一个被行政权力严重操控的资本市场，它的标配不是价值挖掘、技术创新、产业升级，而是“人民日报社论+壳资源+并购题材+国企利益”。</p>
 </blockquote>
@@ -482,8 +452,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/I/Investment/" rel="bookmark">Investment</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Stock/" rel="tag"><i class="fa fa-tag"></i> Stock</a>
           </div>
@@ -495,21 +474,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Travel/HongKong/" rel="next" title="HongKong">
-                  <i class="fa fa-chevron-left"></i> HongKong
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Movie/pretty woman/" rel="prev" title="Pretty Woman">
-                  Pretty Woman <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Travel/HongKong/" rel="prev" title="HongKong">
+      <i class="fa fa-chevron-left"></i> HongKong
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Movie/pretty woman/" rel="next" title="Pretty Woman">
+      Pretty Woman <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -522,7 +498,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -553,8 +551,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -563,14 +561,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -581,11 +579,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -619,7 +612,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -631,51 +624,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -684,18 +638,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -705,63 +653,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -769,14 +660,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -803,40 +694,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/S/Stock/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

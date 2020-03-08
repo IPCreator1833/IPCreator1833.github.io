@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="通过推力或拉力来达成目标。">
 <meta name="keywords" content="Work">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/W/Work/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/W/Work/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/W/Work/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://opb37u589.bkt.clouddn.com/9936755_orig.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/9936755_orig.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>通过推力或拉力来达成目标。</p>
 </blockquote>
@@ -304,11 +274,11 @@
 <p>龙应台在《亲爱的安德烈》中说过一句话：“孩子，我要求你读书用功，不是因为我要你跟别人比成绩，而是因为，<strong>我希望你将来会拥有选择的权利，选择有意义、有时间的工作，而不是被迫谋生。当你的工作在你心中有意义，你就有成就感。当你的工作给你时间，不剥夺你的生活，你就有尊严。成就感和尊严，会给你快乐！</strong>”这句话不仅仅对孩子，更是对每一个妈妈，或者说是对每一个全职妈妈。</p>
 <p>Definition of work: Activity involving mental and physical effort done in order to achieve a purpose or result</p>
 <p><a href="http://bellagambaam.weebly.com/work.html" target="_blank" rel="noopener">Scientific definition of work: The use of force to move an object.</a>   </p>
-<h2 id="1分钟心理学：什么人最容易成为工作狂？"><a href="#1分钟心理学：什么人最容易成为工作狂？" class="headerlink" title="1分钟心理学：什么人最容易成为工作狂？"></a><a href="http://www.xinli001.com/info/100303561" target="_blank" rel="noopener">1分钟心理学：什么人最容易成为工作狂？</a></h2><p><img alt data-src="http://ossimg.xinli001.com/20151128/bc98d53bb5a86a9fc1d101db3863f89a.jpg"></p>
-<h2 id="万维钢关于高手如何休息的清单"><a href="#万维钢关于高手如何休息的清单" class="headerlink" title="万维钢关于高手如何休息的清单"></a><a href="http://www.luojiji.com/thread-9564-1-1.html" target="_blank" rel="noopener">万维钢关于高手如何休息的清单</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/20/110124saze4naaheeeqspv.jpg"></p>
+<h2 id="1分钟心理学：什么人最容易成为工作狂？"><a href="#1分钟心理学：什么人最容易成为工作狂？" class="headerlink" title="1分钟心理学：什么人最容易成为工作狂？"></a><a href="http://www.xinli001.com/info/100303561" target="_blank" rel="noopener">1分钟心理学：什么人最容易成为工作狂？</a></h2><p><img data-src="http://ossimg.xinli001.com/20151128/bc98d53bb5a86a9fc1d101db3863f89a.jpg" alt></p>
+<h2 id="万维钢关于高手如何休息的清单"><a href="#万维钢关于高手如何休息的清单" class="headerlink" title="万维钢关于高手如何休息的清单"></a><a href="http://www.luojiji.com/thread-9564-1-1.html" target="_blank" rel="noopener">万维钢关于高手如何休息的清单</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201708/20/110124saze4naaheeeqspv.jpg" alt></p>
 <p>2017-08-20 「得到」 罗辑思维<br>引言</p>
 <p>对于高手来说，集中精力认真工作，不是为了有朝一日停下来彻底休息。相反，高效休息，是为了更好的工作，抵达巅峰状态。</p>
-<p>万维钢的14条建议，告诉你高手休息的秘密。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/20/110143ngr8errgajshr53r.jpg"></p>
+<p>万维钢的14条建议，告诉你高手休息的秘密。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201708/20/110143ngr8errgajshr53r.jpg" alt></p>
 <blockquote>
 <ol>
 <li>人生是一场长跑，光努力赢了起跑没用，得悠着点。</li>
@@ -356,12 +326,12 @@
 <li><p>有谁能想到，在今天这个世界里想要做出一点成绩，居然连呼吸都得练呢？一切出发点，都因为你想做个不一样的人。</p>
 </li>
 </ol>
-<h2 id="关于能量管理的清单"><a href="#关于能量管理的清单" class="headerlink" title="关于能量管理的清单"></a><a href="http://www.luojiji.com/thread-8964-1-1.html" target="_blank" rel="noopener">关于能量管理的清单</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201706/25/220347ycwc5iakd5sperow.jpg"></p>
+<h2 id="关于能量管理的清单"><a href="#关于能量管理的清单" class="headerlink" title="关于能量管理的清单"></a><a href="http://www.luojiji.com/thread-8964-1-1.html" target="_blank" rel="noopener">关于能量管理的清单</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201706/25/220347ycwc5iakd5sperow.jpg" alt></p>
 <p>2017-06-25 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>明明睡眠时间足够，上班还是无精打采？好不容易有时间休息，却感觉越休息越累？其实，你的身体不是缺少能量，而是能量缺乏管理。</p>
 <p>这篇能量管理的清单分享给你，助你开启元气满满每一天。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201706/25/220429rwdjt7a1fmmytuf7.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201706/25/220429rwdjt7a1fmmytuf7.jpg" alt></p>
 <ol>
 <li><p>很多人会将个人管理，理解为时间管理和效率管理，但事实上，真正最需要管理的不是时间，不是效率，而是能量。看看那些在动物圈制霸的动物，“虎行似病，鹰立如睡”，作为最凶猛的兽和禽，它们从不会让自己忙忙碌碌，而是<strong>集中能量，在最正确的时间做最正确的事。</strong></p>
 </li>
@@ -406,12 +376,12 @@
 <ol start="12">
 <li>最后，培养自己的目标感。目标感强的人，永远只处在两个状态——想办法、马上干。他们始终能量满满，从没有时间考虑自己是否能量充足。</li>
 </ol>
-<h2 id="行动清单｜如何告别假日综合征，快速进入工作状态"><a href="#行动清单｜如何告别假日综合征，快速进入工作状态" class="headerlink" title="行动清单｜如何告别假日综合征，快速进入工作状态"></a><a href="http://www.luojiji.com/thread-10076-1-1.html" target="_blank" rel="noopener">行动清单｜如何告别假日综合征，快速进入工作状态</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/09/074534w3vvl4ly3nvlzyvy.jpg"></p>
+<h2 id="行动清单｜如何告别假日综合征，快速进入工作状态"><a href="#行动清单｜如何告别假日综合征，快速进入工作状态" class="headerlink" title="行动清单｜如何告别假日综合征，快速进入工作状态"></a><a href="http://www.luojiji.com/thread-10076-1-1.html" target="_blank" rel="noopener">行动清单｜如何告别假日综合征，快速进入工作状态</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201710/09/074534w3vvl4ly3nvlzyvy.jpg" alt></p>
 <p>2017-10-09 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>今天是“十一”长假后开工的第一天。长假里旅游、刷剧、玩游戏……工作节奏被打乱。还在沉迷假期，不想上班？</p>
 <p>别担心，这篇清单的12条建议，助你告别“假日综合征”，顺利开工。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/09/074545bm4m0xnqmw22qizw.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201710/09/074545bm4m0xnqmw22qizw.jpg" alt></p>
 <ol>
 <li><p>提前做好工作准备。整理好上班要用到的工具、梳理好节后的工作安排，做到心中有数，会大大缓解焦虑情绪。</p>
 </li>
@@ -443,11 +413,11 @@
 <li><p>2017年，还剩下最后的四分之一，祝开工顺利！</p>
 </li>
 </ol>
-<p><img alt="a5c27d1ed21b0ef4aadfb4f8d7c451da81cb3e64.jpg" data-src="http://opb37u589.bkt.clouddn.com/a5c27d1ed21b0ef4aadfb4f8d7c451da81cb3e64.jpg?imageMogr2/thumbnail/!75p"></p>
-<h2 id="In-The-Fall"><a href="#In-The-Fall" class="headerlink" title="In The Fall"></a><a href="https://www.youtube.com/watch?v=A-rEb0KuopI" target="_blank" rel="noopener">In The Fall</a></h2><p>坠楼 In the Fall<br><img alt data-src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2255276829.webp"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/a5c27d1ed21b0ef4aadfb4f8d7c451da81cb3e64.jpg?imageMogr2/thumbnail/!75p" alt="a5c27d1ed21b0ef4aadfb4f8d7c451da81cb3e64.jpg"></p>
+<h2 id="In-The-Fall"><a href="#In-The-Fall" class="headerlink" title="In The Fall"></a><a href="https://www.youtube.com/watch?v=A-rEb0KuopI" target="_blank" rel="noopener">In The Fall</a></h2><p>坠楼 In the Fall<br><img data-src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2255276829.webp" alt></p>
 <p>正在楼顶边抽烟边浇花的中年男人，一不小心从楼上掉了下去。死前的瞬间，他仿佛看见了自己短暂的一生。“你就要死了”、“所以这里就是你最好最快的去处”在他的脑海里不断浮现。1961年，那时他还是刚刚出生的婴儿。然而随着日历上不断翻滚着的时间，男人的生活从多姿多彩变得枯燥乏味。直到2011年，他终于崩溃在自己的电脑面前。如此单调的日子真的要一如既往地过下去么？男人在即将落地的前一秒，忽然释然，悠然地点燃了一支烟。</p>
 <p>　　这部颇有迪士尼早期作品风格的黑色幽默动画短片，由伦敦自由艺术家史蒂夫·卡兹执导。他曾为可口可乐、百加得、丰田、锐步、索尼PSP、菲利普等诸多世界知名品牌制作动画。</p>
-<h2 id="重要的是你想去哪，不是你从哪来"><a href="#重要的是你想去哪，不是你从哪来" class="headerlink" title="重要的是你想去哪，不是你从哪来"></a><a href="http://www.luojiji.com/thread-2910-1-1.html" target="_blank" rel="noopener">重要的是你想去哪，不是你从哪来</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/28/234349ck76h9z6penxdzvd.jpg"></p>
+<h2 id="重要的是你想去哪，不是你从哪来"><a href="#重要的是你想去哪，不是你从哪来" class="headerlink" title="重要的是你想去哪，不是你从哪来"></a><a href="http://www.luojiji.com/thread-2910-1-1.html" target="_blank" rel="noopener">重要的是你想去哪，不是你从哪来</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/28/234349ck76h9z6penxdzvd.jpg" alt></p>
 <p>黄嘉 Karen Wong</p>
 <p>二十多年前，我背着一个背囊赤手空拳来美国留学和就业。当时大多数中国留学生来美国是读研究生院，最早也是从大学起步。</p>
 <p>而现在的家长，生怕孩子输在起跑线上，将孩子送到外国念高中、初中的，比比皆是。父母千方百计为孩子找门路考进常春藤级别的名牌大学，如哈佛、耶鲁、斯坦福等等， 以为这样就把孩子带上了康庄大道。其实，孩子们真正要面对的考验是在离开象牙塔之后，如何面对象牙塔之外的职场竞争。</p>
@@ -479,11 +449,11 @@
 <p>50%以上在常春藤大学就读的中国留学生在美国甚至都找不到正式工作。这不是因为美国的就业机会少，而是因为中国学生缺乏足够的职业规划和求职能力。而且这种能力，不仅对“精英职场”，对所有职场都有广泛的适用价值。</p>
 <p>本文由罗友 张佳莹 推荐。作</p>
 <p>罗胖日：<br>有位历史学家讲，一个“仁”字说尽了中国人的生活方式。<br>“仁”，二人也。<br><strong>中国人必须在二人以上的人际关系中才能定位自己。忠孝节义莫不如此。<br>中国人被追问自己是什么的时候，每每一片茫然。<br>此时，他们往往想的是——<br>“你最希望我是什么。”<br>仍然是回到二人关系，中国人才有思考的立足点。</strong></p>
-<h1 id="Why-We-Work"><a href="#Why-We-Work" class="headerlink" title="Why We Work"></a>Why We Work</h1><p><img alt="why.jpg" data-src="http://opb37u589.bkt.clouddn.com/why.jpg?imageMogr2/thumbnail/!75p"></p>
+<h1 id="Why-We-Work"><a href="#Why-We-Work" class="headerlink" title="Why We Work"></a>Why We Work</h1><p><img data-src="http://opb37u589.bkt.clouddn.com/why.jpg?imageMogr2/thumbnail/!75p" alt="why.jpg"></p>
 <blockquote>
 <p>不应该被设计在别人的概念里而忽略自己本身的人性。</p>
 </blockquote>
-<h2 id="Why-We-Work-工作的意义"><a href="#Why-We-Work-工作的意义" class="headerlink" title="Why We Work 工作的意义"></a><a href="http://www.365yg.com/item/6472095852310561294/" target="_blank" rel="noopener">Why We Work 工作的意义</a></h2><p><img alt="presenter.jpg" data-src="http://opb37u589.bkt.clouddn.com/presenter.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="Why-We-Work-工作的意义"><a href="#Why-We-Work-工作的意义" class="headerlink" title="Why We Work 工作的意义"></a><a href="http://www.365yg.com/item/6472095852310561294/" target="_blank" rel="noopener">Why We Work 工作的意义</a></h2><p><img data-src="http://opb37u589.bkt.clouddn.com/presenter.jpg?imageMogr2/thumbnail/!75p" alt="presenter.jpg"></p>
 <p>我们为什么要工作？如果是想赚钱，那就是最世俗的回答了。因为我们忽略了我们作为人类最大的特质，就是创造力和有思想。</p>
 <p>为什么工业革命之父亚当斯密曾说：在流水线工作的人会变得很笨，笨到人类的极点？因为他相信人类需要制度，通过薪酬的方式把人们变成要满足制度需要的人，剥夺了人们的创造机会。</p>
 <p><strong>所以人们不应该被设计在别人的概念里而忽略自己本身的人性。</strong></p>
@@ -491,7 +461,7 @@
 <blockquote>
 <p><strong>职业生涯首先要关注的是自己，自己想要什么？寻找真正能够使你获得快乐的东西，那才是你想要的东西。<br>有很多的不快乐，其实是源自不满足，而不满足，很多时候是源自于心不定，而心不定则是因为不清楚究竟自己要什么，不清楚要什么的结果就是什么都想要，结果什么都没得到。</strong></p>
 </blockquote>
-<div align="center"><br><img width="400" height="300" alt="personal photo" data-src="http://okkntqe2h.bkt.clouddn.com/12054_190X1420511.jpg"><br> </div>
+<div align="center"><br><img data-src="http://okkntqe2h.bkt.clouddn.com/12054_190X1420511.jpg" width="400" height="300" alt="personal photo"><br> </div>
 
 <!-- more -->
 <p><strong>关于工作与生活</strong></p>
@@ -589,7 +559,7 @@
 <p>LakeTahoe我去了多次，但这次的体验有所不同，我从心里欣赏到它的美丽。</p>
 <p>我的人生观是“完美的演出来自充分的准备”，“勇于改变自己，适应不断变化的环境，机会将不断出现”，“快乐及有意义的人生来自于实现自己心中的愿望，而非外在的掌声”。</p>
 <p>我总结人生有三个阶段，一个阶段是为现实找一份工作，一个阶段是为现实，但可以选择一份自己愿意投入的工作，一个阶段是为理想去做一些事情。</p>
-<h2 id="把无聊工作变有趣是一种能力"><a href="#把无聊工作变有趣是一种能力" class="headerlink" title="把无聊工作变有趣是一种能力"></a><a href="https://book.douban.com/review/9017922/" target="_blank" rel="noopener">把无聊工作变有趣是一种能力</a></h2><p><img alt="p1139465.jpg" data-src="http://opb37u589.bkt.clouddn.com/p1139465.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="把无聊工作变有趣是一种能力"><a href="#把无聊工作变有趣是一种能力" class="headerlink" title="把无聊工作变有趣是一种能力"></a><a href="https://book.douban.com/review/9017922/" target="_blank" rel="noopener">把无聊工作变有趣是一种能力</a></h2><p><img data-src="http://opb37u589.bkt.clouddn.com/p1139465.jpg?imageMogr2/thumbnail/!75p" alt="p1139465.jpg"></p>
 <p>你相信吗？我每天上班唯一的事情就是盼着下班！<br>王木木一脸郑重的看着我说，生怕我不相信这一点。看着这个对我说自己“职业倦怠”的女孩如此认真的样子，我忍不住有点儿想笑。</p>
 <p>那么，请说说你的工作吧！<br>于是，她露出一脸的不堪回首：</p>
 <p>每天上班做的事情都是重复重复再重复的各种报表，实在是没有意思透了！这样下去，也许我会疯掉！<br>看着她紧蹙的眉头，我还是想要问问：</p>
@@ -607,7 +577,7 @@
 <p>说到“心流”这个词，似乎很多人都用到过，这个词的始作俑者就出自米哈里·契克森米哈赖的这本书，后来成为一个心理学中的概念：</p>
 <p>心理学中是一种某者在专注进行某行为时所表现的心理状态。如艺术家在创作时所表现的心理状态。某者在此状态时，通常不愿被打扰，即抗拒中断。定义是一种将个人精神力完全投注在某种活动上的感觉；心流产生时同时会有高度的兴奋及充实感。</p>
 <p>心流是一种心无旁骛的专注，作者认为，唯有这样的专注，才能感受到最优心理体验。这本书在西方首次出版是在1990年，中信出版社2009年引进时名为《生命的心流》，译者陈秀娟，译文虽然流畅，总感觉字里行间带有几滴鸡汤的香味。万幸，2011年，中信出版社重新出版了这本书，引进自台湾著名译者张定绮先生的版本，此公翻译的多部外国作品，不管是非虚构作品还是小说，译笔都曼妙纯熟，别有一番滋味。之前那一版的译名为《当下的幸福》，大概当时流行“活在当下”的理念，这个名字和书籍本身其实有不小的差异。毕竟，在作者看来，幸福本身并不是目标，进入最优体验的心流状态才是作者关注的。因此，2017年底，中信再版此书时，书名回归为《心流：最优体验心理学》，才算是朔本正源，功德无量。</p>
-<p>心流怎么实现<br><img alt="p1139468.jpg" data-src="http://opb37u589.bkt.clouddn.com/p1139468.jpg?imageMogr2/thumbnail/!75p"><br>正如米哈里所说：</p>
+<p>心流怎么实现<br><img data-src="http://opb37u589.bkt.clouddn.com/p1139468.jpg?imageMogr2/thumbnail/!75p" alt="p1139468.jpg"><br>正如米哈里所说：</p>
 <p>工作可以残酷而无聊，但也可能充满乐趣和刺激。<br>当今社会，大多数人每天工作都有八小时之久，占据自己清醒时间的一半左右，如果这个时间阶段体验非常糟糕的话，那么，整个人生想要追求幸福也无从谈起。在工作中，糟糕的工作体验往往有这么几种：</p>
 <p>当工作难度很大，自己难以胜任岗位要求的时候，往往感受是<strong>焦虑</strong>。<br>当工作乏味无聊，自己轻松搞定缺乏新鲜感时，往往体会是<strong>厌倦</strong>。<br>当工作既没有挑战，也难以找到价值感的时候，往往表现为<strong>淡漠</strong>。</p>
 <p>而心流体验，则是在工作有难度，但自己如果专注应对，可以挑战的状态，这种状态不仅可以让自己的能力得到更好的提升，更可以让自己进入这种专注状态。作者认为，这种专注应对挑战的状态本身，就是最优的体验，让自己感受到幸福。在工作中，如果已经陷入糟糕的工作体验，不妨按照作者书中说的那样，采用“重新设计工作”的 方式，让自己重获“最优体验”。如何才能做到呢？作者给出了三个步骤：</p>
@@ -619,7 +589,7 @@
 <p>人最宝贵的东西是生命，生命属于人只有一次。一个人的一生应该是这样度过的：当他回首往事的时候，他不会因为虚度年华而悔恨，也不会因为碌碌无为而羞耻；这样，在临死的时候，他就能够说：“我的整个生命和全部精力，都已经献给世界上最壮丽的事业——为人类的解放而斗争。”</p>
 <p>如果仅仅把最优体验当作幸福，认为时时进入心流状态人生就有意义，这样的观点似乎和我们的当代价值观背道而驰。米哈里·契克森米哈赖作为积极心理学的创始人，让心流这种最优体验和人生意义的结合：一个沉浸在王者荣耀中的小学生，和一个沉浸在上帝投不投骰子思考中的科学家同样处于心流状态，他们的体验相似，但从旁观者看来，两者的复杂程度，和人生意义当然也有高下，融合的元素越多，产生的价值越高，这个心流体验就越珍贵。</p>
 <p>我们在游戏和运动中能够体验心流，记住这种心流体验，把这种状态移植到无聊的工作学习中去，从而发现工作学习的意义，甚至可以在挫折中，在人际交往中时时处处体验到心流，最终让自己的生命在社会层面更加有价值，这样会让自己的人生变得更加有意义。我想，这才是最宏达、最壮美的心流体验吧！</p>
-<p><img alt="p1139469.jpg" data-src="http://opb37u589.bkt.clouddn.com/p1139469.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/p1139469.jpg?imageMogr2/thumbnail/!75p" alt="p1139469.jpg"></p>
 <h2 id="准时下班是做完事情的最好方法"><a href="#准时下班是做完事情的最好方法" class="headerlink" title="准时下班是做完事情的最好方法"></a><a href="http://www.luojiji.com/thread-11231-1-1.html" target="_blank" rel="noopener">准时下班是做完事情的最好方法</a></h2><p>时间管理是不少人的痛点，工作好像永远做不完，加班要加到地老天荒，准时下班压根想都不敢想。前日本麦肯锡资深合伙人山梨广一在《终结低等勤奋，麦肯锡精英教你有用的努力》这本书里，提供了一个解决方案：想把事情做完，最简单的方法就是准时下班。即使工作做不完，也要准时下班，这种说法听起来很矛盾，但山梨广一认为这样才能逼自己找出更有效率的做事方法。</p>
 <p>在麦肯锡工作时，山梨广一从前辈身上学会了“强制决定截止时间”，比如不管还有多少工作，晚上八点一定要下班。放着做了一半的工作就下班，一定会觉得不安吧，但是你得忍住，坚持准时下班，这样才能去认真思考“如何在有限的时间内完成工作？”</p>
 <p>山梨广一认为：“人们理智上能够理解提高效率的好处，却很难改变做事方法。有时多工作几个小时其实比改变工作方法要更轻松。” 他以堵车为例，来解释限制时间带来的好处。想像下，你开车到郊区游玩，回程时却因为高速公路堵车而被卡得动弹不得，“用心工作早点回家”这样的工作态度，就像堵车时为了早几分钟到家，利用导航与地图，想尽办法找到一条解困的路；沿着高速公路，跟着堵车状况走走停停就像是加班，这样比调查、思考、想尽办法找出脱困的路要轻松，但花费的时间也比较多。山梨广一说，</p>
@@ -652,8 +622,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Review/" rel="bookmark">Review</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Work/" rel="tag"><i class="fa fa-tag"></i> Work</a>
           </div>
@@ -665,21 +644,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/H/Humor/" rel="next" title="Humor">
-                  <i class="fa fa-chevron-left"></i> Humor
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/F/Framework/" rel="prev" title="Framework">
-                  Framework <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/H/Humor/" rel="prev" title="Humor">
+      <i class="fa fa-chevron-left"></i> Humor
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/F/Framework/" rel="next" title="Framework">
+      Framework <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -692,7 +668,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -723,8 +721,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -733,14 +731,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -751,11 +749,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -789,7 +782,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -801,51 +794,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -854,18 +808,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -875,63 +823,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -939,14 +830,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -973,40 +864,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/W/Work/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

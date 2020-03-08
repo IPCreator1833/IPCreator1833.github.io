@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="记录，创造，分享">
 <meta name="keywords" content="Camera,Photography">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/P/Photography/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/P/Photography/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/P/Photography/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="https://img3.doubanio.com/lpic/s26971656.jpg"></p>
+        <p><img data-src="https://img3.doubanio.com/lpic/s26971656.jpg" alt></p>
 <blockquote>
 <p>记录，创造，分享</p>
 </blockquote>
@@ -317,53 +287,53 @@
 <p>无论是为美术馆、杂志或作者个人作品集而拍摄，实现了目标之后，摄影就取得了真正的成功。1948年，埃里克•霍斯金拍摄了一幅反映仓鸮的作品，其意义并不在于其艺术性，而是在于它为自然主义者提供了大量的信息。霍斯特•P.霍斯特的《戈雅时尚》（1940）目标直指都市精英，他们可能非常了解作品中的引用的艺术作品历史，并欣赏这种严肃的高端时尚。1985年，马丁•帕尔在英国西北部拍摄的这幅年轻女人购买快餐食品的作品则是其私人纪实摄影作品系列的一部分，其目标是以限量版专集形式出版，针对摄影和传媒人士。</p>
 <p>一幅摄影作品是否成功，最重要的一点在于能否为我们所记住，是否能在我们的视觉记忆中占有一席之地。《摄影原来如此神奇》一书中的大部分作品都很知名，曾在欧美摄影发展史上产生过重大影响。出版，收藏，展览，谈论，它们以各种不同的方式被人们“铭记”。它们经受住了时间的洗礼，并随着历史的增长获得了更多不同层面的意义，但其主要目的与核心仍保存完好。它们成了时间与空间的象征，每当我们想起美国的沙暴区，沃克•埃文斯或者多萝西娅•兰格的作品就会浮出脑海。当我们反思战争与冲突的悲剧性，新闻摄影师比如玛格丽特•伯克-怀特和罗伯特•卡帕的作品，就是我们视觉存储记忆的一部分。苏恩•琼森和埃斯科•曼尼科那些拍摄居住在斯堪的纳维亚半岛的乡下人的作品仍令人印象深刻，它们就是社会与身体隔绝的普遍象征，它们超越了地理的限制，具有了普遍性。</p>
 <p>当我们懂得了它，记住了它；当它提供了我们是谁，我们境况如何的细节与信息；当它赋予空间，让我们思考、想象，构建自己的故事时，摄影就成功了。<br>它将我们带往事件发生的中心之地。</p>
-<p><img alt data-src="http://opb37u589.bkt.clouddn.com/Pdpkeyfeature-sm-g935tzdatmb-600x600-C1-062016.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Pdpkeyfeature-sm-g935tzdatmb-600x600-C1-062016.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <p><a href="https://commons.wikimedia.org/wiki/Commons:Picture_of_the_Year/2016" target="_blank" rel="noopener">Picture of the Year</a></p>
 <p>Picture of the Year 2016 is the eleventh edition of the annual Wikimedia Commons image competition, which recognizes exceptional contributions by users on Wikimedia Commons.<br>Wikimedia users are invited to vote for their favorite images featured on Commons (FP) during the year 2016, to produce a single Picture of the Year.</p>
-<h2 id="2006-Winner"><a href="#2006-Winner" class="headerlink" title="2006 Winner"></a>2006 Winner</h2><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/Polarlicht_2.jpg"></p>
-<h2 id="2007-Winner"><a href="#2007-Winner" class="headerlink" title="2007 Winner"></a>2007 Winner</h2><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/Broadway_tower_edit.jpg"></p>
-<h2 id="2008-Winner"><a href="#2008-Winner" class="headerlink" title="2008 Winner"></a>2008 Winner</h2><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/Biandintz_eta_zaldiak_-_modified2.jpg"></p>
-<h2 id="2009-Winner"><a href="#2009-Winner" class="headerlink" title="2009 Winner"></a>2009 Winner</h2><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/Sikh_pilgrim_at_the_Golden_Temple_%28Harmandir_Sahib%29_in_Amritsar,_India.jpg"></p>
-<h2 id="2010-Winner"><a href="#2010-Winner" class="headerlink" title="2010 Winner"></a>2010 Winner</h2><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/Laser_Towards_Milky_Ways_Centre.jpg"></p>
-<h2 id="2011-Winner"><a href="#2011-Winner" class="headerlink" title="2011 Winner"></a>2011 Winner</h2><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/Lake_Bondhus_Norway_2862.jpg"></p>
-<h2 id="2012-Winner"><a href="#2012-Winner" class="headerlink" title="2012 Winner"></a>2012 Winner</h2><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/Pair_of_Merops_apiaster_feeding.jpg"></p>
-<h2 id="2013-Winner"><a href="#2013-Winner" class="headerlink" title="2013 Winner"></a>2013 Winner</h2><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/Gl%C3%BChwendel_brennt_durch.jpg"></p>
-<h2 id="2014-Winner"><a href="#2014-Winner" class="headerlink" title="2014 Winner"></a>2014 Winner</h2><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/A_butterfly_feeding_on_the_tears_of_a_turtle_in_Ecuador.jpg"></p>
-<h2 id="2015-Winner"><a href="#2015-Winner" class="headerlink" title="2015 Winner"></a>2015 Winner</h2><p><img alt data-src="http://okkntqe2h.bkt.clouddn.com/Pluto-01_Stern_03_Pluto_Color_TXT.jpg"></p>
-<h2 id="2016-Winner"><a href="#2016-Winner" class="headerlink" title="2016 Winner"></a>2016 Winner</h2><p><img alt="Jubilee_and_Munin,_Ravens,_Tower_of_London_2016-04-30.jpg" data-src="http://opb37u589.bkt.clouddn.com/Jubilee_and_Munin,_Ravens,_Tower_of_London_2016-04-30.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="2006-Winner"><a href="#2006-Winner" class="headerlink" title="2006 Winner"></a>2006 Winner</h2><p><img data-src="http://okkntqe2h.bkt.clouddn.com/Polarlicht_2.jpg" alt></p>
+<h2 id="2007-Winner"><a href="#2007-Winner" class="headerlink" title="2007 Winner"></a>2007 Winner</h2><p><img data-src="http://okkntqe2h.bkt.clouddn.com/Broadway_tower_edit.jpg" alt></p>
+<h2 id="2008-Winner"><a href="#2008-Winner" class="headerlink" title="2008 Winner"></a>2008 Winner</h2><p><img data-src="http://okkntqe2h.bkt.clouddn.com/Biandintz_eta_zaldiak_-_modified2.jpg" alt></p>
+<h2 id="2009-Winner"><a href="#2009-Winner" class="headerlink" title="2009 Winner"></a>2009 Winner</h2><p><img data-src="http://okkntqe2h.bkt.clouddn.com/Sikh_pilgrim_at_the_Golden_Temple_%28Harmandir_Sahib%29_in_Amritsar,_India.jpg" alt></p>
+<h2 id="2010-Winner"><a href="#2010-Winner" class="headerlink" title="2010 Winner"></a>2010 Winner</h2><p><img data-src="http://okkntqe2h.bkt.clouddn.com/Laser_Towards_Milky_Ways_Centre.jpg" alt></p>
+<h2 id="2011-Winner"><a href="#2011-Winner" class="headerlink" title="2011 Winner"></a>2011 Winner</h2><p><img data-src="http://okkntqe2h.bkt.clouddn.com/Lake_Bondhus_Norway_2862.jpg" alt></p>
+<h2 id="2012-Winner"><a href="#2012-Winner" class="headerlink" title="2012 Winner"></a>2012 Winner</h2><p><img data-src="http://okkntqe2h.bkt.clouddn.com/Pair_of_Merops_apiaster_feeding.jpg" alt></p>
+<h2 id="2013-Winner"><a href="#2013-Winner" class="headerlink" title="2013 Winner"></a>2013 Winner</h2><p><img data-src="http://okkntqe2h.bkt.clouddn.com/Gl%C3%BChwendel_brennt_durch.jpg" alt></p>
+<h2 id="2014-Winner"><a href="#2014-Winner" class="headerlink" title="2014 Winner"></a>2014 Winner</h2><p><img data-src="http://okkntqe2h.bkt.clouddn.com/A_butterfly_feeding_on_the_tears_of_a_turtle_in_Ecuador.jpg" alt></p>
+<h2 id="2015-Winner"><a href="#2015-Winner" class="headerlink" title="2015 Winner"></a>2015 Winner</h2><p><img data-src="http://okkntqe2h.bkt.clouddn.com/Pluto-01_Stern_03_Pluto_Color_TXT.jpg" alt></p>
+<h2 id="2016-Winner"><a href="#2016-Winner" class="headerlink" title="2016 Winner"></a>2016 Winner</h2><p><img data-src="http://opb37u589.bkt.clouddn.com/Jubilee_and_Munin,_Ravens,_Tower_of_London_2016-04-30.jpg?imageMogr2/thumbnail/!75p" alt="Jubilee_and_Munin,_Ravens,_Tower_of_London_2016-04-30.jpg"></p>
 <blockquote>
 <p>First place: Jubilee and Munin, Ravens of the Tower of London</p>
 </blockquote>
-<p><img alt="Khaoyai_06.jpg" data-src="http://opb37u589.bkt.clouddn.com/Khaoyai_06.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Khaoyai_06.jpg?imageMogr2/thumbnail/!75p" alt="Khaoyai_06.jpg"></p>
 <blockquote>
 <p>Second place: Wild elephants walking up a road in the area of Khao Yai National Park</p>
 </blockquote>
-<p><img alt="Polar_bear_(Ursus_maritimus)_in_the_drift_ice_region_north_of_Svalbard.jpg" data-src="http://opb37u589.bkt.clouddn.com/Polar_bear_(Ursus_maritimus">_in_the_drift_ice_region_north_of_Svalbard.jpg?imageMogr2/thumbnail/!75p)</p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Polar_bear_(Ursus_maritimus" alt="Polar_bear_(Ursus_maritimus)_in_the_drift_ice_region_north_of_Svalbard.jpg">_in_the_drift_ice_region_north_of_Svalbard.jpg?imageMogr2/thumbnail/!75p)</p>
 <blockquote>
 <p>Third place: Male Polar bear (Ursus maritimus) chasing a bearded seal.</p>
 </blockquote>
 <h2 id="拍照快狠準-國內外媒體「獎」評不斷"><a href="#拍照快狠準-國內外媒體「獎」評不斷" class="headerlink" title="拍照快狠準 國內外媒體「獎」評不斷"></a><a href="http://www.samsung.com/tw/campaigns/2016s7awardmarketing/award.html" target="_blank" rel="noopener">拍照快狠準 國內外媒體「獎」評不斷</a></h2><p>Samsung Galaxy S7 edge｜S7 「手機界的單眼相機王」，發表一個月已獲得國外科技網站及媒體多項手機大賞殊榮及編輯嚴選推薦。知名科技網站 ePrice網友盲測票選，近八成網友肯定 Galaxy S7 系列為 <strong>2016 年上半年最佳旗艦拍照手機</strong>！各界的支持證明 Galaxy S7 edge｜S7 絕對是史上最強的智慧型手機！</p>
-<p><img alt data-src="http://opb37u589.bkt.clouddn.com/screencapture-samsung-tw-campaigns-2016s7awardmarketing-award-html-1507904087469.png?imageMogr2/thumbnail/!75p"></p>
-<h2 id="干货丨记住这7点，手机也能拍大片"><a href="#干货丨记住这7点，手机也能拍大片" class="headerlink" title="干货丨记住这7点，手机也能拍大片"></a><a href="http://www.oneplusbbs.com/thread-3594783-1-1.html" target="_blank" rel="noopener">干货丨记住这7点，手机也能拍大片</a></h2><h2 id="手机旅拍摄影全攻略"><a href="#手机旅拍摄影全攻略" class="headerlink" title="手机旅拍摄影全攻略 "></a><a href="http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;tid=3599557" target="_blank" rel="noopener">手机旅拍摄影全攻略 </a></h2><h2 id="玩玩手动RAW格式-amp-人像模式"><a href="#玩玩手动RAW格式-amp-人像模式" class="headerlink" title="玩玩手动RAW格式&amp;人像模式"></a><a href="http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;tid=3591503" target="_blank" rel="noopener">玩玩手动RAW格式&amp;人像模式</a></h2><h2 id="用手机拍摄人像大片（上）"><a href="#用手机拍摄人像大片（上）" class="headerlink" title="用手机拍摄人像大片（上）"></a><a href="http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;tid=3560410" target="_blank" rel="noopener">用手机拍摄人像大片（上）</a></h2><h2 id="手机摄影的高阶方式——RAW格式摄影"><a href="#手机摄影的高阶方式——RAW格式摄影" class="headerlink" title="手机摄影的高阶方式——RAW格式摄影"></a><a href="http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;tid=3358648" target="_blank" rel="noopener">手机摄影的高阶方式——RAW格式摄影</a></h2><h2 id><a href="#" class="headerlink" title></a><a href></a></h2><h2 id="-1"><a href="#-1" class="headerlink" title></a><a href></a></h2><h2 id="-2"><a href="#-2" class="headerlink" title></a><a href></a></h2><h2 id="-3"><a href="#-3" class="headerlink" title></a><a href></a></h2><h2 id="一部手机实现的“小人国”——手机微距拍摄指南"><a href="#一部手机实现的“小人国”——手机微距拍摄指南" class="headerlink" title="一部手机实现的“小人国”——手机微距拍摄指南 "></a><a href="http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;tid=3756530" target="_blank" rel="noopener">一部手机实现的“小人国”——手机微距拍摄指南 </a></h2><p>说起微距摄影，我们的第一印象都是花鸟鱼虫。但是，其实微距摄影能够拍摄的内容和题材远比我们想的更多。我们不仅仅能够使用相机去描绘世界，我们还可以相机去创造世界～例如以下我拍摄的一些微距作品：<br><img alt data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/184523crkzfjc3o8zggxm3.jpg.w_768.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/screencapture-samsung-tw-campaigns-2016s7awardmarketing-award-html-1507904087469.png?imageMogr2/thumbnail/!75p" alt></p>
+<h2 id="干货丨记住这7点，手机也能拍大片"><a href="#干货丨记住这7点，手机也能拍大片" class="headerlink" title="干货丨记住这7点，手机也能拍大片"></a><a href="http://www.oneplusbbs.com/thread-3594783-1-1.html" target="_blank" rel="noopener">干货丨记住这7点，手机也能拍大片</a></h2><h2 id="手机旅拍摄影全攻略"><a href="#手机旅拍摄影全攻略" class="headerlink" title="手机旅拍摄影全攻略 "></a><a href="http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;tid=3599557" target="_blank" rel="noopener">手机旅拍摄影全攻略 </a></h2><h2 id="玩玩手动RAW格式-amp-人像模式"><a href="#玩玩手动RAW格式-amp-人像模式" class="headerlink" title="玩玩手动RAW格式&amp;人像模式"></a><a href="http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;tid=3591503" target="_blank" rel="noopener">玩玩手动RAW格式&amp;人像模式</a></h2><h2 id="用手机拍摄人像大片（上）"><a href="#用手机拍摄人像大片（上）" class="headerlink" title="用手机拍摄人像大片（上）"></a><a href="http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;tid=3560410" target="_blank" rel="noopener">用手机拍摄人像大片（上）</a></h2><h2 id="手机摄影的高阶方式——RAW格式摄影"><a href="#手机摄影的高阶方式——RAW格式摄影" class="headerlink" title="手机摄影的高阶方式——RAW格式摄影"></a><a href="http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;tid=3358648" target="_blank" rel="noopener">手机摄影的高阶方式——RAW格式摄影</a></h2><h2 id><a href="#" class="headerlink" title></a><a href></a></h2><h2 id="-1"><a href="#-1" class="headerlink" title></a><a href></a></h2><h2 id="-2"><a href="#-2" class="headerlink" title></a><a href></a></h2><h2 id="-3"><a href="#-3" class="headerlink" title></a><a href></a></h2><h2 id="一部手机实现的“小人国”——手机微距拍摄指南"><a href="#一部手机实现的“小人国”——手机微距拍摄指南" class="headerlink" title="一部手机实现的“小人国”——手机微距拍摄指南 "></a><a href="http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;tid=3756530" target="_blank" rel="noopener">一部手机实现的“小人国”——手机微距拍摄指南 </a></h2><p>说起微距摄影，我们的第一印象都是花鸟鱼虫。但是，其实微距摄影能够拍摄的内容和题材远比我们想的更多。我们不仅仅能够使用相机去描绘世界，我们还可以相机去创造世界～例如以下我拍摄的一些微距作品：<br><img data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/184523crkzfjc3o8zggxm3.jpg.w_768.jpg" alt></p>
 <p>看了以上的作品，你一定也想马上试一试动手进行拍摄。于是开始拿出自己的相机，准备大干一番！但是等等，在你拍摄之前，要有一件非常重要的事情，需要说明一下：</p>
 <p>不是任何的相机镜头都适合拍摄微距的。微距拍摄往往对器材有着非常严苛的要求，需要专业的微距镜头等等原因，导致对于很多摄影爱好者来说存在一定的门槛。那么，为什么普通镜头不能进行很好的微距拍摄呢？很简单，因为我们的相机虽然可以对无穷远进行对焦，但是不能无穷近，这也就存在着最小的对焦距离。正是因为最小对焦距离的存在，往往我们不能无限靠近被摄体。</p>
 <p>好了，是不是刚刚燃烧起来的拍摄热情，又凉了一大截，并骂一句又想骗我买镜头？别着急，虽然相机需要专业的微距镜头才能进行拍摄，但是我们有手机！</p>
-<p>所以，今天我们的目的是，教大家如何使用手机创造微缩世界。<br><img alt data-src></p>
+<p>所以，今天我们的目的是，教大家如何使用手机创造微缩世界。<br><img src alt></p>
 <p>以上五张作品，全部都是我使用一加5手机拍摄创作的微距作品。而我们今天也将会以一加五手机为例，分享手机微缩摄影的一些小技巧。</p>
-<p>一、拍摄前的准备<br>首先，要说明的是，摄影创作很多时候并不只是拍摄中的一次按快门。按快门之前的摄影项目策划，按之后的摄影后期，都对一组照片有着非常重要的影响。对于微缩摄影而言，更是需要在开始拍摄之前进行精心的准备。我以上述作品为例，在开始拍摄之前准备的东西如下图：<br><img alt data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/184916lc0n01bindi5s5on.jpg.w_768.jpg"><br><img alt data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/184931tfdfb3vkl0zb37mm.jpg.w_768.jpg"></p>
-<p>1.一部可以手动调节焦距的手机，这点至关重要，如一加五的专业模式都可以手动调节。<br>2.一些可以在微观世界里充做参天大树的果蔬。西兰花是我最喜欢的一个道具，它的造型非常好的模拟树木。当然了，这是一个非常开脑洞的环节，就像我前面的作品，你可以把可乐瓶盖当作飞船，你可以把鸡蛋壳当作蕴含宝藏的山体。可以说你想是什么，就是什么。<br>3.道具小人。这对整个微缩摄影来说，也是非常重要的一个部分，因为是这些小人的神态姿势决定了你所有拍摄故事的整体结构。这些小人最简单的途径是就是淘宝购买，一般搜索微缩小人就可以了。<br>4还有两个，在画面中出现，但是你一定忽略的道具：背景和补充光源。这一系列，我因为没有找到满意的背景纸，就拿一本心爱的杉本博司画册作为背景（心疼我一秒）。另一方面，微距拍摄往往需要补充光源，一个小台灯，或者是另一个手机的手电筒都可以。<br>关于制作道具，其实有非常多的小技巧，例如这幅作品中的雪：<br><img alt data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185114t31063u8th8j63o3.jpg.w_768.jpg"></p>
+<p>一、拍摄前的准备<br>首先，要说明的是，摄影创作很多时候并不只是拍摄中的一次按快门。按快门之前的摄影项目策划，按之后的摄影后期，都对一组照片有着非常重要的影响。对于微缩摄影而言，更是需要在开始拍摄之前进行精心的准备。我以上述作品为例，在开始拍摄之前准备的东西如下图：<br><img data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/184916lc0n01bindi5s5on.jpg.w_768.jpg" alt><br><img data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/184931tfdfb3vkl0zb37mm.jpg.w_768.jpg" alt></p>
+<p>1.一部可以手动调节焦距的手机，这点至关重要，如一加五的专业模式都可以手动调节。<br>2.一些可以在微观世界里充做参天大树的果蔬。西兰花是我最喜欢的一个道具，它的造型非常好的模拟树木。当然了，这是一个非常开脑洞的环节，就像我前面的作品，你可以把可乐瓶盖当作飞船，你可以把鸡蛋壳当作蕴含宝藏的山体。可以说你想是什么，就是什么。<br>3.道具小人。这对整个微缩摄影来说，也是非常重要的一个部分，因为是这些小人的神态姿势决定了你所有拍摄故事的整体结构。这些小人最简单的途径是就是淘宝购买，一般搜索微缩小人就可以了。<br>4还有两个，在画面中出现，但是你一定忽略的道具：背景和补充光源。这一系列，我因为没有找到满意的背景纸，就拿一本心爱的杉本博司画册作为背景（心疼我一秒）。另一方面，微距拍摄往往需要补充光源，一个小台灯，或者是另一个手机的手电筒都可以。<br>关于制作道具，其实有非常多的小技巧，例如这幅作品中的雪：<br><img data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185114t31063u8th8j63o3.jpg.w_768.jpg" alt></p>
 <p>很多人的直觉一定是面粉或者是淀粉，的确主要成分是面粉，但是出了面粉还需要添加一些白糖，这样我们的雪才能更白一些。<br>好啦，做完以上的准备相信你的心里，已经构建好了故事的蓝图，那让我们继续前进！</p>
-<p>二、场景构思<br>我们拍摄的第一步当然是进行故事的构思和场景的搭建。<br><img alt data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185153h2u6h2jd563ulc33.jpg.w_768.jpg"></p>
-<p>在这一幅作品中，看到了互相搀扶的两个小人，就有着一种相依为命的浪漫感。于是我就想到了夕阳下人物的剪影。想要拍摄剪影就需要进行逆光拍摄。所以，我就大致构思出下面的拍摄示意图：<br><img alt data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185239p4jkj94vve1elgrk.png.w_768.png"></p>
+<p>二、场景构思<br>我们拍摄的第一步当然是进行故事的构思和场景的搭建。<br><img data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185153h2u6h2jd563ulc33.jpg.w_768.jpg" alt></p>
+<p>在这一幅作品中，看到了互相搀扶的两个小人，就有着一种相依为命的浪漫感。于是我就想到了夕阳下人物的剪影。想要拍摄剪影就需要进行逆光拍摄。所以，我就大致构思出下面的拍摄示意图：<br><img data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185239p4jkj94vve1elgrk.png.w_768.png" alt></p>
 <p>我使用台灯，作为主要的光源，在小人和台灯之间添加了一个杯子来进行丰富场景。为了使整一个作品有着非常丰富的暖色调，我在杯子之中加入了一些黄色的液体。啥，是不是还需要买黄色染料，那你一定是没有喝过啤酒吧！当你进行实际操作的时候，你可能会遇到一点小困难：道具小人站不住。这就非常尴尬了，因为小人的体积很小，所以非常难掌握平衡。别着急，很简单，这个时候我们只需要一个双面胶就可以解决问题。只要我们修剪一点点的双面胶，粘在小人的脚下，这样我们就可以让小人站起来！</p>
-<p>这一系列的作品，是我看到一人一狗，就想到浪迹天涯。于是决定，为他们设计一个看风景的场景。我用了两颗西兰花当作前景的树木，让人物坐在绿色的植物下，这样可以让整个空间更加丰富立体有层次。为了让整个画面有趣味性，我还在树后面添加了一个偷拍的摄影师。看风景的你，也是别人的风景。这幅作品的拍摄示意图如下：<br><img alt data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185612fk5vduk3wufknw3d.png.w_768.png"></p>
+<p>这一系列的作品，是我看到一人一狗，就想到浪迹天涯。于是决定，为他们设计一个看风景的场景。我用了两颗西兰花当作前景的树木，让人物坐在绿色的植物下，这样可以让整个空间更加丰富立体有层次。为了让整个画面有趣味性，我还在树后面添加了一个偷拍的摄影师。看风景的你，也是别人的风景。这幅作品的拍摄示意图如下：<br><img data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185612fk5vduk3wufknw3d.png.w_768.png" alt></p>
 <p>这里面台灯起到的作用非常重要，光线氛围一定是一幅摄影作品中最至关重要的部分。</p>
-<p>三、实际拍摄<br>好了，这个时候，我们的场景搭建也完成了，下面就开始我们的正式拍摄！<br>对于微距拍摄而言，最重要的就是对焦操作，可以说正确的对焦操作是微距拍摄的根本。但是，除了能够手动调节，能够更近的对焦也很重要。这里要说明的是，不同手机品牌的最近对焦距离不一样，大家可以自行尝试一下自己的手机最小对焦距离。我使用的一加五最小对焦距离很近，可以很不错的完成类似的微距拍摄。所以，接下来我就以一加五为例：<br>1.打开相机后，找到不同的拍摄模式：<br> <img alt data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185637gwsct7zczwyaugya.jpg.w_768.jpg"></p>
-<p>2.选择专业模式（即手动模式）：<br> <img alt data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185709ubg2gh2dmlz9z2l1.jpg.w_768.jpg"></p>
-<p>3.找到对焦调节按钮，并将按钮调节到“花朵”处，也就是最近对焦距离处。<br> <img alt data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185720h24e2grgf4cggztd.jpg.w_768.jpg"></p>
+<p>三、实际拍摄<br>好了，这个时候，我们的场景搭建也完成了，下面就开始我们的正式拍摄！<br>对于微距拍摄而言，最重要的就是对焦操作，可以说正确的对焦操作是微距拍摄的根本。但是，除了能够手动调节，能够更近的对焦也很重要。这里要说明的是，不同手机品牌的最近对焦距离不一样，大家可以自行尝试一下自己的手机最小对焦距离。我使用的一加五最小对焦距离很近，可以很不错的完成类似的微距拍摄。所以，接下来我就以一加五为例：<br>1.打开相机后，找到不同的拍摄模式：<br> <img data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185637gwsct7zczwyaugya.jpg.w_768.jpg" alt></p>
+<p>2.选择专业模式（即手动模式）：<br> <img data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185709ubg2gh2dmlz9z2l1.jpg.w_768.jpg" alt></p>
+<p>3.找到对焦调节按钮，并将按钮调节到“花朵”处，也就是最近对焦距离处。<br> <img data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185720h24e2grgf4cggztd.jpg.w_768.jpg" alt></p>
 <p>这个时候，相机的对焦距离就是在最小的对焦距离上，我们只要逐渐靠近被摄物体，直到画面中你希望的清晰的点清晰，就可以按下快门了！是不是非常的简单！～</p>
 <p>但是在实际操作过程中，还有两个小的建议：<br>1.<strong>微距拍摄，对拍摄物体的进光量需要一定的要求，所以请保证拍摄光源充足。适当时候，可以使用另一只手机的手电筒补光。</strong><br>2.微距拍摄由于距离近，景深浅，所以轻微的画面晃动就会产生模糊，拍摄时请保证画面<strong>稳定</strong>。如果你有一个八爪鱼三脚架就最好啦！</p>
-<p>更多题材<br>在文章的一开始，我也说过微距拍摄有非常多的题材。那么我刚刚提到的拍摄方法，也同样适用于其他的拍摄。例如下面这些作品<br>：<br><img alt data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185815figlciglsoos6dgg.jpg.w_768.jpg"></p>
+<p>更多题材<br>在文章的一开始，我也说过微距拍摄有非常多的题材。那么我刚刚提到的拍摄方法，也同样适用于其他的拍摄。例如下面这些作品<br>：<br><img data-src="http://static.oneplus.cn/data/attachment/forum/201710/26/185815figlciglsoos6dgg.jpg.w_768.jpg" alt></p>
 <p>并且，由于对焦距离足够近，所以<strong>景深浅，即使是手机也会很容易产生背景虚化效果</strong>～<br>好了，以上就是关于手机拍摄微距的基本方法了，还等什么，还不赶紧去试试！</p>
 
     </div>
@@ -371,8 +341,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Quality/" rel="bookmark">Quality</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Player/" rel="bookmark">Player</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Mamba/" rel="bookmark">Mamba</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/DataBase/" rel="bookmark">DataBase</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Image/" rel="bookmark">Image</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Camera/" rel="tag"><i class="fa fa-tag"></i> Camera</a>
               <a href="/tags/Photography/" rel="tag"><i class="fa fa-tag"></i> Photography</a>
@@ -385,21 +376,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/K/Knowledge/" rel="next" title="Knowledge">
-                  <i class="fa fa-chevron-left"></i> Knowledge
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/P/Passion/" rel="prev" title="Passion">
-                  Passion <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/K/Knowledge/" rel="prev" title="Knowledge">
+      <i class="fa fa-chevron-left"></i> Knowledge
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/P/Passion/" rel="next" title="Passion">
+      Passion <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -412,7 +400,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -443,8 +453,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -453,14 +463,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -471,11 +481,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -509,7 +514,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -521,51 +526,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -574,18 +540,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -595,63 +555,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -659,14 +562,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -693,40 +596,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/P/Photography/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

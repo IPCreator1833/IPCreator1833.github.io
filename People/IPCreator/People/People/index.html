@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="人物真实的一面。">
 <meta name="keywords" content="People">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/People/" itemprop="url" rel="index">
-                    <span itemprop="name">People</span>
-                  </a>
+                  <a href="/categories/People/" itemprop="url" rel="index"><span itemprop="name">People</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/People/IPCreator/People/People/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/People/IPCreator/People/People/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/People/IPCreator/People/People/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,16 +256,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="/img/content/Lixiaolai-Cover.jpg"></p>
+        <p><img data-src="/img/content/Lixiaolai-Cover.jpg" alt></p>
 <blockquote>
 <p>人物真实的一面。</p>
 </blockquote>
 <a id="more"></a>
 <h2 id="《蒋介石与现代中国的奋斗》读后感"><a href="#《蒋介石与现代中国的奋斗》读后感" class="headerlink" title="《蒋介石与现代中国的奋斗》读后感"></a><a href="http://www.ruanyifeng.com/blog/2013/02/chiang_kai-shek.html" target="_blank" rel="noopener">《蒋介石与现代中国的奋斗》读后感</a></h2><p>作者： 阮一峰<br>日期： 2013年2月28日</p>
 <p>去年暑假，我读完了美国历史学家陶涵（Jay Taylor）的《蒋经国传》。这一周，又读完了他的后一部作品《蒋介石与现代中国的奋斗》。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013022801.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013022801.jpg" alt></p>
 <p>我读的是台湾2010年的版本，但是该书已经于2012年由中信出版社引进了（书名改为《蒋介石与现代中国》）。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013022802.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013022802.jpg" alt></p>
 <p>这本书能够在大陆出版（不管删节了多少字），是我们国家的一大进步。因为它全面地为蒋介石辩护，完全把蒋介石写成了一个正面人物，与官方的历史观截然相反。</p>
 <p>当然，它不是那种歌功颂德式的文字，而是以各种历史资料为依据，试图做出尽可能客观的结论。请先看我做的笔记，该书对一些历史问题是怎么解释的。</p>
 <p>=================================</p>
@@ -354,16 +324,16 @@
 <p>我不敢下结论。各方出于自己的目的，都对历史进行歪曲和编造，我不知道信任谁。</p>
 </blockquote>
 <p>历史学家黄仁宇在回忆录中曾经说，他相信对蒋介石评价的最低点已经过去了，以后会逐步上升。而周恩来被美国记者问到，如何评价法国革命（French Revolution）时，曾经说过一句有名的话，”现在下结论还太早”（too early to say）。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013022803.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013022803.jpg" alt></p>
 <p>好在蒋介石有写日记的习惯，他的1915年到1972年的日记，现在都保存在美国胡佛图书馆。等到日记完全公开出版的那一天，也许才是可以对他进行公正评价的时候。</p>
 <p>（完）</p>
 <h2 id="蒋经国与台湾民主进程"><a href="#蒋经国与台湾民主进程" class="headerlink" title="蒋经国与台湾民主进程"></a><a href="http://www.ruanyifeng.com/blog/2012/07/chiang_ching-kuo.html" target="_blank" rel="noopener">蒋经国与台湾民主进程</a></h2><p>作者： 阮一峰<br>日期： 2012年7月25日</p>
 <p>英国《经济学家》杂志，每年公布一次”民主指数”（Democracy Index），用来评估世界各国和地区的民主程度。</p>
 <p>在2011年的评选中，台湾排在第37位，是排名最高的华人地区。（香港排名第80位，新加坡第81位，还有的地区倒数。）</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201207/bg2012072502.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201207/bg2012072502.jpg" alt></p>
 <p>为什么台湾可以推行民主制度，其他华人地区却做不到？二战结束后，台湾还是一个高度集权的社会，蒋介石实行独裁统治，为什么半个世纪之后一切完全改变？如果台湾可以在和平条件下，实现民主转变，其他地区行不行？</p>
 <p>最近，我读完了美国人陶涵的《蒋经国传》，了解了台湾民主制度的由来，对上面这些问题有了新的认识。这本《蒋经国传》是同类书籍中最好的一本，资料详实，信息量大，叙述清晰，立场客观，推荐阅读。（以下的引文都出自该书。）</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201207/bg2012072501.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201207/bg2012072501.jpg" alt></p>
 <p>《蒋经国传》（英文版：哈佛大学出版社，2000；繁体中文版：时报出版公司，2001；简体中文版：新华出版社，2002，天津华文天下图书有限公司，2010。）</p>
 <p>一、民主的起步</p>
 <p>1986年3月，蒋经国在国民党十二届三中全会上，提出”政治革新”的主张，决定开放党禁报禁，允许自由成立政党、自由出版报纸。</p>
@@ -423,20 +393,20 @@
 <p>（完）</p>
 <h2 id="胡适的三个主义"><a href="#胡适的三个主义" class="headerlink" title="胡适的三个主义"></a><a href="http://www.ruanyifeng.com/blog/2012/04/hu_shih.html" target="_blank" rel="noopener">胡适的三个主义</a></h2><p>作者： 阮一峰<br>日期： 2012年4月13日</p>
 <p>来台湾之前，我就想好了，一定要去胡适纪念馆看看。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041301.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041301.jpg" alt></p>
 <p>（图一，胡适，1891–1962。）</p>
 <p>昨天终于成行，先坐捷运，到了位于南港的中央研究院。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041302.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041302.jpg" alt></p>
 <p>（图二，中央研究院，台北市南港区研究院路二段128号。）</p>
 <p>然后，按照地图，找到了西南角的”胡适纪念馆”。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041303.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041303.jpg" alt></p>
 <p>（图三，胡适纪念馆入口。）</p>
 <p>=================================================</p>
 <p>我喜欢胡适，是从大学期间阅读《胡适口述自传》开始的。这本书让我大开眼界，意识到真正的学术不同于官方的意识形态，而是一种生动活泼、引人入胜的智力追求。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041304.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041304.jpg" alt></p>
 <p>（图四，《胡适口述自传》，唐德刚整理。）</p>
 <p>后来，我大量阅读胡适的著作，断断续续读完了四卷本的《胡适文存》和一部分《胡适全集》。在治学方法和为人处事上，都深受他的影响。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041305.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041305.jpg" alt></p>
 <p>（图五，《胡适全集》，安徽人民出版社，44卷，2003年。）</p>
 <p>在我看来，胡适的主要信念，可以总结为三个主义：<strong>实用主义、实验主义和自由主义。</strong></p>
 <p>一、实用主义</p>
@@ -449,7 +419,7 @@
 <p>“主义的危险，就是能使人心满意足，自以为寻着治病的根本方法，从此用不着费心力去研究这个那个具体问题的解决法了。”</p>
 <p>他主张年轻人要把自己的人生，用来解决实际的问题。</p>
 <p>“生命本没有意义，你要给它什么意义，它就有什么意义。与其终日冥想人生有何意义，不如试用此生做点有意义的事。”</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041306.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041306.jpg" alt></p>
 <p>（图六，胡适纪念馆入口。）</p>
 <p>二、实验主义</p>
 <p>怎么解决实际的问题呢？胡适说，要用实验的方法，强调证据。</p>
@@ -462,7 +432,7 @@
 <p>“世间有一种最流行的迷信，叫做’服从多数的迷信’。人都以为多数人的公论总是不错的。”</p>
 <p>“要用自己的头脑独立思考，不要轻易受人惑，不要轻易相信别人的理论，哪怕是我胡适说的话。”</p>
 <p>“我这里千言万语，只是要教人一个不受人惑的方法。被孔丘、朱熹牵着鼻子走，固然不算高明；被马克思、列宁、斯大林牵着鼻子走，也算不得好汉。我自己决不想牵着谁的鼻子走。我只希望尽我的微薄的能力，教我的少年朋友们学一点防身的本领，努力做一个不受人惑的人。”</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041307.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041307.jpg" alt></p>
 <p>（图七，胡适纪念馆陈列室。）</p>
 <p>三、自由主义</p>
 <p>胡适认为，一个有用的人必须思想自由，而一个强大的国家只可能是由无数自由的个人组成。</p>
@@ -474,7 +444,7 @@
 <p>“中国社会最爱专制，往往用强力摧折个人的个性，压制个人自由独立的精神；等到个人的个性都消灭了，等到自由独立的精神都完了，中国社会自身也没有生气了，也不会进步了。”</p>
 <p>“中国的教育，不但不能救亡，简直可以亡国。”</p>
 <p>“明明是男盗女娼的社会，我们偏说是圣贤礼仪之邦；明明是赃官污吏的政治，我们偏要歌功颂德；明明是不可救药的大病，我们偏说一点病都没有！”</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041308.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041308.jpg" alt></p>
 <p>（图八，胡适的卧室。）</p>
 <p>四、人生态度</p>
 <p>胡适用自己的行为，积极地实践上面三个信仰。</p>
@@ -491,7 +461,7 @@
 <p>我们要深信；今日的努力，必定有将来的大收成。</p>
 </blockquote>
 <p>佛典里有一句话：”福不唐捐”。唐捐就是白白的丢了。我们也应该说：”功不唐捐！”没有一点努力是会白白的丢了的。在我们看不见想不到的时候，在我们看不见想不到的方向，你瞧！你下的种子早已生根发叶开花结果了！”</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041309.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041309.jpg" alt></p>
 <p>（图九，胡适的会客厅。）</p>
 <p>胡适很喜欢引用范仲淹的一句名言：</p>
 <blockquote>
@@ -499,29 +469,29 @@
 </blockquote>
 <p>1962年年2月24日，中央研究院召开第五次院士会议。胡适不顾自己刚刚心脏病出院，参加了上午的会议，并且在晚上6点半出席了庆祝酒会。</p>
 <p>在酒会上，他发表了即席演讲。不料讲到一半，突然脸色发白，倒在地上。送到医院后，终因心脏病突发，宣告不治，享年71岁。他用自己的生命实践了”宁鸣而死”。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041310.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041310.jpg" alt></p>
 <p>（图十，胡适去世当天的照片，可以看到他面容憔悴。）</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041311.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041311.jpg" alt></p>
 <p>（图十一，胡适突然倒地，溘然长逝。）</p>
 <p>=========================================================</p>
 <p>离开”胡适纪念馆”，走出中央研究院的大门，马路对面就是”胡适公园”。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041312.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041312.jpg" alt></p>
 <p>（图十二，胡适公园。）</p>
 <p>首先映入眼帘的是一排喷水池，后面小山上的白色建筑就是胡适的墓地。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041313.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041313.jpg" alt></p>
 <p>（图十三，胡适的墓地位于土山之上。）</p>
 <p>拾阶而上，就可以看到胡适、江冬秀夫妇的合葬墓。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041314.jpg"><br>（图十四，胡适墓的入口。）</p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041314.jpg" alt><br>（图十四，胡适墓的入口。）</p>
 <p>墓穴后面是蒋介石的题字”智德兼隆”。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041315.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041315.jpg" alt></p>
 <p>（图十五，胡适夫妇的墓碑。）</p>
 <p>墓穴的右面，是胡适大儿子胡祖望的墓（2005年去世），以及二儿子胡思杜的纪念石。（胡思杜1948年从美国留学回国后，没有选择去台湾，而是留在大陆，迎接共产党。1950年，他在香港《大公报》发表《对我的父亲—-胡适的批判》，公开表示与胡适划清界线。1957年反右运动中，他被定为右派，多次批斗后，不堪羞辱，上吊自杀。）</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041316.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041316.jpg" alt></p>
 <p>（图十六，胡适的两个儿子的墓碑。）</p>
 <p>天色将暮，阴沉闷热的天空飘起了雨。静寂的墓园，再无旁人。入土将近50年的胡适先生与他的一位忠实读者，在这个亚热带岛屿的偏僻角落，一起默默地听着黄昏的雨声。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041317.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201204/bg2012041317.jpg" alt></p>
 <p>（完）</p>
-<h2 id="4个影响世界的女人"><a href="#4个影响世界的女人" class="headerlink" title="4个影响世界的女人"></a><a href="http://www.luojiji.com/thread-8381-1-1.html" target="_blank" rel="noopener">4个影响世界的女人</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201704/19/110423l5gndgiih2b92fkk.jpg"></p>
+<h2 id="4个影响世界的女人"><a href="#4个影响世界的女人" class="headerlink" title="4个影响世界的女人"></a><a href="http://www.luojiji.com/thread-8381-1-1.html" target="_blank" rel="noopener">4个影响世界的女人</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201704/19/110423l5gndgiih2b92fkk.jpg" alt></p>
 <p>2017-04-19 罗辑思维</p>
 <p>美国大学，尤其是名校，在每年的毕业季，都会邀请优秀校友或者其他社会名流，来给本校毕业生们做一场演讲。</p>
 <p>他们会就“如何面对真实社会”这个话题，给毕业生一些过来人的提点和建议。</p>
@@ -529,7 +499,7 @@
 <p>在这之前，我们精选了往年的经典演讲辞，做成《哈佛毕业演讲II》，让你不出家门，也能品尝到哈佛的精神果实。</p>
 <p>登上哈佛演讲台的，有相当数量的优秀女性。在她们给出的人生建议里，我们精选了最有价值的观点，和你分享：</p>
 <ol>
-<li>瑕疵让你与众不同<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201704/19/115443b5xnnqfn6x5fxjgn.jpg"><br>娜塔莉·波特曼</li>
+<li>瑕疵让你与众不同<br><img data-src="http://www.luojiji.com/data/attachment/forum/201704/19/115443b5xnnqfn6x5fxjgn.jpg" alt><br>娜塔莉·波特曼</li>
 </ol>
 <p>哈佛大学2003届毕业生，心理学学士。</p>
 <p>美国著名女演员，奥斯卡影后，曾主演《这个杀手不太冷》、《黑天鹅》等电影作品。</p>
@@ -538,7 +508,7 @@
 <p>她以自身的经历告诉毕业生们，<strong>作为社会新人，“没经验”恰恰是一种特别宝贵的<a href="http://deepcreator.com/2017/10/20/MVP/MTF/Experience/" target="_blank" rel="noopener">体验</a>。</strong></p>
 <p>每次你动手做新事时，这种“没经验”可能带你走上一条人云亦云的路，但要是你把它用好，就能创造完全属于自己的路。</p>
 <ol start="2">
-<li>真相会越问越明<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201704/19/110522dtist8p5sqstrqtz.jpg"><br>雪莉·桑德伯格<br>哈佛大学商学院1995届毕业生，MBA。<br>现任Facebook首席运营官，登上了福布斯前50名“最有力量”的商业女精英榜单，还被《时代》杂志评为全球最具影响力的人物之一。</li>
+<li>真相会越问越明<br><img data-src="http://www.luojiji.com/data/attachment/forum/201704/19/110522dtist8p5sqstrqtz.jpg" alt><br>雪莉·桑德伯格<br>哈佛大学商学院1995届毕业生，MBA。<br>现任Facebook首席运营官，登上了福布斯前50名“最有力量”的商业女精英榜单，还被《时代》杂志评为全球最具影响力的人物之一。</li>
 </ol>
 <p>当雪莉·桑德伯格离开Google，决定去Facebook时，身边的人问她，“你为什么要去给一个23岁的年轻人打工呢？”</p>
 <blockquote>
@@ -547,7 +517,7 @@
 <p>她还提醒毕业生说，留给你们的路不再是向上走、爬阶梯了。世界越来越扁平、越来越充分连接，职业结构已经从传统的设立阶层转向了责任共享。</p>
 <p>你需要一些方法，来获取别人对你的信任和尊敬，从而获得力量。</p>
 <ol start="3">
-<li>不要害怕失败<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201704/19/110542dvmy8mzlyvwddeft.jpg"><br>J.K.罗琳</li>
+<li>不要害怕失败<br><img data-src="http://www.luojiji.com/data/attachment/forum/201704/19/110542dvmy8mzlyvwddeft.jpg" alt><br>J.K.罗琳</li>
 </ol>
 <p>英国著名作家，著有《哈利•波特》系列小说，被翻译成67种文字，全球发行4亿册。从一无所有的单亲妈妈，奋斗成为财产超过英国女王的作家首富。</p>
 <p>2008年哈佛毕业典礼，请来了J.K.罗琳。</p>
@@ -561,7 +531,7 @@
 </blockquote>
 <p>最后，她成功了。她全心投入写作的《哈利·波特》系列小说，让她的身价超过了10亿美元。</p>
 <ol start="4">
-<li>职业选择与幸福寻找<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201704/19/110557ynm95i2cz9i5wy25.jpg"><br>德鲁·福斯特</li>
+<li>职业选择与幸福寻找<br><img data-src="http://www.luojiji.com/data/attachment/forum/201704/19/110557ynm95i2cz9i5wy25.jpg" alt><br>德鲁·福斯特</li>
 </ol>
 <p>美国历史学家，现任哈佛大学校长，也是哈佛大学历史上第一位女校长。2007年获选《时代》杂志“年度百大人物”。</p>
 <p>身为哈佛大学校长的德鲁·福斯特，总是会被学生问到类似的问题——</p>
@@ -576,7 +546,7 @@
 </ul>
 <p>作为商业和主流社会上的竞争者和独立能量，这些女士的自我蜕变和成长，值得所有人怀着敬畏之心，认真研习。</p>
 <p>为了让你获得更好的体验，「得到」特别邀请了中国著名配音演员季冠霖，来朗读和演绎这些演讲辞。</p>
-<p>她将以专业的声音表演功底，为你生动还原演讲现场，带你“亲临”哈佛，享受听觉盛宴。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201704/19/110615mujjqhp5x5splzyg.jpg"><br>季冠霖</p>
+<p>她将以专业的声音表演功底，为你生动还原演讲现场，带你“亲临”哈佛，享受听觉盛宴。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201704/19/110615mujjqhp5x5splzyg.jpg" alt><br>季冠霖</p>
 <p>中国著名配音演员，凭借优质的嗓音和扎实的台词功底，塑造了众多广为人知的声音形象，包括06版《神雕侠侣》中的小龙女、《甄嬛传》中的甄嬛、《芈月传》中的芈月等等。</p>
 <p>现在，《哈佛毕业演讲II》音频免费送给你，只求你帮忙推广「得到」。</p>
 <ol>
@@ -592,7 +562,7 @@
 <p>在男士演讲者专辑中，「得到」专门邀请了著名话剧和影视剧演员——赵立新，来朗读和演绎演讲辞。</p>
 <p>该专辑包含了来自著名导演史蒂文·斯皮尔伯格、微软创始人比尔•盖茨、曾任美国财政部长的劳伦斯•萨默斯、曾任美国能源部长的朱棣文的经典演讲。</p>
 <h2 id="视频-成败蒋介石-罗辑思维-No-194"><a href="#视频-成败蒋介石-罗辑思维-No-194" class="headerlink" title="视频: 成败蒋介石[罗辑思维]No.194"></a><a href="http://www.luojiji.com/thread-5355-1-1.html" target="_blank" rel="noopener">视频: 成败蒋介石[罗辑思维]No.194</a></h2><p>手机版播放地址：<a href="http://v.youku.com/v_show/id_XMTc4NjMyNDM2NA==.html" target="_blank" rel="noopener">http://v.youku.com/v_show/id_XMTc4NjMyNDM2NA==.html</a></p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152658gmdlq31uuddqdzzn.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152658gmdlq31uuddqdzzn.jpg" alt></p>
 <p>《罗辑思维》节目第194期</p>
 <p>本周《罗辑思维》节目的话题是《成败蒋介石》。</p>
 <p>看蒋介石是如何运用谋略，一步步地成功上位；又看他如何失去主流，奠定败局。但归根到底，说的却是和我们每个人都密切相关的问题——如何不走错路？</p>
@@ -606,7 +576,7 @@
 <p>孙中山坐着，蒋介石一身戎装站在他身后，这在暗示什么？就是我是孙中山的继承人。</p>
 <p>那真是这么回事吗？当然不是。我们现在觉得是，那是一个观念的误解。就像很多儒家说孔孟之道，好像孔子和孟子就是师徒俩人似的，其实不是，这两个人相差一百多年。在孙中山和蒋介石之间，其实也没啥关系，他更不是继承人之间的关系。</p>
 <p>这问题就来了，他既然不是继承人，蒋介石为什么突然能够蹿起成功呢？而且就是短短的不到十年的时间。这是蒋介石一生身上的大疑团。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152701azqskdz7qi5tqvq5.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152701azqskdz7qi5tqvq5.jpg" alt></p>
 <p>03 蒋介石的弥天大谎</p>
 <p>蒋介石扯了一生的大谎，就是他声称自己是日本士官学校毕业的。</p>
 <p>日本士官学校是日本很著名的一个培养军事将领的学校，这里面毕业了很多中国的人才，像什么蒋百里、蔡锷，就是小凤仙她干老公，还有阎锡山、许崇智，都是日本士官学校毕业的，这在当时军界那算是科班毕业。</p>
@@ -629,7 +599,7 @@
 <p>当时报纸上登出了一个标题，叫“中美合作”，因为蒋介石叫蒋中正，宋美龄有个“美”。这段婚姻对蒋介石的意义太大了。</p>
 <p>第一个意义是中美合作。宋家三姐妹，包括宋子文，都是美国大学毕业的。在美国人看来，我们文化浸染出来的这一家子，回到中国，嫁给了当时最重要的一个青年将领，这是咱们美国人的女婿，而且还让这个人皈依了我们的基督教。所以，从此美国人支持蒋介石，作用后来在抗日战争期间就体现出来了。</p>
 <p>第二，蒋介石终于拥有了亲戚关系的私家班底。从小舅子宋子文到连襟孔祥熙，所谓“四大家族”这时就基本成型了。</p>
-<p>更重要的作用是拿到了党统。宋氏三姐妹的老二是宋庆龄，是国母，是孙中山的遗孀，他娶了宋美龄之后，跟孙中山的关系就变成了连襟。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152704d7efseumz14x9yx9.jpg"></p>
+<p>更重要的作用是拿到了党统。宋氏三姐妹的老二是宋庆龄，是国母，是孙中山的遗孀，他娶了宋美龄之后，跟孙中山的关系就变成了连襟。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152704d7efseumz14x9yx9.jpg" alt></p>
 <p>07 股票经纪人蒋介石</p>
 <p>国民党的血统当中其实有现代金融的基因。</p>
 <p>孙中山早年在美国活动，现代资本主义怎么玩是知道的。所以孙中山一辈子经常讲要搞交易所等等，甚至在革命陷入低潮的时候，他就要求这些同盟会的年轻会员，包括蒋介石，去交易所当经纪人，用这种方式挣钱，效率很高，挣的钱来补贴革命。</p>
@@ -657,7 +627,7 @@
 <p>今天看这段历史有什么用？</p>
 <p>一句话，<strong>不要光看力量，要看什么正在生长。</strong></p>
 <p>本文根据《罗辑思维》第 194 期节目《成败蒋介石》整理。商业转载请取得授权，非商业转载请注明出处微信公众号“罗辑思维”。</p>
-<h2 id="观点：蒋介石在台湾留下的记忆烙印"><a href="#观点：蒋介石在台湾留下的记忆烙印" class="headerlink" title="观点：蒋介石在台湾留下的记忆烙印"></a><a href="http://www.bbc.com/zhongwen/simp/chinese-news-41887798" target="_blank" rel="noopener">观点：蒋介石在台湾留下的记忆烙印</a></h2><p><img alt data-src="https://ichef-1.bbci.co.uk/news/660/cpsprodpb/146B1/production/_98633638_cks01.jpg"></p>
+<h2 id="观点：蒋介石在台湾留下的记忆烙印"><a href="#观点：蒋介石在台湾留下的记忆烙印" class="headerlink" title="观点：蒋介石在台湾留下的记忆烙印"></a><a href="http://www.bbc.com/zhongwen/simp/chinese-news-41887798" target="_blank" rel="noopener">观点：蒋介石在台湾留下的记忆烙印</a></h2><p><img data-src="https://ichef-1.bbci.co.uk/news/660/cpsprodpb/146B1/production/_98633638_cks01.jpg" alt></p>
 <blockquote>
 <p>中国对蒋介石的记忆可能是北伐、抗战还有被毛泽东打败逃到台湾，台湾人对蒋介石的记忆却是很不一样。</p>
 </blockquote>
@@ -806,7 +776,7 @@
 <p>再比如方田均税法，本应该通过重新丈量和登记土地，让税收更加公平，但老百姓当时头脑里哪里有这种现代经济观念，结果民间谣言四起，就说这是要加税，大家纷纷抵制。而且中国当时农村人口已经暴涨，人均耕地面积少，而且因为买来卖去，造成了一种什么局面呢，一户人家名下那一亩三分地，可能被分成了十好几个地块儿，散落在这个村子四周各个地方。再加上宋代，还没有现代专业的统计机构，一个县衙门，除了县官，就是几个文书，十几个衙役，哪怕累死累活，这个工作进度，可能还赶不上辖区里农业土地产权和面积的变化速度呢。</p>
 <p>当然了啊，别说那时候的老百姓，就是王安石，司马光这些官僚士大夫，甚至皇帝本人，都不会有这些现代社会经济学常识，找不到真正的理由，那就只能走人身攻击一条路，互相攻击对方是坏人，司马光攻击王安石是从老百姓兜里掏钱的坏人，王安石攻击司马光是老顽固，蓄意破坏，抹黑变法。而真正的教训是什么呢？就是<strong>现代资本主义的诞生，是要有一系列条件的，包括社会的，经济的，文化上的。</strong>北宋的商业经济固然很发达，但还没有发达到能够取代农业，成为整个国民经济支柱的地步。而且，对于私人财产的保障，金融信贷，保险，货币政策，和政府现代化，这些资本主义能够顺利发展的条件，北宋一个也没有。所以我们只能说，王安石确实生错了时代，他太高瞻远瞩了，以至于他的时代和资源，不能承载他的梦想。</p>
 <p>来源：微信公号“剑客会”（王安石变法为什么会失败？）</p>
-<h2 id="梁启超的“腰子”"><a href="#梁启超的“腰子”" class="headerlink" title="梁启超的“腰子”"></a><a href="http://www.luojiji.com/thread-1626-1-1.html" target="_blank" rel="noopener">梁启超的“腰子”</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/17/235723v4jj12t5w4z2s4a1.jpg"><br>作者：讴歌</p>
+<h2 id="梁启超的“腰子”"><a href="#梁启超的“腰子”" class="headerlink" title="梁启超的“腰子”"></a><a href="http://www.luojiji.com/thread-1626-1-1.html" target="_blank" rel="noopener">梁启超的“腰子”</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/17/235723v4jj12t5w4z2s4a1.jpg" alt><br>作者：讴歌</p>
 <p>1926年3月8日，梁启超因尿血症入住协和医院。他得病多年，家人曾屡劝就医，但他总嫌“费事”。后来他忽然怀疑自己是癌症，终于同意检查一下。经X光透视，医生发现右肾中有一黑点，诊断为瘤。</p>
 <p>梁启超弟弟梁仲策问主治医生：不一定是癌吧？<br>答：不一定不是癌。<br>“怎么治？”<br>“全部割除。”</p>
 <p>手术后解剖此肾，果见其中有一大如樱桃的黑点，但却不是癌症。要命的是，病人尿中依然带血，且检查不出病源所在，于是复诊为“无理由之出血症”。此后梁启超于4月12日出院。</p>
@@ -902,8 +872,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Program/IPCreator/Technology/Program/Computer/Bryce Bayer/" rel="bookmark">Bryce Bayer</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/IPCreator/IPR/TianYanCha/" rel="bookmark">TianYanCha</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/People/IPCreator/People/Xiao-Bo Wu/" rel="bookmark">Xiao-Bo Wu</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Movie/In the Name of People/" rel="bookmark">In the Name of People</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/English/IPCreator/English/IPCreator's Translations/" rel="bookmark">IPCreator's Translation</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/People/" rel="tag"><i class="fa fa-tag"></i> People</a>
           </div>
@@ -915,21 +906,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/J/Jealousy/" rel="next" title="Jealousy">
-                  <i class="fa fa-chevron-left"></i> Jealousy
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/I/Imagination/" rel="prev" title="Imagination">
-                  Imagination <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/J/Jealousy/" rel="prev" title="Jealousy">
+      <i class="fa fa-chevron-left"></i> Jealousy
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/I/Imagination/" rel="next" title="Imagination">
+      Imagination <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -942,7 +930,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -973,8 +983,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -983,14 +993,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1001,11 +1011,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -1039,7 +1044,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -1051,51 +1056,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -1104,18 +1070,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1125,63 +1085,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1189,14 +1092,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1223,40 +1126,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/People/IPCreator/People/People/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

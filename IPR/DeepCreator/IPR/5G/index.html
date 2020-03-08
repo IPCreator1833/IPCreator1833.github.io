@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="在物联网、车联网和大数据时代，网络速度提升100倍，能带来怎样的机会？">
 <meta name="keywords" content="5G,IPR">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/IPR/" itemprop="url" rel="index">
-                    <span itemprop="name">IPR</span>
-                  </a>
+                  <a href="/categories/IPR/" itemprop="url" rel="index"><span itemprop="name">IPR</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/IPR/DeepCreator/IPR/5G/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/IPR/DeepCreator/IPR/5G/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/IPR/DeepCreator/IPR/5G/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://omj173lhw.bkt.clouddn.com/5g-speedometer-logo.jpg"></p>
+        <p><img data-src="http://omj173lhw.bkt.clouddn.com/5g-speedometer-logo.jpg" alt></p>
 <blockquote>
 <p>在物联网、车联网和大数据时代，网络速度提升100倍，能带来怎样的机会？</p>
 </blockquote>
@@ -315,9 +285,9 @@
 <p>包括通信设备商，芯片制造商，通信运营商等在内的全球多家移动通信企业，将长期研发和创新产出的无线技术推进5G标准，推动了5G标准进程，为实现5G愿景作出了不可磨灭的贡献，同时也在5G标准中烙印下高达几千项5G新标准必要专利相关的发明。</p>
 <p>据欧洲电信标准化协会（ETSI，一个非营利性的电信标准化组织，目前有来自47个国家的457名成员，涉及电信行政管理机构、国家标准化组织、网络运营商、设备制造商、专用网业务提供者、用户研究机构等，是全球标准化组织3GPP的成员之一）官方网站的近期检索结果表明，截止2018年6月14日，由华为、爱立信、三星、夏普、因特尔等10家企业声明5G标准专利达5401族。</p>
 <p>在5G新空口领域，累计声明标准专利总数高达5124项（见表1）。 从声明的5G标准专利持有者看，持有超过1000族5G新空口标准专利的专利权人包括：华为、爱立信、三星。其中，华为以1481项声明专利（占比28.90%）占据排名第一，爱立信以1134项声明专利（占比22.13%）据次席、三星以1038项标声明专利（占比20.26%）排名进前三。</p>
-<p>表1：5G 新空口声明标准专利统计<br><img alt data-src="http://pd4vb8220.bkt.clouddn.com/F7E124F0D5AA47CE925A8210C6807DEE.jpeg?imageMogr2/thumbnail/!75p"></p>
+<p>表1：5G 新空口声明标准专利统计<br><img data-src="http://pd4vb8220.bkt.clouddn.com/F7E124F0D5AA47CE925A8210C6807DEE.jpeg?imageMogr2/thumbnail/!75p" alt></p>
 <p>在5G新核心网领域（见表2），目前仅有华为、LG、ETRI三家企业声明持有相关标准专利，总数为277族。其中，华为以214族（占比77.26%）声明专利排名榜首，LG以49族（占比17.69%）声明专利排名第二，ETRI以14族（占比5.05%）声明专利排名第三。</p>
-<p>表2：5G 新核心网声明标准专利统计<br><img alt data-src="http://pd4vb8220.bkt.clouddn.com/882FF75F380744368A972DAC803C0B44.jpeg?imageMogr2/thumbnail/!75p"></p>
+<p>表2：5G 新核心网声明标准专利统计<br><img data-src="http://pd4vb8220.bkt.clouddn.com/882FF75F380744368A972DAC803C0B44.jpeg?imageMogr2/thumbnail/!75p" alt></p>
 <p>从上述ETSI已披露的5G标准专利统计数据客观看，5G标准专利已经汇聚在少数在该领域持续重视、投入和坚持不断创新的企业如华为、爱立信等企业身上。只有坚持创新、加强自主知识产权积累才能拥有5G时代的话语权。</p>
 <h2 id="来自世界移动通信大会的三个讯息"><a href="#来自世界移动通信大会的三个讯息" class="headerlink" title="来自世界移动通信大会的三个讯息"></a><a href="http://www.ftchinese.com/video/2615" target="_blank" rel="noopener">来自世界移动通信大会的三个讯息</a></h2><p>正在巴塞罗那举行的世界移动通信大会传来三个讯息：欧洲在5G时代落后了，智能手机不再唱主角，电信行业仍在推动技术边界。</p>
 <h2 id="如何1秒下载一部高清电影？"><a href="#如何1秒下载一部高清电影？" class="headerlink" title="如何1秒下载一部高清电影？"></a><a href="http://www.luojiji.com/thread-3360-1-1.html" target="_blank" rel="noopener">如何1秒下载一部高清电影？</a></h2><p>在上海世界移动大会刚刚结束的时候，5G的发展就变成了一个热门话题。那到底什么是5G呢？华为副董事长胡厚崑讲了5G几个很有意思的特点。</p>
@@ -327,7 +297,7 @@
 <p>本文源自：华为轮值CEO胡厚崑：我们为什么需要5G</p>
 <h2 id="智能手机成长趋缓-5G为产业推动主力"><a href="#智能手机成长趋缓-5G为产业推动主力" class="headerlink" title="智能手机成长趋缓　5G为产业推动主力"></a><a href="http://laoyaoba.com/ss6/html/93/n-666693.html" target="_blank" rel="noopener">智能手机成长趋缓　5G为产业推动主力</a></h2><p>工研院IEK最新研究指出，2017年全球智能手机出货量达15亿710万支，出货量维持正成长，产值达3617亿美元较2016年大幅成长14%，展望未来几年，智能手机出货量成长力道确实趋缓，不过整体产值还持续成长，预计2018年出货量达15亿2070万支，产值达3680亿美元，2021年市场规模为16亿5350万支，产值4067亿美元。</p>
 <p>出货量趋缓原因包括：2018年面临中国与美国经济与政策不稳定，以及消费者换机周期延长等影响，但在<strong>双镜头、AI、全面屏</strong>设计开始往中端与中高端产品渗透，智能手机单价提高，未来几年产值成长性大于出货量成长性。</p>
-<p><img alt="5105782_201803220610371DNmY.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/5105782_201803220610371DNmY.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/5105782_201803220610371DNmY.jpg?imageMogr2/thumbnail/!75p" alt="5105782_201803220610371DNmY.jpg"></p>
 <p>IEK也认为，下一波成长的推动因素将由5G电信服务带动换机潮，预期2019年由日韩开始，并于2021年以后随5G手机的电信方案与5G手机单价降低以促进消费意愿，再次推升出货量与产值成长力道。</p>
 <h2 id="5G行业动态分析：平昌冬奥会韩国电信5G首秀，全球运营商竞速5G布局"><a href="#5G行业动态分析：平昌冬奥会韩国电信5G首秀，全球运营商竞速5G布局" class="headerlink" title="5G行业动态分析：平昌冬奥会韩国电信5G首秀，全球运营商竞速5G布局"></a><a href="https://mp.weixin.qq.com/s/uawJCu6N7pTcH1gl4jhw3g" target="_blank" rel="noopener">5G行业动态分析：平昌冬奥会韩国电信5G首秀，全球运营商竞速5G布局</a></h2><p>摘要</p>
 <p>■事件：根据日经新闻报道，本周五（2月9日）即将举办的韩国平昌冬奥会将率先提供5G应用服务，成为全球5G服务的首秀。韩国电信（KT）、爱立信、思科、三星和英特尔等将联合为此次5G应用提供基站、网络设备和终端支持。韩国电信将在花样滑冰馆安装100台摄像机，基于速率是4G百倍的5G网络，现场观众可从更多视角、更低时延地观看比赛。三星将在多个场馆提供200台支持5G的平板电脑，观众可以通过平板获取各种内容和赛程数据。此外，韩国电信还将设置展示厅，整合5G网络和VR，提供模拟跳台滑雪等体验。</p>
@@ -344,7 +314,7 @@
 <li>平昌冬奥会韩国电信KT开启5G服务，全球运营商加速布局</li>
 </ol>
 <p>根据日经新闻报道，本周五（2月9日）即将举办的韩国平昌冬奥会将率先提供5G应用服务，成为全球5G服务的首秀。韩国电信、爱立信、思科、三星和英特尔等将联合为此次5G应用提供基站、网络设备和终端支持。韩国电信将在花样滑冰馆安装100台摄像机，甚至在雪橇赛事中，主办方会在雪橇上安装摄像头，基于速率是4G百倍的5G网络，现场观众可从更多视角、更低时延地观看比赛。三星将在多个场馆（包括滑冰馆）提供200台支持5G的平板电脑，观众可以通过平板获取各种内容和赛程数据。此外，韩国电信还将设置展示厅，整合5G网络和VR，提供模拟跳台滑雪等体验。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHslbYP2EkSNYreu0iaRQ8yVPoOwavFZJucyRk45YwuviaJkXKLXbwmwVA/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHslbYP2EkSNYreu0iaRQ8yVPoOwavFZJucyRk45YwuviaJkXKLXbwmwVA/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
 <p>历史上，多届奥运会成为各种断代式信息和通信技术的首秀场。1936年德国柏林奥运会电视实现首秀；1964年日本东京奥运会首次使用卫星广播；1984年美国洛杉矶奥运会展示了光纤通信；1992年西班牙巴塞罗那奥运会CCD相机第一次应用。2018年韩国平昌冬奥会5G将尽显风采。</p>
 <ol start="2">
 <li>平昌冬奥会5G服务应用的四大关注热点</li>
@@ -353,20 +323,20 @@
 <p>3GPP于2017年12月完成非独立组网标准（NSA），独立组网标准（SA）将于2018年6月完成。此次韩国平昌冬奥会5G服务，基于的是2017年12月完成的NSA标准。</p>
 <p>2.2. 高频段先行，解决热点容量是重点</p>
 <p>韩国5G频谱安排在中频段和高频段，5G第一阶段商用频谱主要在3.4~3.7GHz和27.5~28.5GHz两个频段，此次平昌冬奥会将在28GHz频段实现5G应用。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHWa7BUNKxSjYa3Hg3to25hl9icBy2NkY01mGPOhWI3prWXRMMcLibh6Dw/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHWa7BUNKxSjYa3Hg3to25hl9icBy2NkY01mGPOhWI3prWXRMMcLibh6Dw/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
 <p>2.3. 韩国第二大运营商KT抢先部署5G</p>
 <p>韩国第二大运营商KT早在2016年就在平昌及冬奥会场馆进行5G网络测试，此前第一大运营商SK也曾宣布为平昌冬奥会5G商用做准备，但是本周五冬奥会赛程正式开启，KT将成为赛事期间5G服务应用的主要提供者。</p>
 <p>2.4. 爱立信、思科和三星联合提供5G设备支持</p>
 <p>全球通信设备商围绕5G均已推出适配的网络设备，并且与主流运营商展开合作，完成网络互通测试和建设预商用网络等。2018年1月29日，KT正式对外公布了《5G商用系统需求》，用于遴选5G商用系统的设备供应商，同日，KT还集合了6家设备商召开情况说明会，包括爱立信、三星和思科等。此次KT为平昌冬奥会提供5G应用服务，选择的正是参与1月29日情况说明会的3家，其中基站设备供应商是爱立信，数据设备供应商是思科，终端设备（平板）供应商是三星。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHTfLibtmT1J0cM6lH6WDw9LSKE4076QBNyujtRHUA1VI1mibwJBevPYhg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHTfLibtmT1J0cM6lH6WDw9LSKE4076QBNyujtRHUA1VI1mibwJBevPYhg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
 <p>值得一提的是，4G时代，KT与爱立信就保持密切合作；2015年，KT CEO亲自到访爱立信总部，双方在引领5G革新发展上达成合作；2017年5月，KT在平昌的5G网络测试也与爱立信合作完成。此次，KT 5G设备供应商“花落爱立信”符合预期。而三星作为韩国本土通信设备和终端厂商，自3G以来就受益于本土运营商全球领先的无线网络布局，5G时代必将继续享受本土网络提前商用的红利。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHPFx85vZibXgib4S69TibPUduQ8EMr4ic9oticKDJQkDxAEO5BIIVKTholGw/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHPFx85vZibXgib4S69TibPUduQ8EMr4ic9oticKDJQkDxAEO5BIIVKTholGw/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
 <ol start="3">
 <li>韩国无线网络发展的三点借鉴意义启示</li>
 </ol>
 <p>3.1. 用户需求和移动网络流量升级是运营商网络部署的源动力</p>
 <p>虽然韩国国内市场较小，但是拥有SK电讯（简称SK）、KT电讯（简称KT）和LGU+（建成LG）三大电信运营商，且竞争十分激烈，3G/4G以来，无线网络部署无论在进度上还是宽带质量上都持续走在全球前列。根据Akamai发布的全球宽带网速研究报告，韩国宽带网速已经连续多年位列全球第一。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHRbhzzib626cEvibmpWhY5J8R47icKKf6kiaeBPQZrLSsa4jwicoMWVKu81g/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHRbhzzib626cEvibmpWhY5J8R47icKKf6kiaeBPQZrLSsa4jwicoMWVKu81g/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
 <p>韩国无线网络部署全球领先，其原因是韩国年轻用户对视频体验的要求高，对移动流量和速度需求高。根据Strategy Analytics的统计，2013年韩国手机用户月均消费数据就达到500MB，而同期西欧市场也只有400MB，中国市场仅为185MB。</p>
 <p>5G时代，韩国的商用计划继续走在领先全球，与美国齐肩。本周五即将举办的平常冬奥会，既是韩国开启5G商用的关键标志，也是全球5G服务首秀。同时，韩国政府已宣布将于2018年6月开始拍卖3.5GHz和28GHz频段的5G频谱，较原计划提前一年。频谱拍卖实施成功后，韩国三大运营商将进一步加快网络部署。</p>
 <p>3.2. 每一代通信网络都是落后运营商实现市场份额突破的新寄托</p>
@@ -383,8 +353,8 @@
 <p>美国、韩国和中国的5G商用布局走在全球前列。韩国5G进展不再赘述；美国方面，Verizon将在2018年提供固定5G无线服务，AT&amp;T也计划在2018年下半年在全美推出5G服务；我国5G技术实验研究已经进入第三阶段测试，三大运营商将于2018年在全国十余座城市展开5G试商用，工信部或将于2018年底颁发5G许可试点牌照。总结来说，韩国运营商已经进入选择和确定5G设备供应商的阶段；美国5G商用服务已经开启。那么对比韩国和美国，我国5G发展优势体现在哪里？我们认为我国“网络应用+通信设备+终端电子”的全产业生态已基本完善，具备主导全球5G发展的实力。</p>
 <p>从运营商到设备商，到器件商和终端厂商，我国通信全产业链已经基本具备5G核心技术实力。运营商方面，TDD有望取代FDD成为5G主流技术，而中国移动拥有TDD网络绝对的市场优势和历史发展经验。同时，中国移动在5G全球标准制定中掌握极大的话语权，作为唯一报告人和协议主编，中国移动领导完成了5G空口场景和需求研究项目，以及输出5G空口技术纲领性文件。设备商方面，华为全球第一，中兴跻身前四并有望在5G机遇期实现弯道超车，剑指全球前三。随着我国设备商全球话语权加大，通信产业链上游各环节具有核心竞争力的内资厂商均有望借“船（华为/中兴）”出海。以长飞和亨通光电为代表的光纤光缆厂商，以中际旭创为代表的光模块厂商，以深南电路和沪电股份为代表的射频PCB厂商均已具备深厚的技术积累，5G时代有望占据更高的全球市场份额。</p>
 <p>网络应用方面，在2018年1月16日IMT-2020（5G）推进组召开的我国5G技术研发试验第三阶段规范发布会上，工信部部长闻库提出要促进业务应用发展，开启5G应用征集大赛。什么样的应用会在5G爆发？我国具有怎样的网络应用优势？根据华为发布的《5G十大应用场景白皮书》，5G时代，云VR/AR、车联网、智能制造、智慧能源、无线医疗、无线家庭娱乐、联网无人机、社交网络、个人AI辅助和智慧城市等有望全面铺开。而目前，我国政府从国家层面给予5G、AI和互联网云计算等产业给予巨大的政策支持，AI落地商用将驱动流量增长，以BAT为代表的互联网厂商也在互联网创新应用方面走在全球前列，所以我国5G网络应用具有强大的发展潜力。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHXNXe6bJzib2LE9vJq6znJLSsKKMSYDictWZEtE9GwCiak1ooibD4iaHj0kg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1"></p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tH8ayDhRpwMXBRaNDc7qFibGicxWoVgrdDKtBZYsNIj2I96ZlSoQOIibI0g/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tHXNXe6bJzib2LE9vJq6znJLSsKKMSYDictWZEtE9GwCiak1ooibD4iaHj0kg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/IwIcX3CcJicEibzzWib8t9KU8cODf7jx1tH8ayDhRpwMXBRaNDc7qFibGicxWoVgrdDKtBZYsNIj2I96ZlSoQOIibI0g/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
 <ol start="5">
 <li>投资建议</li>
 </ol>
@@ -422,8 +392,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/IPCreator/MVP/Trend/" rel="bookmark">Big Trends</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/AR/" rel="bookmark">AR&VR</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/TWS/" rel="bookmark">TWS</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/5G/" rel="bookmark">5G</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/IPCreator/Company/Tesla/" rel="bookmark">Tesla</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/5G/" rel="tag"><i class="fa fa-tag"></i> 5G</a>
               <a href="/tags/IPR/" rel="tag"><i class="fa fa-tag"></i> IPR</a>
@@ -436,21 +427,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/Madrid System/" rel="next" title="Madrid System">
-                  <i class="fa fa-chevron-left"></i> Madrid System
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/Android/" rel="prev" title="Android">
-                  Android <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/Madrid System/" rel="prev" title="Madrid System">
+      <i class="fa fa-chevron-left"></i> Madrid System
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/Android/" rel="next" title="Android">
+      Android <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -463,7 +451,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -494,8 +504,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -504,14 +514,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -522,11 +532,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -560,7 +565,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -572,51 +577,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -625,18 +591,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -646,63 +606,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -710,14 +613,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -744,40 +647,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/IPR/DeepCreator/IPR/5G/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

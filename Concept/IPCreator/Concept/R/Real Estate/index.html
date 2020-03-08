@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="收入分配不均、土地和资金市场缺乏竞争、金融市场没有更多的投资渠道，是造成房地产业扭曲的根本。">
 <meta name="keywords" content="Real Estate">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/R/Real Estate/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/R/Real Estate/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/R/Real Estate/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -291,9 +261,9 @@
 </blockquote>
 <a id="more"></a>
 <p>新的一年又快到了，时间就是这样无声无息地迈着它既定的脚步一闪而过，又迈向新的未来。擦身而过的过去，总是给我们留下一些难以忘怀的记忆和它本该留下的痕迹。<strong>过去一年最大的一个痕迹，在房地产行业在市场上就是一个字——租。</strong> 从去年下半年甚至再早一些时候，国家领导人和政府，还有党的会议的决议，都不约而同甚至是有约而同，一锤定音房子是用来住的，不是用来炒的，这样一个定性无疑给未来五年、十年房地产制度建设的一个<strong>基本框架和市场的变化的趋势</strong>给了一个定位。<strong>住有所居</strong>，这是这次政策改变的一个最终的落脚点，而一旦每个人都实现了住有所居，而且政府也真正的让每一个人都住有所居，其实美好生活就在眼前，幸福的小康生活就已经在你手心里了，期待着这一天，大家一起开始期盼新的2018年。——冯仑</p>
-<p><img alt data-src="https://p7.pstatp.com/origin/50a600040e661c49440e"></p>
+<p><img data-src="https://p7.pstatp.com/origin/50a600040e661c49440e" alt></p>
 <p>过去20年,房地产发展的最大动力，是<a href="https://www.toutiao.com/a1594983200679940/" target="_blank" rel="noopener">城镇化</a>。城镇化过程中的地产红利，主要来自三个方面。第一是城镇化产生的新的居住、办公和商业需求。第二是改善需求的逐步兴起。第三是城镇化基础设施投入产生的土地红利。谈一谈今年两会透露出来的未来房地产发展的政策重点和市场可能的变化。总理在政府工作报告中明确强调，只要经济运行在合理区间，就业增加、收入增加、环境改善，就集中精力促改革、调结构、添动力。可见，政府现在宁可把政策预期调得稍微悲观点，也不对赌政策放松。很显然，对各房地产公司而言，自力更生，加快销售回款，<a href="https://www.toutiao.com/a1594719054992398/" target="_blank" rel="noopener">提升库存去化率和销售回款率</a>是最重要的。减少货币资金占用，降低企业经营风险尤为重要。——冯仑</p>
-<h2 id="什么是“三价合一”"><a href="#什么是“三价合一”" class="headerlink" title="什么是“三价合一”"></a><a href="https://www.toutiao.com/a1596587264833544/" target="_blank" rel="noopener">什么是“三价合一”</a></h2><p><img alt data-src="https://p3.pstatp.com/origin/662f0000d57604580bcb"></p>
+<h2 id="什么是“三价合一”"><a href="#什么是“三价合一”" class="headerlink" title="什么是“三价合一”"></a><a href="https://www.toutiao.com/a1596587264833544/" target="_blank" rel="noopener">什么是“三价合一”</a></h2><p><img data-src="https://p3.pstatp.com/origin/662f0000d57604580bcb" alt></p>
 <p>在二手房的成交中会涉及三个价格，1.房屋真实成交价；2.网签备案合同价（过户价）；3.银行贷款评估价。</p>
 <p>1.真实成交价：由买卖双方敲定。</p>
 <p>2.网签备案合同价（过户价）：房子过户前在房地产信息系统网签备案，用以计算税费。许多人为省下税费，都按照房管局最低计税指导价填写，这样的行为就是所谓的“阴阳合同”。</p>
@@ -303,12 +273,12 @@
 <blockquote>
 <p>1、可以避免“阴阳合同”；<br>2、可以避免“高评高贷”，通过提高银行评估价变相降低首付比例；<br>3、可以防止报低成交价来避税等。</p>
 </blockquote>
-<p><img alt data-src="https://p7.pstatp.com/origin/66320000a331bdaf5005"><br><img alt data-src="https://p7.pstatp.com/origin/66310000c18660e73acf"><br><img alt data-src="https://p3.pstatp.com/origin/66320000a32d9380b56a"></p>
-<h2 id="收藏｜哪些城市的房子最值得买？"><a href="#收藏｜哪些城市的房子最值得买？" class="headerlink" title="收藏｜哪些城市的房子最值得买？"></a><a href="http://www.luojiji.com/thread-11345-1-1.html" target="_blank" rel="noopener">收藏｜哪些城市的房子最值得买？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/05/100755zb4of4d5s5dfy526.jpg"></p>
+<p><img data-src="https://p7.pstatp.com/origin/66320000a331bdaf5005" alt><br><img data-src="https://p7.pstatp.com/origin/66310000c18660e73acf" alt><br><img data-src="https://p3.pstatp.com/origin/66320000a32d9380b56a" alt></p>
+<h2 id="收藏｜哪些城市的房子最值得买？"><a href="#收藏｜哪些城市的房子最值得买？" class="headerlink" title="收藏｜哪些城市的房子最值得买？"></a><a href="http://www.luojiji.com/thread-11345-1-1.html" target="_blank" rel="noopener">收藏｜哪些城市的房子最值得买？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201803/05/100755zb4of4d5s5dfy526.jpg" alt></p>
 <p>2018-03-05 「得到」 罗辑思维<br>引言</p>
 <p>如今，房子已成为每个家庭绕不开的话题。除了基础的居住属性，更成为重要的投资方式。那对于一个普通家庭，应该去哪里买房？哪里的房子更能保值增值？</p>
 <p>北京大学的徐远教授，为你拆解“哪里的房产能保值增值”这个问题，强烈建议阅读收藏。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/05/100810gm4om2qc7l23kx72.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201803/05/100810gm4om2qc7l23kx72.jpg" alt></p>
 <ol>
 <li><p>买股票是买一个公司的未来，买房也是一样。买一个城市的房子，就是买这个城市的未来。只要这个城市有发展潜力，它的房子就有“保值”和“增值”的可能。具体可以从八个方面，判断一个城市。</p>
 </li>
@@ -331,10 +301,10 @@
 <li><p>上面八个因素，不仅决定了当下各个城市房价的高低，更是未来不同地区房价涨跌的依据。买房时，不妨照着这篇清单，一一对比。</p>
 </li>
 </ol>
-<h2 id="收藏｜关于“买房”，你想知道的都在这儿了"><a href="#收藏｜关于“买房”，你想知道的都在这儿了" class="headerlink" title="收藏｜关于“买房”，你想知道的都在这儿了"></a><a href="http://www.luojiji.com/thread-11302-1-1.html" target="_blank" rel="noopener">收藏｜关于“买房”，你想知道的都在这儿了</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/28/090151fijqti4o9mk5dkia.jpg"></p>
+<h2 id="收藏｜关于“买房”，你想知道的都在这儿了"><a href="#收藏｜关于“买房”，你想知道的都在这儿了" class="headerlink" title="收藏｜关于“买房”，你想知道的都在这儿了"></a><a href="http://www.luojiji.com/thread-11302-1-1.html" target="_blank" rel="noopener">收藏｜关于“买房”，你想知道的都在这儿了</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201802/28/090151fijqti4o9mk5dkia.jpg" alt></p>
 <p>2018-02-28 「得到」 罗辑思维<br>引言</p>
 <p>随着价格持续上涨，房价牵动着每个人的神经。房价还会上涨吗？未来哪里的房子值得买？买房要遵循什么原则？……相信你也饱受这些问题的困扰。</p>
-<p>「得到」特意请到北京大学徐远教授创作了这篇清单。13条干货，一次性解决你关于买房的所有疑惑。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201802/28/090235dt9lc9ebrzreeeev.jpg"></p>
+<p>「得到」特意请到北京大学徐远教授创作了这篇清单。13条干货，一次性解决你关于买房的所有疑惑。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201802/28/090235dt9lc9ebrzreeeev.jpg" alt></p>
 <ol>
 <li>中国的房价是被炒起来的吗？</li>
 </ol>
@@ -400,7 +370,7 @@
 <blockquote>
 <p>对于很多刚毕业，奋斗在一线城市的年轻人，我建议遵循“便利原则”：把房子租在交通便利的地方。这样就能更好地利用时间、节省精力、投资自己。长远来看，<strong>投资自己才是最好的投资。</strong></p>
 </blockquote>
-<h2 id="专家不是说房价要跌吗？"><a href="#专家不是说房价要跌吗？" class="headerlink" title="专家不是说房价要跌吗？"></a><a href="http://www.luojiji.com/thread-6882-1-1.html" target="_blank" rel="noopener">专家不是说房价要跌吗？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201611/16/163616mj5jajtiy9it5659.jpg"><br>2016-11-16 吴军 罗辑思维</p>
+<h2 id="专家不是说房价要跌吗？"><a href="#专家不是说房价要跌吗？" class="headerlink" title="专家不是说房价要跌吗？"></a><a href="http://www.luojiji.com/thread-6882-1-1.html" target="_blank" rel="noopener">专家不是说房价要跌吗？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201611/16/163616mj5jajtiy9it5659.jpg" alt><br>2016-11-16 吴军 罗辑思维</p>
 <p>房价预测  专家  股神<br>科学必须能够证伪<br>科学的结论未必是正确的</p>
 <p>1 不谈条件，就敢谈房价</p>
 <p>中国现在北上广三个城市的房地产总价，已经超过美国全国的70%，这个泡沫是显而易见的。但是你要问这个房价是否会大跌，我还真不敢讲，实际上讲了也没有用。</p>
@@ -503,10 +473,10 @@
 <p>二是市场要见顶的时候，都是市场情绪最疯狂的时候。日本房地产泡沫最狂热的时候，就是泡沫破灭前、几乎每个人都认为日本房价不会下跌的时候；</p>
 <p>三是我多次强调的政策的“塔西陀陷阱”。<strong>政策总是变来变去，导致公信力丧失。</strong> 在调控使房地产下行的情况下，地方政府首先扛不住，然后就是悄然放松调控，然后是全国性的刺激。从逻辑上说，去年“9.30”调控的力度不可谓不大，那为什么市场对任何严厉的调控都置若罔闻？原因很简单，就是过去的历史告诉大家，调控不可能持久，未来一定会反弹。这种对政策不信任导致的恐慌远比中介违法和投资者入市抢房子造成的恐慌要大。</p>
 <p>从目前的态势看，管理层对房地产泡沫的担心远甚于调控之后对经济增长的影响。考虑到今年下半年的政策周期，至少在今年，管理层不希望房价继续上涨，更不希望房地产泡沫给中国经济带来实质性的风险，下半年房价上涨的动能和概率已经很低，多数城市的房价会出现实质性的调整。我之前讲，六个月后中国房地产会变天，其实，<strong>天已经变了。</strong> 那些为没有买到房子而焦虑的人，大可以放宽心观察市场的变化，<strong>至少在今年，你没有在这个敏感的时刻急吼吼地杀进去，做悲催的接盘侠。</strong></p>
-<p><img alt data-src="http://n.sinaimg.cn/finance/transform/20170807/0kPL-fyitapv8907833.jpg"></p>
+<p><img data-src="http://n.sinaimg.cn/finance/transform/20170807/0kPL-fyitapv8907833.jpg" alt></p>
 <p>中国房地产的四个难解之谜：中国究竟有多少房子？中国究竟缺不缺地？中国房价究竟高不高？房价暴涨的原因是什么？</p>
 <p>长期来说中国房地产仍然具有投资价值，这是我讲的未来中国城镇化容纳80%人口以上的区域就是这四个城市：<strong>全球城市</strong>、<strong>中心城市</strong>、<strong>国际城市</strong>、<strong>区域大城市</strong>。长期中国房价仍然的向上，但短期下滑态势非常明显。</p>
-<p><img alt data-src="http://n.sinaimg.cn/finance/transform/20170807/jt24-fyitapp2144525.jpg"></p>
+<p><img data-src="http://n.sinaimg.cn/finance/transform/20170807/jt24-fyitapp2144525.jpg" alt></p>
 <p>新浪财经讯 8月7日消息，“薛掌柜第五代基金组合服务发布会”在北京国家会议中心举行，经济学家马光远参与会议并发表演讲，马光远表示，后房地产投资时代，应该减持房地产，长期来看，中国房地产仍有价值。</p>
 <p>　　马光远称，中国房地产的四个难解之谜：中国究竟有多少房子？中国究竟缺不缺地？中国房价究竟高不高？房价暴涨的原因是什么？</p>
 <p>　　他表示，当前房价，需要毕业生从乾隆年间干起来。中国房价三次大反弹的主要因素及原因，政策推起来的，<strong>当政府鼓励大家买房子的时候，一定要买房子。2017年以来新一轮限购一定会让房价下来，房地产一定不会崩盘，城镇化、中国经济对房地产的依赖，资产化还没有结束。短期政策对房地产影响很大，我建议，应该减持房地产。长期来看，中国房地产仍有价值。什么时候买房子，要看明年春节前后房产政策。不要低估全国金融会议对未来经济的重大影响。</strong></p>
@@ -525,9 +495,9 @@
 <p>　　什么时候可以买房子？最起码等到春节前后看政策变化。当然胆子大的可以不玩房地产，可以玩点别的，刚才叶老师讲投资组合。叶老师讲了那么多，我还是没有明白怎么组合。怎么组合非常重要。这是专业化的时代。我们要看整体划分怎么变？第一个是未来十年全球整体经济不好，大家都不好的情况下，资产收益率当然不会很高。第二，货币政策的总体变化，过去8年防水，现在开始收货币。这是一个转折点，去年的文章中我一直讲全球货币政策的转折点其实已经到来。这意味着资产价格要进行重估。过去是水漫金山，现在是收水，资产价格一定会重估，包括房价。</p>
 <p>　　所以在这个大周期里，我们应该看到包括中国货币政策，未来M2增速处在个位数是常态。以前讲“钱多人少”，以后“人继续少”，但是钱不多了。钱可能比较值钱。第三句话是金融去杠杆，金融去杠杆意味着国家整体层面不鼓励高风险投资。高风险投资不代表股市，可能也指房地产，也就是说未来整个投资来讲，你会看到整个投资理念、思路、玩法、游戏规则都会因为这个而改变。大家不要低估了全国金融工作会议对下一步金融市场、金融行为本身的影响，影响会非常大。</p>
 <p>　　所以人民日报讲的，包括我们看到的很多情况。最后我讲，睡谁的床很重要。你玩什么其实不重要，谁玩儿是重要的。买同样的股票别人赚钱你从来没有赚过钱的都很正常。所以有人讲下一步要投股票、投基金，这些建议你千万不要听关键是你跟着谁玩儿，谁带着你玩儿，这才是最重要的。所以我的结论是，我可以给大家讲资产配置，但是我认为这些话都是废话。当然我比别人进步一点的是我认为人是不一样的，有些人有钱可以玩儿的邪门一点。所以这三类人里我最担心的是哪一类人。大家认为我对哪一类人最“焦虑碌”，一般人反正没有钱，中产很关键，中产敢不敢投股票，关键是谁被人投。所以在这么一个画风转变的年代，大家记住一点，<strong>过去闭着眼睛赚钱的年代已经结束，专业化投资的时代已经到来。不是你投什么，而是你跟着谁来投。</strong></p>
-<h2 id="认知清单｜未来哪里房子值得买"><a href="#认知清单｜未来哪里房子值得买" class="headerlink" title="认知清单｜未来哪里房子值得买"></a><a href="http://www.luojiji.com/thread-9584-1-1.html" target="_blank" rel="noopener">认知清单｜未来哪里房子值得买</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/22/074454whcobnmy0h00yim0.jpg"><br>2017-08-22 「得到」 罗辑思维<br>引言</p>
+<h2 id="认知清单｜未来哪里房子值得买"><a href="#认知清单｜未来哪里房子值得买" class="headerlink" title="认知清单｜未来哪里房子值得买"></a><a href="http://www.luojiji.com/thread-9584-1-1.html" target="_blank" rel="noopener">认知清单｜未来哪里房子值得买</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201708/22/074454whcobnmy0h00yim0.jpg" alt><br>2017-08-22 「得到」 罗辑思维<br>引言</p>
 <p>到底该不该买房？未来哪儿的房子有升值空间？想必你也有这些疑惑。</p>
-<p>清华大学建筑学院周榕副教授的这篇清单，给你11条建议。关乎未来的大事，值得细读。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/22/074512lqclat3zcc4z7tai.jpg"></p>
+<p>清华大学建筑学院周榕副教授的这篇清单，给你11条建议。关乎未来的大事，值得细读。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201708/22/074512lqclat3zcc4z7tai.jpg" alt></p>
 <ol>
 <li><p><strong>买房就是买这座城市的股票</strong> 。只要这座城市的总体价值继续走高，你手里的“城市股票”就会跟着升值。</p>
 </li>
@@ -550,9 +520,9 @@
 <li><p><strong>请格外注意那些高科技企业很多，有互联网虚拟价值支撑的城市，比如深圳、杭州。</strong></p>
 </li>
 </ol>
-<h2 id="收藏清单｜买房时牢记这16条-，避开那些“坑”"><a href="#收藏清单｜买房时牢记这16条-，避开那些“坑”" class="headerlink" title="收藏清单｜买房时牢记这16条 ，避开那些“坑”"></a><a href="http://www.luojiji.com/thread-9664-1-1.html" target="_blank" rel="noopener">收藏清单｜买房时牢记这16条 ，避开那些“坑”</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/30/075336gx1alvyfrxwqr2vx.jpg"><br>2017-08-30 「得到」 罗辑思维<br>引言</p>
+<h2 id="收藏清单｜买房时牢记这16条-，避开那些“坑”"><a href="#收藏清单｜买房时牢记这16条-，避开那些“坑”" class="headerlink" title="收藏清单｜买房时牢记这16条 ，避开那些“坑”"></a><a href="http://www.luojiji.com/thread-9664-1-1.html" target="_blank" rel="noopener">收藏清单｜买房时牢记这16条 ，避开那些“坑”</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201708/30/075336gx1alvyfrxwqr2vx.jpg" alt><br>2017-08-30 「得到」 罗辑思维<br>引言</p>
 <p>购买房产是家庭的重大支出。二手房交易的过程中，怎样规避潜在风险？</p>
-<p>「得到」App邀请一位资深的房产律师，从上万件案件纠纷中总结出了这张清单，供你参考。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/30/075354occibb6zsx3qccib.jpg"></p>
+<p>「得到」App邀请一位资深的房产律师，从上万件案件纠纷中总结出了这张清单，供你参考。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201708/30/075354occibb6zsx3qccib.jpg" alt></p>
 <ol>
 <li><p>通过中介公司找房源，不要直接从个人手里购买。因为房主可能向你隐瞒关于房屋的真实情况，比如<strong>有官司、是凶宅、泡过水</strong>等等。而中介一般对本小区的房源比较清楚，能帮你排除可疑房源。</p>
 </li>
@@ -761,7 +731,7 @@
 <p>除此之外，还包含了我对当地城市未来发展的预期，我在各地看到的消费能力低、市场弹性差的地方，这一部分源自我在各地的实地感受，比较有弹性。</p>
 <p>我只列上我验证后有说服力的指标，其他指标就不罗列了，这些指标或者容易掺水，或者无法反映城市未来预期，我认为说服力不强。另外，地级以下的城市就不写了，除添堵之外没有其他好处。</p>
 <p>此次选择的这些城市有可能一度发展比较快，受制于文化、制度以及当地的产业，现在却露出后劲不足的疲惫之态。</p>
-<h2 id="叶檀再谈”最无前途的十城市”-想成长就要承认难题"><a href="#叶檀再谈”最无前途的十城市”-想成长就要承认难题" class="headerlink" title="叶檀再谈”最无前途的十城市”:想成长就要承认难题"></a><a href="http://news.163.com/16/1218/21/C8JKLCM2000187VE.html" target="_blank" rel="noopener">叶檀再谈”最无前途的十城市”:想成长就要承认难题</a></h2><p><img alt data-src="http://cms-bucket.nosdn.127.net/catchpic/6/6e/6e21907713768d7affec3c8146681760.jpg?imageView&amp;thumbnail=550x0"></p>
+<h2 id="叶檀再谈”最无前途的十城市”-想成长就要承认难题"><a href="#叶檀再谈”最无前途的十城市”-想成长就要承认难题" class="headerlink" title="叶檀再谈”最无前途的十城市”:想成长就要承认难题"></a><a href="http://news.163.com/16/1218/21/C8JKLCM2000187VE.html" target="_blank" rel="noopener">叶檀再谈”最无前途的十城市”:想成长就要承认难题</a></h2><p><img data-src="http://cms-bucket.nosdn.127.net/catchpic/6/6e/6e21907713768d7affec3c8146681760.jpg?imageView&amp;thumbnail=550x0" alt></p>
 <p>财经评论员叶檀最近有点火。</p>
 <p>此前的她，通常是以媒体人的身份，撰写金融、房地产、国企改革方面的财经评论，关注她的群体也基本来自财经界或投资圈。</p>
 <p>但自从两个多月前写了《我眼中最无前途的十个中国城市》，越来越多的人开始认识叶檀。特别是文章中被“点名”的长春、兰州、南昌、温州等几个城市，更是通过地方媒体、政府智囊逐条反驳，掀起一波波舆论热潮。</p>
@@ -816,7 +786,7 @@
 <h2 id="中国三四线城市房价上涨之谜"><a href="#中国三四线城市房价上涨之谜" class="headerlink" title="中国三四线城市房价上涨之谜"></a><a href="http://www.ftchinese.com/story/001073247?full=y" target="_blank" rel="noopener">中国三四线城市房价上涨之谜</a></h2><blockquote>
 <p>由于纯投资性客户占比较低，三四线城市房价短期尚有支撑，但受购买力约束和一二线城市房价滞涨影响，涨幅将逐渐收窄。</p>
 </blockquote>
-<p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F5%2F000063155_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F5%2F000063155_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <p>2016年“930新政”后，开封、徐州、芜湖等三四线楼市开启了“逆势上涨”模式，至今累计涨幅均在20%以上，市场对三四线楼市的关注度骤然提高。那么，三四线房价为什么会超预期上涨？“低库存”和“棚户区改造”是催生三四线楼市繁荣的核心原因吗？</p>
 <p>2016年“930新政”给一线和部分二线城市带上了“紧箍咒”，尤其是随着强二线城市陆续重回“限购限贷”，市场对楼市的预期逐渐转入悲观。当时比较流行的看法是，2016年三季度之前表现强势的一二线城市房价有下行压力，三四线城市受制于人口流出和产业凋敝等原因而难有起色。三四线的本地人不缺房，一二线资金也很难“非理性”地流入三四线（除了部分靠近北上广深等城市的三四线卫星城），也就是说，一般的三四线楼市几乎找不到新增需求。然而，与市场“一致预期”不同的是，不仅九江等库存较低的三四线城市房价在“930新政”后加速上涨，泉州等去化周期高达30个月以上的三四线房价也开始快速攀升。</p>
 <p>预期与事实相悖主要来源于对三四线购房客户的错误“臆想”。“930新政”期间，市场认为的购房客户主要是“新增流入人口”和“一二线投资客户”，但他们并非是2016年10月以来三四线城市的主流客户。微观调研结果显示，推动这波三四线房价上涨的主要客户来自于新三四线人口、邻近的新核心二线人口、“逆都市化”者和返乡置业者，购房目的归为纯投资的客户比例可能在20%以下，芜湖、开封等城市的投资性客户比例可能在10%左右。</p>
@@ -834,7 +804,7 @@
 <p>1</p>
 <p><strong>南  京</strong></p>
 <p>根据新的到2030年的八纵八横高铁规划图，有四条甚至更多高铁通过的高铁节点城市分别为沈阳、天津、济南、石家庄、合肥、杭州、南京、郑州、武汉、长沙、重庆、贵阳、成都、西安、兰州、银川，从到中国核心区域经济地带的距离看，最有红利的城市分别是郑州、武汉，其次是济南、长沙等地，四小时左右到北京、上海、广州等中心城市。</p>
-<p><img alt data-src="http://mmbiz.qpic.cn/mmbiz_jpg/lv8zajRJMylYuI5LDs76SZGRadglLTbgLsZDO3niah26Zen4ia2vF8e63rkAnK7DNTEFEVpravFJFiavicMsicDruIg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1"></p>
+<p><img data-src="http://mmbiz.qpic.cn/mmbiz_jpg/lv8zajRJMylYuI5LDs76SZGRadglLTbgLsZDO3niah26Zen4ia2vF8e63rkAnK7DNTEFEVpravFJFiavicMsicDruIg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt></p>
 <p>根据一财的统计的33个城市，过去十年增幅超过300%的城市共有10个，其中有8个城市来自中西部，分别是长沙、重庆、武汉、贵阳、南宁、西安、成都和郑州。只有两个城市来自沿海，其中天津增速位居第33个城市中的第8位，南京位居第10。</p>
 <p>一度位居江苏省内GDP第三的南京，2014年超过无锡，目前对于苏州的追赶态势已经形成，加上省内资源集聚，影响力辐射到安徽东部地区，未来必然成为江苏省内最主要的城市。</p>
 <p>在35个城市人口流入排名中，南京常住人口从2009年到2014年流入50万人口，低于苏州的123万，但南京的教育资源远好于苏州，高校53所，比杭州高得多，南京发展有强大的高等教育作支撑。</p>
@@ -927,7 +897,7 @@
 <p>刚需住房成交量大幅上升，新房价格大幅上涨的空间不大。 位于沙井和观澜片区的刚需盘销量激增，拉动全区成交量上扬，宝安区成交1297套新房住宅，环比增加62.7%，同比增加19.0%；成交面积约12万平方米，环比增加56.2%，同比增加2.6%。龙岗区成交1253套新房住宅，环比减少0.1%，同比增加21.5%；成交面积11.16万平方米，环比减少2.9%，同比增加12.5%。 由于宝安区均价环比下跌4.5%，为52057元/平方米；龙岗区均价环比下跌6.4%，为37731元/平方米，刚需盘入市，很多豪宅拿不到预售证，新房价格被刚需房价压得死死的。 根据深圳中原研究中心数据显示，5月新房住宅中，价格在4万~6万元/平方米之间的成交面积占比上升9.1%，8万元/平方米以上的成交面积占比下降5.8%。尤其是豪宅5月共成交251套，环比下降36.9%。 换句话说， 新房受政策调控影响极大，二手房的成交量和价格才能反映真正的市场情绪。</p>
 <p>据郁亮说，<strong>深圳14%新房，86%二手房</strong>，二手房是个庞大的市场。二手房市场缓慢上升，<strong>深圳房地产最快的增长时期已经结束了，市场进入震荡期。跟股市一样，跌，跌不下去，涨，不让你涨。</strong></p>
 <p>对于深圳的投资者来说，最好的消息是，<strong>深圳的房地产投资在下降，但人口还在增加</strong>。 今年一季度，深圳房地产业增加值下降7.9%，规模以上工业增加值增长7.6%.房地产投资增速从去年同期的34.1%降到今年的7.2%。深圳房地产去库存完成得非常完美。 但深圳人口还在增加，2016年深圳人口净增长52.95万人，领先全国，深圳的人口增长率全国最高，达到4.65%。 如果粤港澳湾区成熟，再过二十年，深圳的房价很可能与香港并肩。</p>
-<h2 id="叶檀：一线城市血流成河？"><a href="#叶檀：一线城市血流成河？" class="headerlink" title="叶檀：一线城市血流成河？"></a><a href="http://www.sohu.com/a/152699092_554746" target="_blank" rel="noopener">叶檀：一线城市血流成河？</a></h2><p>2017-06-28 13:45<br><img alt data-src="http://5b0988e595225.cdn.sohucs.com/images/20170628/f8b626cd73e241cc9acc8076db6aa02d.png"></p>
+<h2 id="叶檀：一线城市血流成河？"><a href="#叶檀：一线城市血流成河？" class="headerlink" title="叶檀：一线城市血流成河？"></a><a href="http://www.sohu.com/a/152699092_554746" target="_blank" rel="noopener">叶檀：一线城市血流成河？</a></h2><p>2017-06-28 13:45<br><img data-src="http://5b0988e595225.cdn.sohucs.com/images/20170628/f8b626cd73e241cc9acc8076db6aa02d.png" alt></p>
 <p>导读：有一天，指挥指着二三线城市说，你们，站到这边来，指着一线城市说，你们，过去。一线城市傻眼，看着指挥棒，磨磨蹭蹭站到了角落里。一线城市被捆住了手捂住了嘴，刚好是二三线城市高歌的时候。手里捏了一把烂牌的城市，简直是心花怒放。</p>
 <p>文/叶檀 ☞财经女侠 | 毒舌善心</p>
 <p>一线城市是房地产领域的大号，一直在一个大型合唱团里领唱，二线城市紧挨着一线城市伴唱，心里想着的是，我才是主角，我才是主角。三线城市站在边上，没有太大的野心，至于那些四线小号，站在边上张着嘴，出工不出力。</p>
@@ -954,7 +924,7 @@
 <p>从资源、人口和经济看，中国城市群正在形成，一线城市被摁在地下，给了武汉、合肥这样的城市超越的理由。只有武汉、合肥这些城市发展成熟，周边才可能有卫星城。</p>
 <p>所以，<strong>中国城市发展秩序是这样的，一线城市，一线城市卫星城，二三线城市，二三线城市的周边城市。</strong></p>
 <p>扔掉你的感情，不要上当，不要把对房地产的憎恶和投资扯到一块。</p>
-<h2 id="叶檀-中高端住房一年不到5万套-北京只有三类人能住"><a href="#叶檀-中高端住房一年不到5万套-北京只有三类人能住" class="headerlink" title="叶檀:中高端住房一年不到5万套 北京只有三类人能住"></a><a href="http://opinion.jrj.com.cn/2017/09/13081323104775.shtml" target="_blank" rel="noopener">叶檀:中高端住房一年不到5万套 北京只有三类人能住</a></h2><p><img alt data-src="http://getimg.jrj.com.cn/images/2017/09/weixin/one_20170913081326884.jpg"></p>
+<h2 id="叶檀-中高端住房一年不到5万套-北京只有三类人能住"><a href="#叶檀-中高端住房一年不到5万套-北京只有三类人能住" class="headerlink" title="叶檀:中高端住房一年不到5万套 北京只有三类人能住"></a><a href="http://opinion.jrj.com.cn/2017/09/13081323104775.shtml" target="_blank" rel="noopener">叶檀:中高端住房一年不到5万套 北京只有三类人能住</a></h2><p><img data-src="http://getimg.jrj.com.cn/images/2017/09/weixin/one_20170913081326884.jpg" alt></p>
 <p>9月10号，北京市住建委表示，截至8月底，北京保障房新开工4.9万套，完成全年5万套任务的99%，竣工7.1万套，完成全年6万套任务的118%。</p>
 <p>今后五年，将按照建设150万套住房的要求，推进其中25万套共有产权住房和50万套租赁住房的落地。在25万套共有产权住房中，包括转化剩余未售的2.3万套和原计划建设的自住房。</p>
 <p>北京房地产市场将走向平稳，一是人口流入下降，二是住房政府价压着市场价。<br>以后，只有三类人可以在北京居住，<strong>一是北京土著，二是人才，三是全球有钱人。</strong></p>
@@ -963,7 +933,7 @@
 <p>　　当地土著居民受到优待。<br>　　自住房摇号分为优先级和非优先级两种，优先级的是京籍无房家庭和经适房、限价房轮候家庭，非优先级的主要是非京籍和京籍已经有1套房的家庭。<br>　　2016年，非优先级的非京籍家庭根本没有机会分享。统计数据显示，在自住房申请者中，符合优先级条件的占到76%，最终购房者中，优先级家庭占比达到惊人的93%。<br>　　虽然名义上自住房向非京籍开放，每年至少安排30%约1.5万套给非京籍无房家庭，5年累计安排约7.5万，杯水车薪。</p>
 <p>　　第二类是北京引进的人才，外地也无所谓。<br>　　今年有10万套左右租赁住房。<br>　　这些房子只收租金，只有使用权，没有产权。建在集体用地上，不涉及拆迁，成本较低。有的楼盘每年租金交给乡集体，年底分到当地农民手上。<br>　　两类人从中受益，另一类仍然是北京户籍居民，购买不起商品房，可以申请廉价的租赁房。二是从外地引入北京的人才，这是北京需要的。<br>　　从2011年开始，北京在5个集体建设用地地块开展租赁住房项目试点，可供应租赁住房1.28万套，面向周边产业园区职工、外来务工人员，或由区政府按市场价格整体趸租作为公租房，面向城镇中低收入家庭出租。<br>　　温泉351项目作为海淀区创客人才公租房试点项目，打造双创示范基地；北七家镇项目受众人群主要为未来科技城企业员工及中关村(7.65 -0.52%,诊股)科技园区昌平园区企业人才。<br>　　看看雄安的做法。<br>　　雄安新区党工委副书记刘宝玲表示，新区拟为外来创业、就业者提供租赁住房，租赁超过十年也可以买，一定期限内不能卖。若卖，政府优先以略高于同期银行本息的价格回购。<br>　　十年以上才能获得产权，有了产权也不是完整产权，政府以低价优先回购。想在雄安新区炒房的可以洗洗睡了。<br>　　北京也是如此。<br>　　房品房价格维持在高位<br>　　有钱的外地人买高价房在北京生活<br>　　纯商品房越来越稀缺。<br>　　一年三十万套，减去自住房、租赁房、中小户型，其他大型商品房在4.5万左右，去年北京新房出售11.4752万套，跟800万套的存量比，不值一提。加上房贷利率大幅上升，北京商品房价格基数极高，等到限购取消，只有外地的有钱人才能买得起北京商品房。<br>　　现在，开发商验资，买车位，答精装修合同，层出不穷。所以，商品房价格会跌吗？</p>
 <p>　　结论：<br>　　新加坡模式在中国再版，只是组屋比例不如新加坡高。<br>　　<strong>以后低收入阶层住保障房和租赁房，中等收入阶层住自住房等共有产权房，只有真正富裕的一族，才会购买贵得要死的商品房，商品房一律宽敞，精装修。</strong><br>　　房价不可能跌，但涨幅不再，黄金时代已经过去。</p>
-<p><img alt="house.jpg" data-src="http://opb37u589.bkt.clouddn.com/house.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/house.jpg?imageMogr2/thumbnail/!75p" alt="house.jpg"></p>
 <blockquote>
 <p>本轮房价暴涨潮不同于以往的最大区别是，原本应各自牵制的政府、开发商、购房人三方持有了相同的目标。</p>
 </blockquote>
@@ -973,7 +943,7 @@
 <blockquote>
 <p>金融已然是助推房价的最有力杠杆，数轮调控政策打击目标瞄准购房需求，但打击方式只有一个：通过准入门槛和信贷额度卡死金融通道。</p>
 </blockquote>
-<h2 id="“楼市心理调查”系列之一：抢着上车的购房者"><a href="#“楼市心理调查”系列之一：抢着上车的购房者" class="headerlink" title="“楼市心理调查”系列之一：抢着上车的购房者"></a><a href="http://www.ftchinese.com/story/001071841?full=y" target="_blank" rel="noopener">“楼市心理调查”系列之一：抢着上车的购房者</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F2%2F000067982_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="“楼市心理调查”系列之一：抢着上车的购房者"><a href="#“楼市心理调查”系列之一：抢着上车的购房者" class="headerlink" title="“楼市心理调查”系列之一：抢着上车的购房者"></a><a href="http://www.ftchinese.com/story/001071841?full=y" target="_blank" rel="noopener">“楼市心理调查”系列之一：抢着上车的购房者</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F2%2F000067982_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>黎岩：购房者疯狂“抢着上车”，开发商齐捧地王，政府楼市调控越挫越勇，他们各自行为背后存在怎样的心理？</p>
 </blockquote>
@@ -1007,7 +977,7 @@
 <p>中国的城镇化起码还要经历两到三代人才能彻底完成。在这期间，不同城市都要找到自己的位置。什么时候每年春运不需要完成六亿人次的大迁徙，什么时候来到大城市变成不足1%人口比例的个体性迁徙，那些处在食物链顶端的大城市才会出现房价普遍下滑的可能性。</p>
 <p>在这期间，会有很多经济学的理论为房价的爬坡提供理论支撑。而在它们背后所支撑的心理因素就是：人们依然希望代际间的流动，希望用各种尝试和努力去提升自己的阶层，改变自己的居住方位进而希望以此借力，改变更多。</p>
 <p>当然了，以上都是建立在世界大格局不变、中国的大环境不变的前提下，一旦这两个因素改变，房价必然受到影响。不过，也只有在这个前提下讨论房价才有意义。毕竟如果极端的形势发生的话，不光房子，就是所有投资品都同样不可靠。</p>
-<h2 id="“楼市心理调查”系列之二：楼市调控者的“纠结”心理"><a href="#“楼市心理调查”系列之二：楼市调控者的“纠结”心理" class="headerlink" title="“楼市心理调查”系列之二：楼市调控者的“纠结”心理"></a><a href="http://www.ftchinese.com/story/001071875" target="_blank" rel="noopener">“楼市心理调查”系列之二：楼市调控者的“纠结”心理</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F8%2F000059048_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="“楼市心理调查”系列之二：楼市调控者的“纠结”心理"><a href="#“楼市心理调查”系列之二：楼市调控者的“纠结”心理" class="headerlink" title="“楼市心理调查”系列之二：楼市调控者的“纠结”心理"></a><a href="http://www.ftchinese.com/story/001071875" target="_blank" rel="noopener">“楼市心理调查”系列之二：楼市调控者的“纠结”心理</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F8%2F000059048_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>黎岩：房价越调越高并非管理层的初衷，但在拉动经济目标下，确实没有其他车比房地产这辆车更好开。</p>
 </blockquote>
@@ -1036,7 +1006,7 @@
 <p>这是不曾宣诸于口的如意算盘，但是否在实际运行中会走样还很难说——而且，各方利益的介入会使得走样变成大概率事件。群起而抢地的国企、甘愿以一两个点利率给国企放贷款的银行，都是看准了这隐而不宣的一点，才会毫无忌惮地往房地产这个明知已过热、明知已失准的行业里扎。</p>
 <p>如果总结一句的话：只要“效率优先、兼顾公平”的关系不改变，只要“经济建设为中心”的核心不转变，只要城镇化的大潮尚未平息，那么，作为连接上下游产业和各路资金最通畅的行业，房地产业依然会是国民经济中的重要部分，政策制定者依然会默认和容忍它的缓慢小幅上涨。而且，在没有更好的替代性产业被培育成型之前，政策制定者甚至更会虎视眈眈地警惕它不要出现普遍下跌，造成整个国民经济的增长乏力。</p>
 <p>但是，这不完全代表政府和开发商是一伙儿的，事实上，奋勇拿地的开发商甚至要比拼命抢房的房贷一族更为迷茫和焦虑。</p>
-<h2 id="“楼市心理调查”系列之三：房价暴涨背后的囚徒困境"><a href="#“楼市心理调查”系列之三：房价暴涨背后的囚徒困境" class="headerlink" title="“楼市心理调查”系列之三：房价暴涨背后的囚徒困境"></a><a href="http://www.ftchinese.com/story/001071921" target="_blank" rel="noopener">“楼市心理调查”系列之三：房价暴涨背后的囚徒困境</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F1%2F000067381_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="“楼市心理调查”系列之三：房价暴涨背后的囚徒困境"><a href="#“楼市心理调查”系列之三：房价暴涨背后的囚徒困境" class="headerlink" title="“楼市心理调查”系列之三：房价暴涨背后的囚徒困境"></a><a href="http://www.ftchinese.com/story/001071921" target="_blank" rel="noopener">“楼市心理调查”系列之三：房价暴涨背后的囚徒困境</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F1%2F000067381_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>黎岩：本轮房价暴涨潮不同于以往的最大区别是，原本应各自牵制的政府、开发商、购房人三方持有了相同的目标。</p>
 </blockquote>
@@ -1087,7 +1057,7 @@
 <p>而购房人的期待最简单：上车，并且尽量在车上站到更好的位置。三方力量中，购房人最为分散，四下群起买房的景象很容易造成他们的心理恐慌，导致他们看不清规律。事实上，在一次次调控中，房价早已有了固定的起伏规律，抢在调控政策出台之前上车的人是最不理智的，他们没有抗御风险的力量，但缺乏的是抵抗心魔的定力。</p>
 <p><strong>在这个复杂螺旋中，购房人既是房价上涨的最大受害人，也是最直接的推手，最彻底的接盘者，更是力量最弱小的一方。</strong></p>
 <p>所以，囚徒困境之下，谁应该先撤伙，还不明白吗？</p>
-<h2 id="“楼市心理调查”系列之四：房价背后的金融推手"><a href="#“楼市心理调查”系列之四：房价背后的金融推手" class="headerlink" title="“楼市心理调查”系列之四：房价背后的金融推手"></a><a href="http://www.ftchinese.com/story/001071979" target="_blank" rel="noopener">“楼市心理调查”系列之四：房价背后的金融推手</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F4%2F000060814_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="“楼市心理调查”系列之四：房价背后的金融推手"><a href="#“楼市心理调查”系列之四：房价背后的金融推手" class="headerlink" title="“楼市心理调查”系列之四：房价背后的金融推手"></a><a href="http://www.ftchinese.com/story/001071979" target="_blank" rel="noopener">“楼市心理调查”系列之四：房价背后的金融推手</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F4%2F000060814_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>黎岩：金融已然是助推房价的最有力杠杆，数轮调控政策打击目标瞄准购房需求，但打击方式只有一个：通过准入门槛和信贷额度卡死金融通道。</p>
 </blockquote>
@@ -1130,12 +1100,12 @@
 <p>最后一点，户籍或社保年限等政策取消，买房无须成为一个人在选择居住城市时，为了保有必要的尊严而必须做出的购买性选择。对此，不多解释。</p>
 <p>集齐四颗龙珠，换房价下跌。那么，这个几率究竟有多大呢？想必很容易得出答案了。</p>
 <p>（作者系资深媒体人。本文仅代表作者观点。责任编辑邮箱：<a href="mailto:tao.feng@ftchinese.com" target="_blank" rel="noopener">tao.feng@ftchinese.com</a>）</p>
-<p><img alt="450x450.jpg" data-src="http://opb37u589.bkt.clouddn.com/450x450.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/450x450.jpg?imageMogr2/thumbnail/!75p" alt="450x450.jpg"></p>
 <p>其实，买房与否，答案根本不复杂，只需要问自己两个问题：</p>
 <blockquote>
 <p>第一，我能不能不买房？——我真有朋友不买房，在京城租房过日子，相当潇洒和满足。<br>第二，如果我手上有一笔钱，比如100万以内，除了买房，我还有没有其他选择？</p>
 </blockquote>
-<h2 id="谈论房价的正确姿势是什么？"><a href="#谈论房价的正确姿势是什么？" class="headerlink" title="谈论房价的正确姿势是什么？"></a><a href="http://www.ftchinese.com/story/001071800?full=y" target="_blank" rel="noopener">谈论房价的正确姿势是什么？</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F0%2F000066750_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="谈论房价的正确姿势是什么？"><a href="#谈论房价的正确姿势是什么？" class="headerlink" title="谈论房价的正确姿势是什么？"></a><a href="http://www.ftchinese.com/story/001071800?full=y" target="_blank" rel="noopener">谈论房价的正确姿势是什么？</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F0%2F000066750_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>子桐：我对《房价之谜》的分析、论证与结论实难苟同。最大的不赞同是，作者对房地产棋局中多种变量认知不足。</p>
 </blockquote>
@@ -1147,7 +1117,7 @@
 <p>坦率讲，作为从业者，我很赞同作者的”龟壳”说，即中国经济背上了房价等因素促成的一副重重的”龟壳”。我一度为地产开发行业的破坏性增长感到担忧，以为那是寅吃卯粮、竭泽而渔、不可持续。但正如作者说的，<strong>中国市场分成了一线、优质二线、三四线，也就是说中国市场的梯级层次太大了，“泄洪区”幅员辽阔。因为“泄洪区”，我们屡次濒于破产边缘，又屡次走了过来。</strong></p>
 <p>行笔至此，购房者会问，我该如何自洽，如何选择？</p>
 <p>其实，买房与否，答案根本不复杂，只需要问自己两个问题：<strong>第一，我能不能不买房？——我真有朋友不买房，在京城租房过日子，相当潇洒和满足。第二，如果我手上有一笔钱，比如100万以内，除了买房，我还有没有其他选择？闭上眼睛、扪心自问后，答案是相当清楚的，鲜活的个体谈论房价也就找到了正确的姿势。</strong></p>
-<h2 id="中国城市战略的五大迷局"><a href="#中国城市战略的五大迷局" class="headerlink" title="中国城市战略的五大迷局"></a><a href="http://www.ftchinese.com/story/001072724?full=y" target="_blank" rel="noopener">中国城市战略的五大迷局</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F7%2F000066357_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="中国城市战略的五大迷局"><a href="#中国城市战略的五大迷局" class="headerlink" title="中国城市战略的五大迷局"></a><a href="http://www.ftchinese.com/story/001072724?full=y" target="_blank" rel="noopener">中国城市战略的五大迷局</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F7%2F000066357_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>罗天昊：不同的产业选择，导致最终的城市格局迥异。一个城市到底适合哪种产业，有很多先决条件。</p>
 </blockquote>
@@ -1208,7 +1178,7 @@
 <p>比如经济发达的苏州，其本外币存款与GDP的比值不过1.3，但是，经济不发达的甘肃省会兰州，其存款余额与GDP的比重，竟然可达2.8，吸金能力强过经济发达的苏州。在一省之内也是如此。苏州经济比南京更强势，但是吸金能力就不如南京。南京的本外币存款与GDP比值达到2.7。吸纳资金的能力强过苏州。</p>
 <p>不仅公共资源的分配，要考量城市的权力所处层级，很多没有完全走出审批制的垄断行业、半开放行业，都依赖城市权力体系。比如地级市可以做城市银行，再发达的县级市却没有权限，这就不是市场选择，是权力布局。</p>
 <p>处于权力体系中端乃至下端的城市，产业选择空间就小多了。笔者这些年看到很多禀赋一般，层级也一般的城市，产业规划中却有种种宏图伟略，说说可以，真推行就是致当地于不利之中。<br>充分考量自己在权力体系中的地位，合理布局产业，也是很多城市需要尊重的现实。</p>
-<h2 id="反思中国楼市五次低谷"><a href="#反思中国楼市五次低谷" class="headerlink" title="反思中国楼市五次低谷"></a><a href="http://www.ftchinese.com/story/001070717?full=y" target="_blank" rel="noopener">反思中国楼市五次低谷</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F6%2F000064496_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="反思中国楼市五次低谷"><a href="#反思中国楼市五次低谷" class="headerlink" title="反思中国楼市五次低谷"></a><a href="http://www.ftchinese.com/story/001070717?full=y" target="_blank" rel="noopener">反思中国楼市五次低谷</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F6%2F000064496_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>刘渊：明年，中国楼市很可能迎来一次或大或小的调整。展望未来之前，我们不妨先回顾一下过去几次的楼市低谷。</p>
 </blockquote>
@@ -1230,7 +1200,7 @@
 <p>从市场的实际反应来看，表现和2011年那轮类似，重点城市成交量大幅下降，但价格跌的不多，一线城市二手住宅价格跌幅在5%左右。但全国高库存的问题越来越严重，施工建设也出现负增长。当年全国新房的销售面积出现了自1998年房改以来的第二次负增长（第一次是2008年）。在这样的背景下，2014年9月底“930新政”出台，政策转向鼓励购房，楼市重拾升途。后来的故事，大家就应该很熟悉了。</p>
 <p>弹指一挥间，回顾过去十多年楼市的起起伏伏，我们大概可以得到这么几点经验教训：</p>
 <p>建立长效机制非常重要。因为房地产行业的特性，从施工到建成有至少1、2年的间隔。决策不能只看眼前，否则很容易和行业小周期叠加，加剧负面效果。同时，政策推出的时机也很重要，避免市场大起大落。另外，不能迷信行政压力。短期强压虽然见效快，但基本面不改的情况下，要么“按下葫芦浮起瓢”，导致其他领域出问题；要么后期出现报复性反弹。</p>
-<h2 id="博鳌之辩：中国楼市泡沫会破吗？"><a href="#博鳌之辩：中国楼市泡沫会破吗？" class="headerlink" title="博鳌之辩：中国楼市泡沫会破吗？"></a><a href="http://www.ftchinese.com/story/001071951?full=y" target="_blank" rel="noopener">博鳌之辩：中国楼市泡沫会破吗？</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F5%2F000063155_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="博鳌之辩：中国楼市泡沫会破吗？"><a href="#博鳌之辩：中国楼市泡沫会破吗？" class="headerlink" title="博鳌之辩：中国楼市泡沫会破吗？"></a><a href="http://www.ftchinese.com/story/001071951?full=y" target="_blank" rel="noopener">博鳌之辩：中国楼市泡沫会破吗？</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F5%2F000063155_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>原中国财政部科研所所长贾康认为，十五年内一线城市均价不会下行。齐鲁资管李迅雷则表示，2020年左右全国房价会普跌，之后该涨的还会涨回来。</p>
 </blockquote>
@@ -1257,7 +1227,7 @@
 <p>第三，中国在PPP的概念下，已经有非常多的努力，调动政府体外的资金一起提供住宅，提供宜居城市建设所需的基础设施。要把这方面可能对应到的养老需求，由政府牵动整个社会资本形成供应，供需尽可能平衡。</p>
 <p>第四，就是很得罪大众的，中国必须积极借鉴美国、欧洲、日本还有很多发展中国家，在住房的保有环节从无到有地形成房地产税、财产税或者不动产税。这个税制的建设中央早有要求，但到现在为止没有看到任何加快。今年房地产税被人们热议之后，人大宣布本年度内不考虑把它提交到立法过程中去，这是一个重大的遗憾。</p>
 <p>至少这四个方面的基础性制度建设必须形成配套改革方案，坚定不移地推进，否则中国现在以限购、限贷甚至是限价方式做的房地产调控是治标不治本。它不断地在打摆子状态，在任何一个阶段，都是民众不满意、政府在焦虑，都不能够解决健康发展的问题，所以一定要找到标本兼治，而治本为上的这条出路。</p>
-<h2 id="中国房价泡沫收场的N种姿势"><a href="#中国房价泡沫收场的N种姿势" class="headerlink" title="中国房价泡沫收场的N种姿势"></a><a href="http://www.ftchinese.com/story/001072362?full=y" target="_blank" rel="noopener">中国房价泡沫收场的N种姿势</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F3%2F000065483_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="中国房价泡沫收场的N种姿势"><a href="#中国房价泡沫收场的N种姿势" class="headerlink" title="中国房价泡沫收场的N种姿势"></a><a href="http://www.ftchinese.com/story/001072362?full=y" target="_blank" rel="noopener">中国房价泡沫收场的N种姿势</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F3%2F000065483_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>刘胜军：十九大后，中国房价将迎来历史性拐点。政府势必采取措施缓冲房价下跌，但其托市能力和意愿都在减弱。</p>
 </blockquote>
@@ -1268,16 +1238,16 @@
 <p><strong>收场姿势之一：货币政策中性化</strong></p>
 <p>大师弗里德曼说的深刻：价格是一种货币现象。房价泡沫也不会例外地源于过多的货币追逐房产。<br>房价</p>
 <p>2009年到2015年之间，中国信贷平均每年增长20%左右，大大高于名义GDP增长率。截止2016年末，中国M2达到155万亿（约22万亿美元）、GDP为74万亿（11.7万亿美元），而美国的M2和GDP分别为13万亿美元和18万亿美元。换言之，中国的GDP只有美国的2/3，但中国的货币量却相当于美国的1.7倍！这是理解房价泡沫的关键数据。</p>
-<p><img alt data-src="http://i.ftimg.net/picture/8/000069658_piclink.jpg"><br>图：中国货币超发严重</p>
-<p><img alt data-src="http://i.ftimg.net/picture/9/000069659_piclink.jpg"><br>图：中国的货币供应量M2全球遥遥领先<br>来源：Levy Economics Institute of Bard College</p>
+<p><img data-src="http://i.ftimg.net/picture/8/000069658_piclink.jpg" alt><br>图：中国货币超发严重</p>
+<p><img data-src="http://i.ftimg.net/picture/9/000069659_piclink.jpg" alt><br>图：中国的货币供应量M2全球遥遥领先<br>来源：Levy Economics Institute of Bard College</p>
 <p>以中国的金融体系是间接融资为主来解释过高的M2/GDP比率是牵强的，因为在2008年金融危机后这一比率迅速窜升，与之吻合的是大规模的信贷投放。在危机后的几年，中国新增M2占到全球的40~50%，这足以解释中国资产价格泡沫的来源。令人震惊的是，2016年工农中建四大行新增贷款超过60％投入了房地产。</p>
 <p>问题是宽松货币营造的资产价格盛宴是一场幻觉。当泡沫膨胀到一定程度，央行出于恐惧就不得不开始刹车，而且这种刹车往往来得太晚，资产价格泡沫随即被戳破。历史一再证明这一点。</p>
 <p>以日本世纪性的房地产泡沫为例。在维持了两年零三个月的超低利率后，日本央行终于在1989年5月启动加息。1989年12月29日，日本股市达到顶点后开始崩溃。房地产泡沫则反应稍慢，在1991年达到历史顶点后崩溃。</p>
-<p><img alt data-src="http://i.ftimg.net/picture/0/000069660_piclink.jpg"><br>图：日本央行贴现利率</p>
-<p><img alt data-src="http://i.ftimg.net/picture/1/000069661_piclink.jpg"><br>图：日本资产价格指数<br>来源：Maurice Obstfeld,加州大学伯克利分校。</p>
+<p><img data-src="http://i.ftimg.net/picture/0/000069660_piclink.jpg" alt><br>图：日本央行贴现利率</p>
+<p><img data-src="http://i.ftimg.net/picture/1/000069661_piclink.jpg" alt><br>图：日本资产价格指数<br>来源：Maurice Obstfeld,加州大学伯克利分校。</p>
 <p>再看美国2008年次贷危机。在保持了将近三年的低位利率后，美联储于2004年启动加息周期。加息戳破了房价泡沫，2006年房价开始普遍下跌，随即引发2007－2008年的次贷危机。</p>
-<p><img alt data-src="http://i.ftimg.net/picture/2/000069662_piclink.jpg"><br>图：美国联邦基金利率</p>
-<p><img alt data-src="http://i.ftimg.net/picture/3/000069663_piclink.jpg"><br>图：Case-Shiller房价指数</p>
+<p><img data-src="http://i.ftimg.net/picture/2/000069662_piclink.jpg" alt><br>图：美国联邦基金利率</p>
+<p><img data-src="http://i.ftimg.net/picture/3/000069663_piclink.jpg" alt><br>图：Case-Shiller房价指数</p>
 <blockquote>
 <p>有人或许会问：“既然如此，干嘛加息？”原因很简单，低利率犹如在高速公路不断踩油门，当车速过快时，除了加息（踩刹车）之外没有其他选择。</p>
 </blockquote>
@@ -1286,7 +1256,7 @@
 <p>供求决定价格是市场经济的基本规律，资产市场亦不例外。中国的房价泡沫既有货币超发带来的“需求无度”，也有土地供应制度僵化导致的供应短缺。</p>
 <p>在发达国家，土地基本为私有，这意味着土地供应的弹性很大，一旦房价上涨，土地供给“自动”就会增加，从而缓和供求矛盾。但中国的情况截然不同，中国土地为国有，且由国土资源部每年向各省市分配指标。上海等一线城市缺的不是地，而是用地指标。理论上讲，上海仍有大量农业用地可以转化，因为农业功能完全可以疏解到江浙农村。</p>
 <p>从直觉上讲，东部沿海地区房价上涨压力大，应该增加土地供应。但陆铭等人的研究发现，土地指标的分配更倾向于中西部地区而非东部地区。这意味着土地供给的分配，加剧了东部地区的土地供求矛盾。政府政策与市场规律的背离有几种可能的解释：1）体现中央支持中西部发展的战略意图；2）观念误区：不少人认为一线城市太大了，大城市病突出，需要限制发展。而收紧土地供应则体现了这种意图。其效果适得其反：由于经济竞争力的差异，一线城市人口呈现“净流入”状态，土地供应限制只会使大城市各种资源矛盾更加突出。</p>
-<p>图：中西部土地供应更加充分<br><img alt data-src="http://i.ftimg.net/picture/6/000069666_piclink.jpg"><br>来源：陆铭等（2015），“偏向中西部的土地供应如何推升了东部工资”</p>
+<p>图：中西部土地供应更加充分<br><img data-src="http://i.ftimg.net/picture/6/000069666_piclink.jpg" alt><br>来源：陆铭等（2015），“偏向中西部的土地供应如何推升了东部工资”</p>
 <p>实际上，中国的一线城市不是太大，而是管理和规划水平差。最典型的例证是东京：东京圈的国土面积比北京市还小一点，但集中了将近29%的日本人口，生产了30%以上的GDP，2010年东京的人均GDP7.2万美元，高出全国平均值67%。2014年时，东京圈都市面积为8,547km²，人口37,843,000人，按都市地区面积计算的人口密度约为4,400人 /km²。北京市占地面积为16,800km²，都市地区面积3,820km²，2014年时的人口为21,009,000人，按都市地区面积计算的人口密度约为5,500人 /km²。可见，北京的问题不是太大，而是太集中，应该向周边卫星城疏解，形成都市圈的概念。<br>问题是，土地供应制度会变吗？答案是肯定的。2017年4月6日住房和城乡建设部、国土资源部共同签发《关于加强近期住房及用地供应管理和调控有关工作的通知，明确提出了按照库存消化周期调整供地的量化标准：对消化周期在36个月以上的，应停止供地；36-18个月的，要减少供地；12-6个月的，要增加供地；6个月以下的，不仅要显著增加供地，还要加快供地节奏。虽然这样的思路仍具有计划色彩，但在尊重市场规律上体现了理念的进步。</p>
 <p>重庆地票制度的实践为土地供应探索了另外一种路径：把宅基地复垦，然后获得相应地票（土地指标）。这种方法在保持总体耕地面积不变的情况下，把郊区的宅基地变为市区的建设用地，可以大大缓解土地供应的结构性矛盾。这一制度已经推广到郑州。重庆房地产价格相对较低，被认为与地票制度密切相关。</p>
 <p>土地供给制度的改变，将为过热的一线城市房价降温。</p>
@@ -1299,15 +1269,15 @@
 <p>肯尼斯.罗格夫在《这次不一样：800年金融荒唐史》中尖锐地指出：<strong>所有金融危机的本质都是债务过多的危机。</strong> 过度债务是危险的。无论2008年次贷危机还是2015年中国股灾，高杠杆都扮演了重要角色。</p>
 <p>从表面上看，中国的购房杠杆并不高，银行甚至对二套房要求70％的首付款。但这一数据具有欺骗性：很多年轻人买房，不仅借了银行的贷款，还借了父母、岳父岳母的钱，甚至借了影子银行资金。短期来看，父母的钱或许可能不需要偿还。但是当父母需要资金（例如看病）时就会成为子女的债务。因此，中国的家庭部门负债是被低估的。从国际对比来看，日本在房产泡沫最严重的1989 年，居民新增房贷占当年 GDP 的比重也未超过3.0% ，而中国2015年达到 5.5% 。美国金融危机前新增房贷 /GDP 峰值为8.0%，而中国2016年上半年新增房贷与公积金贷款占 GDP 比重已达 8.6%。中国的房贷余额/GDP目前约25%，已达到日本90年地产泡沫顶峰时的水平。中国房地产总市值占GDP的比例为411%，远高于全球260%的平均水平。从趋势看，居民购房贷款新增额/新增商品房销售额从2011年的17.3%，猛增至2015年的36.7%，2016年上半年再次创新高至56.5%，首付比其实已经低于美国金融危机之前07年时平均50%的首付比例。目前中国居民房贷收入比0.46，已超过日本房产泡沫时期的水平。父母可以帮忙解决首付款，难道还贷款也要靠父母吗？</p>
 <p>最近公布的上市公司报表让我们得以一窥房地产加杠杆的疯狂程度：2016年工、农、中、建四大行超过六成的新增贷款流向了房贷领域，其中中国银行占比高达81.7%。</p>
-<p><img alt data-src="http://i.ftimg.net/picture/7/000069667_piclink.jpg"><br>图：中国家庭部门迅速加杠杆<br>来源：Wells Fargo Securities</p>
+<p><img data-src="http://i.ftimg.net/picture/7/000069667_piclink.jpg" alt><br>图：中国家庭部门迅速加杠杆<br>来源：Wells Fargo Securities</p>
 <p><strong>收场姿势之五：经济再平衡之困</strong></p>
 <p>2008年金融危机后，全球经济再平衡。作为世界出口大国的中国亦深受冲击。显然，中国经济要在新的形势下重新平衡，必需提高消费率，以对冲萎缩的出口需求。目前中国的家庭消费/GDP多年徘徊在35％左右，远低于60％的世界平均水平。</p>
-<p><img alt data-src="http://i.ftimg.net/picture/8/000069668_piclink.jpg"><br>图：家庭消费/GDP</p>
+<p><img data-src="http://i.ftimg.net/picture/8/000069668_piclink.jpg" alt><br>图：家庭消费/GDP</p>
 <p>制约中国局面消费的因素很多，但房地产是一个重要因素。一线城市房价收入比高达30倍以上，严重透支了“房奴们”的消费能力。 据国际货币基金组织的全球房价观察报告，2016上半年房价收入比深圳、北京、上海以38.36、33.32和30.91位居前列，房价租金比则均超过50倍。如果中国当局意识到这一问题关系到经济转型的成败，就应该下决心告别“房地产泡沫”。</p>
 <p>结束语</p>
 <p>中国房地产泡沫多年屹立不倒，背后是货币超发、土地供求失衡及土地财政等因素，导致政府的房地产调控缺乏诚意，进而形成“房价不会跌”的社会预期。但是，上述三大因素导致整体经济风险不断积累，迟早需要压力释放。当前制约压力释放的主要因素是十九大前的维稳压力。可以预期，十九大之后，政府行为更趋理性化，房价泡沫将迎来历史性拐点。</p>
 <p>当然，鉴于房地产规模之大，政府对房价的下跌不会无动于衷，势必采取措施进行缓冲，但政府托市的能力和意愿都在减弱。加尔布雷斯在《大崩溃》中说的到位：“<strong>一只充满气的皮球一旦被捅破，就不会有条不紊的漏气。</strong>”</p>
-<h2 id="“楼市之惑”系列报道之一：短命“去库存”倒逼中国楼市顶层设计？"><a href="#“楼市之惑”系列报道之一：短命“去库存”倒逼中国楼市顶层设计？" class="headerlink" title="“楼市之惑”系列报道之一：短命“去库存”倒逼中国楼市顶层设计？"></a><a href="http://www.ftchinese.com/story/001069813" target="_blank" rel="noopener">“楼市之惑”系列报道之一：短命“去库存”倒逼中国楼市顶层设计？</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F9%2F000065789_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="“楼市之惑”系列报道之一：短命“去库存”倒逼中国楼市顶层设计？"><a href="#“楼市之惑”系列报道之一：短命“去库存”倒逼中国楼市顶层设计？" class="headerlink" title="“楼市之惑”系列报道之一：短命“去库存”倒逼中国楼市顶层设计？"></a><a href="http://www.ftchinese.com/story/001069813" target="_blank" rel="noopener">“楼市之惑”系列报道之一：短命“去库存”倒逼中国楼市顶层设计？</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F9%2F000065789_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>沈晓杰：此次“去库存新政”失败，为我们对房地产“顶层设计”中所存在的问题，提供了反思和重新设计的契机。</p>
 </blockquote>
@@ -1354,7 +1324,7 @@
 <p>多年来，笔者一直呼吁，要从根本上解决中国的房地产市场和住房问题，必须重启房地产和住房制度及政策的改革，创新发展能满足人民住房需求、可激活普通人住房消费的新的住房供应模式。</p>
 <p>此次“去库存新政”的失败，从某种方面和积极意义来说，正好提供了一个重新检讨房地产市场和住房供应模式的“大好机会”，也为我们对房地产“顶层设计”上所存在的问题，提供了一个深刻反思和重新设计的不可多得的契机。</p>
 <p>其实，只要认真梳理一下自从1998年大规模房改启动历程和房地产市场的发展史，就可以在住房政策、房改及楼市发展的历史比较和反思中，获取过去被忽视的更多的启迪。那么，中国最初的大规模房改，究竟能带给我们什么样的启示？在接下来的系列文章中我们会逐一呈现。</p>
-<h2 id="“楼市之惑”系列报道之二：中国房改的异化和劣变"><a href="#“楼市之惑”系列报道之二：中国房改的异化和劣变" class="headerlink" title="“楼市之惑”系列报道之二：中国房改的异化和劣变"></a><a href="http://www.ftchinese.com/story/001069951" target="_blank" rel="noopener">“楼市之惑”系列报道之二：中国房改的异化和劣变</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F5%2F000065695_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="“楼市之惑”系列报道之二：中国房改的异化和劣变"><a href="#“楼市之惑”系列报道之二：中国房改的异化和劣变" class="headerlink" title="“楼市之惑”系列报道之二：中国房改的异化和劣变"></a><a href="http://www.ftchinese.com/story/001069951" target="_blank" rel="noopener">“楼市之惑”系列报道之二：中国房改的异化和劣变</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F5%2F000065695_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>沈晓杰：政治文明建设及政治体制改革缺位，使政府在房改中所扮演的角色由“以民为本”变质到“与民争利”。</p>
 </blockquote>
@@ -1397,7 +1367,7 @@
 <p><strong>中国的房改，从取消住房实物分配，到国家补贴（国家、单位、个人三者合理负担的体制），再到地方政府把房地产作为最大的敛财工具，通过控制土地供应和限制其他性质土地上市（农村小产权房等），达到土地财政和效益最大化，甚至与开发商合谋从中攫取暴利，以至于现在市民买房，必须向国家缴纳每平方米数千元甚至数万元的“土地出让金”，说到底，还是房改政策变质异化的结果。</strong></p>
 <p>可以说，正是政治文明建设及政治体制改革的缺位，使得在中国房改的发展历程中，政府所扮演的角色，也由“以民为本”变质到“与民争利”。这也是中国房改“失误多多”的根本原因所在。</p>
 <p>中国房改的失败，除了政府在住房政策上的错位以外，还有一个重要的问题，就是当初房改的“灵魂”，如今也已被打的“无影无踪”。具体论证我们将在后续文章中呈现。</p>
-<h2 id="“楼市之惑”系列报道之三：中国房改“灵魂”去哪儿了？"><a href="#“楼市之惑”系列报道之三：中国房改“灵魂”去哪儿了？" class="headerlink" title="“楼市之惑”系列报道之三：中国房改“灵魂”去哪儿了？"></a><a href="http://www.ftchinese.com/story/001070033" target="_blank" rel="noopener">“楼市之惑”系列报道之三：中国房改“灵魂”去哪儿了？</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F7%2F000064777_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="“楼市之惑”系列报道之三：中国房改“灵魂”去哪儿了？"><a href="#“楼市之惑”系列报道之三：中国房改“灵魂”去哪儿了？" class="headerlink" title="“楼市之惑”系列报道之三：中国房改“灵魂”去哪儿了？"></a><a href="http://www.ftchinese.com/story/001070033" target="_blank" rel="noopener">“楼市之惑”系列报道之三：中国房改“灵魂”去哪儿了？</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F7%2F000064777_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>沈晓杰：九八房改后，政府虽然卸掉福利分房的巨大财政包袱，但其更有责任担当起让居民买得起房的国家义务。</p>
 </blockquote>
@@ -1409,7 +1379,7 @@
 <p>2013年诺贝尔经济学奖获得者席勒等创办的美国最权威的凯西•席勒房价指数，也许更能反映成熟的市场经济统计下房价走势应有的规律。据报道，根据该指数研究报告，美国在过去123年（1890年到2013年）中，房价的平均年增长率为3.07%。而同期，美国CPI通胀率为2.82%。这就是说，这123年来美国的房价只比通胀率高了千分之2.5，扣除通胀率后，美国房价基本不涨。此外，根据这项指数，在这123年中，房价下跌的有28年（占23%），上涨的有95年（占77%）。而跌得最深的是金融危机爆发的2008年，一年跌幅达18%。累积跌幅最大的是，2006-2011年间由房地产泡沫破灭引发的金融危机，累积跌幅达33%。</p>
 <p>对比房价走势的“国际惯例”，就不难使人对政府缺位、市场缺失（中国房地产市场政府控制土地和开发商操控供应的“双寡头垄断”，谈不上真正自由竞争的市场经济）所导致的称绝全球的“中国特色房价奇观”，有了更深刻的切身之感。</p>
 <p>正是由于中国各级政府多年来对房价暴涨的放任、纵容甚至合谋，房价多年暴涨的累积结果，不仅使中国众多大中城市的房价呈现“冲天揽月” 之势，而且也使市民的买房负担，在全球登峰造极。<br>众所周知，无论是联合国人居中心还是世界银行，“国际惯例”给出的房价收入比（一个地方家庭收入的中位数和当地住房的平均总价之比）是在3－6之间，也就是国际上一般国家的居民，用3-6年的全部家庭收入即可买到一套住房。而且一旦房价收入比超过5，按照国际惯例该城市就被认为房屋购买力“极低”，房价收入比超过6，就会被国际公认为房地产泡沫地区；超过7以后，直接就会被视为“国际房价最难承受地区”。</p>
-<p>今年初，笔者曾把全球知名房地产顾问机构Demographia公布的2016年度《全球住房负担能力调查》报告（该报告未包含中国大陆城市）和中国一些一二线城市的情况做了对比分析。该报告所列的10个“全球房价最难负担城市”（各自的房价收入比），位居第一的香港为19.0，居于第十名的澳大利亚某城市为9.3（见下图）。<br><img alt data-src="http://i.ftimg.net/picture/4/000066074_piclink.jpg"></p>
+<p>今年初，笔者曾把全球知名房地产顾问机构Demographia公布的2016年度《全球住房负担能力调查》报告（该报告未包含中国大陆城市）和中国一些一二线城市的情况做了对比分析。该报告所列的10个“全球房价最难负担城市”（各自的房价收入比），位居第一的香港为19.0，居于第十名的澳大利亚某城市为9.3（见下图）。<br><img data-src="http://i.ftimg.net/picture/4/000066074_piclink.jpg" alt></p>
 <p>而根据同样的方法计算中国大陆的城市，北京、上海和深圳的买房负担分别为33.2、31.9和33.5。这不仅把号称“全球房价最难负担城市”的香港远远的甩在了后头，而且超过的负担更是高达70%以上。随意抽取的杭州（15.7）、青岛（13.2）、南京（18.3）和西安（8.5）这四个城市，除了西部城市西安外，其他3个城市居民的房价负担都远远高于名列“全球房价最难负担城市”第二名的悉尼（房价收入比为12.2）。其中南京比悉尼的高出了50% 。</p>
 <p>以上还是根据去年底的数据所做的统计。而根据中国房地产业协会的最新的统计，到今年十月份，上述的北京、上海、深圳、杭州、青岛、南京和西安这七个城市，房价同比更是分别上涨了41.18%、32.78%、23.45%、15.08%、11.54%、38.14%和3.04%。这就意味着除了西安以外，早在去年底就分别把“全球房价最难负担城市”头两名甩出“几条大街”的京沪深和杭州青岛南京等中国一二线大城市，今年以来又以让人不可思议的增速，把“全球房价最难负担城市”远远甩在后面。</p>
 <p>面对中国这些大中城市如此的房价涨幅和高居全球之巅的房价最难负担水平，很多人对此已麻木到“司空见惯”，似乎如此“中国特色”是当初实施房改所带来的必然结果。事实真的如此吗？</p>
@@ -1442,7 +1412,7 @@
 <p>回顾中国房改和房地产市场发展的历程，不难发现，我们何时坚持了“让老百姓买得起房”这个房改和住房政策的灵魂，城镇居民的住房问题就解决的好，住房小康就会得到持续稳定的发展。反之，城镇居民的住房小康就可能出现停滞不前，甚至是倒退。有两组数据可以说明：</p>
 <p>朱镕基总理在2003年3月所做的最后一次政府工作报告时，在回顾其5年任期（从1998年3月到2003年3月）工作时，专门提到其任期内“城镇居民人均住房建筑面积由17.8平方米增加到近22平方米；而根据国家统计局和住建部的数据计算，到2015年底，中国城镇的人均住房面积仅有21.12平方米。也就是说，从朱镕基退下后到去年底的这13年期间，中国城镇居民实际的住房面积和水平不进反退。</p>
 <p>那么，究竟是什么原因导致中国城镇居民的住房小康“半途重创”？我们将在后续文章详细论述。</p>
-<h2 id="“楼市之惑”系列报道之四：引发楼市乱象的“二次房改”"><a href="#“楼市之惑”系列报道之四：引发楼市乱象的“二次房改”" class="headerlink" title="“楼市之惑”系列报道之四：引发楼市乱象的“二次房改”"></a><a href="http://www.ftchinese.com/story/001070138" target="_blank" rel="noopener">“楼市之惑”系列报道之四：引发楼市乱象的“二次房改”</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F6%2F000064956_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="“楼市之惑”系列报道之四：引发楼市乱象的“二次房改”"><a href="#“楼市之惑”系列报道之四：引发楼市乱象的“二次房改”" class="headerlink" title="“楼市之惑”系列报道之四：引发楼市乱象的“二次房改”"></a><a href="http://www.ftchinese.com/story/001070138" target="_blank" rel="noopener">“楼市之惑”系列报道之四：引发楼市乱象的“二次房改”</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F6%2F000064956_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>沈晓杰：中国房改早已不是当年的“九八房改”，十三年前它就改弦易撤，从那时起，房改开始了由善转恶的劣变。</p>
 </blockquote>
@@ -1492,7 +1462,7 @@
 <p>就是在这样的城镇居民住房水平背景下，在这样一张经济适用房“成绩单”上，国家的红头文件竟然以“适应了中低收入家庭购房需求”的理由，用一纸公文，宣告了“普通市民的经济适用房政策”的终结。这究竟要完成了谁的“历史使命”？</p>
 <p>对中国“二次房改”的评价，套用邓小平30多年前的一段话，也许更“对症下药”。1985年3月邓小平在出席全国科技工作会议时说：“社会主义的目的就是要全国人民共同富裕，不是两极分化。如果我们的政策导致两极分化，我们就失败了；如果产生了什么新的资产阶级，那我们就真是走了邪路了。”而2003年启动的“二次房改”，在制造数以万计的地产首富和富翁的同时，更是为这个时代留下了数以亿计的房奴和无房户。如此“二次房改”失败与否，不容置疑。</p>
 <p>那么，我们究竟应该有怎样的住房政策和房地产市场的“顶层设计”，才能使中国的房地产市场重归健康之路？请见后续文章论述。</p>
-<h2 id="“楼市之惑”系列报道之五：本末倒置的“去库存”"><a href="#“楼市之惑”系列报道之五：本末倒置的“去库存”" class="headerlink" title="“楼市之惑”系列报道之五：本末倒置的“去库存”"></a><a href="http://www.ftchinese.com/story/001070310" target="_blank" rel="noopener">“楼市之惑”系列报道之五：本末倒置的“去库存”</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F5%2F000065085_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="“楼市之惑”系列报道之五：本末倒置的“去库存”"><a href="#“楼市之惑”系列报道之五：本末倒置的“去库存”" class="headerlink" title="“楼市之惑”系列报道之五：本末倒置的“去库存”"></a><a href="http://www.ftchinese.com/story/001070310" target="_blank" rel="noopener">“楼市之惑”系列报道之五：本末倒置的“去库存”</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F5%2F000065085_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>沈晓杰：把去库存作为楼市调控之本，不仅冲击了实体经济，也严重危害了中国房地产市场本身的有序健康发展。</p>
 </blockquote>
@@ -1545,7 +1515,7 @@
 <p>必须特别指出的是，住宅产业的爆发式增长，还可为处在“去产能”剧痛中的中国钢铁工业、原材料产业、电器和家装行业，甚至是煤炭等能源产业，雪中送炭一般的带来崭新的生机。</p>
 <p>当然，中国的住宅产业不可能一下子就实现这般爆发式的“大跃进增长”。但它至少使人们可以清楚知道，政府和高层解决全民住房小康，看起来是一个“碰不得”的挑战，其实更是一个不可多得的发展机遇。尤其是在当前高库存已达到80亿平方米的情况下，更是为中国城镇全民的住房小康提供了不可多得的基础。</p>
 <p>那么，我们该有怎样的住房政策顶层设计，才能实现这一伟大的转折？请见后续文章论述。</p>
-<h2 id="“楼市之惑”系列报道之六：第三次房改该如何推进？（上）"><a href="#“楼市之惑”系列报道之六：第三次房改该如何推进？（上）" class="headerlink" title="“楼市之惑”系列报道之六：第三次房改该如何推进？（上）"></a><a href="http://www.ftchinese.com/story/001070529?full=y" target="_blank" rel="noopener">“楼市之惑”系列报道之六：第三次房改该如何推进？（上）</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F4%2F000060814_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="“楼市之惑”系列报道之六：第三次房改该如何推进？（上）"><a href="#“楼市之惑”系列报道之六：第三次房改该如何推进？（上）" class="headerlink" title="“楼市之惑”系列报道之六：第三次房改该如何推进？（上）"></a><a href="http://www.ftchinese.com/story/001070529?full=y" target="_blank" rel="noopener">“楼市之惑”系列报道之六：第三次房改该如何推进？（上）</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F4%2F000060814_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>沈晓杰：顶层若能设计和重启普通人住房消费机制，将会为经济发展、社会稳定和国民幸福指数，带来巨大变化。</p>
 </blockquote>
@@ -1584,7 +1554,7 @@
 <p>按照市长黄奇帆的说法，以市民每月的家庭收入可买得到一个平方米住房来计算，现在户均100平方米的住房的房价收入比就是8.3。所以，把房价收入比9作为中国大中城市买得起房的基准线，符合中国现实国情。</p>
 <p>当然，之所以把它当作“基准线”，是因为这个政策标准不应该是“一杆尺子量到底”。比如，在三四线中小城市和西部边远城市，本来的房价水平就不高，住房库存积压可能还多，“买得起房”的政策标准就应该明显下浮，定在房价收入比6以下；而一些房价高企的一二线大中城市和沿海发达城市，一般的“买得起房”的政策界限可以上浮到房价收入比12，北京上海深圳等特大型城市，最高可以上浮到房价收入比15。就是这样的“高水平”，这些地方市民实际承受房价，也要比现在低了一半左右。</p>
 <p>而要房价立马下降50%，怎么说都不现实。但是，地方政府可以通过共有产权房、经适房和自持房等多种形式，使市民实际的负担水平下降一半。这也算“买得起房”政策的一种“灵活运用”。</p>
-<h2 id="“楼市之惑”系列报道之七：第三次房改该如何推进？（下）"><a href="#“楼市之惑”系列报道之七：第三次房改该如何推进？（下）" class="headerlink" title="“楼市之惑”系列报道之七：第三次房改该如何推进？（下）"></a><a href="http://www.ftchinese.com/story/001070587?tcode=smartrecommend&amp;ulu-rcmd=1_02ra_art_0_3a767efb60f44ae4a482b5b50b215bd8&amp;position=instory" target="_blank" rel="noopener">“楼市之惑”系列报道之七：第三次房改该如何推进？（下）</a></h2><p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F3%2F000063543_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"></p>
+<h2 id="“楼市之惑”系列报道之七：第三次房改该如何推进？（下）"><a href="#“楼市之惑”系列报道之七：第三次房改该如何推进？（下）" class="headerlink" title="“楼市之惑”系列报道之七：第三次房改该如何推进？（下）"></a><a href="http://www.ftchinese.com/story/001070587?tcode=smartrecommend&amp;ulu-rcmd=1_02ra_art_0_3a767efb60f44ae4a482b5b50b215bd8&amp;position=instory" target="_blank" rel="noopener">“楼市之惑”系列报道之七：第三次房改该如何推进？（下）</a></h2><p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F3%2F000063543_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt></p>
 <blockquote>
 <p>沈晓杰：在中国住房政策顶层设计中，缺少对城镇土地全民所有公有制的“制度优越性”的考量，这是一个大问题。</p>
 </blockquote>
@@ -1639,7 +1609,7 @@
 <h2 id="十九大后的中国：房地产发展下一站"><a href="#十九大后的中国：房地产发展下一站" class="headerlink" title="十九大后的中国：房地产发展下一站"></a><a href="http://www.ftchinese.com/story/001074942?full=y" target="_blank" rel="noopener">十九大后的中国：房地产发展下一站</a></h2><blockquote>
 <p>邵宇、陈达飞：未来住房市场的调控也将呈现出一种层次感，把市场的交给市场，需保障的交给政府。住房市场，更需要“回归初心”。</p>
 </blockquote>
-<p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F0%2F000072160_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"><br>更新于2017年11月7日 07:20 东方证券 邵宇 陈达飞</p>
+<p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F0%2F000072160_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt><br>更新于2017年11月7日 07:20 东方证券 邵宇 陈达飞</p>
 <p>【编者按】岁末临近，针对一年政经大事回顾与来年展望，FT中文网组织专题《2017年度报告》。编辑事宜，联系徐瑾<a href="mailto:jin.xu@ftchinese.com" target="_blank" rel="noopener">jin.xu@ftchinese.com</a>。</p>
 <p>中国共产党第十九次全国代表大会（下文简称“十九大”）于2017年10月24日闭幕。习近平主席在开幕式中做出了中国已经进入中国特色社会主义新时代的前瞻性判断，新时代的一个重要特征就是社会主义基本矛盾的变化，即由“人民日益增长的物质文化需要同落后的社会生产之间的矛盾”转变为“<strong>人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾</strong>”。</p>
 <p>基本矛盾决定着政策的发力点，建国以来，中国一直强调以经济建设为中心，发展才是硬道理。但发展掩盖了一些深层次的社会矛盾，这些矛盾在金融危机之后的经济增速换挡期、结构调整阵痛期与前期政策消化期这“三期叠加”的特殊时期逐渐显现。其中，房地产市场的发展就是连接着经济、金融与民生工程的交汇点。房子的问题，已经成为土地政策、货币政策与金融监管政策等必须考虑的元素，是影响中国各项事业迈向新台阶必须要跨过去的槛。为此，习近平主席再次强调“房子是用来住的，不是用来炒的”，并对中国下一步房地产市场的发展做出了明确部署，即建立“多主体供给、多渠道保障和租购并举的住房制度”，目的是实现“住有所居”。十九大对房子的定调将会削弱住房的投资属性，不鼓励甚至是打击住房的投机属性，并强调了住宅的居住与公共品属性。从近几年的政策走势来看，房产调控除了需求侧以“限”为代表的方式之外，供给侧也在探索，特别是多层次的公共住房（也称保障房）体系更加丰富。为此，有必要探讨适合中国公共住宅建设的模式，<br>公共住房制度改革的历史背景</p>
@@ -1678,7 +1648,7 @@
 <h2 id="北京折叠还是中国折翼？"><a href="#北京折叠还是中国折翼？" class="headerlink" title="北京折叠还是中国折翼？"></a><a href="http://www.ftchinese.com/story/001069069" target="_blank" rel="noopener">北京折叠还是中国折翼？</a></h2><blockquote>
 <p>徐瑾：在中国，每一次资产泡沫，最先感受到切身之痛的，注定是底层民众，至于高层，永远是在与泡沫共舞。</p>
 </blockquote>
-<p><img alt data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F1%2F000064441_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover"><br>更新于2016年8月25日 06:26 FT中文网财经版主编、首席财经评论员 徐瑾</p>
+<p><img data-src="https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F1%2F000064441_piclink.jpg?source=ftchinese&amp;width=1340&amp;height=754&amp;fit=cover" alt><br>更新于2016年8月25日 06:26 FT中文网财经版主编、首席财经评论员 徐瑾</p>
 <p>故事永远起源于偶然，复归于日常。</p>
 <p>二十二世纪的北京。老刀，一位年近五十的垃圾工，单身父亲。为了女儿的未来，他穿越北京市三个世界，结果他见到了不同的北京，相互折叠又彼此分割的世界，<strong>一个贫困无望的第三空间，一个小中产扎堆的第二空间，以及控制一切且享受更多的第一空间。</strong></p>
 <p>这一情节源自中国作家郝景芳的科幻作品《北京折叠》，近期因获得科幻界大奖雨果奖而获得不少关注。抛开对这部著作的评价，从这部作品引发的反响来看，与其说其科幻色彩，毋宁说是现实意义，其中暴露的阶层差异以及权力分配，不仅每天发生在虚拟空间，也发生在都市之间。</p>
@@ -1699,7 +1669,7 @@
 <blockquote>
 <p>孙宏斌认为，明年房地产市场政策可能会比今年松一点，但不会松太多；限价可能放松一些，也不会放松太多。</p>
 </blockquote>
-<p><img alt data-src="http://img1.jiemian.com/101/original/20171115/151075439217254700_a580x330.jpg"></p>
+<p><img data-src="http://img1.jiemian.com/101/original/20171115/151075439217254700_a580x330.jpg" alt></p>
 <p>文/王营</p>
 <p>11月15日，由民生银行主办的“中国不动产金融年会2017”在北京召开。融创中国控股有限公司董事长、创始人孙宏斌在会议上发表了主题为“房地产下半场：投资美好生活”的演讲。</p>
 <p>持续高强度的调控之下，下一步房地产会怎么样？这是目前房地产行业最为关注的事情。孙宏斌认为，明年房地产市场政策可能会比今年松一点，但不会松太多；限价可能放松一些，也不会放松太多。</p>
@@ -1721,8 +1691,26 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/People/IPCreator/People/Yu-Shi Mao/" rel="bookmark">Yu-Shi Mao</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Travel/HongKong/" rel="bookmark">HongKong</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Travel/ShenZhen/" rel="bookmark">ShenZhen</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Travel/BeiJing/" rel="bookmark">Impotence of BeiJing</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Real-Estate/" rel="tag"><i class="fa fa-tag"></i> Real Estate</a>
           </div>
@@ -1734,21 +1722,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/I/Innovation Method/" rel="next" title="Innovation Method">
-                  <i class="fa fa-chevron-left"></i> Innovation Method
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Music/Shape of my heart/" rel="prev" title="Sting - Shape Of My Heart">
-                  Sting - Shape Of My Heart <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/I/Innovation Method/" rel="prev" title="Innovation Method">
+      <i class="fa fa-chevron-left"></i> Innovation Method
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Music/Shape of my heart/" rel="next" title="Sting - Shape Of My Heart">
+      Sting - Shape Of My Heart <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -1761,7 +1746,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -1792,8 +1799,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -1802,14 +1809,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1820,11 +1827,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -1858,7 +1860,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -1870,51 +1872,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -1923,18 +1886,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1944,63 +1901,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -2008,14 +1908,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -2042,40 +1942,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/R/Real Estate/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

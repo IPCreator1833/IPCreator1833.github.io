@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="为大众创造更加美好的日常生活">
 <meta name="keywords" content="IKEA">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Journey/" itemprop="url" rel="index">
-                    <span itemprop="name">Journey</span>
-                  </a>
+                  <a href="/categories/Journey/" itemprop="url" rel="index"><span itemprop="name">Journey</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Journey/IPCreator/Journey/Brand/IKEA/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Journey/IPCreator/Journey/Brand/IKEA/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Journey/IPCreator/Journey/Brand/IKEA/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="ikea.jpg" data-src="http://opb37u589.bkt.clouddn.com/ikea.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/ikea.jpg?imageMogr2/thumbnail/!75p" alt="ikea.jpg"></p>
 <blockquote>
 <p>为大众创造更加美好的日常生活</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="宜家产品的名字为什么都那么古怪？"><a href="#宜家产品的名字为什么都那么古怪？" class="headerlink" title="宜家产品的名字为什么都那么古怪？"></a><a href="http://www.luojiji.com/thread-2974-1-1.html" target="_blank" rel="noopener">宜家产品的名字为什么都那么古怪？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/29/150922p0zebudb0u669666.jpg"></p>
+<h2 id="宜家产品的名字为什么都那么古怪？"><a href="#宜家产品的名字为什么都那么古怪？" class="headerlink" title="宜家产品的名字为什么都那么古怪？"></a><a href="http://www.luojiji.com/thread-2974-1-1.html" target="_blank" rel="noopener">宜家产品的名字为什么都那么古怪？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/29/150922p0zebudb0u669666.jpg" alt></p>
 <p>2015-11-24贝小戎</p>
 <p>“我打开穆斯肯，取了一件衣服穿上，在卡纳佩前照了照。随手关掉奥思迪，我就出门了。”如果这么说话，是不是挺装的？</p>
 <p>正常人会这样说：“我打开衣橱，取了一件衣服穿上，在镜子前照了照。随手关掉壁灯，我就出门了。”</p>
@@ -321,49 +291,49 @@
 <p>罗胖曰<br>名字为什么会有魔力？<br>因为人是靠语言来认知世界的。<br>或者说语言就是人的世界本身。<br>比如，有心理学的实验证明——<br>让人做一个承诺，如果还让他签上自己的名字，履约率会高很多。<br>签名的人，会觉得把自己的“一部分”已经放进来了。<br>名字不是事物的符号。<br>名字是事物的一部分。</p>
 <h2 id="宜家购物攻略"><a href="#宜家购物攻略" class="headerlink" title="宜家购物攻略"></a><a href="http://www.ikea.com/ms/zh_CN/customer_service/guide_to_ikea/index.html" target="_blank" rel="noopener">宜家购物攻略</a></h2><p>自主、自助购物在宜家。我们一起保持低价。</p>
 <p>在家具展间，您可以自由选择、比较、感受产品！</p>
-<p><img alt data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_01.jpg"></p>
+<p><img data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_01.jpg" alt></p>
 <p>查看价格标签，所有关于产品的信息都在价格标签上。</p>
 <p>A)红色：您可直接取货，或至家具自提区及家居用品区取货。<br>B)黄色：您须咨询销售人员打订单。</p>
 <p>查看价格标签，它会告诉您在哪里取货。</p>
-<p>用免费纸笔记录您的购物清单！<br><img alt data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_02.jpg"></p>
+<p>用免费纸笔记录您的购物清单！<br><img data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_02.jpg" alt></p>
 <p>请记录您选择的产品名称、货号及取货区域。</p>
-<p>手推车助您自行取货<br><img alt data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_03.jpg"></p>
+<p>手推车助您自行取货<br><img data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_03.jpg" alt></p>
 <p>宜家家具采用平板包装，方便您自行拿取。</p>
 <p>请在取货时确认货号是否正确！</p>
-<p>您可自行把购买的产品带回家<br><img alt data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_04.jpg"><br>或选择有偿送货服务，只须支付合理的费用。</p>
-<p>自行组装家具<br><img alt data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_05.jpg"><br>不但乐趣无穷，而且能即时享用！</p>
+<p>您可自行把购买的产品带回家<br><img data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_04.jpg" alt><br>或选择有偿送货服务，只须支付合理的费用。</p>
+<p>自行组装家具<br><img data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_05.jpg" alt><br>不但乐趣无穷，而且能即时享用！</p>
 <p>组装家具时，仔细阅读组装说明。</p>
-<p>改变主意了? 没关系。<br><img alt data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_06.jpg"><br>您可在60天内（宜家俱乐部会员可在180天内），携带完好的货品、原始包装和原始购物凭证（银行卡付款需要银行卡消费凭证）到商场退换货，我们将按照您购物时的支付方式退款。</p>
+<p>改变主意了? 没关系。<br><img data-src="http://www.ikea.com/ms/zh_CN/img/how_to_shop_10/6_steps_06.jpg" alt><br>您可在60天内（宜家俱乐部会员可在180天内），携带完好的货品、原始包装和原始购物凭证（银行卡付款需要银行卡消费凭证）到商场退换货，我们将按照您购物时的支付方式退款。</p>
 <p>很抱歉：食品、植物、处理商品，定制商品、家用电器商品、以及被切割、裁剪和油漆过的产品，不适用于以上条例。</p>
 <ul>
 <li>以上退换货政策仅适用中国大陆的宜家商场购买的货品。</li>
 </ul>
-<h2 id="宜家经营理念"><a href="#宜家经营理念" class="headerlink" title="宜家经营理念"></a><a href="http://www.ikea.com/ms/zh_CN/this-is-ikea/the-ikea-concept/index.html" target="_blank" rel="noopener">宜家经营理念</a></h2><h3 id="采用不同方式"><a href="#采用不同方式" class="headerlink" title="采用不同方式"></a>采用不同方式</h3><p><img alt data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_01_PE365318.jpg"></p>
+<h2 id="宜家经营理念"><a href="#宜家经营理念" class="headerlink" title="宜家经营理念"></a><a href="http://www.ikea.com/ms/zh_CN/this-is-ikea/the-ikea-concept/index.html" target="_blank" rel="noopener">宜家经营理念</a></h2><h3 id="采用不同方式"><a href="#采用不同方式" class="headerlink" title="采用不同方式"></a>采用不同方式</h3><p><img data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_01_PE365318.jpg" alt></p>
 <p>我们不断地问：还有更好的方法吗？这就是宜家家居装饰产品保持独特魅力的缘由所在，也是我们尝试让更多人的日常生活变得更好的缘由所在。</p>
 <h3 id="为大众服务"><a href="#为大众服务" class="headerlink" title="为大众服务"></a>为大众服务</h3><p>宜家经营理念最初始于为大众提供经济实惠的家居装饰产品，而非仅为少数人服务。它将<strong>功能、质量、设计、价值</strong>结合在一起，并始终牢记<strong>可持续发展</strong>理念。从<strong>设计、采购、包装、配送到业务模式</strong>，宜家经营理念存在于公司日常运营的每个环节。我们的目标是帮助更多人创造更好的家居生活。</p>
 <p>将宜家经营理念带入生活中</p>
 <p>宜家经营理念以多种方式体现在生活中：通过我们在全球各地开设的商场、宜家《家居指南》、网站和应用程序，更重要的是全球数百万的家庭。</p>
-<p><img alt data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_02.jpg"></p>
+<p><img data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_02.jpg" alt></p>
 <blockquote>
 <p>宜家《家居指南》如今使用了增强现实技术。</p>
 </blockquote>
-<p><img alt data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_03.jpg"></p>
+<p><img data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_03.jpg" alt></p>
 <p>名字背后的故事</p>
 <blockquote>
 <p>IKEA这个名称结合了宜家创始人Ingvar Kamprad的名字首字母（IK），和他长大的农场和村庄的名字Elmtaryd和Agunnaryd的首字母（EA）。宜家标识在公司的整个历史过程中几乎未经改变，1967年的版本一直是宜家的象征。</p>
 </blockquote>
 <p>默契合作更省钱</p>
 <p>宜家顾客起着至关重要的作用。我们负责巧妙包装产品，顾客负责组装产品。宜家和顾客这样默契合作，各尽其责，不仅可以省钱，而且运输更便捷，无形中减少了路上的运输卡车，降低了对环境的影响。</p>
-<p><img alt data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_04_PE327848.jpg"></p>
+<p><img data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_04_PE327848.jpg" alt></p>
 <p>1956年，一位名叫Gillis Lundgren的宜家员工在将 LÖVET 桌子装进他车里时，遇到了困难。平板包装理念便在此时应运而生。如今 LÖVET 桌子已重新回归宜家，它现在的名字是 LÖVBACKEN 罗贝肯。这款可爱的小桌子背后竟藏着这样一个独特的故事。查看 <a href="http://www.ikea.com/cn/zh/catalog/products/80270125/" target="_blank" rel="noopener">LÖVBACKEN 罗贝肯 边桌</a>。</p>
 <h3 id="为更多人服务"><a href="#为更多人服务" class="headerlink" title="为更多人服务"></a>为更多人服务</h3><p>每年在全球范围内都有新的宜家商场开业。查看我们的互动地图查看我们所有的现有商场位置，获取未来计划开设的商场的最新信息。</p>
-<p><img alt data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_05_PE293639.jpg"></p>
+<p><img data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_05_PE293639.jpg" alt></p>
 <h3 id="弘扬宜家经营理念"><a href="#弘扬宜家经营理念" class="headerlink" title="弘扬宜家经营理念"></a>弘扬宜家经营理念</h3><p>1980年代早期，宜家在20个国家设有商场，并处于不断扩张中。宜家创始人Ingvar Kamprad认识到需要保护独特的宜家经营理念，将其作为公司发展的一部分。他想要完全的独立和长期的所有权结构，因而股市并非最佳选择。此外，他认为宜家品牌旗下的所有公司需先建立资源之后再扩张。</p>
 <p>宜家特许经营系统就此应运而生了。如今所有的宜家商场（除了荷兰的代尔夫特宜家商场由Inter IKEA Systems B.V.所有）都通过特许经营协议运营。Inter IKEA Systems B.V.是宜家理念的所有者和宜家在全球的特许经营授权商。</p>
-<p><img alt data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_06_PE381277.jpg"></p>
+<p><img data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/the_ikea_concept/20143_tiic01a_06_PE381277.jpg" alt></p>
 <h3 id="企业愿景和经营理念"><a href="#企业愿景和经营理念" class="headerlink" title="企业愿景和经营理念"></a>企业愿景和经营理念</h3><p>“<strong>为大众创造更加美好的日常生活</strong>”，这是宜家的愿景。我们的经营理念是“<strong>提供种类繁多、美观实用、老百姓买得起的家居用品</strong>”。</p>
 <p>通过优化我们的整个价值链，与供应商建立长期合作关系，投资高度自动化和大规模生产等方式，我们努力为顾客提供物美价优的产品。我们的愿景不局限于家居装饰。我们希望通过努力，为大众创造更美好的日常生活。</p>
-<p><img alt data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/about_the_ikea_group/201724_tiig01a_Business_Concept_01_PE414282.jpg"></p>
+<p><img data-src="http://www.ikea.com/ms/img/ads/vitality/this_is_ikea/about_the_ikea_group/201724_tiig01a_Business_Concept_01_PE414282.jpg" alt></p>
 <h2 id="产品"><a href="#产品" class="headerlink" title="产品"></a><a href="https://zh.wikipedia.org/wiki/%E5%AE%9C%E5%AE%B6%E5%AE%B6%E5%B1%85" target="_blank" rel="noopener">产品</a></h2><p>宜家家居家具以其<strong>富有现代感且不寻常的设计</strong>而闻名。其中有很多是被设计成简单套件，可让消费者自行组装的自行组装家具，这与其他家具店贩售的已组装好的现成家具很不同。这些未组装或“平整包装”的家具的体积远比现成家具小，在包装、储存和运送的成本也较低，宜家家居宣称这样可以使他们降低产品的价格。</p>
 <p>宜家家居的创建者称他们的设计为“民主设计”，意思是宜家家居将制造和设计容为一体。回应20世纪的人口爆炸与对材料的期许，宜家家居擅长于规模经济，掌握了材料潮流并且创造出一套降低成本和资源的生产程序。这样的结果是可以生产出具有高度适应力的家具，无论是大型房屋还是为数越来越众多却受到忽略的小型寓所，这些家具都能够改变大小来容纳。宜家家居引以为傲的地方，在于它创造了不同于欧美传统的家具路线，而将焦点放在节约的美学上。</p>
 <p>以全世界做为销售对象的宜家家居家具，他们对于世界观的独特见解反应在产品的产地选择与包装内组装说明书的设计。宜家家居的产品虽然大都是由北欧出身的设计师操刀，但实际上的生产地点却遍及全球各国，消费者只需拿起产品仔细阅读标签上的说明，就可以轻易发现整个产地名单像是一个缩小的联合国，成为采购时另外一种趣味。除此之外，由于销售地区涵盖许多语言不同的国家，<strong>宜家家居并不像一般厂商以多国语文并列的方式编写他们的产品说明书，取而代之的他们以简单的卡通图画来编绘组装步骤说明书，完全避免了语言与文字可能带来的隔阂。</strong></p>
@@ -383,8 +353,11 @@
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/IKEA/" rel="tag"><i class="fa fa-tag"></i> IKEA</a>
           </div>
@@ -396,21 +369,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/V/View of Value,Life,World/" rel="next" title="View of Value,Life,World">
-                  <i class="fa fa-chevron-left"></i> View of Value,Life,World
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/A/Addiction/" rel="prev" title="Addiction">
-                  Addiction <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/V/View of Value,Life,World/" rel="prev" title="View of Value,Life,World">
+      <i class="fa fa-chevron-left"></i> View of Value,Life,World
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/A/Addiction/" rel="next" title="Addiction">
+      Addiction <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -423,7 +393,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -454,8 +446,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -464,14 +456,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -482,11 +474,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -520,7 +507,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -532,51 +519,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -585,18 +533,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -606,63 +548,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -670,14 +555,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -704,40 +589,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Journey/IPCreator/Journey/Brand/IKEA/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

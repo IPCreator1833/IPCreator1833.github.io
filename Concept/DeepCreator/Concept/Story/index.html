@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="“以铜为鉴，可正衣冠；以古为鉴，可知兴替；以人为鉴，可明得失。”——唐太宗">
 <meta name="keywords" content="Story,History">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Story/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Story/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Story/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="story20180723.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/story20180723.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/story20180723.jpg?imageMogr2/thumbnail/!75p" alt="story20180723.jpg"></p>
 <blockquote>
 <p>“以铜为鉴，可正衣冠；以古为鉴，可知兴替；以人为鉴，可明得失。”——唐太宗</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt="writeyourstory20180830.JPG" data-src="http://pd4vb8220.bkt.clouddn.com/writeyourstory20180830.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/writeyourstory20180830.JPG?imageMogr2/thumbnail/!75p" alt="writeyourstory20180830.JPG"></p>
 <p>一切都是故事，感悟，成长，育儿，专利，专业，沟通…</p>
 <p>人与社会</p>
 <p>60/70年代，文革动乱年代<br>80年代：改革开放年代<br>90年代：经济飞速阶段<br>00年代：技术革新阶段</p>
@@ -337,7 +307,7 @@
 <p>2<br>他是古怪的，与当时声名远扬的艺术家关系恶劣，却与自己愚笨的仆人，乃至家禽等坦诚以待。但奴仆终是奴仆，稍有天分的每得指点便班门弄斧，没有天分的即使将苦衷诉说也无法走进他的内心，他始终是个孤独的武断者。他认为当局的艺术家，明明有点醒世界重视艺术的能力，却甘愿为小人效力在世俗中沉沦。对于这些人，他不屑与他们为伍，宁愿活在自己的思想里，和无邪无欲的仆人返璞还真。<br>他不接受任何人甚至朋友的礼物，对于这一点，我认为是“一朝被蛇咬，十年怕井绳”的表现。他的一生，颠沛流离，无论走到哪里，总有前教皇的后世来催促他完成未完成的工作——他领了酬劳，却并未完工。但这本就不是他满口答应的工作，酬劳对于他已完成的部分来说是该得的。到最后，这成了一种致命的追杀，每当他想要真正置身于艺术，这就是他必须最先完成的任务。可以说，这是他一生的累赘，从此之后，他不敢再接受任何无来由的馈赠。这，不是他不近人情，只是从前的折磨，是时间无法淡化的伤。<br>他很痛苦，因为他也盼望有人能理解他的古怪。他忍受着别人嘲讽他的道德，却依旧愿意这么痛苦下去。这痛苦，很神圣。</p>
 <p>3<br>他是可怜的，与贝多芬的乐观主义不同，或许是专治的环境所迫，他生来就有一种哀伤。他明明非常富有，却对自己极为节俭极为随意，到最后，安心睡觉对于他来说竟成奢望。他太负责了，对工作太负责，也对自己的梦太负责。如此一个天才却在文化艺术的国度里把自己定位得如此卑微，除却生活的因素相逼，这是多么可悲！<br>在感情上，他一生未婚，对于仅有的几段爱情，或被对方不理解，或被时事搅得灰飞烟灭。他把侄子当成自己的儿子一般对待，却没使侄子把自己当父亲。到他临终前，他寄托于希望的侄子仅仅在意他的财富由谁来继承！到生命的末端，他只能把自身寄托于虚无的宗教。时光流逝，他生无可恋，日复一日地期待着死的解脱。<br>他是痛苦的，被世界逼得痛苦，被自己逼得痛苦。他的一生和艺术相连，因为痛苦，他不会绝望。到死的前一刻，他仍在完成他的雕塑。这痛苦，很神圣。</p>
 <p>他神圣的痛苦，在岁月长河中永不被时光掩埋。他，值得每一个人，真挚相待，肃然起敬！<br>你不能把这个世界，让给你所鄙视的人。——安·兰德 《源泉》（尾记）<br>三列夫·托尔斯泰<br>                                                      老托<br>                                                                                       ——怀念列夫·托尔斯泰<br>几乎所有人都会称老托是“伟大的作家”，但读完此书，我认为称其为思想家更为合适，而且，是一位具有现实主义的思想家。<br>如罗曼·罗兰所说，老托写作的最大缺点是缺乏永久的热情，或许，老托在意的不是文字本身，而更是通过文字传递的那一种信念。他说自己想说的，批判应该批判的。他的思想，永垂不朽，值得被所有人敬佩。<br>老托对于自己为民众呐喊的理想，永不放弃。出身于贵族的他，早已厌倦当时高层生活的残忍，对这种生活“欢乐建立在人民痛苦之上”的理所当然，他嗤之以鼻。他认识了很多的普通人，这些人胆怯，懦弱，却又真诚。在当时社会的黑暗统治下，本可以平安和睦的他们，痛不欲生。老托决意要拯救他们，还给他们一份安然。他把救赎当作己任，一生为此效力，可是无际的黑暗，让他到生命末端依然无法完成这伟大的事业。他有愧于心，期待死的解脱。这不是消极，因为变革本就不是他的义务。老托心中难掩的愧怍，或许只是别人一笔带过的“不可能”。<br>老托与当时著名的作家，并没有互相的欣赏，这其实很令人奇怪，因为屠格涅夫，福楼拜，高尔基，每一位都是为人民反抗的优秀作家。他们的本质，都是爱。不幸，他们的观点并不一致。当屠格涅夫在老托面前赞扬其女儿的慈善事业时，老托很不屑。屠格涅夫认为，只要是帮助，哪怕微不足道，也是好事；但老托认为，一个人能做慈善，说明其完全有能力为民众做更多，也同样懂得人民生活环境的水深火热。但其只行动了如此小的一部分便来邀功，内心可能只是想利用穷苦的人民来体现自己道德的高尚。可以说，老托的行动也没有被本来可以合作的有才之士理解。老托的呐喊，本是孤军奋战，但他却不卑不亢地一战到底。<br>如果说在当时，人民轻视自己，低估自己的力量，那么在某些方面，老托可能太高估了他们。在老托的作品里，流露出对于音乐的排斥，尤其是对于贝多芬的音乐，这同时也给老托带来了不少人的批评。事实上，贝多芬的音乐对于老托的童年有着不可埋没的影响力。每当音乐响起，他便会沉醉，痴迷，内心情感受了波动，思绪变得混乱。老托之所以拒绝音乐，可能是因为他认为连他都会无法自拔，人民如果被这迷惑，将会成为虚伪者的傀儡。可是他忘了，他有思索，才会在音乐中找到共鸣，普通人，总是只在意音符的本身，听过即忘。这一份高估，使得老托被一些他最爱的人们不理解，他的事业，再次滞足。<br>但是我想，对于老托最大的打击，是他认为最重要的东西——真理与爱，竟然无法共存。他与妻子互相深爱着，但是他们并不了解对方。老托的真理，是为了人民自己尽力而为，什么都可以不要；而他妻子只明白，这一种真理会让老托遍体鳞伤，她所希望的，是老托发挥出自己的才华，平平安安就好。老托想要卖掉房产去帮助人民，但他无法对自己深爱的妻子说出自己的真理——因为妻子并不相信，如果硬让她为了真理和老托在同一立场，可以说这只是老托玩弄妻子对他信任的一个谎言。老托最终离开了，为了真理把爱深藏。他郁闷，他不解，他不明白为什么真理和爱互相冲突，他不懂得为什么让世界变得博爱与向往真理竟是如此之难！<br>幸好，甘地出现了；幸好，老托的愿望达成了。<br>老托，他负责，坚强，勇敢，执着。他身上凝聚着那个时代最美好的品德，他的博大的胸怀，不分国度，不分人群，令人动容。他是伟大的作家，伟大的思想家，伟大的行动者！<br>老托，谢谢。老托，请你安心。</p>
-<h2 id="万历十五年"><a href="#万历十五年" class="headerlink" title="万历十五年"></a><a href="https://book.douban.com/subject/1041482/" target="_blank" rel="noopener">万历十五年</a></h2><p><img alt="story20180717.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/story20180717.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="万历十五年"><a href="#万历十五年" class="headerlink" title="万历十五年"></a><a href="https://book.douban.com/subject/1041482/" target="_blank" rel="noopener">万历十五年</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/story20180717.jpg?imageMogr2/thumbnail/!75p" alt="story20180717.jpg"></p>
 <h3 id="内容简介-1"><a href="#内容简介-1" class="headerlink" title="内容简介"></a>内容简介</h3><p>万历十五年，亦即公元1587年，在西欧历史上为西班牙舰队全部出动征英的前一年；而在中国，这平平淡淡的一年中，发生了若干为历史学家所易于忽视的事件。这些事件，表面看来虽似末端小节，但实质上却是以前发生大事的症结，也是将在以后掀起波澜的机缘。在历史学家黄仁宇的眼中，其间的关系因果，恰为历史的重点，而我们的大历史之旅，也自此开始……</p>
 <p>《万历十五年》是黄仁宇的成名之作，也是他的代表作之一。这本书融会了他数十年人生经历与治学体会，首次以“大历史观”分析明代社会之症结，观察现代中国之来路，给人启发良多。英文原本推出后，被美国多所大学采用为教科书，并两次获得美国书卷奖历史类好书的提名。</p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>自序<br>第一章 万历皇帝<br>第二章 首辅申时行<br>第三章 世间已无张居正<br>第四章 活着的祖宗<br>第五章 海瑞――古怪的模范官僚<br>第六章 戚继光――孤独的将领<br>第七章 李贽――自相冲突的哲学家<br>参考书目<br>附录一<br>附录二<br>《万历十五年》和我的“大”历史观</p>
@@ -372,7 +342,7 @@
 <p>六、最终的思考：谁该为大明王朝的衰落负责</p>
 <p>　　黄仁宇老先生向我们揭示了一个不争的事实。“在当时的历史条件下，皇帝的励精图治或者宴安耽乐，首辅的独裁或者调和，高级将军的富于创造或者习于苟安，文官的廉洁奉公或者贪污舞弊，思想家的极端进步或者绝对保守，都无法扭转时局”。上至天子，下至庶民都成为那个腐朽制度的牺牲品。大明历史步入万历年间，纵使再有“重华大孝，武穆精忠”之类的贤君良将，也难扭转历史滚滚前进的车轮。</p>
 <p>　　之所以说大明王朝的颓势在万历年间已经显现，是因为当时的生产关系已经明显束缚生产力的发展，和社会进步需要不相适应，而想要打破这种腐朽制度造成的僵局，紧靠一己之力和个人勇气明显不够。大明王朝衰败的症结，非一日之败笔，非一人之罪责，而是制度积弊造成的。当社会诟病和制度缺陷益深，再想扭转时局则为时晚矣，仅凭个人意志难以改变历史发展的方向。是沿袭旧制固步自封，还是鼎新革弊改革图强，可能是明朝由盛至衰过程中未曾及时察觉、妥善权衡、有力处置的关键问题。</p>
-<h2 id="会讲故事，让世界听你的"><a href="#会讲故事，让世界听你的" class="headerlink" title="会讲故事，让世界听你的"></a><a href="https://book.douban.com/subject/26658035/" target="_blank" rel="noopener">会讲故事，让世界听你的</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s28333352.jpg"></p>
+<h2 id="会讲故事，让世界听你的"><a href="#会讲故事，让世界听你的" class="headerlink" title="会讲故事，让世界听你的"></a><a href="https://book.douban.com/subject/26658035/" target="_blank" rel="noopener">会讲故事，让世界听你的</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s28333352.jpg" alt></p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>“推荐序<br>故事带来感动、思考、改变／齐柏林<br>他的人生就是场故事／劳双恩<br>台南与台北之间／白明奇<br>每个人身上独有的故事／龚大中<br>作者序<br>用故事力改变世界，帮助更多人<br>CHAPTER 1 最有利的武器是故事<br>01　很久很久以前，我们就爱听故事<br>02　故事是品牌最大的差异<br>03　没故事，让人失忆<br>04　故事让你成为有力人士<br>05　故事可以是商品的核心<br>06　是人，你就有故事<br>CHAPTER 2 故事从哪里来？<br>07　你的故事最好够好<br>08　不是农夫也要田野调查<br>09　对人感兴趣，人才会对你感兴趣<br>10　新闻是经过筛选的故事<br>CHAPTER 3 把故事提炼出来<br>11　故事是这样子的，层次<br>12　最深刻的概念<br>13　最聪明的点子<br>14　最精彩的素材<br>15　有关系就没关系，没关系就有关系<br>16　先催眠自己，才能催眠别人<br>17　创意的房间很大，像个仓库一样<br>CHAPTER 4 讲个故事给你听<br>18　故事来自生活(上)<br>19　故事来自生活(下)<br>20　高铁上的小科学家(上)<br>21　高铁上的小科学家(下)<br>22　看见台湾<br>23　L牌在日本十年销售第一(上)<br>24　L牌在日本十年销售第一(下)<br>25　同场加映：将故事带入电影院<br>26　不做不会怎样，做了很不一样<br>27　冲向人生的尽头<br>CHAPTER 5 这故事要带人们去哪里？<br>28　祝福你成为别人的祝福<br>29　说造就人的故事<br>30　自律才有自由<br>31　让你的故事被买单<br>32　强壮的身体支撑强壮的脑袋<br>33　独立思考的习惯<br>34　创意无限，时间有限，不要抱怨<br>CHAPTER 6 还在发生的故事<br>35　我的结婚照<br>36　我没见过的金门大桥<br>37　爱迪生出发<br>后记 愿故事力与你同在</p>
 <h2 id="洞察：读历史书有什么价值？"><a href="#洞察：读历史书有什么价值？" class="headerlink" title="洞察：读历史书有什么价值？"></a><a href="http://www.luojiji.com/thread-12339-1-1.html" target="_blank" rel="noopener">洞察：读历史书有什么价值？</a></h2><p>吕世浩是台湾大学历史系教授，他也是中欧国际工商学院的人文教授。公众号混沌大学发表了一篇文章，文章中吕世浩分享了人们阅读历史有什么价值，为什么一些企业管理者喜欢看历史书。</p>
 <p>吕世浩认为，古人学历史其实是用来想的，但现在的人学历史都是在背。如果能用思辨的方式学历史，就会体会历史具有的三个作用。</p>
@@ -398,7 +368,7 @@
 <p>但不管是“世选制”还是“两翼制”，都有一个共同问题，就是上一代汗王的权势和声望无法传给下一代，新的汗王必须通过战争来证明自己，想坐享其成，门都没有。这就是为什么多数草原帝国的对外扩张，往往只能维持一代人，很容易就陷入到统一、扩张、分裂、再统一、再分裂的循环中。所以呢，草原帝国的疆域大小，很大程度上其实取决于大汗寿命多长，能在位多少年。那些最著名的征服者都是这样：帖木儿在位36年，阿提拉在位21年，成吉思汗在位最久，达到43年。所以蒙古兴盛的时间最长。</p>
 <p>第二点，除了活得长，成吉思汗还开创了一种新的制度，让政权变得更坚固。什么制度呢？在统一蒙古草原后，他打散了部落组织，采用了千户制，千就是个十百千的千，户是户口的户，每个千户设千户长，管理这上千户人口。成吉思汗把部落重新编成95个千户，千户下又设百户、十户。很多千户都是跨部落混编的，原来的部落的界线就被抹掉了。成吉思汗亲自委任的千户长，多数是他的子孙，或者是一手提拔起来的将领，完全听他的。这种社会组织改造，就像秦始皇改封建为郡县制那样，一下子让游牧民族不再是一盘散沙了。在这个基础上，成吉思汗还建立了直属他本人指挥的禁卫部队，里边都是他的亲信子弟，禁卫部队分成四班轮流倒，保护成吉思汗的安全，待遇远高于普通士兵。这让军权进一步掌握在他手中，把草原的权利高度集中起来，为元朝的建立打下了基础。</p>
 <p>其实不仅是蒙古人，另一个持久的少数民族政权清朝的崛起也是依赖制度。满族的前身是以渔猎为生的女真人，他们一开始也是松散的部落联盟，是努尔哈赤发明八旗制，把零散的部落改造成中央集权的军政组织。皇太极继位后，又逐个消灭政治对手，彻底变为家天下，这才挥师南下，入主中原，可见在群雄逐鹿的草原上，<strong>个人再勇武，也赶不上精妙的制度</strong>。这就是少数民族政权寿命有长有短的秘密所在。</p>
-<h3 id="一本书，带你看懂曾国藩的正面与侧面"><a href="#一本书，带你看懂曾国藩的正面与侧面" class="headerlink" title="一本书，带你看懂曾国藩的正面与侧面"></a><a href="http://www.luojiji.com/thread-12153-1-1.html" target="_blank" rel="noopener">一本书，带你看懂曾国藩的正面与侧面</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/12/094830z7dj1xk965ojnoez.jpg"></p>
+<h3 id="一本书，带你看懂曾国藩的正面与侧面"><a href="#一本书，带你看懂曾国藩的正面与侧面" class="headerlink" title="一本书，带你看懂曾国藩的正面与侧面"></a><a href="http://www.luojiji.com/thread-12153-1-1.html" target="_blank" rel="noopener">一本书，带你看懂曾国藩的正面与侧面</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/12/094830z7dj1xk965ojnoez.jpg" alt></p>
 <p>今天，要给你介绍的书是——</p>
 <p>《曾国藩的正面与侧面》<br>作者：张宏杰<br>出版：民主与建设出版社</p>
 <p>这本书，是曾国藩的个人传记。</p>
@@ -431,15 +401,15 @@
 <p>我只得向她解释，这样做是为了更快速的处理，她不解，于是我打了下面这个比喻——这就像我们喂宝宝吃奶一样，</p>
 <p>CPU就像是已经在宝宝嘴里的奶一样，直接可以咽下去了。需要1秒钟<br>L1缓存就像是已冲好的放在奶瓶里的奶一样，只要把孩子抱起来才能喂到嘴里。需要5秒钟。<br>L2缓存就像是家里的奶粉一样，还需要先热水冲奶，然后把孩子抱起来喂进去。需要2分钟。<br>内存RAM就像是各个超市里的奶粉一样，这些超市在城市的各个角落，有的远，有的近，你先要寻址，然后还要去商店上门才能得到。需要1-2小时。<br>硬盘DISK就像是仓库，可能在很远的郊区甚至工厂仓库。需要大卡车走高速公路才能运到城市里。需要2-10天。<br>所以，在这样的情况下——</p>
 <p>我们不可能在家里不存放奶粉。试想如果得到孩子饿了，再去超市买，这不更慢吗？<br>我们不可以把所有的奶粉都冲好放在奶瓶里，因为奶瓶不够。也不可能把超市里的奶粉都放到家里，因为房价太贵，这么大的房子不可能买得起。<br>我们不可能把所有的仓库里的东西都放在超市里，因为这样干成本太大。而如果超市的货架上正好卖完了，就需要从库房甚至厂商工厂里调，这在计算里叫换页，相当的慢。<br>我讲完后，老婆看似有些明白了，然后对我说，“明白了，我就说最近衣服有点跟不上，原来是L1（衣柜）里的衣服跟不上了，老公什么时候去买衣服啊……”。我晕！</p>
-<p><a href="https://coolshell.cn/articles/3301.html" target="_blank" rel="noopener">JEFF DEAN的STANFORD演讲</a><br><img alt data-src="https://coolshell.cn/wp-content/uploads/2010/11/numberseveryoneshouldknow.png"></p>
+<p><a href="https://coolshell.cn/articles/3301.html" target="_blank" rel="noopener">JEFF DEAN的STANFORD演讲</a><br><img data-src="https://coolshell.cn/wp-content/uploads/2010/11/numberseveryoneshouldknow.png" alt></p>
 <blockquote>
 <p>代码的性能将会是想当的重要。Jeff给了一张叫“Numbers Everyone Should Know” 的slide（注：1 ns = 十亿分之一秒）</p>
 </blockquote>
-<h3 id="计算机编程简史图"><a href="#计算机编程简史图" class="headerlink" title="计算机编程简史图"></a><a href="https://coolshell.cn/articles/2724.html" target="_blank" rel="noopener">计算机编程简史图</a></h3><p><img alt="programmingworlden20180502.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/programmingworlden20180502.jpg?imageMogr2/thumbnail/!75p"></p>
+<h3 id="计算机编程简史图"><a href="#计算机编程简史图" class="headerlink" title="计算机编程简史图"></a><a href="https://coolshell.cn/articles/2724.html" target="_blank" rel="noopener">计算机编程简史图</a></h3><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/programmingworlden20180502.jpg?imageMogr2/thumbnail/!75p" alt="programmingworlden20180502.jpg"></p>
 <blockquote>
 <p>计算机编程简史图（英文版）</p>
 </blockquote>
-<p><img alt="programmingworldzh20180502.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/programmingworldzh20180502.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/programmingworldzh20180502.jpg?imageMogr2/thumbnail/!75p" alt="programmingworldzh20180502.jpg"></p>
 <blockquote>
 <p>计算机编程简史图（中文版）</p>
 </blockquote>
@@ -452,13 +422,13 @@
 <p>这个时候，Microsoft的某个团队发现了Java的致命缺陷：这不是他们做的！于是他们创造了一个叫J，或是Jole，或是ActiveJ的东西（对不起，我真的记不起叫什么了）来挽救Java（译者：应该是Visual J++）。看起来很像Java，只是名字不同罢了。这太让人兴奋了，但是Sun使用了一些相当古老的法律条款向Microsoft提起了法律诉讼，其在一年内限制了任何一个公司可以发布类似Java的产品。这明显是抑制微软复制别人产品的一次尝试，唯一不同的，其结果导致了微软流向国会议员裤兜的现金网络的建立（在这个网络可以得到时事新闻和价值$14.75的T恤衫）。还记得 J/Jole/ActiveJ 的项目经理用他的鞋桌在敲着桌子并信誓旦旦地坚持 Microsoft 将永远不会放弃他的产品。SB！所有的这些也就仅仅意味着一件事——没有人关心ActiveX团队（或者是COM？）。令人难以置信的是，微软把这些东东全部集成起来，成了COM+（难道不应该是ActiveX+?），还有MTS（我不知道为什么没有COM和Active或是X或是+的字眼，而直接叫MTS了——我为这个名词感到实实在在地震惊！）。他们总是那么NB地为那些流行词加上“+”号。在那段时间，还有人曾叫喊着“Windows DNA”以及“Windows Washboard”，但这两个东西最终在我搞清是什么玩意的之前就夭折了。</p>
 <p>在这一点上，Microsoft已经很不安地窥视着Internet好几年了，他们终于意识到Internet上有一个致命缺陷：嗯，你应该知道这是什么（译注：Internet不是做他们做的！）。于是他们开始培养我们和.NET约会（.NET的发音很像“doughnut”圆环图，不过，这只是他们的唯一不同），这和Internet很相似，只不过.NET有更多的印刷品。其让我们清楚再清楚地了解一件事：.NET会消除DLL Hell。.NET包含了一个新的编程语言，叫C#（为了解决已经死翘翘的Active++ J++的缺陷）。.NET还包含一个虚拟机，所有的语言都运行在上面（这主要是为了解决依赖于Intel CPU的缺陷）。.NET还包含了一个单一的登录系统（这主要是为了解决“不把口令存放在Microsoft服务器上”的缺陷）。实际上，我们更容易做的是把.NET不包含的事给列出来。.NET绝对是一个划时代地Windows编程革命……当然，仅到明年。</p>
 <h3 id="编程语言进化"><a href="#编程语言进化" class="headerlink" title="编程语言进化"></a><a href="https://coolshell.cn/articles/3100.html" target="_blank" rel="noopener">编程语言进化</a></h3><p>第一张是比较宏观的，来源在这里，虽然是去年的，但还是比较不错的，其把计算机编程语言分成了五个时代——</p>
-<p><img alt data-src="https://coolshell.cn/wp-content/uploads/2010/10/language-evolution.jpg"></p>
+<p><img data-src="https://coolshell.cn/wp-content/uploads/2010/10/language-evolution.jpg" alt></p>
 <p><strong>语言诞生</strong>。1940年代。第一个语言应该是：Ada Lovelace,</p>
 <p><strong>编译器时代</strong>。1950年代。这个时代的代表语言是：Fortran, LISP, 和 COBOL，编程语言开始引入编译器优化技术。</p>
 <p><strong>模式时代</strong>。1960年代-1970年代。这个时代是编程语言最重大的变革。在这个时代，所有人都在思考如何让设计一个好的编程语言以让编程更简单。面向对象也因为Simula而出现，而Smalltalk成了第一个纯动态类型的语言，C/C++、Pascal和SQL也是这个时代出现的，而第一个功能性/函数式语言ML也是这个时代出现的。所以说，这个时代是一个百花齐放的时代。而1980年代并没有太多的创新的东西，而只是对70年代出现的那些语言优化和发展的时期，如：1979年发明的C++语言。</p>
 <p><strong>生产力时代</strong>。1990年代以来主要是如何增进编程生产率的时代，这个时代出现了很多framework，代码库，以及快速开发的IDE，很多公司都在这个时期致力于这些增进生率的工作，如：delphi, power builder, MFC，boost等等。但最重要的还是因为引入了虚拟机——WORA（Write Once, Run Anywhere），JVM 是这方面的代表作。之后的.NET整出来的那些东西都是。今天的JPython, JRuby等都是为整合开发效率和维护效率。参看《基于JVM的语言正在开始流行》</p>
 <p><strong>后现代</strong>。未来的编程语言要走向何方，我不太清楚，不过，大家可以看看本站的这几篇文章：《五个编程语言设计的失误》、《C++和JAVA传统中积极的一面》</p>
-<p>下面是一张大图，让你看看整个编程语言的进代图。（点击看大图）<br><img alt data-src="https://coolshell.cn/wp-content/uploads/2010/10/EvolutionOfComputerlanguages-1024x727.png"></p>
+<p>下面是一张大图，让你看看整个编程语言的进代图。（点击看大图）<br><img data-src="https://coolshell.cn/wp-content/uploads/2010/10/EvolutionOfComputerlanguages-1024x727.png" alt></p>
 <h3 id="尼尔·弗格森：历史没有周期和规律"><a href="#尼尔·弗格森：历史没有周期和规律" class="headerlink" title="尼尔·弗格森：历史没有周期和规律"></a><a href="http://www.luojiji.com/thread-12018-1-1.html" target="_blank" rel="noopener">尼尔·弗格森：历史没有周期和规律</a></h3><p>尼尔·弗格森（Niall Ferguson）是哈佛大学历史系教授，曾被《时代》周刊评为“影响世界的100人”之一。他的代表著作有《文明》《帝国》《货币崛起》等。接受好奇心日报采访时，尼尔·弗格森分享了他对历史进程的看法。</p>
 <p>15岁时，尼尔·弗格森读到了列夫·托尔斯泰写的《战争与和平》，书的最后，托尔斯泰写了一篇有关历史决定论（historical determinism）的文章，文章中托尔斯泰提出一个问题：让国家变动的力量是什么？弗格森当时觉得这个问题非常有趣，于是他决定要当一名历史学家，用一生时间来思考这个问题。</p>
 <p>人们很喜欢强调历史的模式与周期性，但弗格森认为，历史其实没有什么周期和规律。比如，从经济上看，我们有工业革命这样产生革命性进步的转折点，它产生于1780年代的大不列颠岛，后来改变了整个世界的经济形态，但这并不是周期性事件。“现实告诉我们，<strong>历史是一系列复杂系统的交织</strong>”。</p>
@@ -501,7 +471,7 @@
 <p>“审容膝之易安”之后，日子过得格外逍遥：“园日涉以成趣，门虽设而常关。策扶老以流憩，时矫首而遐观。”每天去园子里弄弄菜，很愉快，也没有名利场上的人来拜访自己，乐得清静。拄着拐杖到处走走，看看远处的风景。</p>
 <p>然后又是两句名言：“云无心以出岫，鸟倦飞而知还。”云和鸟都在比喻自己，自己像云一样不想出山，是被风吹出去的，像鸟一样飞累了，只想回家休息。</p>
 <p>我们当然也想这么任性，毕竟谁都不愿意受委屈，但必须面对一个很现实的问题：陶渊明丢了工作之后，靠什么养家糊口呢？《归去来兮辞》里说是要“植杖而耘耔”，问题是知识分子真会种地吗，种地真能养活自己吗？这就是今天留给你的思考题。</p>
-<h3 id="一本书看懂棉花如何影响近代世界"><a href="#一本书看懂棉花如何影响近代世界" class="headerlink" title="一本书看懂棉花如何影响近代世界"></a><a href="http://www.luojiji.com/thread-12102-1-1.html" target="_blank" rel="noopener">一本书看懂棉花如何影响近代世界</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/06/094430hq3fqsfw8txixq6y.jpg"></p>
+<h3 id="一本书看懂棉花如何影响近代世界"><a href="#一本书看懂棉花如何影响近代世界" class="headerlink" title="一本书看懂棉花如何影响近代世界"></a><a href="http://www.luojiji.com/thread-12102-1-1.html" target="_blank" rel="noopener">一本书看懂棉花如何影响近代世界</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/06/094430hq3fqsfw8txixq6y.jpg" alt></p>
 <p>《棉花帝国》<br>(Empire of Cotton: A Global History)<br>作者：[美] 斯温·贝克特<br>译者:  林添贵<br>出版:  远见天下文化出版股份有限公司</p>
 <p>作为讲述资本主义发展史的严肃著作，这本书的视角非常独特：</p>
 <p>突破传统的民族、地域、阶级等视角，创新地以棉花这一看似普通的商品为线索，梳理了棉花与资本主义全球网络之间的关系。</p>
@@ -530,19 +500,19 @@
 <h3 id="何帆：5本书，带你看懂不一样的中国"><a href="#何帆：5本书，带你看懂不一样的中国" class="headerlink" title="何帆：5本书，带你看懂不一样的中国"></a><a href="http://www.luojiji.com/thread-12024-1-1.html" target="_blank" rel="noopener">何帆：5本书，带你看懂不一样的中国</a></h3><p>几千年的中国历史极其复杂。粗略了解历史事实很简单，但要做到多视角、多维度的全面认识却很难。</p>
 <p>「得到」专栏《何帆的北大读书俱乐部》的主理人何帆老师，为你推荐5本研究中国历史的硬书。</p>
 <p>带你认识中国走到今天的<strong>必然性</strong>与<strong>偶然性</strong>，从新的<a href="https://deepcreator.com/Concept/Viewpoint.html" target="_blank" rel="noopener">视角</a>，看懂一个不一样的中国。</p>
-<h4 id="《中国青铜时代》"><a href="#《中国青铜时代》" class="headerlink" title="《中国青铜时代》"></a>《中国青铜时代》</h4><p>作者：张光直<br>出版：生活·读书·新知三联书店<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201805/27/111445oppiig8ibiyy9ib8.jpg"></p>
+<h4 id="《中国青铜时代》"><a href="#《中国青铜时代》" class="headerlink" title="《中国青铜时代》"></a>《中国青铜时代》</h4><p>作者：张光直<br>出版：生活·读书·新知三联书店<br><img data-src="http://www.luojiji.com/data/attachment/forum/201805/27/111445oppiig8ibiyy9ib8.jpg" alt></p>
 <p>中国青铜时代，即指上古的夏商周三代。因为相关的历史古籍很少，所以这段早期历史，很少有人熟知。</p>
 <p>作者张光直基于自己考古学家的身份，采用科学的研究方法——考古挖掘，寻找来自地下的史料。他试图从各个侧面，还原一个立体的时代模型。读完这本书，你会发现，我们对中国历史的了解，还有很多欠缺。</p>
-<h4 id="《汉-代-农-业》"><a href="#《汉-代-农-业》" class="headerlink" title="《汉 代 农 业》"></a>《汉 代 农 业》</h4><p>作者：许倬云<br>译者： 程农  张鸣<br>出版：江苏人民出版社<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201805/27/111445wprfxz4zrpp11jpa.jpg"></p>
+<h4 id="《汉-代-农-业》"><a href="#《汉-代-农-业》" class="headerlink" title="《汉 代 农 业》"></a>《汉 代 农 业》</h4><p>作者：许倬云<br>译者： 程农  张鸣<br>出版：江苏人民出版社<br><img data-src="http://www.luojiji.com/data/attachment/forum/201805/27/111445wprfxz4zrpp11jpa.jpg" alt></p>
 <p>中国从汉代开始，就出现了一种独特的重商的农业经济模式：个体农户精耕细作的同时，又与市场经济紧密相连。</p>
 <p>作者许倬云是著名的历史学家，他通过研究发现，这一转型肇始于汉武帝时期相关政策的剧烈冲击，也与当时人口增长过快有着密切的关联。从小农意识这个视角出发，相信对你理解当下的中国，有很大启发。</p>
-<h4 id="《为什么有的国家富裕，有的国家贫穷》"><a href="#《为什么有的国家富裕，有的国家贫穷》" class="headerlink" title="《为什么有的国家富裕，有的国家贫穷》"></a>《为什么有的国家富裕，有的国家贫穷》</h4><p>作者：【美】贾雷德·戴蒙德<br>译者： 栾奇<br>出版：中信出版社<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201805/27/111446r93x915557f56wzh.jpg"></p>
+<h4 id="《为什么有的国家富裕，有的国家贫穷》"><a href="#《为什么有的国家富裕，有的国家贫穷》" class="headerlink" title="《为什么有的国家富裕，有的国家贫穷》"></a>《为什么有的国家富裕，有的国家贫穷》</h4><p>作者：【美】贾雷德·戴蒙德<br>译者： 栾奇<br>出版：中信出版社<br><img data-src="http://www.luojiji.com/data/attachment/forum/201805/27/111446r93x915557f56wzh.jpg" alt></p>
 <p>贾雷德·戴蒙德是美国著名生理学教授，曾获普利策奖、美国国家科学奖等重要奖项。他著写的“人类历史三部曲”：《第三种猩猩》《枪炮、病菌与钢铁》和《崩溃》，影响甚大。</p>
 <p>本书从地理因素的视角，重新审视了“中国的大一统传统”。为什么说地理作为一种慢变量，能影响到未来的大趋势？当今中国又该如何处理地缘政治风险？这本书，或许能给你答案。</p>
-<h4 id="《火-枪-与-账-簿》"><a href="#《火-枪-与-账-簿》" class="headerlink" title="《火 枪 与 账 簿》"></a>《火 枪 与 账 簿》</h4><p>作者：李伯重<br>出版：生活·读书·新知三联书店<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201805/27/111446kf95w2cwu2yw20oc.jpg"></p>
+<h4 id="《火-枪-与-账-簿》"><a href="#《火-枪-与-账-簿》" class="headerlink" title="《火 枪 与 账 簿》"></a>《火 枪 与 账 簿》</h4><p>作者：李伯重<br>出版：生活·读书·新知三联书店<br><img data-src="http://www.luojiji.com/data/attachment/forum/201805/27/111446kf95w2cwu2yw20oc.jpg" alt></p>
 <p>作者李伯重是著名历史学家，长期从事中国经济史方面的研究。书名中的“火枪”指军事技术，“账簿”指经济全球化。</p>
 <p>全书围绕军事与经济两方面，回答了一个问题：明朝时期中国已经登上全球舞台，是什么让中国错失成为世界霸主的机会？</p>
-<h4 id="《-大-分-流-》"><a href="#《-大-分-流-》" class="headerlink" title="《 大 分 流 》"></a>《 大 分 流 》</h4><p>作者：【美】彭慕兰<br>译者： 史建云<br>出版：江苏人民出版社<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201805/27/111446p597cgdtd7gg9z87.jpg"></p>
+<h4 id="《-大-分-流-》"><a href="#《-大-分-流-》" class="headerlink" title="《 大 分 流 》"></a>《 大 分 流 》</h4><p>作者：【美】彭慕兰<br>译者： 史建云<br>出版：江苏人民出版社<br><img data-src="http://www.luojiji.com/data/attachment/forum/201805/27/111446p597cgdtd7gg9z87.jpg" alt></p>
 <p>作者彭慕兰是美国著名历史学家、汉学家，“加州学派”代表人物。</p>
 <p>作为加州学派的代表作品，这本书反对“欧洲中心论”，以欧洲现代化与中国现代化道路因何”大分流”为主论题。对18世纪英国和中国江南的经济社会状况，进行了具体的比较，并提出了很多独创性的结论。为我们重新认识当时的中国与欧洲，提出了新的思考方向。</p>
 <h2 id="罗胖60秒：一场几千年的风暴"><a href="#罗胖60秒：一场几千年的风暴" class="headerlink" title="罗胖60秒：一场几千年的风暴"></a><a href="http://www.luojiji.com/thread-12735-1-1.html" target="_blank" rel="noopener">罗胖60秒：一场几千年的风暴</a></h2><ol>
@@ -566,7 +536,7 @@
 <p>为了让你更好地发现这种线索，我特地为你准备了一个知识结构图（详见文末）。你可以在这个知识结构图里，对这门课50讲的内容有一个更直观的把握，感受到时间和空间这两条线索在共同发挥作用。</p>
 <p>《中国史纲50讲》是高效的社交工具，对历史的深度解读，你可以随时分享给需要的朋友、同事、伙伴，在分享中学习和交流，你会有更大的进步。</p>
 <p>知识结构图左侧栏代表时间线，顶部横栏代表空间坐标，分别为：海洋、中原、草原、西域和高原。利用这张图，你可以找到时间和空间两条线索的相互作用关系。<br>结构图的表格中，所有括号内的数字，皆对应于目录中的课程序号；<br>各讲之间有交叉联系、相互贯通，同一讲的序号会出现在不止一个单元格中；<br>单元格的形状变形，代表着时间和空间上的重叠性。</p>
-<p><img alt="history20180508.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/history20180508.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/history20180508.jpg?imageMogr2/thumbnail/!75p" alt="history20180508.jpg"></p>
 <h3 id="01丨发刊词：历史学才是真正的未来学"><a href="#01丨发刊词：历史学才是真正的未来学" class="headerlink" title="01丨发刊词：历史学才是真正的未来学"></a>01丨发刊词：历史学才是真正的未来学</h3><p>可能你会问，在一个高速发展的互联网时代，我们应该更多展望未来，为什么还要读历史呢？<br>很简单，是为了回答门口保安会问你的那三个深刻的哲学问题：<br>“你是谁？你从哪来？你要到哪去？”<br>为什么这么说呢？<br>因为，在你思考未来的时候，最重要的一个事情，就是你对未来目标的设定。<br>这个目标要如何设定呢？<br>这首先取决于你如何理解自己、如何理解世界。<br>而只有当你搞清楚了自己是从哪里来的，也就是理解了过去，理解了历史，才能搞清楚当下自己在哪里，然后才知道该如何规划未来。</p>
 <blockquote>
 <p>所以，越是一个需要规划未来的时代，就越是一个需要回顾过去的时代。</p>
@@ -680,7 +650,7 @@
 <p>先说“中国”概念。</p>
 <p>“中国”这个词在历史上第一次出现，就是在周朝，但跟今天的意思差别很大。</p>
 <p>周朝的第二位君主周成王，兴建了东都洛阳城，当时有个叫做“何”的贵族，这人铸了一件青铜器纪念这个事儿，1963年这个青铜器在陕西宝鸡被发现，今天称其为“何尊”。</p>
-<p><img alt="hezun20180508.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/hezun20180508.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/hezun20180508.jpg?imageMogr2/thumbnail/!75p" alt="hezun20180508.jpg"></p>
 <p>何尊的底部铸了一百多个字，里面提到，周武王说要“宅兹中国”，就是说要“住在‘中国’”，这是“中国”这个词的最早来源。复旦大学葛兆光老师有一本书叫做《宅兹中国》，专门就说过这个事。</p>
 <p>“宅兹中国”，“我要住在‘中国’”，这话啥意思呢？周天子你不就是住在中国的土地上吗？</p>
 <p>这就是我说的古代和现代的差别了。</p>
@@ -760,7 +730,7 @@
 <p>问题是，这样一种战争的打法，有个前提，就是大家都认同“礼”这套规矩很重要。万一碰上个根本不懂这套规矩、不按套路出牌的人，不踢正步而是直接抡刀砍人，那战争的打法就变了。</p>
 <p>春秋时代的楚国，就是这么个不按套路出牌的国家。这倒不是因为楚国人耍无赖，而是因为它就不是周天子分封的诸侯国，本来就不大懂中原的那一套。</p>
 <p>楚国是个土生政权，崛起在今天的湖北、河南南部这一带，它的文化和中原有很大区别，也不大在乎中原的礼仪之类的东西，在当时的中原诸侯看来它就是个蛮夷之邦。</p>
-<p><img alt="chustate20180508.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/chustate20180508.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/chustate20180508.jpg?imageMogr2/thumbnail/!75p" alt="chustate20180508.jpg"></p>
 <p>春秋时期的楚国，虽然政权面积大，但在地处中原的宋国看来，只是“蛮夷之邦”</p>
 <p>出身中原的宋国国君宋襄公，血统高贵，是商朝王族的后裔，正步踢得非常有水准。一时间他也曾号令过一些诸侯，被列入春秋五霸。</p>
 <p>结果他就想多了，看到楚国不大守规矩，就想去提高一下楚国的正步水平，没想到和楚王打仗的时候，楚军直接轮刀，宋襄公被打得大败。</p>
@@ -843,7 +813,7 @@
 <p>战国时期是中国古代历史上变革最激烈的时期之一，它终结了封建社会，中国走上大一统帝国，带来了周秦之变。<br>周秦之变对中国的思想史还带来个自然延伸的影响，就是我们在历史上看到的，从秦皇到汉武，帝国的官方思想经历了从法家到道家再到儒家的转换过程。<br>这些变化，背后的机理非常重要，是我们理解此后大一统帝国的一个重要线索。这一讲就来解释这个机理。    </p>
 <p>周秦之变的“法家逻辑”<br>先来说周秦之变是怎么发生的，这与战国时期诸侯争霸的逻辑紧密相关。<br>对诸侯们来说，随着战争规模的扩大，提升国家的战争效率就成了重中之重。<br>百家争鸣的诸多学说，哪一种更注重提升战争效率，它就会获得诸侯们在政治上的更多支持。<br>法家在这方面显然是最有优势的，儒家显得迂腐，道家追求出世，都不被诸侯们所重视。<br>只有法家告诉诸侯们，要想富国强兵就得变法，传统已经不合时宜了，得改掉。<br>过去人们的身份高低是由血统决定的，打仗时大家都比赛看谁的正步踢得好。这就没法刺激人们的欲望，尤其没法刺激一般老百姓的欲望。<br>法家认为，应该改成，身份的高低由你从战场上拎回来的人头数量决定，血统的标准靠边站。<br>这政策的激励机制非常强大，能刺激人们争先恐后地出去打仗，战争效率当然大幅提升。<br>法家这套逻辑一出，天下的风气就开始变了。</p>
 <p>魏国在公元前400年左右第一个开始变法，这就是著名的李悝变法。魏国处在四战之地、战略环境并不好，但因为变法，成为了战国前期的顶级强国，把还未变法的秦国也打得缩回老家去。<br>其他诸侯国一瞧这情形，不变法就没法混了，只好也开始变法。这回，各国发展起来的力量相互抵消，形成恐怖均衡，魏国的优势也就没了。<br>魏国变弱，还有自己的主观成分。在魏国优势开始下降的时候，新上台的君主魏惠王做了一件蠢事，他拒绝了任用当时正在魏国寻找当官机会的商鞅。<br>商鞅在魏国找不到机会，就去了秦国，在这儿发起了著名的“商鞅变法”。秦国把法家的逻辑发展到极致，迅速崛起。<br>相比于其余六国，秦国在最西边儿，地处今天的陕西一带。这个位置战略上特别好，易守难攻，它一边能坐看东边六国互相牵制，一边能独自侵占和掠夺弱小的西戎和蜀国。</p>
-<p><img alt="Qing20180508.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Qing20180508.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Qing20180508.jpg?imageMogr2/thumbnail/!75p" alt="Qing20180508.jpg"></p>
 <p>秦国位于六国西部。公元前260年，这一年长平之战结束，秦大败赵<br>这样一种战略位置，基本上只有它打人，难得见到人打它。所以，秦国变法虽是最晚的一个，却后发先至，最终完成天下一统。</p>
 <p>说到这儿，你就该明白，为什么百家争鸣的局面，最后输给了法家。</p>
 <p>但是，秦国统一天下这件事，却让法家的逻辑走到头儿了。这又是怎么回事呢？</p>
@@ -930,7 +900,7 @@
 <p>儒家文化的地理依赖性</p>
 <p>定居的前提是农耕，而农耕有一个最硬性的约束条件，就是年降水量。东亚大陆上，如果一个地方年降水量少于400毫米的话，靠农耕是活不下去的。</p>
 <p>那么，东亚大陆的400毫米等降雨线在哪儿呢？</p>
-<p><img alt="precipitation20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/precipitation20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/precipitation20180509.jpg?imageMogr2/thumbnail/!75p" alt="precipitation20180509.jpg"></p>
 <p>400毫米等降雨线，基本就是中原和草原的分割线</p>
 <p>这条400毫米等降雨线，差不多和长城重合。长城再往北，年降水量就不足400毫米了。也就是说，儒家帝国在农耕地区的扩张极限，就是400毫米等降雨线。于是在这里，儒家帝国修建了长城。长城再往北就是游牧地区了。</p>
 <p>在古代社会，由于农耕对降雨量的要求，使得你要是越过了长城以北，还想活得下去的话，就必须游牧化，否则是死路一条。</p>
@@ -958,7 +928,7 @@
 <p>小群体的规模上限是多大呢？英国有一位人类学家叫做邓巴，他提出，这个规模上限是150人左右，150这个数字就被称作“邓巴数”。超过150人，要维持群体内所有人之间的密切关系，所要处理的数据量就超过大脑的承受极限了。</p>
 <p>所以，一旦群体规模超过这个临界点，它就不再是个熟人社会，是陌生人社会，只能靠规则来治理。规则就得有人来执行，官僚体系就是干这个的；但是草原上又养不起官僚。</p>
 <p>所以，一旦部落的规模超过临界点，它就会分裂出新的部落，继续以小集群的方式来行动。</p>
-<p><img alt="inheritance20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/inheritance20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/inheritance20180509.jpg?imageMogr2/thumbnail/!75p" alt="inheritance20180509.jpg"></p>
 <p>草原究竟是如何形成兄終弟及的继承顺序的，这个问题会在下一讲给你详细展开</p>
 <p>说到这里，你可能要问了，既然草原上不能大规模治理，那么，草原上为何会有匈奴、鲜卑、蒙古那种强大的游牧帝国呢？<br>要回答这个问题，你必须要先搞清楚一个背景，就是强大的草原游牧帝国是何时出现的？</p>
 <p>在秦统一天下之前，并没有出现过什么强悍的草原民族。那时的北方游牧民，在历史记载中顶多是跑龙套的，根本算不上什么威胁。但到了西汉帝国时期，一个强大的匈奴帝国仿佛从天而降，突然耸立在北方。</p>
@@ -1250,7 +1220,7 @@
 <p>第一个原因是气候的变化。司马家族就算再牛，也牛不过气候变化去。从东汉中期开始，气温在不断下降，到三国魏晋时期降到了最低点。</p>
 <p>东汉时期，匈奴早已分裂为南北两支，随着气温降低，草原上的资源越来越少，南匈奴逐渐移居长城以南，其他的一些胡人也陆续迁到这里。</p>
 <p>迁来的胡人比例不大的时候，帝国还能比较容易地消化他们，当比例大到一定程度，帝国就扛不住了。<br>另一次气候变化的最低点是什么时候呢？没错，就是明清朝代更替的时候。所以说，改朝换代，气候是一大原因。</p>
-<p><img alt="temperature20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/temperature20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/temperature20180509.jpg?imageMogr2/thumbnail/!75p" alt="temperature20180509.jpg"></p>
 <p>第二个原因是中原社会的豪族化，它不断地削弱着帝国政府的能力。</p>
 <p>黄巾大起义闹起来后，豪族们为了增强自卫能力，建起了很多坞堡，坞堡就像一个个小城市，大的坞堡里面能有几千户人家。</p>
 <p>坞堡内部的经济基本上能自给自足，不怎么需要和外面的经济交往，整个社会越来越退回到自然经济状态。</p>
@@ -1315,7 +1285,7 @@
 </blockquote>
 <p>虽然冉闵的战斗力不下于项羽，但还是很快就败在了来自东北的慕容氏之手。</p>
 <p>混一胡汉的不成功阶段<br>在冉闵暴虐的统治失败之后，就进入了五胡十六国的第二阶段，也就是努力混一胡汉却不成功的阶段，这个阶段的领袖是前秦的苻坚。</p>
-<p><img alt="fujian20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/fujian20180509.jpg?imageMogr2/thumbnail/!75p"><br>苻坚这个名字是不是很熟悉呢？著名的淝水之战，东晋以弱胜强，强的那一方，就是苻坚。</p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/fujian20180509.jpg?imageMogr2/thumbnail/!75p" alt="fujian20180509.jpg"><br>苻坚这个名字是不是很熟悉呢？著名的淝水之战，东晋以弱胜强，强的那一方，就是苻坚。</p>
 <p>虽然输了淝水之战，但不要以为苻坚就是个笨蛋。苻坚绝对是个明君英主，只不过他在几个重要的策略上，把步骤走反了，导致满盘皆输。</p>
 <p>为啥说苻坚是个英主呢？因为他清晰地意识到，胡汉对立的统治模式，注定会失败，要真正想成就大业，必须消除胡汉差异，打碎各种胡人汉人的小共同体认同，才能建立统一的国家。</p>
 <p>但是，苻坚虽然意识到了问题，却没找对方法。他想打碎小共同体，于是就先从自己所属的氐族开始。因为他想，如果不能先摆脱自己的氐族身份，那也就没法让别人摆脱胡人身份、汉人身份的约束，也就没法混一胡汉、实现统一大业了。</p>
@@ -1334,7 +1304,7 @@
 <p>对慕容垂来说，自己起兵反秦这是复国，是要兴复慕容氏的大燕国。于是，慕容垂自称燕王。这一段，历史上称为“后燕”。</p>
 <p>混一胡汉的成功阶段</p>
 <p>在慕容垂起兵反秦之后，即将进入五胡十六国的第三个阶段，就是成功实现了混一胡汉、建立二元帝国的阶段。<br>在这个阶段，除了燕国的慕容垂，还有一个鲜卑人叫拓跋珪，这两个人可以被称为鲜卑人的绝代双骄。他们终于站在前人的肩膀上，摸到了成功的门径。<br>慕容与拓跋两家有个共同特征，就是他们都来自中原与草原的过渡地带。慕容氏起家于东北，拓跋氏起家于山西北部的长城沿线地区。<br>在过渡地带起家的人，必须既懂得草原的逻辑，也懂得中原的逻辑。只懂得一边的逻辑，就肯定站不住脚。所以他们两家都能够建立起胡人汉人相融合的二元政权。<br>来自东北的慕容氏建立的前燕，率先实现了对草原力量和中原力量的整合。前燕因此发展得不错，后来还打败了不可一世的冉闵。冉闵，就是一开头我们提到的那个战斗力爆表的汉人。<br>打败冉闵之后，前燕的自我感觉非常良好，于是就打算入关玩个大的，不巧碰上了正如日中天的前秦苻坚，于是就被灭国了。这也就有了刚才说的慕容垂起兵，兴复大燕国的事情了。<br>但最终，慕容氏兴复大燕的努力也没有成功，他败给了真正统一北方江山的英雄，就是建立起北魏的拓跋珪。</p>
-<p><img alt="beiwei20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/beiwei20180509.jpg?imageMogr2/thumbnail/!75p"><br>拓跋氏真正地建立了持续统治北方的大帝国北魏。北魏的开国皇帝，道武帝拓跋珪，和苻坚一样，都琢磨着要混一胡汉。但是又和苻坚不一样，他把步骤走对了。</p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/beiwei20180509.jpg?imageMogr2/thumbnail/!75p" alt="beiwei20180509.jpg"><br>拓跋氏真正地建立了持续统治北方的大帝国北魏。北魏的开国皇帝，道武帝拓跋珪，和苻坚一样，都琢磨着要混一胡汉。但是又和苻坚不一样，他把步骤走对了。</p>
 <p>咱们之前谈到过，草原上的部落小可汗们都是军事贵族，他们对大汗有着很强的约束力，大汗只有把这帮人都摆平，才能说了算。</p>
 <p>但大汗要想摆平他们，又必须能够在中原获取足够多的财富，才能用钱把这些军事贵族赎买掉。<br>于是，拓跋珪先是带领人马扫平了草原上其它部落，再南下进入中原，把慕容家在各个地方好不容易恢复起来的三四个燕国，又挨个灭掉，完全不考虑慕容家的感受。</p>
 <p>北魏的制度安排<br>在南下夺取了中原的财富之后，拓跋珪的实力壮大了，于是他推行了一个重要政策，叫“离散部落”，就是把部落这种小共同体打碎。就这样，拓跋珪同时离散了他统治下的拓跋氏部落，和其他胡人的部落。</p>
@@ -1362,7 +1332,7 @@
 <p>这些汉化的改革意味着，皇帝不再认同鲜卑人的身份，转而要放弃各种鲜卑人的习惯，把帝国转化为一个汉人国家。这对鲜卑军人们的自豪感是个巨大打击。皇上不再认北边的这些老兄弟，那就不能指望老兄弟们还认你。</p>
 <p>军事贵族这回是约束不了皇上了，皇上爽了，但北方的军人们越来越不痛快，军人离心离德，这个帝国就太危险了。<br>迁都后没几年，孝文帝就去世了，后续又冒出个想要学习冯太后的胡太后，但胡太后没有冯太后的才能，一通乱搞，于是六镇官兵们发生暴动，北魏王朝也就很快土崩瓦解。<br>北魏瓦解后，分成了东魏和西魏，再加上南边的南朝，这就是所谓后三国时代。在这个时代，就轮到出身六镇军人的英雄们登场了。</p>
 <p>东魏和西魏的建立<br>在胡太后还在洛阳胡作非为的时侯，一个出身怀朔镇的小兵偶然来到洛阳送信，他看到洛阳的乱象，认定天下即将大乱，该是成大事的时候了，他回到怀朔就散尽家财，募集英雄。<br>这个小兵叫高欢，后来就是他主导成立了东魏。<br>怀朔镇离今天的包头不远，它东面还有个军镇，叫武川镇，离今天的呼和浩特不远。武川镇出来了另一个英雄宇文泰，他主导成立了西魏。<br>高欢和宇文泰在天下大乱中趁机起事，都是先跟着别的英雄混，后来各自扶持了一个北魏王室成员成立新政权。高欢主导东魏，定都邺城，就是今天邯郸附近。宇文泰主导西魏，定都长安。</p>
-<p><img alt="wei20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/wei20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/wei20180509.jpg?imageMogr2/thumbnail/!75p" alt="wei20180509.jpg"></p>
 <p>高欢和宇文泰一定有既生瑜何生亮的痛苦，俩人依托各自的国家，苦斗了好多年，几次都有把对方置于死地的机会，但是都失之交臂。<br>高欢主导的东魏，后来在他儿子的手上变成了北齐，北齐的核心是中原地区，人口和财富都更多，本来是更有优势的。<br>但高欢看到了魏孝文帝改革带来的问题，他为了避免鲜卑人离心离德，就使劲把帝国往鲜卑化的方向拉。鲜卑军人们是高兴了，但是，这就没法充分动员起汉人的力量，结果东魏人多钱多的优势完全发挥不出来。</p>
 <p>鲜卑人宇文泰复周礼<br>再说宇文泰主导的西魏，西魏其实就是后来隋唐帝国的母体。<br>西魏的主体在今天的陕西关中地区，人口和财富都没有办法跟高欢的地盘相比，宇文泰不得不想方设法把手下所有人的力量都充分发挥动员起来。</p>
 <p>宇文泰是怎么做的呢？<br>他首先得安顿鲜卑这一方的人心。所以他没有继续孝文帝改汉姓的这种做法，而是要求鲜卑人都恢复鲜卑姓，甚至，他还要求汉人也要给自己起个鲜卑的姓氏。这下鲜卑人满意了，但是汉人的人心怎么收拢呢？<br>宇文泰又搞出了一个极有想象力的办法，“复周礼”！<br>复周礼，这是儒家文化的最高理想之一，之前一直没人做到过。鲜卑人宇文泰却努力做到了，一下子就收服了汉人的人心。<br>复周礼对宇文泰来说，还有个好处，那就是一下子获得了比谁都强的正统性。你们另外两国，甭管是老高家的北齐，还是南方的陈朝，谁都没有我的正统性强，因为你们都没本事恢复周礼。<br>所以宇文泰的继任者，在篡夺了西魏的皇位之后，新建立的国号就是周，史称北周。<br>说到这，你可能会有一个问题。既然复周礼在政治上有各种好处，为什么中原的汉人都没有去做，反而是鲜卑人宇文泰恢复了周礼呢？<br>这就得再说一下周礼的来源，咱们在前面曾经说到过，周礼是周代早期贵族们的行为规范，那会儿的贵族都是军事征服者出身。所以周礼实际上是一种由贵族所主导的、兵民一体的社会秩序。<br>但是在中原，贵族先是被君主们碾压了，后来出现的世家大族也很快都堕落了，这种情况下，想要复周礼，根本就没有社会基础，因为没有贵族啊。<br>但是草原上有现成的军事贵族，只要把他们的身份用周礼来重新规定一下，再依照周礼，把汉人也都整合进来，整出个兵民一体的结构，复周礼这事大致就成型了。<br>宇文泰把他在武川镇的兄弟们封为柱国大将军，柱国大将军下面再设置大将军，大将军下面再设置开府，一共有十二大将军、二十四开府，由此形成了府兵制。<br>鲜卑军人和汉人士兵都被整合在里面，各种力量都被有效地动员了起来。<br>这样，宇文泰的地盘，虽然人少钱少，但是效率却更高。</p>
@@ -1424,7 +1394,7 @@
 <p>地理结构带来的政治逻辑差异</p>
 <p>说了这些，你大致就能知道西域和中亚作为历史催化剂，有多大的重要性了。而这一切，都离不开它特殊的地理结构。所以，我们先简单了解一下它的地理结构。</p>
 <p>你可以先看看文稿里面的大中亚地图，先看横向的，中国境内的天山，以及一条起源天山、向西流的大河锡尔河。<br>天山-锡尔河这一条线很重要，这条线以北是中亚的游牧区，这条线以南是中亚的定居地区。这条分界线的意义，就跟长城在东亚的意义一样。</p>
-<p><img alt="xinjiang20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/xinjiang20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/xinjiang20180509.jpg?imageMogr2/thumbnail/!75p" alt="xinjiang20180509.jpg"></p>
 <p>大中亚地区地形图</p>
 <p>天山-锡尔河以北的游牧地区，政治和社会的逻辑，和长城以北的草原上差不多，但南面的定居地区则与中原有很大差别。</p>
 <p>中原有很多大河，有充沛的水源进行灌溉，农耕区的规模很大，连成片，财富总量就很大；中亚定居区的水源，只有雪山融水还有一些内流河，水资源很匮乏，只能形成一些高度分散的小规模绿洲，因此财富总量很小，和中原没法比。</p>
@@ -1475,7 +1445,7 @@
 <p>但是，到了地理大发现，新航道开辟出来，中亚沦落为很次要的贸易通道，人均财富量也大幅下降，没有足够多的人有闲情逸致仰望星空，中亚就从人类的知识高地跌落了下来。<br>而在中国这边，在唐末安史之乱之后，中原、草原和西域之间发生了非常复杂又有趣的历史联动关系，西域的历史催化剂作用表现得极为到位，深刻地改变了中国的历史。<br>这就是我们下一讲的内容。</p>
 <h3 id="19-回鹘，草原霸主的兴与衰"><a href="#19-回鹘，草原霸主的兴与衰" class="headerlink" title="19 | 回鹘，草原霸主的兴与衰"></a>19 | 回鹘，草原霸主的兴与衰</h3><p>上一讲里，我们谈到了西域的重要意义，以及整个大中亚地区对中国历史乃至世界历史的催化剂作用。<br>这一讲里，我们再来看一下唐朝中期以后的草原霸主，回鹘汗国。你会看到中原和西域分别是如何促成了回鹘汗国的崛起，又如何让它败亡，后续的历史又是如何深刻地改造着西域。<br>从回鹘汗国跌宕起伏的命运里，你能看到草原、中原与西域深刻的联动关系。你也会更好地理解，我为什么说中国历史是一个体系史。</p>
 <p>回鹘汗国是如何崛起的<br>其实在回鹘之前，还有一个草原霸主，就是突厥汗国。突厥汗国曾被唐太宗征服，后来在武则天掌权期间，又复国了。再后来，唐玄宗为了打击它，又扶植了一个突厥人的附属部落，回纥。<br>在大唐和回纥的联手打击下，突厥汗国在公元744年灭国了。突厥汗国被灭掉之后，回纥就成为了新的草原霸主，后来它又改名成为回鹘。</p>
-<p><img alt="huihu20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/huihu20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/huihu20180509.jpg?imageMogr2/thumbnail/!75p" alt="huihu20180509.jpg"></p>
 <p>唐时期的回鹘</p>
 <p>回鹘汗国成立后刚过十年，就赶上了一个大大的红利。这个红利是什么呢？跟安史之乱有直接关系。<br>公元755年，唐朝发生了安史之乱。安史之乱的主谋安禄山，出生在农耕、草原过渡地带的辽西地区，他爸爸是来自中亚的粟特人，粟特人属于东波斯族群，他妈妈是出身草原的突厥人，所以他的身上同时流着中亚和草原的两种血。</p>
 <p>安史之乱爆发后，唐玄宗派遣大将哥舒翰去应战。但是唐玄宗一通瞎指挥，导致哥舒翰被安禄山俘虏，唐玄宗这下慌了，被迫逃离长安，并黯然退位。</p>
@@ -1503,7 +1473,7 @@
 <p>而藏传佛教，对元明清的帝国统治都有着极为重要的作用。</p>
 <p>这一讲，就是要讲这背后的历史过程和逻辑，让你看看吐蕃帝国是怎么崛起的，又是怎样亡国的，之后又是如何兴起的藏传佛教体系。</p>
 <p>雪域高原的地理特征<br>先来说雪域高原上的这个吐蕃帝国。<br>雪域高原的地理条件特殊，资源极度匮乏。所以在历史上的大部分时间，都是分成一个个小部落，由部落首领来领导的。<br>一直到了公元六百多年的初期，也就是和唐太宗差不多的时代，才由松赞干布建立起了统一的帝国，也就是吐蕃帝国。于是也就有了文成公主远嫁吐蕃的故事。<br>为了能理解吐蕃帝国面临的现实条件的约束，咱们得先看一下雪域的地理特征。<br>这里有一系列东西走向的巨大山脉，都属于世界上最高的山脉之列，高原的北边是昆仑山到祁连山这一线，基本是青藏高原和西域的分界线，下面就是塔里木盆地。高原的南边是喜马拉雅山脉，大致是青藏高原和印度平原的分界线。<br>高原上多数地方都不适合人类生存，只有在大山之间的河谷地区，海洋上的水汽能够曲折地传进来，也形成了一些很分散的能够维持人类生存的小区域。</p>
-<p><img alt="snow20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/snow20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/snow20180509.jpg?imageMogr2/thumbnail/!75p" alt="snow20180509.jpg"></p>
 <p>雪域高原上还能分为三个亚区域。</p>
 <p>在东北方向上，是安多藏区，包括今天的青海、甘肃南部和四川西北。<br>东南方向上，是康巴藏区，主要包括今天的西藏东部、四川西部、云南西北部，香格里拉就属于康巴藏区的。<br>还有一个是卫藏地区，包括今天的西藏大部分地区，“卫”在藏语里就是“中心”的意思。</p>
 <p>吐蕃帝国的贵族制<br>吐蕃帝国的核心地区就在卫藏，吐蕃的最高统治者叫做赞普。而松赞干布是第一个有明确年代的赞普，在他之前的雪域高原历史，都处在传说当中。<br>虽然只有传说，但我们明确可以知道的是，在松赞干布之前，高原上就已经有了一种比较原始的宗教了，叫做苯教。<br>苯教是个多神教，有萨满教特征，就是类似于跳大神那种。高原上最初那一个个的小部落，部落首领多半都兼有宗教属性。在松赞干布建立起吐蕃帝国之后，这些部落首领就成了帝国的大贵族。</p>
@@ -1529,7 +1499,7 @@
 <h3 id="21-大辽，首破百年的游牧帝国"><a href="#21-大辽，首破百年的游牧帝国" class="headerlink" title="21 | 大辽，首破百年的游牧帝国"></a>21 | 大辽，首破百年的游牧帝国</h3><p>上一讲结尾说到，从唐到宋，中国由豪族社会变为平民社会。宋朝又分成两段，北宋和南宋。北宋的历史是和大辽共同度过的。</p>
 <p>你听评书《杨家将》可能会觉得，宋、辽经常在打仗。事实上，杨家将的抗辽战争发生在北宋初年。此后直到北宋灭亡，两国基本没什么战争了，保持了中国历史上极为罕见的持续百余年的和平。</p>
 <p>为什么会这样呢？解释这个问题的关键就在于幽云十六州。说到幽云十六州，汉人经常为之捶胸顿足。<br>因为这里是中原帝国最重要的北部屏障，一旦失去这里，中原将无险可守。所以常常会听到有人说，大宋之所以灭亡，正是因为没能收复幽云十六州。<br>但是如果我们换个视角来看这段历史，可能会有不一样的理解。<br>这一讲里你会看到， 正是因为大辽占领了幽云十六州这片土地，使得它有能力进行一种重要的制度创新，才带来了中原与草原之间持续一百多年的和平，并为中国后续的发展奠定了重要的思想和制度基础。<br>那么，幽云十六州又是如何到了大辽手里的？我们先看一下幽云十六州的位置。</p>
-<p><img alt="sixteen20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/sixteen20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/sixteen20180509.jpg?imageMogr2/thumbnail/!75p" alt="sixteen20180509.jpg"></p>
 <p>幽云十六州位置图</p>
 <p>这片土地包括今天的北京、天津、河北和山西两省的北部区域，面积大概10万平方公里多一点。<br>别看面积不大，但是战略位置十分重要。因为它们都在长城以南，幽云十六州的北部边界差不多是长城和各种崇山峻岭，南部则是一马平川的华北平原。因此，这片土地是非常重要的屏障。</p>
 <p>中原和大辽的格局<br>当时中原和大辽的格局是怎么样的呢？<br>中原这边，在唐宋两个朝代之间，有一段分裂割据的历史，就是五代十国。<br>安史之乱后唐朝内部藩镇割据，帝国政府的话越来越没人听。唐朝末年又有一系列大变乱，帝国终于彻底崩溃，那些割据的藩镇首领都自立为王，但绝大部分都没有称帝。这些小国先后有十几个，但人们一般称之为“十国”。</p>
@@ -1629,7 +1599,7 @@
 <p>咱先说蒙古人。对蒙古人来说这事儿也很麻烦，它也有一个双重的认知，一个是从蒙古帝国的角度，再一个是大元帝国的角度。<br>从蒙古帝国的角度来说，蒙古人肯定认为他们所建立的是一个庞大的世界帝国，这个世界帝国下面分了好几支，有统治俄罗斯地区的金帐汗国，有统治中亚地区的察哈台汗国，有统治西亚地区的伊利汗国，还有一个就是统治东亚地区的大元帝国。<br>但是大元帝国很特殊，大元帝国的统治者同时也是大蒙古帝国的最高统治者，所以元帝国是有一种特殊地位的。</p>
 <p>而且大元帝国是大蒙古帝国里面最繁荣、最富庶的一支，以这一支为基础，蒙古人建立起一个横跨欧亚大陆的庞大的秩序。<br>中原的财富、草原的武力、穆斯林的商业能力，所有这些东西全都被他们给整合在一块儿了，形成了一个空前的东西方大交通、大融合的一个局面。</p>
 <p>游牧世界、农耕世界、海洋世界，所有这些地方都在欧亚大陆的规模上被联系在了一起。所以蒙古帝国在这个意义上超越了各种古典的帝国和文化，当然它也超越了蒙古自身了。</p>
-<p><img alt="mongolia20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/mongolia20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/mongolia20180509.jpg?imageMogr2/thumbnail/!75p" alt="mongolia20180509.jpg"></p>
 <p>元朝时的蒙古帝国<br>这个是大蒙古帝国的角度，可是从大元帝国的角度来说，蒙古人必须得对儒家的世界观做一种回应，否则没法统治这么庞大的汉人群体。</p>
 <p>那怎么回应呢？最深远的一个动作就是为前朝修史，也就是说写前朝的历史。新的朝代为前朝修史这肯定不是一个草原传统，草原上没谁去写这个东西，这是一个极为重要的儒家传统。<br>对儒家来说只有修了前朝的历史，才能说清楚自己这个朝代是如何继承了前朝的天命，从而才能让帝国的法统获得一个清晰的表达。<br>元朝在给前朝修史的时候就遇到一个很大的问题，因为它前面不是只有一个朝代，它前面有宋、辽、金这三个朝代或者说三个国家。那到底把正朔放在哪儿呢？正朔就是正统性，它到底把正统性放在哪儿？<br>这个事儿很麻烦，如果你把正朔归给大宋的话，那大元的草原身份，这个事儿就说不清楚了，如果你把正朔归给大辽和大金，这从儒家理念上又肯定说不通。<br>这到底怎么办？人们对这个事儿肯定是争吵不休，结果是从忽必烈的时代就打算修史了，一直到元朝后期一直都没有修成，就是因为这种争吵。</p>
 <p>元朝汉人如何认知正朔<br>那么说到了这儿，咱就又得转过头来看一下元朝的汉人是怎么认知正朔这个问题了。因为很多的争吵都是发生在汉人内部的。<br>但是经常被我们忽略的是，元朝的汉人对正朔这个事儿也有双重的认知。为什么会这样呢？这就跟元朝内部人们的身份差异有关系了。</p>
@@ -1715,7 +1685,7 @@
 <p>然而，一个衍生性的效果就出现了，等到大家都信了藏传佛教之后，活佛可以向草原首领授予可汗尊号这件事情，也就被普遍接受了。<br>问题是黄教里面不只有一个活佛，高原上也不止黄教这一个教派，于是一发而不可收，草原上有若干个黄金家族小支的部落首领，甚至还有并非黄金家族的部落首领，都通过成为某个活佛的檀越，就是施主，而获得了可汗的尊号。<br>蒙古世界的统治正当性，也就是法统就此分裂了，那种精神世界的底层统一性也就破掉了。</p>
 <p>蒙古内斗促成的满蒙联盟<br>蒙古世界的法统分裂，严重削弱了蒙古对于东亚世界的影响力，这就给了大清崛起的机会了。也就是开头说的那个问题，皇太极获得了机会夺得元朝的正统。<br>这个还是跟蒙古的内斗有关，这个内斗又是跟藏传佛教的一系列影响有关。<br>蒙古内斗的核心人物是林丹汗，他是在17世纪初期登上察哈尔部的大汗地位的。注意啦，他是察哈尔部的大汗，这可是黄金家族的正牌大汗。林丹汗也是个雄才大略的人，而俺答汗的后代则不那么强大了，林丹汗便决心要重新恢复正统大汗的地位。<br>但是他也得面对黄教已经是蒙古人普遍信仰这样一个事实。林丹汗也信仰黄教的，为了能够吸引到足够多的支持者，他组织人把大量的藏文佛经译成了蒙文，这样就可以在某种意义上掌握蒙古地区的黄教解释权，从而统合其他蒙古部落。<br>光是掌握精神解释权还不够，还要在军事上把不服的挑战者压制住，所以林丹汗又进行了一系列战争。</p>
 <p>但是，那些不服的部落根本就不理林丹汗，一旦打不过，就投奔女真人去了。这下把林丹汗气坏了，我帮你们建立更完整的精神世界，却没人买我的账。既然黄教不能给我带来帮助，我干嘛还要信黄教。<br>林丹汗正在郁闷中，另一个蒙古部落喀尔喀部有一位好兄弟却图汗来找他，跟我一块改宗得了，别信黄教了，改信白教的红帽派吧。<br>林丹汗一气之下跟着却图汗改了宗，这下别的蒙古部落更排斥他了。皇太极趁机联合这些蒙古部落，在1634年一举打败林丹汗，成为满蒙两大族群的霸主。<br>但这会儿皇太极还没能继承元朝的正统，必须得拿到元朝留下的玉玺才行，但玉玺还在林丹汗手里。<br>这会儿被打败的林丹汗去哪了呢？要说林丹汗真是个英雄，他在这会形成了一个极为大胆的战略。林丹汗带着仍然忠诚于他的部众逃往青海，计划在这里和他的好兄弟却图汗会师。俩人加一块手上就有将近十万人，这支力量可以横扫雪域高原了。<br>林丹汗计划凭这支大军攻入西藏，以千钧之力灭掉黄教，扶植红帽派，一举掌握住雪域高原的精神秩序。然后，再逆袭回蒙古，扫平已经丧失了黄教精神世界的蒙古诸部，一举成为横跨草原与高原的霸主，同时掌控政治秩序与精神秩序，雄踞整个内亚世界。<br>这个大胆的战略如果能够成功，会结合起高原与草原两种力量，将会对东亚其他力量形成巨大的军事压力。<br>从汉武帝开始，中原帝国的战略目标之一，就是要防止草原与高原联合起来，以免受到一种战略包围。<br>汉武帝为了防止草原上的匈奴和高原上的西羌形成联盟，不得不攻占河西走廊，把它们隔开，而为了保住河西走廊，又不得不通西域。</p>
-<p><img alt="westernofriver20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/westernofriver20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/westernofriver20180509.jpg?imageMogr2/thumbnail/!75p" alt="westernofriver20180509.jpg"></p>
 <p>河西走廊地图</p>
 <p>林丹汗的战略极有想象力，但是人算不如天算，他到了青海没多久就染上天花病死了，伟大的战略无疾而终。<br>林丹汗死后，他的家人无处可去，只好又回到老家投降了皇太极，并交出了大元传国玉玺。皇太极于是登基称帝，成为满洲人和蒙古人共同的大汗，满蒙联盟的军事基础就此成立。</p>
 <p>本讲小结<br>总结一下，今天讲的主要内容就是，雪域从草原方向获得政治秩序的输入，使得雪域内部的教派秩序发生深刻变迁。<br>草原则从雪域获得精神秩序的输入，这个输入却在蒙古世界产生深刻的影响，反过来给了满洲人以崛起的机会，满蒙联盟成为大清得以夺取天下的重要基础。<br>但不要以为大清的天下就是靠满蒙联盟的战争能力维系的，实际上，大清帝国经过多年征战，把汉满蒙回藏全都纳入了中华帝国的统治之下，这背后有一系列极为高超的治理技术。<br>没有这些政治智慧，大清根本就维系不了如此庞大的帝国，今天的中国也无法继承一个庞大的领土。<br>那么，大清究竟是怎么做的呢？这就是我们下一讲的主题。</p>
@@ -1731,12 +1701,12 @@
 <p>到1750年代，经过又一次大规模战争，最终灭亡了准噶尔汗国，把整个西域纳入帝国。乾隆说西域是汉唐时期的帝国故土，现在重新回归，这叫故土新归，赐名为“新疆”。</p>
 </blockquote>
 <p>到了这个时候，咱们经常说的统治了汉满蒙回藏的大清帝国，终于全部整合起来了。此时大清帝国的领土接近于明朝末期的四倍。</p>
-<p><img alt="wanni20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/wanni20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/wanni20180509.jpg?imageMogr2/thumbnail/!75p" alt="wanni20180509.jpg"></p>
 <p>明朝晚期万历年间疆域图</p>
-<p><img alt="Qing20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Qing20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Qing20180509.jpg?imageMogr2/thumbnail/!75p" alt="Qing20180509.jpg"></p>
 <p>清朝乾隆年间疆域图</p>
 <p>尽管后来晚清的时候又丢掉了不少，但剩下的领土仍然是明末领土的接近三倍，今天的中国继承的就是大清留下的疆域。<br>可见在领土意义上，大清曾经为中国攒下了多么厚的家底。你比较一下明朝晚期的地图，和大清地图以及今天的中国地图，就明白了。</p>
-<p><img alt="china20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/china20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/china20180509.jpg?imageMogr2/thumbnail/!75p" alt="china20180509.jpg"></p>
 <p>中国地图</p>
 <p>大清的多元帝国<br>大清征服的疆域极为庞大，治下的人口也是极为复杂，没法用同一套办法吃遍天下，在不同的地方必须发展出不同的统治技术。<br>大清在这个过程中把大辽开创的二元帝国治理技术，发展为多元治理技术。汉满蒙回藏这些次级区域，在大清内部各自起到了其他区域完全无法替代的作用。<br>大清的最高统治者在这些地方也以不同的身份出现，作为体系的中国，其内部整合达到了前所未有的高度。<br>汉人为主体的中原地区，是整个帝国最有钱的地方，所以这里主导着大清帝国的财政秩序，依靠这里的庞大财富，统治者可以把八旗的军事贵族都给赎买掉，克服掉周期性的继承危机。大清统治者在中原以皇帝的身份出现，这是儒家所赋予的身份。<br>再看草原方向。冷兵器时代最强大的军队是草原骑兵，所以满蒙地区的游牧者主导着整个帝国的军事秩序，统治者在这里以大可汗的身份出现。<br>只要有满蒙骑兵，就能控制中原。反过来，只要有中原，就能统御满蒙的军事贵族。<br>满蒙里面的满，那完全就是自己人，“蒙”的内部则很复杂了。比如蒙古的科尔沁部，世世代代和满洲贵族通婚，康熙的奶奶孝庄太后就是科尔沁部的，这个部落早就被满洲皇室当做自己人了。<br>此外还有内属蒙古，就是由大清皇帝派人直接统治的蒙古部落，这里不设置世袭的土著首领，也算半个自己人。<br>再有外藩蒙古，算是作为藩属的蒙古部落，它们有自己的世袭土著首领，和大清皇室有点类似于合伙人的关系。内属蒙古和外藩蒙古，与后来的内蒙古、外蒙古有一部分重合，但并不是一回事。<br>对大清皇上来说，外藩蒙古还是要加以某种控制的，以避免当年大金被成吉思汗征服的历史重演。<br>怎么控制呢？这就要看外藩蒙古的战斗力的基础是什么了。蒙古地区的自然条件支持不了大规模人口，所以它的战斗力不是靠人多，而是靠蒙古骑兵的高度机动性，一旦把这个机动性给控制住，外藩蒙古就不会构成威胁了。<br>大清有一个非常高超的办法，就是大力鼓励蒙古人信仰藏传佛教。上一讲说过，俺答汗就推动过这个事情，大清把它继续推向深入。<br>为啥这个会对大清有帮助呢？不仅仅是因为信了教的人有好生之德，不愿意喊打喊杀。更重要的原因是，藏传佛教，尤其是格鲁派的信徒，都会从属于某一个寺庙。<br>牧民是可以移动的，但寺庙移动不了。信了教的蒙古游牧民，游牧半径就被寺庙给固定下来了，就进入某种准定居状态。高度的机动性没有了，对大清就不构成威胁了。</p>
 <blockquote>
@@ -1810,7 +1780,7 @@
 <p>但是通过刚才的解释可以看出，在19世纪前期，鸦片的流入不是导致中国白银净流出的根本原因。因为在此之前中国的白银一直是既有流入又有流出的，世界白银供给的骤然减少，导致向中国流入的白银急剧减少，才是中国白银净流出的根本原因。于是经济就萧条了，大清的日子就不好过了。</p>
 </blockquote>
 <p>但当时的局内人不可能看得清这个问题，大清把白银短缺归因于鸦片的大规模流入，最终引发了1840年的鸦片战争。<br>战争的结果你应该很熟悉了，一方面是割地赔款，一方面是改造了外贸秩序，从广州作为唯一的外贸港口，改为五口通商。<br>五口通商对大清带来了更大的冲击，大清当时主要的外贸商品是茶叶、生丝、瓷器、漆器等。产地在江南、江西、两湖、福建等地。在一口通商的时候，出口品得千里迢迢地运往广州，运输中最困难的就是翻越南岭的一段路，这段路养活了一大批广西籍的搬运工。</p>
-<p><img alt="mountain20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/mountain20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/mountain20180509.jpg?imageMogr2/thumbnail/!75p" alt="mountain20180509.jpg"></p>
 <p>中国东南部主要山脉示意图</p>
 <p>看了上图，你就知道华南的主要地理结构了。<br>五口通商之后，就用不着往广州运输了，出口品可以就近从上海、宁波、福州、厦门等地出海，于是广西籍搬运工失业了。<br>屋漏偏逢连夜雨，经济既萧条，大清的人口也已经膨胀到临界点。正好赶上两广地区又是基督教比较早传入的地区，基督教带来了一种全新的动员和组织机制。</p>
 <p>这些因素全都加在一起，太平天国起义就在1851年从广西发动起来了。在很短的时间内席卷到长江中下游地区，也是大清最富庶的地区，一直坚持到1864年。</p>
@@ -1847,7 +1817,7 @@
 <p>两国在中亚的争夺反复了好多年，最终达成妥协，形成了一个缓冲国，就是跨越兴都库什山的阿富汗。用阿富汗把两大帝国彻底隔开，以避免不必要的冲突。</p>
 </blockquote>
 <p>实际上，两个帝国谁都没有能力实质性地越过阿富汗，这里的崇山峻岭就是海洋与大陆两大帝国的天然疆界。<br>由于地理的原因，中国是不会参与到在南北这个方向上的博弈的。但是大中亚的东西方向上，中国就是博弈的玩家之一。东西方向，东就是新疆，西边就是今天中亚的几个斯坦国。</p>
-<p><img alt="bigmiddleasia20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/bigmiddleasia20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/bigmiddleasia20180509.jpg?imageMogr2/thumbnail/!75p" alt="bigmiddleasia20180509.jpg"></p>
 <p>大中亚地区地形图</p>
 <p>从东西方向上的博弈，你可以看出中国在世界上独特的位置，就是海洋帝国和大陆帝国的中介位置。<br>通过晚清左宗棠收复新疆的案例，可以看出，中国在这个方向上的博弈，启示出中国作为海陆枢纽帝国的历史意义。</p>
 <p>新疆是怎么丢的<br>既然谈到左宗棠收复新疆，就得先说一下新疆是怎么一度丢掉的。<br>大清在19世纪中期的十几年当中，被太平天国搅得天翻地覆，根本没有精力去认真经营边疆了，结果一个来自中亚的冒险家阿古柏抓住了机会，在1865年趁乱侵入新疆。<br>阿古柏是个狂热的原教旨主义者，动员起一批信徒跟他一块冒险，迅速地控制了整个南疆。阿古柏又挥师北上，打败了另一教派的穆斯林，攻占乌鲁木齐，眼看着又要席卷北疆了。<br>俄国眼看着阿古柏势力的扩张，便在1871年派兵冲进了北疆最重要的战略地区伊犁，把这里控制住了。但俄国并没有说要割走这里，而是说要替大清代为管理伊犁地区，等到日后大清收复新疆，再把它归还给大清。</p>
@@ -2156,7 +2126,7 @@
 </blockquote>
 <p>抗战时期共产党的“货币战争”<br>说完了国民党被迫面对的货币战争，再来看看共产党这边的货币战争。注意，这里说的不是1949年之后的事情，而就是在抗日战争时期的事情。<br>抗战时期，日本只能控制占领地区的城市和交通线，下面的乡村什么的根本没有能力去控制，毕竟日军人数不足以控制如此大的领土，这些地方的国民党统治多数瓦解了，而共产党则有办法在这里建立根据地，这里面的具体原因下一讲会展开讲。<br>位于山东半岛的胶东抗日根据地是个特别有意思的案例，可以看到共产党的货币战争是怎么玩的。</p>
 <p>共产党在这块根据地成立了一个银行叫做北海银行，它所发行的货币就被叫做北海币。根据地政权没有办法让人们相信它会永远存在，所以它也没有办法发行信用货币，因为人们不会接受的；它只能发行本位货币，可是它又没有足够的贵金属储备作担保，那要以什么作为货币的信用基础呢？<br>北海银行很有创造性，它以农业物资储备作为担保，来发行北海币，只要你拿着北海币，随时就可以用它兑换根据地政权所储备的农业物资，只要这种兑付承诺是真实的，人们就可以接受这种货币。    </p>
-<p><img alt="beihai20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/beihai20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/beihai20180509.jpg?imageMogr2/thumbnail/!75p" alt="beihai20180509.jpg"></p>
 <p>北海币</p>
 <p>北海银行进一步根据农业周期来调整货币发行数量，并且依据物价涨跌的情况，安排根据地的工商局吞吐储备物资，来回笼货币或者投放货币，调整货币流通数量以保持币值稳定。</p>
 <p>这一系列做法非常成功，北海币在其流通领域中的信用远远好过法币和汪精卫政权发行的伪币，成为强势货币。根据地的经济官员还因此总结出了关于北海币的“物资本位”理论，摸索出通过控制纸币发行进行宏观调控的政策等等，打起货币战争来得心应手。<br>那么问题就来了，为什么胶东根据地居然能够赢得货币战争，国民政府却不行呢？</p>
@@ -2268,7 +2238,7 @@
 <p>中国的崛起导致了世界经济秩序一个极为深刻的转型，这个转型为未来打开了极为深远的想象空间，这就是我们下一讲的主要内容。</p>
 <h3 id="44-中国崛起导致的世界经贸双循环"><a href="#44-中国崛起导致的世界经贸双循环" class="headerlink" title="44 | 中国崛起导致的世界经贸双循环"></a>44 | 中国崛起导致的世界经贸双循环</h3><p>上一讲我们讲了中国经济崛起的奥秘。西方进入创新经济、中国的土地财政，这两个事情正好在同一时期发生，让中国的供应链网络成长起来了，于是带来了中国经济的崛起。</p>
 <p>但近些年，部分制造业开始从中国向东南亚转移，这带了一种新的担忧，就是中国会不会像拉美国家那样，陷入到“中等收入陷阱？”<br>这一讲，我们就会展开来讲，以中国为中心的东亚制造业集聚区，这种产业格局是终局性的。也就是说，很难会有新的制造业集聚区能够崛起，来取代东亚聚集区的位置。<br>这种产业格局，也让世界经济秩序发生了深刻变化。<br>以前，世界经济秩序是以西方世界为中心的，是一个“中心到外围”的结构。而现在的世界经济秩序，产生了中国这样一个副中心，并且形成了一个新的双循环结构。  </p>
-<p><img alt="circle20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/circle20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/circle20180509.jpg?imageMogr2/thumbnail/!75p" alt="circle20180509.jpg"></p>
 <p>“中等收入陷阱”在中国不可能出现</p>
 <p>我们先说第一个话题，中国经济在崛起之后，会不会陷入拉美国家那样的“中等收入陷阱。</p>
 <p>上一讲我们说了，中国的崛起，主要是形成了一个制造业的供应链网络，这个网络是由无数家中小企业组成的。<br>其中，单个小企业是高度专业化分工的，作为微观个体，它们确保了生产的效率。<br>这些小企业之间又互为配套，不断动态组合，形成一个供应链网络，这个网络确保了生产的弹性。<br>供应链网络的规模越大，意味着其中的小企业越多，专业化分工的程度就越深，生产的效率也越高；同时，互为配套的组合可能性也就越多，弹性越好。</p>
@@ -2470,7 +2440,7 @@
 <p>坦桑尼亚的战略可能性<br>中国的经济崛起速度太快，给世界格局带来了新格局，也就是双循环结构，仅仅十年左右的时间。<br>中国在非洲的各种活动，还没有来得及顺应这个新格局调整，但是我们已经可以看到有些战略可能性浮现出来了。<br>接下来我就讲讲自己在坦桑尼亚的研究，以这里为案例，看看一些开脑洞的战略可能性。不过得再澄清一下，这里讲的只是我自己的学术研究，和国家战略没有关系。</p>
 <p>坦桑尼亚是东非的核心国家，和中国有着非常深厚的关系。<br>中国迄今为止最大的援外项目——坦赞铁路，就是贯穿赞比亚和坦桑尼亚这两个国家的，也是坦桑尼亚仅有的两条铁路之一。坦桑尼亚的军队直接就是中国帮助装备和训练的。坦桑尼亚的政治稳定性也非常好，独立以来从未发生过内战或者军事政变，这在非洲国家很少见。<br>坦桑尼亚的农业资源非常丰富。国土面积94万多平方公里，不到中国的1/10，但是可耕地面积大约达到了中国的一半，约为9亿亩。问题是，这其中只有不到20%是获得有效开发的，剩下80%都荒着。<br>原因是什么呢？ 首先就是基础设施问题，运输能力不行，那些土地就算耕种了农产品也运不出来。<br>坦桑尼亚在2010年前后制定了“南方粮食走廊计划”，旨在把这些荒废的土地开发出来。该计划覆盖的正好就是坦赞铁路途径的地区，有现成的铁路，运输能力咋还不行呢？<br>原因有二，一是铁路的运营能力太差，二是配套的港口跟不上。<br>坦赞铁路目前每个礼拜只能开行两三趟车，开起来也是晃晃悠悠、速度慢得很。<br>我去坦赞铁路的终点站看过，是上世纪70年代中国援建的，用料特别实在，质量特别好。站台上的砖用了四十多年没怎么换过，看上去跟咱们人行道上用了两三年的砖差不多。<br>但是，坦桑尼亚人和赞比亚人对于铁路的管理、调度和养护能力都不到位，导致铁路运营成准植物人状态。<br>从经济角度来说，这铁路肯定破产了，但两国政府每当看到铁路公司要撑不下去了，就拨点钱，让它剩口气儿，继续撑着。因为两国都相信，总有一天中国人会回来的。</p>
 <p>果然，2014年下半年，中坦两国政府首脑会见，中国承诺要激活坦赞铁路。这个事情还没有完全展开。但中国人只要想做，激活坦赞铁路很容易，现在中国运营铁路的事情太在行了。<br>还有个麻烦，就算中国人把运营能力恢复了，这条铁路也还是不大容易活下去。因为坦赞铁路沿线除了终点站之外没啥城市，没法以客运为主，客源太少，只能是以货运为主。<br>货运的话，就需要有配套的港口，否则铁路就和断头路差不多。现在的港口是李嘉诚在1995年前后修建的，就是把多年前的老港口扩了扩。但它是建在河口里，这里的海岸结构，也只能建个河港了。<br>河港意味着它的扩展性相对有限，如果货运吞吐量的需求上来了，就很麻烦。港口扩容的话，如果港口的堆栈扩大一倍，对配套交通系统的压力就上升不止一倍。<br>这港口就在坦桑尼亚首都达累斯萨拉姆几乎市中心的位置。达市现在堵车已经一塌糊涂了，绝不比北京差。如果河港扩容，意味着城市交通将彻底瘫痪，那就得迁都。这事儿完全不靠谱，还不如在别处再建个港口。<br>果然，2013年上半年，中国和坦桑签订条约，要在达市北面大概六十多公里一个叫巴加莫约（Bagamoyo）的地方修建一个新的海港。这个海港的规划吞吐量约等于现在非洲东部海岸所有其他港口的总和。<br>重要的是，从坦赞铁路修一条几十公里的支线，就能和巴加莫约港口连起来。你肯定已经听明白了，这个港口，将使得坦赞铁路真的有可能被激活。</p>
-<p><img alt="railway20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/railway20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/railway20180509.jpg?imageMogr2/thumbnail/!75p" alt="railway20180509.jpg"></p>
 <p>坦赞铁路示意图<br>修港口、复活铁路，这两个项目都还在路上，离见成效还有段时间。但是从这里面我们已经可以推想出一些非常有意思的可能性出来了。</p>
 <p>首先，这些基础设施的建设，将使得坦桑政府的“南方粮食走廊计划”能够真正发展起来，闲置的土地能够被有效耕种。<br>坦桑尼亚是世界上最好的玉米产地，玉米是做饲料最重要的原料。反观中国这边，这些年来中国人的饮食结构发生了很大变化，吃肉越来越多了，那就意味着需要大量的饲料用地。<br>中国耕地有18亿亩的红线，看2016年的数据，其中大约5.5亿亩是种玉米的，这里面相当部分是做饲料用。<br>想象一下，如果我们把这些饲料用地转到坦桑尼亚去，这并不会影响到中国人的粮食安全，最多影响饲料的安全，可是中国这边就有可能腾出来几亿亩的土地。几亿亩能转化成多么巨大的经济资源。<br>中国很多现在解不开的经济困境，一下子就能找到解决的办法了。我们前面反复说过，<strong>中国问题必须在世界格局下才能找到出路</strong>，这就是个非常好的例子。<br>再说坦桑尼亚这边，有双循环结构做经济前提，中国市场的巨大吸纳力，可以让坦桑尼亚的玉米之类的农产品产多少就能销多少。<br>一种市场化导向的农业经济就能发展起来，会提供大量的就业机会，带来非常好的财富分享效应。老百姓变得越来越富裕，他们对于日用品的消费能力就会越来越大，中国的制成品将获得更大规模的市场，一种良性循环就发展起来了。<br>当然，不是说修了港口和铁路，市场化导向的农业就能发展起来。<br>这两大设施只相当于大动脉，真正健康的循环，光有大动脉肯定不行，还需要有大量的毛细血管，需要大量的乡村土路、农村水利电力、乡村卫生防疫部门、农业供销社等等，一系列基础设施。这些设施的建设与完善，可能也得个十几、二十年的时间。<br>做这种工程项目，中国称第二，世界上没人敢称第一，于是这里又有了大量工程建设能力输出的机会。在这些基础设施建设的过程中，就已经可以为当地非洲人提供大量的就业机会，财富分享的过程就可以展开了。<br>以前中国在非洲也有很多这种基础设施的建设，投资和援建了不少工厂，但这些建设都有个问题，就是没法拉动当地的产业演化。<br>产业不能演化，意味着提供的就业机会就只能是那个厂的工作岗位，拉动不出更多的就业机会，无法带来投资的乘数效应。<br>为什么过去的建设没法拉动产业演化呢？因为当时没有意识到，非洲在国际贸易上的比较优势根本就不可能是工业。我们投资的工业园，在里面建立工厂，以及为工厂服务的基础设施，就都是孤立的存在，没法发展为一个产业网络，这种援助和投资的效率就不高。<br>具体什么样的基础设施才能适合当地的比较优势，才能拉动产业演化，更具财富的分享效应呢？这需要有丰富的地方性知识才知道，中国在这方面的知识储备远远不够。<br>我在非洲考察时见过世界银行以及很多NGO组织在当地的工作，他们在这方面的知识很丰富，恰好可以弥补中国的短板。<br>于是，前几讲里我曾经提到过的， 中国与西方在非洲的合作，就有了空间 。<br>中国完全可以和世界银行或者相关的NGO组织进行合作，联合设计，然后由我们来执行和施工，在当地建设起基础设施，从而拉动产业演化，催生财富分享效应。这样一来，这几年西方一直指责中国在非洲搞“新殖民主义”，中西的这种合作，也可以对这些指责构成有力的反击。<br>非洲不发展第二产业，是否就没机会现代化了呢？肯定不是。<br>一方面，由于双循环结构的现实，非洲想发展第二产业也没机会。另一方面，有一些国家，比如澳大利亚、新西兰，就没有多少第二产业，主要就是靠卖羊毛、买牛肉、卖铁矿，就获得了大量财富，然后绕过第二产业直接进入第三产业，照样是发达国家。<br>非洲也有同样的案例，南部非洲的博茨瓦纳，也是类似的发展模式，发展得非常好。 对于非洲来说，完全有可能发展出发达的第一产业，然后直接跨入有本土特色的第三产业，照样能获得现代化。<br>具体到坦桑的案例，市场化导向的农业发展起来，会拉动出大量专门为此服务的服务业，这就是有本土特色的第三产业，这种发展的财富分享效应就非常好。<br>当然，坦桑更有特色的本土服务业是旅游业。比如在《动物世界》里经常能看到的东非动物大迁徙，主要就是发生在坦桑尼亚的塞伦盖蒂大草原。<br>我去看过几次，野性的动物和纯粹的自然所能带给人的震撼，草原深处与自然完全融为一体，奢华至极的酒店所带来的体验，真是超出了语言描述的范围，不到现场完全感受不到。这种独一无二的第三产业，将与发达的第一产业共同促成当地的另一种样式的现代化。</p>
 <p>本讲小结<br>这讲的内容比较细碎，咱们简单如下总结一下：<br>双循环结构当中， 由于中国经济独特的拉动效应，使得第二循环里面的国家获得了一种特殊的发展机会，中国与西方在这个过程中也有着深度合作的空间 。在所有这些过程中，还能反过来使得中国国内很多不容易化解的困境，获得新的解决空间。<br>这几讲分别讲了双循环结构当中的第一、第二循环，但是还有一些国际政治、经济的变迁是超越两个循环的，比如气候变暖、碳减排问题等等。中国在这里也有着非常有意思的政治和经济战略展开的可能性，咱们下一讲就来讲下这个话题。</p>
@@ -2488,7 +2458,7 @@
 <p>实力结构最根本的是伤害别人的能力，只有「我有能力伤害你，我却选择不伤害你」，才能有效谈判。如果你没能力伤害别人，那就不能指望别人愿意跟你谈。</p>
 </blockquote>
 <p>换句话说，彼此都有能力互相伤害的人，就都会意识到靠暴力没法实现诉求。谈判才更符合自己的利益，于是会坐下谈出个秩序来，这样谈出来的秩序才是能有效运转的。因为各方都知道，对方是能伤害自己的，违约的成本会远远大于收益，于是大家就愿意守约。<br>说完这个基本逻辑，再切换回碳问题上。我们可以知道，气候谈判要想谈出成果，除非是有碳实力的国家愿意主动谈判、主动合作，否则什么也搞不成。<br>实力的基础包含两条：一，我有能力伤害你；二，我却选择不伤害你。 于是谈判的空间才打开。<br>所以碳实力的核心要素就是：第一，我必须得特别能排，这就是伤害别人的能力；第二，我又必须有能力减排，这就是选择不伤害别人。这两个要素哪怕欠缺一条，都不具备真正意义上的碳实力。光能排不能减，人家跟你谈也没用；光能减不能排，人家凭什么要坐下来跟你谈。<br>那么世界上究竟谁有碳实力呢？<br>中国碳排放占全球的比例，在2000年之后迅速上升。因为2000年之后制造业大规模外包开始了，中国迅速工业化，当然中国的排放量就会迅猛上升了。</p>
-<p><img alt="carbon20180509.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/carbon20180509.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/carbon20180509.jpg?imageMogr2/thumbnail/!75p" alt="carbon20180509.jpg"></p>
 <p>世界各地区碳排放量走势</p>
 <p>根据2013年的数据，各国的当年排放量，中国占全球的29%，美国占15%，欧盟占10%，印度占7.1%，其他国家都是在5%以下。中国的人均排放量已经超过欧洲，但还不到美国人均排放量的40%。</p>
 <p>根据进一步的测算，中国到2016年已经成为历史上累计碳排量最高的国家。不过近年来中国的年度排放量已经开始下降，也就是减排开始见效了。而印度的年度排放量却在上升，上升的量比中国减排的量还大。</p>
@@ -2616,18 +2586,18 @@
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
 <p>有趣有料有种！</p>
 </blockquote>
-<h3 id="品三国"><a href="#品三国" class="headerlink" title="品三国"></a><a href="https://book.douban.com/subject/27666002/" target="_blank" rel="noopener">品三国</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29666291.jpg"></p>
+<h3 id="品三国"><a href="#品三国" class="headerlink" title="品三国"></a><a href="https://book.douban.com/subject/27666002/" target="_blank" rel="noopener">品三国</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29666291.jpg" alt></p>
 <blockquote>
 <p>以故事说人物，以人物说历史，以历史说文化，以文化说人性。</p>
 </blockquote>
 <p>目录  · · · · · ·<br>开场白 / 大江东去_001<br>第一部 / 魏武挥鞭<br>第一章 真假曹操_016　 第二章 奸雄之谜_026<br>第三章 能臣之路_036　 第四章 何去何从_046<br>第五章 一错再错_056　 第六章 深谋远虑_066<br>第七章 先入为主_076　 第八章 鬼使神差_086<br>第九章 一决雌雄_096　 第十章 胜败有凭_106<br>第十一章 海纳百川_116　 第十二章 天下归心_126<br>第二部 / 孙刘联盟<br>第十三章 青梅煮酒_136　 第十四章 天生奇才_146<br>第十五章 慧眼所见_156　 第十六章 三顾茅庐_166<br>第十七章 隆中对策_176　 第十八章 江东基业_185<br>第十九章 必争之地_195　 第二十章 兵临城下_204<br>第二十一章 临危受命_214 　第二十二章 力挽狂澜_224<br>第二十三章 中流砥柱_233　 第二十四章 赤壁疑云_243<br>第三部 / 三国鼎立<br>第二十五章 半途而废_256 　第二十六章 得寸进尺_266<br>第二十七章 进退失据_276　 第二十八章　借刀杀人_286<br>第二十九章 命案真相_297　 第三十章 夺嫡之争_307<br>第三十一章 乘虚而入_317　 第三十二章 蜜月阴谋_328<br>第三十三章 白衣渡江_338　 第三十四章 败走麦城_349<br>第三十五章 猇亭遗恨_360　 第三十六章 永安托孤_370<br>第四部 / 重归一统<br>第三十七章 非常君臣_382　 第三十八章 难容水火_393<br>第三十九章 痛失臂膀_404　 第四十章 祸起萧墙_415<br>第四十一章 以攻为守_426　 第四十二章 无力回天_437<br>第四十三章 风云际会_448　 第四十四章 坐断东南_459<br>第四十五章 情天恨海_470　 第四十六章 冷暖人生_480<br>第四十七章 逆流而上_491　 第四十八章 殊途同归_502<br>结束语 / 滚滚长江东逝水_514</p>
-<h3 id="《-哈佛中国史-》"><a href="#《-哈佛中国史-》" class="headerlink" title="《 哈佛中国史 》"></a><a href="http://www.luojiji.com/thread-12190-1-1.html" target="_blank" rel="noopener">《 哈佛中国史 》</a></h3><p>作者：【加】卜正民 等<br>译者：兴亮 李磊 刘雅君 张晓东<br>冯世明 李文锋 潘玮琳 李仁渊 张远<br>出版：中信出版社<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/17/090121g6mzz061ol33z6k6.jpg"></p>
+<h3 id="《-哈佛中国史-》"><a href="#《-哈佛中国史-》" class="headerlink" title="《 哈佛中国史 》"></a><a href="http://www.luojiji.com/thread-12190-1-1.html" target="_blank" rel="noopener">《 哈佛中国史 》</a></h3><p>作者：【加】卜正民 等<br>译者：兴亮 李磊 刘雅君 张晓东<br>冯世明 李文锋 潘玮琳 李仁渊 张远<br>出版：中信出版社<br><img data-src="http://www.luojiji.com/data/attachment/forum/201806/17/090121g6mzz061ol33z6k6.jpg" alt></p>
 <p>这段旅程，从中国出发，咱们从这套书开始。</p>
 <p>你会穿越到秦朝与汉朝，看“中国人“的概念如何形成，知晓“桃花源记”背后的真相。或者回到魏晋，看草根出身的刘裕等军事强人如何完成逆袭。你还能看到“天可汗时代”，感受盛唐气象的尖峰时刻。</p>
 <p>这套书，会帮你深入了解各个时期的中国。</p>
-<h3 id="哈佛极简中国史-The-Heritage-of-Chinese-Civilization"><a href="#哈佛极简中国史-The-Heritage-of-Chinese-Civilization" class="headerlink" title="哈佛极简中国史 The Heritage of Chinese Civilization"></a><a href="https://book.douban.com/subject/26891290/" target="_blank" rel="noopener">哈佛极简中国史 The Heritage of Chinese Civilization</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29120321.jpg"></p>
+<h3 id="哈佛极简中国史-The-Heritage-of-Chinese-Civilization"><a href="#哈佛极简中国史-The-Heritage-of-Chinese-Civilization" class="headerlink" title="哈佛极简中国史 The Heritage of Chinese Civilization"></a><a href="https://book.douban.com/subject/26891290/" target="_blank" rel="noopener">哈佛极简中国史 The Heritage of Chinese Civilization</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29120321.jpg" alt></p>
 <p>目录  · · · · · ·<br>前 言…………007<br>第1章 早期中国…………016<br>起源：旧石器时代与新石器时代…………017<br>青铜时代早期：商朝…………021<br>青铜时代晚期：西周…………028<br>铁器时代：东周…………031<br>铁器时代：中国哲学的诞生…………036<br>历史视野中的早期中国思想…………051<br>第2 章 中国最早的帝国及其后时期…………056<br>秦统一中国…………058<br>西 汉…………063<br>东汉及其后时期…………078<br>汉代思想与宗教…………086<br>历史视野中的中国最早的帝国…………095<br>第3 章 帝制时代的高峰…………100<br>帝国的重建：隋朝和唐朝…………101<br>宋 朝…………124<br>元朝：蒙古大帝国统治下的中国…………143<br>历史视野中的帝制中国…………156<br>第4 章 帝制时代后期：明朝和清朝…………162<br>经济区域…………164<br>人 口…………166<br>中国第三次商业革命…………168<br>明朝的统治模式…………175<br>明朝的对外关系…………184<br>清朝的统治模式…………188<br>清朝的对外关系…………195<br>明清文化…………201<br>历史视野中的帝制时代后期的中国…………207<br>第5 章 近代中国…………212<br>清朝统治的终结…………215<br>从王朝统治走向军阀政治…………230<br>文化和思想激荡：“五四运动”…………238<br>国民党治下的中国…………243<br>历史视野中的近代中国…………255<br>注 释…………259<br>延伸阅读…………263</p>
-<h3 id="半小时漫画世界史"><a href="#半小时漫画世界史" class="headerlink" title="半小时漫画世界史"></a><a href="https://book.douban.com/subject/30191803/" target="_blank" rel="noopener">半小时漫画世界史</a></h3><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29736949.jpg"></p>
+<h3 id="半小时漫画世界史"><a href="#半小时漫画世界史" class="headerlink" title="半小时漫画世界史"></a><a href="https://book.douban.com/subject/30191803/" target="_blank" rel="noopener">半小时漫画世界史</a></h3><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s29736949.jpg" alt></p>
 <p>目录  · · · · · ·</p>
 <ol>
 <li>简到崩溃的欧洲史（一）：希腊&amp;罗马/1</li>
@@ -2642,8 +2612,8 @@
 <li>美国往事（三）：上帝保佑美国/199</li>
 <li>一口气读完日本史/225</li>
 </ol>
-<p><img alt="Image_20180505201203.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201203.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201043.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201043.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201050.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201050.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201057.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201057.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201103.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201103.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201109.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201109.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201115.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201115.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201121.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201121.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201127.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201127.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201133.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201133.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201139.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201139.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201145.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201145.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201151.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201151.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180505201156.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201156.jpg?imageMogr2/thumbnail/!75p"></p>
-<h3 id="半小时漫画中国史（修订版）"><a href="#半小时漫画中国史（修订版）" class="headerlink" title="半小时漫画中国史（修订版）"></a><a href="https://book.douban.com/subject/27003014/" target="_blank" rel="noopener">半小时漫画中国史（修订版）</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29492853.jpg"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201203.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201203.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201043.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201043.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201050.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201050.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201057.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201057.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201103.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201103.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201109.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201109.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201115.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201115.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201121.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201121.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201127.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201127.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201133.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201133.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201139.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201139.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201145.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201145.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201151.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201151.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180505201156.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180505201156.jpg"></p>
+<h3 id="半小时漫画中国史（修订版）"><a href="#半小时漫画中国史（修订版）" class="headerlink" title="半小时漫画中国史（修订版）"></a><a href="https://book.douban.com/subject/27003014/" target="_blank" rel="noopener">半小时漫画中国史（修订版）</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29492853.jpg" alt></p>
 <p>目录  · · · · · ·<br>作者自序<br>一、如果东周列国是一个班级，这事儿就好理解了（一）<br>二、如果东周列国是一个班级，这事儿就好理解了（二）<br>三、如果东周列国是一个班级，这事儿就好理解了（假期篇）<br>四、如果东周列国是一个班级，这事儿就好理解了（三）<br>五、如果东周列国是一个班级，这事儿就好理解了（四）<br>六、端午节你到底关心过人家屈大夫没？<br>七、大秦帝国：过把瘾就死<br>八、楚汉之争（上）——败家子坑爹不求人，包工头怒掀造反潮<br>九、楚汉之争（上）——大哥刘三丢节操，楚霸王三犯傲娇<br>十、楚汉之争（八卦篇上）——张良、萧何、韩信——一个好汉三个帮<br>十一、楚汉之争（八卦篇上）——“邦女郎”之争</p>
 <p><a href="https://book.douban.com/review/8528583/" target="_blank" rel="noopener">记录下</a></p>
 <p>春秋——战国——秦朝——汉朝</p>
@@ -2665,14 +2635,14 @@
 <p>秦朝昏庸，陈胜吴广起义，全国各地造反，其中就有刘邦和项羽；后为当关中王两人开始撕逼，其中有项庄舞剑意在沛公的鸿门宴，河南荥阳鸿沟对峙（象棋中的楚河汉界），垓下会战四面楚歌，项羽自刎乌江边，开始大汉王朝；</p>
 <p>刘邦能成大事多亏了三个帮手：萧何（后勤）、张良（谋略）、韩信（带兵打仗）；韩信是被萧何慧眼识中，月下追回韩信后，韩信后成为大将军，是为“成也萧何”；后也是萧何帮吕雉骗回韩信除掉了他，是为“败也萧何”。</p>
 <p>《半小时漫画中国史》——趣谈人性</p>
-<p><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/2efdbe1121ad48f5a4c2612e38ad8600~1080x2160_noop.jpeg"></p>
-<p><img alt data-src="https://sf6-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/4845640aa0a040f7b202f1be0dc4558e~1080x2160_noop.jpeg"></p>
-<p><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/6996425de787492d81854dad200d1720~1080x2160_noop.jpeg"></p>
-<p><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/e4747559c41045518c905efa3ffd8631~1080x2160_noop.jpeg"></p>
-<p><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/3efcc899772744cd9c75c4b2dfcd53df~1080x2160_noop.image"></p>
-<p><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/2e4fd5487f97478b8ddcd60ae2eaad1c~1080x2160_noop.jpeg"></p>
-<h3 id="半小时漫画中国史2"><a href="#半小时漫画中国史2" class="headerlink" title="半小时漫画中国史2"></a><a href="https://book.douban.com/subject/30206117/" target="_blank" rel="noopener">半小时漫画中国史2</a></h3><p><img alt="91T5h9X0ksL.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/91T5h9X0ksL.jpg?imageMogr2/thumbnail/!75p"></p>
-<h3 id="半小时漫画中国史3"><a href="#半小时漫画中国史3" class="headerlink" title="半小时漫画中国史3"></a><a href="https://book.douban.com/subject/30232294/" target="_blank" rel="noopener">半小时漫画中国史3</a></h3><p><img alt="oc5kFUGoijSu6P18.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/oc5kFUGoijSu6P18.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/2efdbe1121ad48f5a4c2612e38ad8600~1080x2160_noop.jpeg" alt></p>
+<p><img data-src="https://sf6-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/4845640aa0a040f7b202f1be0dc4558e~1080x2160_noop.jpeg" alt></p>
+<p><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/6996425de787492d81854dad200d1720~1080x2160_noop.jpeg" alt></p>
+<p><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/e4747559c41045518c905efa3ffd8631~1080x2160_noop.jpeg" alt></p>
+<p><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/3efcc899772744cd9c75c4b2dfcd53df~1080x2160_noop.image" alt></p>
+<p><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/tos-cn-i-0000/2e4fd5487f97478b8ddcd60ae2eaad1c~1080x2160_noop.jpeg" alt></p>
+<h3 id="半小时漫画中国史2"><a href="#半小时漫画中国史2" class="headerlink" title="半小时漫画中国史2"></a><a href="https://book.douban.com/subject/30206117/" target="_blank" rel="noopener">半小时漫画中国史2</a></h3><p><img data-src="http://pd4vb8220.bkt.clouddn.com/91T5h9X0ksL.jpg?imageMogr2/thumbnail/!75p" alt="91T5h9X0ksL.jpg"></p>
+<h3 id="半小时漫画中国史3"><a href="#半小时漫画中国史3" class="headerlink" title="半小时漫画中国史3"></a><a href="https://book.douban.com/subject/30232294/" target="_blank" rel="noopener">半小时漫画中国史3</a></h3><p><img data-src="http://pd4vb8220.bkt.clouddn.com/oc5kFUGoijSu6P18.jpg?imageMogr2/thumbnail/!75p" alt="oc5kFUGoijSu6P18.jpg"></p>
 <h2 id="历史人物"><a href="#历史人物" class="headerlink" title="历史人物"></a>历史人物</h2><h3 id="视频-汪精卫的命运深渊-罗辑思维-No-171"><a href="#视频-汪精卫的命运深渊-罗辑思维-No-171" class="headerlink" title="视频: 汪精卫的命运深渊[罗辑思维]No.171"></a><a href="http://www.luojiji.com/thread-4664-1-2.html" target="_blank" rel="noopener">视频: 汪精卫的命运深渊[罗辑思维]No.171</a></h3><p>手机版：<a href="http://v.youku.com/v_show/id_XMTU4NDkyNTYyMA==.html" target="_blank" rel="noopener">http://v.youku.com/v_show/id_XMTU4NDkyNTYyMA==.html</a></p>
 <p>我们今天跟大家谈一个非常难谈的人物就是汪精卫。1949年之后海峡两岸很多历史问题观点都不一致，但唯独对于汪精卫这个人的历史定位大家是有共识的你就是一个大汉奸。1945年国民政府从重庆还都到南京几乎第一件事就是把汪精卫的墓给刨开，把他焚尸灭迹。</p>
 <p>在这儿我们插一句话很多人说中国有一个文化传统叫死者为大，错了！中国哪有这个传统。从伍子胥当年对楚王进行鞭尸开始，中国文化一直认为人死之后你的那个尸体也要承担生前的很多责任。所以仇家之间什么互刨祖坟，罪犯最后还要挫骨扬灰，这才是中国文化的传统如果说死者为大！总而言之，汪精卫就是这样一个下场最后被焚尸灭迹。</p>
@@ -3806,25 +3776,25 @@
 <p>所以你看，所有这一切的最初根源，就是明成祖朱棣造了一次反，当了一次皇帝，得到了一次本不应该得到的成功。于是兵分两路，首先一朵恶之花在他自己内心里绽放，最后把他自己变成了一只野兽。第二，这朵恶之花也在国家制度层面绽放。有一个恶的制度，你就必须发明一个更恶的制度来解前面的毒，而一旦一味药解了毒之后，它本身变成了毒，那就再也无药可解了，所以这一期的题目我们就叫恶之果。</p>
 <p>坏事真是不能干哪！</p>
 <h3 id="罗辑思维：只有一种人能改写历史-136"><a href="#罗辑思维：只有一种人能改写历史-136" class="headerlink" title="罗辑思维：只有一种人能改写历史 136"></a><a href="http://www.luojiji.com/thread-555-1-1.html" target="_blank" rel="noopener">罗辑思维：只有一种人能改写历史 136</a></h3><p>感谢各位来到罗辑思维捧场，今天我们和大伙聊一个，世界历史上的关键性人物:尤里克斯•凯撒。我们都知道，凯撒是古罗马时代的人，他终结了古罗马共和国，开创了古罗马帝国，我们直到今天还经常见到他，就是在打扑克的时候，四张老k当中，有一张就是他。你看:</p>
-<p>黑桃k是犹太人的先王大卫王,<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194555vez4p6rujrezh54e.jpg"></p>
-<p>那红桃k是神圣罗马帝国的开国皇帝查理曼大帝,<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194555ym6m3i8p66p6w9ph.jpg"></p>
-<p>草花k是亚历山大大帝，<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194556zzyzdst71c3l4svs.jpg"></p>
-<p>方片k就是这位尤里克斯•凯撒。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194557m2i776d6ms2hdj2s.jpg"></p>
+<p>黑桃k是犹太人的先王大卫王,<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194555vez4p6rujrezh54e.jpg" alt></p>
+<p>那红桃k是神圣罗马帝国的开国皇帝查理曼大帝,<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194555ym6m3i8p66p6w9ph.jpg" alt></p>
+<p>草花k是亚历山大大帝，<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194556zzyzdst71c3l4svs.jpg" alt></p>
+<p>方片k就是这位尤里克斯•凯撒。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194557m2i776d6ms2hdj2s.jpg" alt></p>
 <p>那既然是k，就是King，就是国王。那凯撒有没有当过国王或者皇帝呢？没有。他就跟中国我们熟悉的那个曹操有点像，生前虽然各方面的准备都做好了，又是加九锡，称魏王，但是篡位这最后一步他还没有走，一直到他的儿子曹丕才把这事干完。所以凯撒在生前并没有称帝。可是凯撒在古往今来所有的皇帝当中，干成了一件没有人干过的事情。别人都是把皇帝这两个字的称号，放到了自己的名字上，比如说，拿破仑，中国的嬴政秦始皇，对吧。可是，凯撒呢？是把自己的名字，凯撒这两个字，变成了皇帝的代称。</p>
-<p>欧洲中世纪一直到近现代，欧洲很多语言当中的皇帝，其实这个发音就是凯撒。比如说，我们熟悉的第一次世界大战的发动者，德皇威廉二世，德语当中皇帝就是凯撒。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194559y7d1t7f999lt2xwv.jpg"></p>
+<p>欧洲中世纪一直到近现代，欧洲很多语言当中的皇帝，其实这个发音就是凯撒。比如说，我们熟悉的第一次世界大战的发动者，德皇威廉二世，德语当中皇帝就是凯撒。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194559y7d1t7f999lt2xwv.jpg" alt></p>
 <p>俄语当中也是，沙皇的沙字就是凯撒的意思。所以你看他多牛，他是把自己的名字变成了皇帝的意思。那凯撒之所以有名，主要是文韬武略了。从武的这方面来讲，我们都知道，古罗马是把地中海变成了自己的内湖。不仅是南欧那一带，而且是北非那一带。可是往北打，就是打什么日耳曼的蛮族，打高卢，就是今天法国那一带。还有征服不列颠，这些武功都是凯撒给立下的。那如果说文的这一边呢？那就更不得了了，凯撒这一生写过很多东西，现在留下的主要是一本《高卢战记》，还有一本叫《内战记》。</p>
-<p>因为当时古罗马用的是拉丁文，直到近现代时候，学拉丁文的学生最好的范文，就是凯撒写的这两本书。据说他的写作方式非常的简洁而且优美。反正罗胖也不懂拉丁文，所以在这儿也是胡说。当然凯撒还有其他的奇闻铁事。比如说和埃及艳后克利奥帕特拉，<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194600wps6s3sme336aikv.jpg"></p>
+<p>因为当时古罗马用的是拉丁文，直到近现代时候，学拉丁文的学生最好的范文，就是凯撒写的这两本书。据说他的写作方式非常的简洁而且优美。反正罗胖也不懂拉丁文，所以在这儿也是胡说。当然凯撒还有其他的奇闻铁事。比如说和埃及艳后克利奥帕特拉，<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194600wps6s3sme336aikv.jpg" alt></p>
 <p>比如说他创造了西方历史上第一套密码系统，就是凯撒密码。再比如说西方中世纪的时候，沿用了一千多年的，儒略厉。那套历法就是凯撒最先用的。</p>
 <p>当然今天我们之所以要说这个人，和这些都没啥关系。主要是两个原因:第一呢，《罗辑思维》得做生意，得卖书，书来了，《凯撒传》，是目前最新最好的一本凯撒传记。第二个原因呢，是我读完这本书之后，我马上跟出版社的编辑说，按住，一定要交给罗辑思维独家首发销售。</p>
 <p>为啥?因为这本书在我看来，完整地诠释了什么叫一个大时代，给小人物洞开的大机会。什么叫大时代，就是时代处于剧烈的变动之中，社会结构正在剧烈地重组。每一个人距离历史的顶点都很近，和我们今天的时代非常像。你经常听说吧，一个人两年前还是屌丝，对吧。然后人家创业了，人家拿到A轮B轮C轮的融资，然后上市了，财务自由了。这就是一个大时代的典型特征，每个人距离历史的顶点都很近。</p>
 <p>我们先做一个剧透，凯撒一直混到大概罗胖这个岁数，40岁的时候，还一事无成，在古罗马城里面是一个很普通的芝麻官，但是仅仅十几年之后，人家就一手终结了罗马共和国，那可是五百年左右历史的一个传统。然后一手开创了罗马帝国，所以从凯撒这个故事当中，我们能够读出什么?我们是不是可以看得出，一个人在大时代当中捕捉大机会的那种技巧。或者反过来说，不是每一个人要捕捉大机会的。在所有的这些芸芸众生当中，我们怎么能够看出来，一个人他将来能够飞黄腾达呢？也许我们从凯撒的故事当中能够看到蛛丝马迹。</p>
-<p>好！既然说大时代，我们就得回到古罗马的那个时代，凯撒是出生在公元前100年。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194600lmk45yoo2fihi24i.jpg"></p>
+<p>好！既然说大时代，我们就得回到古罗马的那个时代，凯撒是出生在公元前100年。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194600lmk45yoo2fihi24i.jpg" alt></p>
 <p>这个日子很整，很好记。在凯撒出生前这半个世纪，就是古罗马最动荡的半个世纪，为啥，长身体，青春期，扩地盘。公元前146年古罗马通过第一次第二次第三次布匿战争打败了迦太基人，统一了整个地中海沿岸。</p>
 <p>我的老天，大国崛起，那它自然也会带来新的麻烦。主要的两个方面：</p>
 <p>第一个方面罗马人处理不错，就是中央和地方的关系。原来领土和新征服的行省之间的关系。在这方面，古罗马和今天的美国很像。一方面武力威胁。</p>
 <p>第二方面制度输出，派个总督过去，让当地人学着罗马的样子也搞什么元老院。另外，还有一手绝的，就是把当地的神，也请到古罗马的万神殿里给供起来。你们信什么，你们接着信什么。而且我们还陪着你信，但是你们得纳税。甚至把一些当地的上层人士。还发一个古罗马的公民权。通过这几招基本上搞的定，但是搞不定的是第二个矛盾，就是古罗马内部的贫富分化问题。为什么会有贫富分化呢？任何社会都有贫富分化，但是古罗马的情况又不太一样。以前的节目我们曾经讲过。简单给大家回溯一下，就是古罗马它主要靠打仗为生的的这么一个国家，穷人和富人都是自己准备装备。富人当然有枪有马，穷人拎根棍子就能上战场，但是分战利品的时候。也是按照你出力和出装备的多少来分。所以富人就越抢越有钱，穷人呢其实也抢不到什么东西。但是随着战争离家乡越来越远，穷人当士兵出征，一出去就好几年，等回到家，你看田园荒芜了吧。房子被人霸占了吧，老婆跟别人生娃了吧。他就变成了彻底的贫民。所以这些贫民越攒越多。我们看到的资料里边，大概有二三十万人。这帮人去哪啊，当然就去古罗马城了，所以就在古罗马城就积累了大量的贫富矛盾。那这个矛盾怎么解决呢？</p>
 <p>我们现在是隔着两千年的时光往前看，当然就看的比较清楚，这就预示着古罗马共和国一定要向古罗马帝国进行制度转型。原来是由一帮人，元老院来统治。现在就必须由一个人，拥有绝对权威的那个皇帝来统治。这就是历史发展的大势所趋啊！</p>
-<p>你可能会说罗胖你怎么能这么反动呢，难道说共和制度还没有一个皇帝制度好吗？你还千万别受那些抽象的政治分析的骗。回到具体的历史场景当中，往往就是这样的。首先共和制度也有坏的。比如说这本书的作者《凯撒转》的作者就说，我越研究古罗马的历史，就越发现那些元老院的所谓的共和派是一帮不是东西的人，他们祖宗八辈都是贵族。传下来通过各种各样的通婚关系。已经板结成一个利益集团。这里面充斥了各种愚蠢，贪婪，败坏，无知。他们互相之间可谓是贵贵相互。他里面举了个栗子。比如说古罗马当时有一个著名的演说家叫西塞罗。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194601z0za9rlc39cv9r3v.jpg"></p>
+<p>你可能会说罗胖你怎么能这么反动呢，难道说共和制度还没有一个皇帝制度好吗？你还千万别受那些抽象的政治分析的骗。回到具体的历史场景当中，往往就是这样的。首先共和制度也有坏的。比如说这本书的作者《凯撒转》的作者就说，我越研究古罗马的历史，就越发现那些元老院的所谓的共和派是一帮不是东西的人，他们祖宗八辈都是贵族。传下来通过各种各样的通婚关系。已经板结成一个利益集团。这里面充斥了各种愚蠢，贪婪，败坏，无知。他们互相之间可谓是贵贵相互。他里面举了个栗子。比如说古罗马当时有一个著名的演说家叫西塞罗。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194601z0za9rlc39cv9r3v.jpg" alt></p>
 <p>现在还有很多作品流传下来了。这个人私下老说，有一个古罗马的总督。说这个人就是个野兽。但是公开场合绝对不说，一团和气。而且经常当众还要讨那个人的欢心，为啥。大家磕头碰脑都相见。祖祖辈辈都是亲戚。谁愿意得罪谁啊。所以你要像这套共和制度。来解决贫富分化问题，是根本不可能的。那你可能会问，那难道多了个皇帝就能解决吗，没准儿就能解决。至少在心态上可以解决。</p>
 <p>（皇帝最爱老百姓？）</p>
 <p>我们在中学读政治课的时候都知道一个概念。啥叫皇帝啊，是地主阶级的总头子。他是带领那些富人们欺压贫民的。其实在世界历史上，古今中外。我们经常会发现不是这样的。皇帝和最底层的老百姓，恰恰是跨过千山万水要握手言和的，结成同盟的，为什么。因为他们有一个共同的敌人。就是那些富足大户和官僚阶层。皇帝怕的也是这些人。老百姓恨得也是这些人。所以你看，越是贫民。他越希望这个国家出现一个什么青天大老爷，一个明君，越希望权力集中在一个强人手里。而那些富家大户出来的孩子呢，往往年纪轻轻拥有了一些理想。他要搞什么民主革命，所以不要像一般人讲的那样。说富人就一定是坏人，倾向于集权。恰恰相反，在历史上有太多这样的例子。皇帝恰恰要扮演最苦最苦的贫民的保护者。你比如说，我随便举两个例子：中国朱元璋，朱元璋上台之后大开杀戒，杀的是什么人。不是普通老百姓，就是那些官僚阶层。朱元璋惩贪的那个力度在历史上也是空前的。甚至有个官员拦阻老百姓到南京去告御状，朱元璋把他活活给阉了。让你给拦，老百姓跟我老朱那才是一家人。所以朱元璋的时代恰恰是一个既血腥，同时有对底层的老百姓温情脉脉的时代。再比如说我们举一个西方的例子。俄国的沙皇，我们对沙皇的统治，老觉得他腐朽，残忍。恰恰相反，在俄国的历史传统当中，沙皇的外号是什么，是农民的父亲。是穷人的保护人。如果没有沙皇。那些贵族老爷们不定怎么欺负我们呢，老百姓都这么想问题。尤其是俄国底层的贫民。在这方面如果大家有兴趣，可以读一些秦晖先生写的，关于研究俄国的那些材料，在这儿我就不赘述。</p>
@@ -3834,36 +3804,36 @@
 <p>过了几年，大格拉古的兄弟，叫小格拉古又上台了。这回学乖了，借鉴他兄弟失败的那个经验，他搞的比较和风细雨。不再用一种什么， 一揽子计划。要把富人的财产给剥夺掉，那他用的什么方法呢？你不是说我哥不搞法理吗，我就跟你们元老院斗斗法理，那就背靠公民大会，对元老院的人一个一个地进行刑事上的起诉。起诉的理由都很简单，贪污，那你说贪污有没有一点影呢？我估计肯定是有影的，但是真实的意图就是政治迫害。要各个击破的把元老院的这些贵族给干掉，那自然就会在罗马城里又引起一番腥风血雨，最后一直发展到内战。最后小格拉古是在逃亡的路上，让自己家的奴隶把自己杀死的。这是公元前121年的事情，到此为止。</p>
 <p>所有想解决古罗马共和国，贫富差距问题的制度性的 ，政治性的，和平的解决方案，算是彻底走进了死胡同。</p>
 <p>我们调动政治常识想一想？下面该谁登台了，当然就是握有枪杆子的那些武夫登台了，只有用暴力和军事的手段才能解决问题了。所以历史就在等，一直等到了一个人出现。</p>
-<p>这个人就是马略，马略在古罗马共和国的历史上也是鼎鼎大名。他最大的特点不是贵族，虽然很有名，他就是一个普通的平民，是在战阵一刀一枪杀出来的。是从死人堆里爬出来的这么一个，战功赫赫的将军。他参加的最重要的战争就是朱古达战争。朱古达是北非的一个国家，原来跟迦太基也是同盟。那罗马灭完迦太基之后，当然要揍它了。所以就爆发了朱古达战争，在战场上，这马略在士兵当中的威望，比那个真正的贵族身份的统帅还要高得多。为啥？第一、御下极严，直到近现代 ，很多西方的老兵自嘲，说我是马略的骡子。这个词，马略的骡子，是很多老兵自我的称号。为啥呢？因为他让士兵扛的东西实在是太多了，除了他的全部辎重，还要扛上三天的粮草。要能经得住长时间的，高强度的行军。所以士兵们都把自己觉得是骡子，而且在战术训练上，马略对下面也极其的严苛。我估计经常还打打人什么的。就像我们三国演义里面的张三爷张飞，虽然极受大家的爱戴，但平时就是爱好，就是鞭打士卒，最后他不就死在这上头。但是，马略有一条，严归严，他有时候也不守规矩，尤其在财产问题上。因为古罗马的军队嘛，马略说，我的军队抢，没问题，只要打下来的就抢，包括屠城这些事都干。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194603nczpi6qicna6winz.jpg"></p>
+<p>这个人就是马略，马略在古罗马共和国的历史上也是鼎鼎大名。他最大的特点不是贵族，虽然很有名，他就是一个普通的平民，是在战阵一刀一枪杀出来的。是从死人堆里爬出来的这么一个，战功赫赫的将军。他参加的最重要的战争就是朱古达战争。朱古达是北非的一个国家，原来跟迦太基也是同盟。那罗马灭完迦太基之后，当然要揍它了。所以就爆发了朱古达战争，在战场上，这马略在士兵当中的威望，比那个真正的贵族身份的统帅还要高得多。为啥？第一、御下极严，直到近现代 ，很多西方的老兵自嘲，说我是马略的骡子。这个词，马略的骡子，是很多老兵自我的称号。为啥呢？因为他让士兵扛的东西实在是太多了，除了他的全部辎重，还要扛上三天的粮草。要能经得住长时间的，高强度的行军。所以士兵们都把自己觉得是骡子，而且在战术训练上，马略对下面也极其的严苛。我估计经常还打打人什么的。就像我们三国演义里面的张三爷张飞，虽然极受大家的爱戴，但平时就是爱好，就是鞭打士卒，最后他不就死在这上头。但是，马略有一条，严归严，他有时候也不守规矩，尤其在财产问题上。因为古罗马的军队嘛，马略说，我的军队抢，没问题，只要打下来的就抢，包括屠城这些事都干。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194603nczpi6qicna6winz.jpg" alt></p>
 <p>那士兵对的领袖往往是容易崇拜的，后来战争结束了，马略回到了罗马城。那他自然就会成为政坛上冉冉升起的一颗新星。一方面是得胜还朝的将军，另一面，他在普通民众和士兵当中享有崇高的威望。所以从公元前107年开始，他就当选了罗马共和国的执政官，后来又歇了两年。从公元前104年开始，104、103、103、102、101、100年他就连选连任五届执政官。当领导就是这样的，一旦当成了老领导。那他的权威，威望就不仅来自于这个职务。而是来自在他期间培植起来的那个，盘庚错节的人际关系。他渐渐的，那就容不下他了嘛，小尾巴就翘起来了嘛。当时的元老院封了他一个称号，叫祖国之父。你想想看，就算你岁数大，好意思当全罗马人的爹吗？但是他觉得这个称号很好。而且他在很多礼制上就不是很注意，比如说当时古罗马的贵族觉得，穿紫色的衣服是一件很嘚瑟的事情，为啥？因为紫色的颜料非常珍贵。是在深海当中一种生物提取出来的，非常贵。就像今天有人上着一个普通的班，开了一辆迈巴赫、或者宝马、奔驰上班，那你的领导肯定看不惯啊。一般贵族到元老的时候，仅仅敢在白袍子的边上镶一个紫色的边，就已经很嘚瑟了，但是人家马略，直接穿一身紫色的衣服就进了元老院。所以元老院的人就越来越看不惯他。因为毕竟你底子潮，你还是一个平民出生的人，所以元老院的这帮贵族就在他的对立面，又培养起来一个人，这个人大名鼎鼎，叫苏拉。苏拉也是在战场上拼杀出来的。虽然是个没落的贵族，但毕竟是贵族，所以元老院就拼命培植他，到了公元前88年的时候，出了一件事，就是希腊那个地区发生了一场叛乱，那自然古罗马就要派兵去平叛，那这个时候到底谁带兵呢。苏拉说我来，马略说我来，老将出马，一个顶俩。那就争得相持不下，后来元老院说这么地吧，你们俩谁都想，抽签。也不知道是不是有人作弊，反正元老院看中的这个苏拉，就抽到了带兵出征的这个签。因为带兵意味着掌握军权，那马略心理不爽，又诉诸于公民大会。你看又搞这一套。最后在公民大会上就鼓动那些平民支持他，废除了苏拉的带兵权。元老院一看，这是要不讲规矩的是吧。那好，我们所有的贵族联合起来抵制你马略，马略说你抵制个毛抵制，我是祖国之父。是你们所有人的爹，还抵制我。正好我手里也有一支力量，这个力量就有点像后来的纳粹德国，搞的那个冲锋队，它既不是国家的正是军事力量，也不是普通的小流氓，他有点组织性。你这帮人冲过去就杀，酒吧苏拉的女婿，还有一帮支持者给杀了。苏拉就害怕了，在罗马城里面跟他斗斗不过，所以<br>就跑到马略家去道歉，我们不该抵制你，你爱怎么就怎样。然后苏拉就一溜烟跑除了罗马城，这可就叫蛟龙入大海，因为苏拉不是普通人。他是军人出身，在很多士兵当中也有威望的。他一出罗马城就拼凑出了六个军团的力量，开始反攻罗马城。清注意，这是古罗马共和国历史上很重要的一个瞬间。因为古罗马国家养的那个军队，他们都有很强的爱国心，他们不可能向罗马进攻的，这形同陌路，所以苏拉在古罗马共和国的历史上，第一次冒天下之大不韪，破了这个恶例，用国家的军队去进攻罗马。那自然了，马略的那些冲锋队肯定是打不过了，所以就跑了，这就带来了罗马三年马略和苏拉的内战。从公元前88年、87年一直打到公元前86年。这三年的拉锯战，一会儿马略来了，占领的罗马。一会儿苏拉来了，也占领了罗马。那请问，谁倒霉呢，表面上一个代表平民派，一个代表贵族派。但是每一次罗马城被占，倒霉的都是贵族，都是元老远的那帮家伙，那为啥呢？你想这个道理，当马略率兵攻占了罗马城之后，因为他是平民派嘛，肯定要杀贵族，而且首当其冲就是苏拉合作的那些贵族，所以杀贵族。而苏拉带兵攻占罗马城之后，按说应该去杀平民，可是平民派人数太多，散入人间看不见。能看见的还是台面上那几人。这些人当中往往也是贵族，而贵族最恨的就是自己阶级的这些叛变者，所以他们杀贵族。那如果，苏拉想杀平民派怎么办?他只能出告示，就是我不在的时候，谁跟马略合作过，这些人你们去告发。哪怕是奴隶告发自己的主人，我也是给赏银。这就带来了一个后果，很多民间会诬告的。因为他贪图别人的财产，如果把他给杀了，他的财产归我，对吧！</p>
-<p>比如说这本书里就举到了一个例子，有一个人他觉得自己是逍遥派。你马略、苏拉，我哪派都不是，所以背着个手在街上闲逛，就逛到元老院门口。一看这个通缉犯的名单当中怎么还有我呢，他突然一拍脑门想明白了。哪是苏拉要杀我呦。是我们家那幢别墅要杀我。果然，话音未落，这个人就被杀了。所以这三年的内战，杀来杀去，元老院基本就杀光了。那后来三年内战是怎么平息的呢！是因为马略死了，而且是得到了 善终，病死的，不是被杀掉的。那苏拉就开始掌权，而苏拉当了三年的独裁官之后，他退休了。说我现在把古罗马光荣的贵族制度共和制度又开始重建了。而且大规模扩张了元老院的人数和权力。所有的权力都归到了元老院。罗马终于可以太平了吧，于是他就退休了，他哪里想到，这只让问题回到了原点。我们原来讲的那个。古罗马共和国里面的贫富分化问题。并没有因此解决，所以历史在等。等另一个人的出现，这就是，凯撒！<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194605ya35ca35gj6zbpj7.jpg"></p>
+<p>比如说这本书里就举到了一个例子，有一个人他觉得自己是逍遥派。你马略、苏拉，我哪派都不是，所以背着个手在街上闲逛，就逛到元老院门口。一看这个通缉犯的名单当中怎么还有我呢，他突然一拍脑门想明白了。哪是苏拉要杀我呦。是我们家那幢别墅要杀我。果然，话音未落，这个人就被杀了。所以这三年的内战，杀来杀去，元老院基本就杀光了。那后来三年内战是怎么平息的呢！是因为马略死了，而且是得到了 善终，病死的，不是被杀掉的。那苏拉就开始掌权，而苏拉当了三年的独裁官之后，他退休了。说我现在把古罗马光荣的贵族制度共和制度又开始重建了。而且大规模扩张了元老院的人数和权力。所有的权力都归到了元老院。罗马终于可以太平了吧，于是他就退休了，他哪里想到，这只让问题回到了原点。我们原来讲的那个。古罗马共和国里面的贫富分化问题。并没有因此解决，所以历史在等。等另一个人的出现，这就是，凯撒！<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194605ya35ca35gj6zbpj7.jpg" alt></p>
 <p>今天我们这个节目表面上是在说凯撒，而实际上我们仅仅想回答。《凯撒传》这本书的副标题，提出来的问题，叫什么样的人能改写历史。所以你看，节目进行到一半了。恺撒他老人家还没有出场，那接下来我们就花一点时间，介绍一下恺撒这个人的生平。</p>
 <p>(底层公务员的逆袭)</p>
-<p>恺撒的全名叫盖乌斯.尤里乌斯.恺撒。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194607q440vmioi4s2zgk4.jpg"></p>
+<p>恺撒的全名叫盖乌斯.尤里乌斯.恺撒。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194607q440vmioi4s2zgk4.jpg" alt></p>
 <p>盖乌斯是他的名字，尤里乌斯是他的姓。那你会问：恺撒是啥呢？据说他有一位先祖在战场上很英勇，打迦太基人的时候。居然打死了对方的一头大象，那大象这个词在迦太基语当中，就叫恺撒。所以后来这就变成了他家族的荣誉称号。这个家族其实也挺怪的，你要说他不是贵族吧，他算。因为这个家族的传统一直可以追溯到古罗马的王政时期。那个时候还是有国王的时候，这大概是五六百年前。所以这个家族历史非常悠久。可你要说他是贵族吧！又不是，因为据盐野七生讲：就在恺撒出生前这一百年，你想那个时候古罗马共和国。每年可是选举个执政官，有两百次机会，这个尤里乌斯家族只有一个人当过执政官。这就说明这个家族实际上不怎么兴旺，那恺撒的父亲只当过一个非常非常底层的财务官。他出生的时候，他们家的家庭财政状况也不太好。至少从资料上看，他是出生在贫民区。而不是山顶上的那个贵族区。那个房产价值区别很大，当然他母亲非常争气。对他从小就施以各种各样的贵族教育，他这个人一生第一次和政治发生接触。是十几岁的时候，为啥？因为倒霉催的。他有一个姑父，就是我们前面讲的那个大名鼎鼎的马略，那苏拉执政之后，马略所有的支持者和亲戚。那肯定是要诛九族的，所以就把十几岁的恺撒，也放在了那张死刑黑名单上。当时有人就劝苏拉说算了，一个小孩，搞他干什么，他虽然十几岁，岁数小。也结婚了，但是他结婚的那个妻子。是平民派的一个领袖的孩子。他只要答应离婚 我就饶了他。恺撒还不干。后来他逃走了，苏拉据说望着他逃走的背影说了一句话，说在这个孩子身上，有一百个马略，所以苏拉那个眼光还是很厉害的。知道他将来是人中龙凤，从十几岁开始逃亡。一直逃到小亚细亚。据说还搞出一些绯闻，跟当地的一个国王还搞出了个同性恋的绯闻，但是不管怎么样，后来苏拉死了，23岁他回到了罗马城，回来之后干什么呢？从最底层的一个律师开始干起，但是恺撒这个人性格比较潇洒。他不是那种很严谨的人，所以干这行又干不好。所以又接着出去，到希腊去留学，到了27岁的时候再次回到罗马，那回罗马干什么呢。考公务员，就是当最底层的官员。这一段日子真的是很惨，大概十几年的时间，他干过好多事情。比如说军事保民官，你不要以为这个保民官，是我们前面讲的那个保民官。古罗马同时有80个军事保民官，80分之一，那真叫是芝麻绿豆官。后来还当过什么，阿皮亚大道的那个管理者。就是街道办事处主任，后来干的还不错。一直干到了古罗马城管理很多公共设施，神庙的这个管理人员。你想想看，也就是一个普通的</p>
-<p>公务员干部，那这一干就十几年，这个时候已经不小了。据说有一次，恺撒跑到亚历山大大帝的神庙去参观。你这不是找自卑吗？<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194608xqxp3zpp656y9ndx.jpg"></p>
-<p>亚历山大大帝那可是扑克牌里面的草花K，在扑克牌里都比你凯撒要高一级，亚历山大是当时的欧洲人，征服了所有已知世界的这么一个君主，所以凯撒就自卑了，说到我的这把岁数的时候，人家亚历山大已经功臣名就，你再看看我，还一事无成呢！我们中国人不是有一话吗？货比货得扔、人比人得死。别说什么亚历山大，就在你凯撒的同时代，罗马城里面还有另外一个像明星一样的人物，那就是庞培嘛！<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194608g7px5ggfxgmmttim.jpg"></p>
-<p>庞培的岁数其实比凯撒大，但是年少得意，23岁的时候就已经是名将，是苏拉的左膀右臂，25岁的时候已经在罗马城办了第一次属于自己的凯旋仪式。而且元老院还奉给他一个称号叫“伟大的庞培”。你凯撒呢？一直到了40岁，你还没有轮上过什么凯旋仪式吧，到了30岁的时候庞培已经是古罗马共和国的军队的总司令，跟这样的人相比你凯撒出门好意思跟人到招呼吗？说到这儿你可能会觉得奇怪，凯撒一生也就活了五十几岁，你看，公元前100年出生，44年就已经被人刺杀了，那他到40岁的时候还一事无成怎么后来这十几年就突然蹿起成为世界历史上的划时代人物呢？好奇怪，这十几年里发生了什么？他后来走运了，他遇到了一个人，这个人叫克拉苏，请注意！凯撒、克拉苏和庞培，这就是古罗马历史上著名的前三头，就是一段时间里的三巨头，当然这个里面凯撒是最次最次的一个头，那克拉苏当时凭什么成为前三头之一呢？<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194609nbvxvd2sn2b2f2cd.jpg"></p>
+<p>公务员干部，那这一干就十几年，这个时候已经不小了。据说有一次，恺撒跑到亚历山大大帝的神庙去参观。你这不是找自卑吗？<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194608xqxp3zpp656y9ndx.jpg" alt></p>
+<p>亚历山大大帝那可是扑克牌里面的草花K，在扑克牌里都比你凯撒要高一级，亚历山大是当时的欧洲人，征服了所有已知世界的这么一个君主，所以凯撒就自卑了，说到我的这把岁数的时候，人家亚历山大已经功臣名就，你再看看我，还一事无成呢！我们中国人不是有一话吗？货比货得扔、人比人得死。别说什么亚历山大，就在你凯撒的同时代，罗马城里面还有另外一个像明星一样的人物，那就是庞培嘛！<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194608g7px5ggfxgmmttim.jpg" alt></p>
+<p>庞培的岁数其实比凯撒大，但是年少得意，23岁的时候就已经是名将，是苏拉的左膀右臂，25岁的时候已经在罗马城办了第一次属于自己的凯旋仪式。而且元老院还奉给他一个称号叫“伟大的庞培”。你凯撒呢？一直到了40岁，你还没有轮上过什么凯旋仪式吧，到了30岁的时候庞培已经是古罗马共和国的军队的总司令，跟这样的人相比你凯撒出门好意思跟人到招呼吗？说到这儿你可能会觉得奇怪，凯撒一生也就活了五十几岁，你看，公元前100年出生，44年就已经被人刺杀了，那他到40岁的时候还一事无成怎么后来这十几年就突然蹿起成为世界历史上的划时代人物呢？好奇怪，这十几年里发生了什么？他后来走运了，他遇到了一个人，这个人叫克拉苏，请注意！凯撒、克拉苏和庞培，这就是古罗马历史上著名的前三头，就是一段时间里的三巨头，当然这个里面凯撒是最次最次的一个头，那克拉苏当时凭什么成为前三头之一呢？<br><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194609nbvxvd2sn2b2f2cd.jpg" alt></p>
 <p>因为人家有钱，他是个商人特别会做生意，就在那个经济水平下所有能挣钱的生意，什么买卖奴隶、海外贸易、开个矿产、倒腾点房地产，什么都干，据说他起家的时候财产只有300个塔连特，后来他的家产一度累积到13000塔连特。塔连特是当时古罗马金币的一个单位，具体是多少我也不知道，总而言之富可敌国。据说亚历山大大帝跑到波斯去征服人家，把人家所有国库金币搬到希腊，也不过就是这个数，所以你想他真的是富可敌国，但是克拉苏这个人因为是商人，所以元老院就有点看不起他，就一直压制他，那克拉苏就觉得这凯撒不错，我要培养这个凯撒。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194600lmk45yoo2fihi24i.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194600lmk45yoo2fihi24i.jpg" alt></p>
 <p>那作为一个商人怎么培养他呢？就是借钱给他花，那凯撒就不客气了，你敢死我就敢埋，你敢借这个钱，我就敢替你花了，那他怎么花这个钱呢？主要是三个通道，第一:我们前面讲凯撒担任了大量的公共职务，管理什么阿皮亚大道，管理个什么神庙。凯撒说,如果仅仅是扫扫卫生，维持个秩序，那不是谁都会干吗？我得来点绝的，我要在这些场所给罗马人民办娱乐活动，你想想看，今天的政府给老百姓办个什么运动会，那肯定是财政税收出钱，可是凯撒说这个钱不用国家税收，我来！反正钱也是克拉苏出，无非是他借给我，我当一个过路的财神，这笔钱我认，但是钱我把它花出去，你想想看，那还得了？银子像流水一样往外淌啊，但是带来一个附带的结果，就是很多罗马人非常喜欢这个凯撒，为人如此慷慨，给我们提供这样的娱乐，那第二点呢，就是把前花在女人身上了，凯撒玩女人在当时的罗马那也是一绝，主要是出手特别的阔绰。据历史记载，他曾经送给他一个情妇，可能是生日礼物吧，就是大量的珍珠那价值多少呢？是足以在罗马城买下两幢豪华别墅的钱！我想今天中国的很多房地产商搞小三，我觉得也不会有这么大的手面，那第三呢？主要就是宴请朋友，平时送个礼，搞好关系，那这钱也是没数的，凯撒就是这个性格，那一来二去他在后来当上执政官之前，他个人的债务累积到了1300塔连特，请注意这个单位，前面我们讲克拉苏的家产富可敌国，也不过13000塔连特，十分之一都给了这个小子花了，但是你说克拉苏不是有病吗，对吧？我就算支持个谁，也不是这么玩命的支持，而且在古罗马历史上，大家对克拉苏这个人是有一个评价的，说这个人，你千万别指望做他什么忠实的朋友，你也不会变成一个冤仇难解的敌人，一但涉及到他的个人利益，他会马上忘却什么私人恩怨。你看，这就是我特别喜欢的商人的一个性格，跟商人打交道，我们就拿钱说话，克拉苏就是这么一个合格的商人，那他那他对凯撒进行投资为什么这么舍得呢？这就说明凯撒这个人身上有他要的东西，什么东西？就是做他的政治代理人，因为凯撒的家世好，人家祖先好歹是个贵族。而且花了克拉苏这么多钱，已经在罗马城里建立了很高的知名度，老百姓都喜欢他，这样一个有魅力的人物如果送进元老院，肯定是克拉苏最好的政治代理人，因为我是债主，你欠我钱你能不听我的吗？那庞培是怎么卷入的呢？前面我们交代，庞培在三十岁的时候，已经当到军队的总司令。</p>
 <p>已经当到了军队的总司令 握有军权，这样的人一旦时间长了，元老院当然要含糊他。所以那帮共和派的贵族要打压庞培，庞培说打压我是吧！我也需要在元老院里有一个政治的代理人，所以他看上了这个凯撒。这三个人是一拍即合。就结成了历史上著名的前三头同盟。当然后来罗马又有后三头同盟，那是后来的故事。超出今天的主题。我们就不讲了，这三个人大体搞了这么一个计划。就是克拉苏和庞培联合起来，支持凯撒竞选执政官，那执政官的任期只有一年。你在这一期间来拼命提携我们俩的势力，一年之后你下野去当地方官。克拉苏和庞培联合在共和国执政。大概是这么一个计划。哎呀，凯撒高兴死了。因为什么前三头 那俩一个有钱，一个有军队，他是什么都没有。所以他是最大的受益者。他当然接受这样的安排了 为了巩固这样的安排 他还按今天人讲话 有点丧心病狂 把自己一个十四岁的女儿嫁个了庞培 庞培这个时候五十岁 来结成这样的一个姻亲同盟的关系。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194607q440vmioi4s2zgk4.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194607q440vmioi4s2zgk4.jpg" alt></p>
 <p>好了，公元前59年。凯撒终于登上了自己政治生涯的一个新台阶，当上了共和国的执政官。当然这个时间也不长。一年之后，按照原来商定的结果，他就得下台。给他一个很好的安排，让他去高卢当总督。按说这也就是发配充军，为啥？高卢就是现在的法国，可是当时可不是什么发达地区，居住着大量蛮族。天天不仅要管理当地的行政事务，还得跟蛮族打仗。你说这是什么好差事呢？整个罗马城就已经让给了庞培和克拉苏，所以所谓的前三头说是一个同盟，其实凯撒在这个三人组合当中，仅仅是一个棋子。因为你啥都没有，人家两个人一个有钱，一个有军队。你有啥呢？你既然已近被用完了，已经完成了你的历史使命，所以这个时候等于已经被丢进了垃圾堆。如果是一个普通人，那凯撒的故事可以说到此也就结束了。但是请注意！</p>
 <p>从公元前59年到公元前49年，就在这十年间!发生了一些列事情,今天我们是没时间把他细展开讲:大概是这么一个过程,首先克拉苏死了,为啥死了呢?他非要出去带兵打仗,因为克拉苏是一个扒拉算盘的商人,他一看这个做生意这个回本的速度,还是没有打仗快.因为有一次庞培打仗回来,光给国库一捐就是一万塔连特.犒赏士兵又是一万塔连特 人家克拉苏说我这号称富可敌国。也不过13000多，而且还借了那么多给凯撒。对吧！所以看来还是打仗挣钱，他就带兵，一定要出去打东方的帕提亚帝国。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194609nbvxvd2sn2b2f2cd.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194609nbvxvd2sn2b2f2cd.jpg" alt></p>
 <p>当然一战失败，自己也在战场上死掉了。那克拉苏一死，前三头同盟自然就瓦解了。但是与此同时，还发生了另外一件事情。就是在极短的时间里面，凯撒崛起为一个军事强人。他本来不是带兵打仗的人，但是你把它放到高卢那个位置上，他天天必然带兵打仗。可能凯撒自己也很吃惊！我怎么具备这么好的军事天才呢，所以他经常以少击多。在很短的时间里就征服了高卢，而且与此同时还写出了一本书 现在还在叫《高卢战记》。而且还越过了英吉利海峡，征服了不列颠群岛，征服了英国。这时候他不是留下那句著名的名言吗，叫：“ 我来了，我看见，我征服！” 等这些漂亮仗打完之后,那个在罗马城里耀武扬威的庞培,就显得没有那么光彩了。你也是靠军功出身，人家凯撒立下来的军功比你大得多。人家才是罗马现在握有武力的大英雄！所以庞培说：“那该轮到我打压你了吧。”所以前三头同盟到此为止正式解散。庞培一屁股就坐到了元老院那儿 一起要去打压凯撒。那发生的第三件事情呢，就是元老院授予庞培全权。说授予你一个职位 叫独裁官。不是真让你建立一个独裁政权。原来执政官是两个人，现在为期两个月。只有你一个人当执政官，这就叫独裁官。那意思我们不愿意手上沾血，你跟你的老丈人。那凯撒女儿不是嫁给他了吗？你跟你老丈人死磕，你去为古罗马共和国解决凯撒问题。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194608g7px5ggfxgmmttim.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194608g7px5ggfxgmmttim.jpg" alt></p>
 <p>那庞培是怎么解决凯撒问题的呢？他下面干的一些列事情，要是摊在桌上。只要你读过一点中国历史，心里还知道什么叫政治权谋。你都会被他蠢哭了，这真是我见过的最愚蠢的一套政治操作。这个时候凯撒是什么人：军头。已经在部队当中建立了个人的崇高威望，而且握有的是共和国最精锐的野战部队。身经百战，这个时候你要搞凯撒，你总得先缴了他的械吧。然后在对他动手，哪怕你使个计策把他骗回罗马呢。说我给你封一个什么称号，给你搞个什么仪式，你先回来，然后再说嘛。对吧！庞培不信那一套，他相信的是法理权威。我代表元老院，我是独裁官。他相信红头文件，先是给凯撒下了一纸红头文件，说你提前结束在高卢总督上的任期。给我滚回罗马来，那凯撒能回来吗？他在罗马不可能没有眼线，他也知道元老院这个时候要制约他。已经站到了他的对立面，所以他不肯回来。</p>
 <p>（凯撒回城恢复帝制）</p>
 <p>庞培接着下红头文件，说不回来是吧，我给你一个叫最终的劝告书。其实就是最后通牒了。你要不回来，我对你怎样怎样。你能把人怎样？枪把子在人凯撒手里，那后来庞培就怎样了呗。他首先宣布凯撒是人民公敌，然后把凯撒的一些支持者驱逐出罗马城。你看这些手段又下三滥又没有什么力道对吧又于事无补，但是庞培居然就以为自己拥有控制全局的能力。终于啊，公元前49年1月份，把凯撒逼造反了。凯撒反正就是这样了，要不鱼死网破跟你斗一场，要不回到罗马也没有好下场。于是，在公元前49年的1月份，他干了一件标志性的事儿，叫渡过卢比孔河。啥叫卢比孔河？是罗马城外一条普通的河流，但是国家法律有严格的规定，任何将领不允许带领士兵渡过这条河流，逼近罗马城，否则以造反论处。人家凯撒就是要造反嘛，管你什么这套法律嘞。于是大兵压境，渡过卢比孔河，逼近罗马城。那庞培这时候还纳闷呢，怎么国家红头文件就不管用嘞，而且他这个时候还没做任何军事上的准备，一看凯撒来了，马上一哄而散，就开始逃跑。凯撒是兵不血刃占领罗马，然后就开始追杀这个庞培。跑？哪儿跑？去我一定要把你追杀到死。这是世界军事史上可能是最著名的追杀战，从意大利一直追杀到北非，然后一直到埃及，庞培最后是兵败而死。那之后就发生了大家都知道的那个故事，就是凯撒和埃及艳后克里奥佩特拉，就开始搞在一起，这是一段。那最后公元前44年，凯撒回到罗马。凯撒这个时候就不跟元老院搞虚招子，你选举我当执政官，我杀几个人就算了？没那个，你们直接任命我为独裁官，而且是终身独裁官，执政官从今以后只有我一个，而且我要当到死为止。你想这不就已经是一个皇帝了吗？当然这个时候凯撒还没有当皇帝，他也在测探各种名义。比如说有一次大家开大会的时候，他手下有一个将领，是后三头之一，叫安东尼，可能两个人也是商量好了。安东尼就突然从兜里掏出一个皇冠来，要给凯撒戴上，凯撒这时候就观察周边人的反应，一看有人鼓掌，但是大部分人沉默，所以凯撒觉得时机未到，因为毕竟他在罗马执政的时间还太短嘛，所以他就把皇冠拿下来，扔到地下。安东尼说:别弄脏了，别弄脏了。拿起来，又给他戴上，他又拿下来，扔到地下。说白了，是在等时间，探测民意，看我是不是已经可以称王。当然，历史最后也没给他这个机会，在公元前44年3月15号，这日子好记吧？国际消费者权益保护日，凯撒被刺杀，这个人的一生就这样落下了帷幕。从他的一生当中，我们能看到什么呢？怎么才能回答这本书提出来的问题:什么样的人能改写历史？</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194605ya35ca35gj6zbpj7.jpg"><br>（死磕自个愉悦大家这就是咱们的罗辑思维）</p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194605ya35ca35gj6zbpj7.jpg" alt><br>（死磕自个愉悦大家这就是咱们的罗辑思维）</p>
 <p>今天我们这期节目涉及到的人名是比较多的，但是你有没有从中发现一个规律啊？就是在这一百年古罗马的历史舞台上，不管谁登台表演，其实他扮演的历史角色都一样啊，都是这套传统的贵族共和制度的掘墓人。其中既包括那些量民阶层的反对派，所谓的贫民派，像格拉古兄弟啊，马略将军啊。其实也包括这套制度的捍卫者，比如说苏拉。苏拉这一生啊，是以捍卫元老院为自己的己任啊。临死的时候把元老院扩大了规模，但是又怎样？你干了些什么啊？你跑到罗马城外，带领士兵第一次跨过卢比孔河，向罗马进军，用武力解决问题，这是你第一个干出来的。那所以后来的凯撒才有样学样，他不是第一个冒天下之大不韪。后来的庞培，更是亲自用自己的愚蠢葬送了这套制度。所以什么叫历史的大势所趋啊？这就叫大势所趋。就是一套制度，不管是捍卫者还是反对者，都在加速他的灭亡。那你说这是为啥呢？现在看来也很简单因为古罗马共和国正在剧烈的扩张当中嘛，你扩张当然要让贫民为你冲锋陷死啦 ，你新加入的那些领土，新吞并的那些行省，作为一个全新的政治元素，你一定要纳入到原来的政治结构当中啊，但是你们不愿意啊，所以你们原来的政治结构就缺乏弹性，他就一定要崩溃，对吧？所以这个阶段，从共和向帝制这个制度转型，就是大势所趋，其中的道理，我们在第一part也分析过。</p>
 <p>但是下面一个问题就是我们今天的文眼啊，就是这一段时间历史舞台上表演的那些明星，个顶个都是能人，谁也不是怂蛋。</p>
 <p>（资源的诅咒）</p>
 <p>为什么历史的桂冠最后落在这个家伙头上了呢？是凯撒最终改写了历史呢？</p>
 <p>我们不妨来做一些对比，我们在凯撒这个人的对面再放四个人，一个就是马略，一个就是苏拉，还有一个是克拉苏，最后一个是庞培。我自己读完了这本书，对这四个人为什么没有成功的像凯撒一样改写历史。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194609syeyolunuwnue5fu.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194609syeyolunuwnue5fu.jpg" alt></p>
 <p>我的解读是两个字，叫惯性，如果用四个字的话，就叫路径依赖，如果用五个字，就叫资源的诅咒嘛。</p>
 <p>你看这四个人，每个人都抱着一坨资源。都是这些资源上的霸主。比如说马略拥有武力，苏拉拥有血统的尊贵，他是贵族。那克拉苏呢？当然就抱着一坨钱。庞培呢？拥有法理上的至高无上的合法性！一个政治家要想登上历史的顶峰，这四样资源你都是要要的。可是这四个人都犯了一个什么错误？就是太相信自己的资源，太按照惯性往前走了。可是古罗马共和国这是一个什么样的时代？大变局时代。如果你没有一种能力，把这四样资源全部统和起来为己所用，你是不可能走到历史的顶点的。所以这四个人都撞到了历史的南墙。我们一个一个给大家分析。首先马略，马略是战场上冲杀出来的人。所以他就过分迷恋武力。当时就有人对他的评价，说他在军事上是个巨人，在政治上就是个矮子，他当什么祖国之父那么多年，当了七任执政官。他居然就没有培养那些平民派的政治家。他一心所想的就是多当一任执政官，因为据说有一个算命的说他这辈子能当七任，但是他原来只当过六任。那第七任怎么当上的呢？他后来不是跟苏拉打围城战，争夺罗马吗？苏拉最后一次已经把罗马城围了，他还逼着元老院非要封他为第七任执政官，然后在十几天之后才幸福地死掉！所以你像这样的人，他完全没有政治远见，光有武力有什么用呢？第二个人就是苏拉，苏拉这方面都强，既有政治上的远见，也能带兵打仗，可是他太迷恋那个贵族血统，以及带来的那个范儿了。苏拉最后——要我说，——我读史料，我就觉得他有一点表演的性质，比如说他已经把元老院搞得定定的了，古罗马城也收复了，当了三年独裁官。然后卸任，挥一挥衣袖，不带走一片云彩，人家当平民去了。而且临走的时候在元老院还留下一句话，说我执政这几年，如果谁觉得我干得不好，受了委屈，可以到我家来找我报仇，我现在是一介平民了。后来果然有一个人，但也只有一个人跑到他家去骂他。苏拉心里头高兴，你看，干了三年只有一个人来骂我，越骂越高兴。临死前的时候他还亲手给自己拟了一个墓志铭，说“如果我是你的敌人，我就是你一生中最可怕的敌人。如果我是你的朋友，我就是你最亲爱的朋友！”你看，这个贵族范儿气派吧！但是正因为此，所以你只能当这套旧制度最后的守门人，你不可能开创一个全新的时代。我们再看克拉苏，这就不用说了，那个眼珠子全部都掉在钱眼里，对吧！眼珠子是黑的，银子是白的，你天天诛魔那个事，你琢磨来琢磨去就偏了！首先为什么元老院看不起你？就是因为你天天扒拉算盘。一个商人，你总应该有更大的眼光吧。这个就不去说他了，这个道理很简答。那庞培呢？庞培就是过于迷恋那<br>个法理性：我少年得志，我是共和国的总司理！我现在又是执政官，我下红头文件你能不听吗！人家不听你能怎么地！对吧！因为时代在转变嘛，整个趋势已经不是那个原先的温暖的环境了。</p>
 <p>那凯撒这个人呢？恰恰具备我刚才说的那些特征的反面，就是他没有路径依赖。你要说有，他也全有，对吧！你要说武力，我也能在战场上证明自己的存在。你要说什么血统？他自己就这么说，我们家也是贵族出身，要说发理性，你看他也很尊重法理，刚才我们讲那个安东尼给他戴那个皇冠，他不也不敢戴吗！所以这个人其实他什么资源都能借上劲，但是他没有任何惯性。</p>
@@ -3874,11 +3844,11 @@
 <p>而凯撒就是当年古罗马的结构洞。</p>
 <p>听到这儿你可能会反问，这不就是中介吗？对吧！满大街那个房屋中介，它不就是结构洞吗？它一方面能搞得清楚谁买房，一方面搞得清楚谁卖房。难道这样的人最值钱吗？我不是说房产中介不值钱，也有可能很值钱，但是请注意，结构洞里面的人是主动的人。他不是被动的等着别人来找自己要服务，他是会用自己的魅力，不断地主动地颠覆一点什么，去搞一点跨界打劫的人，他才是真正有价值的结构洞。</p>
 <p>我们再回头来看凯撒，凯撒这个人最大的特点是，你会觉得他哪儿哪儿都有一点反着来的那个劲。所以在这本书当中，我们会看到作者反复强调凯撒的那些魅力。而魅力这个东西它是怎么来的呢？凯撒的魅力到了什么程度，有这么一个数字，不知道是真是假。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194600lmk45yoo2fihi24i.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194600lmk45yoo2fihi24i.jpg" alt></p>
 <p>说当时凯撒在罗马混那十几年的时候，元老院有三分之一的议员的老婆，都跟他睡过。比如说庞培的老婆他睡过、克拉苏的老婆他也睡过、庞培的副手的老婆他也睡过、真是睡遍罗马无敌手。 而且，据说他还搞过同性恋。在这方面他是什么都敢尝试那么一点点，当然当时的道德风气跟今天也不太一样了。但这至少证明了他的魅力！</p>
 <p>在很多物种当中，雌性愿意跟哪个睡。就是这个物种前进的动力，就是魅力的表征。凯撒就是这么一个人，而且什么叫魅力，这个东西很难定义。但是我们在看这本书的时候，你能在凯撒身上发现他在哪个方面，都有那么一点别扭劲。都有那么一点跟凡俗的那个规律不太一样，比如说他这么好色，睡遍天下。但是你还记得我前面讲的，苏拉让他离婚，不离。我有我的底线。对吧！他没钱， 但是天天又挥金如土。你说他勇敢，但是他从来不残忍。很少见过凯撒搞什么大屠杀，但是你说他懦弱吧，不是！对于像庞培这样的对手，他一定要追杀到死。可是你说他睚眦必报吧，又不是！庞培死了之后，他居然让安东尼把他的家产发还给他。而且几年之后，在罗马的很多公共设施当中。又开始里庞培的塑像，最后他被刺杀的时候，其实就倒在庞培塑像的脚下。</p>
 <p>所以这是一个什么方面都有那么一点别扭劲，你说规矩有没有，他当然有。但是什么规矩他都愿意破那么一点点的人，这就叫跨界打劫的人。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194609syeyolunuwnue5fu.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201511/27/194609syeyolunuwnue5fu.jpg" alt></p>
 <p>那节目的最后，我们再一次回答一下这个问题吧！什么样的人可以改写历史。我想至少应该有两条：</p>
 <blockquote>
 <p>第一、 什么资本他都应该有一点，但是什么资本都不是他唯一的依靠。<br>第二、 什么规则他心里都有，但什么规则对他来说，都不是牢不可破的天条。</p>
@@ -4391,7 +4361,7 @@
 <p>而中国人过去30多年的历史恰恰也在证明这一点，我们没有搞西方意义上的民主，但是每一个中国人他的自由度，他的个体自由都在趋向于放大，所以这个国家就欣欣向荣。就像我们在上一季节目的最后一期，谈到的一个话题，现在在国际上主张自由贸易的国家是谁，恰恰不是高举自由贸易大旗的美国，他们的美式自由贸易有很多政治上的条件，而中国人现在是手把红旗旗不失，我们在主张没有条件的自由贸易。所以自由这个传统虽然是发育于英国，甭管这个学界的争论是怎么样，但是它是人类的共同的遗产，英国人不继承，我们中国人继承，也是一样嘛，我们这一代人正在品尝自由的果实。</p>
 <p>那回到每一个人的个体选择，应该怎样行动呢，我们的主张是一贯的，那就是每一个人应该追逐更大的个体自由，但是更重要的是后半句话，就是为你的选择去承担结果，请注意，这是一个强者的逻辑，你看，每一个商人是不是就是这样践行的？你只要让我自由决策去做生意，是赔是赚，最终我来承担责任，所以《罗辑思维》一直以来就讲一句话，叫做生意，合法挣钱，是这个世界上最有尊严的生活方式，甚至比做慈善还有尊严。</p>
 <p>前不久在一个媒体活动上，有一位媒体前辈上台讲了一番话，说中国现在做生意挣钱的人实在是太多了，我就不凑那个热闹了，我站在旁边写评论。后来我上台也是跟他开了个善意的玩笑，我说不同意你说的，我恰恰认为，中国这个时代，做生意，挣钱的人太少了，而站在旁边搞评论的人太多太多了。</p>
-<h2 id="蒋介石成与败的秘密"><a href="#蒋介石成与败的秘密" class="headerlink" title="蒋介石成与败的秘密"></a><a href="http://www.luojiji.com/thread-5355-1-1.html" target="_blank" rel="noopener">蒋介石成与败的秘密</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152658gmdlq31uuddqdzzn.jpg"></p>
+<h2 id="蒋介石成与败的秘密"><a href="#蒋介石成与败的秘密" class="headerlink" title="蒋介石成与败的秘密"></a><a href="http://www.luojiji.com/thread-5355-1-1.html" target="_blank" rel="noopener">蒋介石成与败的秘密</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152658gmdlq31uuddqdzzn.jpg" alt></p>
 <p>本周《罗辑思维》节目的话题是《成败蒋介石》。</p>
 <p>看蒋介石是如何运用谋略，一步步地成功上位；又看他如何失去主流，奠定败局。但归根到底，说的却是和我们每个人都密切相关的问题——如何不走错路？</p>
 <p>01 是非是别人的，<a href="https://deepcreator.com/Concept/Cognition.html" target="_blank" rel="noopener">认知</a>才是自己的</p>
@@ -4403,7 +4373,7 @@
 <p>蒋介石这一辈子最爱秀的一张照片，在朋友圈里，不是自己的美颜照，而是他和孙中山的那张合照。</p>
 <p>孙中山坐着，蒋介石一身戎装站在他身后，这在暗示什么？就是我是孙中山的继承人。</p>
 <p>那真是这么回事吗？当然不是。我们现在觉得是，那是一个观念的误解。就像很多儒家说孔孟之道，好像孔子和孟子就是师徒俩人似的，其实不是，这两个人相差一百多年。在孙中山和蒋介石之间，其实也没啥关系，他更不是继承人之间的关系。</p>
-<p>这问题就来了，他既然不是继承人，蒋介石为什么突然能够蹿起成功呢？而且就是短短的不到十年的时间。这是蒋介石一生身上的大疑团。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152701azqskdz7qi5tqvq5.jpg"></p>
+<p>这问题就来了，他既然不是继承人，蒋介石为什么突然能够蹿起成功呢？而且就是短短的不到十年的时间。这是蒋介石一生身上的大疑团。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152701azqskdz7qi5tqvq5.jpg" alt></p>
 <p>03 蒋介石的弥天大谎</p>
 <p>蒋介石扯了一生的大谎，就是他声称自己是日本士官学校毕业的。</p>
 <p>日本士官学校是日本很著名的一个培养军事将领的学校，这里面毕业了很多中国的人才，像什么蒋百里、蔡锷，就是小凤仙她干老公，还有阎锡山、许崇智，都是日本士官学校毕业的，这在当时军界那算是科班毕业。</p>
@@ -4427,7 +4397,7 @@
 <p>第一个意义是中美合作。宋家三姐妹，包括宋子文，都是美国大学毕业的。在美国人看来，我们文化浸染出来的这一家子，回到中国，嫁给了当时最重要的一个青年将领，这是咱们美国人的女婿，而且还让这个人皈依了我们的基督教。所以，从此美国人支持蒋介石，作用后来在抗日战争期间就体现出来了。</p>
 <p>第二，蒋介石终于拥有了亲戚关系的私家班底。从小舅子宋子文到连襟孔祥熙，所谓“四大家族”这时就基本成型了。</p>
 <p>更重要的作用是拿到了党统。宋氏三姐妹的老二是宋庆龄，是国母，是孙中山的遗孀，他娶了宋美龄之后，跟孙中山的关系就变成了连襟。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152704d7efseumz14x9yx9.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201611/04/152704d7efseumz14x9yx9.jpg" alt></p>
 <p>07 股票经纪人蒋介石</p>
 <p>国民党的血统当中其实有现代金融的基因。</p>
 <p>孙中山早年在美国活动，现代资本主义怎么玩是知道的。所以孙中山一辈子经常讲要搞交易所等等，甚至在革命陷入低潮的时候，他就要求这些同盟会的年轻会员，包括蒋介石，去交易所当经纪人，用这种方式挣钱，效率很高，挣的钱来补贴革命。</p>
@@ -4461,8 +4431,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Love/" rel="bookmark">Love</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/The-Three-Kingdoms/" rel="bookmark">The Three Kingdoms</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Story/" rel="bookmark">Story</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/S/Story/" rel="bookmark">Story</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/M/Museum/" rel="bookmark">Museum</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Story/" rel="tag"><i class="fa fa-tag"></i> Story</a>
               <a href="/tags/History/" rel="tag"><i class="fa fa-tag"></i> History</a>
@@ -4475,21 +4466,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/C/Concept/" rel="next" title="Concept">
-                  <i class="fa fa-chevron-left"></i> Concept
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/S/Story/" rel="prev" title="Story">
-                  Story <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/C/Concept/" rel="prev" title="Concept">
+      <i class="fa fa-chevron-left"></i> Concept
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/S/Story/" rel="next" title="Story">
+      Story <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -4502,7 +4490,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -4533,8 +4543,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -4543,14 +4553,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -4561,11 +4571,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -4599,7 +4604,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -4611,51 +4616,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -4664,18 +4630,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -4685,63 +4645,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -4749,14 +4652,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -4783,40 +4686,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Story/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

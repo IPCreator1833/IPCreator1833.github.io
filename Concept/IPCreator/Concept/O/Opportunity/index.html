@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="是人才永远不缺机会，不是人才给你机会也抓不住，临渊羡鱼不如退而结网，聚焦自我成长才是解决问题的王道。">
 <meta name="keywords" content="Opportunity">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/O/Opportunity/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/O/Opportunity/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/O/Opportunity/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="In-the-middle-of-every-difficulty-lies-opportunity.png" data-src="http://opb37u589.bkt.clouddn.com/In-the-middle-of-every-difficulty-lies-opportunity.png?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/In-the-middle-of-every-difficulty-lies-opportunity.png?imageMogr2/thumbnail/!75p" alt="In-the-middle-of-every-difficulty-lies-opportunity.png"></p>
 <blockquote>
 <p>是人才永远不缺机会，不是人才给你机会也抓不住，临渊羡鱼不如退而结网，聚焦自我成长才是解决问题的王道。</p>
 </blockquote>
@@ -318,14 +288,14 @@
 </blockquote>
 <p><a href="https://www.douban.com/people/yanshudetudou/" target="_blank" rel="noopener">“机会并不是平等的。你把握好机会，是能力；你创造出机会，也是能力。”</a></p>
 <p>Deep Thinking from IPCreator</p>
-<p><img alt="Image_20180215075114.jpg" data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075114.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075114.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180215075114.jpg"></p>
 <p>1, Every task is a good opportunity for self-growth.—Win-Win<br>   The greater the challenge, the greater the growth.<br>2, The premise of seizing a good opportunity is to have the necessary ability and experience, as well as contacts.<br>3, Breaking old thinking and old habits can produce new results.<br>4, Take care of yourself first, make yourself comfortable, then say something else.<br>5, Don’t waste any energy and money on useless people and things. That’s what life and struggle are all about.<br>6, My health, happiness, growth, life has nothing to do with others, only Myself.</p>
 <blockquote>
 <p>Create opportunities, identify opportunities, seize opportunities<br>There is no shortage of opportunities, only the ability to seize them.</p>
 </blockquote>
-<p><img alt="Dollarphotoclub_650991851.jpg" data-src="http://opb37u589.bkt.clouddn.com/Dollarphotoclub_650991851.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="2017111215412899.jpg" data-src="http://opb37u589.bkt.clouddn.com/2017111215412899.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="460440-636274412330917926-16x9.jpg" data-src="http://opb37u589.bkt.clouddn.com/460440-636274412330917926-16x9.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Dollarphotoclub_650991851.jpg?imageMogr2/thumbnail/!75p" alt="Dollarphotoclub_650991851.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/2017111215412899.jpg?imageMogr2/thumbnail/!75p" alt="2017111215412899.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/460440-636274412330917926-16x9.jpg?imageMogr2/thumbnail/!75p" alt="460440-636274412330917926-16x9.jpg"></p>
 <h2 id="造成机会不平等的4个因素"><a href="#造成机会不平等的4个因素" class="headerlink" title="造成机会不平等的4个因素"></a><a href="http://www.luojiji.com/thread-10045-1-1.html" target="_blank" rel="noopener">造成机会不平等的4个因素</a></h2><p>罗伯特·帕特南（Robert Putnam）是美国当代最有影响力的政治和社会学者之一。他的代表作包括《使民主运转起来》，研究的是意大利在二战之后如何建立起现代政府，《独自打保龄》研究美国社区的衰落。这两本书都是过去半个世纪被引用非常多的社会科学著作。他也担任过多届美国总统、英国首相、法国总统等政府首脑的顾问，在西方的学术界和政治领域都拥有很大的影响力。</p>
 <p>帕特南最新的一部作品是《我们的孩子》。这本书要讨论的问题同样宏大而且切中现实：美国社会中的不平等和阶层流动机会的变化。</p>
 <p>我们在谈论不平等时，首先要区分两个概念，收入平等和机会平等。</p>
@@ -347,15 +317,15 @@
 <h2 id="成长的秘密"><a href="#成长的秘密" class="headerlink" title="成长的秘密"></a><a href="https://www.jianshu.com/p/b850a0361981" target="_blank" rel="noopener">成长的秘密</a></h2><p>每个人都渴望成长，渴望提升自己的能力。有什么办法可以提升能力，如何提升呢？今天，我就自己最近学习的内容分享一下我的看法，欢迎各位指正。</p>
 <p>一、个人知识内化升华，分享与应用<br>写到这里的时候，我想起了之前学习达梦的一个课程——《个人知识管理》。何为个人知识管理？是指个人为了提升个人的竞争优势，建立自我的知识体系，并不断进行知识的获取与整理、存储与更新、交流与分享、应用与创新的过程。</p>
 <p>很多时候，我们在不知不觉中走入了误区，资料保存了就掌握了。而事实上，我们只是保存了，而且只是增加了硬盘的内存，并没有添加到自己的头脑，更没有内化建立自己的知识体系。没有内化升华，一切就成了垃圾。学习知识，需要形成体系，除了获取和存储外，还要更新、分享、应用和创新。</p>
-<p>知识如何转化为能力呢？能力就是将知识运用到工作生活中，使得下一次出现的时候，依然能做得很好。能力提升的通用模式一般要经过体验、试错、观察、阅读、思考、行动、肯定等环节，总的来说是自己先去做了，再去示范教会别人，这个是成长最快的途径之一。<br><img alt data-src="https://upload-images.jianshu.io/upload_images/4371513-14977b30bd2db218.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/554"></p>
+<p>知识如何转化为能力呢？能力就是将知识运用到工作生活中，使得下一次出现的时候，依然能做得很好。能力提升的通用模式一般要经过体验、试错、观察、阅读、思考、行动、肯定等环节，总的来说是自己先去做了，再去示范教会别人，这个是成长最快的途径之一。<br><img data-src="https://upload-images.jianshu.io/upload_images/4371513-14977b30bd2db218.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/554" alt></p>
 <p>二、行动，刻意练习<br>其实每个人或多或少都有自己的梦想，可大多数人是想得太多而做得太少，猫叔说：不去做，然并卵。想法太多不如去做，知道与做到之间，差着很多个刻意练习。真正提升我们水平的不是文化，不是艺术，不是哲学，不是制度，不是自虐，而是刻意练习！</p>
-<p>想要成为某个领域的顶尖高手，关键在于“刻意”地在这个领域上练习。而刻意练习的关键就是察觉，有意识地训练识别当下的情绪、当下的机会，让情绪带来正面的价值，创造或把握机会。因此，不要因为察觉练习简单而放弃。<br><img alt data-src="https://upload-images.jianshu.io/upload_images/4371513-313c9e76dfd335bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/535"></p>
+<p>想要成为某个领域的顶尖高手，关键在于“刻意”地在这个领域上练习。而刻意练习的关键就是察觉，有意识地训练识别当下的情绪、当下的机会，让情绪带来正面的价值，创造或把握机会。因此，不要因为察觉练习简单而放弃。<br><img data-src="https://upload-images.jianshu.io/upload_images/4371513-313c9e76dfd335bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/535" alt></p>
 <p>三、察觉，利他，共情<br>梦想实践班微课第一项作业是做察觉练习，这个练习是定期记录自己的情绪状态，检查是否偏离自己的目标。这个练习早在刚接触达梦的时候，就有刻意练习过，给我最大的感受是，在紧急的状态下，通过察觉自己的情绪，能更好地控制自己的情绪。另外，在与他人沟通时，能更好地察觉对方的情绪，进而做到共情。</p>
 <p>近期听裙子老师的课程《如何成为一个合格的HRBP》，他提出一个合格的HRBP要有利他心理，即共情。如果与员工对话的过程中，多站在对方角度考虑，那么得到的效果就截然不同。</p>
-<p>这个周二，在跟运营部门开会讨论绩效方案的时候，我想起了裙子老师的利他心，当运营部门人员提出了不同意见和过分要求时，我察觉到自己心里有那么一丝嘲讽，但是我没有去反驳，也没有恼怒，而是调整了一下情绪，作为一个聆听者认真听着他们的处境、他们的难处，以平和的心态引导他们说出自己的看法。虽然讨论会最终的结果没有达成一致的意见，但是在这个过程中，更深层地了解到业务的运作，同时也发现自己在控制情绪上有了明显的提高。<br><img alt data-src="https://upload-images.jianshu.io/upload_images/4371513-905e1d1eb330556e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/554"></p>
+<p>这个周二，在跟运营部门开会讨论绩效方案的时候，我想起了裙子老师的利他心，当运营部门人员提出了不同意见和过分要求时，我察觉到自己心里有那么一丝嘲讽，但是我没有去反驳，也没有恼怒，而是调整了一下情绪，作为一个聆听者认真听着他们的处境、他们的难处，以平和的心态引导他们说出自己的看法。虽然讨论会最终的结果没有达成一致的意见，但是在这个过程中，更深层地了解到业务的运作，同时也发现自己在控制情绪上有了明显的提高。<br><img data-src="https://upload-images.jianshu.io/upload_images/4371513-905e1d1eb330556e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/554" alt></p>
 <p>四、坚持，养成习惯，厚积薄发<br>牛人之所以牛，除了有天赋之外，还离不开行动的勇气，以及坚持下去的毅力。上面提到的想要成为某个领域的顶尖高手，关键在于“刻意”地在这个领域内练习，那怎么练习呢？有2个关键点：第一就是走出舒适区，不断接受各种挑战，才能突破自身的局限，达到前所未有的高度；第二就是保持动力。刻意练习离不开长期的努力，但过分强调意志力的事情都很难成功，保持动力才是关键。</p>
 <p>重复，重复，再重复！想要把一个套路，一个技能，哪怕仅仅是一个生活习惯，甚至是一个心态，长在大脑中，唯一办法就是不断重复。据美国科学家的研究，一个好习惯的养成需要21天，90天的重复会形成稳定的习惯。所以一个行为，如果被别人或自己验证了21次以上，它一定会形成你的习惯。</p>
-<p>习惯经过长时间有准备的沉淀积累，那么在重要时刻，将会发挥作用。就如我现在的状态，通过察觉练习，能够及时地感知自己当下的情绪状态，进而减少与他人争吵对抗的局面。当然目前还有需要加强的地方。<br><img alt data-src="https://upload-images.jianshu.io/upload_images/4371513-4a9281008f2ccdc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/554"></p>
+<p>习惯经过长时间有准备的沉淀积累，那么在重要时刻，将会发挥作用。就如我现在的状态，通过察觉练习，能够及时地感知自己当下的情绪状态，进而减少与他人争吵对抗的局面。当然目前还有需要加强的地方。<br><img data-src="https://upload-images.jianshu.io/upload_images/4371513-4a9281008f2ccdc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/554" alt></p>
 <p>五、总结<br>能力提升的4个环节，第一是将知识分享与应用；第二是刻意练习；第三是察觉练习；第四是厚积薄发。把察觉练习运用到生活和工作中，每个人都能很好地提升自己的能力。</p>
 <h2 id="零工经济：如何用“机会心态”获得成功"><a href="#零工经济：如何用“机会心态”获得成功" class="headerlink" title="零工经济：如何用“机会心态”获得成功"></a><a href="http://www.luojiji.com/thread-11470-1-1.html" target="_blank" rel="noopener">零工经济：如何用“机会心态”获得成功</a></h2><p>如今，零工经济越来越成为一种潮流和趋势。2017年，咨询公司麦肯锡发布的一份“零工经济”报告显示，在美国和欧洲，从事自由职业的人口占到了20%~30%。过去，零工可能只是体力劳动的外包，比如像快餐、零售等行业提供的兼职工作。而随着互联网的发展，脑力和专业工作也可以被重组、外包，比如，我们可以下载一个财务管理软件，找一位会计师。</p>
 <p>美国资深研究员黛安娜·马尔卡希开过一门MBA课程，叫做“创业与零工经济”，这门课被《福布斯》网站评为“全美十大创新性商学院课程”。她在《零工经济》这本书里认为，零工经济不仅让企业和劳动关系发生了变化，也是一种生活方式的革命。在零工经济中，好工作甚至不是必须的，人们只要专注于找到好的工作内容就可以了。</p>
@@ -478,8 +448,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Opportunity/" rel="bookmark">Opportunity</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Opportunity/" rel="tag"><i class="fa fa-tag"></i> Opportunity</a>
           </div>
@@ -491,21 +470,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/C/Confidence/" rel="next" title="Confidence">
-                  <i class="fa fa-chevron-left"></i> Confidence
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/T/Thanksgiving/" rel="prev" title="Thanksgiving">
-                  Thanksgiving <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/C/Confidence/" rel="prev" title="Confidence">
+      <i class="fa fa-chevron-left"></i> Confidence
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/T/Thanksgiving/" rel="next" title="Thanksgiving">
+      Thanksgiving <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -518,7 +494,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -549,8 +547,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -559,14 +557,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -577,11 +575,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -615,7 +608,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -627,51 +620,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -680,18 +634,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -701,63 +649,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -765,14 +656,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -799,40 +690,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/O/Opportunity/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="使命：组织全球的信息，让每个人都能随时、随地获取。">
 <meta name="keywords" content="Google">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/DeepCreator/Company/Google/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/DeepCreator/Company/Google/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/DeepCreator/Company/Google/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,14 +256,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="Google_wordmark.png" data-src="http://opb37u589.bkt.clouddn.com/Google_wordmark.png?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/Google_wordmark.png?imageMogr2/thumbnail/!75p" alt="Google_wordmark.png"></p>
 <blockquote>
 <p>使命：组织全球的信息，让每个人都能随时、随地获取。</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt data-src="http://opb37u589.bkt.clouddn.com/238f43dba8f96fd.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/238f43dba8f96fd.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <h2 id="Google——未来之镜"><a href="#Google——未来之镜" class="headerlink" title="Google——未来之镜"></a><a href="https://book.douban.com/subject/26892520/" target="_blank" rel="noopener">Google——未来之镜</a></h2><p> Was Google Wirklich Will</p>
-<p><img alt="google20180726.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/google20180726.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/google20180726.jpg?imageMogr2/thumbnail/!75p" alt="google20180726.jpg"></p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>目　录<br>前　言　数字时代的银河战舰 1</p>
 <p>第1章    根基：从学生宿舍到数字帝国1<br>比尔·盖茨没有想到，在他出资兴建的教学楼里培养出了微软历史上最强劲的对手；贝希托尔斯海姆没有想到，自己签发的10 万美元支票竟成了经济史上回报率最高的一笔投资。一切看似偶然，却成就了互联网时代谷歌必然的霸主地位。<br>规划中的意外，历史上的必然9<br>比尔·盖茨帮谷歌做“梦”12<br>车库起家的互联网传奇18<br>奇异博士的取财之道20<br>要工程师，也要生意人22<br>任性而强势的IPO26<br>拳打雅虎，脚踢微软32<br>告别成人监管36</p>
 <p>第2章    创始人：性格迥异，野心如一39<br>一个热衷社交、魅力超凡的现实版钢铁侠，加一个羞涩内敛、精于发明的硅谷版特斯拉，这是打造一家科技巨头的完美组合吗？选择埃里克?施密特帮助谷歌扭转千万亏损、实现百亿盈利，是创始人的深思熟虑还是仅因为三人意趣相投？<br>现实版托尼·史塔克42<br>“温柔”的野心家47<br>蒙台梭利双子星56<br>谷歌四大金刚57<br>重掌大权，全面整顿60<br>数码嬉皮士的乌托邦63<br>火人节与登月文化69</p>
@@ -307,7 +277,7 @@
 <p>Positive side:</p>
 <p>想象力：谷歌的X实验室聚集了全世界最为优秀的科学家和工程师，并且不惜一切金钱成本投入最为前沿的科技探索，即使某个想法听起来疯狂至极，谷歌CEO拉里也会鼓励员工去大胆尝试。印象最深的就是使用热气球辐射5000英里的WIFI信号，在贫困地区谷歌与运营商合作，谷歌提供技术支持，运营商提供当地的运营许可，使得贫穷的人民可以通过互联网接收世界信息，而谷歌也可以同运营商盈利。</p>
 <p>专注力：早期在核心搜索业务蒸蒸日上之时，谷歌也试图不断地拓宽边界，比如曾经想要通过收购手机厂商摩托罗达，达到自己提供软件系统，同时生产手机售卖的盈利模式，但是不就便以失败告终。经过一些并不成功的尝试，谷歌管理层决定在搜索核心的技术上更专注，因为对于用户而言轻易跳到另外一个搜索引擎界面是相对容易的。而为了能够使谷歌各项目与管理结构更为清晰，Alphabet已经将重要的几项项目和业务分别成立子公司运营。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1173720.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1173720.jpg" alt></p>
 <p>对人才的尊重：谷歌为了招揽世界各地人才，不仅下血本提供好的条件更尊重其研究方向，比如拉里曾为了世界顶级生物医药学家单独组建子公司研究医疗项目。并且谷歌的HR系统也时时刻刻进行行为学研究，以期为员工提供更好的服务。</p>
 <p>看到未来：书中经常会提到谷歌的管理者思考的是未来10年科技发展后的社会是什么样子，家庭是什么样子，而相应的去支持相关发展的科技。作为普通人的我们应该思考为什么我们都是这些科技公司的消费者？他们是不是真的在操控我们的生活？</p>
 <p>Negative Side:</p>
@@ -321,7 +291,7 @@
 <p>1.对社会有益。<br>2.避免制造或加剧社会偏见。<br>3.提前测试以保证安全。<br>4.由人类承担责任，即AI技术将受到适当的人类指导和控制。<br>5.保证隐私。<br>6.坚持<a href="https://deepcreator.com/Concept/Science.html" target="_blank" rel="noopener">科学</a>的高标准。<br>7.从主要用途、技术独特性、规模等方面来权衡。</p>
 <p>此外，谷歌还宣布，除了上面七个原则，谷歌不会在以下应用领域设计或部署AI：1.造成或者可能造成整体伤害的技术。比如，一项技术可能造成伤害，谷歌只会在其好处大大超过伤害的情况下进行，并会提供适当的安全措施。2.武器或其他用于直接伤害人类的技术。3.违反国际规范收集或使用信息进行监视的技术。4.违反了被广泛接受的国际法和人权原则的技术。</p>
 <p>谷歌CEO 桑达尔·皮查伊（Sundar Pichai）在推特上评论了这份原则：“我们将谷歌的AI原则和实践分享给大家。AI的开发和使用方式将在未来很多年里持续带来重大影响。我们感到了强烈的责任感，要把这件事做好。”</p>
-<h2 id="Google-反诉-Rockstar：Android-厂商，你们的背后我来保护"><a href="#Google-反诉-Rockstar：Android-厂商，你们的背后我来保护" class="headerlink" title="Google 反诉 Rockstar：Android 厂商，你们的背后我来保护"></a><a href="http://www.ifanr.com/391308" target="_blank" rel="noopener">Google 反诉 Rockstar：Android 厂商，你们的背后我来保护</a></h2><p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2013/12/Android-Robot-3D.jpg"></p>
+<h2 id="Google-反诉-Rockstar：Android-厂商，你们的背后我来保护"><a href="#Google-反诉-Rockstar：Android-厂商，你们的背后我来保护" class="headerlink" title="Google 反诉 Rockstar：Android 厂商，你们的背后我来保护"></a><a href="http://www.ifanr.com/391308" target="_blank" rel="noopener">Google 反诉 Rockstar：Android 厂商，你们的背后我来保护</a></h2><p><img data-src="https://images.ifanr.cn/wp-content/uploads/2013/12/Android-Robot-3D.jpg" alt></p>
 <p>2013-12-25 16:25</p>
 <p>剪不断理还乱的专利问题一直让各厂商头疼着，也难怪各大厂商都需要成立庞大的律师团队来应对来自竞争对手的专利诉讼，Google 作为业界领头企业，Android 目前作为使用最广的智能手机操作系统，也毫不例外地成为诉讼的对象。</p>
 <p>由于 Android 是开放系统，因而使用 Android 系统的制造商也经常被牵连其中。</p>
@@ -383,7 +353,7 @@
 <p>第七，<strong>提高执行力</strong>。这是李江从拉里·佩奇那里学到的。拉里·佩奇年轻的时候，读了发明家尼古拉·特斯拉的故事。因为尼古拉·特斯拉没办法把自己的许多发明商品化或者利用起来，去世的时候身无分文。所以，当拉里·佩奇在2011年重返谷歌时，他把公司的注意力集中在提高增长速度和执行上。拉里·佩奇说，谷歌一直在提高发展速度，提高执行力，把重点放在能改变世界的大赌注上。所以，世界不会在意你多聪明或者多有创意，世界也不总是公平的。你要专注于执行和获得结果。</p>
 <p>以上就是投资人李江从谷歌的公开信里学到的心得，希望对你有启发。</p>
 <p>本期内容参考来源：《投资人心得：我读了谷歌创始人所有的公开信，学到了这些》，见于科技媒体36氪。</p>
-<h2 id="谷歌在中国深圳再开办公室-主要开展智能硬件业务"><a href="#谷歌在中国深圳再开办公室-主要开展智能硬件业务" class="headerlink" title="谷歌在中国深圳再开办公室 主要开展智能硬件业务"></a><a href="http://tech.ifeng.com/a/20180117/44849001_0.shtml" target="_blank" rel="noopener">谷歌在中国深圳再开办公室 主要开展智能硬件业务</a></h2><p><img alt data-src="http://p3.ifengimg.com/a/2018_03/67a5fb35d76ef51_size78_w800_h531.jpg"></p>
+<h2 id="谷歌在中国深圳再开办公室-主要开展智能硬件业务"><a href="#谷歌在中国深圳再开办公室-主要开展智能硬件业务" class="headerlink" title="谷歌在中国深圳再开办公室 主要开展智能硬件业务"></a><a href="http://tech.ifeng.com/a/20180117/44849001_0.shtml" target="_blank" rel="noopener">谷歌在中国深圳再开办公室 主要开展智能硬件业务</a></h2><p><img data-src="http://p3.ifengimg.com/a/2018_03/67a5fb35d76ef51_size78_w800_h531.jpg" alt></p>
 <p>凤凰网科技讯（作者/花子健）1月17日消息，根据一封谷歌内部电子邮件显示，谷歌本周已在深圳开设办公室。一个月前的上海谷歌开发者日，谷歌宣布将在中国成立人工智能实验室。</p>
 <p>深圳毗邻香港，被视为全球硬件中心。谷歌在深圳租用了一处办公楼的办公室，这处办公室本周开始运行。</p>
 <p>以下是谷歌发给员工的邮件：</p>
@@ -436,7 +406,7 @@
 <p>不过，整体来看，这件事带来的影响还不小。笔者获悉，不少外单手机厂商2018年手机销量预期超1000万部，现在GMS认证受阻，销量难及预期。而手机安卓系统不管是最新的Android Go版本还是任何一个版本，只要是基于安卓原生态系统，现在都是需要通过通过谷歌GMS认证，包括一加、传音等主打海外市场的品牌也不例外。<strong>如果没有过GMS认证，海外上市的手机系统将会不停的出现弹窗，无法正常使用。</strong></p>
 <p>此外，在美国禁止国内企业向中兴出售元器件后，市场传言，中兴手机可能失去安卓牌照，或无法再使用谷歌的安卓操作系统。但截至目前，谷歌未就中兴手机能否使用安卓系统作出决定，相信谷歌也不敢贸然打出这张牌。</p>
 <h2 id="专利战恼人？Google-组建了一个-Android-“复仇者联盟”"><a href="#专利战恼人？Google-组建了一个-Android-“复仇者联盟”" class="headerlink" title="专利战恼人？Google 组建了一个 Android “复仇者联盟”"></a><a href="http://www.ifanr.com/813883" target="_blank" rel="noopener">专利战恼人？Google 组建了一个 Android “复仇者联盟”</a></h2><p>2017-04-05 16:09</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2017/04/you-get-android-.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2017/04/you-get-android-.jpg" alt></p>
 <p>为了维护智能手机专利界的“和平”，Google 又组建了一个专利“复仇者联盟”。</p>
 <p>近日，Google 宣布成立了一个 Android 专利联盟——PAX，以促进 Android 阵营内厂商的内部合作，共同抵御可能的专利诉讼。</p>
 <p>Google 表示，联盟名 PAX 取自拉丁语，意思是“<strong>和平</strong>”。在知识产权领域，专利之间的“和平”就意味着各厂商之间可以通过不断的创新和有益的竞争更好地造福用户。</p>
@@ -448,7 +418,7 @@
 <p>甲骨文公司也曾以 Android 无授权使用 Java 语言为由诉 Google 侵权。</p>
 <p>但是与巨额的投入相比，专利战的收效甚微。因为 Google 并不通过免费的 Android 系统获利，所以对 Google 的专利指控往往很难获得支持。</p>
 <p>更重要的是，专利战并没有遏制住 Android 的发展趋势。在短短的几年内，Android 的市场份额迅速增长，到 2014 年 7 月，Android 操作系统的设备使用量首次超过了 iOS 平台；今年 4 月，Android 首次超越 Windows，成为消费者接入互联网使用最广泛的移动操作系统。</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2017/04/android-over-windows.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2017/04/android-over-windows.jpg" alt></p>
 <p>2011 年，Google 斥资 125 亿美元收购了摩托罗拉移动，将后者的 2.45 万份专利组合收入怀中，更加巩固了自己在专利战中的有利地位。</p>
 <p>万般无奈之下，2014 年 5 月，苹果和 Google 发布了联合声明，表示双方将对关于智能手机的所有专利诉讼进行“和解”，未来还将在专利改革领域展开更多合作。</p>
 <p>但苹果的“妥协”并不意味着投降。2014 年，苹果联合杜邦、福特、通用电气、微软和辉瑞成立了名为“美国创新联盟”的专利维护组织，声称希望能够遏制“美国媒体、国会及法院对专利体系抱有的一种过分夸大的负面看法和敌意”。</p>
@@ -471,7 +441,7 @@
 <p>截至目前，苹果和 Google 都没有对此事发表任何评论，该两家公司达成和解的真正原因我们暂时不得而知。</p>
 <p>根据纽约时报 Bits 博客的观点，此次和解很有可能是因为苹果和 Google 面对着共同的敌人——专利流氓。在过去的五年间，苹果和 Google 因专利事务共计被起诉将近 200 次。据悉，当红炸子鸡苹果在去年是首当其冲的专利诉讼对象，而 Google 也位于三甲之列。</p>
 <p>需要强调的是，苹果和 Google 达成的这份和解协议，与苹果和三星之间的专利战没有任何关系。苹果和三星的专利案从 2011 年 4 月开始，持续两年多的诉讼波及了至少 10 个国家和地区。在本月初的最近一次判决中，三星被指侵犯苹果的多项专利，应向苹果赔偿近 1.2 亿美元。</p>
-<h2 id="大方-Google-推出专利共享计划"><a href="#大方-Google-推出专利共享计划" class="headerlink" title="大方 Google 推出专利共享计划"></a><a href="http://www.ifanr.com/news/270048" target="_blank" rel="noopener">大方 Google 推出专利共享计划</a></h2><p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2013/03/234.jpg"></p>
+<h2 id="大方-Google-推出专利共享计划"><a href="#大方-Google-推出专利共享计划" class="headerlink" title="大方 Google 推出专利共享计划"></a><a href="http://www.ifanr.com/news/270048" target="_blank" rel="noopener">大方 Google 推出专利共享计划</a></h2><p><img data-src="https://images.ifanr.cn/wp-content/uploads/2013/03/234.jpg" alt></p>
 <p>2013-03-29 09:56</p>
 <p>The Verge 的消息，Google 宣布了启动<strong> Open Patent Non-Assertion (OPN) Pledge</strong>，承诺不会因部分专利起诉开发人员、经销商或者开源软件的使用者，除非 Google 自己先受到起诉。</p>
 <p>不过这次适用于 OPN Pledge 的专利只有 10 个，跟用来处理大数据的 MapReduce 有关。Google 表示这个专利在业界已经得到了广泛使用，未来会继续增加其他专利。</p>
@@ -503,7 +473,7 @@
 <p>微软原先起诉的是摩托罗拉，微软主张摩托罗拉及其德国分公司推广 Google Maps Android 客户端的行为侵犯了他们的知识产权。在去年 10 月举行的听证会上，摩托罗拉表示，自己不知道 Google 的后台服务器是怎么运行的，微软这才将 Google 一同送上被告席。</p>
 <p>慕尼黑地方法庭法官 Matthias Zigann 清晰无误地对 Google 方面表态，法院非常有可能做出对 Google 不利的裁定。而败诉的结果是，Google 必须封停德国 IP 对 Google Maps 网页或移动客户端的访问。事实上，由于微软的专利涉及到软件开发的基础层面，Android 系统都与其有所牵连，三星、HTC、LG 等厂商早已为此与微软签订专利授权许可证协定，但 Google 方面从不承认 Android 中流淌着微软的血脉。</p>
 <p>值得一提的是，这场官司的挑起者是<a href="https://deepcreator.com/Company/Motorola.html" target="_blank" rel="noopener">摩托罗拉</a>，而不是微软。摩托罗拉向法院提交了四起针对微软的诉讼，微软迫于招架只能反诉，但事态却演化至如今局面。该案的判决将在两个月后揭晓。</p>
-<h2 id="Google：收购摩托罗拉移动不全为专利"><a href="#Google：收购摩托罗拉移动不全为专利" class="headerlink" title="Google：收购摩托罗拉移动不全为专利"></a><a href="http://www.ifanr.com/121761" target="_blank" rel="noopener">Google：收购摩托罗拉移动不全为专利</a></h2><p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2012/07/00208.jpg"></p>
+<h2 id="Google：收购摩托罗拉移动不全为专利"><a href="#Google：收购摩托罗拉移动不全为专利" class="headerlink" title="Google：收购摩托罗拉移动不全为专利"></a><a href="http://www.ifanr.com/121761" target="_blank" rel="noopener">Google：收购摩托罗拉移动不全为专利</a></h2><p><img data-src="https://images.ifanr.cn/wp-content/uploads/2012/07/00208.jpg" alt></p>
 <p>2012-07-26 09:43</p>
 <p>去年八月，Google 一纸声明宣布斥资 <strong>125 亿</strong> 美元收购摩托罗拉移动。直到今年五月在多数国家完成对 Google 此次收购的反垄断调查之后，Google 才正式完成对摩托罗拉的收购。我们在感叹 Google 如此豪爽花费 125 亿美元的同时，也在为摩托罗拉移动的未来捏着一把汗。</p>
 <p>当初 Google 在发表收购声明时就曾承认是此次的收购是为专利而来。摩托罗拉移动算是一个专利大户，它的手中握着 1.7 万个至关重要的专利。对于保护增强 Android 系统的知识产权有很大帮助。当然也是多了几件和苹果的专利战对抗的武器。</p>
@@ -516,7 +486,7 @@
 <p>其中 55 亿美元用于摩托罗拉移动所持有专利和开发技术的价格。<br>其中 29 亿美元用于收购是所付的现金。<br>其中 26 亿美元用于为摩托罗拉的商誉（Goodwill：指的是收购之后预计会给 Google 带来的协同增效）。<br>其中 7.3 亿美元用于摩托罗拉移动所具有的客户关系。<br>其中 6.7 亿美元用于摩托罗拉移动其他的净额资产。</p>
 <p>从上述这些细节可以看出，尽管 Google 表示收购不全是为了专利，但其花费在专利上的金额仍然占很大一部分。当然为了让 Android 系统以及 Android 设备制造商不被苹果和其他专利战对手欺负，Google 耗资 55 亿美元为专利也是无可厚非的。</p>
 <h2 id="Google-确认停售-Galaxy-Nexus，下周放出更新避开专利"><a href="#Google-确认停售-Galaxy-Nexus，下周放出更新避开专利" class="headerlink" title="Google 确认停售 Galaxy Nexus，下周放出更新避开专利"></a><a href="http://www.ifanr.com/news/108129" target="_blank" rel="noopener">Google 确认停售 Galaxy Nexus，下周放出更新避开专利</a></h2><p>2012-07-06 10:05</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2012/07/%E6%8D%95%E8%8E%B7-1024x447.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2012/07/%E6%8D%95%E8%8E%B7-1024x447.jpg" alt></p>
 <p>根据 ABC 的消息，Google 确认了首款 Android 4.0（ICS）手机 Galaxy Nexus 已经从 Play 商店下架。同时，正如我们昨天提到的， Android 4.1（Jelly Bean）的更新将在下周放出，为了避开苹果的专利，在这次更新中用户将无法在主屏搜索框中进行本地搜索，只能搜索互联网的内容。</p>
 <blockquote>
 <p>在这场官司中，主要就是关于 Galaxy Nexus 上的“快速搜索框”，用户可以通过这个搜索框搜索包括联系人、音乐、应用等本地信息。但是苹果称，他们已经持有“计算机信息检索通用接口”（universal interface for retrieval of information in a computer system）的专利。</p>
@@ -533,27 +503,27 @@
 <p>整个案件审理的关键在于 Java API 的使用是否需要授权，如何界定合理使用。</p>
 </blockquote>
 <p>据网易科技，在此项案件审理过程中，Google 的出席证人包括了 Alphabet 执行董事长 Eric Schmidt 。甲骨文 2010 年收购 Sun Microsystems 时，尽管 Eric Schmidt 本人参与了 Google 的授权谈判，不过根据他多年研发 Java 的经验来看，他认为 Google 无需通过谈判就应该被允许使用 Java 应用程序接口（API），Sun Microsystems 以开源和免费方式推广它们，而非通过授权或出售方式。</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/google-2.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/google-2.jpg" alt></p>
 <p>Google 要说服陪审团，Google 使用了 Java 技术去创新，并不是简单地抄袭代码。</p>
 <p>而甲骨文曾尝试证明 Android 系统对于其公司本身的 Java 授权业务的影响是毁灭性的，并认为 Google 在 Android 上获利已 420 亿美元。甲骨文方面的观点是，“许多我们以前要授权才能拿到拷贝的公司因为用了免费的 Android 之后就不再买我们授权了。”</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/oracle.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/oracle.jpg" alt></p>
 <p>尽管这一诉讼已经宣判，但 CNBC 在视频报道中提及甲骨文认为有很多理由继续上诉，并会将付诸行动。“我们坚定认为 Google 非法抄袭 Java 核心技术开发了 Android 系统，并打入移动设备市场，”</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/cnbc.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/cnbc.jpg" alt></p>
 <p>Google 则认为这是“<a href="https://deepcreator.com/IPR/Android.html" target="_blank" rel="noopener">Android</a> 生态系统、Java 编程群体，以及依赖免费开放编程语言开发创新性消费产品的软件开发商的一次胜利。”</p>
 <p>知产力曾在去年曾发表文章，提及了这一案件的深远影响。Google 除去将要提供大量的赔偿金，可能还需要为大量的 Android 设备支付源源不断的版权费。</p>
 <p>对于行业来说，该案件审判结果很可能作为先例，程序员们也会痛苦的领悟到原来他们一直使用的计算机应用程序编程接口（以及其中的源代码），特别是“JAVA  API”，竟也是受到版权保护的，从这重要意义上来讲，对于开源软件界而言无疑是一场难以承受的灾难。</p>
 <h2 id="甲骨文说-Android-抄了要给钱！Google-创始人表示：程序员的事那怎么是抄"><a href="#甲骨文说-Android-抄了要给钱！Google-创始人表示：程序员的事那怎么是抄" class="headerlink" title="甲骨文说 Android 抄了要给钱！Google 创始人表示：程序员的事那怎么是抄"></a><a href="http://www.ifanr.com/659477" target="_blank" rel="noopener">甲骨文说 Android 抄了要给钱！Google 创始人表示：程序员的事那怎么是抄</a></h2><p>2016-05-20 23:17</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/Female-programmers-girl-code-Django-Girls-Manchester.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/Female-programmers-girl-code-Django-Girls-Manchester.jpg" alt></p>
 <p>不，我们没有付钱给免费和开放的事物。</p>
 <p>在今天早些时候，外媒 Ars Technica 带来了关于甲骨文和 Google 版权案的最新进展。Google 联合创始人之一拉里·佩奇（Larry Page）出席作证，在长达一个半小时的律师询问中，佩奇虽然声带不适，但还是断断续续的回答了来自双方律师的问题，并表示他认为 Java“是免费和开放的”。</p>
 <p>在法庭上中甲骨文方律师一环接一环的提问，试图让佩奇承认 Google 并没有为 Android 系统获得过 Java 授权。</p>
 <p>而面对甲骨文方律师的诘问，佩奇在法庭上做出了开篇的言论。</p>
 <p>软件上的版权大战<br>Google 和甲骨文之间的版权案，远比苹果和三星的专利战要旷日持久。</p>
 <p>如果追溯的话，时间要回到 2010 年，当时甲骨文以 Android 未经授权使用 Java API 起诉了 Google，但是在 2012 Google 成功的让法庭认可了 API 不在著作权保护范畴内的观点，使地方法院最终裁定为 Google 无须向甲骨文赔偿。</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2012/10/oracle-suits-google.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2012/10/oracle-suits-google.jpg" alt></p>
 <p>但是这个理由却在 2014 年失效了。当时联邦上诉法院三名法官意见一致的将案件判决驳回，并宣布 <strong>API 受著作权保护</strong>。</p>
 <p>随后 Google 上诉到了联邦最高法院，并找来了 Yahoo、HP、Red Had 等开源公司支援，而甲骨文则找到了微软、EMC、NatApp 助威。</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/Supreme-Court-of-the-United-States-Oblique_facade_1_US_Supreme_Court.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/Supreme-Court-of-the-United-States-Oblique_facade_1_US_Supreme_Court.jpg" alt></p>
 <p>2015年联邦最高法院驳回上诉，将本案发回地方法院重审。</p>
 <p>而本月其实已经是地方法院的二度开庭，计划要先用十周听证词。</p>
 <p>一切争议的核心<br>这场软件界的版权大战，也要远比苹果和三星的设计专利战纠结。</p>
@@ -570,11 +540,11 @@
 <p>}</p>
 <p>这九行代码最初出现在 OpenJDK 中，而 Google 可以说连符号都没变的用了。</p>
 <p>而这重要的九行的作者也同样重要，他就是 Java 经典书籍《Effective Java》的作者——Joshua Bloch。</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/Effective-Java-768x994.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/Effective-Java-768x994.jpg" alt></p>
 <p>Joshua Bloch 在 Sun 工作期间，领导开发了 Java 集合框架、java.math 套件与 assert 机制等功能，Java API 也是出自他的指尖。</p>
 <p>但是他在 2004 年加入了 Google，并成为了 Google 的首席 Java 设计师，到了 2008 年他加入了 Android 项目，而在此期间他还在给 Sun 的开源项目 OpenJDK 贡献代码。</p>
 <p>2009 年，甲骨文收购 Sun。</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/Joshua-bloch.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2016/05/Joshua-bloch.jpg" alt></p>
 <p>从这个时间线上，爱范儿觉得这九行代码可能就是同一个人写的……</p>
 <p>在苹果和三星的设计专利战上，一方先看了另一方图标等设计而做出了相似的设计，爱范儿还能武断的指责谁是抄袭者。</p>
 <p>但同一个作者写的相同代码应该怎么算？</p>
@@ -617,7 +587,7 @@
 <p>对广大 Android 用户而言，除了看一场大战之外也许并不会有什么直接影响。如果 Google 失利，现有的 Android 设备可以继续使用，那么以后各大厂商出售 Android 的收益则很可能有相当一部分装进甲骨文的腰包，并且最终还是由客户买单。</p>
 <p>说到底，这场官司打来打去本质上还是离不开利益，但是对于旁观者而言，或许更多的是利益之外的收获。</p>
 <h2 id="甲骨文-Java-专利索赔：被伤害与侮辱的人？"><a href="#甲骨文-Java-专利索赔：被伤害与侮辱的人？" class="headerlink" title="甲骨文 Java 专利索赔：被伤害与侮辱的人？"></a><a href="http://www.ifanr.com/80553" target="_blank" rel="noopener">甲骨文 Java 专利索赔：被伤害与侮辱的人？</a></h2><p>2012-03-30 15:35</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2012/03/07464601477485972.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2012/03/07464601477485972.jpg" alt></p>
 <p>据路透社报道，在 Google 与甲骨文（Oracle）关于 Java 专利纠纷将要宣判之际，Google 提出了一个一揽子赔偿方案，甲骨文嫌价低，没有接受。</p>
 <p>这个方案是这样的：</p>
 <p>假如甲骨文能够在即将到来的审判中证明 Google 的 Android 系统侵犯甲骨文的专利，Google 将从每年的 Android 收入中拿出一部分来赔偿甲骨文的损失。</p>
@@ -633,18 +603,18 @@
 <h2 id="Google-应对甲骨文可能失利-amp-One-more-thing"><a href="#Google-应对甲骨文可能失利-amp-One-more-thing" class="headerlink" title="Google 应对甲骨文可能失利 &amp; One more thing"></a><a href="http://www.ifanr.com/51762" target="_blank" rel="noopener">Google 应对甲骨文可能失利 &amp; One more thing</a></h2><p>2011-09-08 17:30</p>
 <p>昨日，Oracle 状告 Google 窃用 Java 源代码一事有了最新的进展，根据一直关注此事的 Florian Mueller 的消息，现在所披露的细节对 Google 不利。</p>
 <p>一封 Andy Rubin 的电子邮件</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2011/09/06-01-13-Rubin-email-480x389.png"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2011/09/06-01-13-Rubin-email-480x389.png" alt></p>
 <p>所披露的第一个细节是 Andy Rubin 写给 Sergey 的一封电子邮件，内容显示 Sun 愿意采用类似授权给 RedHat 的“专利许可证”的方式把 Java 专利授权给 Android。而 Google 需支付 Sun 一年一亿美元的权利金。</p>
 <p>然而，Android 最终并未获得 Sun 授权，这是为什么？Android 的员工曾经记录：“全部原因是因为<a href="https://deepcreator.com/IPR/Open%20Source%20License.html" target="_blank" rel="noopener"> GPL 协议</a>只保护 Sun 的利益。”也许双方在遵守哪个开源协议上产生了分歧。若 Google 必须遵守 GPL 协议的话，意味着 Android 必须完全开源，这不符合 Google 的愿望，不论从由广告驱动的商业模式还是从最近准备闭源动作来看。</p>
 <p>总之，这封信件意味着 Android 早期源代码使用了 Sun 的专利。</p>
 <p>代码一致</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2011/09/TimSort-code-copying-480x175.png"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2011/09/TimSort-code-copying-480x175.png" alt></p>
 <p>在 Oarcle 提交的证据中，有一张代码对比的图片，该图表明 Java 的 Arrays 函数与 Android 的 TimeSort 函数一致 。</p>
 <p>Google 曾经指出这段代码来自第三方，和 Google 无关。但是证据显示，这段代码“正好”来自 Google 的工程师 Joshua Bloch（Bloch 此前曾为 Sun 工作，来到 Google 之后一直担任 Chief Java Architec 职位）。最糟糕的是，他承认他把这段代码从 Sun 复制到 Android 中去：</p>
 <p>“Q：你是否在为 TimeSort 工作的时候回忆起 Sun 的源代码？</p>
 <p>A：我没有回忆，我相信我自己。我认为它们的特征相似，事实上，三个争议点拥有一样的顺序和一样的名字，是在强烈的暗示我回忆过（Sun 的代码）。”</p>
 <p>One more thing</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2011/09/Lead-device-concept.png"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2011/09/Lead-device-concept.png" alt></p>
 <p>在本次公开披露的文件中，还有一个有趣的文档，虽然不会影响到本次诉讼的结果，但可以看出 Google 的其他方面。</p>
 <p>该文档的第三条条款显示，若手机厂商按照 Google 所提供的规格制造和销售手机，那么它将取得访问 Android 最新版本的权利。</p>
 <p>这意味着 Android 还拥有一个“私有”频道，向合作伙伴提供比竞争对手更新的系统版本。那么最近被 Google 收购的摩托罗拉，会不会比 HTC、三星、LG 等厂商更早的拥有最新的 Android？而且，Google 和 Amazon 一样，它提供的是服务，不需要在硬件上赚钱。摩托罗拉会不会提供大量低价的 Android 手机来参与市场竞争？</p>
@@ -655,8 +625,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Google/" rel="bookmark">Google</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/iDeepLearn/Profession/Google/" rel="bookmark">Google</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/DeepCreator/IPR/Android/" rel="bookmark">Android</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/AI/IPCreator/Technology/AI/TensorFlow/Tensorflow Lite/" rel="bookmark">Tensorflow Lite</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/IPCreator/Company/Google/" rel="bookmark">Google</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Google/" rel="tag"><i class="fa fa-tag"></i> Google</a>
           </div>
@@ -668,21 +659,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/P/Problem/" rel="next" title="Problem">
-                  <i class="fa fa-chevron-left"></i> Problem
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Company/IPCreator/Company/Google/" rel="prev" title="Google">
-                  Google <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/P/Problem/" rel="prev" title="Problem">
+      <i class="fa fa-chevron-left"></i> Problem
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Company/IPCreator/Company/Google/" rel="next" title="Google">
+      Google <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -695,7 +683,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -726,8 +736,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -736,14 +746,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -754,11 +764,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -792,7 +797,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -804,51 +809,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -857,18 +823,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -878,63 +838,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -942,14 +845,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -976,40 +879,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/DeepCreator/Company/Google/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="有上山就有下山，有高潮就有低潮，有波峰就有波谷，三十年河东，三十年河西。">
 <meta name="keywords" content="Business,Period,Cycle">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Period/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Period/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Period/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="period20180720.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/period20180720.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/period20180720.jpg?imageMogr2/thumbnail/!75p" alt="period20180720.jpg"></p>
 <blockquote>
 <p>有上山就有下山，有高潮就有低潮，有波峰就有波谷，三十年河东，三十年河西。</p>
 </blockquote>
@@ -299,25 +269,25 @@
 <pre><code>“现在是上升趋势”
 “现在是下降趋势”
 </code></pre><p>这种描述尽管有时候还算管用，但更多的时候却是肤浅的、危险的，因为一个上升趋势要加上一个下降趋势才构成一个完整的周期。而实际上，真正的趋势常常需要在多个周期（至少2个）之后才能真实展现。</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-8-44.jpg"></p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-8-44.jpg" alt></p>
 <p>如果我们探究的是真正的趋势，就会发现，上升与下降只不过是一个真理的表象 —— 现实的经济里没有直线，只有波（动）。</p>
 <p>在一个很长的波段中，从任何一个点前后望，看起来都像自己身处在一条直线而不是曲线上，就好像我们站在地球上却很难感知我们自己其实是站在球面上而不是平面上一样。</p>
 <p>一个上升与一个下降构成一个周期。2 个或多个周期之后，如果我们发现曲线就好像是数学课本里的 sin 曲线的话，那么所谓的“趋势”实际上就是一条水平线而已，而我们常常说的且在寻找的所谓“趋势”应该是个要么上升、要么下降的线条才对，因为“水平”等于“无变化”，无变化就无趋势。</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-9-47.jpg"></p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-9-47.jpg" alt></p>
 <p>这就解释了为什么有些人认定的所谓的趋势在另外一些人眼里根本谈不上是趋势，因为后者重视的是1个以上的周期之后所显现的真正的趋势。这也解释了为什么“跟涨杀跌”的人必然吃亏，因为他们所看到的并不是实际的趋势，他们看到的和把握的只不过是幻象而已。</p>
 <p>下面是 1800 年至 2012 年的股票和债券收益的收益比较图，红色是股票指数（SPXTRD），蓝色是债券指数（TRUSG 10M）。</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-10-50.png"></p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-10-50.png" alt></p>
 <p>起起落落这么多年，股权投资和债权投资的趋势其实是一样的 —— 都在上升。只不过，虽然债权投资“看起来更稳定”，即波动相对比较小，但涨幅却落后于股权投资。</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-11-53.jpg"></p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-11-53.jpg" alt></p>
 <p>而从上面这张图中我们会发现，长期来看，投资黄金、美元比起投资股票简直是“弱爆了” —— 不管你同不同意。这也是为什么现在越来越多的人认为“股权收益时代来了”的重要原因 —— 其实早就存在了。</p>
 <blockquote>
 <p>所以，关注周期，以及多个周期背后显现出来的真正趋势，会给你一个全新且更为可靠的世界和视界。</p>
 </blockquote>
 <p>进而，几乎一切事物，无论是抽象的还是具体的，都有它自己的周期。而他们的周期不大可能一致。于是，几乎一切的机会和陷阱都隐藏在周期与周期之间的差异上。据说GDP和股市的周期轮换如下图所示。</p>
 <p>还有个“库伯勒 —— 罗丝改变曲线”（Kübler-Ross change curve）特别好玩，它看起来是这样的。</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-13-59.png"></p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-13-59.png" alt></p>
 <p>更进一步，人们发现，任何新生事物的发展过程（Transition Curve）也是差不多的。</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-14-62.png"></p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/licai-14-62.png" alt></p>
 <p>于是，我们可以反思这样的现象了：每次巨大技术变革出现的时候，都有一批投资者死在路上。为什么呢？因为他们看到了所谓的“趋势”，却忘记了或者不知道真正的趋势需要 1 个以上的周期才会真正显现。回顾一下历史吧，互联网、NetPC（后来所谓的“云”）等都是如此。再如，我相对比较了解的比特币，现在在这样一个阶段：比特币正在引发很多人的愤怒。</p>
 <blockquote>
 <p>对周期的深入理解，甚至可能影响一个人的性格。在我看来，所谓的不屈不挠，所谓的坚持不懈，更多的时候，只不过是因为对自己身处某个周期的某个位置非常了解，所以才更容易作出的决定。</p>
@@ -335,7 +305,7 @@
 <p>3.再次是库兹涅茨周期。库兹涅茨周期的长度一般为10年，它的解释为房地产周期，其实这也代表了相关耐用消费品行业、金融行业的周期性。在新产品出现所带来的经济增长和财富积累，将带动周边行业的景气度，从而进一步刺激经济的增长。由于库兹涅茨周期是朱格拉周期和康波周期的从属波，因此一般波形相同，但滞后于朱格拉周期。4.最后是基钦周期。基钦周期又称库存周期。库存是企业能够调整经营成本和经营规模的最小决策变量，库存周期的变化影响经济的短期扰动。</p>
 <p>二、现代世界经济理论的更新。在古典经济学理论中，经济过热一般不会以经济危机的方式结束，市场会及时地进行自我调节，或依靠政府微调恢复正常。但如今，世界经济体之间似乎很难依靠自身免疫力保持健康。这是因为原先一国内部的资源——生产——消费经济闭环被打破，经济中各环节的角色被分配为资源国、生产国、消费国，如俄罗斯（巴西）、中国（印度）、美国。因此资源国的通货膨胀很难自然地传导到消费端而达到自主调节的效果，相反，这一压力可能在层层环节中在不同的经济体积压，最终造成危机隐患的累积。此外，货物的资源—生产—消费正向流动势必带来金融的消费—生产—资源的负向流动，而金融的基础在于信用。于是，消费国信用的波动就会撕扯经济闭环的稳定性，释放长期积累的经济压力，造成经济危机。所以，世界经济的好坏，要判断上游国经济压力和消费国信用变化两方面的因素。</p>
 <p>阅读本书需要有一定的经济学基础。同时建议可以先读七八九章，对相关经济理论有个大致的把握之后再从头开始阅读，阅读可以更加流畅。</p>
-<h2 id="逃不开的经济周期——历史，理论与投资现实"><a href="#逃不开的经济周期——历史，理论与投资现实" class="headerlink" title="逃不开的经济周期——历史，理论与投资现实"></a><a href="https://book.douban.com/subject/20272113/" target="_blank" rel="noopener">逃不开的经济周期——历史，理论与投资现实</a></h2><p><img alt="period20180621.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/period20180621.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="逃不开的经济周期——历史，理论与投资现实"><a href="#逃不开的经济周期——历史，理论与投资现实" class="headerlink" title="逃不开的经济周期——历史，理论与投资现实"></a><a href="https://book.douban.com/subject/20272113/" target="_blank" rel="noopener">逃不开的经济周期——历史，理论与投资现实</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/period20180621.jpg?imageMogr2/thumbnail/!75p" alt="period20180621.jpg"></p>
 <p>《逃不开的经济周期(珍藏版)》内容简介：我们一生都会历经数次经济的增长、衰退、停滞和危机，对于未来生活的看法总是从乐观的高峰跌落悲观的深渊，又在某种契机下重燃希望。如此循环往复的经济波动，就是经济周期，对于经济周期，我们该如何理解和把握呢？</p>
 <p>为解开经济周期的奥秘，作者拉斯•特维德带领我们翻开经济周期的历史，从苏格兰赌徒兼金融天才约翰•劳所生活的时代开始，一直到今天的计算机时代，回溯300年来财智精英对经济周期理论和现象的解密之旅，包括经济学之父亚当•斯密、股票经纪人李嘉图、投资银行家桑顿、志得意满的熊彼特、美国“最恶交易员”古尔德等人，探索各派经济理论与模型，帮我们揭开经济循环的真相。</p>
 <p>这趟历史之旅的目的并不仅仅是回顾过往，而在于帮助读者将对经济循环的理解正确运用于预测经济波动、因应形势、明智投资、规避风险。</p>
@@ -343,7 +313,7 @@
 <h2 id="技术的热门度曲线"><a href="#技术的热门度曲线" class="headerlink" title="技术的热门度曲线"></a><a href="http://www.ruanyifeng.com/blog/2017/03/gartner-hype-cycle.html" target="_blank" rel="noopener">技术的热门度曲线</a></h2><p>作者： 阮一峰<br>日期： 2017年3月 3日</p>
 <p>全球最大的 IT 咨询公司高德纳（Gartner），有一个”技术热门度曲线”模型（Gartner Hype Cycle）。</p>
 <p>该模型认为，一门技术的发展要经历五个阶段。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017030301.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017030301.png" alt></p>
 <p>（1）启动期（Innovation Trigger）</p>
 <p>该技术刚刚诞生，还只是一个概念，不具有可用性，无法评估商业潜力。媒体有所报道，引起了外界的兴趣。</p>
 <p>（2）泡沫期（Peak of Inflated Expectations）</p>
@@ -356,14 +326,14 @@
 <p>经过不断发展，该技术慢慢成为了主流。技术标准得到了清晰定义，使用起来越发方便好用，市场占有率越来越高，进入稳定应用阶段。配合它的工具和最佳实践，经过数代的演进，也变得非常成熟了。业界对它有了公认的一致的评价。</p>
 <p>该模型的细节可以查看维基百科的大图。</p>
 <p>高德纳公司每年都会公布，当年的热门技术图。下面就是去年七月的图。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017030302.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017030302.png" alt></p>
 <p>上图中，4D打印处于”启动期”，区块链处于”泡沫期”，增强现实处于”低谷期”，虚拟现实处于爬升期。</p>
 <p>本周，有人进行数据分析后，建立了一个名叫 State.of.Dev 的网站，提供各种技术的热门程度图。</p>
 <p>下图是编程语言。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017030303.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017030303.png" alt></p>
 <p>上图中，Rust 语言处于启动期，Go 语言处于泡沫期，Ruby 语言处于低谷期，Object-C 处于爬升期，PHP 和 Java 处于高原期。</p>
 <p>下图是 Web 技术。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017030305.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017030305.png" alt></p>
 <p>上图中，WebAssembly 处于启动期，WebRTC 处于低谷期，HTTPS 处于高原期。</p>
 <p>一门技术到底前景如何，很难预测，但是它的热门程度却是可以衡量的（比如在社交媒体提及次数的增长幅度）。风险投资跟热门程度高度正相关，越热门的技术越容易拿到投资。</p>
 <p>用户可以采用这张图，判断技术处在哪一个阶段，确定它的热门程度。简单的使用规则如下。</p>
@@ -389,8 +359,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/P/Period/" rel="bookmark">Period</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Period/" rel="bookmark">Period</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/iDeepLearn/Wisdom/Period/" rel="bookmark">Period</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Samsung/" rel="bookmark">Samsung</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Blackberry/" rel="bookmark">Blackberry</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Business/" rel="tag"><i class="fa fa-tag"></i> Business</a>
               <a href="/tags/Period/" rel="tag"><i class="fa fa-tag"></i> Period</a>
@@ -404,21 +395,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Universe/" rel="next" title="Universe">
-                  <i class="fa fa-chevron-left"></i> Universe
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Influence/" rel="prev" title="Influence">
-                  Influence <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Universe/" rel="prev" title="Universe">
+      <i class="fa fa-chevron-left"></i> Universe
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Influence/" rel="next" title="Influence">
+      Influence <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -431,7 +419,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -462,8 +472,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -472,14 +482,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -490,11 +500,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -528,7 +533,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -540,51 +545,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -593,18 +559,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -614,63 +574,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -678,14 +581,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -712,40 +615,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Period/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

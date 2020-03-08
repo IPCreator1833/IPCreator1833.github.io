@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="眼——视觉盛宴，人、物耳——听觉盛宴脑——故事、主题、思想、感悟行——成长">
 <meta name="keywords" content="How,Movie,Appreciate">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Journey/" itemprop="url" rel="index">
-                    <span itemprop="name">Journey</span>
-                  </a>
+                  <a href="/categories/Journey/" itemprop="url" rel="index"><span itemprop="name">Journey</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Journey/IPCreator/Journey/Movie/How to appreciate a Movie/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Journey/IPCreator/Journey/Movie/How to appreciate a Movie/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Journey/IPCreator/Journey/Movie/How to appreciate a Movie/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="Movie" data-src="http://searchengineland.com/figz/wp-content/seloads/2015/08/movie-film-video-production-ss-1920-800x450.jpg"></p>
+        <p><img data-src="http://searchengineland.com/figz/wp-content/seloads/2015/08/movie-film-video-production-ss-1920-800x450.jpg" alt="Movie"></p>
 <blockquote>
 <p>眼——视觉盛宴，人、物<br>耳——听觉盛宴<br>脑——故事、主题、思想、感悟<br>行——成长</p>
 </blockquote>
@@ -303,10 +273,10 @@
 <p>单纯的广告收入已经覆盖不了互联网平台购买版权的成本。王晓晖说，发展付费用户是更符合互联网平台的商业模式。他给出的数字是，2016年整个网络视频用户6.8亿，广告收入350多亿，单用户贡献收入是50多块；2016年视频平台付费收入100亿，付费用户6000万，单用户贡献收入可以达到150块左右。“这就决定了互联网视频平台的商业模式该往哪个方向走”。他预计2017年底付费用户人数会超过1亿，到2020年可以超过2亿。最终互联网视频平台理想的收入格局是：广告收入小于付费收入，付费收入小于生态收入，生态收入是指像迪士尼拥有通过各种版权衍生收入。</p>
 <p>虽然市场繁荣，但王晓辉也提醒说，<strong>中国的影视剧行业现在特别像中国乳业一度面临的状况。“竞争激烈，平台方就像蒙牛和伊利，拼命抢优质的奶源，生产方为了把东西给大公司，开始注水，兑三聚氰氨，让剧越来越长，质量越来越差。最后大家都选择了‘进口奶粉’。</strong></p>
 <p>”如果不加以改变，中国乳业面对的窘境也会出现在中国网剧行业上，“<strong>一二线城市受过良好教育的青少年对于国产剧都不太注意了，反而美剧、英剧盯得很紧。</strong>网剧是奔着小镇青年的，但是他们视野越来越开阔，吐槽的内容很专业。如果供给品质再跟不上，两三年绝对会倒向品质更高的国外剧去。”</p>
-<h2 id="践行"><a href="#践行" class="headerlink" title="践行"></a>践行</h2><h3 id="豆瓣电影-Top-250"><a href="#豆瓣电影-Top-250" class="headerlink" title="豆瓣电影 Top 250"></a><a href="https://movie.douban.com/top250" target="_blank" rel="noopener">豆瓣电影 Top 250</a></h3><p><img alt="screencapture-movie-douban-top250-1503841991856.png" data-src="http://opb37u589.bkt.clouddn.com/screencapture-movie-douban-top250-1503841991856.png?imageMogr2/thumbnail/!75p"></p>
-<h3 id="IMDB-Top-Rated-Movies"><a href="#IMDB-Top-Rated-Movies" class="headerlink" title="IMDB Top Rated Movies"></a><a href="http://www.imdb.com/chart/top?ref_=ft_250" target="_blank" rel="noopener">IMDB Top Rated Movies</a></h3><p><img alt="screencapture-imdb-chart-top-1503841998376.png" data-src="http://opb37u589.bkt.clouddn.com/screencapture-imdb-chart-top-1503841998376.png?imageMogr2/thumbnail/!75p"></p>
-<h2 id="电影艺术-形式与风格（插图修订第8版）"><a href="#电影艺术-形式与风格（插图修订第8版）" class="headerlink" title="电影艺术 : 形式与风格（插图修订第8版）"></a><a href="https://book.douban.com/subject/26416255/" target="_blank" rel="noopener">电影艺术 : 形式与风格（插图修订第8版）</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28100265.jpg"></p>
-<h2 id="看电影的艺术"><a href="#看电影的艺术" class="headerlink" title="看电影的艺术"></a><a href="https://book.douban.com/subject/4196774/" target="_blank" rel="noopener">看电影的艺术</a></h2><p><img alt data-src="https://img1.doubanio.com/lpic/s4585748.jpg"></p>
+<h2 id="践行"><a href="#践行" class="headerlink" title="践行"></a>践行</h2><h3 id="豆瓣电影-Top-250"><a href="#豆瓣电影-Top-250" class="headerlink" title="豆瓣电影 Top 250"></a><a href="https://movie.douban.com/top250" target="_blank" rel="noopener">豆瓣电影 Top 250</a></h3><p><img data-src="http://opb37u589.bkt.clouddn.com/screencapture-movie-douban-top250-1503841991856.png?imageMogr2/thumbnail/!75p" alt="screencapture-movie-douban-top250-1503841991856.png"></p>
+<h3 id="IMDB-Top-Rated-Movies"><a href="#IMDB-Top-Rated-Movies" class="headerlink" title="IMDB Top Rated Movies"></a><a href="http://www.imdb.com/chart/top?ref_=ft_250" target="_blank" rel="noopener">IMDB Top Rated Movies</a></h3><p><img data-src="http://opb37u589.bkt.clouddn.com/screencapture-imdb-chart-top-1503841998376.png?imageMogr2/thumbnail/!75p" alt="screencapture-imdb-chart-top-1503841998376.png"></p>
+<h2 id="电影艺术-形式与风格（插图修订第8版）"><a href="#电影艺术-形式与风格（插图修订第8版）" class="headerlink" title="电影艺术 : 形式与风格（插图修订第8版）"></a><a href="https://book.douban.com/subject/26416255/" target="_blank" rel="noopener">电影艺术 : 形式与风格（插图修订第8版）</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28100265.jpg" alt></p>
+<h2 id="看电影的艺术"><a href="#看电影的艺术" class="headerlink" title="看电影的艺术"></a><a href="https://book.douban.com/subject/4196774/" target="_blank" rel="noopener">看电影的艺术</a></h2><p><img data-src="https://img1.doubanio.com/lpic/s4585748.jpg" alt></p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>译者序有关电影的一切 7<br>前言 9</p>
 <p>第一章看电影的艺术 1<br>一、电影的独特性 2<br>二、电影分析面临的挑战 4<br>三、电影分析的价值 5<br>四、成为善于接受的观众 7<br>五、看电影的环境 9<br>六、准备看电影 13<br>七、深化我们对电影的反应 15<br>自测问题：分析你对一部电影的反应 16</p>
 <p>第二章主题元素 17<br>一、主题和中心 18<br>二、确立主题 30<br>三、评价主题 31<br>自测问题：分析主题部分 33<br>学习影片列表 35</p>
@@ -332,7 +302,7 @@
 <p>（1）好故事——完整的情节、可信的（事物的真实面貌、人性/满足人的信仰、艺术的真实感）、有趣的、简单又复杂、节制或低调的处理感情戏（真诚吗？）<br>（2）标题的重要性<br>（3）戏剧结构——时间顺序或线性、非线性、结尾的特殊处理<br>（4）冲突<br>（5）人物刻画<br>（6）寓言、象征、反讽——宇宙反讽，它不是发自内心的，而是很突然地往外吐出一口气，就像咳嗽一般，从嗓子眼处发出，在心和大脑之间。我们笑了，也许是伤得太深而哭不出来。</p>
 <p>3.影片分析的几个角度<br>（1）视觉设计——彩色VS黑白、银幕宽高比例、电影胶片（粗/细颗粒）、美工设计（布景、着色、装饰等，参考导演、摄影师、服装师的意见，遵从剧本、场景决定人物反映性格创造气氛作为符号等）、服装和化妆设计、布光<br>（2）摄影和特效——电影的视点（客观观点：摄影机作为旁观者、主观观点：摄影机作为参与者、间接观点以及导演诠释观点）<br>（3）剪辑<br>（4）色彩<br>（5）音效与对白<br>（6）配乐<br>（7）表演<br>（8）导演风格</p>
 <p>4.影片的总体分析<br>（1）第一遍看，确定主题，即中心思想，这部影片的主旨是什么，目的是什么。结合我们的生活阅历、道德观念和社会环境、世故程度、生活时间和空间，对影片作出个性化的主观评价。<br>（2）第二遍看，理解每个戏剧元素与电影整体之间的关系，分析每个独立要素的长处，对影片作出客观评价<br>（3）影片目前的水准<br>（4）其他评价：技术成果评价；展示演员的影片：个人崇拜</p>
-<h2 id="认识电影"><a href="#认识电影" class="headerlink" title="认识电影"></a><a href="https://book.douban.com/subject/2326403/" target="_blank" rel="noopener">认识电影</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s2781361.jpg"></p>
+<h2 id="认识电影"><a href="#认识电影" class="headerlink" title="认识电影"></a><a href="https://book.douban.com/subject/2326403/" target="_blank" rel="noopener">认识电影</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s2781361.jpg" alt></p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>致中国读者<br>译者序<br>前言</p>
 <p>第一章 摄影<br>1.1 现实主义和形式主义<br>1.2 镜头<br>1.3 角度<br>1.4 光与影<br>1.5 色彩<br>1.6 镜片、滤镜及底片<br>1.7 特殊效果<br>1.8 电影摄影师<br>延伸阅读</p>
 <p>第二章 场面调度<br>2.1 景框<br>2.2 构图和设计<br>2.3 区域空间<br>2.4 距离关系<br>2.5 开放与封闭的形式<br>延伸阅读</p>
@@ -492,7 +462,7 @@
 <p>11.4 折衷及综合理论<br>折衷主义是一种实用的方法，而不是理论。折中主义评论者认为单一理论无法解释所有电影，坚持每个人对电影的反应是非常个人化的。他们经常诉求于感性传统，重视具品味及眼光的个人美感偏好。</p>
 <p>11.5 结构主义和符号学<br>20世纪70年代早期两种相关电影理论开始发展，以对抗个人情感的评论的缺失。结构主义和符号学都主张用新而科学的方法，系统地分析电影。这两种理论都借用语言学、人类学、心理学、哲学的方法论来发展准确的分析词汇。</p>
 <p>11.6 历史学<br>历史学Historiography是研究历史的理论——包括各学派言论、原则及方法学。理论学家依据各自的哲学概论、方法与数据，建构出四种电影史：美学史——将电影视为艺术；技术史——将电影视为发明；经济史——将电影视为工业；社会史——认为电影反映观众的价值观、欲望和恐惧等。</p>
-<h2 id="如何写影评"><a href="#如何写影评" class="headerlink" title="如何写影评"></a><a href="https://book.douban.com/subject/3806309/" target="_blank" rel="noopener">如何写影评</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s3845782.jpg"></p>
+<h2 id="如何写影评"><a href="#如何写影评" class="headerlink" title="如何写影评"></a><a href="https://book.douban.com/subject/3806309/" target="_blank" rel="noopener">如何写影评</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s3845782.jpg" alt></p>
 <h3 id="读书笔记-1"><a href="#读书笔记-1" class="headerlink" title="读书笔记"></a>读书笔记</h3><p>《如何写影评》是最近看过的一本书，发现有一些确实很实用的方法，所以做个读书笔记吧。<br>写影评首先要明确的问题是写给谁看<br>—写给自己的日记。只有当我们有机会认真思考和想要更准确表达出我们的观影感受的时候，我们对一部电影有某种特定感受的原因才变得清晰起来。所以如果你喜欢一部电影就写个影评吧，你会发现喜欢它的原因，而这些原因还能使你更了解自己。</p>
 <p>—写给别人，想让别人去看或者别去看这个电影。这个工作通常是电影爱好者在自己的博客里完成的。写的多了些的好了就可以得到很多RSS订阅哦。</p>
 <p>—做作业，假如你是学习电影专业的学生。把你的读者设定为老师和同学，所以是一个小圈子内的较专业的交流，你可以写摄像机的运动，你可以谈场面调度，你可以说说灯光，和用一些非常专业的术语。</p>
@@ -579,25 +549,25 @@
 <p>当然，看多了，品位多了，你就会发现，为什么张艺谋，李安的东西，拿到国际上就能得奖，XXX随便怎么拍，感觉再好，吹得再厉害，就是怎么也找不到门路，不是运气的问题。</p>
 <p>同样的，看多了你也会明白，为什么有些人一拍就赚很多钱，怎么那么轻松都可以圈钱。</p>
 <p>所以，谁说会鉴赏没用？有一天技术普及了，你也可以拿起摄像机，成为导演，去参加国际大赛，那时候，比的就是，谁的基本功扎实，谁会玩了。</p>
-<p>外面的世界 - 知乎专栏<br>【DaisyChen的回答(7票)】:<br>不管是看电影还是学电影，都推荐一本书<br><img alt data-src="http://img.5io.org/2015/e0/e0081c02277fab63c8935416b1d35382.jpg"><br>《电影艺术:形式与风格(插图第8版)》个人认为是电影爱好者最好的入门教材。具体如何欣赏重点参阅：<br>第三部分 电影风格<br>第四章 镜头：场面调度<br>第五章 镜头：摄影<br>第六章 剪辑：镜头之间的关系<br>第七章 电影的声音<br>第八章 总结：风格是一种形式系统</p>
+<p>外面的世界 - 知乎专栏<br>【DaisyChen的回答(7票)】:<br>不管是看电影还是学电影，都推荐一本书<br><img data-src="http://img.5io.org/2015/e0/e0081c02277fab63c8935416b1d35382.jpg" alt><br>《电影艺术:形式与风格(插图第8版)》个人认为是电影爱好者最好的入门教材。具体如何欣赏重点参阅：<br>第三部分 电影风格<br>第四章 镜头：场面调度<br>第五章 镜头：摄影<br>第六章 剪辑：镜头之间的关系<br>第七章 电影的声音<br>第八章 总结：风格是一种形式系统</p>
 <p>电影的特点是“形式大于内容”，欣赏电影就是欣赏电影的形式系统。真的想欣赏电影或者说欣赏电影的形式系统，专业点说用解构主义，通俗点说就是“拆”，下面就来介绍一下怎么“拆”～</p>
 <p>在此不讲类型片哦，也不主要评价选用例子的优劣。还有就是书里主要讲的是怎么拍，我讲的是怎么看，除了理论基础之外没有使用书本内容。（所有剧照、截图等来自豆瓣电影。）</p>
 <p>制作电影的使用的语言是“视听语言”（学电影的请无视这一段）主要由视觉元素与听觉元素组成。还有了解一个概念，组成一部电影的基本单位是一个个镜头。啥是镜头？人的眼睛眨巴两下，这两下之间就是个镜头。</p>
 <p>视觉元素：</p>
 <p>1.人物（表演、台词以及服装等）：感觉这个不用讲了，演技如何欣赏大家都懂。在口碑建立起来之前，观众愿意去电影院看电影，无非就是看见海报上有大明星或者是熟悉的演员，根本不管剧情如何，先去看了再说呗。一般观众最喜欢的就是看演员和演员的表演，欣赏的层次一般也就停留在这个水平上了。的确，演员的表演是推动电影叙事的一部分，但也只是整个形式系统下的一个元素罢了，过多的夸大其中某个元素的作用，基本上不能算好的电影。越商业化的电影，演员的作用越大，也就越没有欣赏价值，某时代大家都懂得，这一条不举例子啦。</p>
 <p>2.场景（道具、布景以及特效等）：除演员以外的内容都包括在这里。实际上1&amp;2可以统称为“场面调度”，并且场面调度还包括了镜头的运动，这个词太专业啦，是用来考验导演功力的所以不用过多解释。同样有着推动叙事的作用，但是场景能表现的东西更多，这不仅仅是一个空间的概念，可以说是整个电影的世界观。尤其是年代戏或者是科幻片，场景的设计是成败的关键。年代戏，举个例《安娜·卡列尼娜》（2012）</p>
-<p>剧情改编得不怎么样，但是服装和场景十分考究，也算是还原了沙皇时代风貌。<br>年代戏推荐《辛德勒的名单》《赎罪》《莎翁情史》《国王的演讲》《霸王别姬》<br><img alt data-src="http://img.5io.org/2015/18/18b113ff98c894d91158fa241adc70e5.jpg"></p>
-<p>科幻片举个例《饥饿游戏3：嘲笑鸟》 13区的设定不觉得很带感吗？！反正我是这么觉得…<br>科幻片看得不多，不过推荐诺兰的所有电影，值得二刷三刷的乃至N刷的好导演。<br><img alt data-src="http://img.5io.org/2015/54/54a3bbd71e0abebef42c17b53c668471.jpg"></p>
-<p>3.景别：这是个比较专业的概念，简单点来讲是“大小”，画框不变，画框内部的元素大小比例的变化，也就是摄影机到被摄的人物或者物体的距离呈现。一旦讲景别就一定会讲到《巴顿将军》的开场是如何运用景别切换来突出人物身份blahblah，找段视频吧：<br>怎么去欣赏电影？<br>巴顿将军 <a href="http://v.youku.com/v_show/id_XMzg3ODc5NDE2.html" target="_blank" rel="noopener">http://v.youku.com/v_show/id_XMzg3ODc5NDE2.html</a> 大全景（摄影机离将军很远很远）营造气势，大特写（摄影机离将军很近很近）突显细节，有点像阅读理解，慢慢品味。要是想装X，分析景别是一个不错的突破点。<br>景别的变化实际上是用来丰富画面语言的，一般的观众可能感受不到景别的变化，因为这个并不显而易见，只是电影的表现手法之一。景别毫无变化其实是很无聊的，比如杨德昌的《一一》还有一些台湾文艺电影，大量的长镜头，景别还没有变化，这别怪观众不懂欣赏了，确实是比较乏味。<br>有个对景别印象特别深刻的片子，《阿黛尔的生活》几乎全程脸部大特写，看得我很是焦虑，还好演员颜值高。<br><img alt data-src="http://img.5io.org/2015/bb/bb79372fc28b70f01b9331c7e74ed21f.jpg"></p>
-<p>4.光&amp;色：电影的发展离不开光学理论的完善，从胶片时代到现在的数码时代，光始终是一切的基础，没有光怎么成像怎么拍摄呢？至于色呢，在彩色电影诞生之前，毫无存在感，但是随着技术的发展色彩已经是最为普遍的元素之一啦。不过这里说的光与色就不是基础的光线和色彩啦，是指能够增强感官刺激的光线与色彩设计。能够达到欣赏这二者层次的观众，已经算得上专业级别的啦，因为这需要相当大的阅片量，以及比较高的审美能力才能掌握。举个喜闻乐见的例子，姜文的《阳光灿烂的日子》<br><img alt data-src="http://img.5io.org/2015/34/349d0df7ef3d3e412d3ee5e4fcc40a5a.jpg"></p>
-<p>全片几乎都是这种亮得发蒙的日光，暖得发痒的色调，满满的荷尔蒙气息。据说为了加强室内光线的效果，还使用了烟雾来增强丁达尔效应。全片几乎都是这种亮得发蒙的日光，暖得发痒的色调，满满的荷尔蒙气息。据说为了加强室内光线的效果，还使用了烟雾来增强丁达尔效应。<br>再举一个我个人非常喜欢的法国导演，让-皮埃尔 热内，最有名的是那部《天使爱美丽》。撇开他拍的商业片，其他的片子都带有强烈的个人风格，他喜欢用那种糖浆一般甜腻的色调，极度偏暖，但是和上一个例子的暖色调作用完全不同。<br>这是《尽情游戏》<br><img alt data-src="http://img.5io.org/2015/a6/a61129c2f33efaa346169f7f1f4ed55c.jpg"></p>
-<p>这是《黑店狂想曲》这是《黑店狂想曲》<br><img alt data-src="http://img.5io.org/2015/ed/eda87aa43c9fa348e7101e1bc877f414.jpg"></p>
-<p>这是《少年斯派维的奇异旅行》<br><img alt data-src="http://img.5io.org/2015/10/101c8451796ff05ddefdd4bfccd8a39b.jpg"></p>
-<p>这是《天使爱美丽》这是《天使爱美丽》<br><img alt data-src="http://img.5io.org/2015/35/35cead9c28365933807b00eff3e46083.jpg"></p>
+<p>剧情改编得不怎么样，但是服装和场景十分考究，也算是还原了沙皇时代风貌。<br>年代戏推荐《辛德勒的名单》《赎罪》《莎翁情史》《国王的演讲》《霸王别姬》<br><img data-src="http://img.5io.org/2015/18/18b113ff98c894d91158fa241adc70e5.jpg" alt></p>
+<p>科幻片举个例《饥饿游戏3：嘲笑鸟》 13区的设定不觉得很带感吗？！反正我是这么觉得…<br>科幻片看得不多，不过推荐诺兰的所有电影，值得二刷三刷的乃至N刷的好导演。<br><img data-src="http://img.5io.org/2015/54/54a3bbd71e0abebef42c17b53c668471.jpg" alt></p>
+<p>3.景别：这是个比较专业的概念，简单点来讲是“大小”，画框不变，画框内部的元素大小比例的变化，也就是摄影机到被摄的人物或者物体的距离呈现。一旦讲景别就一定会讲到《巴顿将军》的开场是如何运用景别切换来突出人物身份blahblah，找段视频吧：<br>怎么去欣赏电影？<br>巴顿将军 <a href="http://v.youku.com/v_show/id_XMzg3ODc5NDE2.html" target="_blank" rel="noopener">http://v.youku.com/v_show/id_XMzg3ODc5NDE2.html</a> 大全景（摄影机离将军很远很远）营造气势，大特写（摄影机离将军很近很近）突显细节，有点像阅读理解，慢慢品味。要是想装X，分析景别是一个不错的突破点。<br>景别的变化实际上是用来丰富画面语言的，一般的观众可能感受不到景别的变化，因为这个并不显而易见，只是电影的表现手法之一。景别毫无变化其实是很无聊的，比如杨德昌的《一一》还有一些台湾文艺电影，大量的长镜头，景别还没有变化，这别怪观众不懂欣赏了，确实是比较乏味。<br>有个对景别印象特别深刻的片子，《阿黛尔的生活》几乎全程脸部大特写，看得我很是焦虑，还好演员颜值高。<br><img data-src="http://img.5io.org/2015/bb/bb79372fc28b70f01b9331c7e74ed21f.jpg" alt></p>
+<p>4.光&amp;色：电影的发展离不开光学理论的完善，从胶片时代到现在的数码时代，光始终是一切的基础，没有光怎么成像怎么拍摄呢？至于色呢，在彩色电影诞生之前，毫无存在感，但是随着技术的发展色彩已经是最为普遍的元素之一啦。不过这里说的光与色就不是基础的光线和色彩啦，是指能够增强感官刺激的光线与色彩设计。能够达到欣赏这二者层次的观众，已经算得上专业级别的啦，因为这需要相当大的阅片量，以及比较高的审美能力才能掌握。举个喜闻乐见的例子，姜文的《阳光灿烂的日子》<br><img data-src="http://img.5io.org/2015/34/349d0df7ef3d3e412d3ee5e4fcc40a5a.jpg" alt></p>
+<p>全片几乎都是这种亮得发蒙的日光，暖得发痒的色调，满满的荷尔蒙气息。据说为了加强室内光线的效果，还使用了烟雾来增强丁达尔效应。全片几乎都是这种亮得发蒙的日光，暖得发痒的色调，满满的荷尔蒙气息。据说为了加强室内光线的效果，还使用了烟雾来增强丁达尔效应。<br>再举一个我个人非常喜欢的法国导演，让-皮埃尔 热内，最有名的是那部《天使爱美丽》。撇开他拍的商业片，其他的片子都带有强烈的个人风格，他喜欢用那种糖浆一般甜腻的色调，极度偏暖，但是和上一个例子的暖色调作用完全不同。<br>这是《尽情游戏》<br><img data-src="http://img.5io.org/2015/a6/a61129c2f33efaa346169f7f1f4ed55c.jpg" alt></p>
+<p>这是《黑店狂想曲》这是《黑店狂想曲》<br><img data-src="http://img.5io.org/2015/ed/eda87aa43c9fa348e7101e1bc877f414.jpg" alt></p>
+<p>这是《少年斯派维的奇异旅行》<br><img data-src="http://img.5io.org/2015/10/101c8451796ff05ddefdd4bfccd8a39b.jpg" alt></p>
+<p>这是《天使爱美丽》这是《天使爱美丽》<br><img data-src="http://img.5io.org/2015/35/35cead9c28365933807b00eff3e46083.jpg" alt></p>
 <p>从一定程度上说，这就是因突出形式系统中某一元素而形成的电影的风格啦，感受到了吗？从一定程度上说，这就是因突出形式系统中某一元素而形成的电影的风格啦，感受到了吗？<br>5.剪辑：剪辑之复杂，对电影本身之重要，值得单独拿出来开一个问题。不过从观众角度来说评价一部电影的剪辑如何，倒是很简单。一部剪辑优秀的电影，不会让你感受到剪辑的存在。看完一部电影，如果有哪怕一个地方你觉得很生硬，不自然，可以说这个剪辑就是不合格的（因为审查而被迫删剪的不算）。请不要一提到剪辑就说蒙太奇，并不能装X呢，除了学院派需要学电影史或者写电影理论论文之外，根本没有用（感觉蒙太奇理论就是在胶片时代和巴赞的长镜头理论撕X用的）。<br>大部分电影的剪辑都是很优秀的，全片太长就不贴啦。然而最体现剪辑功力的，就是预告片，想最快感受到剪辑的魅力，多多关注预告片吧。推荐个网站，预告片世界 - 2015最新电影预告片网站<br>贴一个《X战警 逆转未来》的中文预告吧，看在有范爷的份上…<br>怎么去欣赏电影？<br>《X战警前传2》中文预告 豪华阵容范爷亮相 <a href="http://www.iqiyi.com/v_19rrh897rs.html" target="_blank" rel="noopener">http://www.iqiyi.com/v_19rrh897rs.html</a></p>
 <p>听觉元素：<br>1.音响（包括自然声与音效等）：音响最重要的就是要自然，尤其是动画片，全片的声音需要单独制作。有的声音不是录出来的而是要做出来的，恐怖片为了达到效果，有很多音效用的就不是现实生活中的声音。这个其实和剪辑一样，做到自然流畅就很好了。顺便吐槽下，我恨译制片（尤其是CCTV6上播的那种），并不是认为配音演员配得差，而是译制片会影响影片原声，极其影响观影体验，还好现在引进片都是原声。</p>
 <p>2.音乐（主题曲是宣传品，不算在内）：不管是主题音乐还是背景音乐，说白了还是为画面服务，起到渲染气氛与调动情绪的作用。试想一下坐在电影院，光看画面没有声音，肯定是看不下去的。常常大片会出现史诗般的电影配乐，给人极大的感官刺激，如《魔戒》《泰坦尼克号》《星际穿越》包括《狮子王》等（国产电影对配乐一向不怎么重视，还有就是缺乏顶级专业人才，只推荐《宝莲灯》），这些电影的配乐大师都是古典音乐的传承者，对电影主题把握非常之深刻，并且极善于用音乐来调动人的情绪。顶级电影配乐的制作过程非常复杂和专业，尽管这不是一个独立存在的派别，但是制作体量已超过了许多其他的音乐门类。其实我很想吐槽的是，现在国内很多青春片，评论会说主题曲比电影本身好多了（例如《匆匆那年》有那请天后的资金还不如想着怎么把电影拍好点），OMG那根本都不能算作电影的一部分，主题曲的作用就是宣传，它是一个单独的作品。欣赏电影的音乐，更多的从主观入手，喜好由看官定夺。不过好的电影音乐肯定能让你在观影结束后仍然念念不忘，甚至时隔许久听到后就能立刻回忆起影片画面啦。<br>以上。</p>
-<p>还有一些元素我没提出来，最后通过安利一个导演再提一个视觉元素里的构图吧，这个概念静态摄影用得多一些。韦斯·安德森，通过构图构建了个人风格与美学体系的导演，强迫症患者的福音。<br>《了不起的狐狸爸爸》<br><img alt data-src="http://img.5io.org/2015/18/18bc850041e789dea9ccc9fb76b0f91f.jpg"><br>《月升王国》《月升王国》<br><img alt data-src="http://img.5io.org/2015/09/093ac33b0f79b92409c4b3565e2ab30f.jpg"><br>《天才一族》《天才一族》<br><img alt data-src="http://img.5io.org/2015/df/df487132b1a9087921f51b4cd0d5b89f.jpg"><br>《布达佩斯大饭店》 非常非常非常优秀的一部电影！ 男神QAQ《布达佩斯大饭店》 非常非常非常优秀的一部电影！ 男神QAQ<br><img alt data-src="http://img.5io.org/2015/52/523fdbcdae46cf3e952921b373e6cb64.jpg"><br>安德森追求场景或者是空间的极端对称，神奇的是即使是通过运动镜头切换场景也没有打破构图，从这个对称到下一个对称，无缝衔接。截图能表现的太少了，绝妙之处只有去看电影才能感受得到啦。什么是风格，安德森的电影就是风格。<br>主体结束。</p>
+<p>还有一些元素我没提出来，最后通过安利一个导演再提一个视觉元素里的构图吧，这个概念静态摄影用得多一些。韦斯·安德森，通过构图构建了个人风格与美学体系的导演，强迫症患者的福音。<br>《了不起的狐狸爸爸》<br><img data-src="http://img.5io.org/2015/18/18bc850041e789dea9ccc9fb76b0f91f.jpg" alt><br>《月升王国》《月升王国》<br><img data-src="http://img.5io.org/2015/09/093ac33b0f79b92409c4b3565e2ab30f.jpg" alt><br>《天才一族》《天才一族》<br><img data-src="http://img.5io.org/2015/df/df487132b1a9087921f51b4cd0d5b89f.jpg" alt><br>《布达佩斯大饭店》 非常非常非常优秀的一部电影！ 男神QAQ《布达佩斯大饭店》 非常非常非常优秀的一部电影！ 男神QAQ<br><img data-src="http://img.5io.org/2015/52/523fdbcdae46cf3e952921b373e6cb64.jpg" alt><br>安德森追求场景或者是空间的极端对称，神奇的是即使是通过运动镜头切换场景也没有打破构图，从这个对称到下一个对称，无缝衔接。截图能表现的太少了，绝妙之处只有去看电影才能感受得到啦。什么是风格，安德森的电影就是风格。<br>主体结束。</p>
 <p>挖了个大坑，作为修过电影史和影视评论等课的学生，我感觉写得实在不够专业啊但是发给朋友她还是看不下去…悲剧了…观众看个电影确实是图个乐子，有必要这么认真吗？可是国内的现状是，不懂如何欣赏电影的观众，一边吐槽国产电影怎么就这么烂，一边还进电影院为烂片贡献票房。我真心地希望大家懂得如何欣赏电影的美，并且去支持好的电影。不是有了好电影才有好观众，而是有了好观众才有好电影。</p>
 <p>本来以为知乎各位的观影水平应该会比较高一些，结果可能是期待值过高了。如果各位提起电影网站第一时间想到的是豆瓣的话，说实话可以理解，因为我原来就经常泡豆瓣。</p>
 <p>但是！豆瓣的影评质量太低，充斥着大量的剧情复述与观后感。而别人的观后感并不能帮助你欣赏电影。极少数好一些的会分析影片的历史文化背景，还可以学到点东西。但是到视听语言层面分析的，约等于无。电影之所以是电影，不是因为故事、剧情、表演与主体思想等等，比其他文艺作品更高端高尚，而是因为电影视听语言的不可替代性。电视剧为什么没这种感觉？一聊天就正反打，镜头几乎不运动，景别固定就那几个，不看画面光靠听也不会错过剧情发展（特点，非黑）。</p>
@@ -609,8 +579,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/How/" rel="bookmark">How</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/What/" rel="bookmark">What</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Why/" rel="bookmark">Why</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/iDeepLearn/Profession/WWH/" rel="bookmark">WWH</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/How/" rel="bookmark">How</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/How/" rel="tag"><i class="fa fa-tag"></i> How</a>
               <a href="/tags/Movie/" rel="tag"><i class="fa fa-tag"></i> Movie</a>
@@ -624,21 +615,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/R/Reading/" rel="next" title="How to Read a Book">
-                  <i class="fa fa-chevron-left"></i> How to Read a Book
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Music/How to appreciate a Song/" rel="prev" title="How to Appreciate a Song">
-                  How to Appreciate a Song <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/R/Reading/" rel="prev" title="How to Read a Book">
+      <i class="fa fa-chevron-left"></i> How to Read a Book
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Music/How to appreciate a Song/" rel="next" title="How to Appreciate a Song">
+      How to Appreciate a Song <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -651,7 +639,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -682,8 +692,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -692,14 +702,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -710,11 +720,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -748,7 +753,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -760,51 +765,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -813,18 +779,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -834,63 +794,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -898,14 +801,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -932,40 +835,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Journey/IPCreator/Journey/Movie/How to appreciate a Movie/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

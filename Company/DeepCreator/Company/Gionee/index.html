@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="让世界与自由连通，以个人移动终端为载体共建值得信赖的垂直生态系统">
 <meta name="keywords" content="Smartphone,China,India,Gionee">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/DeepCreator/Company/Gionee/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/DeepCreator/Company/Gionee/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/DeepCreator/Company/Gionee/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="gionee20180604.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/gionee20180604.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/gionee20180604.jpg?imageMogr2/thumbnail/!75p" alt="gionee20180604.jpg"></p>
 <blockquote>
 <p><a href="https://baike.baidu.com/item/%E9%87%91%E7%AB%8B/12003696?fr=aladdin" target="_blank" rel="noopener">让世界与自由连通</a>，以个人移动终端为载体共建值得信赖的垂直生态系统</p>
 </blockquote>
@@ -294,7 +264,7 @@
 <p>金立价值观<br>以奋斗者为本<br>以用户价值为先<br>说到做到<br>善学快用<br>崇实勇进</p>
 <p>成立于2002年9月16日，注册资金2亿元人民币。金立集团建有生产基地金立工业园和印度工厂。坐落于广东东莞松山湖的金立工业园占地面积258亩，投资23亿。年产能高达8000万台。开发的amigo操作系统，已更新至5.0版本，为广大用户带来更加人性化的体验。</p>
 <h2 id="金立危局何来，生存概率几何"><a href="#金立危局何来，生存概率几何" class="headerlink" title="金立危局何来，生存概率几何"></a><a href="https://www.huxiu.com/article/240747.html" target="_blank" rel="noopener">金立危局何来，生存概率几何</a></h2><p>2018-04-19 12:13 本文来自微信公众号：财经十一人（caijingEleven），作者：陈潇潇，编辑：谢丽容，虎嗅获授权发表。</p>
-<p><img alt data-src="https://img.huxiucdn.com/article/cover/201801/16/142032230002.jpg?imageView2/1/w/800/h/600/|imageMogr2/strip/interlace/1/quality/85/format/jpg"></p>
+<p><img data-src="https://img.huxiucdn.com/article/cover/201801/16/142032230002.jpg?imageView2/1/w/800/h/600/|imageMogr2/strip/interlace/1/quality/85/format/jpg" alt></p>
 <p>金立董事长刘立荣创业16年，打败过步步高，直逼过三星、诺基亚，但真正成为新闻人物是在2018年1月，金立爆发危机之后。</p>
 <p>一年前曾有望跻身第一梯队的金立，在2017年底爆出了百亿级的资金缺口，其中欠供应商40亿元，银行80多亿元，缺口之大，波及面之深，让人始料未及。</p>
 <p>人们开始揣测窟窿的来龙去脉，比如这位曾经的“商界棋王”因豪赌输掉了几十亿元，甚至一度有传言，刘立荣失联了。</p>
@@ -330,7 +300,7 @@
 <p>2018年1月开始，以显示屏供应商欧菲科技为首的供应商轮番上场，分别向法院申请财报保全。金立总共欠下近40亿元货款，已影响到十家上市公司，其中最大一笔来自欧菲，总共6.26亿元。而电池供应商维科科技被波及最深，已面临退市风险警示，金立是其最大客户。欧菲公开称金立账期已逾期两个月。一时间，数十家供应商加入挤兑，其中多数已于去年底停止供货。</p>
 <p>“过去量大的时候，供应商愿意给你兜着，因为有利润。”一位接近金立的供应链人士对《财经》记者说，“现在不愿意，是因为不确定金立还能不能做那么多量。”</p>
 <p><strong>2017年的手机寒冬将持续至2018年，包括华为在内的手机厂商都在大量砍单。业内估计2017年中国手机市场的库存有5000万部，这些压力瞬间转移到了供应商身上。</strong></p>
-<p><img alt data-src="https://img.huxiucdn.com/article/content/201804/19/114912451180.png?imageView2/2/w/1000/format/png/interlace/1/q/85"></p>
+<p><img data-src="https://img.huxiucdn.com/article/content/201804/19/114912451180.png?imageView2/2/w/1000/format/png/interlace/1/q/85" alt></p>
 <p>上述供应链人士对《财经》记者说，<strong>金立向供应商透支的，是近20年来累积的行业信誉，如今其信誉已彻底崩溃。</strong></p>
 <p>金立手机的出货也受到影响。有山东经销商对《财经》记者表示，2018年初拿货就非常困难，为求生存，周围有经销商已开始转卖华为等品牌。另据《财经》获悉，不少经销商欠了金立的应收账款，有些高达1、2亿元，但都因危机的爆发搁浅，回款就更难了。</p>
 <p>投资账面赚了钱，却拖垮了公司</p>
@@ -339,7 +309,7 @@
 </blockquote>
 <p>2017年6月，在现金流极度紧张之际，刘立荣买入了南粤银行9.30％的股权，花费了12.18亿元，几乎是金立2016年的全年净利润。<strong>按目前南粤银行股权的估值，这笔金融投资半年间升值了40％，但可能是最终压垮金立的那根稻草。</strong></p>
 <p>多位知情人士对《财经》记者说，刘立荣出手买南粤股份是因为算好了将有一笔来自某地政府支持的银行贷款。这笔贷款总共30亿元，将分三次批复，当时第一个10亿元已经批了，但迟迟没到账，导致供应商账期逾期。</p>
-<p><img alt data-src="https://img.huxiucdn.com/article/content/201804/19/114947544290.png?imageView2/2/w/1000/format/png/interlace/1/q/85"></p>
+<p><img data-src="https://img.huxiucdn.com/article/content/201804/19/114947544290.png?imageView2/2/w/1000/format/png/interlace/1/q/85" alt></p>
 <p>2017年秋天，金立先后表示将在重庆、宜宾投建工厂，扩大经营。按照惯例，一个年产2000万部手机的工厂，能在政府获得至少10亿元的银行贷款。</p>
 <p>刘立荣是围棋业余七段，熟悉他的人说，在企业运营上，刘立荣经常神秘出棋，让人捉摸不透。</p>
 <p>他确实出奇制胜过。2008年功能机时代，千机争霸，在这场同质化竞争中，波导、夏新等耳熟能详的品牌被洗刷掉了。<strong>金立另辟蹊径，通过电视广告和购物轰炸，去掉了积压的库存，活了下来。</strong></p>
@@ -366,10 +336,10 @@
 <p>印度一直是金立海外市场的主力，一位金立海外事业部员工对《财经》记者表示，印度占据了金立60％到70％的海外份额。</p>
 </blockquote>
 <p>如果算上代工时期，耕耘八年，金立曾是印度线下市场的翘楚，但局面随着2014年底OPPO和vivo的到来彻底改变。金立的份额从排名前一二的中国品牌滑到了第四五位，前后不到两年。</p>
-<p><img alt data-src="https://img.huxiucdn.com/article/content/201804/19/115052839249.png?imageView2/2/w/1000/format/png/interlace/1/q/85"></p>
+<p><img data-src="https://img.huxiucdn.com/article/content/201804/19/115052839249.png?imageView2/2/w/1000/format/png/interlace/1/q/85" alt></p>
 <p>这两年是卢伟冰最巅峰但也最痛苦的两年。在外界眼中，卢伟冰和刘立荣一样，<strong>是儒将，面对对手不够狠</strong>。以至于这几年只要内部<a href="https://deepcreator.com/Concept/Review.html" target="_blank" rel="noopener">复盘</a>，一谈某某市场的经营策略得失，卢伟冰总喜欢说：对手太强了。</p>
 <p>印度市场可以理解为几年前的中国，线上市场孱弱，只占30％，几十万家线下门店才是主体。搞定这些星罗棋布的门店，三星花了十年，做到了第一。2013年金立舍弃印度的ODM生意，开始推自主品牌，也是从挨家挨户谈渠道开始的。</p>
-<p><img alt data-src="https://img.huxiucdn.com/article/content/201804/19/115137101237.png?imageView2/2/w/1000/format/png/interlace/1/q/85"></p>
+<p><img data-src="https://img.huxiucdn.com/article/content/201804/19/115137101237.png?imageView2/2/w/1000/format/png/interlace/1/q/85" alt></p>
 <p><a href="https://deepcreator.com/AI/Smartphone.html" target="_blank" rel="noopener">手机</a>是典型的<a href="https://deepcreator.com/Business/Finance.html" target="_blank" rel="noopener">资本</a>密集型产业，渠道和营销敢砸钱才有胜出的可能。周鸿掉曾公开感慨，这是一个“要有一年赔多少亿的胆量才能玩”的行业。一位深圳的vivo供应商告诉《财经》记者，<strong>渠道和营销投入占OPPO和vivo年营收的10％</strong>。在资金实力及渠道投入上，很少有人超过OV。到2017年OV在国内的分销点已达25万个，而金立只有7万个。</p>
 <p>OPPO掌舵人陈明永也是围棋爱好者，推崇已故棋手吴清源，尤其是后者对胜负的见解：<strong>真正的高手是你围你的地盘，我围我的，可能没有任何厮杀，高下已见。</strong></p>
 <p>这种打法被OV复制到了印度。一位vivo印度经销商告诉《财经》记者，vivo的好几个省代理直接扎到了印度本地，一家一家地谈渠道，前期不惜血本。</p>
@@ -440,8 +410,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/DeepCreator/Company/TCL/" rel="bookmark">TCL</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/DeepCreator/Company/Motorola/" rel="bookmark">Motorola</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/DeepCreator/Company/HTC/" rel="bookmark">HTC</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/DeepCreator/Company/MeiZu/" rel="bookmark">MeiZu</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/DeepCreator/Company/Hisense/" rel="bookmark">Hisense</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Smartphone/" rel="tag"><i class="fa fa-tag"></i> Smartphone</a>
               <a href="/tags/China/" rel="tag"><i class="fa fa-tag"></i> China</a>
@@ -456,21 +447,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/IPR/" rel="next" title="IPR">
-                  <i class="fa fa-chevron-left"></i> IPR
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Company/DeepCreator/Company/Hisense/" rel="prev" title="Hisense">
-                  Hisense <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/IPR/" rel="prev" title="IPR">
+      <i class="fa fa-chevron-left"></i> IPR
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Company/DeepCreator/Company/Hisense/" rel="next" title="Hisense">
+      Hisense <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -483,7 +471,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -514,8 +524,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -524,14 +534,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -542,11 +552,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -580,7 +585,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -592,51 +597,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -645,18 +611,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -666,63 +626,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -730,14 +633,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -764,40 +667,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/DeepCreator/Company/Gionee/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

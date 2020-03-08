@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="尽可能从他人教训和自己的尝试中汲取有用的经验，而不是满足于舒适区，依赖别人的“指南”、宣传或舆论处事，在不确定的世界中拥抱变化。">
 <meta name="keywords" content="Uncertainty,Change">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Uncertainty/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Uncertainty/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Uncertainty/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="1164069437-1_u_4.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/1164069437-1_u_4.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://pd4vb8220.bkt.clouddn.com/1164069437-1_u_4.jpg?imageMogr2/thumbnail/!75p" alt="1164069437-1_u_4.jpg"></p>
 <blockquote>
 <p><a href="https://book.douban.com/review/7087193/" target="_blank" rel="noopener">尽可能从他人教训和自己的尝试中汲取有用的经验，而不是满足于舒适区，依赖别人的“指南”、宣传或舆论处事，在不确定的世界中拥抱变化。</a></p>
 </blockquote>
@@ -297,14 +267,14 @@
 <p>第三，失败并不都是失败，成功的失败能扩大对关键未知之处的认知。1970年，美国阿波罗计划中第三次载人登月飞船“阿波罗13 号”发射升空。在靠近月球时，登月舱动力系统发生故障，配用氧气罐也爆炸破裂。位于休斯敦的指挥中心被迫放弃登月。在寒冷、缺氧、动力不足的条件下，三位宇航员凭借胶布等简单的材料，维系着火箭按地球惯性运行，最后安全降落在南太平洋。专业人士认为这是航空历史上最成功的失败，因为它展现了过去无法知晓的盲区和难以想象的临场应变能力。</p>
 <p>第四，创造经历错误、向错误学习的方法。学习的方法很多，但主要应用在巩固已知、消灭偏差和复制成功上面。通过经历错误来向错误学习则是拥抱偏差，识别跨越转型的机会苗头。经历错误与人的自然情绪是相背的，因为人们有避免出错和躲避灾难的本能。好领导知道在动机和工具设计上帮助人们克服本能的弱点。</p>
 <p>通过以上方法，或许你就能搭建一座桥梁，从不确定性出发，渐渐去接近确定性，而不是停滞不前。</p>
-<h2 id="适应复杂——管理像拼图一样有序省力"><a href="#适应复杂——管理像拼图一样有序省力" class="headerlink" title="适应复杂——管理像拼图一样有序省力"></a><a href="https://book.douban.com/subject/30221476/" target="_blank" rel="noopener">适应复杂——管理像拼图一样有序省力</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29769922.jpg"></p>
+<h2 id="适应复杂——管理像拼图一样有序省力"><a href="#适应复杂——管理像拼图一样有序省力" class="headerlink" title="适应复杂——管理像拼图一样有序省力"></a><a href="https://book.douban.com/subject/30221476/" target="_blank" rel="noopener">适应复杂——管理像拼图一样有序省力</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29769922.jpg" alt></p>
 <p><a href="https://book.douban.com/review/9479605/" target="_blank" rel="noopener">应对复杂需要整体思维</a></p>
 <p>前阵子偶然读到米哈里的《心流》，印象最深刻的是「复杂」，人在不断整合各种孤立杂乱，甚至相互矛盾的东西，比如价值观，形成更复杂自我的过程中会找到乐趣，这个乐趣的状态就是幸福。</p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>阅读指南<br>复杂性　是神话还是现实？<br>陷阱1　简化带来成功<br>陷阱2　将错综复杂等同于难于处理<br>陷阱3　专家能搞定<br>陷阱4　不许出错<br>陷阱5　计划为王<br>陷阱6　搜集数据，一览全局<br>陷阱7　信任虽好，控制更优<br>陷阱8　竞争带来活力<br>陷阱9　必须有人发号施令<br>应对复杂性<br>附录<br>出版后记</p>
 <h2 id="行动清单-假如生活打击了你，你该如何勇敢回击"><a href="#行动清单-假如生活打击了你，你该如何勇敢回击" class="headerlink" title="行动清单 | 假如生活打击了你，你该如何勇敢回击"></a><a href="http://www.luojiji.com/thread-9925-1-1.html" target="_blank" rel="noopener">行动清单 | 假如生活打击了你，你该如何勇敢回击</a></h2><p>2017-09-24 「得到」 罗辑思维<br>引言</p>
 <p>失恋、失去亲人、工作受挫……人生难免遭遇不如意。面对打击，如何整理情绪、恢复能量，成长为更强大的自己？</p>
 <p>「得到」专栏作者万维钢为你准备了这套“抗打击装备”，15条建议，助你突破逆境。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/24/093855r3fxbyswxw8xwxv8.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201709/24/093855r3fxbyswxw8xwxv8.jpg" alt></p>
 <ol>
 <li><p>巴顿将军说过：衡量一个人的成功标志，不是看他到达顶峰的高度，而是看他跌落谷底时的反弹力。</p>
 </li>
@@ -342,7 +312,7 @@
 <li><p>我们比我们知道的自己更脆弱，但更多时候，我们也比我们想象中的自己更强大。</p>
 </li>
 </ol>
-<h2 id="反脆弱——从不确定性中获益-Antifragile-Things-That-Gain-from-Disorder"><a href="#反脆弱——从不确定性中获益-Antifragile-Things-That-Gain-from-Disorder" class="headerlink" title="反脆弱——从不确定性中获益 Antifragile: Things That Gain from Disorder"></a><a href="https://book.douban.com/subject/25782902/" target="_blank" rel="noopener">反脆弱——从不确定性中获益 Antifragile: Things That Gain from Disorder</a></h2><p><img alt="antifragile20180710.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/antifragile20180710.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="反脆弱——从不确定性中获益-Antifragile-Things-That-Gain-from-Disorder"><a href="#反脆弱——从不确定性中获益-Antifragile-Things-That-Gain-from-Disorder" class="headerlink" title="反脆弱——从不确定性中获益 Antifragile: Things That Gain from Disorder"></a><a href="https://book.douban.com/subject/25782902/" target="_blank" rel="noopener">反脆弱——从不确定性中获益 Antifragile: Things That Gain from Disorder</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/antifragile20180710.jpg?imageMogr2/thumbnail/!75p" alt="antifragile20180710.jpg"></p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>为什么这个世界上最稳定的国家其实没有政府？<br>为什么负债对你不好，以及为什么我们通常所说的“效率”根本缺乏就是效率？<br>为什么政府和社会政策保护强者，却伤害弱者？<br>为什么你应该在还没入职之前，就应该写好辞职信？<br>泰坦尼克号的沉没为什么拯救了更多的生命？</p>
 <p>尼采有句名言：“<strong>杀不死我的，使我更强大。</strong>”就像人的骨头承受压力和紧张会变得更加强壮，谣言或暴乱在有人试图压制它们时会变本加厉一样，生命中的许多事物也会受益于压力、混乱、波动和不确定。</p>
 <p>畅销书《黑天鹅》告诉我们，发生概率极低的事件和无法预测的“黑天鹅”事件，在世界上几乎每一种事物的身上都会发生。在《反脆弱》一书中，塔勒布告诉我们在不确定的世界中的生存法则，他找到并定义了“反脆弱”类事物：每一个事物都会从波动中得到利益或蒙受损失，脆弱性是指因为波动和不确定而承受损失，反脆弱性则是指让自己避免这些损失，甚至从混乱和不确定中获利。</p>
@@ -357,7 +327,7 @@
 <p>第五卷 非线性与非线性<br>第18章　一块大石头与一千颗小石子的区别　223<br>发现脆弱性的简单法则　224<br>更多就是不同之处　232<br>小的可能是丑陋的，但肯定不那么脆弱　234<br>预估与预测　238<br>强调“效率”的地方偏偏缺乏效率　241<br>第19章　炼金石与反炼金石　245<br>如何识别谁将破产　245<br>如何失去了祖母　249<br>现在来谈炼金石　251</p>
 <p>第六卷 否定法<br>第20章　时间与脆弱性　263<br>从西蒙尼德斯到詹森　263<br>学习做减法　265<br>越活越年轻：林迪效应　270<br>一些心理偏差　273<br>建筑和不可逆转的新事物狂热症　277<br>把科学变成新闻　281<br>应该会消失的东西　284<br>先知与现在　285<br>恩培多克勒的狗　287<br>第21章　医疗、凸性和不透明　288<br>如何在急诊室中辩论　290<br>医源性损伤的首要原则：经验主义　291<br>医源性损伤的第二原则：非线性反应　292<br>埋藏证据　295<br>大自然的不透明逻辑　299<br>第22章　活得长寿，但不要太长　307<br>预期寿命和凸性　307<br>如何吃掉自己　317</p>
 <p>第七卷 脆弱性与反脆弱性的伦理<br>第23章　切身利害：反脆弱性和牺牲他人的可选择性 　323<br>汉谟拉比　327<br>空谈者的免费选择权　329<br>古人和斯蒂格利茨综合征　339<br>选择权、反脆弱性与社会公平　344<br>反脆弱性与大公司的伦理　347<br>第24章　给职业套上伦理光环　353<br>专业人士和集体　355<br>大数据与研究者的选择权　361<br>集体的专制　364<br>第25章　结语　366<br>后 记　369</p>
-<p><img alt="noteofantifragile20180710.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/noteofantifragile20180710.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/noteofantifragile20180710.jpg?imageMogr2/thumbnail/!75p" alt="noteofantifragile20180710.jpg"></p>
 <h3 id="纠结和疼痛才是参与感"><a href="#纠结和疼痛才是参与感" class="headerlink" title="纠结和疼痛才是参与感"></a><a href="https://book.douban.com/review/6570305/" target="_blank" rel="noopener">纠结和疼痛才是参与感</a></h3><p>一个玻璃杯美美地放在桌子上，当摔到地上的时候它会瞬间破碎，所以玻璃杯就是脆弱的；如果摔到地上的是一个塑料杯，它不会破碎而会在地上弹两下，所以塑料杯是强韧的；想象一下有种杯子，当摔到地下的时候，它非但没有破碎反而变成了两个杯子，这个时候它就是反脆弱的。</p>
 <p>书中所言的反脆弱简单说来就是：<strong>能够在突如其来的变化冲击下获益的能力。</strong></p>
 <p>作者另外一本书《黑天鹅》在08年金融危机的时候声名鹊起，不是因为它准确的预言的金融危机的发生，而是在金融危机的大背景下，书中表达观点获得了更多的认可：这个世界上的随机性和不确定性是一直存在的，然而由于人类情感天然喜欢安全感和确定性，因此绝大多数人的选择都倾向于稳定，即使这个稳定只是大脑自我营造的假象。</p>
@@ -436,8 +406,20 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/The Book of Changes/" rel="bookmark">The Book of Changes</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/C/Change/" rel="bookmark">Change</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Uncertainty/" rel="tag"><i class="fa fa-tag"></i> Uncertainty</a>
               <a href="/tags/Change/" rel="tag"><i class="fa fa-tag"></i> Change</a>
@@ -450,21 +432,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Pressure/" rel="next" title="Pressure">
-                  <i class="fa fa-chevron-left"></i> Pressure
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Company/DeepCreator/Company/iGet/" rel="prev" title="iGet">
-                  iGet <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Pressure/" rel="prev" title="Pressure">
+      <i class="fa fa-chevron-left"></i> Pressure
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Company/DeepCreator/Company/iGet/" rel="next" title="iGet">
+      iGet <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -477,7 +456,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -508,8 +509,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -518,14 +519,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -536,11 +537,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -574,7 +570,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -586,51 +582,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -639,18 +596,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -660,63 +611,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -724,14 +618,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -758,40 +652,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Uncertainty/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

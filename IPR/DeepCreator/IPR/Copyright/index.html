@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="即著作权，是指文学、艺术、科学作品的作者对其作品享有的权利（包括财产权、人身权）。">
 <meta name="keywords" content="Copyright">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/IPR/" itemprop="url" rel="index">
-                    <span itemprop="name">IPR</span>
-                  </a>
+                  <a href="/categories/IPR/" itemprop="url" rel="index"><span itemprop="name">IPR</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/IPR/DeepCreator/IPR/Copyright/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/IPR/DeepCreator/IPR/Copyright/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/IPR/DeepCreator/IPR/Copyright/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="copyright-e1439474080753.png" data-src="http://p53s4d2qk.bkt.clouddn.com/copyright-e1439474080753.png?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/copyright-e1439474080753.png?imageMogr2/thumbnail/!75p" alt="copyright-e1439474080753.png"></p>
 <blockquote>
 <p><a href="https://baike.baidu.com/item/%E7%89%88%E6%9D%83/275922?fr=aladdin" target="_blank" rel="noopener">即著作权，是指文学、艺术、科学作品的作者对其作品享有的权利（包括财产权、人身权）。</a></p>
 </blockquote>
@@ -315,7 +285,7 @@
 <h4 id="第五章-法律责任和执法措施"><a href="#第五章-法律责任和执法措施" class="headerlink" title="第五章　法律责任和执法措施"></a>第五章　法律责任和执法措施</h4><p>　　第四十七条　有下列侵权行为的，应当根据情况，承担停止侵害、消除影响、赔礼道歉、赔偿损失等民事责任：<br>　　（一）未经著作权人许可，发表其作品的；<br>　　（二）未经合作作者许可，将与他人合作创作的作品当作自己单独创作的作品发表的；<br>　　（三）没有参加创作，为谋取个人名利，在他人作品上署名的；<br>　　（四）歪曲、篡改他人作品的；<br>　　（五）剽窃他人作品的；<br>　　（六）未经著作权人许可，以展览、摄制电影和以类似摄制电影的方法使用作品，或者以改编、翻译、注释等方式使用作品的，本法另有规定的除外；<br>　　（七）使用他人作品，应当支付报酬而未支付的；<br>　　（八）未经电影作品和以类似摄制电影的方法创作的作品、计算机软件、录音录像制品的著作权人或者与著作权有关的权利人许可，出租其作品或者录音录像制品的，本法另有规定的除外；<br>　　（九）未经出版者许可，使用其出版的图书、期刊的版式设计的；<br>　　（十）未经表演者许可，从现场直播或者公开传送其现场表演，或者录制其表演的；<br>　　（十一）其他侵犯著作权以及与著作权有关的权益的行为。<br>　　第四十八条　有下列侵权行为的，应当根据情况，承担停止侵害、消除影响、赔礼道歉、赔偿损失等民事责任；同时损害公共利益的，可以由著作权行政管理部门责令停止侵权行为，没收违法所得，没收、销毁侵权复制品，并可处以罚款；情节严重的，著作权行政管理部门还可以没收主要用于制作侵权复制品的材料、工具、设备等；构成犯罪的，依法追究刑事责任：<br>　　（一）未经著作权人许可，复制、发行、表演、放映、广播、汇编、通过信息网络向公众传播其作品的，本法另有规定的除外；<br>　　（二）出版他人享有专有出版权的图书的；<br>　　（三）未经表演者许可，复制、发行录有其表演的录音录像制品，或者通过信息网络向公众传播其表演的，本法另有规定的除外；<br>　　（四）未经录音录像制作者许可，复制、发行、通过信息网络向公众传播其制作的录音录像制品的，本法另有规定的除外；<br>　　（五）未经许可，播放或者复制广播、电视的，本法另有规定的除外；<br>　　（六）未经著作权人或者与著作权有关的权利人许可，故意避开或者破坏权利人为其作品、录音录像制品等采取的保护著作权或者与著作权有关的权利的技术措施的，法律、行政法规另有规定的除外；<br>　　（七）未经著作权人或者与著作权有关的权利人许可，故意删除或者改变作品、录音录像制品等的权利管理电子信息的，法律、行政法规另有规定的除外；<br>　　（八）制作、出售假冒他人署名的作品的。<br>　　第四十九条　侵犯著作权或者与著作权有关的权利的，侵权人应当按照权利人的实际损失给予赔偿；实际损失难以计算的，可以按照侵权人的违法所得给予赔偿。赔偿数额还应当包括权利人为制止侵权行为所支付的合理开支。<br>　　权利人的实际损失或者侵权人的违法所得不能确定的，由人民法院根据侵权行为的情节，判决给予五十万元以下的赔偿。<br>　　第五十条　著作权人或者与著作权有关的权利人有证据证明他人正在实施或者即将实施侵犯其权利的行为，如不及时制止将会使其合法权益受到难以弥补的损害的，可以在起诉前向人民法院申请采取责令停止有关行为和财产保全的措施。<br>　　人民法院处理前款申请，适用《中华人民共和国民事诉讼法》第九十三条至第九十六条和第九十九条的规定。<br>　　第五十一条　为制止侵权行为，在证据可能灭失或者以后难以取得的情况下，著作权人或者与著作权有关的权利人可以在起诉前向人民法院申请保全证据。<br>　　人民法院接受申请后，必须在四十八小时内作出裁定；裁定采取保全措施的，应当立即开始执行。<br>　　人民法院可以责令申请人提供担保，申请人不提供担保的，驳回申请。<br>　　申请人在人民法院采取保全措施后十五日内不起诉的，人民法院应当解除保全措施。<br>　　第五十二条　人民法院审理案件，对于侵犯著作权或者与著作权有关的权利的，可以没收违法所得、侵权复制品以及进行违法活动的财物。<br>　　第五十三条　复制品的出版者、制作者不能证明其出版、制作有合法授权的，复制品的发行者或者电影作品或者以类似摄制电影的方法创作的作品、计算机软件、录音录像制品的复制品的出租者不能证明其发行、出租的复制品有合法来源的，应当承担法律责任。<br>　　第五十四条　当事人不履行合同义务或者履行合同义务不符合约定条件的，应当依照《中华人民共和国民法通则》、《中华人民共和国合同法》等有关法律规定承担民事责任。<br>　　第五十五条　著作权纠纷可以调解，也可以根据当事人达成的书面仲裁协议或者著作权合同中的仲裁条款，向仲裁机构申请仲裁。<br>　　当事人没有书面仲裁协议，也没有在著作权合同中订立仲裁条款的，可以直接向人民法院起诉。<br>　　第五十六条　当事人对行政处罚不服的，可以自收到行政处罚决定书之日起三个月内向人民法院起诉，期满不起诉又不履行的，著作权行政管理部门可以申请人民法院执行。</p>
 <h4 id="第六章-附-则"><a href="#第六章-附-则" class="headerlink" title="第六章　附　　则"></a>第六章　附　　则</h4><p>　　第五十七条　本法所称的著作权即版权。<br>　　第五十八条　本法第二条所称的出版，指作品的复制、发行。<br>　　第五十九条　计算机软件、信息网络传播权的保护办法由国务院另行规定。<br>　　第六十条　本法规定的著作权人和出版者、表演者、录音录像制作者、广播电台、电视台的权利，在本法施行之日尚未超过本法规定的保护期的，依照本法予以保护。<br>　　本法施行前发生的侵权或者违约行为，依照侵权或者违约行为发生时的有关规定和政策处理。<br>　　第六十一条　本法自1991年6月1日起施行。</p>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h2 id="事实案例"><a href="#事实案例" class="headerlink" title="事实案例"></a>事实案例</h2><h3 id="琼瑶诉于正：阿姨说谎，于妈无辜？"><a href="#琼瑶诉于正：阿姨说谎，于妈无辜？" class="headerlink" title="琼瑶诉于正：阿姨说谎，于妈无辜？"></a><a href="https://www.huxiu.com/article/112978.html?f=member_article" target="_blank" rel="noopener">琼瑶诉于正：阿姨说谎，于妈无辜？</a></h3><p>IPRdaily  2015-04-17 10:45 收藏11 评论6</p>
-<p><img alt data-src="https://img.huxiucdn.com/article/cover/201504/17/104316553194.jpg?imageView2/1/w/1000/h/750/|imageMogr2/strip/interlace/1/quality/85/format/jpg"></p>
+<p><img data-src="https://img.huxiucdn.com/article/cover/201504/17/104316553194.jpg?imageView2/1/w/1000/h/750/|imageMogr2/strip/interlace/1/quality/85/format/jpg" alt></p>
 <p>众所周知，这个案子是一定会适用著作权法的。那我国著作权法保护的究竟是什么？</p>
 <p>著作权法的立法宗旨是“为保护文学、艺术和科学作品作者的著作权，以及与著作权有关的权益，鼓励有益于社会主义精神文明、物质文明建设的作品的创作和传播，促进社会主义文化和科学事业的发展与繁荣。”简单的说，就是“鼓励你写东西/让你放心的写”。</p>
 <p>但是，为了防止垄断（意思就说，我写了一个爱情故事，然后说爱情故事是我的创作，所以我要禁止其他人再写爱情故事），著作权法有个原则，就是“<strong>保护表达形式，而不保护思想</strong>”，也就是说：你写一个爱情故事，我不能照抄你的故事，然后说这是我的作品（保护表达形式）；但我能重新写个爱情故事（不保护思想）。</p>
@@ -373,18 +343,18 @@
 <h3 id="Unix版权史"><a href="#Unix版权史" class="headerlink" title="Unix版权史"></a><a href="http://www.ruanyifeng.com/blog/2010/03/unix_copyright_history.html" target="_blank" rel="noopener">Unix版权史</a></h3><p>作者： 阮一峰<br>日期： 2010年3月18日</p>
 <p>1.</p>
 <p>这几天，我在读《Unix编程艺术》。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/miscellaneous/bg2010031801.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/miscellaneous/bg2010031801.jpg" alt></p>
 <p>书中介绍了Unix的发展历史。我发现，这是一个很好的例子，说明现行版权制度具有阻碍社会发展的负面作用。</p>
 <p>2.</p>
 <blockquote>
 <p>Unix诞生于1969年，是贝尔实验室员工Ken Thompson的个人项目。由于贝尔实验室是AT&amp;T（美国电话电报公司）的下属机构，所以Unix的版权归AT&amp;T所有。</p>
 </blockquote>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/miscellaneous/bg2010031802.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/miscellaneous/bg2010031802.jpg" alt></p>
 <blockquote>
 <p>AT&amp;T垄断了美国长途电话业务，所以美国司法部在1958年与它签了一个和解协议。AT&amp;T同意不进入计算机业，不销售任何与计算机有关的产品，以避免司法部起诉它违反《反垄断法》。Unix是计算机的操作系统，所以AT&amp;T不能销售它，任何要求得到源码的机构，都能免费得到。</p>
 </blockquote>
 <p>加州大学伯克利分校得到源码后，为Unix添加了许多功能。然后在1979年，推出了一个自家的Unix版本，取名为<strong>Berkeley Software Distribution（伯克利软件套件），简称BSD。</strong></p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/miscellaneous/bg2010031803.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/miscellaneous/bg2010031803.jpg" alt></p>
 <p>3.</p>
 <p>正当Unix蓬勃发展之际，发生了一件谁也没有想到的事情。</p>
 <p>1974年，美国司法部再次起诉AT&amp;T违反《反垄断法》。1982年，哥伦比亚地区法庭判决AT&amp;T败诉，必须被拆成8家小公司。但是，这个判决也意味着1958年的和解协议失效，AT&amp;T从此可以进入计算机业。</p>
@@ -396,7 +366,7 @@
 <p>为什么这么说？</p>
 <p>首先，起诉者其实与Unix毫无关系。这是AT&amp;T经理层的决定，而不是开发者的决定。事实上，包括Ken Thompson在内的技术人员一直希望，公司能够公开源码。他们完全有理由这么要求，因为Unix从来不是AT&amp;T的业务重点，最初是个人项目，后来也没有占用公司太多资源。销售Unix的利润，在公司全部业务中，几乎可以忽略不计。为了一点点钱，去打击一个使许多人受益的产品，何必这样做呢。</p>
 <p>其次，AT&amp;T根本不关心Unix的发展。它真正关心的是金钱和削弱对手。1994年，官司还没有结束，它就把Unix卖给了Novell公司，从此不再与Unix发生关系，官司也因此不了了之。既然你不想要这个产品，为什么要提起诉讼呢？真是不可理解。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/miscellaneous/bg2010031804.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/miscellaneous/bg2010031804.jpg" alt></p>
 <p>最后，所谓的侵权几乎是不存在的。因为Novell从AT&amp;T买下Unix版权后，检查了BSD的源码，在18000个组成文件中删除了3个，并对其他文件做了一些小修改，然后BSD就重新获得了自由发布源码的许可。这意味着，至多只有千分之一的BSD代码有版权问题，但是就因为这千分之一的问题，导致百分之百的产品被迫中断，完全不符合比例原则。</p>
 <p>所以，这场版权官司就是一家利益至上的公司，以微不足道的理由，为了一个自己根本不在乎的产品，悍然发动一场损人不利己的战争。</p>
 <p>5.</p>
@@ -410,7 +380,7 @@
 <p>Novell买到Unix版权后，也没在手里放多久，1995年又转手卖给了别人。从此，Unix原始版本的开发正式结束。</p>
 <p>以后的发展集中在两个方向，一个是各个商业公司自己修改的Unix版本，比如Sun的Solaris，HP的HP-UX，IBM的AIX，另一个则是开源项目的开发，比如BSD和Linux。</p>
 <p>（完）</p>
-<h3 id="计算机字体与字库的法律保护"><a href="#计算机字体与字库的法律保护" class="headerlink" title="计算机字体与字库的法律保护"></a><a href="https://book.douban.com/subject/10469905/" target="_blank" rel="noopener">计算机字体与字库的法律保护</a></h3><p><img alt data-src="https://img3.doubanio.com/lpic/s9046234.jpg"></p>
+<h3 id="计算机字体与字库的法律保护"><a href="#计算机字体与字库的法律保护" class="headerlink" title="计算机字体与字库的法律保护"></a><a href="https://book.douban.com/subject/10469905/" target="_blank" rel="noopener">计算机字体与字库的法律保护</a></h3><p><img data-src="https://img3.doubanio.com/lpic/s9046234.jpg" alt></p>
 <h2 id="海盗湾"><a href="#海盗湾" class="headerlink" title="海盗湾"></a><a href="http://www.ipr.gov.cn/list/hdw/1/cateinfo.html" target="_blank" rel="noopener">海盗湾</a></h2><p>2017-07-28荷兰反盗版组织BREIN希望加速屏蔽海盗湾<br>2017-06-22欧盟法院判定海盗湾向公众传播侵权内容<br>2016-08-17美国没收多特康姆的数百万现金<br>2014-01-14海盗湾推出新软件程序对抗反盗版措施<br>2014-01-03海盗湾上传数量同比增长50%　打击盗版遭重创<br>2013-12-24秘鲁：当局为保护版权取消海盗湾当地域名<br>2013-09-06“六振”未能阻止美国海盗湾发展态势<br>2013-03-15海盗湾向欧洲人权法院提起的上诉败诉<br>2013-02-25海盗湾向警察举报盗版<br>2012-09-03海盗湾网站共同创办人Warg在柬埔寨被捕<br>2012-08-14MPAA和RIAA希望美国政府帮助取缔海盗湾<br>2012-05-16海盗湾共同创始人将向欧盟法院提出上诉<br>2012-05-09打击海盗湾的版权措施不具有可持续性<br>2012-05-07海盗湾敦促英国用户绕过ISP的封锁<br>2012-02-22英国法院判决之后海盗湾面临禁令<br>2012-02-09瑞典最高法院拒绝给以海盗湾创始人上诉权<br>2012-01-11海盗湾遭封锁提示黑客组织发起分布式拒绝服务攻击<br>2011-05-30芬兰乐观的音乐制作商们将“海盗湾”告上法庭<br>2010-12-31美国迫使瑞典打击盗版及“海盗湾”</p>
 <h2 id="罗辑思维：正版进天堂-盗版走四方-35"><a href="#罗辑思维：正版进天堂-盗版走四方-35" class="headerlink" title="罗辑思维：正版进天堂,盗版走四方 35  "></a><a href="http://www.luojiji.com/thread-446-1-1.html" target="_blank" rel="noopener">罗辑思维：正版进天堂,盗版走四方 35  </a></h2><p>死磕自己，愉悦大家，欢迎来到我们的罗辑思维！</p>
 <p>话说不久前的一天，在北京大学的未名湖畔，有一个青年男子，响晴白日哦，突然把自己脱光，光着屁股在湖边开始乱跑，然后被我英勇的人民警察和义愤填膺的革命群众当场给按倒，然后就问他，你为啥要裸奔呢？那男的说，我是个音乐家，你们现在全社会都在盗我的版，以至于我活不下去了，所以我要搞一个行为艺术，跟你们抗议。哎呀，你看音乐家们真可怜啊，靠版权衣服都穿不起了，但是我们今天本着治病救人的态度，我们要在他的伤口上再撒一把盐，然后再抹上一抹，我们要告诉他们，很直白地告诉你一个结论：个人创作的、供大众享用的、低成本的内容作品，在未来想靠版权维持生计，可能是一种痴心妄想，版权收益将会越来越少。</p>
@@ -577,7 +547,7 @@
 <p>（作者系上海市第二中级人民法院法官）</p>
 <h2 id="仅供个人学习研究和交流使用，请于下载后二十四小时内删除"><a href="#仅供个人学习研究和交流使用，请于下载后二十四小时内删除" class="headerlink" title="仅供个人学习研究和交流使用，请于下载后二十四小时内删除"></a><a href="http://blog.sina.com.cn/s/blog_eb6325dd0102wwt0.html" target="_blank" rel="noopener">仅供个人学习研究和交流使用，请于下载后二十四小时内删除</a></h2><p>无论是喜欢看美剧、英剧、韩剧、日剧还是日漫的小伙伴们肯定都会看到过在下载的视频上的滚动字幕“仅供个人学习研究和交流使用，请于下载后二十四小时内删除”，那么这样“免责声明”到底有没有效呢？这样是不是就一定能使视频的传播合法了呢？</p>
 <p>而在Youtube、优酷等视频网站上也经常能够看到视频上传者在视频注释中注明“本人没有该内容的版权，内容版权归原作者所有”等类似的声明，以防版权纠纷。而这样是否就真的能够完全避免掉版权纠纷了呢？</p>
-<p><img alt data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/92bbe3a11fb28d25b56e1b4f005084ed.jpg"></p>
+<p><img data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/92bbe3a11fb28d25b56e1b4f005084ed.jpg" alt></p>
 <p>要回答这些问题，那就要说道说道“合理使用”（Fair use）这个法律概念啦~</p>
 <p>在之前的文章中我们提到版权持有者人在其版权作品的使用、拷贝、改编上具有唯一性。当版权有效时，在未经版权持有人同意的情况下拷贝和使用版权作品是侵权行为，但在某些特定的情况下，使用者不必征求版权持有人同意，也无需缴纳费用就可以使用作品，我们把这些特定情况下的使用称之为“合理使用”(Fair Use)。根据版权法，在判断一种使用是否是合理使用时，通常有</p>
 <p>四个方面</p>
@@ -598,35 +568,56 @@
 </ol>
 <p>作品的性质包括版权作品是否已发表，是学术性还是艺术性，在多大程度上会影响到版权法本来的目的 – 保护创作者的利益从而鼓励创新。</p>
 <p>总体来说，使用学术性的作品比使用艺术性的作品要更容易被判别为合理使用。或者说，使用艺术性的作品比使用学术性的作品更容易造成侵权行为。</p>
-<p><img alt data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/b9922488ef356cda9779bedd1c0e8866.jpg"></p>
+<p><img data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/b9922488ef356cda9779bedd1c0e8866.jpg" alt></p>
 <ol start="3">
 <li>使用的成分在原创作品中所占的比例及重要性</li>
 </ol>
 <p>一般来说，使用的比重越少，被视为合理使用的可能性也就越大，但这也不是绝对的。</p>
 <p>如果引用或者使用的部分是原创中关键或者重要的部分，即便只是使用了很少的部分也会被视为侵权。</p>
-<p><img alt data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/75684c8ed202cfd2065d6412e8fad5a6.jpg"></p>
+<p><img data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/75684c8ed202cfd2065d6412e8fad5a6.jpg" alt></p>
 <ol start="4">
 <li>使用对版权作品在潜在市场上价值的影响</li>
 </ol>
 <p>在讲述第一个考虑因素时我们就强调过目的和性质只是法官在评判是否为合理使用或者是否侵权的一个重要考量因素，但并不能起决定性的作用。以上版权作品的性质，使用成分的数量和质量也同样只是考量因素，与这些因素相制衡的一个重要的，从版权拥有者角度考虑的因素就是使用在对版权作品销量、知名度等价值的影响。</p>
 <p>大家知道，版权存在的目的就是通过给创作人特权从而鼓励发明创作。合理使用使得版权拥有人的使用唯一性被破坏，或多或少对版权拥有人的利益有损害。当这些使用对创作人利益损害不大，而对公众十分有利时，被判断是合理使用的可能性就很大。反之，如果对公众利益贡献不大，但同时又严重影响版权作品的销量、市场份额时，使用极有可能是被认定为侵权的。</p>
-<p><img alt data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/b44906f69a881c4ee9568b976493330d.jpg"></p>
+<p><img data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/b44906f69a881c4ee9568b976493330d.jpg" alt></p>
 <p>看过上述四个裁定规则后，让我们再回到文章开头的问题。</p>
 <p>关于视频中 的滚动字幕“仅供个人学习研究和交流使用，请于下载后二十四小时内删除”是不是就能够是视频因为是用于教育目的所以被认为是合理使用呢？我们要清楚的一点是，并不是你说“我这个视频使用在教育用途的”它就自然被认为是用于教育目的的了；如果涉及到法律纠纷的话，法官在裁判时是会以作品的实际使用情况来判定。</p>
-<p><img alt data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/7cc3339dbbf42fa56e3e3f36ff335e49.jpg"></p>
+<p><img data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/7cc3339dbbf42fa56e3e3f36ff335e49.jpg" alt></p>
 <p>而对于视频网站上的“本人没有该内容的版权，内容版权归原作者所有”声明，实际上并不能确保你的行为适用“合理使用”的范畴。</p>
 <blockquote>
 <p>因为你虽然通过声明表明了你没有该作品的所有权，但是你依然在使用、拷贝和传播，这些行为依然是对版权的侵权行为。</p>
 </blockquote>
-<p><img alt data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/45cd5d5cb5f14de8a30c27602ce67b4e.jpg"></p>
+<p><img data-src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qlogo_cn/45cd5d5cb5f14de8a30c27602ce67b4e.jpg" alt></p>
 
     </div>
 
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/2020/Copyright/" rel="bookmark">Copyright</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/DeepCreator/IPR/IPR/" rel="bookmark">IPR</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/DeepCreator/IPR/Berne Convention/" rel="bookmark">Berne Convention</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/IPCreator/IPR/Copyright/" rel="bookmark">Copyright</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/IPCreator/IPR/Chinese Copyright  Law/" rel="bookmark">Chinese Copyright Law</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Copyright/" rel="tag"><i class="fa fa-tag"></i> Copyright</a>
           </div>
@@ -638,21 +629,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/Business Secret/" rel="next" title="Business Secret">
-                  <i class="fa fa-chevron-left"></i> Business Secret
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/Patent/" rel="prev" title="Patent">
-                  Patent <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/Business Secret/" rel="prev" title="Business Secret">
+      <i class="fa fa-chevron-left"></i> Business Secret
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/Patent/" rel="next" title="Patent">
+      Patent <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -665,7 +653,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -696,8 +706,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -706,14 +716,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -724,11 +734,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -762,7 +767,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -774,51 +779,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -827,18 +793,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -848,63 +808,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -912,14 +815,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -946,40 +849,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/IPR/DeepCreator/IPR/Copyright/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

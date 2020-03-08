@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="王烨clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。 也许这是个千人千面的话题，每个工程师都有自己的理解。比如我，从一个天天被骂代码写得烂的人，逐渐学习成长，到现在也能写的出“人模人样”的代码来了。这期间算是积累了一点经验心得，想和大家分享，抛砖引玉。 本文主要针对面向对象编程的clean code来阐述，面向过程代码的思路会比较不">
 <meta name="keywords" content="Clean Code">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><a href="http://tech.meituan.com/clean-code.html" target="_blank" rel="noopener">王烨</a><br><img alt data-src="http://okkntqe2h.bkt.clouddn.com/clean-code.jpg"><br>clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。</p>
+        <p><a href="http://tech.meituan.com/clean-code.html" target="_blank" rel="noopener">王烨</a><br><img data-src="http://okkntqe2h.bkt.clouddn.com/clean-code.jpg" alt><br>clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。</p>
 <p>也许这是个千人千面的话题，每个工程师都有自己的理解。比如我，从一个天天被骂代码写得烂的人，逐渐学习成长，到现在也能写的出“人模人样”的代码来了。这期间算是积累了一点经验心得，想和大家分享，抛砖引玉。</p>
 <p>本文主要针对面向对象编程的clean code来阐述，面向过程代码的思路会比较不同，不在本文的讨论范畴。</p>
 <a id="more"></a>
@@ -408,25 +378,28 @@
 <p>任务开始先更新R树，然后利用R树的结构和匹配算法来拿到和控制区相交的配送范围ID列表。<br>再批量根据配送范围ID列表，拿到配送范围列表。<br>然后针对这一批配送范围列表（数量很小），用原始多边形相交匹配的方法做进一步过滤，并且对过滤后的商家ID去重。<br>这个优化已经在第一期优化中上线，整个过程耗时由40多分钟缩短到20分钟以内。</p>
 <p>第一期优化改为R树以后，运行了一段时间，随着数据量增大，性能又开始逐渐恶化，一个月后已经恶化到50多分钟。于是继续深入代码分析，寻找了两个优化点，安排第二期优化并上线。</p>
 <p>这两个优化点是：</p>
-<p>第2步的c步骤，原来是根据门店ID列表从DB批量获取门店，现在可以改成mget的方式从缓存批量获取（此时商家数据已被缓存）；<br>第2步的d步骤，根据是否已是热门商家、自营、在线支付等条件来判断是否需要插入或者更新之前的商家和控制区的关系。<br>上线后效果<br>通过日志观察，执行时间由50多分钟缩短到15分钟以内，下图是截取了一天的4台机器的日志时间（单位：毫秒）：<br>poi优化效果图<br>可以看到，效果还是非常明显的。<br><img alt data-src="http://tech.meituan.com/img/poi%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE.png"></p>
+<p>第2步的c步骤，原来是根据门店ID列表从DB批量获取门店，现在可以改成mget的方式从缓存批量获取（此时商家数据已被缓存）；<br>第2步的d步骤，根据是否已是热门商家、自营、在线支付等条件来判断是否需要插入或者更新之前的商家和控制区的关系。<br>上线后效果<br>通过日志观察，执行时间由50多分钟缩短到15分钟以内，下图是截取了一天的4台机器的日志时间（单位：毫秒）：<br>poi优化效果图<br>可以看到，效果还是非常明显的。<br><img data-src="http://tech.meituan.com/img/poi%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE.png" alt></p>
 <h3 id="案例二：POI缓存设计与实现"><a href="#案例二：POI缓存设计与实现" class="headerlink" title="案例二：POI缓存设计与实现"></a>案例二：POI缓存设计与实现</h3><p>背景<br>2014年Q4，数据库中关于POI（这里可以简单理解为外卖的门店）相关的数据的读流量急剧上升，虽然说加入从库节点可以解决一部分问题，但是毕竟节点的增加是会达到极限的，达到极限后主从复制会达到瓶颈，可能会造成数据不一致。所以此时，急需引入一种新的技术方案来分担数据库的压力，降低数据库POI相关数据的读流量。另外，任何场景都考虑加DB从库的做法，会对资源造成一定的浪费。</p>
 <p>实现方案<br>基于已有的经过考验的技术方案，我选择Tair来作为缓存的存储方案，来帮DB分担来自于各应用端的POI数据的读流量的压力。理由主要是从可用性、高性能、可扩展性、是否经过线上大规模数据和高并发流量的考验、是否有专业运维团队、是否有成熟工具等几个方面综合考量决定。</p>
 <p>详细设计<br>第一版设计<br>缓存的更新策略，根据业务的特点、已有的技术方案和实现成本，选择了用MQ来接收POI改变的消息来触发缓存的更新，但是这个过程有可能失败；同时启用了key的过期策略，并且调用端会先判断是否过期，如过期，会从后端DB加载数据并回设到缓存，再返回。通过两个方面双保险确保了缓存数据的可用。</p>
 <p>第二版设计<br>第一版设计运行到一段时间以后，我们发现了两个问题：</p>
-<p>某些情况下不能保证数据的实时一致（比如技术人员手动改动DB数据、利用MQ更新缓存失败），这个时候只能等待5分钟的过期时间，有的业务是不允许的。<br>加入了过期时间导致另外一个问题：Tair在缓存不命中的那一刻，会尝试从硬盘中Load数据，如果硬盘没有再去DB中Load数据。这无疑会进一步延长Tair的响应时间，这样不仅使得业务的超时比率加大，而且会导致Tair的性能进一步变差。<br>为了解决上述问题，我们从美团点评负责基础架构的同事那里了解到Databus可以解决缓存数据在某些情况下不一致的问题，并且可以去掉过期时间机制，从而提高查询效率，避免tair在内存不命中时查询硬盘。而且为了防止DataBus单点出现故障影响我们的业务，我们保留了之前接MQ消息更新缓存的方案，作了切换开关，利用这个方案作容错，整体架构如下：<br><img alt data-src="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1%E5%9B%BE.png"></p>
-<p>上线后效果<br>上线后，通过持续地监控数据发现，随着调用量的上升，到DB的流量有了明显地减少，极大地减轻了DB的压力。同时这些数据接口的响应时间也有了明显地减少。缓存更新的双重保障机制，也基本保证了缓存数据的可用。见下图：<br><img alt data-src="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png"><br>poi缓存优化效果图</p>
+<p>某些情况下不能保证数据的实时一致（比如技术人员手动改动DB数据、利用MQ更新缓存失败），这个时候只能等待5分钟的过期时间，有的业务是不允许的。<br>加入了过期时间导致另外一个问题：Tair在缓存不命中的那一刻，会尝试从硬盘中Load数据，如果硬盘没有再去DB中Load数据。这无疑会进一步延长Tair的响应时间，这样不仅使得业务的超时比率加大，而且会导致Tair的性能进一步变差。<br>为了解决上述问题，我们从美团点评负责基础架构的同事那里了解到Databus可以解决缓存数据在某些情况下不一致的问题，并且可以去掉过期时间机制，从而提高查询效率，避免tair在内存不命中时查询硬盘。而且为了防止DataBus单点出现故障影响我们的业务，我们保留了之前接MQ消息更新缓存的方案，作了切换开关，利用这个方案作容错，整体架构如下：<br><img data-src="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1%E5%9B%BE.png" alt></p>
+<p>上线后效果<br>上线后，通过持续地监控数据发现，随着调用量的上升，到DB的流量有了明显地减少，极大地减轻了DB的压力。同时这些数据接口的响应时间也有了明显地减少。缓存更新的双重保障机制，也基本保证了缓存数据的可用。见下图：<br><img data-src="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png" alt><br>poi缓存优化效果图</p>
 <h3 id="案例三：业务运营后台相关页面的性能优化"><a href="#案例三：业务运营后台相关页面的性能优化" class="headerlink" title="案例三：业务运营后台相关页面的性能优化"></a>案例三：业务运营后台相关页面的性能优化</h3><p>背景<br>随着业务的快速发展，带来的访问量和数据量的急剧上升，通过我们相应的监控系统可以发现，系统的某些页面的性能开始出现恶化。 从用户方的反馈，也证明了这点。此时此刻，有必要迅速排期，敏捷开发，对这些页面进行调优。</p>
-<p>欢迎页<br>需求背景：欢迎页是地推人员乃至总部各种角色人员进入外卖运营后台的首页，会显示地推人员最想看到最关心的一些核心数据，其重要性不言而喻，所以该页面的性能恶化会严重影响到用户体验。因此，首先需要优化的就是欢迎页。通过相应定位和分析，发现导致性能恶化的主要原因有两个：数据接口层和计算展现层。<br>解决方案：对症下药，分而治之。经过仔细排查、分析定位，数据接口层采用接口调用批量化、异步RPC调用的方式来进行有效优化，计算展现层决定采用预先计算、再把计算好的结果缓存的方式来提高查询速度。其中，缓存方案根据业务场景和技术特点，选用Redis。定好方案后，快速开发上线。<br>上线效果：上线后性能对比图，如下：<br><img alt data-src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png"><br>组织架构页<br>需求背景：组织架构页，采用了四层树形结构图，一起呈现加载，第一版上线后发现性能非常差。用户迫切希望对这个页面的性能进行调优。<br>解决方案：经过分析代码，定位到一个比较经典的问题：里面执行了太多次小数据量的SQL查询。于是采用多个SQL合并成大SQL的方式，然后使用本地缓存来缓存这些数据，合理预估数据量和性能，充分测试后上线。<br>上线效果：上线后性能对比图，如下：<br><img alt data-src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_2.png"><br>订单关联楼宇页<br>需求背景：随着订单量日益增大，订单表积累的数据日益增多，订单关联楼宇页的性能也日益变差（响应时间线性上升）。而这个页面和地推人员的业绩息息相关，所以地推人员使用该页面的频率非常高，性能日益恶化极大地影响了地推人员的用户体验。<br>解决方案：经过分析与设计，决定采用当时已有的订单二级索引月分表来代替原始的订单表来供前端的查询请求；并且限制住筛选的时间条件，使得筛选的开始时间和结束时间不能跨月（事先和用户沟通过，可以接受，能满足用户的基本需求），这样就只需一个月分索引表即可，通过适当的功能限制来达到性能的调优。这样从二级索引月分表中根据各种查询条件查到最终的分页的订单ID集合，然后再根据订单ID从订单库来查出相应的订单数据集合。<br>上线效果：上线后发现在调用量几乎没怎么变的情况下，性能提升明显，如下图：<br><img alt data-src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_3.png"><br>其他<br>除了上面介绍的之外，优化还涉及前端、分布式文件系统、CDN、全文索引、空间索引等几方面。限于篇幅，我们留到未来再做介绍。</p>
+<p>欢迎页<br>需求背景：欢迎页是地推人员乃至总部各种角色人员进入外卖运营后台的首页，会显示地推人员最想看到最关心的一些核心数据，其重要性不言而喻，所以该页面的性能恶化会严重影响到用户体验。因此，首先需要优化的就是欢迎页。通过相应定位和分析，发现导致性能恶化的主要原因有两个：数据接口层和计算展现层。<br>解决方案：对症下药，分而治之。经过仔细排查、分析定位，数据接口层采用接口调用批量化、异步RPC调用的方式来进行有效优化，计算展现层决定采用预先计算、再把计算好的结果缓存的方式来提高查询速度。其中，缓存方案根据业务场景和技术特点，选用Redis。定好方案后，快速开发上线。<br>上线效果：上线后性能对比图，如下：<br><img data-src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png" alt><br>组织架构页<br>需求背景：组织架构页，采用了四层树形结构图，一起呈现加载，第一版上线后发现性能非常差。用户迫切希望对这个页面的性能进行调优。<br>解决方案：经过分析代码，定位到一个比较经典的问题：里面执行了太多次小数据量的SQL查询。于是采用多个SQL合并成大SQL的方式，然后使用本地缓存来缓存这些数据，合理预估数据量和性能，充分测试后上线。<br>上线效果：上线后性能对比图，如下：<br><img data-src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_2.png" alt><br>订单关联楼宇页<br>需求背景：随着订单量日益增大，订单表积累的数据日益增多，订单关联楼宇页的性能也日益变差（响应时间线性上升）。而这个页面和地推人员的业绩息息相关，所以地推人员使用该页面的频率非常高，性能日益恶化极大地影响了地推人员的用户体验。<br>解决方案：经过分析与设计，决定采用当时已有的订单二级索引月分表来代替原始的订单表来供前端的查询请求；并且限制住筛选的时间条件，使得筛选的开始时间和结束时间不能跨月（事先和用户沟通过，可以接受，能满足用户的基本需求），这样就只需一个月分索引表即可，通过适当的功能限制来达到性能的调优。这样从二级索引月分表中根据各种查询条件查到最终的分页的订单ID集合，然后再根据订单ID从订单库来查出相应的订单数据集合。<br>上线效果：上线后发现在调用量几乎没怎么变的情况下，性能提升明显，如下图：<br><img data-src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_3.png" alt><br>其他<br>除了上面介绍的之外，优化还涉及前端、分布式文件系统、CDN、全文索引、空间索引等几方面。限于篇幅，我们留到未来再做介绍。</p>
 <p>不想错过技术博客更新？想给文章评论、和作者互动？第一时间获取技术沙龙信息？</p>
-<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img alt data-src="http://tech.meituan.com/img/qrcode_for_gh.jpg"><br>公众号二维码</p>
+<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img data-src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>公众号二维码</p>
 
     </div>
 
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Clean-Code/" rel="tag"><i class="fa fa-tag"></i> Clean Code</a>
           </div>
@@ -438,21 +411,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/AI/IPCreator/Technology/AI/Meituan/example-of-machine-learning-in-meituan/" rel="next" title="Examples of Machine Learning in Meituan">
-                  <i class="fa fa-chevron-left"></i> Examples of Machine Learning in Meituan
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Android/IPCreator/Technology/Program/Android/the-essence-of-hardware-accelarate-in-android/" rel="prev" title="Essence of Android Hardware Accelerate">
-                  Essence of Android Hardware Accelerate <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/AI/IPCreator/Technology/AI/Meituan/example-of-machine-learning-in-meituan/" rel="prev" title="Examples of Machine Learning in Meituan">
+      <i class="fa fa-chevron-left"></i> Examples of Machine Learning in Meituan
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Android/IPCreator/Technology/Program/Android/the-essence-of-hardware-accelarate-in-android/" rel="next" title="Essence of Android Hardware Accelerate">
+      Essence of Android Hardware Accelerate <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -465,7 +435,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -496,8 +488,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -506,14 +498,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -524,11 +516,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -562,7 +549,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -574,51 +561,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -627,18 +575,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -648,63 +590,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -712,14 +597,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -746,40 +631,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="“THERMOS”源自希臘文，為”熱”之意涵。">
 <meta name="keywords" content="Cup">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Journey/" itemprop="url" rel="index">
-                    <span itemprop="name">Journey</span>
-                  </a>
+                  <a href="/categories/Journey/" itemprop="url" rel="index"><span itemprop="name">Journey</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Journey/IPCreator/Journey/Food/Water Cup/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Journey/IPCreator/Journey/Food/Water Cup/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Journey/IPCreator/Journey/Food/Water Cup/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,14 +256,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="thermos.JPG" data-src="http://opb37u589.bkt.clouddn.com/thermos.JPG?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/thermos.JPG?imageMogr2/thumbnail/!75p" alt="thermos.JPG"></p>
 <blockquote>
 <p>“THERMOS”源自希臘文，為”熱”之意涵。</p>
 </blockquote>
 <a id="more"></a>
 <h2 id="THERMOS-膳魔師"><a href="#THERMOS-膳魔師" class="headerlink" title="THERMOS 膳魔師"></a><a href="https://www.thermos.com.tw/company/brand.aspx" target="_blank" rel="noopener">THERMOS 膳魔師</a></h2><p>THERMOS 膳魔師品牌精神<br>THERMOS 膳魔師，源自對於人的關懷，為人類生活創造無限可能，帶給人們更健康便利的生活，並讓地球的能源與資源耗損速度減緩，一個為了人的需要而存在的品牌 – THERMOS 膳魔師</p>
 <p>THERMOS 膳魔師百年不變的品牌承諾與品牌堅持<br>六保宣言—保溫、保冷、保鮮、保健、保安、保証</p>
-<p>THERMOS 膳魔師 –品牌歷史沿革<br><img alt data-src="https://www.thermos.com.tw/company/images/brand_timeline1.gif"><br><img alt data-src="https://www.thermos.com.tw/company/images/brand_timeline2.gif"><br><img alt data-src="https://www.thermos.com.tw/company/images/brand_timeline3.gif"><br><img alt data-src="https://www.thermos.com.tw/company/images/brand_timeline4.gif"><br><img alt data-src="https://www.thermos.com.tw/company/images/brand_timeline5.gif"><br><img alt data-src="https://www.thermos.com.tw/company/images/brand_timeline6.gif"></p>
+<p>THERMOS 膳魔師 –品牌歷史沿革<br><img data-src="https://www.thermos.com.tw/company/images/brand_timeline1.gif" alt><br><img data-src="https://www.thermos.com.tw/company/images/brand_timeline2.gif" alt><br><img data-src="https://www.thermos.com.tw/company/images/brand_timeline3.gif" alt><br><img data-src="https://www.thermos.com.tw/company/images/brand_timeline4.gif" alt><br><img data-src="https://www.thermos.com.tw/company/images/brand_timeline5.gif" alt><br><img data-src="https://www.thermos.com.tw/company/images/brand_timeline6.gif" alt></p>
 <p>西元1904年，三位德國人在柏林首度以“THERMOS”為名，製造出全世界第一支玻璃內膽真空保溫瓶，這不僅是世界工業史、產品設計史一個重要篇章的開始，更是平面廣告史與產品包裝史上的先鋒。</p>
 <p>“THERMOS”源自希臘文，為”熱”之意涵。1904年於德國柏林將世界首創的“玻璃內膽真空保溫瓶”商品化，並將此品牌命名為”THERMOS”，並創立了THERMOS G.M.B.H公司，1906年THERMOS 膳魔師引進美國，不久便成立THERMOS美國膳魔師公司，1908年THERMOS 膳魔師以”THERMOS 膳魔師瓶是令人驚奇的發明”引進日本。從此THERMOS 膳魔師和人類的生活密不可分，甚至更伴隨著冒險家的旅程普及到全世界，如南極、北極、肯亞、剛果內陸，甚至被美國懷特兄弟與肯特哲柏林帶上青天。1957年”THERMOS”成了”保溫瓶”的代名詞，並且登錄在英文字典裡，變成了一個普通名詞。</p>
 <p>THERMOS 膳魔師的首創一直持續的締造，1978年日本膳魔師推出了「輕巧、不會破裂」的高真空不鏽鋼保溫瓶；1988年日本膳魔師研發出「超輕量、超強韌」的鈦鋼製保溫瓶；1989年日本膳魔師開發出「真空保溫調理鍋-燜燒鍋」，在台灣市場熱賣引起轟動，幾乎家家戶戶必買；1996年起日本膳魔師、中國膳魔師及膳魔師台灣區總代理皇冠金屬共同開發設計適合中華料理烹飪調理的鍋具系列。THERMOS 膳魔師產品包含真空保溫系列、燜燒系列及鍋具系列，THERMOS 膳魔師目前在全球各洲設有據點，在美國、日本皆擁有強大創新的研發設計團隊，以貼近全球消費者的生活需求為設計理念，因應歐、美、日及亞洲等世界各地不同消費者的生活態度、休閒風格、飲食習慣及烹調文化量身訂製，不斷地與時俱進、精益求精。</p>
@@ -302,15 +272,15 @@
 <p>THERMOS高真空斷熱科技<br>保冰、保鮮、保冷、保溫多功能，美味時間更長久</p>
 <p>THERMOS 膳魔師保溫容器是一個結合材料學、食品營養學跟美學的產品。THERMOS 膳魔師以真空斷熱和焊接技術為傲，向世界展現保溫性能最好的產品魅力。THERMOS 膳魔師長期致力研發高科技高真空斷熱科技，將雙層優質不銹鋼內部抽真空處理，容器內的真空隔熱層，能有效的達到保溫效果。THERMOS膳魔師保溫產品，保證能夠帶來最佳的保溫效果讓食物、飲品保溫時效更長久、更新鮮，帶來更便利的生活。THERMOS 膳魔師是全球歷史最悠久的的真空保溫品牌，也是全球真空保溫產品第一品牌。保溫性能、輕巧與耐久，是研發團隊不變的追求。多元的產品用途開拓也是我們的重要目標。THERMOS 膳魔師在食品科學的知識基礎上，在雙層不銹鋼之間運用高真空斷熱科技，延長食物或飲料享用的時間。換言之，膳魔師產品為消費者補捉住更多的美味時間。</p>
 <p>THERMOS 膳魔師真空保溫瓶的秘密 溫度不流失的高真空層真空不銹鋼保溫瓶是一種內外層不銹鋼中間有著高真空狀態的容器，由於瓶內增加了鏡面功能，能夠有效阻絕因輻射產生的熱的散失。正因為有這一層 “高真空層” ，讓膳魔師的產品能夠持續達到高保溫、高保冷的效力。</p>
-<p><img alt data-src="https://www.thermos.com.tw/company/images/technology-pic1.jpg"></p>
-<p><img alt data-src="https://www.thermos.com.tw/company/images/technology-pic2.jpg"></p>
+<p><img data-src="https://www.thermos.com.tw/company/images/technology-pic1.jpg" alt></p>
+<p><img data-src="https://www.thermos.com.tw/company/images/technology-pic2.jpg" alt></p>
 <p>膳魔师保温杯</p>
 <p>系享誉国际已百年之全球最大知名高真空系列产品品牌THERMOS（膳魔师）家族的一员。于1995 年由港，日合资，进入中国市场。膳魔师（中国）家庭制品有限公司产品主要有高真空不锈钢保温杯、保温瓶、保温壶、保温罐、焖烧锅等高品质保温系列产品以及以高TCC科技太空技术研发的各式复合金炒菜锅、汤锅锅具系列等等之家庭厨房系列用品。</p>
 <p>品牌历程<br>1893年：英国科学家詹姆士得瓦在伦敦皇家学院发表了他的新发明，史上第一个玻璃保温瓶延生。<br>1904年：三个德国人雷候伯格、亚伯特阿司却布雷挪与盖斯特凡派林于柏林成立膳魔师公司。<br>1907年：英国、美国、加拿大纷纷成立膳魔师公司，之后，膳魔师保温瓶快速普及世界各地。<br>1908年：以“令人惊奇的发明”发表广告，将德制保温瓶介绍给日本。<br>1978年：日本酸素株式会社推出不锈钢真空保温瓶。<br>1988年：推出世界首只超轻型钛金属制真空保温瓶。<br>1989年：推出“不锈钢真空闷烧锅”。日本酸素株式会社并购英国、美国、加拿大膳魔师公司，成为世界最大真空保温瓶制造商。<br>2001年：日本酸素株式会社Thermos事业本部和日酸Thermos整合成立Thermos株式会社。<br>2004年：Thermos品牌100周年。<br>2011年7月13日膳魔师官网网站开通</p>
 <p>保温杯<br>膳魔师致力研发的高科技真空技术，将双层优质不锈钢内部抽真空处理，容器内的真空隔热层，能有效的达到保温效果，膳魔师保温杯保证能够给您最佳的保温效果，让您的食物、饮品保温时效更长久，更新鲜。<br>种类编辑<br>运动保冷杯/瓶<br>随手保温杯/瓶<br>儿童保温杯/瓶<br>个性保温杯/瓶<br>桌上型保温杯/壶</p>
 <p>专业技术<br>THERMOS高真空断热科技保冰、保鲜、保冷、保温多功能，美味时间更长久<br>THERMOS膳魔师保温容器是一个结合材料学、食品营养学跟美学的工业产<br>品<br>THERMOS膳魔师以真空断热和焊接技术为傲，向世界展现保温性能最好的产品魅力。THERMOS 膳魔师长期致力研发高科技高真空断热科技，将双层优质不銹钢内部抽真空处理，容器内的真空隔热层，能有效的达到保温效果。THERMOS膳魔师保温产品，保证能够带来最佳的保温效果让食物、饮品保温时效更长久、更新鲜，带来更便利的生活。<br>THERMOS 膳魔师是全球历史最悠久的的真空保温品牌，也是全球真空保温产品第一品牌。保温性能、轻巧与耐久，是研发团队不变的追求。多元的产品用途开拓也是我们的重要目标。THERMOS 膳魔师在食品科学的知识基础上，在双层不銹钢之间运用高真空断热科技，延长食物或饮料享用的时间。换言之，膳魔师产品为消费者补捉住更多的美味时间。<br>THERMOS膳魔师真空保温瓶的秘密，温度不流失的高真空层</p>
 <p>真空不銹钢保温瓶是一种内外层不銹钢中间有着百万分之一气压高真空状态的容器。这种真空状态和宇宙的空间状态一样，无法进行任何对流和散热。另外，瓶内增加了镜面功能，能够有效阻绝因辐射产生的热的散失。正因为有这一层”高真空层”，让膳魔师的产品能够持续达到高保温、高保冷的功能。</p>
-<h2 id="Zojirushi"><a href="#Zojirushi" class="headerlink" title="Zojirushi"></a><a href="http://zojirushi.com.hk/hkarticle.php?Cid=1&amp;TypeID=1" target="_blank" rel="noopener">Zojirushi</a></h2><p><img alt data-src="http://zojirushi.com.hk/Zojiru/UPFILE/userfiles/images/Zojirushi_headquarter.jpg"></p>
+<h2 id="Zojirushi"><a href="#Zojirushi" class="headerlink" title="Zojirushi"></a><a href="http://zojirushi.com.hk/hkarticle.php?Cid=1&amp;TypeID=1" target="_blank" rel="noopener">Zojirushi</a></h2><p><img data-src="http://zojirushi.com.hk/Zojiru/UPFILE/userfiles/images/Zojirushi_headquarter.jpg" alt></p>
 <p>象印魔法瓶株式會社於1918年在日本大阪創業，在幾年後即將迎來100周年的誕辰。 以電飯煲為主打產品的小家電，熱水瓶，以及不銹鋼保溫瓶為代表。在日本主導並引領著日常生活的市場。 在全球，美國、歐洲、臺灣以及東南亞地區，產品的品質和功能性等方面均獲得很高的評價。</p>
 <p>日本象印簡介<br>公司名稱    象印魔法瓶株式會社ZOJIRUSHI CORPORATION<br>創業於    1918年（大正7年) 5月10日<br>設立於    1948年（昭和23年) 12月29日<br>社長    市川典男<br>資本額    40億2295万日元<br>總公司所在地    日本大阪<br>業務內容    烹調、保存、舒適環境及其他相關產品的製作、銷售及關聯業務<br>員工人數    638名</p>
 
@@ -319,8 +289,11 @@
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Cup/" rel="tag"><i class="fa fa-tag"></i> Cup</a>
           </div>
@@ -332,21 +305,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Dress/Timberland/" rel="next" title="Timberland">
-                  <i class="fa fa-chevron-left"></i> Timberland
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Dress/Alpint Mountain/" rel="prev" title="Alpint Mountain">
-                  Alpint Mountain <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Dress/Timberland/" rel="prev" title="Timberland">
+      <i class="fa fa-chevron-left"></i> Timberland
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Dress/Alpint Mountain/" rel="next" title="Alpint Mountain">
+      Alpint Mountain <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -359,7 +329,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -390,8 +382,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -400,14 +392,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -418,11 +410,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -456,7 +443,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -468,51 +455,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -521,18 +469,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -542,63 +484,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -606,14 +491,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -640,40 +525,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Journey/IPCreator/Journey/Food/Water Cup/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

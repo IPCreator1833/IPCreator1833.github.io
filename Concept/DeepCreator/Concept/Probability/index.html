@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="为了增加达成目标的概率，需要持续自我成长和进化。——DeepCreator">
 <meta name="keywords" content="Probability">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Probability/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Probability/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Probability/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,18 +256,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="Probability2.png" data-src="http://opb37u589.bkt.clouddn.com/Probability2.png?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/Probability2.png?imageMogr2/thumbnail/!75p" alt="Probability2.png"></p>
 <blockquote>
 <p>为了增加达成目标的概率，需要持续自我成长和<a href="https://deepcreator.com/Concept/Evolution.html" target="_blank" rel="noopener">进化</a>。——DeepCreator</p>
 </blockquote>
 <a id="more"></a>
 <p>概率是对随机事件发生的可能性的度量，一般以一个在0到1之间的实数表示一个事件发生的可能性大小。</p>
-<h2 id="随机漫步的傻瓜"><a href="#随机漫步的傻瓜" class="headerlink" title="随机漫步的傻瓜"></a><a href="https://book.douban.com/subject/10773362/" target="_blank" rel="noopener">随机漫步的傻瓜</a></h2><p><img alt="randomness20180621.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/randomness20180621.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="随机漫步的傻瓜"><a href="#随机漫步的傻瓜" class="headerlink" title="随机漫步的傻瓜"></a><a href="https://book.douban.com/subject/10773362/" target="_blank" rel="noopener">随机漫步的傻瓜</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/randomness20180621.jpg?imageMogr2/thumbnail/!75p" alt="randomness20180621.jpg"></p>
 <p>《随机漫步的傻瓜》内容简介：塔勒布在《随机漫步的傻瓜》中指出：<strong>你的<a href="https://deepcreator.com/Concept/Success.html" target="_blank" rel="noopener">成功</a>不见得是因为比其他人高明，而很可能是运气的结果。</strong></p>
 <p>开劳斯莱斯的摇滚乐手、把印象派画作抬到天价的投机客，拥有私人飞机的企业家和牙医相比，哪一个更富有？答案可能让你吃惊：牙医。因为他的职业生涯几乎没有什么<a href="https://deepcreator.com/IPR/Risk.html" target="_blank" rel="noopener">风险</a>，可能出现的灾难少之又少，也不会像投机客和企业家那样垮台，所以，牙医其实相当富有。</p>
 <p>塔勒布生活的最大特点是<strong>不确定性</strong>，随机现象比比皆是，大起大落常常发生在须臾之间。当随机性的黑天鹅出现时，你可能一夜暴富，也可能在一次失误中回到原点。但我们天生倾向于忽视低<a href="https://deepcreator.com/Concept/Probability.html" target="_blank" rel="noopener">概率</a>事件的可能性，无论这些事件会引发多大的灾难。《随机漫步的傻瓜》以深刻独到的<a href="https://deepcreator.com/Concept/Viewpoint.html" target="_blank" rel="noopener">视角</a>，告诉你这个随机世界的规律和运行方式。随机性虽然无法避免，但我们可以学着接受它。就像在<a href="https://deepcreator.com/Business/Investment.html" target="_blank" rel="noopener">投资</a>市场上，如果一个小概率事件可以带来巨额回报，为什么不在这个事件上持续下注呢？换一种<a href="https://deepcreator.com/Concept/Thinking.html" target="_blank" rel="noopener">思维</a>方式，做“随机漫步的傻瓜”，我们对<a href="https://deepcreator.com/Concept/Life.html" target="_blank" rel="noopener">人生</a>的了解无疑将大为增进。</p>
 <h2 id="机会的数学原理——明知其输而博赢的概率分析"><a href="#机会的数学原理——明知其输而博赢的概率分析" class="headerlink" title="机会的数学原理——明知其输而博赢的概率分析"></a><a href="https://book.douban.com/subject/1281171/" target="_blank" rel="noopener">机会的数学原理——明知其输而博赢的概率分析</a></h2><p>Taking Chances: Winning with Probability</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s1407781.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s1407781.jpg" alt></p>
 <h2 id="一句话明白：什么是统计？什么是概率？"><a href="#一句话明白：什么是统计？什么是概率？" class="headerlink" title="一句话明白：什么是统计？什么是概率？"></a><a href="https://zhuanlan.zhihu.com/p/28105785" target="_blank" rel="noopener">一句话明白：什么是统计？什么是概率？</a></h2><p>有一次我“老婆”听我在讲课，讲的是《学习统计对你人生的重要意义是什么？》。讲完课后，我给她说，统计概率真的很重要，然后balaba。</p>
 <p>她只淡淡的回了我一句，我竟无言对：</p>
 <p>虽然我知道你说的很对，但是什么是统计概率呢？对我有什么帮助呢？<br>当我长篇大论的解释给她听时，她已经不耐烦了：我不是要听你这些晦涩难懂的名称，你应该用生活中的例子讲我听，毕竟我是小白。如果你跟我讲化妆品什么牌子好，我倒是能立马明白。（女人啊）</p>
@@ -308,16 +278,16 @@
 <p>猴子：某次生物课考试，有一道题是看动物的脚，猜该动物的名称，一考生实在是不会做，愤怒的把试卷撕掉就往外走，老师看见了，抓住他大声说道：“你哪个班的，这么嚣张”。学生把裤腿一提，说道：“你猜啊，你猜啊！”</p>
 <p>这个笑话虽然你很早听过，但是很多人却没看懂这个学生绝对是个统计高手。（忽悠，接着忽悠）。</p>
 <p>统计就是给你黑盒子里面装着猫和狗，只让你看到他们的腿，然后让你猜哪个腿是猫的。</p>
-<p><img alt data-src="https://pic4.zhimg.com/v2-c0a0d854d1b8ac65ecea2d02ca7050f7_b.jpg"></p>
+<p><img data-src="https://pic4.zhimg.com/v2-c0a0d854d1b8ac65ecea2d02ca7050f7_b.jpg" alt></p>
 <p>你可能会问，这怎么猜？</p>
 <p>在统计里会总结过去的数据，然后对这些数据进行总结归纳。就像刚才的例子，我们要判断出哪个腿属于猫。需要收集所有猫的腿（也就是过去的数据），然后总结这些腿的特征（总结归纳）。当图片里的腿出现时，你可以根据之前的总结归纳来判断出这腿是不是猫的腿。</p>
 <p>当然，你也不会无聊到判断哪只腿是猫，哪只腿是狗的（更多时候我还是喜欢看美女的腿，，窃喜）。举个更加实际的例子，在医院会对过去有糖尿病的所有病人进行归纳总结（建立模型），当有一个新的病人入院时，就可以用之前的归纳总结来判断该病人是否患糖尿病，然后就可以对症下药了。<strong>统计里常说的“分类”就是这个过程。</strong></p>
 <p>所以，<strong>统计是对过去数据进行“总结归纳”</strong>。可以用下图表示：</p>
-<p><img alt data-src="https://pic1.zhimg.com/v2-b7dc1b094a609dae26e3ca1ba011d1c0_b.jpg"></p>
+<p><img data-src="https://pic1.zhimg.com/v2-b7dc1b094a609dae26e3ca1ba011d1c0_b.jpg" alt></p>
 <p>那什么是概率呢？</p>
 <p>概率是用数值来表示事情发生的可能性大小。举个例子小马去创业了去找投资人王思聪要钱。王思聪可不是傻X。然后就派猴子我去调查小马过去的经历（看他有什么创业的条件），然后预测他可能成功的概率是多大。经过深入调查我发现小马他爸是马云（给定条件），得出小马创业概率成功率是99%（预测未来）。</p>
 <p>如果我们用猫和狗这个例子来举例，就是给了你猫和狗的行为特征（给定条件），然后预测猫和狗明天撕逼的可能性多大。</p>
-<p><img alt data-src="https://pic3.zhimg.com/v2-cdb7808a1911c58d5d020420901ee582_b.jpg"></p>
+<p><img data-src="https://pic3.zhimg.com/v2-cdb7808a1911c58d5d020420901ee582_b.jpg" alt></p>
 <p>所以，<strong>概率是给定条件，对“数据”进行预测</strong>，可以用下图来表示：</p>
 <p>用简单的话来总结：</p>
 <blockquote>
@@ -332,17 +302,17 @@
 <p>下图翻译：</p>
 <p>统计学：根据手中信息，猜猜桶里有啥？(样本归纳总结出总体)</p>
 <p>概率论：根据桶中信息，猜猜手里有啥？(总体对样本进行预测)</p>
-<p><img alt data-src="https://pic2.zhimg.com/v2-4064812aac8f042f00dc6d54e9a7620d_b.png"></p>
+<p><img data-src="https://pic2.zhimg.com/v2-4064812aac8f042f00dc6d54e9a7620d_b.png" alt></p>
 <p>参考资料：</p>
 <p>1）<a href="https://betterexplained.com/articles/a-brief-introduction-to-probability-statistics/" target="_blank" rel="noopener">https://betterexplained.com/articles/a-brief-introduction-to-probability-statistics/</a></p>
 <p>2）《学习统计概率的重要意义是什么》音频课程无法上传，可以在我的微信公众号：猴子聊知识，中回复“意义”获取。</p>
-<h2 id="Probability-Theory"><a href="#Probability-Theory" class="headerlink" title="Probability Theory"></a>Probability Theory</h2><p><img alt="cover_1080x600.jpg" data-src="http://opb37u589.bkt.clouddn.com/cover_1080x600.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="Probability-Theory"><a href="#Probability-Theory" class="headerlink" title="Probability Theory"></a>Probability Theory</h2><p><img data-src="http://opb37u589.bkt.clouddn.com/cover_1080x600.jpg?imageMogr2/thumbnail/!75p" alt="cover_1080x600.jpg"></p>
 <blockquote>
 <p><a href="https://zh.wikipedia.org/wiki/%E6%A6%82%E7%8E%87%E8%AE%BA" target="_blank" rel="noopener">研究随机性或不确定性等现象的数学。</a></p>
 </blockquote>
 <h2 id="概率论"><a href="#概率论" class="headerlink" title="概率论"></a><a href="https://zh.wikipedia.org/wiki/%E6%A6%82%E7%8E%87%E8%AE%BA" target="_blank" rel="noopener">概率论</a></h2><p>概率论（英语：Probability theory）是集中研究概率及随机现象的数学分支，是研究随机性或不确定性等现象的数学。概率论主要研究对象为随机事件、随机变量以及随机过程。对于随机事件是不可能准确预测其结果的[1]，然而对于<strong>一系列的独立随机事件——例如掷骰子、扔硬币、抽扑克牌以及轮盘等，会呈现出一定的、可以被用于研究及预测的规律</strong>[2]，两个用来描述这些规律的最具代表性的数学结论分别是<strong>大数定律</strong>和<strong>中心极限定理</strong>。</p>
 <p>作为统计学的数学基础，概率论对诸多涉及大量数据定量分析的人类活动极为重要[3]，概率论的方法同样适用于其他方面，例如是对只知道系统部分状态的复杂系统的描述——统计力学，而二十世纪物理学的重大发现是以量子力学所描述的原子尺度上物理现象的概率本质[4]。</p>
-<p><img alt="probability01.JPG" data-src="http://opb37u589.bkt.clouddn.com/probability01.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/probability01.JPG?imageMogr2/thumbnail/!75p" alt="probability01.JPG"></p>
 <h3 id="生活例子"><a href="#生活例子" class="headerlink" title="生活例子"></a>生活例子</h3><p>人们对概率总是有一点触摸不清的感觉，而事实上也有很多看似奇异的结果：</p>
 <p>1; 六合彩：在六合彩（49选6）中，一共有13,983,816种可能性（参阅组合数学），</p>
 <p>如果每周都买一组不相同的号，一年有52周，则在实验越多次（一直买直到中奖算一次）之后，平均中奖所花的时间会越接近 {\displaystyle {\frac {13983816}{52}}=268919} {\frac {13983816}{52}}=268919。 <strong>事实上，即使每周买相同的号，获得头奖的概率也是相同的。</strong> 但假设每周实际中奖的组合都不重复，268919年的算术推论是正确的，这说明概率和其他数学理论可能导出不同的结论。</p>
@@ -360,12 +330,12 @@
 <p>后来为了使游戏更刺激，游戏规则发生了些许变化，玩家这回用2个骰子连续掷24次，不同时出现2个6点，玩家赢，否则庄家赢。当时人们普遍认为，2次出现6点的概率是一次出现6点的概率的1 / 6，因此6倍于前一种规则的次数，也既是24次赢或输的概率与以前是相等的。然而事实却并非如此，从长期来看，这回庄家处于输家的状态，于是他们去请教当时的数学家帕斯卡，求助其对这种现象作出解释。</p>
 <p>其他对概率论的发展作出重要贡献的人还有荷兰物理、数学家惠更斯，瑞士物理、数学家伯努利，法国数学家棣莫弗，法国数学、天文学家拉普拉斯，德国数学家高斯，法国物理、数学家泊松，意大利数学、医学家卡尔达诺以及苏联数学家柯尔莫哥洛夫。</p>
 <h3 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h3><p>单位事件、事件空间、随机事件</p>
-<p><img alt="event01.JPG" data-src="http://opb37u589.bkt.clouddn.com/event01.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="collection01.JPG" data-src="http://opb37u589.bkt.clouddn.com/collection01.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="traditionalprobability.JPG" data-src="http://opb37u589.bkt.clouddn.com/traditionalprobability.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="statistics.JPG" data-src="http://opb37u589.bkt.clouddn.com/statistics.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="modelprobability.JPG" data-src="http://opb37u589.bkt.clouddn.com/modelprobability.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="bayestheory.JPG" data-src="http://opb37u589.bkt.clouddn.com/bayestheory.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/event01.JPG?imageMogr2/thumbnail/!75p" alt="event01.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/collection01.JPG?imageMogr2/thumbnail/!75p" alt="collection01.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/traditionalprobability.JPG?imageMogr2/thumbnail/!75p" alt="traditionalprobability.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/statistics.JPG?imageMogr2/thumbnail/!75p" alt="statistics.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/modelprobability.JPG?imageMogr2/thumbnail/!75p" alt="modelprobability.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/bayestheory.JPG?imageMogr2/thumbnail/!75p" alt="bayestheory.JPG"></p>
 <h2 id="大数定律"><a href="#大数定律" class="headerlink" title="大数定律"></a><a href="https://zh.wikipedia.org/wiki/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B" target="_blank" rel="noopener">大数定律</a></h2><p>在数学与统计学中，大数定律又称大数法则、大数律，是描述相当多次数重复实验的结果的定律。根据这个定律知道，样本数量越多，则其平均就越趋近期望值。</p>
 <p>大数定律很重要，因为它“保证”了一些随机事件的均值的长期稳定性。人们发现，在重复试验中，随着试验次数的增加，事件发生的频率趋于一个稳定值；人们同时也发现，在对物理量的测量实践中，测定值的算术平均也具有稳定性。比如，我们向上抛一枚硬币，硬币落下后哪一面朝上本来是偶然的，但当我们上抛硬币的次数足够多后，达到上万次甚至几十万几百万次以后，我们就会发现，硬币每一面向上的次数约占总次数的二分之一。<strong>偶然之中包含着必然。</strong></p>
 <p>如果统计数据很少，就很容易出现特别不均匀的情况。这个现象被诺奖得主丹尼尔·卡尼曼戏称为“小数定律”。卡尼曼说，如果我们不理解小数定律，就不能真正理解大数定律。</p>
@@ -376,54 +346,54 @@
 </blockquote>
 <p>正因为如此，我们才不能只凭自己的经验，哪怕加上家人和朋友的经验，去对事物做出判断。我们的经验非常有限。别看个例，看大规模统计。有的人听说两三个负面新闻就敢写文章把社会批得一文不值，这样的人非常无知。</p>
 <h2 id="中心极限定理"><a href="#中心极限定理" class="headerlink" title="中心极限定理"></a><a href="https://zh.wikipedia.org/wiki/%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86" target="_blank" rel="noopener">中心极限定理</a></h2><p>中心极限定理是概率论中的一组定理。中心极限定理说明，<strong>大量相互独立的随机变量，其均值的分布以正态分布为极限</strong>。这组定理是数理统计学和误差分析的理论基础，指出了大量随机变量之和近似服从正态分布的条件。</p>
-<p><img alt data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/HistPropOfHeads.png/450px-HistPropOfHeads.png"><br>本图描绘了多次抛掷硬币实验中出现正面的平均比率，每次实验均抛掷了大量硬币。</p>
-<p><img alt data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Binomial_Distribution.svg/450px-Binomial_Distribution.svg.png"></p>
-<h2 id="基于贝叶斯生存分析的《冰与火之歌》人物死亡率分析"><a href="#基于贝叶斯生存分析的《冰与火之歌》人物死亡率分析" class="headerlink" title="基于贝叶斯生存分析的《冰与火之歌》人物死亡率分析"></a><a href="http://www.36dsj.com/archives/30704" target="_blank" rel="noopener">基于贝叶斯生存分析的《冰与火之歌》人物死亡率分析</a></h2><p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/1312.jpg"></p>
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/HistPropOfHeads.png/450px-HistPropOfHeads.png" alt><br>本图描绘了多次抛掷硬币实验中出现正面的平均比率，每次实验均抛掷了大量硬币。</p>
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Binomial_Distribution.svg/450px-Binomial_Distribution.svg.png" alt></p>
+<h2 id="基于贝叶斯生存分析的《冰与火之歌》人物死亡率分析"><a href="#基于贝叶斯生存分析的《冰与火之歌》人物死亡率分析" class="headerlink" title="基于贝叶斯生存分析的《冰与火之歌》人物死亡率分析"></a><a href="http://www.36dsj.com/archives/30704" target="_blank" rel="noopener">基于贝叶斯生存分析的《冰与火之歌》人物死亡率分析</a></h2><p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/1312.jpg" alt></p>
 <p>《冰与火之歌》书迷遍布全球。该小说凭借其丰富的人物设置受到广大书迷青睐。然而，在马丁( Martin )笔下，无论好人、坏人，主角、配角都难逃命运的捉弄。除不计其数的无名小卒外，马丁的世界里有916位有名字的角色，其中三分之一都已以各种方式结束了自己在小说中的生命。本文中，我们将进一步探究小说人物的死亡模式，建立贝叶斯生存模型来预测各角色的死亡概率。</p>
 <p>本文数据来自冰与火之歌维基( A Wiki of Ice and Fire )。依据该数据我们创建了截至目前书中出现的916名角色的数据集。用人物首次出现的章节，性别，是否为贵族，所属势力，死亡的章节(若已故)作为解释变量来预测这些角色在未来两本书中的存活情况。</p>
 <p>方法论</p>
 <p>采用Weibull 分布外推在7本书中的各个角色的生存概率。Weibull分布提供了一种建立危险函数( hazard function )模型的方法。而危险函数主要测量人物在特定“书龄”上的死亡概率。Weibull分布主要依赖与两个参数，k和lambda，这两个参数决定了Weibull分布的形状。</p>
 <p>在参数估计之前我们选取均匀分布作为先验概率。对于尚存角色，分析k和lambda如何描述人物的存活状况；对于已故人物，分析参数如何预测人物死亡时间。</p>
 <p>对守夜人( Night’s Watch )，生存概率的后验分布如图1。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/170.jpg"><br>图1：lambda的分布比较紧密(在0.27附近)，K的分布比较宽松。</p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/170.jpg" alt><br>图1：lambda的分布比较紧密(在0.27附近)，K的分布比较宽松。</p>
 <p>接下来，本文通过生存曲线分析人物的生存情况。为与生存曲线相联系，计算k和lambda的均值以及90%的置信区间。进一步，绘制原始数据和基于后验均值的生存曲线以及置信区间。</p>
 <p>个人分析：雪诺( Jon Snow )</p>
 <p>采用贝叶斯生存分析方法可以预测个性化人物(例如雪诺)的生存情况。在卷五：魔龙的狂舞( A Dancewith Dragons )结尾，守夜人生存的置信区间为0.36到0.56。Jon能活下来的估计并不乐观。即使Jon可以顺利活过第5本书，他在接下来的两本书中存活的概率将降到0.3到0.51。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/1414.jpg"></p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/239.jpg"></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/1414.jpg" alt></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/239.jpg" alt></p>
 <p>图2：置信区间紧紧围绕在真实数据周围，均值为合理预测。</p>
 <p>值得注意的的是Jon并非守夜人的普通一员。他受过良好的教育，拥有精良的武器和战斗技能。接下来，将样本选为守夜人中家族地位显赫，教育良好的贵族。守夜人中只有11人为贵族。所以置信区间(如图3所示)非常分散，最优近似( Best Estimate )显示贵族背景并不能提高守夜人的生存率。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/326.jpg"></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/326.jpg" alt></p>
 <p>图3：当只有贵族角色时，生存曲线的置信区间显著加宽，概率置信区间下限非常接近0。</p>
 <p>家族因素</p>
 <p>接下来，我们分家族研究人物的生存情况。这里包括9个主要家族，守夜人，野人( the Wildlings )，和其他( a “None” category，指无法归入某类势力的人物)。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/427.jpg"></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/427.jpg" alt></p>
 <p>图4 ：Arryn (蓝)，Lannister (金)，None (绿)及Stark (灰)的生存概率。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/525.jpg"></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/525.jpg" alt></p>
 <p>图5：Tyrell (绿)，Tully (蓝)，Baratheon (橘)及Night’sWatch (灰)生存概率。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/617.jpg"></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/617.jpg" alt></p>
 <p>图6：Martell (橘)，Targaryen (栗色)，Greyjoy (黄)及Wildling (紫色)生存概率。</p>
 <p>图4、5、6的置信区间表明艾琳家族( Houses Arryn )、提利尔家族( Houses Tyrell )以及马泰尔家族( Houses Martell )有较高的生存率。主要原因是其远离书中主要冲突，不过这也意味着这些家族信息较少，我们只有至多5个死亡成员样本，所以生存曲线并没有包含足够的样本点。信息量的稀疏体现为较宽的置信区间。相反，北境诸侯( in the north )、史塔克家族( the Starks )、守夜人和野人这些家族(或势力)有较低的生存曲线和较窄的置信区间。他们在情节主线中占据主要篇幅，许多重要人物都是他们的一员。</p>
 <p>男女(性别因素)</p>
 <p>书中塑造了丰富的女性角色，但依旧以男性人物为主(男女比例为769:157)。女性生存概率的置信区间较宽，但是其生存状态显著好于男性。如图7。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/715.jpg"></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/715.jpg" alt></p>
 <p>图7：维斯特洛(Westeros)中女性存活概率高于男性。</p>
 <p>地位(阶层)</p>
 <p>小说中贵族和贫民人数差距很大，其生存曲线也展现出不同态势。如图8所示，平民倾向于在出场阶段迅速死亡，若能安全度过“介绍期”则将存活较长时间，甚至生存概率会高于部分贵族。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/813.jpg"></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/813.jpg" alt></p>
 <p>图8：贵族在介绍期存活的概率较大，但生存概率的下降速度要大于平民。</p>
 <p>个性角色分析</p>
 <p>利用本文提及的方法，可以结合性别，家族，地位等复合因素提供针对个体角色的粗糙预测模型。在书中给一个非常受欢迎的角色是艾莉亚( Arya )，许多读者关心她在书中的命运。史塔克家族的贵族女性中还包括一些值得注意的角色如珊莎( Sansa )和布雷妮( Brienne，宣誓效忠于史塔克家族，虽然她后来才被介绍)。另外，皇后瑟曦( Cersei )和可怜的弥赛拉( Myrcella )也十分令人着迷。为了得到生存曲线的准确区间估计，我们将贵族女子和平民女子的数据加以综合。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/910.jpg"></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/910.jpg" alt></p>
 <p>图9：各组置信区间都比较宽松。与史塔克家族相比，兰尼斯特( Lannister )家族的贵族女性死亡可能性更高。虽然信息不明确，但艾莉亚会比瑟曦活得久一些。</p>
 <p>此外我们还关心两个小角色，野人公主瓦迩（ Val ）和神秘的魁蜥( Quaithe )。她们并不是故事一开始就出现，所以分析相对比较复杂。瓦迩在章节2.1中被引入，她在整个时序中存活的概率在0.1到0.53之间。魁蜥在章节1.2中首次出现，她的生存概率为0.58到0.85，明显高于瓦迩。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/1012.jpg"></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/1012.jpg" alt></p>
 <p>图10：代表一些小角色的生存曲线，魁蜥和瓦迩有不同的生存曲线。</p>
 <p>有足够的数据能够区分大多数男性角色的家族、性别和地位，以绘制他们的生存曲线。图11显示，兰尼斯特兄弟的生存曲线居中，在第七本书的生存概率为0.35到0.79。达里奥( Daario )生存曲线的置信区间较宽，但考虑到他是在章节2.5中才出现，所以存活概率较大。曼斯( Mance )的存活概率最不容乐观。曼斯在章节2.2故事中登场，他的存活概率为0.19到0.56。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/1117.jpg"></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/1117.jpg" alt></p>
 <p>图11：不同地位、<a href="https://deepcreator.com/2017/11/06/Concept/Alliance/" target="_blank" rel="noopener">联盟</a>的男性角色的生存曲线。</p>
 <p>有一些角色，我们期望看到他们一命呜呼，但是图12显示他们还要活很久。希恩( Theon)似乎会痛苦的活着直到到结局。瓦尔德·弗雷( Walder Frey )在章节0.4中初次登场，存活的可能性为0.44到0.72之间。目前为止，霍斯特·徒利( Hoster Tully )可能是唯一一个死于衰老的人，所以弗雷将有可能活到结局。</p>
-<p><img alt data-src="http://www.36dsj.com/wp-content/uploads/2015/06/1214.jpg"></p>
+<p><img data-src="http://www.36dsj.com/wp-content/uploads/2015/06/1214.jpg" alt></p>
 <p>图12：不同地位、联盟的男性的生存曲线。</p>
 <p>总结</p>
 <p>孰生孰死在故事中充满变数，但从现有数据中，我们可以观察到不同组别下人物生死的模式。对于一些特定角色，尤其是男性角色，我们可以对他们在未来的故事中的遭遇做简单预测。但对于数据较少的、非主要家族的女性来说，预测的准确性则有待商榷。</p>
@@ -433,7 +403,7 @@
 <p>再比如，龙王是中国农民普遍的崇拜对象，但黄土高原和华北平原的农民更崇拜龙王，而沿海地区龙王庙就少得多。因为西北地区下雨没准儿，所以才更需要拜一拜。</p>
 <p>经常看香港电影的朋友会发现，香港人很迷信，为什么呢？香港前身是渔村，渔民恰恰是高风险职业啊。后来商人变成香港的主要阶层，这也是个高风险的职业。再加上香港独特的地理位置，之前一直是中英两国暗中较劲儿的地方，政治环境摇摆不定，当你越觉得无法掌控命运，就越需要能带来确定感的东西，迷信恰好填补了这个心理缺口。</p>
 <p>你看，<strong>迷信其实是确定感的精神寄托。</strong></p>
-<h2 id="最简单概率论的五个智慧"><a href="#最简单概率论的五个智慧" class="headerlink" title="最简单概率论的五个智慧"></a><a href="http://www.luojiji.com/thread-3005-1-1.html" target="_blank" rel="noopener">最简单概率论的五个智慧</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/29/162218syyj0uu30qu6oogf.jpg"></p>
+<h2 id="最简单概率论的五个智慧"><a href="#最简单概率论的五个智慧" class="headerlink" title="最简单概率论的五个智慧"></a><a href="http://www.luojiji.com/thread-3005-1-1.html" target="_blank" rel="noopener">最简单概率论的五个智慧</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/29/162218syyj0uu30qu6oogf.jpg" alt></p>
 <p>2015-12-05万维钢</p>
 <p>我认为人人都应该学一些概率知识，它现在是公民必备知识。</p>
 <p>现在的世界比过去复杂得多，其中有大量不确定性，是否理解概率，直接决定一个人的开化程度。</p>
@@ -504,7 +474,7 @@
 <p>此外，作者也告诉我们，我们很难一次就找到解决的方法，我们犯的每一个错误，都有可能对解决问题有帮助。也就是说，我们要珍惜很多的错误和危机，把它变成一种正面的机遇。</p>
 <p>以上观点，供你参考。</p>
 <p>本文源自：公众号“中信奇点课堂”（秦朔教你如何应对大概率危机）、《灰犀牛：如何应对大概率危机》</p>
-<h2 id="概率权：“算”出来的富人思维"><a href="#概率权：“算”出来的富人思维" class="headerlink" title="概率权：“算”出来的富人思维"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=8174&amp;highlight=%E6%A6%82%E7%8E%87" target="_blank" rel="noopener">概率权：“算”出来的富人思维</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201703/30/154157fwrznxfw0on0kf6r.jpg"></p>
+<h2 id="概率权：“算”出来的富人思维"><a href="#概率权：“算”出来的富人思维" class="headerlink" title="概率权：“算”出来的富人思维"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=8174&amp;highlight=%E6%A6%82%E7%8E%87" target="_blank" rel="noopener">概率权：“算”出来的富人思维</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201703/30/154157fwrznxfw0on0kf6r.jpg" alt></p>
 <p>2017-03-30 罗振宇 罗辑思维</p>
 <p>这篇文章是《罗辑思维》第五季第11期的内容。</p>
 <p>改变的是节目的形式，不变的是对知识的分享和认知的升级。&gt;&gt;&gt;戳此和罗胖一起终身学习</p>
@@ -582,7 +552,7 @@
 <blockquote>
 <p>你可以通过学习，通过认知升级，通过改变自己的大脑，通过克服自己与生俱来的本能，认识概率权，掌握概率权。</p>
 </blockquote>
-<p>要知道，这是我们脑子里发生的事情，虽然它千难万难，但是毕竟我们不需要任何额外的资源，没有任何人能够阻止它发生。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201703/30/154304wadpkwnfnebzp5e5.jpg"></p>
+<p>要知道，这是我们脑子里发生的事情，虽然它千难万难，但是毕竟我们不需要任何额外的资源，没有任何人能够阻止它发生。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201703/30/154304wadpkwnfnebzp5e5.jpg" alt></p>
 <h2 id="临界知识：复利效应和概率论"><a href="#临界知识：复利效应和概率论" class="headerlink" title="临界知识：复利效应和概率论"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=7959&amp;highlight=%E6%A6%82%E7%8E%87" target="_blank" rel="noopener">临界知识：复利效应和概率论</a></h2><p>这条音频说的是两个重要的临界知识，复利效应和概率论。</p>
 <p>临界知识，是知识管理达人、得到说书人成甲在他的新书《好好学习》里提出来的概念，指的是更广泛、更普遍地指导我们行动的基本规律。掌握并且应用临界知识，能让我们做事和学习的效果事半功倍。这本书里列出了好多具体的临界知识，我们精选了两个转述给你。</p>
 <p>第一个临界知识是复利效应。复利效应被爱因斯坦称为世界第八大奇迹。很多人都听过这个故事，国王要奖赏国际象棋的发明人，问他想要什么，他对国王说：陛下，请您在棋盘的第一个格里赏我一粒麦子，第二个格两粒，第三个格四粒，以后每一个格比前一个格加一倍。国王觉得这个要求很容易满足，一算才知道，这一棋盘的麦子，数量是1844亿亿粒，就是把全印度的甚至全世界的麦粒都拿来也满足不了这个要求。</p>
@@ -622,7 +592,7 @@
 <p>解决的办法也很简单，就是是锁定可疑的样本，比如10000人中检查出现问题的那14个人，再独立重复检测一次，因为正常人连续两次体检都出现误测的概率极低，这时筛选出真正患者的准确率就很高了，这也是为什么许多疾病的检测，往往还要送交独立机构多次检查的原因。</p>
 <p>你看，我们平时都觉得很奇怪，说很多像医院这样的权威机构，按理说它们给出的数据肯定没问题，不会错，为什么还总是出现偏差呢？知道了贝叶斯分析这种方法后，你就会发现，概率有时候是不靠谱的，或者说，概率是有局限性的。只有利用更科学的统计分析方法，才能最大程度地避免误判带来的影响。</p>
 <p>本文源自：“得到”App订阅专栏“卓老板聊科技”</p>
-<h2 id="人的一切都是偶然"><a href="#人的一切都是偶然" class="headerlink" title="人的一切都是偶然"></a><a href="http://www.luojiji.com/thread-1223-1-1.html" target="_blank" rel="noopener">人的一切都是偶然</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/15/171743nnbh5nbnh783xns8.jpg"></p>
+<h2 id="人的一切都是偶然"><a href="#人的一切都是偶然" class="headerlink" title="人的一切都是偶然"></a><a href="http://www.luojiji.com/thread-1223-1-1.html" target="_blank" rel="noopener">人的一切都是偶然</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/15/171743nnbh5nbnh783xns8.jpg" alt></p>
 <p>作者：葛优</p>
 <p>我一直到十八九岁都不知道自己将来会是什么样。我爸演戏的时候，我经常躲在一边看。那时，我觉得自己可能是一辈子的忠实观众吧。</p>
 <p>“文革”结束了，艺术院校招生，我忽然好像知道自己想干什么了。考艺术院校时，主考官让我演一个动作：从后面捂女孩的眼睛，我太紧张了，捂住她的眼睛，手就下不来了。那女孩只好把情人见面的戏变成了抓流氓的戏。</p>
@@ -787,8 +757,23 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Probability/" rel="bookmark">Probability</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/iDeepLearn/Profession/Probability/" rel="bookmark">Probability</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/P/Probability/" rel="bookmark">Probability</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Probability/" rel="tag"><i class="fa fa-tag"></i> Probability</a>
           </div>
@@ -800,21 +785,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Concept/" rel="next" title="Concept">
-                  <i class="fa fa-chevron-left"></i> Concept
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Platform/" rel="prev" title="Platform">
-                  Platform <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Concept/" rel="prev" title="Concept">
+      <i class="fa fa-chevron-left"></i> Concept
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Platform/" rel="next" title="Platform">
+      Platform <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -827,7 +809,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -858,8 +862,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -868,14 +872,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -886,11 +890,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -924,7 +923,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -936,51 +935,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -989,18 +949,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1010,63 +964,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1074,14 +971,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1108,40 +1005,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Probability/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

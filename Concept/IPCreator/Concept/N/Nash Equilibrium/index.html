@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="纳什均衡是一种策略组合，使得同一时间内每个参与人的策略是对其他参与人策略的最优反应。——“不后悔”">
 <meta name="keywords" content="Equilibrium,Nash">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/N/Nash Equilibrium/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/N/Nash Equilibrium/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/N/Nash Equilibrium/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="nash.jpg" data-src="http://opb37u589.bkt.clouddn.com/nash.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/nash.jpg?imageMogr2/thumbnail/!75p" alt="nash.jpg"></p>
 <blockquote>
 <p><a href="https://baike.baidu.com/item/%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1" target="_blank" rel="noopener">纳什均衡是一种策略组合，使得同一时间内每个参与人的策略是对其他参与人策略的最优反应。</a><br><a href="https://www.zhihu.com/question/19804990" target="_blank" rel="noopener">——“不后悔”</a></p>
 </blockquote>
@@ -294,7 +264,7 @@
 <h2 id="三十分钟理解博弈论“纳什均衡”-–-Nash-Equilibrium"><a href="#三十分钟理解博弈论“纳什均衡”-–-Nash-Equilibrium" class="headerlink" title="三十分钟理解博弈论“纳什均衡” – Nash Equilibrium"></a><a href="http://blog.csdn.net/xbinworld/article/details/50932559" target="_blank" rel="noopener">三十分钟理解博弈论“纳什均衡” – Nash Equilibrium</a></h2><p>纳什均衡（或者纳什平衡），Nash equilibrium ,又称为非合作博弈均衡，是博弈论的一个重要策略组合，以约翰·纳什命名。</p>
 <p>约翰·纳什，生于1928年6月13日。著名经济学家、博弈论创始人、《美丽心灵》男主角原型。前麻省理工学院助教，后任普林斯顿大学数学系教授，主要研究博弈论、微分几何学和偏微分方程。由于他与另外两位数学家（经济学家，约翰·C·海萨尼和莱因哈德·泽尔腾）在非合作博弈的均衡分析理论方面做出了开创性的贡献，对博弈论和经济学产生了重大影响，而获得1994年诺贝尔经济学奖。</p>
 <p>纳什的人生非常曲折，一度学术成果不被认可，甚至换上严重的精神分裂症，在爱的力量下在很多年后奇迹般地恢复，并最终获得诺贝尔经济学奖。影片《美丽心灵》（A Beautiful Mind）是一部改编自同名传记而获得奥斯卡金像奖的电影，影片以约翰·纳什与他的妻子艾莉西亚（曾离婚，但2001年复婚）以及普林斯顿的朋友、同事的真实感人故事为题材，艺术地重现了这个爱心呵护天才的传奇故事。</p>
-<p><img alt data-src="http://img.blog.csdn.net/20160319231117713"><br>年轻时的Nash，很帅噢</p>
+<p><img data-src="http://img.blog.csdn.net/20160319231117713" alt><br>年轻时的Nash，很帅噢</p>
 <p>纳什均衡定义</p>
 <p>经济学定义[3]<br>所谓纳什均衡，指的是参与人的这样一种策略组合，在该策略组合上，任何参与人单独改变策略都不会得到好处。换句话说，如果在一个策略组合上，当所有其他人都不改变策略时，没有人会改变自己的策略，则该策略组合就是一个纳什均衡。</p>
 <p>数学定义<br>纳什均衡的定义：在博弈G=﹛S1,…,Sn：u1,…，un﹜中，如果由各个博弈方的各一个策略组成的某个策略组合（s1<em>,…，sn</em>）中，任一博弈方i的策略si<em>，都是对其余博弈方策略的组合（s1</em>,…s<em>i-1,s</em>i+1,…，sn<em>）的最佳对策，也即ui（s1</em>,…s<em>i-1,si</em>,s<em>i+1,…，sn</em>）≥ui（s1<em>,…s</em>i-1,sij<em>,s</em>i+1,…，sn<em>）对任意sij∈Si都成立，则称（s1</em>,…，sn*）为G的一个纳什均衡。</p>
@@ -306,7 +276,7 @@
 <p>（1）囚徒困境</p>
 <p>假设有两个小偷A和B联合犯事、私入民宅被警察抓住。警方将两人分别置于不同的两个房间内进行审讯，对每一个犯罪嫌疑人，警方给出的政策是：如果一个犯罪嫌疑人坦白了罪行，交出了赃物，于是证据确凿，两人都被判有罪。如果另一个犯罪嫌疑人也作了坦白，则两人各被判刑8年；如果另一个犯罪嫌人没有坦白而是抵赖，则以妨碍公务罪（因已有证据表明其有罪）再加刑2年，而坦白者有功被减刑8年，立即释放。如果两人都抵赖，则警方因证据不足不能判两人的偷窃罪，但可以私入民宅的罪名将两人各判入狱1年。</p>
 <p>此时产生了两个嫌疑人之间的一场博弈：</p>
-<p><img alt data-src="http://img.blog.csdn.net/20160320000357092"></p>
+<p><img data-src="http://img.blog.csdn.net/20160320000357092" alt></p>
 <p>表中的数字表示A，B各自的判刑结果。博弈论分析中一般都用这样的表来表示。</p>
 <p>该案例，显然<strong>最好的策略是双方都抵赖</strong>，结果是大家都只被判1年。但是由于两人处于隔离的情况，首先应该是从心理学的角度来看，当事双方都会怀疑对方会出卖自己以求自保、其次才是亚当·斯密的理论，假设每个人都是“理性的经济人”，都会从利己的目的出发进行选择。这两个人都会有这样一个盘算过程：假如他坦白，如果我抵赖，得坐10年监狱，如果我坦白最多才8年；假如他要是抵赖，如果我也抵赖，我就会被判一年，如果我坦白就可以被释放，而他会坐10年牢。综合以上几种情况考虑，不管他坦白与否，对我而言都是坦白了划算。两个人都会动这样的脑筋，<strong>最终，两个人都选择了坦白</strong>，结果都被判8年刑期。</p>
 <p>注：亚当·斯密的理论（“看不见的手”原理），在市场经济中，每一个人都从利己的目的出发，而最终全社会达到利他的效果。但是我们可以从“纳什均衡”中引出“看不见的手”原理的一个悖论：<strong>从利己目的出发，结果损人不利己，既不利己也不利他。</strong></p>
@@ -316,7 +286,7 @@
 <p>原因何在？因为，小猪踩踏板将一无所获，不踩踏板反而能吃上食物。对小猪而言，无论大猪是否踩动踏板，不踩踏板总是好的选择。反观大猪，已明知小猪是不会去踩动踏板的，自己亲自去踩踏板总比不踩强吧，所以只好亲力亲为了。</p>
 <p>（3）普通范式博弈</p>
 <p>GOO公司和SAM公司是某手机产品生态的两大重量级参与者，双方在产业链的不同位置上各司其职且关系暧昧，有时也往往因商业利益和产品影响力的争夺而各怀异心。二者的收益也随着博弈的变化而不断更替。</p>
-<p><img alt data-src="http://img.blog.csdn.net/20160320001757487"></p>
+<p><img data-src="http://img.blog.csdn.net/20160320001757487" alt></p>
 <p>上图表格模拟了两家公司的博弈现状，双方各有两个可选策略“合作”与“背叛”，格中的四组数据表示四个博弈结局的分数（收益），每组数据的第一个数字表示GOO公司的收益，后一个数字表示SAM公司的收益。</p>
 <p>博弈是同时进行的，一方参与者必须站在对方的角度上来思考我方的策略选择，以追求收益最大化。这在博弈论里称作Putting yourselves into other people’s shoes。</p>
 <p>现在我们以GOO公司为第一人称视角来思考应对SAM公司的博弈策略。假如SAM公司选择合作，那么我方也选择合作带来的收益是3，而我方选择背叛带来的收益是5，基于理性的收益最大化考虑，我方应该选择背叛，这叫严格优势策略；假如SAM公司选择背叛，那么我方选择合作带来的收益是-3，而选择背叛带来的收益为-1，为使损失降到最低，我方应该选择背叛。最后，GOO公司的分析结果是，无论SAM公司选择合作还是背叛策略，我方都必须选择背叛策略才能获得最大化的收益。</p>
@@ -333,14 +303,14 @@
 <p>为简化说明，我们先给出此题的解法。该题须采用逆向分析法，也就是从最弱的狮子F开始分析，依次前推。假设狮子E睡着了，狮子F敢不敢吃掉狮子E？答案是肯定的，因为在狮子F的后面已没有其它狮子，所以狮子F可以放心地吃掉午睡中的狮子E。</p>
 <p>继续前推，既然狮子E睡着会被狮子F吃掉，那么狮子E必然不敢吃在他前面睡着的狮子D。</p>
 <p>再往前推，既然狮子E不敢吃掉狮子D，那么D则可以放心去吃午睡中的狮子C。依次前推，得出C不吃，B吃，A不吃。所以答案是狮子A不敢吃掉绵羊。</p>
-<p>推理结果如下图：<br><img alt data-src="http://img.blog.csdn.net/20160320002315056"></p>
+<p>推理结果如下图：<br><img data-src="http://img.blog.csdn.net/20160320002315056" alt></p>
 <p>但是，如果我们在狮子F的后面增加了一只狮子G，总数变成7只，用逆向分析法按照上题步骤再推一次，很容易得出结论：狮子G吃，狮子F不吃，E吃，D不吃，C吃，B不吃，A吃。这次的答案变成了狮子A敢吃掉绵羊。</p>
-<p><img alt data-src="http://img.blog.csdn.net/20160320002400338"></p>
+<p><img data-src="http://img.blog.csdn.net/20160320002400338" alt></p>
 <p>对比两次博弈我们发现，狮子A敢不敢吃绵羊取决于狮子总数的奇偶性，总数为奇数时，A敢吃掉绵羊；总数为偶数时，A则不敢吃。因此，总数为奇数和总数为偶数的狮群博弈结果形成了两个稳定的纳什均衡点。</p>
 <p>（5）硬币正反</p>
 <p>你正在图书馆枯坐，一位陌生美女主动过来和你搭讪，并要求和你一起玩个数学游戏。美女提议：“让我们各自亮出硬币的一面，或正或反。如果我们都是正面，那么我给你3元，如果我们都是反面，我给你1元，剩下的情况你给我2元就可以了。”那么该不该和这位姑娘玩这个游戏呢？</p>
 <p>每一种游戏依具其规则的不同会存在两种纳什均衡，一种是纯策略纳什均衡，也就是说玩家都能够采取固定的策略(比如一直出正面或者一直出反面)，使得每人都赚得最多或亏得最少；或者是混合策略纳什均衡，而在这个游戏中，便应该采用混合策略纳什均衡。</p>
-<p><img alt data-src="http://img.blog.csdn.net/20160320003913334"></p>
+<p><img data-src="http://img.blog.csdn.net/20160320003913334" alt></p>
 <p>假设我们出正面的概率是x，反面的概率是1-x，美女出正面的概率是y，反面的概率是1-y。为了使利益最大化，应该在对手出正面或反面的时候我们的收益都相等，由此列出方程就是</p>
 <p>3x + (-2)(1-x)=(-2) <em> x + 1</em>( 1-x )——解方程得x=3/8；同样，美女的收益，列方程-3y + 2( 1-y)= 2y+ (-1) * ( 1-y)——解得y也等于3/8。</p>
 <p>于是，我们就可以算美女每次的期望收益是： （1-y）(2x-(1-x)) + y(-3x+2(1-x)) = 1/8元，也就是说，双方都采取最优策略的情况下，平均每次美女赢1/8元。</p>
@@ -392,15 +362,15 @@
 <p>假如两个人组成的社会，每个人都有两个选择，可以选择合作，也可以选择不合作。当然了，这个概念可以作为一般应用，也可以理解为在团队中的努力还是不努力，合作是努力，不合作是不努力。你也可以讲合作就是诚实，不合作就是欺骗。为了方便简洁我们简单地用合作和不合作。这样的话，每个人最终会得到什么，不仅依赖于你选择合作或不合作，还依赖于别人的选择。</p>
 <p>在两个人情况下，有四种可能性：第一种两个人都合作；第二种两个人都不合作；第三种是第一个人合作，第二个人不合作；第四种第一个不合作，第二个人合作。对应这四种可能性，每个人的报酬，或者说叫效用，或者博弈论中叫支付，是不一样的。我们先从个人讲起，因为博弈论是从个人的决策开始的，先要研究对单个人来讲，什么是最好的。</p>
 <p>在这个案例里面，对单个人来说最好就是别人合作，他不合作，他就赚便宜了。比如别人好好干活，你偷懒，你分享别人的成果，你赚了；其次是两个人都合作；再其次是两个人都不合作；最糟糕的是你合作，别人不合作，你被别人骗了。凡是满足这样一个条件的，都叫囚徒困境。</p>
-<p><img alt data-src="http://i.ftimg.net/picture/6/000054986_piclink.jpg"><br>图一：囚徒困境</p>
+<p><img data-src="http://i.ftimg.net/picture/6/000054986_piclink.jpg" alt><br>图一：囚徒困境</p>
 <p>图一用具体的数值描述了这个博弈。在这里，从A的角度来看，如果B合作，他不合作，他得到4；其次是两个人都合作，他得到3；再其次是两个人都不合作，他得到0；最糟糕是什么？他合作， B不合作，结果他得到-1。图一里边的第一个数字代表第一个人的报酬，第二个代表第二个人的报酬，这是表述的惯例。</p>
 <p>我们看到，如果是这样情况，每个人出于自己的利益选择，他会选择什么呢？从A的角度出发，如果B合作，他最好是不合作，他得到4；如果B不合作，他合作的话就亏了，不合作是0，所以从他的利益出发，最好选择不合作。从B的角度讲也是一样，所以每个人的最优选择都是不合作，结果是每个人都得到0。而我们作为局外人，明明看到这样更好：如果两个人都合作得到3。这就是我们过去讲的个人理性与集体理性的矛盾，这就是囚徒困境的意思。</p>
 <p>两人都不合作的纳什均衡显然是坏的均衡，从这里我们就可以体会到制度的意义。一个制度其实是某种游戏规则，实际上就是博弈规则，这就是制度的含义。它不仅在影响人的行为，还决定着什么样的纳什均衡会出现。什么叫好的制度？好的制度就是能使得合作变成纳什均衡的制度；反过来，坏的制度就是使得不合作变成纳什均衡的制度。在刚才这个例子当中，我们可以设想这也许就是人民公社制度，大家吃大锅饭，谁好好干活谁吃亏，谁耍奸谁得到好处，最后结果是大家没饭吃。</p>
-<p><img alt data-src="http://i.ftimg.net/picture/6/000054986_piclink.jpg"><br>图二：包产到户下的纳什均衡</p>
+<p><img data-src="http://i.ftimg.net/picture/6/000054986_piclink.jpg" alt><br>图二：包产到户下的纳什均衡</p>
 <p>我们现在看制度改变起什么意义？假如人民公社变成包产到户，在包产到户的情况下，你赚不了别人的便宜，你只能吃自己地上打的粮食。以前，如果农民两人都合作，每人可以得到3，俩人都不合作，得到0。现在就变化了，如果第一个农民A努力，第二个人偷懒的话，农民A自家能拿到3，B只能拿到0；反过来说，如果B努力，A偷懒的话，A只能得到0，B得到3。你看，在这样的制度下，纳什均衡是大家都会合作。</p>
 <p>从A来讲，不管B合不合作，我自己一定会好好干活，B最后选择也是好好干活。结果就从前面坏的纳什均衡变成了好的纳什均衡，即合作的纳什均衡，这就是我们讲的制度的意义：<strong>制度影响纳什均衡，一个好的制度鼓励人们合作，一个不好的制度使大家不合作。</strong></p>
 <p>但我们马上遇到一个问题了，农业是由于生产落后，不需要实际上物理上的合作，每个人自己种自己的地就好。当然，互助组合作社之类的我们先不讲它。但是，任何一个工业企业不可能分成个体生产，如果你把一个大企业分成一个个个体户的话，公司的价值就没有了，我们需要这个公司本身就是因为它可以创造出单个人创造不出的东西，也就是说N个人放在一块创造的价值大于每个人创造的价值乘以N，这才是我们需要团队的原因。所以我刚才这个例子，并不能完全概括我们面临的问题。</p>
-<p><img alt data-src="http://i.ftimg.net/picture/8/000054988_piclink.jpg"><br>图三：私有产权下的纳什均衡</p>
+<p><img data-src="http://i.ftimg.net/picture/8/000054988_piclink.jpg" alt><br>图三：私有产权下的纳什均衡</p>
 <p>如果在集体当中，囚徒困境一定会存在的话，怎么解决它？现在来看，私有产权就能解决它。</p>
 <p>这里的私有产权可以这样设想，还是一个博弈，如果现在企业有一个老板，一个雇员，老板合作，雇员也合作的话，每个人得到3；如果老板合作，雇员不合作的话，老板就可以处罚雇员，雇员只能得到0，老板还能得到2；如果雇员合作，老板不合作的话，老板照样付雇员3的工资，老板就亏了。从这里可以发现，一个人干活只能创造2的价值，两个人干活可以创造6的价值，于是企业的价值就出现了。这时候，雇员和老板都会选择合作，如图三所示。</p>
 <p>所以，在有了私有产权的博弈当中，我们看到合作就变成一个纳什均衡了。为什么现代企业制度能够出现并且持续存在，即便它有好多诸如偷懒这些问题，就是因为有私有产权制度，简单说有老板。如果一个企业没有老板就会变成囚徒困境博弈，纳什均衡就是没人合作，这就是国有企业的问题。如果一个企业有老板了，那就改变了制度，改变了游戏规则，合作就变成了纳什均衡。这就是前面讲的制度的意义。</p>
@@ -414,7 +384,7 @@
 <p>我们还可以更多地细分，我们的社会制度或者游戏规则简单地说就是这样一些东西，都可以归结这几类，包括我们的文化也可以说是社会规范。</p>
 <p>3、社会规则的基本功能：激励与协调</p>
 <p>下面我简单给大家分析一下社会规则的基本功能。这里要讲的有些是在某种制度情况下人们如何行为，有些是这些制度本身是如何形成的。我大体归结了人类所有的制度、游戏规则的四大作用：第一是激励功能，提供正确的激励，当然也可能是错误的激励；第二是协调功能；第三是承诺功能；第四是信号功能。</p>
-<p><img alt data-src="http://i.ftimg.net/picture/9/000054989_piclink.jpg"><br>图四：作为激励机制的社会规范或法律</p>
+<p><img data-src="http://i.ftimg.net/picture/9/000054989_piclink.jpg" alt><br>图四：作为激励机制的社会规范或法律</p>
 <p>先看一下激励功能。刚才已经谈到的私有财产制度就有激励功能，包产到户就是激励机制。现在更一般的来讲，在博弈当中，如果没有这些游戏规则的话，我们得到就是不好的纳什均衡。法律是来干什么得呢？如图四，假如说合作是一个合同，我们大家都要合作，如果你不合作的话，你直接得到4，但这个时候你要受到一点惩罚，就是y(或x)，从你的所得中减去，因为你违反了合同，要补偿人家。</p>
 <p>我们先假定不去考虑图中的a和b。只有这个惩罚y和x足够大，人们才可能去合作。在这里，只要y大于1，x大于1，当你预计你不合作之后，带来的好处要扣除你要承担的惩罚，你觉得不如合作的话，你就会选择合作。这个时候这种法律就可能使得合作成为纳什均衡。</p>
 <p>社会规范也一样，社会规范不像法律那么有强制性，但就像我刚才讲的，我们人不只重视物质的东西，也重视非物质的东西，当别人鄙视你的时候，你会有不愉快的感觉。比如，你看到别人的东西，你抓过来自己吃，人家不打你，甚至骂都不骂你，人家只瞪你一眼，你会有什么感觉？你心里会有点不舒服，这就是一种成本。如果有了规范，所有人都要遵守这个规范，你违反这个规范的话，就相当于你要付出一种成本。</p>
@@ -426,7 +396,7 @@
 <p>人类走出囚徒困境，或者从不合作走向合作最重要机制，也许就是博弈论研究的重复博弈导致的声誉机制，时间关系不能细讲。简单说，一个社会人们越是有积极性从事重复博弈，人们就越愿意合作。你骗一次人家，得到一次好处，但损害了未来声誉，大家以后不跟你合作，你就没有机会得到合作的好处了，你会觉得骗人划不来。反过来说，一个社会中大家只注重眼前利益，没有重复博弈、长期博弈的可能性，这个社会一定坑蒙拐骗横行。</p>
 <p>一个社会是不是有重复博弈的可能性，很大程度上取决于产权制度，在有明确的私有产权界定的情况下，我们从事的就是长期博弈。最简单的例子就是挖矿，如果这个矿的产权是清楚的永久的，你自己不挖还可以卖给别人，这个时候你开矿就会非常注意安全。为什么？出现安全事故损害的是自己。如果这个矿是集体的，国家的，今天让挖，明天可能就不让挖了，能挖的时间你一定会疯狂采挖，掠夺性开采，你也不会买那么多安全设备，事故就会不断发生。</p>
 <p>这是非常重要的一点，传统经济学的价格理论只能解释市场是一只看不见的手，它没法解释我这里讲的市场是一双隐型的眼睛，你干了好事，市场能记得住，你干了坏事，市场也能记得住，你不要以为你骗了人家就真的会获得便宜，你早晚会得到报应，所谓天网恢恢疏而不漏，这就是市场。市场不仅是看不见的手，也是隐型的眼睛，这个理论对我们理解中国社会是非常非常重要的。<br>好多人误解了市场，只从价格理论角度理解市场，没有按照我刚才讲的从博弈这样的角度理解市场，就说所有的坑蒙拐骗问题，最后唯一的解决方式是由政府来管制，政府就成立了各种审批机构，监管机构。你看我们有食品医药局，工商局，安检局，等等。但这种机构越多，骗子反倒越多，因为这种机构本身消灭了社会声誉机制，一个社会没有人在乎自己声誉的时候，你靠政府监管是没办法解决问题的。</p>
-<p><img alt data-src="http://i.ftimg.net/picture/0/000054990_piclink.jpg"><br>图五：作为协调预期的社会规范或法律</p>
+<p><img data-src="http://i.ftimg.net/picture/0/000054990_piclink.jpg" alt><br>图五：作为协调预期的社会规范或法律</p>
 <p>制度的第二个作用，是协调机制。协调机制我也用一个简单的博弈来讲（图五）。假如我们有一个门，比较小的一个门，一次只能进一个人。现在有两个人同时到了门口，那现在就有一个问题，如果两个人都急着往进走，谁都进不来，如果两个人都谦让的话，也是谁都进不来，最好是一个先走，一个后走。</p>
 <p>图五中，我们假定如果两个人同时抢着进门，撞在一起，每个人亏了1；如果两个人都谦让，延误了进门，也亏了1；但是如果第一个人先走，第二个人让一下后走，第一个人到了2，第二个人得到1，反过来如果第二个人先走，第一个人先走，第一个人得到1，第二个人得到2。</p>
 <p>我们再想象，如果你碰到一个人，你预期这个人会先走的话，你的最优选择是什么？后走，你让他一下。反过来说，你预期他后走，你的最优选择是什么？先走。一个人先走，另一个人后走，无论哪一个人先走，哪一个人后走，都是纳什均衡，在这个博弈当中，有两个纳什均衡。</p>
@@ -484,8 +454,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Balance/" rel="bookmark">Balance</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Equilibrium/" rel="tag"><i class="fa fa-tag"></i> Equilibrium</a>
               <a href="/tags/Nash/" rel="tag"><i class="fa fa-tag"></i> Nash</a>
@@ -498,21 +477,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/R/Resource/" rel="next" title="Resource">
-                  <i class="fa fa-chevron-left"></i> Resource
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Movie/Game of Thrones/Petyr Baelish/" rel="prev" title="Petyr Baelish">
-                  Petyr Baelish <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/R/Resource/" rel="prev" title="Resource">
+      <i class="fa fa-chevron-left"></i> Resource
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Movie/Game of Thrones/Petyr Baelish/" rel="next" title="Petyr Baelish">
+      Petyr Baelish <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -525,7 +501,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -556,8 +554,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -566,14 +564,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -584,11 +582,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -622,7 +615,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -634,51 +627,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -687,18 +641,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -708,63 +656,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -772,14 +663,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -806,40 +697,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/N/Nash Equilibrium/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

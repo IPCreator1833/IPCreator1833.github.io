@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="一台可以运行linux的具有完整计算机结构的小体积开发板。">
 <meta name="keywords" content="Raspberry">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Program/IPCreator/Technology/Program/Raspberry/Raspberry/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Raspberry/Raspberry/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Raspberry/Raspberry/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://opb37u589.bkt.clouddn.com/52274bf592db85164c5.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/52274bf592db85164c5.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>一台可以运行linux的具有完整计算机结构的小体积开发板。</p>
 </blockquote>
@@ -296,52 +266,52 @@
 </blockquote>
 <h2 id="树莓派新手入门教程"><a href="#树莓派新手入门教程" class="headerlink" title="树莓派新手入门教程"></a><a href="http://www.ruanyifeng.com/blog/2017/06/raspberry-pi-tutorial.html" target="_blank" rel="noopener">树莓派新手入门教程</a></h2><p>作者： 阮一峰<br>日期： 2017年6月15日</p>
 <p>树莓派（Raspberry Pi）是学习计算机知识、架设服务器的好工具，价格低廉，可玩性高。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061501.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061501.png" alt></p>
 <p>本文根据我的亲身经验，介绍如何从零开始，搭建一个树莓派服务器，控制 LED 灯。你会看到，树莓派玩起来实在很容易。</p>
 <p>一、型号<br>树莓派是一个迷你电脑，集成在一块电路板。目前，最新的型号有两个。</p>
 <p>（1）Raspberry Pi 3代 B 型</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061502.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061502.jpg" alt></p>
 <p>（2）Raspberry Pi zero （含 zero w）</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061503.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061503.jpg" alt></p>
 <p>虽然后者便宜，但是少了许多接口（比如只有一个 USB 口），CPU 和内存都比较低，配件也少，因此推荐购买第3代的 B 型。以下都针对这个型号，但大部分内容对 zero 也适用。</p>
 <p>二、配件<br>树莓派本身只是一个主机。要运行起来，必须有配件。</p>
 <p>（1）电源</p>
 <p>Micro USB 接口的手机充电器，就可以充当电源，但输出必须是 5V 电压、至少 2A 电流。充电宝当电源也没问题。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061504.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061504.jpg" alt></p>
 <p>（2）Micro SD 卡</p>
 <p>树莓派不带硬盘，Micro SD 卡就是硬盘。最小容量8G，推荐使用16G和32G的卡。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061506.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061506.jpg" alt></p>
 <p>（3）显示器</p>
 <p>树莓派有 HDMI 输出，显示器必须有该接口。如果有 HDMI 转 VGA 的转接线，那么 VGA 显示器也可以。我用的是一个 7 寸的液晶监视器。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061507.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061507.jpg" alt></p>
 <p>不过，显示器只在安装系统时需要，后面可以 SSH 登录，就不需要了。</p>
 <p>（4）无线键鼠</p>
 <p>树莓派内置蓝牙，USB 或蓝牙的无线键鼠都可以用。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061508.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061508.jpg" alt></p>
 <p>就像显示器一样，如果树莓派已经装好系统，而且只当作服务器，无线键鼠也可以不配。</p>
 <p>三、电子元件<br>除了配件，下面的实验还需要一些电子元件。</p>
 <p>（1）面包板（一块）</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061509.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061509.jpg" alt></p>
 <p>（2）连接线（若干）</p>
 <p>注意，连接线必须一端是公头，一端是母头。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061510.jpg"></p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061511.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061510.jpg" alt></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061511.jpg" alt></p>
 <p>另外，最好也备一些两端都是公头的连接线。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061512.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061512.jpg" alt></p>
 <p>（3）LED 二极管（若干）</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061512.gif"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061512.gif" alt></p>
 <p>（4）270欧姆的电阻（若干）</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061513.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061513.jpg" alt></p>
 <p>四、安装系统<br>如果商家已经装好系统，可以跳过这一步，否则需要自己安装操作系统。</p>
 <p>官方提供的操作系统是 Raspbian，这是 Debian 系统的定制版。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061514.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061514.png" alt></p>
 <p>官方还提供一个安装器 NOOBS，建议通过它来安装 Raspbian，相对简单一点。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061515.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061515.png" alt></p>
 <p>下载 NOOBS。<br>格式化 Micro SD 卡为 FAT 格式（操作指导）。<br>解压NOOBS.zip到 Micro SD 卡根目录。<br>插入 Micro SD 卡到树莓派底部的卡槽，接通电源，启动系统。<br>正常情况下，按照屏幕上的提示，一路回车，就能装好系统。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061516.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061516.png" alt></p>
 <p>五、SSH 登录<br>安装系统后，树莓派就可以上网了（Wifi 或者网线）。这时，你要看一下它的局域网 IP 地址，可以使用下面的命令。</p>
 <p>$ sudo ifconfig<br>然后，更改系统设置，打开 SSH 登录（默认是禁止的）。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061521.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061521.png" alt></p>
 <p>接着，从另一台电脑 SSH 登录树莓派。下面的命令是在局域网的另一台电脑上执行的。</p>
 <p>$ ssh <a href="mailto:pi@192.168.1.5" target="_blank" rel="noopener">pi@192.168.1.5</a><br>上面代码中，192.168.1.5是我的树莓派的地址，你要换成你的地址。树莓派的默认用户是pi。</p>
 <p>树莓派会提示你输入密码。pi的默认密码是raspberry。正常情况下，这样就可以登录树莓派了。接着，就可以进行各种服务器操作了，比如修改密码。</p>
@@ -350,17 +320,17 @@
 <p>六、安装 Node<br>为了运行 Node 脚本，树莓派必须安装 Node，可以参考这篇文章。</p>
 <p>$ curl -sL <a href="https://deb.nodesource.com/setup_8.x" target="_blank" rel="noopener">https://deb.nodesource.com/setup_8.x</a> | sudo -E bash -<br>$ sudo apt install nodejs<br>正常情况下，Node 8.x 版就已经安装成功了。</p>
 <p>$ node -v<br>v8.1.0<br>七、点亮 LED<br>树莓派提供了一组对外的 IO 接口，称为 GPIO（ 通用 IO 接口，General-purpose input/output）。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061518.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061518.png" alt></p>
 <p>它的 40 个脚的定义如下图。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061519.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061519.png" alt></p>
 <p>注意，左上角的第1针（3.3V）是一个方块，其他针脚都是圆的。将树莓派翻过来，背后可以看到 GPIO 有一个角是方的，通过这种方法就可以确认哪一个针眼是3.3V。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061516.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061516.jpg" alt></p>
 <p>通过 GPIO ，树莓派可以与其他电子元件连接。下面根据 Jonathan Perkin 的文章，使用树莓派连接 LED 二极管。</p>
 <p>这里需要用到面包板。本质上，面包板就是几根导线，上面开了许多可以连到导线的孔。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061519.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061519.jpg" alt></p>
 <p>+极和-极是两根垂直的导线，标着1、5、10这些数字的行，每一行都是一根水平的导线。导线与导线之间互不连接，另外，面包板的左右两半也是互不连接的。</p>
 <p>然后，按照下面的图，将树莓派、面包板、LED 灯、电阻连起来。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061520.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061520.jpg" alt></p>
 <p>上图中，红色导线表示电流的正极，从 GPIO 的第1针（3.3V）连到面包板。黑色导线表示电流的负极，从 GPIO 第三排的第6针（ground）连到面包板。它们连到面包板的哪个眼并不重要，但必须保证能组成一个完整的电路（上图的箭头流向）。注意，LED 二极管也有正负极，长脚表示正极，短脚表示负极。电阻没有正负极。</p>
 <p>连接完成后，打开树莓派的电源，LED 应该就会亮起来了。</p>
 <p>八、LED 控制脚本<br>下面，我们使用 Node 脚本控制 LED。</p>
@@ -388,7 +358,7 @@
 <p>$ curl <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a><br>好了，今天的教程就到这里。接下来，你可以自己探索，做更多的尝试，比如写一个测试用例脚本，只要测试失败 LED 就会长亮，或者组装一个8位的加法器。</p>
 <p>（正文完）</p>
 <h2 id="树莓派新手入门教程-1"><a href="#树莓派新手入门教程-1" class="headerlink" title="树莓派新手入门教程"></a><a href="http://www.ruanyifeng.com/blog/2017/06/raspberry-pi-tutorial.html" target="_blank" rel="noopener">树莓派新手入门教程</a></h2><p>作者： 阮一峰<br>日期： 2017年6月15日</p>
-<p>树莓派（Raspberry Pi）是学习计算机知识、架设服务器的好工具，价格低廉，可玩性高。<br><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061501.png"></p>
+<p>树莓派（Raspberry Pi）是学习计算机知识、架设服务器的好工具，价格低廉，可玩性高。<br><img data-src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017061501.png" alt></p>
 <p>本文根据我的亲身经验，介绍如何从零开始，搭建一个树莓派服务器，控制 LED 灯。你会看到，树莓派玩起来实在很容易。</p>
 <p>一、型号<br>树莓派是一个迷你电脑，集成在一块电路板。目前，最新的型号有两个。<br>（1）Raspberry Pi 3代 B 型</p>
 <p>（2）Raspberry Pi zero （含 zero w）</p>
@@ -436,7 +406,7 @@
 <p>console.log(‘server starts on 8080 port’);<br>运行这个脚本。</p>
 <p>$ node server.js<br>然后，再打开一个命令行终端，访问8080端口，LED 就会闪一下。</p>
 <p>$ curl <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a><br>好了，今天的教程就到这里。接下来，你可以自己探索，做更多的尝试，比如写一个测试用例脚本，只要测试失败 LED 就会长亮，或者组装一个8位的加法器。</p>
-<h2 id="Raspberry-Pi是什么"><a href="#Raspberry-Pi是什么" class="headerlink" title="Raspberry Pi是什么"></a><a href="http://www.alsrobot.cn/wiki/index.php/Raspberry_Pi%E6%98%AF%E4%BB%80%E4%B9%88" target="_blank" rel="noopener">Raspberry Pi是什么</a></h2><p><img alt data-src="http://www.alsrobot.cn/wiki/images/b/b8/01C11901.png"></p>
+<h2 id="Raspberry-Pi是什么"><a href="#Raspberry-Pi是什么" class="headerlink" title="Raspberry Pi是什么"></a><a href="http://www.alsrobot.cn/wiki/index.php/Raspberry_Pi%E6%98%AF%E4%BB%80%E4%B9%88" target="_blank" rel="noopener">Raspberry Pi是什么</a></h2><p><img data-src="http://www.alsrobot.cn/wiki/images/b/b8/01C11901.png" alt></p>
 <p>Raspberry Pi 简介</p>
 <p>Raspberry Pi，缩写RPi或者RasPi，中文译名为“树莓派”，是一个信用卡大小的、基于Linux的“卡片电脑”（Single-board Computer，单板机），是为学生计算机编程教育而设计，由英国剑桥某实验室历经6年的研制，于 2012年2月29日公开发布并接受预定。负责Raspberry P(树莓派)i这个项目运作的是树莓派基金会（Raspberry Pi Foundation），该基金会主任是Eben Upton（埃本·阿普顿），在媒体前有着非常高的曝光率。</p>
 <blockquote>
@@ -463,7 +433,7 @@
 <p>1、Raspberry pi camera V2 使用方法<br>2、（新）7 寸触摸屏幕配合 Raspberry Pi 使用说明<br>3、（旧）7寸触摸屏使用之驱动加载<br>4、树莓派摄像头安装及配置<br>5、树莓派控制器蓝牙适配器配置</p>
 <p>应用篇 - Raspberry Pi 与传感器</p>
 <p>1、模拟量传感器控制LED<br>2、控制 SPI 八位数码管显示<br>3、超声波传感器测距实验</p>
-<h2 id="Raspberry-Pi常见问题"><a href="#Raspberry-Pi常见问题" class="headerlink" title="Raspberry Pi常见问题"></a><a href="http://www.alsrobot.cn/wiki/index.php/Raspberry_Pi%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98" target="_blank" rel="noopener">Raspberry Pi常见问题</a></h2><p><img alt data-src="http://www.alsrobot.cn/wiki/images/thumb/6/6c/Raspia.JPEG/525px-Raspia.JPEG"></p>
+<h2 id="Raspberry-Pi常见问题"><a href="#Raspberry-Pi常见问题" class="headerlink" title="Raspberry Pi常见问题"></a><a href="http://www.alsrobot.cn/wiki/index.php/Raspberry_Pi%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98" target="_blank" rel="noopener">Raspberry Pi常见问题</a></h2><p><img data-src="http://www.alsrobot.cn/wiki/images/thumb/6/6c/Raspia.JPEG/525px-Raspia.JPEG" alt></p>
 <p>树莓派</p>
 <p>树莓派体积小，功能强大，自从其问世以来，以其优越的性能，倍受电子爱好者的亲赖，也正因为树莓派功能比较多，所以在使用时，发现的问题也会越来越多，在此列出使用过程中，遇到的常见问题以及疑难杂症，日后也会不间断的更新，敬请关注。<br>树莓派常见问题</p>
 <p>树莓派各个型号的区别<br>详见：Raspberry Pi板的介绍<br>为什么没有实时时钟？<br>树莓派没有实时时钟，关机后无法维持时钟的走时。没有连接网络的树莓派，每次开机时都需要手工设定时间。（连接网络的，开机时会自动联网获取时间）添加实时时钟时钟电路，其实出奇的昂贵。因为一旦在板子上加入电池，空间和接口电路都会大大推高树莓派的造价。如果您的应用或电子制作有需要，可以考虑用GPIO扩展端口，自己在外部连接实时时钟电路。<br>能增加内存吗？<br>不能。内存是一个“扣”在CPU/GPU上的PoP封装，无法拆卸。<br>如何连接键盘和鼠标？<br>使用USB端口。树莓派A型有一个，B型有两个USB口。如果您要连接更多的USB设备，使用USB HUB即可。建议使用无线键盘鼠标套装。除了使用方便外，最重要的是可以节省一个USB口。推荐：罗技MK240或MK220。<br>树莓派能连接什么显示设备？<br>树莓派提供HDMI与复合视频两种输出。您可以将树莓派连接到任何电视机的A/V输入端子，或是新型电视的HDMI端子上。也可以使用廉价的HDMI转DVI线缆（转接头）连接支持DVI输入的显示器。树莓派不支持VGA。如果要使用VGA或YPbPr色差，您需要一个相对贵一些的HDMI转VGA转换器。最便宜的可靠的HDMI转VGA转换器，在淘宝上72元可以买到，介绍文档会稍后贴到论坛上。 当然，尽管对初学者可能有些难，但树莓派即使没有显示器，也可以通过远程登录进行操作！<br>为什么不支持VGA？<br>因为BCM2835芯片只支持HDMI输出。并且VGA技术也已经开始逐步退出显示市场，有了过时的趋势。我们因此也不计划去支持VGA。</p>
@@ -495,8 +465,11 @@
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Raspberry/" rel="tag"><i class="fa fa-tag"></i> Raspberry</a>
           </div>
@@ -508,21 +481,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Book/IPCreator/Book/Thought can not Drift/" rel="next" title="Thought can not Drift">
-                  <i class="fa fa-chevron-left"></i> Thought can not Drift
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Program/IPCreator/Technology/Program/Python/Python/" rel="prev" title="Python">
-                  Python <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Book/IPCreator/Book/Thought can not Drift/" rel="prev" title="Thought can not Drift">
+      <i class="fa fa-chevron-left"></i> Thought can not Drift
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Program/IPCreator/Technology/Program/Python/Python/" rel="next" title="Python">
+      Python <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -535,7 +505,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -566,8 +558,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -576,14 +568,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -594,11 +586,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -632,7 +619,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -644,51 +631,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -697,18 +645,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -718,63 +660,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -782,14 +667,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -816,40 +701,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Program/IPCreator/Technology/Program/Raspberry/Raspberry/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

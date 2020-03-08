@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="计算机——会计算的机器设备。">
 <meta name="keywords" content="Computer">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Program/IPCreator/Technology/Program/Computer/Computer/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Computer/Computer/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Computer/Computer/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031216.jpg"></p>
+        <p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031216.jpg" alt></p>
 <blockquote>
 <p>计算机——会计算的机器设备。</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="布尔代数入门"><a href="#布尔代数入门" class="headerlink" title="布尔代数入门"></a><a href="http://www.ruanyifeng.com/blog/2016/08/boolean-algebra.html" target="_blank" rel="noopener">布尔代数入门</a></h2><p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2016/bg2016080502.jpg"><br>19世纪早期，英国数学家乔治·布尔（George Boole，1815－1864）突发奇想：人的思想能不能用数学表达？</p>
+<h2 id="布尔代数入门"><a href="#布尔代数入门" class="headerlink" title="布尔代数入门"></a><a href="http://www.ruanyifeng.com/blog/2016/08/boolean-algebra.html" target="_blank" rel="noopener">布尔代数入门</a></h2><p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2016/bg2016080502.jpg" alt><br>19世纪早期，英国数学家乔治·布尔（George Boole，1815－1864）突发奇想：人的思想能不能用数学表达？</p>
 <p>两千年来，哲学书都是用文字写的。比如，最著名的三段论：</p>
 <p>所有人都是要死的，<br>苏格拉底是人，<br>所以，苏格拉底是要死的。</p>
 <p>乔治·布尔认为，这种推理可以用数学表达，也就是说，哲学书完全可以用数学写。这就是<strong>数理逻辑</strong>的起源。</p>
@@ -301,7 +271,7 @@
 <p>一、什么是二进制？</p>
 <p>首先，从最简单的讲起。</p>
 <p>计算机内部采用二进制，每一个数位只有两种可能”0”和”1”，运算规则是”逢二进一”。举例来说，有两个位A和B，它们相加的结果只可能有四种。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031201.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031201.png" alt></p>
 <p>这张表就叫做”真值表”（truth table），其中的sum表示”和位”，carry表示”进位”。如果A和B都是0，和就是0，因此”和位”和”进位”都是0；如果A和B有一个为1，另一个为0，和就是1，不需要进位；如果A和B都是1，和就是10，因此”和位”为0，”进位”为1。</p>
 <p>二、逻辑门（Logic Gate）</p>
 <p>布尔运算（Boolean operation）的规则，可以套用在二进制加法上。布尔运算有三个基本运算符：AND，OR，NOT，又称”与门”、”或门”、”非门”，合称”逻辑门”。它们的运算规则是：</p>
@@ -309,45 +279,45 @@
 <p>　　OR：如果( A=1 OR B=1 )，则输出结果为1。</p>
 <p>　　NOT：如果( A=1 )，则输出结果为0。</p>
 <p>两个输入（A和B）都为1，AND（与门）就输出1；只要有任意一个输入（A或B）为1，OR（或门）就输出1；NOT（非门）的作用，则是输出一个输入值的相反值。它们的图形表示如下：</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031202.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031202.png" alt></p>
 <p>三、真值表的逻辑门表示</p>
 <p>现在把”真值表”的运算规则，改写为逻辑门的形式。</p>
 <p>先看sum（和位），我们需要的是这样一种逻辑：当两个输入不相同时，输出为1，因此运算符应该是OR；当两个输入相同时，输出为0，这可以用两组AND和NOT的组合实现。最后的逻辑组合图如下：</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031203.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031203.png" alt></p>
 <p>再看carry（进位）。它比较简单，两个输入A和B都为1就输出1，否则就输出0，因此用一个AND运算符就行了。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031204.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031204.png" alt></p>
 <p>现在把sum和carry组合起来，就能得到整张真值表了。这被称为”半加器”（half-adder），因为它只考虑了单独两个位的相加，没有考虑可能还存在低位进上来的位。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031205.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031205.png" alt></p>
 <p>四、扩展的真值表和全加器</p>
 <p>如果把低位进上来的位，当做第三个输入（input），也就是说，除了两个输入值A和B以外，还存在一个输入（input）的carry，那么问题就变成了如何在三个输入的情况下，得到输出（output）的sum（和位）和carry（进位）。</p>
 <p>这时，真值表被扩展成下面的形式：</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031206.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031206.png" alt></p>
 <p>如果你理解了半加器的设计思路，就不难把它扩展到新的真值表，这就是”全加器”（full-adder）了。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031207.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031207.png" alt></p>
 <p>五、全加器的串联</p>
 <p>多个全加器串联起来，就能进行二进制的多位运算了。</p>
 <p>先把全加器简写成方块形式，注明三个输入（A、B、Cin）和两个输出（S和Cout）。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031208.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031208.png" alt></p>
 <p>然后，将四个全加器串联起来，就得到了四位加法器的逻辑图。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031209.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031209.png" alt></p>
 <p>六、逻辑门的晶体管实现</p>
 <p>下一步，就是用晶体管做出逻辑门的电路。</p>
 <p>先看NOT。晶体管的基极（Base）作为输入，集电极（collector）作为输出，发射极（emitter）接地。当输入为1（高电平），电流流向发射极，因此输出为0；当输入为0（低电平），电流从集电极流出，因此输出为1。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031210.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031210.png" alt></p>
 <p>接着是AND。这需要两个晶体管，只有当两个基极的输入都为1（高电平），电流才会流向输出端，得到1。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031211.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031211.png" alt></p>
 <p>最后是OR。这也需要两个晶体管，只要两个基极中有一个为1（高电平），电流就会流向输出端，得到1。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031212.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031212.png" alt></p>
 <p>七、全加器的电路</p>
 <p>将三种逻辑门的晶体管实现，代入全加器的设计图，就可以画出电路图了。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031213.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031213.jpg" alt></p>
 <p>（点击看大图）</p>
 <p>按照电路图，用晶体管和电路板组装出全加器的集成电路。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031215.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031215.jpg" alt></p>
 <p>左边的三根黄线，分别代表三个输入A、B、Cin；右边的两根绿线，分别代表输出S和Cout。</p>
 <p>八、制作计算机</p>
 <p>将四块全加器的电路串联起来，就是一台货真价实的四位晶体管计算机了，可以计算0000~1111之间的加法。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031216.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201103/bg2011031216.jpg" alt></p>
 <p>电路板的下方有两组各四个开关，标注着”A”和”B”，代表两个输入数。从上图可以看到，A组开关是”上下上上”，代表1011（11）；B组开关是”上下下下”，代表1000（8）。它们的相加结果用五个LED灯表示，上图中是”亮暗暗亮亮”，代表10011（19），正是1011与1000的和。</p>
 <p>九、结论</p>
 <p>虽然这个四位计算机非常简陋，但是从中不难体会到现代计算机的原理。</p>
@@ -357,7 +327,7 @@
 <p>（完）</p>
 <h2 id="计算机是如何启动的？"><a href="#计算机是如何启动的？" class="headerlink" title="计算机是如何启动的？"></a><a href="http://www.ruanyifeng.com/blog/2013/02/booting.html" target="_blank" rel="noopener">计算机是如何启动的？</a></h2><p>作者： 阮一峰<br>日期： 2013年2月16日</p>
 <p>从打开电源到开始操作，计算机的启动是一个非常复杂的过程。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013021501.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013021501.jpg" alt></p>
 <p>我一直搞不清楚，这个过程到底是怎么回事，只看见屏幕快速滚动各种提示…… 这几天，我查了一些资料，试图搞懂它。下面就是我整理的笔记。</p>
 <p>零、boot的含义</p>
 <p>先问一个问题，”启动”用英语怎么说？</p>
@@ -368,17 +338,17 @@
 <p>计算机的整个启动过程分成四个阶段。</p>
 <p>一、第一阶段：BIOS</p>
 <p>上个世纪70年代初，”只读内存”（read-only memory，缩写为ROM）发明，开机程序被刷入ROM芯片，计算机通电后，第一件事就是读取它。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013021502.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013021502.jpg" alt></p>
 <p>这块芯片里的程序叫做”基本輸出輸入系統”（Basic Input/Output System），简称为BIOS。</p>
 <p>1.1 硬件自检</p>
 <p>BIOS程序首先检查，计算机硬件能否满足运行的基本条件，这叫做”硬件自检”（Power-On Self-Test），缩写为POST。</p>
 <p>如果硬件出现问题，主板会发出不同含义的蜂鸣，启动中止。如果没有问题，屏幕就会显示出CPU、内存、硬盘等信息。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013021503.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013021503.png" alt></p>
 <p>1.2 启动顺序</p>
 <p>硬件自检完成后，BIOS把控制权转交给下一阶段的启动程序。</p>
 <p>这时，BIOS需要知道，”下一阶段的启动程序”具体存放在哪一个设备。也就是说，BIOS需要有一个外部储存设备的排序，排在前面的设备就是优先转交控制权的设备。这种排序叫做”启动顺序”（Boot Sequence）。</p>
 <p>打开BIOS的操作界面，里面有一项就是”设定启动顺序”。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013021504.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013021504.jpg" alt></p>
 <p>二、第二阶段：主引导记录</p>
 <p>BIOS按照”启动顺序”，把控制权转交给排在第一位的储存设备。</p>
 <p>这时，计算机读取该设备的第一个扇区，也就是读取最前面的512个字节。<strong>如果这512个字节的最后两个字节是0x55和0xAA，表明这个设备可以用于启动</strong>；如果不是，表明设备不能用于启动，控制权于是被转交给”启动顺序”中的下一个设备。</p>
@@ -416,7 +386,7 @@
 <p>3.3 情况C：启动管理器</p>
 <p>在这种情况下，计算机读取”主引导记录”前面446字节的机器码之后，不再把控制权转交给某一个分区，而是运行事先安装的”启动管理器”（boot loader），由用户选择启动哪一个操作系统。</p>
 <p>Linux环境中，目前最流行的启动管理器是Grub。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013021505.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201302/bg2013021505.png" alt></p>
 <p>四、第四阶段：操作系统</p>
 <p>控制权转交给操作系统后，操作系统的内核首先被载入内存。</p>
 <blockquote>
@@ -430,17 +400,17 @@
 <p>《计算机原理》课本说，启动时，主引导记录会存入内存地址0x7C00。</p>
 <p>这个奇怪的地址，是怎么来的，课本就不解释了。我一直有疑问，为什么不存入内存的头部、尾部、或者其他位置，而偏偏存入这个比 32KB 小1024字节的地方？</p>
 <p>昨天，我读到一篇文章，终于解开了这个谜。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015092804.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015092804.png" alt></p>
 <p>首先，如果你不知道，主引导记录（Master boot record，缩写为MBR）是什么，可以先读《计算机是如何启动的？》。</p>
 <p>简单说，计算机启动是这样一个过程。</p>
 <p>通电<br>读取ROM里面的BIOS，用来检查硬件<br>硬件检查通过<br>BIOS根据指定的顺序，检查引导设备的第一个扇区（即主引导记录），加载在内存地址 0x7C00<br>主引导记录把操作权交给操作系统<br>所以，主引导记录就是引导”操作系统”进入内存的一段小程序，大小不超过1个扇区（512字节）。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015092802-1.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015092802-1.jpg" alt></p>
 <blockquote>
 <p>0x7C00这个地址来自Intel的第一代个人电脑芯片8088，以后的CPU为了保持兼容，一直使用这个地址。</p>
 </blockquote>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015092801-1.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015092801-1.jpg" alt></p>
 <p>1981年8月，IBM公司最早的个人电脑IBM PC 5150上市，就用了这个芯片。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015092803.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015092803.png" alt></p>
 <p>当时，搭配的操作系统是86-DOS。这个操作系统需要的内存最少是32KB。我们知道，内存地址从0x0000开始编号，32KB的内存就是0x0000～0x7FFF。</p>
 <p>8088芯片本身需要占用0x0000～0x03FF，用来保存各种中断处理程序的储存位置。（主引导记录本身就是中断信号INT 19h的处理程序。）所以，内存只剩下0x0400～0x7FFF可以使用。</p>
 <p>为了把尽量多的连续内存留给操作系统，主引导记录就被放到了内存地址的尾部。由于一个扇区是512字节，主引导记录本身也会产生数据，需要另外留出512字节保存。所以，它的预留位置就变成了：</p>
@@ -453,8 +423,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/DataBase/" rel="bookmark">DataBase</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Image/" rel="bookmark">Image</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Chip/" rel="bookmark">Chip</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Linux/" rel="bookmark">Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Video/" rel="bookmark">Video</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Computer/" rel="tag"><i class="fa fa-tag"></i> Computer</a>
           </div>
@@ -466,21 +457,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/J/Joke/" rel="next" title="Joke">
-                  <i class="fa fa-chevron-left"></i> Joke
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Program/IPCreator/Technology/Program/Computer/Dos/" rel="prev" title="Dos">
-                  Dos <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/J/Joke/" rel="prev" title="Joke">
+      <i class="fa fa-chevron-left"></i> Joke
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Program/IPCreator/Technology/Program/Computer/Dos/" rel="next" title="Dos">
+      Dos <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -493,7 +481,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -524,8 +534,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -534,14 +544,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -552,11 +562,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -590,7 +595,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -602,51 +607,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -655,18 +621,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -676,63 +636,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -740,14 +643,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -774,40 +677,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Program/IPCreator/Technology/Program/Computer/Computer/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="沉溺其中而又欲罢不能。">
 <meta name="keywords" content="Addiction">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/A/Addiction/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/A/Addiction/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/A/Addiction/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="Cycle-of-Addiction.png" data-src="http://opb37u589.bkt.clouddn.com/Cycle-of-Addiction.png?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/Cycle-of-Addiction.png?imageMogr2/thumbnail/!75p" alt="Cycle-of-Addiction.png"></p>
 <blockquote>
 <p>沉溺其中而又欲罢不能。</p>
 </blockquote>
@@ -390,7 +360,7 @@
 <p>以上就是社交媒体的上瘾机制以及它背后的技术应用，希望对你有所启发。</p>
 <p>本期内容参考来源：《它撑起了市值千亿的互联网帝国，也可能摧毁你的正常生活》，见于微信公众号“科研圈”。<br>来源:得到</p>
 <h2 id="摧毁一个人可以有多简单？"><a href="#摧毁一个人可以有多简单？" class="headerlink" title="摧毁一个人可以有多简单？"></a><a href="http://www.xinli001.com/info/100375168" target="_blank" rel="noopener">摧毁一个人可以有多简单？</a></h2><p>文 | Lachel<br>来源 | L先生说（ID：Lxianshengmiao）</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20171009/1537d2fc9919be71dae3f7af3077ee96.jpeg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20171009/1537d2fc9919be71dae3f7af3077ee96.jpeg" alt></p>
 <p>最近，在知乎看到一个问题：如何才能摧毁一个人？</p>
 <p>有一个回答，很有意思。它说：</p>
 <p>无条件给他许多东西，然后再全部收回。</p>
@@ -419,7 +389,7 @@
 <p>长期来看，部门老大对他的满意程度，以及他上升的空间和潜力，绝对大于每个月 4k 的收益。</p>
 <p>简而言之：你能否满足别人的期望，比你实际上做了多少事情，重要得多得多。</p>
 <p>工作，学习，人际交往，概莫能外。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20171009/2264408942da33b3080ec54be5b37e73.jpeg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20171009/2264408942da33b3080ec54be5b37e73.jpeg" alt></p>
 <p> 02</p>
 <p>这就是我想说的：</p>
 <p>人，永远都是非理性的。</p>
@@ -441,7 +411,7 @@
 <p>而当这个回路被打破，他们所面临的，就是跌入深渊的失望。</p>
 <p>这种失望所带来的负面情绪，要远高于激励所带来的正面情绪。</p>
 <p>这就是「期望」的力量。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20171009/baa6b960e569ba9b803a6a3d226a7169.jpeg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20171009/baa6b960e569ba9b803a6a3d226a7169.jpeg" alt></p>
 <p> 03</p>
 <p>很多人会说：这有什么大不了的？取消奖金激励，无非就是回到之前的情况罢了。你实际上相当于挣了好几百美金。</p>
 <p>但当你身处其中的时候，你是很难控制自己的情绪和思维的。</p>
@@ -453,7 +423,7 @@
 <p>当我们作出有益选择的时候，腹侧纹状体释放多巴胺，提高我们对情绪的感受能力，使我们感受到兴奋，从而推动「前额叶皮质」继续作出相同决策，对行为产生正反馈。</p>
 <p>这就是一个「奖赏回路」的过程。</p>
 <p>Kuss 和 Griffiths 在2012 年的一篇论文中指出：成瘾性药物，会阻塞多巴胺受体，使它接收不到多巴胺，从而刺激大脑大量分泌多巴胺。这些多余的多巴胺聚集在神经突触间，会导致神经细胞处于高度兴奋的状态。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20171009/b97b34671a0f2ae28d2365495db44e7f.jpeg"><br>左图是摄入食物的多巴胺，右图是可卡因<br>图片来自 Coursera The addicted Brain</p>
+<p><img data-src="http://ossimg.xinli001.com/20171009/b97b34671a0f2ae28d2365495db44e7f.jpeg" alt><br>左图是摄入食物的多巴胺，右图是可卡因<br>图片来自 Coursera The addicted Brain</p>
 <p>长期重复这个过程，神经细胞就会适应这种状态。一旦停止摄入药物，神经细胞适应不了低水平状态，就会产生强烈的戒断反应。</p>
 <p>也就是说，通过剧烈的刺激和奖赏，我们的大脑，会被我们一步步推到「高水平」的期望状态。</p>
 <p>一旦我们满足不了它，就会带来强烈的失落感和痛苦。</p>
@@ -466,7 +436,7 @@
 <p>所以，我们习惯了什么呢？买大量的书，却一本都不去读；刷大量的信息，却完全不去思考；我们越来越读不进深度内容，看不下去长文章。</p>
 <p>原因就在于，大脑已经习惯了高频、强烈的刺激，期望水平被我们人为地调得太高。</p>
 <p>我们再也坐不住了。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20171009/00c71b8f1b0efcc31379a6340fb7c3d1.jpeg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20171009/00c71b8f1b0efcc31379a6340fb7c3d1.jpeg" alt></p>
 <p> 04</p>
 <p>更进一步思考，为什么我们会习惯于通过游戏、综艺、信息，来不断获取刺激，强化自己的奖赏回路呢？</p>
 <p>最主要的原因，是来自现实世界的压力。</p>
@@ -476,7 +446,7 @@
 <p>但实际上呢？</p>
 <p>国内有一个调查，叫做中国综合社会调查（CGSS），给出了一个非常有趣的结果。</p>
 <p>如下图：横轴表示「受访者实际所处的社会阶层」（按收入划分），纵轴表示「受访者认为自己所处的阶层」。蓝色表示低估，红色表示高估，黄色表示估计正确。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20171009/91dcdbfc28b4e0cb07f84986651e414f.jpeg"><br>图片来自知乎数据帝 chenqin</p>
+<p><img data-src="http://ossimg.xinli001.com/20171009/91dcdbfc28b4e0cb07f84986651e414f.jpeg" alt><br>图片来自知乎数据帝 chenqin</p>
 <p>直接报结论吧：估计正确的人只有10%，高估的人是30%，低估的人达到了60%。</p>
 <p>也就是说，在全国范围内，有60%的人认为自己生活在水深火热之中，实际上他们的境况，比自己想象的要好得多。</p>
 <p>所以，很多人说，我们如今都活在一个「中产阶级焦虑」的社会中 —— 低于中产阶级的人，焦虑着想要挤进中产阶级；位于中产阶级的人，又担心自己阶级跌落。</p>
@@ -488,7 +458,7 @@
 <p>努力却看不到终点，投入却始终没有回报，而目标还遥遥无期 —— 在这种情况下，选择用各种刺激去给予大脑兴奋感，就成了一个自然而然的选择。</p>
 </blockquote>
 <p>但这样的做法，只会一步步，把路走得更窄。</p>
-<p>而这一切本都是可以避免的。<br><img alt data-src="http://ossimg.xinli001.com/20171009/f45c854c20139c66308493e1831c198d.jpeg"></p>
+<p>而这一切本都是可以避免的。<br><img data-src="http://ossimg.xinli001.com/20171009/f45c854c20139c66308493e1831c198d.jpeg" alt></p>
 <p> 05</p>
 <p>那么，如何才能缓解焦虑，管理好自己的期望水平呢？</p>
 <p>下面几个方法，可以参考。</p>
@@ -590,7 +560,7 @@
 <p>作者：Mohamed Ghilan，维多利亚大学神经科学专业。</p>
 <p>原文地址：<a href="http://www.suhaibwebb.com/ummah/men/how-watching-pornography-changes-the-brain/" target="_blank" rel="noopener">http://www.suhaibwebb.com/ummah/men/how-watching-pornography-changes-the-brain/</a></p>
 <p>[【張渝萍╱綜合報導】看A片會傷腦？德國科學家近日發表研究，指常看A片的男人腦部可能萎縮，對性刺激的反應較遲鈍。但科學家強調，目前還不確定是A片造成腦部變化，還是有特定腦部型態的人愛看A片。國內精神科醫師則說，過度沉迷看A片可能有強迫症，嚴重的話會影響正常生活。德國馬克斯普朗克研究院學者庫恩（Simone Kuhn），日前針對64名介於21至45歲的男性，調查他們看A片的習慣，並觀察腦部影像。結果發現，愛不愛看A片，腦部影像會有差異。庫恩說：「常看A片男性的大腦『紋狀體』（striatum）體積，比不常看A片的男性還小。紋狀體主要與獎勵處理及動機行為有關。」 此外，科學家還發現，常看A片的男人對性刺激較無感，也就是他們大腦中，另一個屬於紋狀體、對性刺激會有反應的區域較不活躍。庫恩強調：「我們尚無法得知是常看A片導致腦部變化，還是愛看A片者的腦部本就如此。」這是首次有研究發現常看A片可能有害健康，該研究發表於《美國醫學會精神病學期刊》（JAMA Psychiatry）。書田診所精神科醫師江漢光表示，大部分的正常男性每40至60分鐘腦中都會浮現有關性的畫面，看A片的行為是正常的，但過度沉迷A片可能有強迫症的情況，嚴重時會影響到正常生活。他表示，紋狀體較小影響不大，只是認知功能比較差。] (<a href="https://tw.appledaily.com/headline/daily/20140531/35863021" target="_blank" rel="noopener">https://tw.appledaily.com/headline/daily/20140531/35863021</a>)</p>
-<p><img alt data-src="http://img01.vgtime.com/vr/image/2016/06/28/160628091330287.jpeg"></p>
+<p><img data-src="http://img01.vgtime.com/vr/image/2016/06/28/160628091330287.jpeg" alt></p>
 <blockquote>
 <p>纹状体，Striatum，也就是终脑的皮层，是大脑中负责感知快感的部分。例如，当我们突然有了钱，纹状体会让我们感觉到开心。长期暴露在色情片里，纹状体会缩小。纹状体萎缩会导致对快感的刺激反应渐渐迟钝。一旦VR色情片带给我们的刺激显著下降，那些被VR色情片泡小了纹状体的宅男，要收获同样的满足就需要更多的刺激，就像吸毒一样。过度的色情消费会令多巴胺激增，进而会导致Delta-FosB蛋白质增多，这就是你的狂欢机制。这个机制反过来又会让你对色情的渴望增长，如此一直循环。多巴胺过度会改变大脑前额皮质，令你对日常的正常活动失去兴趣。</p>
 </blockquote>
@@ -600,8 +570,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/Hooked！！How to Build Habit-Forming Products/" rel="bookmark">Hooked——How to Build Habit-Forming Products</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Addiction/" rel="tag"><i class="fa fa-tag"></i> Addiction</a>
           </div>
@@ -613,21 +592,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Brand/IKEA/" rel="next" title="IKEA">
-                  <i class="fa fa-chevron-left"></i> IKEA
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/R/Rich and poor/" rel="prev" title="Rich and Poor">
-                  Rich and Poor <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Brand/IKEA/" rel="prev" title="IKEA">
+      <i class="fa fa-chevron-left"></i> IKEA
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/R/Rich and poor/" rel="next" title="Rich and Poor">
+      Rich and Poor <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -640,7 +616,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -671,8 +669,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -681,14 +679,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -699,11 +697,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -737,7 +730,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -749,51 +742,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -802,18 +756,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -823,63 +771,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -887,14 +778,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -921,40 +812,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/A/Addiction/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

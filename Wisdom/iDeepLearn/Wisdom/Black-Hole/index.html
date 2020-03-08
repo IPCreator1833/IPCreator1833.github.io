@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="Inferiority and jealousy, bad habits, vicious circle are all black holes in energy.">
 <meta name="keywords" content="Hole">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Wisdom/" itemprop="url" rel="index">
-                    <span itemprop="name">Wisdom</span>
-                  </a>
+                  <a href="/categories/Wisdom/" itemprop="url" rel="index"><span itemprop="name">Wisdom</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Wisdom/iDeepLearn/Wisdom/Black-Hole/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Wisdom/iDeepLearn/Wisdom/Black-Hole/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Wisdom/iDeepLearn/Wisdom/Black-Hole/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,21 +256,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="https://www.techexplorist.com/wp-content/uploads/2019/04/black-hole-M87.jpg"></p>
+        <p><img data-src="https://www.techexplorist.com/wp-content/uploads/2019/04/black-hole-M87.jpg" alt></p>
 <blockquote>
 <p> Inferiority and jealousy, bad habits, vicious circle are all black holes in energy.</p>
 </blockquote>
 <a id="more"></a>
 <p>Control your attention through meditation and build full confidence through self-discipline and growth.</p>
-<p><img alt data-src="http://pd4vb8220.bkt.clouddn.com/how-to-deal-with-jealousy-by-the-skinny-confidential-1.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/how-to-deal-with-jealousy-by-the-skinny-confidential-1.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>it’s better to go back and make a net than to stand by the pond and long for fish</p>
 </blockquote>
-<p><img alt data-src="http://pd4vb8220.bkt.clouddn.com/ViciousCircleOfNegativeThoughts.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/ViciousCircleOfNegativeThoughts.JPG?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>Vicious circle of negative thoughts</p>
 </blockquote>
-<p><img alt data-src="http://pd4vb8220.bkt.clouddn.com/jealousy.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/jealousy.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <p>Using Jealousy as a Manifesting Tool<br>When this concept of jealousy was shared with me it was a paradigm shift.<br>You mean I can use what I was beating myself up about,<br>as a tool to help guide me towards what I DO WANT?<br>Hold the phone!<br>Don’t take away my vicitimhood.<br>I need something to beat myself up about…. ahhhhh..<br>(said the old Lisa)<br>It’s your choice.<br>You can continue to see jealousy as something that takes you down, triggering you into feeling bad about yourself and charging what you don’t have in life.<br>OR<br>You can use this energy as a tool.—–</p>
 <blockquote>
 <p>“You are the average of the five people you spend the most time with.” – Jim Rohn</p>
@@ -317,7 +287,7 @@
 <p>youcandoit!</p>
 <p>If you want support in making changes in your life, sign up for a FREE VISION CALL and we can talk about how awesome you are. 🙂</p>
 <p><a href="https://www.theskinnyconfidential.com/jealousy-waste-energy/" target="_blank" rel="noopener"></a>. It doesn’t help you. It doesn’t help your relationship. It’s not going to stop anything; as a matter of fact it will probably only make something happen. Men are like children in some respects. When we were kids and our parents or teachers told us not to do something, it only made us want to do it more. The best thing you can do in a relationship is give the other person freedom. This is for two reasons: first, if someone wants to step out on you they are going to step out and there is nothing you can do. Better to find out early and be done. Second, men are attracted to confidence ( at least men worth being with ) &amp; there is nothing more attractive than a confident woman who is confident in the relationship. It’s no fun being in a relationship and listening to insecurities. BIG turn off. With Lauryn, she is not the jealous type. I have never been tempted to step out or cheat. A lot of that has to do with me and integrity…but a big part is her attitude. <strong>She doesn’t care if I go out with friends, she’s not looking through my phone or e-mails. She just trusts me and in turn, that makes me trust her. She’s too busy to be wasting time on worry &amp; jealousy. I like that.</strong></p>
-<h2 id="A-VICIOUS-CIRCLE"><a href="#A-VICIOUS-CIRCLE" class="headerlink" title="A VICIOUS CIRCLE"></a><a href="https://trainingmag.com/trgmag-article/vicious-circle/" target="_blank" rel="noopener">A VICIOUS CIRCLE</a></h2><p><img alt data-src="http://pd4vb8220.bkt.clouddn.com/lastwordStressRudenesscircle.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="A-VICIOUS-CIRCLE"><a href="#A-VICIOUS-CIRCLE" class="headerlink" title="A VICIOUS CIRCLE"></a><a href="https://trainingmag.com/trgmag-article/vicious-circle/" target="_blank" rel="noopener">A VICIOUS CIRCLE</a></h2><p><img data-src="http://pd4vb8220.bkt.clouddn.com/lastwordStressRudenesscircle.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <p>By curbing the inclination to act impulsively, you can improve relationships and avoid entering the stress/rudeness vicious circle.</p>
 <p>Article Author:<br>By Peter Post, Director, The Emily Post Institute<br>What happens to cause people to act in a rude manner? Possible moments when rudeness can rear its ugly head include:</p>
 <p>When disagreement occurs. A discussion in which people don’t agree turns personal rather than remains focused on the issue.<br>When time pressure builds at work. The deadline for a column causes the author to be curt with others as he attempts to turn it in on time.<br>When people are asked to do more with less. Downsizing is tough on those let go, but it also places additional demands on those still on the job and leaves them wondering if they might be next.<br>When technology builds an electronic brick wall between people. A person receives a less-than-friendly e-mail and rather than taking the time to cool down first, fires off an angry response, starting a chain of angry e-mails.<br>If you had a blood pressure cuff on people at the time these situations happened, you’d see their readings increase— sometimes dramatically. In each case, it’s easy to imagine the stress level in the office or between the people involved sky-rocketing. Unfortunately, the resultant stress increases the odds for rudeness to occur, and that can lead to the stress/rudeness vicious circle.</p>
@@ -325,7 +295,7 @@
 <p>Another stress factor is introduced when people act impulsively, doing the first thing that comes to mind without thinking about the consequences. For instance, Tom and Andy are having a conversation and Tom’s cell phone rings. Without thinking about the effect on Andy, Tom answers his phone, leaving Andy to think Tom is pretty rude. So Andy throws his hands up in disgust and walks away. Tom perceives Andy’s action as rude and way over the top and, suddenly, they became trapped in the stress/ rudeness vicious circle, all because of two impulsive actions: Tom answering his phone and Andy’s impulsive response to Tom’s action.</p>
 <p>Had Tom stayed his hand for just a few seconds while his phone was ringing and focused on how answering it might be perceived by Andy, he might have chosen to send the call to voicemail. Andy would have noticed the action and instead of being frustrated with Tom, he would have appreciated the non-verbal signal that Tom considered their conversation to be more important than a phone call from who knows who.</p>
 <p>By curbing the inclination to act impulsively, you can improve relationships and avoid entering the stress/rudeness vicious circle.</p>
-<h2 id="3-Biblical-Truths-About-Envy-And-Jealousy"><a href="#3-Biblical-Truths-About-Envy-And-Jealousy" class="headerlink" title="3 Biblical Truths About Envy And Jealousy"></a><a href="https://theprayingwoman.com/3-biblical-truths-about-envy-and-jealousy/" target="_blank" rel="noopener">3 Biblical Truths About Envy And Jealousy</a></h2><p><img alt data-src="http://pd4vb8220.bkt.clouddn.com/jealousy20180908.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="3-Biblical-Truths-About-Envy-And-Jealousy"><a href="#3-Biblical-Truths-About-Envy-And-Jealousy" class="headerlink" title="3 Biblical Truths About Envy And Jealousy"></a><a href="https://theprayingwoman.com/3-biblical-truths-about-envy-and-jealousy/" target="_blank" rel="noopener">3 Biblical Truths About Envy And Jealousy</a></h2><p><img data-src="http://pd4vb8220.bkt.clouddn.com/jealousy20180908.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <ol>
 <li>Jealousy can lead to your downfall.<br>For where jealousy and selfish ambition exist, there will be disorder and every vile practice. – James 3:16</li>
 </ol>
@@ -357,7 +327,7 @@
 <p>Sometimes we’re so busy counting everyone else’s blessings that we forget to count our own.</p>
 <p>Keep your eyes on your prize! Jesus Christ!</p>
 <h2 id="5-Symptoms-of-Inferiority-Complex-And-5-Ways-How-To-Overcome-It"><a href="#5-Symptoms-of-Inferiority-Complex-And-5-Ways-How-To-Overcome-It" class="headerlink" title="5 Symptoms of Inferiority Complex And 5 Ways How To Overcome It"></a><a href="https://www.lifecoachcode.com/2018/01/24/inferiority-complex-5-ways-how-to-overcome-it/" target="_blank" rel="noopener">5 Symptoms of Inferiority Complex And 5 Ways How To Overcome It</a></h2><p>January 24, 2018</p>
-<p><img alt data-src="http://pd4vb8220.bkt.clouddn.com/Big-fish-small-pond-shutterstock_8451121.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/Big-fish-small-pond-shutterstock_8451121.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <p>Having a down feeling after a major life setback or failure in some kind of endeavor is normal. These failures might make you feel worthless or useless.</p>
 <p>After wallowing on your pain for a day or two, you should feel better to face another day. However, if the feelings of worthlessness is long overdue and is getting worse with the passing of days, it might indicate that you’re having an inferiority complex.</p>
 <p>Inferiority complex prevents you from seeing your true worth and focus only on your flaws. It gives you a thousand reasons why you can’t do a thing rightly and why others perform better than you.</p>
@@ -387,7 +357,7 @@
 <p>Everything has to be flawless and must pass the high standards you have set upon.</p>
 <p>Like any other personality problems, you can overcome inferiority complex by doing the inner work that helps you heal.</p>
 <p>How To Overcome Inferiority Complex:Inferiority Complex 5 Ways How To Overcome It</p>
-<p><img alt data-src="https://www.lifecoachcode.com/wp-content/uploads/2018/01/5-Symptoms-of-Inferiority-Complex-And-5-Ways-How-To-Overcome-It.jpg"></p>
+<p><img data-src="https://www.lifecoachcode.com/wp-content/uploads/2018/01/5-Symptoms-of-Inferiority-Complex-And-5-Ways-How-To-Overcome-It.jpg" alt></p>
 <ol>
 <li>Get inspiration from others instead of wanting to be like them.</li>
 </ol>
@@ -421,8 +391,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/B/Black Hole/" rel="bookmark">Black Hole</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Hole/" rel="tag"><i class="fa fa-tag"></i> Hole</a>
           </div>
@@ -434,21 +413,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Common-Sense/" rel="next" title="Common Sense">
-                  <i class="fa fa-chevron-left"></i> Common Sense
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Profession/iDeepLearn/Profession/Communication/" rel="prev" title="Communication">
-                  Communication <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Common-Sense/" rel="prev" title="Common Sense">
+      <i class="fa fa-chevron-left"></i> Common Sense
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Profession/iDeepLearn/Profession/Communication/" rel="next" title="Communication">
+      Communication <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -461,7 +437,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -492,8 +490,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -502,14 +500,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -520,11 +518,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -558,7 +551,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -570,51 +563,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -623,18 +577,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -644,63 +592,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -708,14 +599,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -742,40 +633,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Wisdom/iDeepLearn/Wisdom/Black-Hole/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

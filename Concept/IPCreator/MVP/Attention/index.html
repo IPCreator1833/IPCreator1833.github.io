@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="IPCreator：自胜者强，自胜的前提是掌控自己的注意力。">
 <meta name="keywords" content="Wealth,Time,Attention">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/MVP/Attention/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/MVP/Attention/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/MVP/Attention/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,17 +256,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="/img/content/Attention-Cover.jpg"></p>
+        <p><img data-src="/img/content/Attention-Cover.jpg" alt></p>
 <blockquote>
 <p>IPCreator：自胜者强，自胜的前提是掌控自己的注意力。</p>
 </blockquote>
 <a id="more"></a>
 <p><a href="http://deepcreator.com/2018/12/31/MVP/ABCDE/Attention/" target="_blank" rel="noopener">Attention</a> – the most Precious Wealth of Human Being.<br>Control yourself, start by controlling your attention.</p>
-<p><img alt data-src="http://img3.cyzone.cn/uploadfile/2017/0101/20170101090042164.jpg"></p>
+<p><img data-src="http://img3.cyzone.cn/uploadfile/2017/0101/20170101090042164.jpg" alt></p>
 <blockquote>
 <p>任天堂常年的掌门人山内溥老先生提出了四个词：收集、育成、追加和交换。</p>
 </blockquote>
-<p><img alt data-src="http://img3.cyzone.cn/uploadfile/2017/0101/20170101090042499.jpg"></p>
+<p><img data-src="http://img3.cyzone.cn/uploadfile/2017/0101/20170101090042499.jpg" alt></p>
 <blockquote>
 <p>史玉柱也提出了四个词：荣耀、目标、互动和惊喜。</p>
 </blockquote>
@@ -325,7 +295,7 @@
 <p>杨文丽介绍了一种“切割术”，简单来说，就是帮孩子把功课划分为更小单位。一般来说，两到三岁的儿童可以专注10分钟，而4至6岁的小孩大多就可以坐住10到15分钟。所以家长可以帮孩子把需要做30分钟的作业切割成2次，写完15分钟后就休息一会儿，这样孩子也可以学会时间规划。</p>
 <p>如果孩子在阅读的时候经常漏行，或者在考试时经常漏写题目，家长也可以用“切割术”教他缩小范围。比如用尺遮住文章，一次只看一行字，或是做卷子时做完一道题就给题号打个勾，全部完成再回过头来检查勾有没有打全等等。</p>
 <p>以上就是帮助孩子提升专注力的两个方法，希望对你有帮助。</p>
-<h2 id="注意力，未来唯一有价值的资源"><a href="#注意力，未来唯一有价值的资源" class="headerlink" title="注意力，未来唯一有价值的资源"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=2976&amp;highlight=%E8%B5%84%E6%BA%90" target="_blank" rel="noopener">注意力，未来唯一有价值的资源</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/29/151725kgytfpgxj6630jig.jpg"></p>
+<h2 id="注意力，未来唯一有价值的资源"><a href="#注意力，未来唯一有价值的资源" class="headerlink" title="注意力，未来唯一有价值的资源"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=2976&amp;highlight=%E8%B5%84%E6%BA%90" target="_blank" rel="noopener">注意力，未来唯一有价值的资源</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/29/151725kgytfpgxj6630jig.jpg" alt></p>
 <p>2015-11-25罗振宇</p>
 <p>有一天，我的同事跟我说，我突然明白咱们罗辑思维书店现阶段存在的价值了。我们干的是一个“人肉过滤”的活儿。</p>
 <p>凯文·凯利新作《必然》第七章的标题，就是“过滤”。</p>
@@ -374,12 +344,12 @@
 <p>抄经本需要你把对父母的注意力灌注到其中。</p>
 <p>用体验留住用户十分稀缺的注意力，这是产品的价值感所在。</p>
 <p>罗胖曰<br>名字为什么会有魔力？<br>因为人是靠语言来认知世界的。<br>或者说语言就是人的世界本身。<br>比如，有心理学的实验证明——<br><strong>让人做一个承诺，如果还让他签上自己的名字，履约率会高很多。</strong><br>签名的人，会觉得把自己的“一部分”已经放进来了。<br>名字不是事物的符号。<br>名字是事物的一部分。</p>
-<h2 id="关于日常生活中训练专注力的清单"><a href="#关于日常生活中训练专注力的清单" class="headerlink" title="关于日常生活中训练专注力的清单"></a><a href="http://www.luojiji.com/thread-9378-1-1.html" target="_blank" rel="noopener">关于日常生活中训练专注力的清单</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/02/080002z1ii0sq3s8zl70zq.jpg"></p>
+<h2 id="关于日常生活中训练专注力的清单"><a href="#关于日常生活中训练专注力的清单" class="headerlink" title="关于日常生活中训练专注力的清单"></a><a href="http://www.luojiji.com/thread-9378-1-1.html" target="_blank" rel="noopener">关于日常生活中训练专注力的清单</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201708/02/080002z1ii0sq3s8zl70zq.jpg" alt></p>
 <p>2017-08-02 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>专注力是决定效率的重要因素。可怎样才能拥有超高的专注力？</p>
 <p>「得到」App 请到许岑，一个从幻灯片制作到吉他、英语，都能快速掌握到专业级的学习高手，为你创作了这份清单。让你在日常的衣食住行中，高效训练自己的专注力。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/02/080020k6mccssx2c76zsmd.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201708/02/080020k6mccssx2c76zsmd.jpg" alt></p>
 <ol>
 <li><p>成年人专注力的训练，需要很强的<a href="http://deepcreator.com/2017/10/13/Concept/Ceremony/" target="_blank" rel="noopener">仪式感</a>。日常生活本身不能训练专注力，但是我们可以通过在平常的生活中营造仪式感，提升专注力。所以，专注力的训练，不能单靠自身的意志力，也要学会借助<strong>外部环境</strong>产生影响。</p>
 </li>
@@ -414,7 +384,7 @@
 <p>第四个秘诀，就是在自己的空间里，划出一块“<strong>工作区域</strong>”。别的地方乱糟糟不要紧，你工作的区域，一定要整齐，避免出现过多的杂物牵涉你的注意力。心理学家说，如果你要在同一个桌子上完成两个完全不同的项目，那就把桌子划成两个区域。进入一个新的空间可以让你的大脑重启，让你的创造力不受限制，而治疗轻度失眠的方法，比如没有困意时不要卧床，不要在床上进行阅读或者影音娱乐，运用的也是这个原理。</p>
 <p>所以说，世界上绝大部分人在体力，智商方面的差距不大，然而成功者始终只有少数。原因呢，就是大部分人缺乏专注力，所以，如果你想成功，那么就从今天开始，检查自己的生活，去除所有不必要的干扰。也许过一段时间，你会发现成功并不遥远。</p>
 <p>本文源自：Linkedin中国，（你90%的注意力，都浪费在了鸡毛蒜皮上）</p>
-<h2 id="马云力荐：把时间分配在真正重要和真正有趣的事情上"><a href="#马云力荐：把时间分配在真正重要和真正有趣的事情上" class="headerlink" title="马云力荐：把时间分配在真正重要和真正有趣的事情上"></a><a href="http://www.luojiji.com/thread-5158-1-1.html" target="_blank" rel="noopener">马云力荐：把时间分配在真正重要和真正有趣的事情上</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201606/05/113449b1s1wc3b351asw99.jpg"><br>2016-06-05 李翔 罗辑思维</p>
+<h2 id="马云力荐：把时间分配在真正重要和真正有趣的事情上"><a href="#马云力荐：把时间分配在真正重要和真正有趣的事情上" class="headerlink" title="马云力荐：把时间分配在真正重要和真正有趣的事情上"></a><a href="http://www.luojiji.com/thread-5158-1-1.html" target="_blank" rel="noopener">马云力荐：把时间分配在真正重要和真正有趣的事情上</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201606/05/113449b1s1wc3b351asw99.jpg" alt><br>2016-06-05 李翔 罗辑思维</p>
 <p>马云语音：</p>
 <p>李翔，一个拥有 12 年媒体经验的资深媒体人。</p>
 <p>他是中国最好的商业记者之一。采访过几乎所有中国商业世界的知名人物：从第一代企业家如柳传志、张瑞敏、王石；到互联网一代如马云、丁磊、田溯宁、曹国伟；再到最近几年新晋的互联网创业明星如王兴、程维、张旭豪。</p>
@@ -460,7 +430,7 @@
 <blockquote>
 <p>这其实是互联网带给每个人的福利，让每个人能以低成本的方式享受到高质量的服务。本质上，它和你叫一辆专车并无区别。我们都只想服务好你。</p>
 </blockquote>
-<h2 id="为什么你不应该读新闻"><a href="#为什么你不应该读新闻" class="headerlink" title="为什么你不应该读新闻"></a><a href="http://www.luojiji.com/thread-1833-1-1.html" target="_blank" rel="noopener">为什么你不应该读新闻</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/19/175844n3nh8bw3wsx3eiew.jpg"><br>作者：多贝里</p>
+<h2 id="为什么你不应该读新闻"><a href="#为什么你不应该读新闻" class="headerlink" title="为什么你不应该读新闻"></a><a href="http://www.luojiji.com/thread-1833-1-1.html" target="_blank" rel="noopener">为什么你不应该读新闻</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/19/175844n3nh8bw3wsx3eiew.jpg" alt><br>作者：多贝里</p>
 <p>苏门答腊的地震、俄罗斯的坠机事件、一个男人将自己的女人在地下室关了30年、海蒂·克鲁姆和席尔分手、德意志银行破纪录的工资报酬、在巴基斯坦发生的暗杀、马里总统的辞职、掷铅球的最新世界纪录，人们真的必须要知道这些事情？</p>
 <p>我们的信息很灵通，但知道的很少，为什么呢？因为我们在200年前发明了一种有毒的知识类型：新闻，即世界各地的消息报道。新闻对于我们的精神的影响，就像糖对于身体的影响一样：新闻是可口的，容易消化的——但长期下来却是有害的。</p>
 <p>3年前我开始进行一个实验。我决定不再阅读新闻，取消了所有报纸和杂志的订阅，把电视机和收音机从家中搬走，将苹果手机上的新闻应用程序删除，我不再碰任何一份免费的报纸，而且当飞机上有人在我面前阅读报纸时，我会有意识地看向别处。在最开始的几个星期这么做是不容易的，很煎熬，我总害怕会错过些什么。但在一段时间之后，我有了一种新的生活感觉。3年之后，我的思维变得更清晰，见识更深远，可以做出更好的决定，有了更多的时间，而且最好的一点是：我从未错过什么重要的新闻。我的社交圈子——不是指脸谱网，而是现实中真正的朋友和熟人——起着新闻过滤器的作用。</p>
@@ -494,10 +464,10 @@
 <p>第四种KOL推广方式是，利用公司的资源自产KOL。举个例子，移动健身App keep在推广初期，确定了“人人都是KOL”的推广方针。运营团队随后启动了一个叫“埋雷计划”的行动，5个人在产品上线前一个月，就开始活跃在各种QQ群、微信群、BBS、贴吧，以及豆瓣小组里。通过长期转发高品质的健身经验帖子，再通过长期和用户沟通交流，最终成为社群里的KOL，得到极高的关注度。当keep正式上线时，运营人员将这些帖子集中引爆，告诉自己的粉丝自己发布的高质量内容，是来自Keep，引导用户从关注内容转化为关注产品。</p>
 <p>所以说，在明星和 KOL遍地开花的时候，如何利用有限的预算达到最大推广度，是有门道的。一味砸钱去投明星，不顾其他条件，照样达不到期待中的效果。</p>
 <p>本文源自：公众号“姑婆那些事”（注意力经济时代，如何利用KOL进行推广）</p>
-<h2 id="注意力曲线"><a href="#注意力曲线" class="headerlink" title="注意力曲线"></a><a href="https://book.douban.com/subject/4087655/" target="_blank" rel="noopener">注意力曲线</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s4348670.jpg"></p>
+<h2 id="注意力曲线"><a href="#注意力曲线" class="headerlink" title="注意力曲线"></a><a href="https://book.douban.com/subject/4087655/" target="_blank" rel="noopener">注意力曲线</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s4348670.jpg" alt></p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>引言<br>第一部分 理解你的注意力专区<br>第一章 什么是你的注意力专区？<br>第二章 无聊，兴奋，还是两者都是？<br>第三章 数字时代的注意力<br>第四章 我们将如何运用自己的大脑？<br>第二部分 八付钥匙串<br>第五章 情绪调节技巧<br>第六章 面对恐惧<br>第七章 心理调节技巧<br>第八章 无压力的安排<br>第九章 行为技巧<br>第三部分 数字时代的成功策略<br>第十章 智胜干扰和信息过载<br>第十一章 在21世纪战胜干扰<br>第十二章 患了注意力缺乏障碍怎么办？<br>第四部分 注意力是你的生活方式<br>第十三章 教导孩子提高注意力<br>第十四章 注意力的力量</p>
-<h3 id="笔记及摘抄"><a href="#笔记及摘抄" class="headerlink" title="笔记及摘抄"></a><a href="https://book.douban.com/annotation/19465057/" target="_blank" rel="noopener">笔记及摘抄</a></h3><p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p19465057-1.jpg"><br>注意力与刺激的关系</p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p19465057-2.jpg"><br>倒U曲线</p>
+<h3 id="笔记及摘抄"><a href="#笔记及摘抄" class="headerlink" title="笔记及摘抄"></a><a href="https://book.douban.com/annotation/19465057/" target="_blank" rel="noopener">笔记及摘抄</a></h3><p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p19465057-1.jpg" alt><br>注意力与刺激的关系</p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p19465057-2.jpg" alt><br>倒U曲线</p>
 <p>◤名人名言◢</p>
 <ol>
 <li>吻着一个漂亮姑娘还能把车开得稳稳当当,只能说明这人吻得不够专心. —-爱因斯坦</li>
@@ -760,15 +730,36 @@
 <p>肾上腺素用于衡量对事态的感受是缓慢还是快速的，也是引导你进入放松或是戒备状态的标准。作者设定了一个肾上腺素的分值表用于衡量自己的肾上腺素，先设定一个标准用于比对，然后随时给自己打分，然后根据分值调整自己的状态，从而达到合适的注意力专区。</p>
 <p>这里值得一提的是中断电源发，暂停无法集中注意力的状态，设定一个具体的中断时间和中断程序，这个方法对办公室人员应该有都非常有效。但最好要先设定好一个中断方式，保证重启的时候能进入最好的状态。这里可以套用乔希维茨金的恢复状态法，先想出自己状态最好的时候，比如和某个朋友聊天，那么每次中断电源的时候，可以跟某个朋友聊天，设定一个程序然后缩短程序的时间，并进行不断的冥想练习，一开始是聊天以后才能进入状态重新开启电源，久而久之就可以做到冥想之后就能进入状态，简单有效。</p>
 <p>作者还介绍了很多别的方法，但针对自身的实际情况，以上两点是最值得借鉴和努力的。最后附上作者的一个标题：<strong>注意力集中让你与众不同</strong>。以此共勉。</p>
-<p><img alt data-src="http://opb37u589.bkt.clouddn.com/1429071778471.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/1429071778471.jpg?imageMogr2/thumbnail/!75p" alt></p>
 
     </div>
 
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Freedom/" rel="bookmark">Freedom</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Wealth/" rel="bookmark">Wealth</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Wealth/" rel="bookmark">Wealth</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/W/Wealth/" rel="bookmark">Wealth</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/The Millionaire Fastlane/" rel="bookmark">The Millionaire Fastlane</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Wealth/" rel="tag"><i class="fa fa-tag"></i> Wealth</a>
               <a href="/tags/Time/" rel="tag"><i class="fa fa-tag"></i> Time</a>
@@ -782,21 +773,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Wisdom/IPCreator/MVP/Be Yourself/" rel="next" title="Be Yourself">
-                  <i class="fa fa-chevron-left"></i> Be Yourself
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Profession/2020/Supervisor/" rel="prev" title="Supervisor">
-                  Supervisor <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Wisdom/IPCreator/MVP/Be Yourself/" rel="prev" title="Be Yourself">
+      <i class="fa fa-chevron-left"></i> Be Yourself
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Profession/2020/Supervisor/" rel="next" title="Supervisor">
+      Supervisor <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -809,7 +797,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -840,8 +850,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -850,14 +860,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -868,11 +878,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -906,7 +911,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -918,51 +923,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -971,18 +937,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -992,63 +952,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1056,14 +959,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1090,40 +993,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/MVP/Attention/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

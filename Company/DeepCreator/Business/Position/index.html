@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="找准定位–&amp;gt;调整心态–&amp;gt;最佳姿态。——DeepCreator">
 <meta name="keywords" content="Position">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/DeepCreator/Business/Position/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/DeepCreator/Business/Position/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/DeepCreator/Business/Position/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,14 +256,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="advertisement20180803.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/advertisement20180803.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/advertisement20180803.jpg?imageMogr2/thumbnail/!75p" alt="advertisement20180803.jpg"></p>
 <blockquote>
 <p>找准定位–&gt;调整心态–&gt;最佳姿态。——DeepCreator</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt="position20180729.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/position20180729.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/position20180729.jpg?imageMogr2/thumbnail/!75p" alt="position20180729.jpg"></p>
 <p>找准定位，调整心态，迎接挑战。</p>
-<p><img alt data-src="http://opb37u589.bkt.clouddn.com/2012051514192718.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/2012051514192718.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>IPCreator：定位包括两个方面</p>
 <ol>
@@ -344,7 +314,7 @@
 <p>第7章 营销者的自我修炼 / 203<br>每个营销者就像一艘船的舵手，无论这艘船是大是小，都需要严阵以待，否则就会有葬身大海的可能。作为个人，想要成功，就要坚定自己的思想；作为企业，就要专注于自己的主业，如果仅仅为了扩大而延伸，就很容易迷失方向。<br>创业时义无反顾，经营中量力而行 / 205<br>对手和环境会加快你转变的脚步 / 211<br>控制过程中的每个关键节点 / 217<br>可以在弯路上成长，不能在利益中迷失 / 223</p>
 <p>第8章 拥抱变化，赌对不变 / 231<br>今天的传播就是两个方向：拥抱变化和赌对不变。当所有内容都转向移动端后，我们就必须要学会创造内容，创造话题，融入内容，融入话题，才能聚集流量引发爆点，让自己的产品、品牌深入人心。<br>新经济形式下的品牌传播趋势 / 233<br>审视自己的存量、变量与增量 / 239<br>未来10年要抓住中产阶层的消费升级 / 243<br>切入头部内容，引爆主流人群 / 249</p>
 <p>附录 营销定位实验室 / 253<br>江南春会在他的营销定位实验室中，为学员详细讲述品牌从0到1，再从1到无穷大的常规路径与特殊打法，并且通过现场教学与互动，在完善商业模式的同时，帮助学员解决实际遇到的各种品牌与营销难题，让抢占心智从理论形态完美落地。<br>江南春问答 / 255<br>课后感悟 / 267<br>学员名录 / 279</p>
-<h3 id="定位理论注释，广告业技术细节与技巧：3星-江南春《抢占心智》"><a href="#定位理论注释，广告业技术细节与技巧：3星-江南春《抢占心智》" class="headerlink" title="定位理论注释，广告业技术细节与技巧：3星|江南春《抢占心智》"></a><a href="https://book.douban.com/review/9555481/" target="_blank" rel="noopener">定位理论注释，广告业技术细节与技巧：3星|江南春《抢占心智》</a></h3><p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1754144.jpg"></p>
+<h3 id="定位理论注释，广告业技术细节与技巧：3星-江南春《抢占心智》"><a href="#定位理论注释，广告业技术细节与技巧：3星-江南春《抢占心智》" class="headerlink" title="定位理论注释，广告业技术细节与技巧：3星|江南春《抢占心智》"></a><a href="https://book.douban.com/review/9555481/" target="_blank" rel="noopener">定位理论注释，广告业技术细节与技巧：3星|江南春《抢占心智》</a></h3><p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1754144.jpg" alt></p>
 <p>看牛文文写的序，本书主要内容是牛文文等根据江南春在“黑马营销定位实验室”的授课内容、学员问答、学员企业介绍整理而成。</p>
 <p>主要内容是以下5类：</p>
 <p>1：特劳特的定位理论特别好；</p>
@@ -388,10 +358,10 @@
 <p>28：根据WPP集团(世界最大的传播集团)对中国品牌前100名的研究,成功的品牌主要靠的是超高价的定位,也就是超过市场均价150%以上的定位。而在失败的品牌中高价和超高价定位的比例很低,只占14%, P244</p>
 <p>29：但是在今天的市场,如果你无法赢得一二线城市主流人群的心,你也就走向了失败。P247</p>
 <p>30：我们这种公司,不是说过不下去了才私有化,而是说一定要在取得更大利益的前提下实现私有化。 如果我们在美国的PE达到15倍20倍,我们就不会私有化。 P262</p>
-<p><img alt data-src="https://img1.doubanio.com/view/thing_review/l/public/p1754148.jpg"></p>
-<p><img alt data-src="https://img1.doubanio.com/view/thing_review/l/public/p1754149.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1754150.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1754151.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/thing_review/l/public/p1754148.jpg" alt></p>
+<p><img data-src="https://img1.doubanio.com/view/thing_review/l/public/p1754149.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1754150.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1754151.jpg" alt></p>
 <h2 id="营销：产品销售心理学带来的4个启示"><a href="#营销：产品销售心理学带来的4个启示" class="headerlink" title="营销：产品销售心理学带来的4个启示"></a><a href="http://www.luojiji.com/thread-12549-1-1.html" target="_blank" rel="noopener">营销：产品销售心理学带来的4个启示</a></h2><p>商业专栏作家科尔·谢弗（Cole Schafer）认为，从人类行为中找到一些共通之处，能帮我们更好地理解为什么人们会购买某些产品，这样也有助于营销人员制定出更高效的营销活动。他在内容平台Medium的一篇文章中，介绍了他总结的产品销售心理学。36氪编译了这篇文章。</p>
 <p>首先，当人们心情不好或是想要变得快乐时，就会购物。谢弗说，大多数人购买产品无外乎两个原因：为了更接近快乐或是远离痛苦。比如，高兴时人们会买酒庆祝，不小心宿醉了需要买止疼药远离痛苦。他建议，当你在推销自己的产品或服务时，一定要注意客户购买产品是出于哪种原因。</p>
 <p>第二，人们会基于自己的情绪做出购买决定。谢弗说，当人们购买产品或服务属于“为了更接近快乐”这个原因时，他们的购买决定会受到情感和情绪的支配。因此，当商家要出售一件能让客户感到快乐的产品时，就要考虑如何诱导他们的情绪，让他们感受到快乐。</p>
@@ -512,8 +482,8 @@
 <li>当百年难遇的机会来敲门时。</li>
 <li>事业停滞不前时。凯恩36岁做到贝氏宝公司的副总裁，但由于没有行政和业务经验，无机会做CEO，后转去公司旗下子公司从烘焙工做起，6年后成为500个连锁店的主要拥有者</li>
 </ol>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-1.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-2.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-3.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-4.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-5.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-6.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-7.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-8.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-9.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-10.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-11.jpg"></p>
-<h2 id="定位屋"><a href="#定位屋" class="headerlink" title="定位屋"></a><a href="https://book.douban.com/subject/26336607/" target="_blank" rel="noopener">定位屋</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28018781.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-1.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-2.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-3.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-4.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-5.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-6.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-7.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-8.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-9.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-10.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p37819882-11.jpg" alt></p>
+<h2 id="定位屋"><a href="#定位屋" class="headerlink" title="定位屋"></a><a href="https://book.douban.com/subject/26336607/" target="_blank" rel="noopener">定位屋</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28018781.jpg" alt></p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>序言定位理论：中国市场正当时<br>总论<br>前言：体系化的定位理论<br>定位理论的核心：一个中心两个基本点<br>定位理论的大厦：定位屋<br>特劳特与里斯的相同与不同<br>定位理论——超越科特勒的营销理论<br>营销的新哲学——定位理论背后的哲学观念<br>第一编什么是定位<br>第一章目的本质：占据心智<br>1、商业竞争的三个时代<br>2、心智认知过程<br>3、心智大于事实<br>4、心智青睐第一<br>5、心智容量有限<br>6、心智憎恨复杂<br>7、心智缺乏安全感<br>8、心智拒绝改变<br>9、心智容易失去焦点<br>10、心智的力量<br>11、真正的外部<br>12、既是名词也是动词<br>13、定位的目的本质<br>14、伪定位：离开心智认知的定位是伪定位<br>附文：加多宝“掏空”王老吉<br>第二章攻防本质：避实击虚<br>1、商业即战争<br>2、两大基本原则<br>3、四种战略形式<br>4、战术与战略<br>5、商战的基本单位<br>6、树立商业中的战争思维<br>7、定位的攻防本质<br>8、伪定位：没有敌人的定位是伪定位<br>附文一：找到你的竞争对手<br>附文二：八马“商政礼节茶”是个伪定位<br>第三章内容本质：与众不同<br>1、创造需求<br>2、超越USP<br>3、破除品牌形象的神话<br>4、其它令人怀疑的与众不同<br>5、有效的与众不同<br>6、与众不同进化为品类第一<br>7、定位的内容本质<br>8、伪定位：令人怀疑和容易复制的与众不同是伪定位 186<br>附文：品牌概念的进化<br>第四章表现本质：简单可信<br>1、简单：名字简单，信息简单<br>2、可信：利用常识，找到信任状<br>3、定位的表现本质<br>4、伪定位：复杂或不可信的定位是伪定位<br>附文：可信度有多重要<br>第五章方法本质：关联第一<br>1、关联第一<br>2、借势<br>3、定位的方法本质<br>4、伪定位：不能借势的定位是伪定位<br>附文：定位：全新一代的品牌战略理念与方法<br>第二编：如何找到定位<br>第三编：如何建立定位<br>第四编：定位智慧<br>第五编：企业定位<br>结语定位颠覆了谁<br>附录A商规的逻辑——《22条商规》书评<br>附录B品牌的逻辑——《22条品牌法则》书评<br>附录C定位问答<br>参考文献</p>
 <h3 id="套路-中国案例，有参考价值"><a href="#套路-中国案例，有参考价值" class="headerlink" title="套路+中国案例，有参考价值"></a><a href="https://book.douban.com/review/8419271/" target="_blank" rel="noopener">套路+中国案例，有参考价值</a></h3><p>前段时间看了《定位屋》这本书，被前辈称作是集定位系列书籍+接地气的中国案例大成的，有套路指导的教科书。摘录一下对我有启发的段落，承前启后的部分是我自己的理解。</p>
 <p>首先，品牌就是消费者与产品的关系，又等于“可信度＋差异化”。信誉是品牌的基石，差异化是品牌的基因，品牌就是它们的结合体。</p>
@@ -558,10 +528,10 @@
 <p>三个例子：<br>农夫山泉<br>传播层次：农夫山泉有点甜<br>竞争层次：侧翼站转换为进攻战， 天然的弱碱性水<br>企业战略层次：天然饮用水，产品价格渠道公关广告强调</p>
 <p>东阿阿胶<br>传播层次： 滋补国宝（提升整个阿胶的认知价值扩大市场，塑造高端地位）<br>竞争层次： 防御战转化为侧翼战，阿胶整个品类低端化，它的对手是人们观念里认为阿胶是低端补血品。提出滋补三大宝：人参、鹿茸和阿胶。<br>企业战略层次： 正宗（高端）阿胶</p>
 <p>王老吉<br>传播层次： 怕上火，喝王老吉<br>竞争层次： 侧翼战，汽水是解渴，突出自己预防上火，凉茶品类的定位<br>企业战略层次： 从餐饮渠道起步，广告主攻易上火的火锅店。</p>
-<h2 id="找准你的职场定位"><a href="#找准你的职场定位" class="headerlink" title="找准你的职场定位"></a><a href="https://book.douban.com/subject/4910627/" target="_blank" rel="noopener">找准你的职场定位</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s6192133.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p30533955-1.jpg"></p>
+<h2 id="找准你的职场定位"><a href="#找准你的职场定位" class="headerlink" title="找准你的职场定位"></a><a href="https://book.douban.com/subject/4910627/" target="_blank" rel="noopener">找准你的职场定位</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s6192133.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p30533955-1.jpg" alt></p>
 <p>法兰西时代的智者拉罗什富科有句箴言：研究人比研究书本更为必要。哲学是揭示人生真相的学问，所以我们都敬鬼神而远之。即使我们回避得了哲学，却回避不了人生。事实证明，政治代替不了哲学，就如同别人代替不了你。认识你自己——这是一个自人类有史以来最难解答的一个人生哲学命题。在西方神话语言体系里，它被表述为著名的斯芬克斯之谜。<br>狮身人面像斯芬克斯每天都要问路过的行人一个问题：“有一种动物，早上用四条腿走路，中午用两条腿，下午用三条腿，这是个什么动物？”回答不出来的人都被斯芬克斯给吃掉了。<br>后来，年轻的阿狄浦斯给出了答案：这个动物就是人。<br>这个故事告诉我们，离我们最近的东西，往往是我们最难认知的。在我们每一个人的生命里，都有一个陌生人一直在默默的陪伴着我们自己。他每天都做着与你相同的事情。然而你却没有充分的去认识他，这个与你相始终的人就是你自己。<br>你不是宇宙的主宰，你却是自己的主宰。每个人的人生都是在书写自己的历史，但这个历史从来都缺乏细心的读者。我们没有工夫阅读自己的历史，即使读也是读得草率而匆匆。卢梭在《论人类不平等的起源和基础》中说：人类的各种知识中最有用而又最不完备的，就是关于“人”的知识。<br>或许，铭刻在希腊圣城德尔斐神殿上的著名箴言“认识你自己”才是人世间真正的智慧之语。2000多年前，中国古代思想家老子也说过类似的话：知人者智自知者明，胜人者有力自胜者强。“认识你自己”这句话揭开了我们心中的秘密——<br>人要有自知之明，认识神与人的区别，就是人应该知道自己的限度。苏格拉底真正领会了箴言的真谛，他认识自己的结果是知道自己一无所知，为此受到了德尔斐神谕的最高赞扬，被称作全希腊最智慧的人。“认识你自己”的箴言不仅旨在防止人类过度骄傲，也在于使我们了解自己的价值何在。<br>每个人身上都藏着世界的秘密，可以通过认识自己来认识世界。赫拉克利特说：“我探寻过我自己。”他认为他的哲学仅是“向自己学习”的产物。孔子说：己所不欲勿施于人。至少就认识人性而言，每个人身上都有着丰富的宝藏，可惜被熟视无睹。自古至今，一切伟大的人物都是真诚的反省者，他们把自己当作标本，“吾一日三省吾身”，借此对人性有了深刻的理解。<br>每个人都是一个独一无二的个体，都应该认识自己独特的禀赋和价值，从而实现自我，真正成为自己。世界上没有两片完全相同的树叶。这个独特的东西就是人格、个性和自尊。了解自己的人格特点，一个人才能成为一个明智的人，“知己知彼百战不殆”。“认识你自己”对于个人生存而言，就如同衣食住行之于肉体。<br>人是自己命运的主人，我们可以通过自己的选择来创造自己。每一个人都不完全是被决定和被限定的，人可以决定他自己的未来，不论是向外界屈服还是勇敢面对。不管我们的生存环境是什么，我们应当保留一点仅存的自由，就是在现实的环境中选择个人态度的能力。<br>我们所看到的事物往往只是一些表面现象，常常看不到其内在的因素与变化的规律，以及人与事物之间的逻辑关系。而对于我们自己的认识更是迷乱疑惑，甚至惘然。我们常常通过他人的眼光与外在的事物去看自己，很难看清自己内在的潜能与真实的情感。因此，我们无法作出准确的判断。一个能够通过灵魂认识自我的人一定能够更好地控制自己的感情，因为他能够充分地认识自己的人格特质。<br>我们的眼睛有向外发现和向内两种观察发现的能力。向外可以发现一个无比辽阔的世界，向内可以发现一个无比深邃的内心。“知我者谓我心忧，不知我者谓我何求”。一个能读懂自己的人，才能够保持一颗完整而圣洁的心，和一个完美的心灵世界，以此建立起内心持久的定力与完善的自我认识，以及良好的自我感知。<br>职业人格理论让我们找到了一个认识自我的方便路径。事实上，我们平时做人做事，内在的自我始终都在表态，只是不被我们留意罢了。那么，让我们从现在开始，了解自己的喜怒哀乐，了解自己的人格特点，了解自己的长处与弱点，了解自己的价值和理想。或者说，知道了自己的兴趣喜恶就是认识了自我，而一个人在这个世界上倘若有了自己真正钟爱的事和人，就可以算是在实现自我了，那他就是一个成功的人，一个幸福的人。<br>王小波曾经说：“我对自己的要求很低：我活在世上，无非想要明白些道理，遇见些有趣的事。倘能如我愿，我的一生就算成功。”中国古代就有“朝闻道夕死可矣”的话。知道自己是谁，知道自己想要什么，知道自己你能干什么，“君子有所为有所不为”，这就是所谓的“明白人”。只有一个具有完善的自我意识的人才是一个完美的人，这样的人生才值得一过。<br>梭罗曾经批评现代人：大多数人都过着平静而绝望的生活。只有保持一种完善的自我认识与良好的自我感知，才能够坚定自己的信念与意志，完善与保持一个最佳的自我状态，建立起一个完善的个人职业生涯，而不会放任自我，随波逐流。歌德有句名言：一个人即使驾着一叶脆弱的小舟，但只要舵掌握在他的手中，他就不会任凭波涛摆布，他会坚定地选择前进的方向。<br>人生的路是用我们自己的脚步去丈量的。证严法师说：只要找到路，就不怕路远。我们每一个人都应当有一双慧眼和一颗坚定的心，用它去认识自己、认识世界。为自己建立起一套完整的自我价值体系，孕育一个完美的自己，开阔智慧启迪思维，拓展美好的职业人生。面向云诡波谲的明天，让我们把握好自己命运的舵，乘风破浪，驶向职业生涯的那片蓝海。</p>
-<h2 id="20幾歲，就定位-打造通往未來的許可證"><a href="#20幾歲，就定位-打造通往未來的許可證" class="headerlink" title="20幾歲，就定位: 打造通往未來的許可證"></a><a href="https://book.douban.com/subject/5260206/" target="_blank" rel="noopener">20幾歲，就定位: 打造通往未來的許可證</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s8818951.jpg"></p>
+<h2 id="20幾歲，就定位-打造通往未來的許可證"><a href="#20幾歲，就定位-打造通往未來的許可證" class="headerlink" title="20幾歲，就定位: 打造通往未來的許可證"></a><a href="https://book.douban.com/subject/5260206/" target="_blank" rel="noopener">20幾歲，就定位: 打造通往未來的許可證</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s8818951.jpg" alt></p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>本書目錄</p>
 <p>Chapter 1.年輕時的夢想決定一生的命運<br>現實生活，跟你想的不一樣<br>想過什麼樣的人生自己決定<br>找對方向才會走對路<br>如何訂定成功的人生規劃<br>找一份自己感興趣的工作</p>
 <p>Chapter 2.二十歲已不小，別讓人瞧不起你<br>一定要有獨立生活的能力<br>成功的人懂得如何利用時間<br>訓練自己獨立思考和做決定<br>有責任感的人才會受到重用<br>培養自己承受挫折的能力</p>
@@ -573,7 +543,7 @@
 <p>Chapter 8.二十幾歲要學會借助外力獲得成功<br>找到生命中的「貴人」<br>每個人都有成功的機會<br>團體合作才會成功<br>「借」他人的優勢為己用<br>利用團隊來完善自我<br>放低身段，虛心請教</p>
 <p>Chapter 9.二十幾歲，明白什麼是愛<br>後悔當時太年輕<br>學會拒絕就能少點傷害<br>有的愛失去了就不會再來<br>失戀不過就像是一場感冒<br>婚姻是用來兌換幸福的</p>
 <p>Chapter10.二十幾歲的人常做的糊塗事<br>親人＝親手傷害的人<br>不要為了穩定而不敢嘗試<br>別只會要求別人，先要求自己<br>浮躁讓一切歸零<br>別仗著年輕而忽視健康</p>
-<h2 id="定位中国"><a href="#定位中国" class="headerlink" title="定位中国"></a><a href="https://book.douban.com/subject/25814334/" target="_blank" rel="noopener">定位中国</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s27205060.jpg"></p>
+<h2 id="定位中国"><a href="#定位中国" class="headerlink" title="定位中国"></a><a href="https://book.douban.com/subject/25814334/" target="_blank" rel="noopener">定位中国</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s27205060.jpg" alt></p>
 <h3 id="目录-3"><a href="#目录-3" class="headerlink" title="目录"></a>目录</h3><p>自序 不能只有梦想没有路——兼谈我心目中的大学教育／001</p>
 <p>第一讲 从“限”字成年度汉字看道与德之关系<br>宏观调控变成了微观管理，牵一发而动全身／003<br>巧妇难为无米之炊的保障房／007<br>商品房是保障房的奶妈／008<br>为什么房价物价会那么高？／009<br>道为德之母／011<br>课后作业／012</p>
 <p>第二讲 人口、资源与环境<br>人是世界上最宝贵的资源和财富／013<br>制度和文化是第一生产力／017<br>战争思维和阴谋论是贫穷落后的根源／023<br>中国的人口红利已消失殆尽／024<br>中国人明天的养老在哪里？／025<br>“人口是负担”的观念亟待转变／027<br>课后阅读／028</p>
@@ -584,7 +554,7 @@
 <p>第七讲 中国经济转型的可能路径<br>奇迹的黄昏：经济下行，房价上涨／140<br>投资刺激是饮鸩止渴的慢性毒药／146<br>哪些经济学家和学者反对经济刺激／149<br>以后谁还敢当县长？／156<br>房价上涨VS投资刺激：谁是经济崩溃的元凶？／158<br>彻底告别凯恩斯主义和“三驾马车”理论／162<br>对外告别经济民族主义／164<br>对内告别经济民粹主义／168<br>中国现代化之路箭在弦上／171</p>
 <p>第八讲 世上没有“中国模式”<br>昙花一现的“中国模式”／175<br>中国已落入拉美式“中等收入陷阱”／176<br>世上没有“中国模式”／178<br>“中国模式”的显著特点是政府竞争代替了市场竞争／180<br>中国模式的发展陷阱／182<br>沉湎于“中国模式”将使中国被甩出第三次世界工业革命／189<br>以自由看中国发展／193<br>告别“中国模式”，融人世界潮流／195</p>
 <p>第九讲 展望“十八大’’后的中国改革<br>中共“十八大”透露的改革玄机／197<br>社会变革的三种力量／205<br>三代中央领导组合／213<br>中央和地方关系／215<br>普通民众的权力幻觉／219<br>历史的节点：以大赦换自由民主／222<br>期末作业／227<br>附录 大城市化与青年未来<br>寻找自己的时代坐标／228<br>爱国和天下一家其实很具体／230<br>“人口与资源矛盾论”是当代中国最大的理论和决策失误／23l<br>拼爹时代，自由的价值高于一切／234<br>做理性的建设者还是感性的威胁者？／237</p>
-<h2 id="定位：争夺用户心智的战争（精装）"><a href="#定位：争夺用户心智的战争（精装）" class="headerlink" title="定位：争夺用户心智的战争（精装）"></a><a href="https://book.douban.com/subject/26704160/" target="_blank" rel="noopener">定位：争夺用户心智的战争（精装）</a></h2><p><img alt data-src="https://img1.doubanio.com/lpic/s28379008.jpg"></p>
+<h2 id="定位：争夺用户心智的战争（精装）"><a href="#定位：争夺用户心智的战争（精装）" class="headerlink" title="定位：争夺用户心智的战争（精装）"></a><a href="https://book.douban.com/subject/26704160/" target="_blank" rel="noopener">定位：争夺用户心智的战争（精装）</a></h2><p><img data-src="https://img1.doubanio.com/lpic/s28379008.jpg" alt></p>
 <h3 id="目录-4"><a href="#目录-4" class="headerlink" title="目录"></a>目录</h3><p>引 言 3</p>
 <p>第一章 到底何谓定位 5<br>许多人误解了传播在当今商界和政界里的作用。在我们这个传播过度的社会里，<br>有效的传播实际上很少发生。确切的说，公司必须在潜在客户的心智中建立一个<br>“位置”，它不仅反映出公司自身的强势和弱势，也反映出竞争对手的强势和弱势。</p>
 <p>第二章 心智备受骚扰 8<br>现在的公司太多，产品太多，营销噪音也太多。在美国，人均广告消费已达到每年<br>200美元。</p>
@@ -672,7 +642,7 @@
 <p>品牌延伸何时有效<br>品牌延伸容易被人忘记，因为它们在人们的心目中没有自己的独立位置。它们是原有品牌名称的卫星，只会让原有品牌的地位模糊不清，而结果往往是灾难性的。<br>什么时候该用延伸品牌，什么时候不该用：<br>预期销量。有获胜潜力的产品不该用，而产量不大的产品则该用。<br>竞争。在没有竞争的地方不该用，在竞争激烈的领域里则该用。<br>广告支持。广告开支大的品牌不该用，广告预算小的产品该用。<br>影响。创新产品不该用，一般产品如化学产品该用。<br>经销。上货架的产品不该用，由销售代表上门推销的产品该用。<br>定位案例<br>公司应该第一个去做某件事情，以此来成为领导企业，而不是自称如何领先于人。<br>定位的一个基本原则：避开那些人人都在谈论的领域，即风尚。若想取得发展，公司必须开辟无人涉足的新领域。<br>给你自己和你的职业定位<br>更加努力很少成为通往成功之路，更加聪明才是更好的方法。</p>
 <p>成功六步曲<br>第一步：你拥有怎样的定位<br>定位需要从潜在顾客开始，而不是从自己开始。<br>唯一的可行之道是将自己的产品、服务和概念同潜在顾客心智中已有的认知相联系。<br>第二步：你想拥有怎样的定位<br>第三步：谁是你必须超越的<br>不要对市场领导者进行正面攻击。绕过障碍要比穿过它好得多。最好是选择一个别人没有完全占据的定位。<br>第四步：你有足够的钱吗<br>如果资金有限，在一个城市花足钱比在多个城市捉襟见肘要好得多。如果在一个地方成功了，就可以在其他地方推广了——如果第一个地点选择正确的话。<br>第五步：你能坚持到底吗<br>比如品牌延伸陷阱：品牌延伸陷阱实际上会削弱品牌的基本定位。一旦定位丢失，品牌就是无锚之船，漂浮不定。<br>第六步：你符合自己的定位吗</p>
 <p>定位的游戏规则<br>必须理解文字、必须理解人、必须对变化持谨慎态度、要有眼光、要有勇气（回顾领导地位的创建史，会发现重要的不是营销技巧，也不是产品微创新，而是抢占先机）、要简单化、要精明、要有耐心、要有全球视野、要他人导向、什么是你不需要的。<br>定位的游戏规则：要想赢得心智争夺战，你不能同定位强大、稳固的公司正面交锋。你可以从侧面、底下或者头领上迂回过去，但决不要正面对抗。</p>
-<h2 id="重新定位"><a href="#重新定位" class="headerlink" title="重新定位"></a><a href="https://book.douban.com/subject/6536667/" target="_blank" rel="noopener">重新定位</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s6567234.jpg"></p>
+<h2 id="重新定位"><a href="#重新定位" class="headerlink" title="重新定位"></a><a href="https://book.douban.com/subject/6536667/" target="_blank" rel="noopener">重新定位</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s6567234.jpg" alt></p>
 <p>为什么扩张产品线会减少你的总体销售量，<br>为什么新品牌总比已有品牌销量多，<br>为什么降价通常不是好的方法。</p>
 <h3 id="目录-5"><a href="#目录-5" class="headerlink" title="目录"></a>目录</h3><p>特劳特致中国读者<br>总序<br>推荐序<br>前言<br>第一部分<br>竞　　争<br>第1章 基本规律 / 3<br>心智疲于应付 / 5<br>心智憎恨混乱 / 6<br>心智缺乏安全感 / 8<br>心智不可改变 / 10<br>心智会丧失焦点 / 11<br>第2章 竞争时代的到来 / 15<br>竞争的激增 / 16<br>正在蔓延的竞争 / 19<br>“选择业” / 22<br>必须小心 / 24<br>第3章 重新定位竞争对手 / 27<br>谨慎攻击 / 28<br>寻找弱点 / 30<br>攻击必须引起共鸣 / 32<br>攻击的关键 / 36<br>将对手归位 / 38<br>第二部分<br>变　　化<br>第4章 面对变化，演变是关键 / 45<br>演变至关重要 / 47<br>可持续技术 / 50<br>如何演变 / 54<br>以融合求演变 / 59<br>成功与失败 / 60<br>内向思维的问题 / 62<br>第5章 企业愈大，愈难变革 / 63<br>大组织情结 / 65<br>个人的日程表 / 69<br>超级修补匠 / 70<br>事情为何如此糟糕 / 71<br>大企业的失败 / 73<br>一个觉醒的CEO / 74<br>第6章 何时不该演变 / 77<br>增长陷阱 / 79<br>隐伏祸患的期权 / 82<br>“最新”陷阱 / 83<br>谨防丧失焦点 / 85<br>角度问题 / 86<br>“人人都在做”的陷阱 / 89<br>第三部分<br>危　　机<br>第7章 改变竞争格局的动力 / 95<br>长期计划的终结 / 97<br>核能源危机 / 99<br>通用汽车的危机 / 101<br>几条准则 / 103<br>第8章 价值是关键 / 107<br>沃尔玛的成功 / 109<br>PC王国的反击战 / 110<br>嘉信理财之路 / 111<br>应对低价 / 111<br>大企业式的服务 / 114<br>奢华过时，价值流行 / 116<br>谈谈促销 / 121<br>第四部分<br>重新定位的艺术<br>第9章 重新定位需要时间 / 125<br>顽固的大脑 / 127<br>改变态度的企图 / 127<br>“重新调整”的条件 / 129<br>重新定位越早越好 / 131<br>建立网络之岛 / 132<br>重新定位与公关 / 134<br>四条成功法则 / 138<br>第10章 重新定位需要勇气 / 141<br>正确的方向在哪里 / 144<br>规模带来的问题 / 145<br>如何认清事实 / 146<br>如何安排时间 / 148<br>内部调整 / 150<br>企业代言人 / 151<br>出发 / 154<br>第11章 重新定位需要CEO的全程参与 / 155<br>曾经的现金牛 / 157<br>原先的错误 / 158<br>“我是负责人” / 159<br>注意措辞 / 159<br>进行营销培训 / 160<br>使用类比 / 161<br>缓速执行 / 161<br>应对变化 / 162<br>第12章 重新定位是显而易见的 / 165<br>为什么会这样 / 168<br>面对现实 / 169<br>复杂化的受益者 / 170<br>显而易见 / 172<br>结语 / 181<br>作者简介 / 183<br>附录A　特劳特思想应用 / 185<br>附录B　企业家感言 / 187</p>
 <h3 id="吃吃《重新定位》"><a href="#吃吃《重新定位》" class="headerlink" title="吃吃《重新定位》"></a><a href="https://book.douban.com/review/4477962/" target="_blank" rel="noopener">吃吃《重新定位》</a></h3><p>这本书是我读第二遍的时候才发现其中的价值的。原因在于用定位理论做一些分析的时候发现，很多时候定位会出现一些误区：企业的资源无法匹配，定位无法表现在营销目的上。于是我重新阅读了此书。</p>
@@ -739,7 +709,7 @@
 <p>知名女包国际品牌coach（寇驰）CEO卢佛兰克福回应称：我们从来不打折，但一直以来反对进行重新定位的想法已不复存在了。coach决定推出一个新的子品牌，而不是降价。该品牌称为poppy，比原来的品牌低20%，均价260美元，其中畅销款是98美元手包。以低价来破坏一个奢侈品牌是很危险的，因为高价支撑了产品高贵豪华，一旦顾客知道你公开降价，你就再也无法把价格提上去。</p>
 <p>因此，要慎重看待降价促销，品牌长期的顾客才会购买促销产品，人们很少因为降价而购买陌生品牌。而且促销成本高，对生产和分销物流的副作用巨大，降价促销大多没有后续效果。</p>
 <p>1、进入心智的最佳方法就是简化信息，尽量不要对你的定位和重新定位战略进行过多的调研和思考，诀窍是保持简单明了。<br>2、重要的不是你想做什么，而是你的竞争对手允许你做什么。<br>3、邓巴指出，但在150人以下，可能以非正式的方式达到相同的目的；在这个规模下，依靠个人忠诚度和直接人与人的接触，命令就能被执行，不守规矩的行为也会受到约束。<br>4、为增长而增长可能是个陷阱，为了赶超他人而发展是个错误。<br>5、如果竞争对手以某一特性著称，那你就应该利用其他特性，通常你可以利用竞争对手强势中的弱点，营销是认知战。<br>6、人们很少仅仅因为降价而购买陌生品牌<br>7、<strong>重新调整认知是个缓慢的过程，重新定位是调整人们的认知，不是改变人们的认知。</strong><br>8、<strong>重新调整认知需要时间和耐心，重新定位需要勇气</strong><br>9、成为有效领导者的基础是想清楚组织的任务，清晰可见地定义并建立这一任务，领导者设定目标，设定优先级，设定并维护标准。 彼得 德鲁克</p>
-<h2 id="这将是你今年最正确的消费决策"><a href="#这将是你今年最正确的消费决策" class="headerlink" title="[这将是你今年最正确的消费决策]"></a>[这将是你今年最正确的消费决策]</h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093647aay1yvwijckcuk8k.jpg"></p>
+<h2 id="这将是你今年最正确的消费决策"><a href="#这将是你今年最正确的消费决策" class="headerlink" title="[这将是你今年最正确的消费决策]"></a>[这将是你今年最正确的消费决策]</h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093647aay1yvwijckcuk8k.jpg" alt></p>
 <p>从「罗辑思维」成立到现在，我们一直试图为用户寻找这样一件商品：</p>
 <p>超级实用，一次投资长期享受；<br>使用成本低，不造成经济负担；<br>每天都要用，每天都能用，每次用都高兴；<br>不增加物理空间上的负担，但却能给精神世界带来极大的愉悦。</p>
 <p>还有这样的产品呢？</p>
@@ -755,14 +725,14 @@
 <p>① 造型不应该增加用户的空间负担。房子这么贵，空间这么有限，好产品应该只满足功能、不占用空间。所以市面上那些体型很大抢占空间的，不行；造型奇特的，更不行。</p>
 <p>② 硬件价格不应该成为阻碍用户的门槛。所以那些价格特贵、性价比不高的，不行。</p>
 <p>③ 操作不应该复杂难用。智能音箱最重要的是啥？当然是智能化水平啊。一台好的智能音箱，必须能满足“下到刚会走，上到九十九”都能无障碍使用的要求。凡是需要用户多次学习才能掌握的，凡是智能程度迭代缓慢的，都不行。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093647hczvvzvzn71yclro.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093647hczvvzvzn71yclro.jpg" alt></p>
 <p>苛刻吧？</p>
 <p>还真就有人能做到。还真就被我们做到了。</p>
 <p>因为我们联合了地球人都知道他们硬件不挣钱的——小米公司。</p>
 <p>小米这么大公司，为啥只选择和「得到」联名呢？</p>
 <p>用他们的话来说就是：“作为一家高自尊的公司，一台智能音箱，必须能持续为用户播放高质量内容。谁都不愿意在享受知识的时候被劣质内容打扰。而这，只有「得到」能做得到。”</p>
 <p>所以，今天，雷军和罗胖，性价比之王和头部内容源头，小米和「得到」，联袂把这台智能音箱郑重推荐给你。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093647tv5kkkdkdbqxk9d0.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093647tv5kkkdkdbqxk9d0.jpg" alt></p>
 <p>这台智能音箱，有以下几个特点：</p>
 <ol>
 <li><p>体积小，完全不刷存在感。长宽不过10厘米左右，比我们的巴掌还小。正因为它自己不刻意争取存在感，所以这台设备才能做到无处不在。这是个最好的硬件设备——不像其他设备一样凹造型，只为你提供最好的内容服务。</p>
@@ -772,7 +742,7 @@
 <li><p>小米和「得到」的技术团队，为此忙活了半年之久，终于把它和「得到」打通了。在体验上非常优秀——从每天的罗胖60秒，到「得到」里的音频内容，只要你一句话，就能轻松操控它播放。</p>
 </li>
 </ol>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093647iz1kkvlw0hqkdhwm.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093647iz1kkvlw0hqkdhwm.jpg" alt></p>
 <ol>
 <li><p>内容丰富。这个音箱自带「得到」听书年卡资格，从你激活它的那一瞬间开始，意味着你把近2000本精选好书的精华搬进了家，从此你就拥有了一个零空间占用的梦想“书房”。当然你还可以用它，来打通你「得到」的其他课程内容。</p>
 </li>
@@ -784,20 +754,32 @@
 <p>② 一张价值365元的听书年卡；</p>
 <p>③ 一枚限量版「得到」金属勋章（非卖品）；</p>
 <p>④ 精美的手袋和祝福卡片。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093647rdzc0cj9k65c4ccj.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093647rdzc0cj9k65c4ccj.jpg" alt></p>
 <p>这么好的产品，你猜多少钱？</p>
 <p>599元？</p>
 <p>不，这次只要399元。</p>
 <p>诚意奉上，请火速享用。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093648ucnr8un87iu8rrlh.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201808/03/093648ucnr8un87iu8rrlh.jpg" alt></p>
 
     </div>
 
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/DeepCreator/Travel/Map/" rel="bookmark">Map</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/P/Position/" rel="bookmark">Position</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Position/" rel="tag"><i class="fa fa-tag"></i> Position</a>
           </div>
@@ -809,21 +791,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/Japan/" rel="next" title="Japan">
-                  <i class="fa fa-chevron-left"></i> Japan
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Creativity/" rel="prev" title="Creativity">
-                  Creativity <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/Japan/" rel="prev" title="Japan">
+      <i class="fa fa-chevron-left"></i> Japan
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Creativity/" rel="next" title="Creativity">
+      Creativity <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -836,7 +815,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -867,8 +868,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -877,14 +878,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -895,11 +896,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -933,7 +929,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -945,51 +941,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -998,18 +955,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1019,63 +970,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1083,14 +977,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1117,40 +1011,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/DeepCreator/Business/Position/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

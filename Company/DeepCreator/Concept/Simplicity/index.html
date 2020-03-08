@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="常识让事情变得简单。">
 <meta name="keywords" content="Art,Simplicity,Simple">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/DeepCreator/Concept/Simplicity/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/DeepCreator/Concept/Simplicity/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/DeepCreator/Concept/Simplicity/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,17 +256,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="simple20180804.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/simple20180804.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/simple20180804.jpg?imageMogr2/thumbnail/!75p" alt="simple20180804.jpg"></p>
 <blockquote>
 <p> <a href="https://book.douban.com/subject/5940650/" target="_blank" rel="noopener">常识让事情变得简单。</a></p>
 </blockquote>
 <a id="more"></a>
-<p><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/41bfb12a1f9143bb8bd30fe7869b92b4~2160x1080_noop.jpeg"></p>
+<p><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/41bfb12a1f9143bb8bd30fe7869b92b4~2160x1080_noop.jpeg" alt></p>
 <blockquote>
 <p>复杂的事情简单化</p>
 </blockquote>
 <p>物得其所，物尽其用，少就是多。</p>
-<p><img alt="Effectiveness_vs_Simplicity20180801.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Effectiveness_vs_Simplicity20180801.jpg?imageMogr2/thumbnail/!75p"><br>Simplicity is the ultimate sophistication</p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Effectiveness_vs_Simplicity20180801.jpg?imageMogr2/thumbnail/!75p" alt="Effectiveness_vs_Simplicity20180801.jpg"><br>Simplicity is the ultimate sophistication</p>
 <p><a href="http://www.luojiji.com/thread-12786-1-1.html" target="_blank" rel="noopener">谈极简</a></p>
 <p>谈到商业模式，任正非说：“<strong>未来的胜利是极简的胜利</strong>。如果我们能做到极简，这世界还有谁能打赢我们？”极简是对准客户的，外部要极简，留给自己的则是极其复杂的。</p>
 <blockquote>
@@ -332,7 +302,7 @@
 <p>15.导航比搜索重要。只有在网站没有提供有效导航的情况想，用户才会使用搜索，搜索比浏览困难得多。</p>
 <p>16.在正确的位置提供正确的内容。在错误的位置，放置再醒目的引导，用户也不会去看。</p>
 <h2 id="极简生活"><a href="#极简生活" class="headerlink" title="极简生活"></a><a href="https://book.douban.com/subject/27598800/" target="_blank" rel="noopener">极简生活</a></h2><p>Simple Matters：Living with Less and Ending Up with More</p>
-<p><img alt="simple20180801.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/simple20180801.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/simple20180801.jpg?imageMogr2/thumbnail/!75p" alt="simple20180801.jpg"></p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>自序 第一步——安家<br>第一章：清理杂物<br>第二章：简 单<br>第三章：整 理<br>第四章：装 饰<br>第五章：浴室与美容护肤产品<br>第六章：穿戴打扮<br>第七章：下厨和请客<br>第八章：打扫清洁<br>第九章：盎然生机<br>致谢<br>出版后记</p>
 <h3 id="如何成为一名极简主义者"><a href="#如何成为一名极简主义者" class="headerlink" title="如何成为一名极简主义者"></a><a href="https://book.douban.com/review/9043076/" target="_blank" rel="noopener">如何成为一名极简主义者</a></h3><p>21世纪初，加州大学洛杉矶分校做了一项研究，目的是研究现代美国家庭如何运转，这项研究，认同美国当时是全球历史上物质最富有的社会——这样的结果就是家里散见各种各样的东西，作为研究的一部分，研究员统计了家里的所有物件，第一户家庭仅仅是起居室和卧室的可见物品就多达2260件，这还不包括隐藏的小物件。</p>
 <p>这不仅仅是拥挤的问题，研究报告说，大量的物件造成的视觉忙碌会影响这个家庭的基本快乐。研究对象连续几天接受了皮质醇测试，那些认为自己家里乱糟糟的研究对象，在晚上表现的更容易抑郁。</p>
@@ -340,25 +310,25 @@
 <p>《极简生活》从租房故事说起，从日常起居、待人接物两大方面切入，对如何处置有限家庭空间里的物品给出了大量具备操作性的建议。在分享物归原位、少买多扔、一物多用等处理原则的过程中，作者艾琳·博伊尔引导我们不断思考两个问题：在有限的空间中什么是必须持有的，怎样的生活才是好的。</p>
 <p>艾琳·博伊尔以前也有很多东西，但是由于不停地搬家，最后甚至搬到了一个布鲁克林16平米的公寓里，所以不得不开始扔东西，开始极简之路。一开始这很费劲，但是后来却逐渐适应甚至享受这一过程，同时她把自己的生活方式分享到博客上，引发了许多人的共鸣，成为一名分享生活方式的人气博主，过着简单的生活，内心平静且幸福。《极简生活》这本书就记录了她整个极简生活的分享和历程。</p>
 <p>《极简生活》的精华分为3个部分，第一部分是什么是极简生活？极简生活是过度关注物质的另一种极端吗？第二部分是极简物品的原则是什么？如何极简物品？第三部分是如何打造一个宁静、幸福、舒适的家？</p>
-<p><img alt data-src="https://img1.doubanio.com/view/thing_review/l/public/p1164098.jpg"><br>什么是极简生活？极简生活是过度关注物质的另一种极端吗？<br>首先，极简不是简单的扔扔扔，也不是性冷淡，更不是倡导我们什么都不要追求，清心寡欲，走到完全不关注的物质的另一种极端。</p>
+<p><img data-src="https://img1.doubanio.com/view/thing_review/l/public/p1164098.jpg" alt><br>什么是极简生活？极简生活是过度关注物质的另一种极端吗？<br>首先，极简不是简单的扔扔扔，也不是性冷淡，更不是倡导我们什么都不要追求，清心寡欲，走到完全不关注的物质的另一种极端。</p>
 <p>艾琳·博伊尔举了个例子。</p>
 <p>首位提倡简单生活的追寻者，美国作家、哲学家亨利-戴维-梭罗，他说想要追求简单的生活，决定去瓦尔登湖畔居住，研究自然，生活俭朴，用心思索人生。但同时，当他想要活得舒服时，他也会跑到市中心和朋友饕餮一顿。</p>
 <p>这种做法被某些评论家批评为虚伪，但是艾琳·博伊尔认为，这不是虚伪，反而是榜样，我们每一个人都可以寻求一种更简单的做事方式，但并不代表我们需要放弃熟悉的生活。我们需要选择。</p>
 <p>由此可见，艾琳·博伊尔所说的极简生活，绝不是极端，与世隔绝，而是有所取舍。她讨论的极简生活不是目的，更像是一种手段，我们在追求极简的过程中，获得生活和心灵的宁静、幸福。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1166154.jpg"><br>极简物品的原则是什么？如何极简物品？<br>艾琳·博伊尔指出，你所珍爱的东西就是你要留下的东西。如果不是，就再想一想要不要扔掉。</p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1166154.jpg" alt><br>极简物品的原则是什么？如何极简物品？<br>艾琳·博伊尔指出，你所珍爱的东西就是你要留下的东西。如果不是，就再想一想要不要扔掉。</p>
 <p>这话听上去有些残酷，比如纪念、宝宝用品、朋友的礼物等等都会让人舍不得处理。但实际上，清理对现在不再有用处的杂物，不仅仅是为了营造一个干净清爽的家，也是为了心灵的宁静。</p>
 <p>相想北上广七八万一平米的房价，少堆积一点杂物，能节约多少金钱啊。</p>
 <p>具体到什么东西该清理呢？艾琳·博伊尔把不重要的东西分为三类：垃圾类、多余物品以及非必需品。</p>
 <p>垃圾和非必需品都不必说，多余物品指的是功能重复的东西，比如家里第2个搅拌机、第4个平底锅、N件同样款式的黑色毛衣等等。这些没有坏掉但是暂时不用的东西，很多人都不会处理掉。艾琳·博伊尔以前也是这样的，她曾经大学时候有四条毯子，都舍不得扔，但是当外出聚会想要用的时候，竟然发现全都不是最喜欢的，没一条用得上。</p>
 <p>这件事引发了艾琳·博伊尔的反思，与其留一堆没用的东西，不如留一件喜欢的东西，不仅和整个家搭配适宜，也省钱。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1166155.jpg"><br>如何打造一个宁静、幸福、舒适的家？<br>《极简生活》不是一本讲方法论干货书，不讲什么90招扔掉东西的方法，或者极简改变命运之类的大道理，《极简生活》更像是一个好朋友跟你分享心得，分享如何从生活360度入手，过一种宁静幸福的日子。</p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1166155.jpg" alt><br>如何打造一个宁静、幸福、舒适的家？<br>《极简生活》不是一本讲方法论干货书，不讲什么90招扔掉东西的方法，或者极简改变命运之类的大道理，《极简生活》更像是一个好朋友跟你分享心得，分享如何从生活360度入手，过一种宁静幸福的日子。</p>
 <p>除了基本的整理收纳，本书还分享了两个重要理念，一慢节奏购物，二是自制和环保理念。</p>
 <p>想要保持家的整洁，除了定期扔掉杂物，更重要的是一开始就不要把不需要的东西带进家门。艾琳·博伊尔在装扮自己家时，特别强调要谨慎购物，放进家里的东西，第一要美观，第二要实用，第三要价格合适，否则宁可等着。比如她家里一个复古凳子，原本是实验室的东西，但是太贵了买不起，那就不买，后来等实验室淘汰教学用具，免费搬回家了。</p>
 <p>艾琳·博伊尔认为，装饰并非一蹴而就，三思而后行，家里的物品将会都是你喜欢的样子，家也是你最喜欢的样子，进而整个生活都是你喜欢的模样。</p>
 <p>此外，善于自制物品，将会让家凝聚自己的一点一滴心血，真正的生机勃勃。艾琳·博伊尔分享了DIY清洁物品、美容物品、美食等等的经验，不但省钱，而且环保，让整个家福有一种人情味。</p>
 <p>最后，各种收纳、极简主义的流行，其本质都是对消费主义的一种反抗。</p>
 <p>除了买买买和挣钱，生活应该有更丰富的色彩，我们应该响应作者的号召：生活中少一点东西，不要在意浴室的瓷砖了。</p>
-<h3 id="有的人出租房是窝，而她的出租房是家"><a href="#有的人出租房是窝，而她的出租房是家" class="headerlink" title="有的人出租房是窝，而她的出租房是家"></a><a href="https://book.douban.com/review/9039040/" target="_blank" rel="noopener">有的人出租房是窝，而她的出租房是家</a></h3><p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1162510.jpg"></p>
+<h3 id="有的人出租房是窝，而她的出租房是家"><a href="#有的人出租房是窝，而她的出租房是家" class="headerlink" title="有的人出租房是窝，而她的出租房是家"></a><a href="https://book.douban.com/review/9039040/" target="_blank" rel="noopener">有的人出租房是窝，而她的出租房是家</a></h3><p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1162510.jpg" alt></p>
 <p>你是否租过房子？中国大多数年轻人，应该都是租过房子的，我们在外地求学或求职，不一定固定生活在一座城市，也不一定买得起房或买得了房。</p>
 <p>你认为你租下的房子是什么？在很多人眼里，租来的房子只是一个栖身之所而不是家。</p>
 <p>我曾经有一段很长的租房经历，遇到很多问题。性格恶劣的房东，偶尔来查看房屋状况，对我的生活指指点点。资金状况窘迫，心仪的房子觉得太贵，便宜的房子又觉得太破。家具和装修老旧，想改造又担心不能续租浪费金钱。白天外出晚上回来睡觉，屋子里乱糟糟的也不想收拾。</p>
@@ -370,7 +340,7 @@
 <p>艾琳·博伊尔的极简生活方式，一直贯彻着三种生活理念。</p>
 <p>第一，清楚自己有什么。</p>
 <p>无论你是相彻底清洁，还是想选购物品或装饰房间，你都需要知道自己有什么。为了及时知道自己有什么，艾琳提倡用开放式的储物柜，这样物品更直观；提倡物品各得其所，放在固定的位置上；罗列必须品清单，一目了然；养成定期整理、定期清洁的习惯，及时检视自己的生活环境。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1162511.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1162511.jpg" alt></p>
 <p>第二，对拥有的物品分类。</p>
 <p>你可以学习艾琳，把物品分为四类，即：垃圾物品、多余的物品、非必需品、真正喜欢的物品。</p>
 <p>极简生活并不需把家扔得像《怦然心动得人生整理魔法》那样空，但是也需要扔掉无用的垃圾。破了洞得衣服，缺了一只得袜子和耳环，装修后胜了一半得油漆罐子，过期的药品、化妆品、食品，坏掉的小家电等等，这些无用的垃圾干嘛不扔掉呢？既占地方又影响心情。千万不要指望着它们还有多大用处。节约是美德，保留垃圾不是。</p>
@@ -393,18 +363,18 @@
 <p>有一个词叫通家之好，指两家交情深厚，像一家人一样，我个人理解，当你愿意把你朋友和他的家人，请到自己家里聚会聚餐的时候，才真正接近了通家之好。当你愿意请朋友来自己的房子吃饭时，也许你真的就把这栋房子当作是家了。我反正是打算在家里请客一次了。</p>
 <p>《极简生活》这本书没有宏大得让人不知所措得主题，也没有“你最好”“你应该”一类得说教，它只是作者艾琳在安静展示自己得经历、心得和生活状态。</p>
 <p>喜欢这种生活状态的人，自然回去尝试和践行，尝试中我们要忽略或改变那些美国式的生活习惯，借鉴其中的经验，活出自己喜欢的样子。</p>
-<h2 id="《日本的八个审美意识》"><a href="#《日本的八个审美意识》" class="headerlink" title="《日本的八个审美意识》"></a><a href="http://www.luojiji.com/thread-12190-1-1.html" target="_blank" rel="noopener">《日本的八个审美意识》</a></h2><p>作者：【日】黑川雅之<br>译者：王超鹰 张迎星<br>出版：中信出版集团<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/17/090229lzmoinisi6din7th.jpg"></p>
+<h2 id="《日本的八个审美意识》"><a href="#《日本的八个审美意识》" class="headerlink" title="《日本的八个审美意识》"></a><a href="http://www.luojiji.com/thread-12190-1-1.html" target="_blank" rel="noopener">《日本的八个审美意识》</a></h2><p>作者：【日】黑川雅之<br>译者：王超鹰 张迎星<br>出版：中信出版集团<br><img data-src="http://www.luojiji.com/data/attachment/forum/201806/17/090229lzmoinisi6din7th.jpg" alt></p>
 <p>日本，我们的近邻，值得你好好打量一番。</p>
 <p>你会看到日本的传统茶室，墙面虽破却无人修补，他们称这是对大自然的敬畏。你会看到城市中很少有广场，因为城市是从既有的村落中形成，他们认为“少即是多”。日本的大部分产品都强调材质的重要性，他们崇尚保持最淳朴的本色之美。</p>
 <p>看完这本书，对日本的一些观念和疑惑，相信你会找到答案。</p>
-<h2 id="简单搜索（searchcraft）"><a href="#简单搜索（searchcraft）" class="headerlink" title="简单搜索（searchcraft）"></a><a href="https://baike.baidu.com/item/%E7%AE%80%E5%8D%95%E6%90%9C%E7%B4%A2/22035376?fr=aladdin" target="_blank" rel="noopener">简单搜索（searchcraft）</a></h2><p><img alt="simplesearch20180530.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/simplesearch20180530.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="简单搜索（searchcraft）"><a href="#简单搜索（searchcraft）" class="headerlink" title="简单搜索（searchcraft）"></a><a href="https://baike.baidu.com/item/%E7%AE%80%E5%8D%95%E6%90%9C%E7%B4%A2/22035376?fr=aladdin" target="_blank" rel="noopener">简单搜索（searchcraft）</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/simplesearch20180530.jpg?imageMogr2/thumbnail/!75p" alt="simplesearch20180530.jpg"></p>
 <p>简单搜索（searchcraft）是一款于2017年7月由百度搜索开发并上线的一款搜索APP。</p>
 <p>其以简洁清爽的视觉体验，高效简单的操作交互，以及依靠语音搜索、图像识别、语音直达、多轮对话、语音播报等多种新一代搜索功能吸引了大量用户。</p>
 <p>我们希望有一款很简单很清爽的软件，满足用户从搜索到查看网页，同时也希望<strong>小朋友和老人</strong>能够使用语音的方式进行检索。让所有人能够<strong>方便、自由、公平</strong>的获取信息，仅此而已。</p>
 <p>主要功能</p>
-<p><img alt="simplesearchproduct20180530.JPG" data-src="http://p53s4d2qk.bkt.clouddn.com/simplesearchproduct20180530.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/simplesearchproduct20180530.JPG?imageMogr2/thumbnail/!75p" alt="simplesearchproduct20180530.JPG"></p>
 <p>【极致体验】集文字、语音、图像搜索于一体，拥有智能的语音、图像识别内核；过滤广告、页面秒开，体验极致搜索；<br>【语音搜索】呼叫”小度小度”可唤起语音功能，一问即搜，快速识别；<br>【图像识别】相机对准目标可实现搜图、搜花、搜题、搜商品、翻译等功能；<br>【悬浮球搜索】开启悬浮球功能，无需切换APP，即可在其他APP中复制文字，直接发起搜索；<br>【热搜榜单】上滑发现搜索榜单，最热内容实时更新，一站式查看各类新闻快讯；<br>【少儿搜索模式】开启少儿搜索模式，过滤少儿不宜的词汇词及搜索结果，提供纯净搜索体验；<br>【明星联名版】明星官方联名设计，有明星的高清写真、专属于你的问候语音和呆萌的互动表情包，爱豆陪伴每一次搜索。</p>
-<p>切换成少儿版后，从主页面可以直接进入「小度乐园」。<br><img alt data-src="https://niuerdata.g.com.cn/data/shareimg_oss/big_media_img/2018/05/28/4eb4302a1def136f177fb85eac335867.JPEG"><br>「小度乐园」是一个专为儿童定制的搜索版本，从画风到 UI 到页面逻辑，都经过了重新设计。儿童用户可以直接在页面上搜索动漫、故事、儿歌、手工等内容。</p>
+<p>切换成少儿版后，从主页面可以直接进入「小度乐园」。<br><img data-src="https://niuerdata.g.com.cn/data/shareimg_oss/big_media_img/2018/05/28/4eb4302a1def136f177fb85eac335867.JPEG" alt><br>「小度乐园」是一个专为儿童定制的搜索版本，从画风到 UI 到页面逻辑，都经过了重新设计。儿童用户可以直接在页面上搜索动漫、故事、儿歌、手工等内容。</p>
 <p>即使不进入「小度乐园」，在少儿版模式下，「简单搜索」也会过滤掉不适合儿童的信息。比如在少儿版搜索「美女」、「性感」等词汇时，显示的结果是：</p>
 <p>小朋友，页面有风险呢。</p>
 <p><a href="http://tech.ifeng.com/a/20180526/45004552_0.shtml?_zbs_baidu_bk" target="_blank" rel="noopener">李彦宏称简单搜索永无广告，“简单搜索”为百度独立App</a></p>
@@ -420,7 +390,7 @@
 <p>　　今年4月，百度发布第一季度财报后，曾被问及公司一季度信息流广告产品表现如何时，百度CFO余正钧称，一季度信息流广告营收较四季度有环比的小幅提高。</p>
 <p>　　之所以推出另一款搜索产品，上述分析师称，是因为传统搜索的推荐机制很难做调整，但又希望尝试新的基于AI的产品，所以做一个新的搜索产品来打市场。基于智能推荐的信息流产品，是可以有丰富的盈利方式，所以不用担心成本问题。</p>
 <p>　　但也有另一种声音存在，产品经理周文君告诉寻找中国创客（ID：xjbmaker），简单搜索并不是一个搜索产品，它只不过是一个内置了百度搜索、并且名字中有“搜索”的浏览器。</p>
-<h2 id="夸克浏览器"><a href="#夸克浏览器" class="headerlink" title="夸克浏览器"></a><a href="https://baike.baidu.com/item/%E5%A4%B8%E5%85%8B%E6%B5%8F%E8%A7%88%E5%99%A8/20183953?fr=aladdin" target="_blank" rel="noopener">夸克浏览器</a></h2><p><img alt="quark20180530.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/quark20180530.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="夸克浏览器"><a href="#夸克浏览器" class="headerlink" title="夸克浏览器"></a><a href="https://baike.baidu.com/item/%E5%A4%B8%E5%85%8B%E6%B5%8F%E8%A7%88%E5%99%A8/20183953?fr=aladdin" target="_blank" rel="noopener">夸克浏览器</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/quark20180530.jpg?imageMogr2/thumbnail/!75p" alt="quark20180530.jpg"></p>
 <p>夸克浏览器是一款以<strong>轻、快</strong>为核心，设计风格简约，专注用户浏览体验的信息获取工具。夸克浏览器致力于用极简思路对抗信息冗余，满足用户对于浏览器最本质的需求，启动时无任何多余加载项，瞬间启动无需等待。浏览器本身从底栏自动缩放、菜单分层设计、导航栏设置等方面，力图给到用户沉浸式浏览体验。此外，夸克还在搜索栏、工具栏、再排版等模块加入产品、设计巧思，呈现新一代移动互联网产品的升级思路。</p>
 <p>功能特性</p>
 <p>【极简设计】界面设计感十足，简洁大方又实用，每次打开都赏心悦目；<br>【超强省流】节省50%的流量，从此不用担心流量不够用；<br>【极速体验】超一流内核，速度提升50%，给你极速、流畅、稳定的上网体验；<br>【内置多引擎】Google、百度、Bing等5种搜索引擎，想找的都能快速找到；<br>【隐私模式】私密性强，无痕浏览不记录搜索和浏览历史，酷影模式上网；<br>【夜间模式】页面适配低亮度环境，爱护你的双眼；<br>【标签气泡&amp;自动联想】搜索词气泡，方便回访；联想词推荐，效率翻倍。</p>
@@ -430,8 +400,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Window/" rel="bookmark">Window</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Coder/" rel="bookmark">Coder</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Art/" rel="bookmark">Art</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/The Art of War/" rel="bookmark">The Art of War</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/The Art of Clear Thinking/" rel="bookmark">The Art of Clear Thinking</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Art/" rel="tag"><i class="fa fa-tag"></i> Art</a>
               <a href="/tags/Simplicity/" rel="tag"><i class="fa fa-tag"></i> Simplicity</a>
@@ -445,21 +436,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Company/DeepCreator/Company/Honor/" rel="next" title="Honor">
-                  <i class="fa fa-chevron-left"></i> Honor
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Company/DeepCreator/Company/OPPO/" rel="prev" title="OPPO">
-                  OPPO <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Company/DeepCreator/Company/Honor/" rel="prev" title="Honor">
+      <i class="fa fa-chevron-left"></i> Honor
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Company/DeepCreator/Company/OPPO/" rel="next" title="OPPO">
+      OPPO <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -472,7 +460,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -503,8 +513,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -513,14 +523,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -531,11 +541,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -569,7 +574,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -581,51 +586,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -634,18 +600,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -655,63 +615,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -719,14 +622,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -753,40 +656,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/DeepCreator/Concept/Simplicity/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

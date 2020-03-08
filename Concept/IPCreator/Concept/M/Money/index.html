@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="货币，称钱财，是人们为提高交易效益，对一种媒介达成的共识。">
 <meta name="keywords" content="Money">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/M/Money/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/M/Money/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/M/Money/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="social-card-travel-money.jpg" data-src="http://opb37u589.bkt.clouddn.com/social-card-travel-money.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/social-card-travel-money.jpg?imageMogr2/thumbnail/!75p" alt="social-card-travel-money.jpg"></p>
 <blockquote>
 <p><a href="https://zh.wikipedia.org/wiki/%E8%B2%A8%E5%B9%A3" target="_blank" rel="noopener">货币，称钱财，是人们为提高交易效益，对一种媒介达成的共识。</a></p>
 </blockquote>
@@ -302,11 +272,11 @@
 </ol>
 <p><a href="https://book.douban.com/annotation/15982715/" target="_blank" rel="noopener">财富的积累可以分为三个阶段。首先，你要学会如何赚钱，然后你要学会如何让钱生钱，最后你要学会如何让别人为你赚钱。</a></p>
 <p><a href="https://book.douban.com/review/7270290/" target="_blank" rel="noopener">金钱成为了有史以来最普遍也最有效的互信系统，钱是人类最能够普遍接受的“共同想象”，比起人类其他所有语言、法律、宗教和社会习俗，钱的心胸都要更加开阔，能够跨越几乎所有文化鸿沟，丝毫不会因为宗教、性别、种族、年龄或性取向而有所歧视。</a></p>
-<p><a href="https://www.toutiao.com/a1589353830919171/" target="_blank" rel="noopener">一个人具有伟大的品质，这到底是成功的原因还是结果？我认为是原因。</a>就相当于为什么你今天能长这么高？是你的基因在起作用，而不是等你长高了以后，才回过头来说你为什么长这么高。但光有基因是不够的。人一生中有三件事算不准：第一，算不准今后能赚多少钱。假设你现在20多岁，你根本不知道自己到了50岁、80岁的时候能赚多少钱；第二，算不准会经历多少幸福和痛苦；第三，算不准什么时候、以什么方式离开这个世界。所以，当我们碰到金钱问题的时候，我们就会很纠结。但是，如果你有价值观、有理想，那你就能活得很轻松。<strong>特别是对年轻人来说，理想是必需品</strong>。——冯仑<br><img alt data-src="https://p3.pstatp.com/origin/568f0004d1da1645a881"></p>
+<p><a href="https://www.toutiao.com/a1589353830919171/" target="_blank" rel="noopener">一个人具有伟大的品质，这到底是成功的原因还是结果？我认为是原因。</a>就相当于为什么你今天能长这么高？是你的基因在起作用，而不是等你长高了以后，才回过头来说你为什么长这么高。但光有基因是不够的。人一生中有三件事算不准：第一，算不准今后能赚多少钱。假设你现在20多岁，你根本不知道自己到了50岁、80岁的时候能赚多少钱；第二，算不准会经历多少幸福和痛苦；第三，算不准什么时候、以什么方式离开这个世界。所以，当我们碰到金钱问题的时候，我们就会很纠结。但是，如果你有价值观、有理想，那你就能活得很轻松。<strong>特别是对年轻人来说，理想是必需品</strong>。——冯仑<br><img data-src="https://p3.pstatp.com/origin/568f0004d1da1645a881" alt></p>
 <p><a href="https://www.toutiao.com/a1593568022099976/" target="_blank" rel="noopener">挣钱是本事，花钱是艺术</a>，这就意味着挣钱容易花钱难。花钱的艺术在于你花的钱能否增加自由与快乐，增加安全感和被尊重的感觉，除此之外，还要考虑能否增加个人自我实现的感觉。因此在花钱与幸福之间要找到一个点，既把钱花出去了，还能备受尊重。钱势力又现实，它一直在流通和交易，<a href="https://www.toutiao.com/a1593567887383582/" target="_blank" rel="noopener">多数时候它都昂着骄傲的头让人膜拜。只有当站在它面前的东西，比它更值得尊敬、更稀缺可贵时，钱才会低下谦虚的头。</a>比如它会对极具创造力的艺术、或商业创新趋之若鹜。——冯仑</p>
-<h2 id="看待“钱”的方式，决定了你的生活"><a href="#看待“钱”的方式，决定了你的生活" class="headerlink" title="看待“钱”的方式，决定了你的生活"></a><a href="http://www.luojiji.com/thread-10372-1-1.html" target="_blank" rel="noopener">看待“钱”的方式，决定了你的生活</a></h2><p> <img alt data-src="http://www.luojiji.com/data/attachment/forum/201711/12/110416ixhah0c9bgxlg90h.jpg"><br>2017-11-12 「得到」 罗辑思维<br>引言</p>
+<h2 id="看待“钱”的方式，决定了你的生活"><a href="#看待“钱”的方式，决定了你的生活" class="headerlink" title="看待“钱”的方式，决定了你的生活"></a><a href="http://www.luojiji.com/thread-10372-1-1.html" target="_blank" rel="noopener">看待“钱”的方式，决定了你的生活</a></h2><p> <img data-src="http://www.luojiji.com/data/attachment/forum/201711/12/110416ixhah0c9bgxlg90h.jpg" alt><br>2017-11-12 「得到」 罗辑思维<br>引言</p>
 <p>“钱”是人人都向往的事物，但是，究竟是要为了赚钱而赚钱，还是把“赚钱”当成一种自我实现的途径？</p>
-<p>该如何看待和对待“钱”这个概念，以下10条建议，供你参考。<br> <img alt data-src="http://www.luojiji.com/data/attachment/forum/201711/12/110437c2hmecn1om25qqrq.jpg"></p>
+<p>该如何看待和对待“钱”这个概念，以下10条建议，供你参考。<br> <img data-src="http://www.luojiji.com/data/attachment/forum/201711/12/110437c2hmecn1om25qqrq.jpg" alt></p>
 <ol>
 <li><p>“钱”，有两种含义，一种是指“财富”，一种是指“货币”。当我们谈到这个字时，务必分清是哪一种。</p>
 </li>
@@ -329,7 +299,7 @@
 <li><p>钱作为工具，最糟糕的使用方式是购买实物消费品，一旦买下，这笔钱的工具价值就消失了，而且买下的商品就会开始事实上的贬值。<strong>不要相信任何某种消费品会增值的故事，只有作为生产资料投入规模性再生产的资产才会增值。</strong></p>
 </li>
 </ol>
-<h2 id="货币崛起-The-Ascent-of-Money-2008"><a href="#货币崛起-The-Ascent-of-Money-2008" class="headerlink" title="货币崛起 The Ascent of Money (2008)"></a><a href="https://movie.douban.com/subject/3684299/?from=subject-page" target="_blank" rel="noopener">货币崛起 The Ascent of Money (2008)</a></h2><p><img alt data-src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2200499453.webp"></p>
+<h2 id="货币崛起-The-Ascent-of-Money-2008"><a href="#货币崛起-The-Ascent-of-Money-2008" class="headerlink" title="货币崛起 The Ascent of Money (2008)"></a><a href="https://movie.douban.com/subject/3684299/?from=subject-page" target="_blank" rel="noopener">货币崛起 The Ascent of Money (2008)</a></h2><p><img data-src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2200499453.webp" alt></p>
 <p>货币崛起的剧情简介 · · · · · ·</p>
 <p>「金钱本色」系列节目，将带领观众经历一场世界金融的史诗之旅。尼尔‧弗格森说明在每一个巨大历史现象（帝国和共和国，战争和革命）背后，总存在一个金融秘密。</p>
 <p>　　《金钱本色 信用与债务》<br>　　信用和债务的演化与促成文明崛起（从古代的巴比伦到今天的香港）的任何科技革新一样重要。从『威尼斯商人』中的奸商夏洛克要求别人以身上一磅肉还债道格拉斯哥的放高利贷者，尼尔说明信用与债务的起源，并且解释为何信用网络是任何文明不可缺少的一部分。信用网络越是发达，债权人越不可能在债务人身上利用它们的的杠杆作用(例如在「第三世界」的格拉斯哥就会这样)。确实如此，在田纳西州的孟菲斯，破产的人才是老大─利用手段躲过债务，这在从前是难以想象的。</p>
@@ -389,7 +359,7 @@
 <p>接下来，研究人员还对包括美国、加拿大、丹麦以及荷兰的6000多个成年人进行调查，得到了同样的结论。也就是说，花钱买时间带给人的满意度和愉悦程度更高。而且，无论收入高低都是如此。</p>
 <p>但是，两位教授也发现了一个新问题，那就是，虽然为了省时间花钱让人感觉更好，但人们通常不会这么做。只有50%的调查对象会真正选择花钱买时间，只有28%的人会把自己不喜欢做的事情外包出去。而且，研究人员回到温哥华科学博物馆，再对98个有工作的成年人进行调查，当被问到，如果白给他们40美元，他们会怎么花这笔钱时，只有2%的人说，愿意为了省时间而花掉。</p>
 <p>两位教授认为，阻止人们花钱省时间的一个障碍是：<strong>人们认为，付钱让别人做自己不喜欢的事情，是在给别人添麻烦，而不是给别人创造挣钱的机会。这种心里障碍在妨碍很多人去花钱买省时间的服务。</strong></p>
-<h2 id="把人引向毁灭的从来不是金钱"><a href="#把人引向毁灭的从来不是金钱" class="headerlink" title="把人引向毁灭的从来不是金钱"></a><a href="http://www.luojiji.com/thread-2654-1-1.html" target="_blank" rel="noopener">把人引向毁灭的从来不是金钱</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/25/172516sooyzum7msxo76yc.jpg"><br>吴晓波</p>
+<h2 id="把人引向毁灭的从来不是金钱"><a href="#把人引向毁灭的从来不是金钱" class="headerlink" title="把人引向毁灭的从来不是金钱"></a><a href="http://www.luojiji.com/thread-2654-1-1.html" target="_blank" rel="noopener">把人引向毁灭的从来不是金钱</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/25/172516sooyzum7msxo76yc.jpg" alt><br>吴晓波</p>
 <p>好几年前，一部叫《一个也不能少》的电影曾让无数中国百姓好好地感动了一把。那天，又搜出来重看，坐在漆黑的家里，我突然发现，在这部关于教育的电影中，导演张艺谋讲的其实是一个关于金钱的故事。</p>
 <p>魏敏芝先是追着喊着找村长，想要的是那50元的代课费，后来她阻拦一个学生到县少体校去集训，所担心的，也是怕少了一个学生就拿不到50元钱，再然后，她到县城去找张慧科，也是怕那50元黄了。</p>
 <p>高老师连手指头都拿不住的粉笔也舍不得丢掉，而是用指甲夹住了继续在黑板上写字；二十多个从来没有看到过可口可乐的学生轮流着喝一罐“很贵”的可乐……</p>
@@ -428,8 +398,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Wealth/" rel="bookmark">Wealth</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Money/" rel="tag"><i class="fa fa-tag"></i> Money</a>
           </div>
@@ -441,21 +420,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/T/Try/" rel="next" title="Try">
-                  <i class="fa fa-chevron-left"></i> Try
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/B/Brand/" rel="prev" title="Brand">
-                  Brand <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/T/Try/" rel="prev" title="Try">
+      <i class="fa fa-chevron-left"></i> Try
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/B/Brand/" rel="next" title="Brand">
+      Brand <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -468,7 +444,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -499,8 +497,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -509,14 +507,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -527,11 +525,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -565,7 +558,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -577,51 +570,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -630,18 +584,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -651,63 +599,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -715,14 +606,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -749,40 +640,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/M/Money/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

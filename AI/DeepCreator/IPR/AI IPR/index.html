@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="兵马未动，粮草先行，产品未动，专利先行。">
 <meta name="keywords" content="AI,IPR">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/AI/DeepCreator/IPR/AI IPR/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/AI/DeepCreator/IPR/AI IPR/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/AI/DeepCreator/IPR/AI IPR/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="aiipr20180529.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/aiipr20180529.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/aiipr20180529.jpg?imageMogr2/thumbnail/!75p" alt="aiipr20180529.jpg"></p>
 <blockquote>
 <p>  兵马未动，粮草先行，产品未动，专利先行。</p>
 </blockquote>
@@ -294,26 +264,26 @@
 <h2 id="重磅-中国电信AI手机白皮书"><a href="#重磅-中国电信AI手机白皮书" class="headerlink" title="重磅 | 中国电信AI手机白皮书"></a><a href="https://mp.weixin.qq.com/s?__biz=MzI5MTY2OTc5NA==&amp;mid=2247484102&amp;idx=1&amp;sn=7167454d92988df19288f1c1ae0fc456&amp;chksm=ec0c508bdb7bd99d3b48f57d997052b3d4eda0f617ca4411e227779c58a4b27292999820dd34&amp;mpshare=1&amp;scene=1&amp;srcid=0604ogaPC1hFN4I5CEfo0rIY#rd" target="_blank" rel="noopener">重磅 | 中国电信AI手机白皮书</a></h2><p>中国电信移动终端研究测试中心   5月18日</p>
 <p>2018年5月17日，中国电信在北京发布了《中国电信AI手机白皮书》，全面阐述了中国电信对AI手机终端的理解与需求，从AI算力、AI能力与AI应用方面规范定义人工智能手机，确定了AI手机的平台要求、能力级要求应用级要求以及中国电信AI能力赋能要求。</p>
 <p>白皮书概要如下：</p>
-<p><img alt="aiwhitepaper001.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper001.jpg?imageMogr2/thumbnail/!75p"><br><img alt="aiwhitepaper002.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper002.jpg?imageMogr2/thumbnail/!75p"><br><img alt="aiwhitepaper003.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper003.jpg?imageMogr2/thumbnail/!75p"><br><img alt="aiwhitepaper004.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper004.jpg?imageMogr2/thumbnail/!75p"><br><img alt="aiwhitepaper005.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper005.jpg?imageMogr2/thumbnail/!75p"><br><img alt="aiwhitepaper006.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper006.jpg?imageMogr2/thumbnail/!75p"><br><img alt="aiwhitepaper007.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper007.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper001.jpg?imageMogr2/thumbnail/!75p" alt="aiwhitepaper001.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper002.jpg?imageMogr2/thumbnail/!75p" alt="aiwhitepaper002.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper003.jpg?imageMogr2/thumbnail/!75p" alt="aiwhitepaper003.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper004.jpg?imageMogr2/thumbnail/!75p" alt="aiwhitepaper004.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper005.jpg?imageMogr2/thumbnail/!75p" alt="aiwhitepaper005.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper006.jpg?imageMogr2/thumbnail/!75p" alt="aiwhitepaper006.jpg"><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/aiwhitepaper007.jpg?imageMogr2/thumbnail/!75p" alt="aiwhitepaper007.jpg"></p>
 <p>如需获取《中国电信AI手机白皮书》全文，请在公众号主界面输入关键字“白皮书”。</p>
 <h2 id="AI研究之-2017人工智能现状、创业图景与未来"><a href="#AI研究之-2017人工智能现状、创业图景与未来" class="headerlink" title="AI研究之 | 2017人工智能现状、创业图景与未来"></a><a href="http://www.sohu.com/a/166363260_802872" target="_blank" rel="noopener">AI研究之 | 2017人工智能现状、创业图景与未来</a></h2><p>CB Insights发布了2017年最新的人工智能全局报告，对AI发展现在进行概要介绍，包括谷歌等巨头的收购、专利数量介绍。此外报告亮点还有：1. AI 的最新进展：马斯克发布Neuralink、ARM的新芯片架构、英特尔通过收购为无人驾驶铺路等等；2. 2017年第一季度是史上AI领域兼并与收购最活跃的季度；3. 与以往最大的不同在于，2017年第一季度金融与保险成为投资最热的领域；4. 本报告的最大亮点之一是搜集了专家对实现通用人工智能的预期，我们可能很快就会迎来突破。</p>
 <p><a href="https://www.cbinsights.com/reports/CB-Insights_State-of-AI-Report.pdf?utm_campaign=Report%20-%20Content%20Emails&amp;utm_source=hs_automation&amp;utm_medium=email&amp;utm_content=49923990&amp;_hsenc=p2ANqtz-8idold7nRf8cMMzy7vpZf9E-2i5mJysUlx4ahNiWx8xhBJ1ljcb6zDB7bY7IXELiaLtOSU66Q5EeqJuU8V44gonLUqjA&amp;_hsmi=49923990" target="_blank" rel="noopener">报告全文下载：</a></p>
-<p><img alt data-src="http://5b0988e595225.cdn.sohucs.com/images/20170822/dc7fd2326ace4c39bb043591814ab614.jpeg"><br>谷歌、亚马逊、Facebook、苹果的人工智能专利数量变化情况</p>
+<p><img data-src="http://5b0988e595225.cdn.sohucs.com/images/20170822/dc7fd2326ace4c39bb043591814ab614.jpeg" alt><br>谷歌、亚马逊、Facebook、苹果的人工智能专利数量变化情况</p>
 <h2 id="乌镇指数：2016年全球人工智能发展报告"><a href="#乌镇指数：2016年全球人工智能发展报告" class="headerlink" title="乌镇指数：2016年全球人工智能发展报告"></a><a href="http://www.199it.com/archives/526338.html" target="_blank" rel="noopener">乌镇指数：2016年全球人工智能发展报告</a></h2><p>人工智能企业的主要应用领域：个人助理<br>人工智能系统在个人助理领域的应用最为官方和相对成熟。即通过智能语音识别、自然语言处理和大数据搜索、深度学习神经网络，实现人机交互。个人助理系统在接受文本、语音信息之后，通过识别、搜索、分析之后进行回馈，返回用户说需要的信息的过程。</p>
 <p>人工智能个人助理目前普遍用于智能手机上的语音助理、语音输入、家庭管家和陪护机器人上。较为知名的应用项目有微软小娜和小冰、苹果Siri、Google Assistant、Facebook Messenger的M虚拟助手、百度度秘、讯飞输入法、Amazon Echo、叮咚智能音箱、扫地机器人、软银Pepper机器人等。</p>
-<p><img alt data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000020.png"></p>
-<p><img alt data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000021.png"></p>
-<p><img alt data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000022.png"></p>
-<p><img alt data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000023.png"></p>
-<p><img alt data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000026.png"></p>
-<p><img alt data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000027.png"></p>
+<p><img data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000020.png" alt></p>
+<p><img data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000021.png" alt></p>
+<p><img data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000022.png" alt></p>
+<p><img data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000023.png" alt></p>
+<p><img data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000026.png" alt></p>
+<p><img data-src="http://www.199it.com/wp-content/uploads/2016/10/2016%E5%B9%B4%E5%85%A8%E7%90%83%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E6%8A%A5%E5%91%8A_000027.png" alt></p>
 <h2 id="CB-Insights：2009-2016-微软已经申请超过200个人工智能相关的专利"><a href="#CB-Insights：2009-2016-微软已经申请超过200个人工智能相关的专利" class="headerlink" title="CB Insights：2009-2016 微软已经申请超过200个人工智能相关的专利"></a><a href="http://www.199it.com/archives/560721.html" target="_blank" rel="noopener">CB Insights：2009-2016 微软已经申请超过200个人工智能相关的专利</a></h2><p>2016年人工智能快速发展，人工智能企业共完成超过650宗投资交易，共募集50亿美元投资。因此，我们分析了亚马逊、苹果、Facebook、谷歌和微软的人工智能方面专利申请情况。</p>
 <p>在申请人工智能专利方面，微软领先于其他科技巨头，自2009年已经申请了超过200个人工智能相关的专利；谷歌排在第二位，申请人工智能方面专利超过150个。但是，2013年谷歌申请的人工智能专利数量曾超过微软。</p>
 <p>苹果是申请人工智能专利数量最少。</p>
-<p><img alt data-src="http://www.199it.com/wp-content/uploads/2017/01/list-8.png"></p>
+<p><img data-src="http://www.199it.com/wp-content/uploads/2017/01/list-8.png" alt></p>
 <h2 id="IITP：截止2017年韩国人工智能专利排名全球第三"><a href="#IITP：截止2017年韩国人工智能专利排名全球第三" class="headerlink" title="IITP：截止2017年韩国人工智能专利排名全球第三"></a><a href="http://www.199it.com/archives/665650.html" target="_blank" rel="noopener">IITP：截止2017年韩国人工智能专利排名全球第三</a></h2><p>2017年12月21日</p>
 <p>据《韩国先驱报》报道，周四，韩国当地一家研究机构调查显示，韩国在人工智能方面的研究越来越多，在人工智能技术方面的专利数量全球排第三，仅次于美国和日本。然而，调查补充称，韩国的专利申请增长速度和质量仍低于美国和中国。</p>
-<p><img alt data-src="http://www.199it.com/wp-content/uploads/2017/12/1513858511-6029-7d0116c359727ad.png"><br>三星语音激活人工智能助手Bixby</p>
+<p><img data-src="http://www.199it.com/wp-content/uploads/2017/12/1513858511-6029-7d0116c359727ad.png" alt><br>三星语音激活人工智能助手Bixby</p>
 <p>根据信息与通信技术研究所（Information &amp; Communications Technology Promotion，简称IITP）数据显示，韩国在2005年1月至2017年9月期间，与人工智能相关的专利数量全球排名第三。</p>
 <p>该研究所跟踪主要国家专利当局发出的人工智能专利。</p>
 <p>调查显示，在韩国，人工智能领域的专利申请平均每年增长8%，从2005年的463个增长到2017年的892个。</p>
@@ -328,7 +298,7 @@
 <p>然而，这位官员指出，韩国最近在人工智能技术领域的竞争力增长速度低于美国和中国。</p>
 <p>总部位于美国的谷歌、微软、Facebook和亚马逊都处于人工智能的前沿，包括劳动力、数据、硬件和投资，而<strong>中国的人工智能专利申请量以每年37%的速度增长，由华为牵头。</strong></p>
 <p>他说:“韩国的人工智能专利表明，目前的总体技术水平低于美国、欧洲和中国。”“韩国只有在韩语智能和听力智能方面才能达到一流的技术水平。”</p>
-<h2 id="IBM2016年获得超过7000项专利-成为当之无愧的专利之王"><a href="#IBM2016年获得超过7000项专利-成为当之无愧的专利之王" class="headerlink" title="IBM2016年获得超过7000项专利　成为当之无愧的专利之王"></a><a href="http://www.ipr.gov.cn/article/gjxw/gbhj/bmz/mg/201612/1899575.html" target="_blank" rel="noopener">IBM2016年获得超过7000项专利　成为当之无愧的专利之王</a></h2><p><img alt data-src="http://images.ipr.gov.cn/img/201612/31101482715874353.jpg"></p>
+<h2 id="IBM2016年获得超过7000项专利-成为当之无愧的专利之王"><a href="#IBM2016年获得超过7000项专利-成为当之无愧的专利之王" class="headerlink" title="IBM2016年获得超过7000项专利　成为当之无愧的专利之王"></a><a href="http://www.ipr.gov.cn/article/gjxw/gbhj/bmz/mg/201612/1899575.html" target="_blank" rel="noopener">IBM2016年获得超过7000项专利　成为当之无愧的专利之王</a></h2><p><img data-src="http://images.ipr.gov.cn/img/201612/31101482715874353.jpg" alt></p>
 <p>日期：2016-12-26 来源：腾讯科技</p>
 <p>据外媒报道称，IBM12月25日宣布，该公司2016年有望继续成为在美国获得专利数量最多的科技公司，从而<strong>连续称霸24年</strong>。</p>
 <p>　　在2015年，IBM获得了超过7335项专利，与2014年的7534项专利相比略有下降。IBM的一位发言人表示，其公司2016年获得的专利数量有望远远超过7000项。而实际上，2016年IBM还实现并创造了另一个里程碑：<strong>IBM今年获得了1000多项人工智能和认知计算专利。</strong></p>
@@ -350,8 +320,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/IPCreator/MVP/Trend/" rel="bookmark">Big Trends</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Python/" rel="bookmark">Python</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/AI/" rel="bookmark">AI</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/AI/DeepCreator/AI/Algorithm/" rel="bookmark">Algorithm</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/AI/DeepCreator/AI/AI Product/" rel="bookmark">AI Product</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/AI/" rel="tag"><i class="fa fa-tag"></i> AI</a>
               <a href="/tags/IPR/" rel="tag"><i class="fa fa-tag"></i> IPR</a>
@@ -364,21 +355,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/China/" rel="next" title="China">
-                  <i class="fa fa-chevron-left"></i> China
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Strategy/" rel="prev" title="Strategy">
-                  Strategy <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/China/" rel="prev" title="China">
+      <i class="fa fa-chevron-left"></i> China
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Strategy/" rel="next" title="Strategy">
+      Strategy <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -391,7 +379,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -422,8 +432,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -432,14 +442,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -450,11 +460,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -488,7 +493,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -500,51 +505,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -553,18 +519,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -574,63 +534,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -638,14 +541,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -672,40 +575,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/AI/DeepCreator/IPR/AI IPR/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="1993年获得哈佛大学心理学博士学位。目前他是国内唯一毕业于哈佛大学的心理学家。">
 <meta name="keywords" content="Psychology,Psychologist">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/People/" itemprop="url" rel="index">
-                    <span itemprop="name">People</span>
-                  </a>
+                  <a href="/categories/People/" itemprop="url" rel="index"><span itemprop="name">People</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/People/IPCreator/People/Xiao-Dong Yue/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/People/IPCreator/People/Xiao-Dong Yue/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/People/IPCreator/People/Xiao-Dong Yue/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=ba51aae8374e251fe2f7e3fe9fbdae2a/08f790529822720ef796ea287ccb0a46f31fab8c.jpg"></p>
+        <p><img data-src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=ba51aae8374e251fe2f7e3fe9fbdae2a/08f790529822720ef796ea287ccb0a46f31fab8c.jpg" alt></p>
 <blockquote>
 <p>1993年获得哈佛大学心理学博士学位。目前他是国内唯一毕业于哈佛大学的心理学家。</p>
 </blockquote>
@@ -321,11 +291,11 @@
 <blockquote>
 <p>当一个人在与人比较中尽获自信时，他要学会与自己比较来获得自谦，而当他在与人比较中尽获自卑时，他要学会与自己比较来获得自信。</p>
 </blockquote>
-<h2 id="活出自己的人生"><a href="#活出自己的人生" class="headerlink" title="活出自己的人生"></a><a href="http://product.dangdang.com/24172159.html" target="_blank" rel="noopener">活出自己的人生</a></h2><p><img alt="liveyourlife.JPG" data-src="http://opb37u589.bkt.clouddn.com/liveyourlife.JPG?imageMogr2/thumbnail/!75p"></p>
+<h2 id="活出自己的人生"><a href="#活出自己的人生" class="headerlink" title="活出自己的人生"></a><a href="http://product.dangdang.com/24172159.html" target="_blank" rel="noopener">活出自己的人生</a></h2><p><img data-src="http://opb37u589.bkt.clouddn.com/liveyourlife.JPG?imageMogr2/thumbnail/!75p" alt="liveyourlife.JPG"></p>
 <blockquote>
 <p>与其努力合群，不如野蛮生长，换一种活法，免于恐惧，敢于遗世独立。</p>
 </blockquote>
-<h2 id="怎样做最好的自己"><a href="#怎样做最好的自己" class="headerlink" title="怎样做最好的自己"></a><a href="https://book.douban.com/subject/5407508/" target="_blank" rel="noopener">怎样做最好的自己</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s4706396.jpg"></p>
+<h2 id="怎样做最好的自己"><a href="#怎样做最好的自己" class="headerlink" title="怎样做最好的自己"></a><a href="https://book.douban.com/subject/5407508/" target="_blank" rel="noopener">怎样做最好的自己</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s4706396.jpg" alt></p>
 <p>大学四年，人们不仅要在学业上有突飞猛进的发展，也需要在人格完善上有长足的进步，这突出表现为大学生培养个人心灵和谐的能力。在本书中，笔者提出，大学生欲培养心灵和谐，需要在以下八个方面狠下功夫，它们分别为：</p>
 <p><strong>压力反弹</strong>：积极认识、化解生活烦恼与压力，化悲痛为力量，做生活的强者，做命运的主人，逐步完善自己的“压力管理自助餐”；<br><strong>人格完善</strong>：积极认识自我，完善自我，对自己的性格优缺点进行扬长避短，补善去恶，给自己的人格发展“配方”；<br><strong>自信树立</strong>：相对爱自己，走出自恋，摆脱自卑，在生活当中不断积累成功体验，爱自己爱得真实，爱得实在。<br><strong>创新培养</strong>：重拾童子心，回归儿童似思维，不断培养个人的批判意识与创新思维，摆脱权威崇拜；<br><strong>爱情成长</strong>：把爱情当作自我成长与自我完善的挑战与体验，不要因为感情上的失意而否定自我的价值。<br><strong>生涯规划</strong>：根据自身的条件，做最佳的职业发展规划，以图在工作中充分发挥自 我的潜能，做最好的自己。<br><strong>幽默开发</strong>：学会另眼看世界，开发自己的幽默潜能，通过幽默表达来提高个人的生活智慧、创新能力及人际交往能力。<br><strong>爱惜生命</strong>：学会珍惜生命，不要因为一时的生活挫败与打击而放弃对人生的信念， 做到活着没商量。</p>
 <p>目录</p>
@@ -338,11 +308,11 @@
 <p>第七章〓重拾童子心——谈大学生创造力培养<br>一、王垠从清华大学退学 <br>二、王垠的退学动机<br>三、是什么扼杀了我们的创造力<br>四、大学生心灵和谐需要有创造力<br>五、我的创新理论<br>六、大学生如何培养创造力<br>七、毕加索——古人艺术创新的典范<br>八、创造力培养英文阅读<br>九、创造力自测量表</p>
 <p>第八章〓活着没商量——谈大学生珍惜生命<br>一、愚人节的恐怖玩笑<br>二、张国荣为什么会自杀<br>三、大学生心灵和谐需要珍惜生命<br>四、我对绝望的理论<br>五、大学生如何珍惜生命<br>六、不忍远离——悲张国荣之死<br>七、歌德——古人珍惜生命的典范<br>八、珍惜生命英文阅读<br>九、抑郁自测量表</p>
 <p>第九章〓幽默是智慧——谈大学生幽默开发<br>一、哈佛大学搞笑诺贝尔奖<br>二、搞笑诺贝尔奖的思索<br>三、大学生心灵和谐需要有幽默<br>四、幽默有什么好处<br>五、我的幽默理论<br>六、中国人为什么缺幽默<br>七、大学生如何开发幽默<br>八、林肯——古人幽默的典范人物<br>九、幽默培养英文阅读<br>十、幽默自测量表</p>
-<h2 id="心理咨询基本功技术"><a href="#心理咨询基本功技术" class="headerlink" title="心理咨询基本功技术"></a><a href="https://book.douban.com/subject/26348023/" target="_blank" rel="noopener">心理咨询基本功技术</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28055362.jpg"></p>
+<h2 id="心理咨询基本功技术"><a href="#心理咨询基本功技术" class="headerlink" title="心理咨询基本功技术"></a><a href="https://book.douban.com/subject/26348023/" target="_blank" rel="noopener">心理咨询基本功技术</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28055362.jpg" alt></p>
 <p>目录<br>上篇　心理咨询接待管理技术<br>第一章　心理咨询的环境管理技术<br>第一节　心理咨询室的布置<br>一、咨询室的心理意义<br>二、咨询室布置的注意事项<br>第二节　心理咨询师的形象管理<br>一、心理咨询师的气质特点<br>二、心理咨询师的形象管理<br>小结：督导论咨询师气质养成<br>第二章　心理咨询的关系确立技术<br>第一节　心理咨询关系的确立<br>一、心理咨询的关系概念<br>二、心理咨询的收费问题<br>第二节　心理咨询的伦理问题<br>一、心理咨询的界限概念<br>二、心理咨询的伦理问题<br>小结：岳晓东论心理咨询关系的确立<br>第三章　心理咨询的会面接待技术<br>第一节　心理咨询的流程管理技术<br>一、心理咨询的预约模式<br>二、心理咨询的记录整理<br>第二节　心理咨询的会面接待技术<br>一、心理咨询的首次会面<br>二、心理咨询的会面收尾<br>小结：岳晓东论心理咨询会面接待 60V<br>第四章　心理咨询的倾听反应技术<br>第一节　心理咨询倾听反应<br>一、心理咨询的倾听反应<br>二、倾听反应的四种沟通类型<br>第二节　心理咨询倾听反应的注意事项<br>一、倾听反应的聆听注意事项<br>二、倾听反应的回应注意事项<br>小结：岳晓东论心理咨询倾听反应技术<br>中篇　心理咨询拓展深入技术<br>第五章　心理咨询的同感共情技术<br>第一节　心理咨询同感共情的概念介绍<br>一、心理咨询同感共情的概念介绍<br>二、心理咨询同感共情技术的层次理论<br>第二节　心理咨询同感共情的操作技巧<br>一、心理咨询同感共情的操作技巧<br>二、心理咨询同感共情的“是”与“不是”<br>第三节　心理咨询同感共情能力的注意事项<br>一、心理咨询同感共情的两大障碍<br>小结：岳晓东论同感共情力<br>第六章　心理咨询的洞察分析技术<br>第一节　心理咨询洞察分析能力的概念<br>一、心理咨询洞察分析能力的概念<br>二、心理咨询洞察分析的步骤<br>第二节　心理咨询洞察能力的操作<br>一、心理咨询的情绪洞察技术<br>二、心理咨询的认知洞察技术<br>三、心理咨询的人格洞察技术<br>四、心理咨询意识洞察技术<br>小结：督导论洞察力<br>第七章　心理咨询的沟通表达技术<br>第一节　心理咨询沟通表达的介绍<br>一、心理咨询沟通表达的概念介绍<br>二、心理咨询沟通表达的常见障碍<br>第二节　心理咨询沟通表达的操作技巧<br>一、心理咨询沟通表达的言语交流技巧<br>二、心理咨询沟通表达的体语交流技巧<br>小结：岳晓东论沟通力<br>第八章　心理咨询的觉察自省技术<br>第一节　心理咨询觉察自省的概念介绍<br>一、心理咨询觉察自省的概念介绍<br>二、心理咨询觉察自省的必要性<br>第二节　心理咨询觉察自省能力的培养<br>一、心理咨询觉察自省的方面<br>二、心理咨询觉察自省的培养途径<br>三、心理咨询觉察自省的培养注意事项<br>小结：岳晓东论觉察力<br>下篇　心理咨询精神分析技术<br>第九章　心理咨询的关系处理技术<br>第一节　心理咨询的移情处理技术<br>一、心理咨询的移情概念<br>二、心理咨询中的移情分类与作用<br>第二节　心理咨询中的反移情<br>一、心理咨询中的反移情表现<br>二、心理咨询中反移情的识别与处理<br>第三节　心理咨询阻抗识别与处理技术<br>一、心理咨询中的阻抗概念<br>二、心理咨询中阻抗的识别与处理<br>小结：岳晓东论移情、反移情和阻抗 243VII<br>第十章　心理咨询的投射分析技术<br>第一节　心理咨询投射分析技术的介绍<br>一、心理咨询投射分析的概念介绍<br>二、心理咨询投射测验<br>三、岳晓东重要他人投射测验<br>第二节　心理咨询的投射分析技术的运用<br>一、心理咨询投射分析技术的局限<br>小结：岳晓东论投射<br>第十一章　心理咨询的释梦解析技术<br>第一节　心理咨询释梦解析的概念介绍<br>一、梦与解梦的基本概念<br>二、中国古代的释梦观<br>三、西方的释梦观<br>第二节　精神分析理论的释梦观<br>一、弗洛伊德的释梦观<br>二、弗洛伊德的释梦方法<br>第三节　岳晓东简易释梦技术<br>一、岳晓东简易释梦技术<br>二、岳晓东简易解梦技术<br>小结：岳晓东论释梦<br>第十二章　心理咨询的催眠治疗基本技术<br>第一节　催眠的基本概念与操作方法<br>一、催眠的概念<br>二、相关知识：催眠大事记<br>三、催眠的导入方法<br>第二节　催眠治疗的操作方法<br>一、催眠治疗的概念<br>二、自我催眠的治疗技术<br>参考资料</p>
-<h2 id="与真理为友"><a href="#与真理为友" class="headerlink" title="与真理为友"></a><a href="https://book.douban.com/subject/2125836/" target="_blank" rel="noopener">与真理为友</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s5827146.jpg"></p>
+<h2 id="与真理为友"><a href="#与真理为友" class="headerlink" title="与真理为友"></a><a href="https://book.douban.com/subject/2125836/" target="_blank" rel="noopener">与真理为友</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s5827146.jpg" alt></p>
 <p>《与真理为友》(修订本)叙述了岳晓东博士在美国六年的哈佛求学之路。全书分为“哈佛经历篇”、“哈佛治学篇”、“哈佛打工篇”、“哈佛趣闻篇”，每篇20个故事。每个故事都是作者的亲身经历，反映了作者在哈佛求学、打工、谋生的艰辛和快乐。岳博士的成功故事印证了哈佛校友老罗斯福总统的名言：“<strong>输了固然感觉不好，但这总比从来没有尝试过成功强。</strong>”作者以一名心理学学者的感悟和生活体验，告诉读者怎样去拥有一个积极健康的人生。这种健康的心态无论是对青年人还是中年人、老年人都富有启迪意义，都是终身受用的。</p>
-<h2 id="登天的感觉"><a href="#登天的感觉" class="headerlink" title="登天的感觉"></a><a href="https://book.douban.com/subject/1002815/" target="_blank" rel="noopener">登天的感觉</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s1001744.jpg"></p>
+<h2 id="登天的感觉"><a href="#登天的感觉" class="headerlink" title="登天的感觉"></a><a href="https://book.douban.com/subject/1002815/" target="_blank" rel="noopener">登天的感觉</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s1001744.jpg" alt></p>
 <p>目录<br>再版前言<br>前言<br>1 登天的感觉<br>2 林登街5号<br>3 我是全哈佛最自卑的人<br>4 我想从哈佛转学<br>5 我不要上哈佛大学法学院<br>6 问你是否还爱我<br>7 骗分被罚的思索<br>8 万般内疚为了谁<br>9 我是同性恋吗?<br>10 我想约你出去行吗?<br>11 我们的缘分尽了吗?<br>12 走出心灵创伤的深渊</p>
 <p>心理咨询正是这种<strong>互敬互爱</strong>之表达与交流的艺术。</p>
 <p>心理咨询也可谓是人之心灵沟通的艺术。</p>
@@ -371,8 +341,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Psychology/" rel="bookmark">Psychology</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Health/IPCreator/Journey/Brain/Cultivate your Brain/" rel="bookmark">Cultivate Your Brain</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/Hooked！！How to Build Habit-Forming Products/" rel="bookmark">Hooked——How to Build Habit-Forming Products</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/People/IPCreator/People/Zhi-Hong Wu/" rel="bookmark">Zhi-Hong Wu</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Health/IPCreator/Journey/Health/Why are you/" rel="bookmark">Why Are You?</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Psychology/" rel="tag"><i class="fa fa-tag"></i> Psychology</a>
               <a href="/tags/Psychologist/" rel="tag"><i class="fa fa-tag"></i> Psychologist</a>
@@ -385,21 +376,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/P/Politics/" rel="next" title="Politics">
-                  <i class="fa fa-chevron-left"></i> Politics
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Health/IPCreator/Journey/Brain/Cultivate your Brain/" rel="prev" title="Cultivate Your Brain">
-                  Cultivate Your Brain <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/P/Politics/" rel="prev" title="Politics">
+      <i class="fa fa-chevron-left"></i> Politics
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Health/IPCreator/Journey/Brain/Cultivate your Brain/" rel="next" title="Cultivate Your Brain">
+      Cultivate Your Brain <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -412,7 +400,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -443,8 +453,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -453,14 +463,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -471,11 +481,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -509,7 +514,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -521,51 +526,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -574,18 +540,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -595,63 +555,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -659,14 +562,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -693,40 +596,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/People/IPCreator/People/Xiao-Dong Yue/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

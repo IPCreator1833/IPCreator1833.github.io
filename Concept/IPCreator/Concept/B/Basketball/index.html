@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="Never say never.">
 <meta name="keywords" content="Basketball,Sport">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/B/Basketball/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/B/Basketball/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/B/Basketball/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,20 +256,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="BtTRm9yIEAASX8q.jpg" data-src="http://opb37u589.bkt.clouddn.com/BtTRm9yIEAASX8q.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/BtTRm9yIEAASX8q.jpg?imageMogr2/thumbnail/!75p" alt="BtTRm9yIEAASX8q.jpg"></p>
 <blockquote>
 <p>Never say never.</p>
 </blockquote>
 <a id="more"></a>
 <h2 id="践行"><a href="#践行" class="headerlink" title="践行"></a>践行</h2><p>2017.10.1日，大沙河公园</p>
 <p>采用正确的投篮姿势，连续投中5个</p>
-<p><img alt="c341e22889ac8fd46ce9cde1c85eb7b3.jpg" data-src="http://opb37u589.bkt.clouddn.com/c341e22889ac8fd46ce9cde1c85eb7b3.jpg?imageMogr2/thumbnail/!75p"><br><img alt="078bd1fc29832884c47a86a574ed60a0.jpg" data-src="http://opb37u589.bkt.clouddn.com/078bd1fc29832884c47a86a574ed60a0.jpg?imageMogr2/thumbnail/!75p"><br><img alt="1d1edc097305d8ab5ed783e144bfd0b0.jpg" data-src="http://opb37u589.bkt.clouddn.com/1d1edc097305d8ab5ed783e144bfd0b0.jpg?imageMogr2/thumbnail/!75p"><br><img alt="1fc7a366ea2fddb1abfde4634a1d90a5.jpg" data-src="http://opb37u589.bkt.clouddn.com/1fc7a366ea2fddb1abfde4634a1d90a5.jpg?imageMogr2/thumbnail/!75p"><br><img alt="7598db0f5f4d133a8aeb3fb36269df62.jpg" data-src="http://opb37u589.bkt.clouddn.com/7598db0f5f4d133a8aeb3fb36269df62.jpg?imageMogr2/thumbnail/!75p"><br><img alt="79d90e17489752f6f115719670021f97.jpg" data-src="http://opb37u589.bkt.clouddn.com/79d90e17489752f6f115719670021f97.jpg?imageMogr2/thumbnail/!75p"><br><img alt="8ca0ddec868d36dda820e406abdc8270.jpg" data-src="http://opb37u589.bkt.clouddn.com/8ca0ddec868d36dda820e406abdc8270.jpg?imageMogr2/thumbnail/!75p"><br><img alt="8cdd61750ac9a869589e86c5437007cd.jpg" data-src="http://opb37u589.bkt.clouddn.com/8cdd61750ac9a869589e86c5437007cd.jpg?imageMogr2/thumbnail/!75p"><br><img alt="ac47f18aeaa4e24f8c52860bc1b61db9.jpg" data-src="http://opb37u589.bkt.clouddn.com/ac47f18aeaa4e24f8c52860bc1b61db9.jpg?imageMogr2/thumbnail/!75p"><br><img alt="ade46e93f36dd719741ab1dd585ae034.jpg" data-src="http://opb37u589.bkt.clouddn.com/ade46e93f36dd719741ab1dd585ae034.jpg?imageMogr2/thumbnail/!75p"><br><img alt="b76658af4febf5b0a6ad8e7f43347c8a.jpg" data-src="http://opb37u589.bkt.clouddn.com/b76658af4febf5b0a6ad8e7f43347c8a.jpg?imageMogr2/thumbnail/!75p"><br><img alt="ba98632b563cdefba1e9d1ba5100aa14.jpg" data-src="http://opb37u589.bkt.clouddn.com/ba98632b563cdefba1e9d1ba5100aa14.jpg?imageMogr2/thumbnail/!75p"><br><img alt="c5225756703b1923be393ddf7bccf0a9.jpg" data-src="http://opb37u589.bkt.clouddn.com/c5225756703b1923be393ddf7bccf0a9.jpg?imageMogr2/thumbnail/!75p"><br><img alt="c5f7131c1701fc72849b9a7977c25db6.jpg" data-src="http://opb37u589.bkt.clouddn.com/c5f7131c1701fc72849b9a7977c25db6.jpg?imageMogr2/thumbnail/!75p"><br><img alt="d2989fab6f7916c7bfafbd8bd9626f23.jpg" data-src="http://opb37u589.bkt.clouddn.com/d2989fab6f7916c7bfafbd8bd9626f23.jpg?imageMogr2/thumbnail/!75p"><br><img alt="e094f754442c3ff02b8a4ce66983434f.jpg" data-src="http://opb37u589.bkt.clouddn.com/e094f754442c3ff02b8a4ce66983434f.jpg?imageMogr2/thumbnail/!75p"><br><img alt="a928b1fc7de748e56dc78b2d1d3b1cc8.jpg" data-src="http://opb37u589.bkt.clouddn.com/a928b1fc7de748e56dc78b2d1d3b1cc8.jpg?imageMogr2/thumbnail/!75p"><br><img alt="0302d564231f95d4bca49970899057b0.jpg" data-src="http://opb37u589.bkt.clouddn.com/0302d564231f95d4bca49970899057b0.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/c341e22889ac8fd46ce9cde1c85eb7b3.jpg?imageMogr2/thumbnail/!75p" alt="c341e22889ac8fd46ce9cde1c85eb7b3.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/078bd1fc29832884c47a86a574ed60a0.jpg?imageMogr2/thumbnail/!75p" alt="078bd1fc29832884c47a86a574ed60a0.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/1d1edc097305d8ab5ed783e144bfd0b0.jpg?imageMogr2/thumbnail/!75p" alt="1d1edc097305d8ab5ed783e144bfd0b0.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/1fc7a366ea2fddb1abfde4634a1d90a5.jpg?imageMogr2/thumbnail/!75p" alt="1fc7a366ea2fddb1abfde4634a1d90a5.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/7598db0f5f4d133a8aeb3fb36269df62.jpg?imageMogr2/thumbnail/!75p" alt="7598db0f5f4d133a8aeb3fb36269df62.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/79d90e17489752f6f115719670021f97.jpg?imageMogr2/thumbnail/!75p" alt="79d90e17489752f6f115719670021f97.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/8ca0ddec868d36dda820e406abdc8270.jpg?imageMogr2/thumbnail/!75p" alt="8ca0ddec868d36dda820e406abdc8270.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/8cdd61750ac9a869589e86c5437007cd.jpg?imageMogr2/thumbnail/!75p" alt="8cdd61750ac9a869589e86c5437007cd.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/ac47f18aeaa4e24f8c52860bc1b61db9.jpg?imageMogr2/thumbnail/!75p" alt="ac47f18aeaa4e24f8c52860bc1b61db9.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/ade46e93f36dd719741ab1dd585ae034.jpg?imageMogr2/thumbnail/!75p" alt="ade46e93f36dd719741ab1dd585ae034.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/b76658af4febf5b0a6ad8e7f43347c8a.jpg?imageMogr2/thumbnail/!75p" alt="b76658af4febf5b0a6ad8e7f43347c8a.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/ba98632b563cdefba1e9d1ba5100aa14.jpg?imageMogr2/thumbnail/!75p" alt="ba98632b563cdefba1e9d1ba5100aa14.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/c5225756703b1923be393ddf7bccf0a9.jpg?imageMogr2/thumbnail/!75p" alt="c5225756703b1923be393ddf7bccf0a9.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/c5f7131c1701fc72849b9a7977c25db6.jpg?imageMogr2/thumbnail/!75p" alt="c5f7131c1701fc72849b9a7977c25db6.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/d2989fab6f7916c7bfafbd8bd9626f23.jpg?imageMogr2/thumbnail/!75p" alt="d2989fab6f7916c7bfafbd8bd9626f23.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/e094f754442c3ff02b8a4ce66983434f.jpg?imageMogr2/thumbnail/!75p" alt="e094f754442c3ff02b8a4ce66983434f.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/a928b1fc7de748e56dc78b2d1d3b1cc8.jpg?imageMogr2/thumbnail/!75p" alt="a928b1fc7de748e56dc78b2d1d3b1cc8.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/0302d564231f95d4bca49970899057b0.jpg?imageMogr2/thumbnail/!75p" alt="0302d564231f95d4bca49970899057b0.jpg"></p>
 <p><strong>My Favourite Sport</strong></p>
-<p><img alt="BZ_RjnkCAAAUfun.png" data-src="http://opb37u589.bkt.clouddn.com/BZ_RjnkCAAAUfun.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/BZ_RjnkCAAAUfun.png?imageMogr2/thumbnail/!75p" alt="BZ_RjnkCAAAUfun.png"></p>
 <blockquote>
 <p>Never stops.</p>
 </blockquote>
-<p><img alt="il_570xN.968838218_jzep.jpg" data-src="http://opb37u589.bkt.clouddn.com/il_570xN.968838218_jzep.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/il_570xN.968838218_jzep.jpg?imageMogr2/thumbnail/!75p" alt="il_570xN.968838218_jzep.jpg"></p>
 <blockquote>
 <p>To be the best version of yourself.</p>
 </blockquote>
@@ -333,50 +303,68 @@
 </li>
 </ol>
 <p><strong>最重要的是要持之以恒</strong></p>
-<h2 id="欧文运球基本功训练，欧文刚开始就是这么练的！"><a href="#欧文运球基本功训练，欧文刚开始就是这么练的！" class="headerlink" title="欧文运球基本功训练，欧文刚开始就是这么练的！ "></a><a href="https://v.qq.com/x/page/h039192w6ur.html?ref_vid=j0157zgqdex" target="_blank" rel="noopener">欧文运球基本功训练，欧文刚开始就是这么练的！ </a></h2><p><img alt="001.JPG" data-src="http://opb37u589.bkt.clouddn.com/001.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="002.JPG" data-src="http://opb37u589.bkt.clouddn.com/002.JPG?imageMogr2/thumbnail/!75p"></p>
-<h2 id="教你如何快速掌握运球的技巧"><a href="#教你如何快速掌握运球的技巧" class="headerlink" title="教你如何快速掌握运球的技巧"></a><a href="https://v.qq.com/x/page/n0518lcctk9.html?ref_vid=j0364olu8w0" target="_blank" rel="noopener">教你如何快速掌握运球的技巧</a></h2><p><img alt="003.JPG" data-src="http://opb37u589.bkt.clouddn.com/003.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="004.JPG" data-src="http://opb37u589.bkt.clouddn.com/004.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="005.JPG" data-src="http://opb37u589.bkt.clouddn.com/005.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="006.JPG" data-src="http://opb37u589.bkt.clouddn.com/006.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="007.JPG" data-src="http://opb37u589.bkt.clouddn.com/007.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="008.JPG" data-src="http://opb37u589.bkt.clouddn.com/008.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="009.JPG" data-src="http://opb37u589.bkt.clouddn.com/009.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="010.JPG" data-src="http://opb37u589.bkt.clouddn.com/010.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="011.JPG" data-src="http://opb37u589.bkt.clouddn.com/011.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="012.JPG" data-src="http://opb37u589.bkt.clouddn.com/012.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="013.JPG" data-src="http://opb37u589.bkt.clouddn.com/013.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="014.JPG" data-src="http://opb37u589.bkt.clouddn.com/014.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="015.JPG" data-src="http://opb37u589.bkt.clouddn.com/015.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="016.JPG" data-src="http://opb37u589.bkt.clouddn.com/016.JPG?imageMogr2/thumbnail/!75p"></p>
-<h2 id="篮球基本功训练-1"><a href="#篮球基本功训练-1" class="headerlink" title="篮球基本功训练"></a><a href="https://v.qq.com/x/page/j0157zgqdex.html" target="_blank" rel="noopener">篮球基本功训练</a></h2><p><img alt="1.JPG" data-src="http://opb37u589.bkt.clouddn.com/1.JPG?imageMogr2/thumbnail/!75p"><br><img alt="2.JPG" data-src="http://opb37u589.bkt.clouddn.com/2.JPG?imageMogr2/thumbnail/!75p"><br><img alt="3.JPG" data-src="http://opb37u589.bkt.clouddn.com/3.JPG?imageMogr2/thumbnail/!75p"><br><img alt="4.JPG" data-src="http://opb37u589.bkt.clouddn.com/4.JPG?imageMogr2/thumbnail/!75p"><br><img alt="5.JPG" data-src="http://opb37u589.bkt.clouddn.com/5.JPG?imageMogr2/thumbnail/!75p"><br><img alt="6.JPG" data-src="http://opb37u589.bkt.clouddn.com/6.JPG?imageMogr2/thumbnail/!75p"><br><img alt="7.JPG" data-src="http://opb37u589.bkt.clouddn.com/7.JPG?imageMogr2/thumbnail/!75p"><br><img alt="8.JPG" data-src="http://opb37u589.bkt.clouddn.com/8.JPG?imageMogr2/thumbnail/!75p"><br><img alt="9.JPG" data-src="http://opb37u589.bkt.clouddn.com/9.JPG?imageMogr2/thumbnail/!75p"><br><img alt="10.JPG" data-src="http://opb37u589.bkt.clouddn.com/10.JPG?imageMogr2/thumbnail/!75p"><br><img alt="11.JPG" data-src="http://opb37u589.bkt.clouddn.com/11.JPG?imageMogr2/thumbnail/!75p"><br><img alt="12.JPG" data-src="http://opb37u589.bkt.clouddn.com/12.JPG?imageMogr2/thumbnail/!75p"><br><img alt="13.JPG" data-src="http://opb37u589.bkt.clouddn.com/13.JPG?imageMogr2/thumbnail/!75p"><br><img alt="14.JPG" data-src="http://opb37u589.bkt.clouddn.com/14.JPG?imageMogr2/thumbnail/!75p"><br><img alt="15.JPG" data-src="http://opb37u589.bkt.clouddn.com/15.JPG?imageMogr2/thumbnail/!75p"><br><img alt="16.JPG" data-src="http://opb37u589.bkt.clouddn.com/16.JPG?imageMogr2/thumbnail/!75p"><br><img alt="17.JPG" data-src="http://opb37u589.bkt.clouddn.com/17.JPG?imageMogr2/thumbnail/!75p"><br><img alt="18.JPG" data-src="http://opb37u589.bkt.clouddn.com/18.JPG?imageMogr2/thumbnail/!75p"><br><img alt="19.JPG" data-src="http://opb37u589.bkt.clouddn.com/19.JPG?imageMogr2/thumbnail/!75p"><br><img alt="20.JPG" data-src="http://opb37u589.bkt.clouddn.com/20.JPG?imageMogr2/thumbnail/!75p"><br><img alt="21.JPG" data-src="http://opb37u589.bkt.clouddn.com/21.JPG?imageMogr2/thumbnail/!75p"><br><img alt="22.JPG" data-src="http://opb37u589.bkt.clouddn.com/22.JPG?imageMogr2/thumbnail/!75p"><br><img alt="23.JPG" data-src="http://opb37u589.bkt.clouddn.com/23.JPG?imageMogr2/thumbnail/!75p"><br><img alt="24.JPG" data-src="http://opb37u589.bkt.clouddn.com/24.JPG?imageMogr2/thumbnail/!75p"><br><img alt="25.JPG" data-src="http://opb37u589.bkt.clouddn.com/25.JPG?imageMogr2/thumbnail/!75p"><br><img alt="26.JPG" data-src="http://opb37u589.bkt.clouddn.com/26.JPG?imageMogr2/thumbnail/!75p"><br><img alt="27.JPG" data-src="http://opb37u589.bkt.clouddn.com/27.JPG?imageMogr2/thumbnail/!75p"></p>
-<h2 id="篮球基本功训练-2"><a href="#篮球基本功训练-2" class="headerlink" title="篮球基本功训练"></a><a href="https://v.qq.com/x/page/j0157zgqdex.html" target="_blank" rel="noopener">篮球基本功训练</a></h2><p><img alt data-src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=4124e7640924ab18f41be96554938da8/f7246b600c338744f8ba2d3e510fd9f9d72aa070.jpg"></p>
+<h2 id="欧文运球基本功训练，欧文刚开始就是这么练的！"><a href="#欧文运球基本功训练，欧文刚开始就是这么练的！" class="headerlink" title="欧文运球基本功训练，欧文刚开始就是这么练的！ "></a><a href="https://v.qq.com/x/page/h039192w6ur.html?ref_vid=j0157zgqdex" target="_blank" rel="noopener">欧文运球基本功训练，欧文刚开始就是这么练的！ </a></h2><p><img data-src="http://opb37u589.bkt.clouddn.com/001.JPG?imageMogr2/thumbnail/!75p" alt="001.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/002.JPG?imageMogr2/thumbnail/!75p" alt="002.JPG"></p>
+<h2 id="教你如何快速掌握运球的技巧"><a href="#教你如何快速掌握运球的技巧" class="headerlink" title="教你如何快速掌握运球的技巧"></a><a href="https://v.qq.com/x/page/n0518lcctk9.html?ref_vid=j0364olu8w0" target="_blank" rel="noopener">教你如何快速掌握运球的技巧</a></h2><p><img data-src="http://opb37u589.bkt.clouddn.com/003.JPG?imageMogr2/thumbnail/!75p" alt="003.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/004.JPG?imageMogr2/thumbnail/!75p" alt="004.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/005.JPG?imageMogr2/thumbnail/!75p" alt="005.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/006.JPG?imageMogr2/thumbnail/!75p" alt="006.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/007.JPG?imageMogr2/thumbnail/!75p" alt="007.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/008.JPG?imageMogr2/thumbnail/!75p" alt="008.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/009.JPG?imageMogr2/thumbnail/!75p" alt="009.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/010.JPG?imageMogr2/thumbnail/!75p" alt="010.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/011.JPG?imageMogr2/thumbnail/!75p" alt="011.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/012.JPG?imageMogr2/thumbnail/!75p" alt="012.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/013.JPG?imageMogr2/thumbnail/!75p" alt="013.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/014.JPG?imageMogr2/thumbnail/!75p" alt="014.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/015.JPG?imageMogr2/thumbnail/!75p" alt="015.JPG"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/016.JPG?imageMogr2/thumbnail/!75p" alt="016.JPG"></p>
+<h2 id="篮球基本功训练-1"><a href="#篮球基本功训练-1" class="headerlink" title="篮球基本功训练"></a><a href="https://v.qq.com/x/page/j0157zgqdex.html" target="_blank" rel="noopener">篮球基本功训练</a></h2><p><img data-src="http://opb37u589.bkt.clouddn.com/1.JPG?imageMogr2/thumbnail/!75p" alt="1.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/2.JPG?imageMogr2/thumbnail/!75p" alt="2.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/3.JPG?imageMogr2/thumbnail/!75p" alt="3.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/4.JPG?imageMogr2/thumbnail/!75p" alt="4.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/5.JPG?imageMogr2/thumbnail/!75p" alt="5.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/6.JPG?imageMogr2/thumbnail/!75p" alt="6.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/7.JPG?imageMogr2/thumbnail/!75p" alt="7.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/8.JPG?imageMogr2/thumbnail/!75p" alt="8.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/9.JPG?imageMogr2/thumbnail/!75p" alt="9.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/10.JPG?imageMogr2/thumbnail/!75p" alt="10.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/11.JPG?imageMogr2/thumbnail/!75p" alt="11.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/12.JPG?imageMogr2/thumbnail/!75p" alt="12.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/13.JPG?imageMogr2/thumbnail/!75p" alt="13.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/14.JPG?imageMogr2/thumbnail/!75p" alt="14.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/15.JPG?imageMogr2/thumbnail/!75p" alt="15.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/16.JPG?imageMogr2/thumbnail/!75p" alt="16.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/17.JPG?imageMogr2/thumbnail/!75p" alt="17.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/18.JPG?imageMogr2/thumbnail/!75p" alt="18.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/19.JPG?imageMogr2/thumbnail/!75p" alt="19.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/20.JPG?imageMogr2/thumbnail/!75p" alt="20.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/21.JPG?imageMogr2/thumbnail/!75p" alt="21.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/22.JPG?imageMogr2/thumbnail/!75p" alt="22.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/23.JPG?imageMogr2/thumbnail/!75p" alt="23.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/24.JPG?imageMogr2/thumbnail/!75p" alt="24.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/25.JPG?imageMogr2/thumbnail/!75p" alt="25.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/26.JPG?imageMogr2/thumbnail/!75p" alt="26.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/27.JPG?imageMogr2/thumbnail/!75p" alt="27.JPG"></p>
+<h2 id="篮球基本功训练-2"><a href="#篮球基本功训练-2" class="headerlink" title="篮球基本功训练"></a><a href="https://v.qq.com/x/page/j0157zgqdex.html" target="_blank" rel="noopener">篮球基本功训练</a></h2><p><img data-src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=4124e7640924ab18f41be96554938da8/f7246b600c338744f8ba2d3e510fd9f9d72aa070.jpg" alt></p>
 <p><a href="https://v.qq.com/x/page/a03162j9xzi.html" target="_blank" rel="noopener">张卫平篮球教学（1）前言、准备动作、熟悉球性</a><br><a href="https://v.qq.com/x/page/m0316yuoalz.html" target="_blank" rel="noopener">张卫平篮球教学（2）投篮及素质练习</a><br><a href="https://v.qq.com/x/page/h0171ocvfjb.html" target="_blank" rel="noopener">张卫平篮球教学(3) 传球 </a><br><a href="https://v.qq.com/x/page/y03164iwimc.html" target="_blank" rel="noopener">张卫平篮球教学（4）传球掩护</a><br><a href="https://v.qq.com/x/page/p0316yoont2.html" target="_blank" rel="noopener">张卫平篮球教学（5）防守</a><br><a href="https://v.qq.com/x/page/c0316ito0xy.html" target="_blank" rel="noopener">张卫平篮球教学（6）后卫篇 </a><br><a href="https://v.qq.com/x/page/m0316ouhudv.html" target="_blank" rel="noopener">张卫平篮球教学（7）前锋篇 </a><br><a href="https://v.qq.com/x/page/w03167lb55l.html" target="_blank" rel="noopener">张卫平篮球教学（8）中锋篇</a></p>
-<h2 id="Michael-Jordan"><a href="#Michael-Jordan" class="headerlink" title="Michael Jordan"></a>Michael Jordan</h2><p><img alt="quote-fundamentals-were-the-most-crucial-part-of-my-game-in-the-nba-everything-i-did-everything-michael-jordan-59-18-58.jpg" data-src="http://opb37u589.bkt.clouddn.com/quote-fundamentals-were-the-most-crucial-part-of-my-game-in-the-nba-everything-i-did-everything-michael-jordan-59-18-58.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="michael-jordan-messages-wallpaper.jpg" data-src="http://opb37u589.bkt.clouddn.com/michael-jordan-messages-wallpaper.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="Michael-Jordan-The-Greatest-Basketball-Player-Figure-In-NBA-Logo-NBA-Images-As-Computer-Wallpaper.jpg" data-src="http://opb37u589.bkt.clouddn.com/Michael-Jordan-The-Greatest-Basketball-Player-Figure-In-NBA-Logo-NBA-Images-As-Computer-Wallpaper.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="Michael-Jordan-The-Greatest-Basketball-Player-Of-All-Times-Unbelievable-Man-NBA-Image-As-Wallpaper.jpg" data-src="http://opb37u589.bkt.clouddn.com/Michael-Jordan-The-Greatest-Basketball-Player-Of-All-Times-Unbelievable-Man-NBA-Image-As-Wallpaper.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="7022933-michael-jordan-dunk.jpg" data-src="http://opb37u589.bkt.clouddn.com/7022933-michael-jordan-dunk.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="IMG_326032.png" data-src="http://opb37u589.bkt.clouddn.com/IMG_326032.png?imageMogr2/thumbnail/!75p"></p>
-<h2 id="Kobe-Bryant"><a href="#Kobe-Bryant" class="headerlink" title="Kobe Bryant"></a>Kobe Bryant</h2><p><img alt="Kobe-Bryant-2.jpg" data-src="http://opb37u589.bkt.clouddn.com/Kobe-Bryant-2.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="BZ_RjnkCAAAUfun.png" data-src="http://opb37u589.bkt.clouddn.com/BZ_RjnkCAAAUfun.png?imageMogr2/thumbnail/!75p"></p>
-<h2 id="Allen-Iverson"><a href="#Allen-Iverson" class="headerlink" title="Allen Iverson"></a>Allen Iverson</h2><p><img alt="maxresdefault.jpg" data-src="http://opb37u589.bkt.clouddn.com/maxresdefault.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="shaq-allen-iverson-basketball-hall-of-fame.jpg" data-src="http://opb37u589.bkt.clouddn.com/shaq-allen-iverson-basketball-hall-of-fame.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="Allen-Iverson.jpg" data-src="http://opb37u589.bkt.clouddn.com/Allen-Iverson.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="allen-iverson-career-net-worth-wife-big-3.jpg" data-src="http://opb37u589.bkt.clouddn.com/allen-iverson-career-net-worth-wife-big-3.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="Allen-Iverson-quotes-L.jpg" data-src="http://opb37u589.bkt.clouddn.com/Allen-Iverson-quotes-L.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="BIL-IVERSON-HURT.jpg" data-src="http://opb37u589.bkt.clouddn.com/BIL-IVERSON-HURT.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="cf68baa91fcba9636cf550ea68b4b6ee--basketball-quotes-basketball-party.jpg" data-src="http://opb37u589.bkt.clouddn.com/cf68baa91fcba9636cf550ea68b4b6ee--basketball-quotes-basketball-party.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="quote-i-don-t-want-to-be-another-jordan-magic-or-isiah-when-my-career-is-over-i-want-to-be-allen-iverson-120-70-50.jpg" data-src="http://opb37u589.bkt.clouddn.com/quote-i-don-t-want-to-be-another-jordan-magic-or-isiah-when-my-career-is-over-i-want-to-be-allen-iverson-120-70-50.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="k6nhWQt.jpg" data-src="http://opb37u589.bkt.clouddn.com/k6nhWQt.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="Michael-Jordan"><a href="#Michael-Jordan" class="headerlink" title="Michael Jordan"></a>Michael Jordan</h2><p><img data-src="http://opb37u589.bkt.clouddn.com/quote-fundamentals-were-the-most-crucial-part-of-my-game-in-the-nba-everything-i-did-everything-michael-jordan-59-18-58.jpg?imageMogr2/thumbnail/!75p" alt="quote-fundamentals-were-the-most-crucial-part-of-my-game-in-the-nba-everything-i-did-everything-michael-jordan-59-18-58.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/michael-jordan-messages-wallpaper.jpg?imageMogr2/thumbnail/!75p" alt="michael-jordan-messages-wallpaper.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Michael-Jordan-The-Greatest-Basketball-Player-Figure-In-NBA-Logo-NBA-Images-As-Computer-Wallpaper.jpg?imageMogr2/thumbnail/!75p" alt="Michael-Jordan-The-Greatest-Basketball-Player-Figure-In-NBA-Logo-NBA-Images-As-Computer-Wallpaper.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Michael-Jordan-The-Greatest-Basketball-Player-Of-All-Times-Unbelievable-Man-NBA-Image-As-Wallpaper.jpg?imageMogr2/thumbnail/!75p" alt="Michael-Jordan-The-Greatest-Basketball-Player-Of-All-Times-Unbelievable-Man-NBA-Image-As-Wallpaper.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/7022933-michael-jordan-dunk.jpg?imageMogr2/thumbnail/!75p" alt="7022933-michael-jordan-dunk.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/IMG_326032.png?imageMogr2/thumbnail/!75p" alt="IMG_326032.png"></p>
+<h2 id="Kobe-Bryant"><a href="#Kobe-Bryant" class="headerlink" title="Kobe Bryant"></a>Kobe Bryant</h2><p><img data-src="http://opb37u589.bkt.clouddn.com/Kobe-Bryant-2.jpg?imageMogr2/thumbnail/!75p" alt="Kobe-Bryant-2.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/BZ_RjnkCAAAUfun.png?imageMogr2/thumbnail/!75p" alt="BZ_RjnkCAAAUfun.png"></p>
+<h2 id="Allen-Iverson"><a href="#Allen-Iverson" class="headerlink" title="Allen Iverson"></a>Allen Iverson</h2><p><img data-src="http://opb37u589.bkt.clouddn.com/maxresdefault.jpg?imageMogr2/thumbnail/!75p" alt="maxresdefault.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/shaq-allen-iverson-basketball-hall-of-fame.jpg?imageMogr2/thumbnail/!75p" alt="shaq-allen-iverson-basketball-hall-of-fame.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Allen-Iverson.jpg?imageMogr2/thumbnail/!75p" alt="Allen-Iverson.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/allen-iverson-career-net-worth-wife-big-3.jpg?imageMogr2/thumbnail/!75p" alt="allen-iverson-career-net-worth-wife-big-3.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Allen-Iverson-quotes-L.jpg?imageMogr2/thumbnail/!75p" alt="Allen-Iverson-quotes-L.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/BIL-IVERSON-HURT.jpg?imageMogr2/thumbnail/!75p" alt="BIL-IVERSON-HURT.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/cf68baa91fcba9636cf550ea68b4b6ee--basketball-quotes-basketball-party.jpg?imageMogr2/thumbnail/!75p" alt="cf68baa91fcba9636cf550ea68b4b6ee--basketball-quotes-basketball-party.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/quote-i-don-t-want-to-be-another-jordan-magic-or-isiah-when-my-career-is-over-i-want-to-be-allen-iverson-120-70-50.jpg?imageMogr2/thumbnail/!75p" alt="quote-i-don-t-want-to-be-another-jordan-magic-or-isiah-when-my-career-is-over-i-want-to-be-allen-iverson-120-70-50.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/k6nhWQt.jpg?imageMogr2/thumbnail/!75p" alt="k6nhWQt.jpg"></p>
 
     </div>
 
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Dress/NewBalance/" rel="bookmark">NewBalance</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Dress/Adidas/" rel="bookmark">Adidas</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Dress/NorthFace/" rel="bookmark">Northface</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Dress/Alpint Mountain/" rel="bookmark">Alpint Mountain</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Basketball/" rel="tag"><i class="fa fa-tag"></i> Basketball</a>
               <a href="/tags/Sport/" rel="tag"><i class="fa fa-tag"></i> Sport</a>
@@ -389,21 +377,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Movie/Citizen Kane/" rel="next" title="Citizen Kane">
-                  <i class="fa fa-chevron-left"></i> Citizen Kane
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Book/IPCreator/Book/Hillbilly Elegy/" rel="prev" title="Hillbilly Elegy">
-                  Hillbilly Elegy <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Movie/Citizen Kane/" rel="prev" title="Citizen Kane">
+      <i class="fa fa-chevron-left"></i> Citizen Kane
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Book/IPCreator/Book/Hillbilly Elegy/" rel="next" title="Hillbilly Elegy">
+      Hillbilly Elegy <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -416,7 +401,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -447,8 +454,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -457,14 +464,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -475,11 +482,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -513,7 +515,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -525,51 +527,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -578,18 +541,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -599,63 +556,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -663,14 +563,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -697,40 +597,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/B/Basketball/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

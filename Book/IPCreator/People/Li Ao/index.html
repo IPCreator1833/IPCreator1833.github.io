@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="以证据骂人、以口舌开心以玩世来醒世，用骂世而救世——有料、有种、有趣">
 <meta name="keywords" content="Serials,Li Ao">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Book/" itemprop="url" rel="index">
-                    <span itemprop="name">Book</span>
-                  </a>
+                  <a href="/categories/Book/" itemprop="url" rel="index"><span itemprop="name">Book</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Book/IPCreator/People/Li Ao/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Book/IPCreator/People/Li Ao/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Book/IPCreator/People/Li Ao/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,23 +256,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://opb37u589.bkt.clouddn.com/20150624-095402_U1004_M69271_c3a1.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/20150624-095402_U1004_M69271_c3a1.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>以证据骂人、以口舌开心<br>以玩世来醒世，用骂世而救世——有料、有种、有趣</p>
 </blockquote>
 <a id="more"></a>
 <h1 id="作者简介"><a href="#作者简介" class="headerlink" title="作者简介"></a>作者简介</h1><p>李敖（1935年4月25日－），字敖之，祖籍吉林省扶余县人，台湾作家、中国近代史学者、文化学者、历史学家、作家、时事批评家。台湾无党派人士，曾任台湾“立法委员”（又称民意代表）。其人意志如铁、斗志昂扬，活力无限，“<strong>以玩世来醒世，用骂世而救世</strong>”。因其文笔犀利，批判色彩浓厚， 嬉笑怒骂皆成文章，故自诩为“中国白话文第一人”，亦被西方传媒追捧为“中国近代最杰出的批评家”。著有《北京法源寺》《李敖有话说》《红色11》《上山•上山•爱》等100多本著作，曾于2005年9月访问大陆，在北大、清华、复旦三所顶尖高校发表演讲。近年来在凤凰卫视主持了《李敖有话说》等节目，深受两岸三地华人朋友的喜爱，李敖也广为大陆观众所熟悉和热捧。</p>
-<h1 id="活着你就得有料"><a href="#活着你就得有料" class="headerlink" title="活着你就得有料"></a><a href="https://book.douban.com/subject/25907030/" target="_blank" rel="noopener">活着你就得有料</a></h1><p><img alt data-src="https://img3.doubanio.com/lpic/s27304735.jpg"></p>
+<h1 id="活着你就得有料"><a href="#活着你就得有料" class="headerlink" title="活着你就得有料"></a><a href="https://book.douban.com/subject/25907030/" target="_blank" rel="noopener">活着你就得有料</a></h1><p><img data-src="https://img3.doubanio.com/lpic/s27304735.jpg" alt></p>
 <h2 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h2><p>年轻就要拼实力。实力哪里来？李敖指给你。<br>李敖狂妄，玩世不恭，嬉笑怒骂，犀利刻薄……这是很多人对李敖的印象。<br>不得不说，这样评价李敖太肤浅。如果没有真本事，无人能一辈子“狂妄、玩世、刻薄骂人”还能屹立不倒。没有过硬的实力，没有真材实料，李敖不知被干掉多少次了。<br>他赖以傲世的，正是他那聪明的头脑和渊博的知识。他骂人，能骂得对方哑口无言，骂完还能保证自己安全，这就是实力的功效。<br>实力的拥有并非无缘无故，这取决于你如何善用自己的兴趣、思维和技巧。<br>本书中，李敖实力尽显，篇篇犀利精彩，发人深省。<br>或许李敖的兴趣你并不喜欢，但他的思维方式于你而言绝对有用。</p>
 <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p>耐得住寂寞的斗士    001<br>限时分手最浪漫    008<br>爱情不能吐光丝    013<br>家中看世界    018<br>人情练达即文章    023<br>负面情感应归零    028<br>1935年诞生的人与物    034<br>女儿的精明    043<br>自得其乐的李敖    050<br>李敖“惯坏”小女儿    056<br>美丽人生    063<br>中国人玩玉的把戏    069<br>爱迪生的失败发明    075<br>阿拉丁神灯和卫生棉    081<br>革命的目的是请客吃饭    088<br>人不如狗    095<br>该是谁的就是谁的    102<br>没裤子穿和造原子弹    108<br>历史：李鸿章、慰安妇与日本    114<br>以利相劝台湾回归祖国    121<br>清末大学者王闿运    128<br>法国总统戴高乐    133<br>为胡适立铜像    140<br>渐行渐远渐无书    147<br>爱恺撒，更爱罗马    155<br>不屈的斗牛士    162<br>杜聿明及乱世骨肉    169<br>抗日英雄梁肃戎    175<br>傅斯年其人其事    181<br>邓小平的典范    187<br>严复有后传家史    192<br>蔡万霖打败“涨价归公”    197<br>和毛泽东辩驳    203<br>回忆李翰祥    209<br>友人刘家昌、吴思远    215<br>友人景新汉、许以祺、高信疆    222<br>陈仪的真正死因    228<br>回顾辜振甫生平    234<br>我的格调没那么低    241<br>鲁迅一直被我们肯定    250<br>孙中山有一种宏伟的气魄    258<br>张学良之晚年    263<br>老师殷海光    270<br>悲情飞行员    277<br>大人物对撞记    284<br>胡适也疯狂    290<br>敌友一线间    295</p>
-<h1 id="活着你就得有种"><a href="#活着你就得有种" class="headerlink" title="活着你就得有种"></a><a href="https://book.douban.com/subject/25887109/" target="_blank" rel="noopener">活着你就得有种</a></h1><p><img alt data-src="https://img3.doubanio.com/lpic/s27283082.jpg"></p>
+<h1 id="活着你就得有种"><a href="#活着你就得有种" class="headerlink" title="活着你就得有种"></a><a href="https://book.douban.com/subject/25887109/" target="_blank" rel="noopener">活着你就得有种</a></h1><p><img data-src="https://img3.doubanio.com/lpic/s27283082.jpg" alt></p>
 <h2 id="内容简介-1"><a href="#内容简介-1" class="headerlink" title="内容简介"></a>内容简介</h2><p>年轻人为什么要读李敖：<br>1.向他学习“不信邪”，拒绝心灵软骨病；<br>2.向他学习“有情趣”，拒绝乏味毁自己；<br>3.向他学习“拼实力”，拒绝浮夸不成事。<br>李敖老了，但他的血性仍在。年纪轻轻的你，血性还剩下多少？<br>人生于世，不是来让这个世界欺负的，不是来和这个世界怄气的，不是来迷迷糊糊混一生的。<br>年轻可以迷茫，但不能失去血性与活力，否则怎能冲出忧郁和颓废的泥淖？<br>年轻可以犯傻，但不能丢失幽默和情趣，否则怎能从容面对世界的多变与残酷？<br>年轻可以缺经验，但不能丢掉自我完善的动力，否则如何达成愿望，活出更好的自己？<br>李敖说，做人就要“不服气，不怄气，要吐气，要扬眉吐气”。这种精神，何其可贵。<br>很多人批评李敖狂妄自大，却无视了他自大背后刚健的品格、智慧的情趣、务实的态度。<br>无论你之前是否读过李敖，是否喜欢李敖，都请给自己一些时间，静下心来，品一品李敖。无论如何，他的一生，是勇敢的一生，他身体力行地告诉你：你有种，世界才会给你一席之地。<br>读李敖，不是读他有多伟大，而是读他能让你多强大。<br>亲爱的读者，愿你读有所获。</p>
 <h2 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h2><p>一切真理都是宣传 001<br>假设李敖在大陆会怎样 008<br>用你的规则出你的洋相 015<br>不忘老哥是好汉 022<br>自费做人家看门狗 028<br>台湾“二•二八事件”有日本人和美国人参与 035<br>皇帝不如三流富翁 041<br>天下物理岂可以意求 048<br>言论自由的代价 055<br>做人当如斗战胜佛 061<br>图片的震撼力 067<br>要么文明，要么革命 074<br>弯腰的胜利者 080<br>涮你总统没商量 086<br>三毛虚伪记 093<br>有趣的历史骗局 099<br>跑不过熊，但跑得过你 107<br>丧钟为谁敲响 113<br>推翻孔夫子的境界 119<br>台湾闭门造历史 126<br>土豪劣绅叶德辉之死 133<br>拿出证据来！ 139<br>有了奶就不做美国人 146<br>蒋介石，你骗不了我 153<br>好事不要都做完 159<br>智斗辜振甫 165<br>蒋介石出卖外蒙内幕 171<br>白纸黑字，欺尽苍生 177<br>宋美龄和威尔基 183<br>笑傲江湖玩一把 188<br>与台湾高官打官司 195<br>阿世者劳思光 201<br>选同志比选敌人重要 209<br>煽风点火的美国人 222<br>警惕政客两面做人 229<br>以牙还牙，以眼还眼 236<br>美国是盗版祖师爷 241<br>没是非的小马哥 248<br>佛门麦当劳 254<br>墙头草，吃两头 261<br>双重人格的陶希圣 267<br>看客变脸术 272</p>
 <h2 id="摘抄"><a href="#摘抄" class="headerlink" title="摘抄"></a><a href="https://book.douban.com/annotation/34758546/" target="_blank" rel="noopener">摘抄</a></h2><p>书中精彩内容颇多，摘抄如下：<br>不得好活与不得好死<br>做弱者，都不得好活；做强者，都不得好死。<br>人缘与真理<br>人缘太好，会对真理构成妨碍。<br>胡先生现在讲话啊讲了半天，我们有的时候都听不出来他是赞成还是反对，听了半天听不出来。为什么一个人讲了半天话，你听不出来他是赞成还是反对呢？就是因为人缘太好，讲话就含糊其辞。<br>说真话的证明<br>每当混蛋又说我扭曲事实，我就知道我又说了一次真话。<br>我要世界主义，不要民族主义，不要国家主义，这是个好的理想，也是个正确的理想，但是行不通嘛！<br>所以我说年轻人可能不懂得，不懂得我李敖这种人七十岁所见的世面。我告诉大家，年轻人的理想，年轻人的愿望，年轻人的憧憬，游本嘉先生的一切都没有错，可是行不通，这就是我觉得对我非常重要的一点。<br>我有言论自由，你们没有，为什么你们没有？你们怕死。<br>有种你玩，没种你就承认这种慢慢改善的现实的前提下，大家帮忙改善和努力改善，或者劝它改善，或者逼它改善都可以<br>我李敖干过这种事情，我并不是说阻止你们去干，而是说我阻止你们说风凉话，说风凉话是没有出息的，这就是“文革”以后一个强者看不起“文革”时期的所谓伤痕文学的原因。那个强者就是邓小平，他说伤痕文学，八个字，哭哭啼啼没有出息，整个的伤痕文学都是这样，弱者的抱怨，弱者的哀音，弱者的痛苦，没有出息！<br>你有本事你去玩嘛！我告诉你我的立场很清楚，中国的富国强兵是最重要的，强兵做到了，对我而言，我觉得我有生之年能够看到中国不被外国人打，这我就很快乐，这是我的价值标准，跟你们可能不一样。<br>可是你们想实行你们的价值标准，不努力，不付代价，或者不要命都是不行的，所以我劝大家，不妨从这个角度来看看，想一想。光说大话，在网站上奚落我李敖，对不起，还轮不到你来奚落我。<br>美国总统卡特到中国的时候，邓小平讲了一段话：没有安定的政治环境，什么事都干不成。他说：如果今天这部分人上街，明天那部分人上街，中国十亿人口，一年三百六十五天，天天都会有事，日子还能过吗？还有什么精力搞建设？所以，不能以你们的角度，就是你们美国人的角度来看待中国的问题，没有安定的政治环境，什么事情都干不成。这是当时邓小平跟卡特说的。<br>过去坦克车结构还不好，所以一个有名的战术就是把瓶子里面装了煤油，跑到坦克车上面硬塞，把它炸掉了。现在这种坦克车你根本爬不上去了，你也没有机会往里面塞东西了，连这种方法都没有。换句话说，政府控制人民的力量强大得不得了，人民想革命门都没有。所以，现在的科技对比之下，人民不能走这种路。<br>看美国1932年开枪啊，就这样子，你只要霸占了中央政府广场，不肯离开，他除了开枪以外，没有办法。但是反过来说，他开枪对不对呢？他不对。可是，你把他逼到墙角上之后，他只好开枪，就变成这样了。所以，我认为做为争取自由的人，也要反省，如果不把他逼到墙角，而得到我们想要的东西，这才是本领。如果硬干的话，只能是两败俱伤，不算本领啊。<br>我必须指出，像三毛这种台湾的作家，的确普遍性地犯了这个毛病，他们是风花雪月的，他们是多愁善感的，可是他们无法真正理解、面对、想象或者承认那种真正的人类的苦难。<br>我把他们臭骂一顿。为什么呢？因为他们是躺在政府怀里的。我骂他们，他们真的有骨气，应该跟我李敖对骂，或者说老子不干了，也不受你李敖这样侮辱。没有一个人敢，都缩在那里，这就证明了他们是孬种。他们是躺在政府怀里，是我李敖看不起的。<br>这是很偏执的一种思想，我必须说，这是一个很恐怖的思想，为什么？为什么人家跟你不同，你就杀人，你就用杀人的方法来保护你的主义？我认为这个方式是不对的，当然那是一个在革命时代里面的不幸现象。<br>何应钦说：“我们中国人的训练，打仗了战死沙场，要被俘的时候开枪自杀，不成功便成仁，我们是这种观念，跟你拼到底，玉石俱焚。”荷兰人听了以后笑起来，说：“何将军，我们跟你们想法不一样。投降是一时的，保护我们国家的文化，保护我们的人民，保护我们的建筑，不同归于尽，留给我们的下一代，或者留给我们未来的机会，可以使我们的国家重新站起来。我们可以投降啊，为什么不能投降？为什么要被打死？为什么要玉石俱焚？为什么宁为玉碎？我们不这样。可是投降不是乱投降，有整套的计划告诉我们在什么情况下会投降，投降的步骤是什么，投降的细节是什么，都按规矩来的。”何应钦觉得不可思议，可真是充满了赞佩，这才真正是为国家百年大计，为国家设想。<br>蒋家天下陈家党，孔家钞票宋家屄<br>挖出很多所谓有头有脸的人身上的疮疤？有人会奇怪我，为什么不讲一下好话？我告诉大家，好话需要我来讲吗？好话已经被他们讲了几十年，拍他们马屁的人太多了，拍他们马屁的单位和媒体太多了，这样的事还需要我李敖来做吗？<br>你可以拒绝接受，或者说接受了却不快乐，骂李敖为什么不说好的，专门说坏的。你可以有不同的意见来解释这个事情，说我李敖解释得不对，你可以见仁可以见智，可是事实只有一种，你不能够否认这个事实。<br>不但提供解释，也提供事实。你可以否认我的解释，你不能否认我的事实。<br>我告诉大家，我不是乱刁的，一定是持之有故，言之成理，并且找出来法律跟他们玩儿，这样子才能够玩到他们头昏脑涨，官不聊生。如果能够使官不聊生，这才证明了我们刁民的本领，刁民万岁！<br>大义与小不义<br>一件大义往往建筑在许多小的不义之上。<br>这是什么意思？这就是我们看一件事情的成功，有的时候不能够斤斤计较它成功的那些细部原因，那些细部的原因常常是一些小的不义。<br>清道夫定律<br>人生的成绩好像是清道夫，怎么做都看不出来，可是一不做就看出来。<br>很多时候都是这样的，好比说，我们写书的人都有一个经验，就是校对，最后校对以后，大家从校对得来的经验是条定律，什么定律啊？扫落叶定律，在树底下扫落叶，你扫过落下来的叶子以后，忽然又有一片叶子落下来了。写书的人，搞校对的人都有这种经验，明明这一行我看过了没有错字，怎么回头一看，第二次看的时候、第三次看的时候或者第五次看的时候，怎么忽然又冒出来一个错字，这就是落叶定律，就是你扫过了可是落叶还落下来了，那个错字忽然冒出来了。校对书就好像在扫落叶，意思是说，它的错误当时你看不到，事后会冒出来，清道夫定律。<br>太稀奇了<br>政客做坏事，不稀奇；做坏事不以为耻，才稀奇；不以为耻还扬扬自得，就太稀奇了。人民是混蛋，不稀奇；是混蛋不以为耻，才稀奇；不以为耻还扬扬得意，就太稀奇了。<br>长城与墙脚<br>盖万里长城的人，不怕别人挖墙脚。<br>国学大师章太炎，他是中国传统学问里面最后一个大师，他等于涵盖通吃了所有的中国文化。他老的时候，他的学生叫沈延国，有一次写封信给章太炎，说你的一个观念被胡适给抄袭了，他把你的观念在他胡适的书里面偷走了。章太炎国学大师就回了一封信给他的学生沈延国，他说，我的学问像一片大森林，里面被偷走一两棵树，小事情，我不在乎。用这个方法来描写他的这个境界，就是说我不怕人家偷，换句话说，万里长城那么长，不怕别人挖墙脚。<br>革命须知<br>选择与我们一起革命的人，比选择革命的对象更重要。<br>这句话说得很沉痛啊，换句话说，你选择同志比选择敌人更重要，敌人是你要打倒的，可是你跟什么人打倒这个敌人的选择是很重要的。你搞错了同志，选错了同志，结果同志比敌人还恐怖，那个时候你就很惨了。<br>先报复再说<br>在你报复过敌人以后，可以原谅他。<br>消灭敌人不是说把他千刀万剐，把他赶尽杀绝，不是啊，化敌为友这就是成功，敌人就不见了，所以就是被消灭了。所以说，在你报复过敌人以后可以原谅他。<br>自君别后<br>每绝交一个朋友，我就买一条狗。<br>当然，我讲的这话非常愤世嫉俗，这是法国的哲学家讲的那种话，就是我认识的人越多，我越喜欢狗。<br>文告百分比<br>国民党的文告是百分之二十的狗屁加百分之八十的狗屎；民进党的文告是百分之二十的狗屎加百分之八十的狗屁。<br>为什么我这么粗鲁不文地描写，因为屎和屁还是不一样的。在笑话里面我们可以看到，就是“屎”，大家认为比较具体，那个“屁”更空洞，所以国民党的文告虽然是屎和屁，可是屁的声音比例只占百分之二十，屎占百分之八十，这还比较具体一点。可是民进党的文告是百分之二十的狗屎，只有五分之一的实体，其他都是狗屁，这当然是我说的这种愤世嫉俗的话。<br>所以这个时候美国才能够反省“为什么会发生双子星的这个事件”，因为你美国很多的政策忽略了别的民族、别的国家的利益<br>斗鱼和蛤蟆的故事给我们有一点点启发，就是说，人在面对敌人的时候，他自己应该怎么样自我检讨，怎么样自己应付，怎么样自处。自处不好的话，敌人还没有完蛋，自己先完蛋了。人生常常会遇到这种问题，所以英国的文学家王尔德说，一个人要小心选择他的敌人，敌人是要挑选的。如果敌人太烂，他不值得做你的敌人。我跟大家讲过，我一辈子快意恩仇，我自己有恩怨情仇，而且我还公开宣布过，我反对耶稣那种爱你的敌人，或者说中国的老子那种以德报怨。我认为敌人是可以爱的，怨是可以化掉的，但是必须在报复过以后、敌人付过代价以后，你才可以跟敌人和解，这是我的原则。这就是孔夫子所说的，以直报怨。什么叫做以直报怨呢？就是要有对应的对等的关系。你打我一拳，我踢你一脚，踢了你一脚以后，可能我们两个人就不是敌人而是朋友了。就是这一脚非踢不可，这就是我的一个人生哲学。<br>我不承认那种无条件的对敌人的原谅，可是我也不承认用紧张的方法来处理敌友关系，把自己弄得不能睡觉，敌人没死你先死，这种搞法我认为是很愚蠢的。<br>在处理敌人和朋友的关系上，我必须说我真的欣赏、佩服以色列人。以色列人在第二次世界大战以前和第二次世界大战中间，他们的族群被德国人干掉了六百万。战争结束以色列人建国以后，并没有坚持耶稣的观念去原谅敌人，他们要追杀那些敌人，所以，他们天涯海角去找当年迫害过他们的那些德国人，其中最有名的一个人，就是艾克曼。以色列人到了南美找到了艾克曼，把他绑票绑回来，然后把他给干掉，这就是以色列人的哲学——以牙还牙，以眼还眼。他们的这个哲学，是很重要的一个观念。<br>这个时候我们才知道，那种主张思想的人物，提倡思想的人物，如果有坚定的伟大的坚韧的人格，像马寅初校长这样，是多么不容易。这就是我李敖今天所要告诉大家的，我一辈子走的路，就是这样的路。<br>当你锁定敌人跟朋友的时候，真正的敌人不是个人，而是敌人脑子里面的想法。当敌人脑子里面的想法不对的时候，他就会出事，他就会作怪，他就变成你的敌人，可是你不是要消灭他个人，你是要消灭他的思想。<br>但这种情况，斗鱼不知道，蛤蟆也不知道。问题就出在这里。所以我们做了很多的努力，树了很多的敌人，是错误的假想敌、错误的设定，这时我们才知道，整个脉络是这么来的。<br>杀君马者道旁儿<br>所谓道旁儿，就是人民，就是群众，这些群众有一个基本的群众心理，请大家记着，当你风光的时候，群众赞美你，给你鼓掌，可是这个局面出现以后呢，就有另外一个潜伏的情况出现，什么情况呢？就是一方面肯定你给你鼓掌，一方面你有什么纰漏出来就要看你好戏。</p>
-<h1 id="活着你就得有趣"><a href="#活着你就得有趣" class="headerlink" title="活着你就得有趣"></a><a href="https://book.douban.com/subject/25907028/" target="_blank" rel="noopener">活着你就得有趣</a></h1><p><img alt data-src="https://img3.doubanio.com/lpic/s27304733.jpg"></p>
+<h1 id="活着你就得有趣"><a href="#活着你就得有趣" class="headerlink" title="活着你就得有趣"></a><a href="https://book.douban.com/subject/25907028/" target="_blank" rel="noopener">活着你就得有趣</a></h1><p><img data-src="https://img3.doubanio.com/lpic/s27304733.jpg" alt></p>
 <h2 id="内容简介-2"><a href="#内容简介-2" class="headerlink" title="内容简介"></a>内容简介</h2><p>年轻就要有情趣，情趣哪里来？李敖指给你。<br>幽默源于智慧，源于见识，源于学识，源于童心，也源于大无畏的胸襟和精神。<br>李敖言谈举止，即使犀利，也永远不忘记带着幽默。<br>他一生童心未泯，是一位活泼可爱甚至有时会偶露萌态的斗士。<br>他有情有趣，爱自己，爱美女，爱天下。嬉笑怒骂，玩世不恭，在人间活得风风火火，有声有色。<br>本书奉上李敖大师接地气、不晦涩、满是知识和乐趣的作品，相信他乐观玩世、嬉笑怒骂的文字，能让年轻的你获得“有趣”的智慧。</p>
 <h2 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h2><p>前妻是最可怕的动物 001<br>优秀的女人有自我毁灭的因子 007<br>自欺欺人的大不要脸家 015<br>真实的林云大师 021<br>“过桥”会死人 026<br>台湾换马甲也没戏 032<br>从男欢女爱谈人生 038<br>美女变枯骨 045<br>大腿，丝袜，女权 051<br>旧式结婚证书 059<br>里根的下半身在哪儿 065<br>大卫王失踪的包皮 071<br>缺德煞风景的笑话    076<br>为什么总在警局自杀 083<br>记忆会骗人 090<br>乱世父女泪 098<br>用中国话芝麻开门 104<br>中国文字咸鱼翻身 110<br>我说一个很有学问的演员 116<br>多面李敖 123<br>李敖的书房 132<br>对钢笔的钟爱 138<br>行走的百科全书 146<br>大话国宝 153<br>字品中见人品 160<br>文物有灵 167<br>军中乐园血泪史 174<br>动物的洒脱 180<br>哭泣的狮子 188<br>政府的最低责任 193<br>好记性不如烂笔头 199<br>思想比现代人新的古人 206<br>怎样取得言论自由 212<br>言语妙天下 219<br>我玩国宝 224<br>洋人趣事 229<br>英雄是训练出来的 235<br>鲁迅的欧化文字 242<br>人要有一点信仰 247<br>暗器无罪 253<br>无知不会有真正的信仰 259<br>怎么样做美国人 265<br>云南王的沉默 271<br>李敖妈妈 277</p>
-<h1 id="深夜十堂"><a href="#深夜十堂" class="headerlink" title="深夜十堂"></a><a href="https://book.douban.com/subject/20472501/" target="_blank" rel="noopener">深夜十堂</a></h1><p><img alt data-src="https://img3.doubanio.com/lpic/s27566194.jpg"></p>
+<h1 id="深夜十堂"><a href="#深夜十堂" class="headerlink" title="深夜十堂"></a><a href="https://book.douban.com/subject/20472501/" target="_blank" rel="noopener">深夜十堂</a></h1><p><img data-src="https://img3.doubanio.com/lpic/s27566194.jpg" alt></p>
 <h2 id="内容简介-3"><a href="#内容简介-3" class="headerlink" title="内容简介"></a>内容简介</h2><p>《深夜十堂》内容简介：李敖以证据骂人、以口舌开心！李大师教你怎样读书、求知、做学问！“我李敖不但能说善道，也善写。”我活过了鲁迅，活过了梁启超，活过了胡适……很孤独，可是也很快乐！<br>《深夜十堂》所涉文化讨论内容丰富、所出典故引据翔实。本书共分六章，谈及该怎样评价蒋介石、吹牛逼与拍马屁、诗经里的生殖崇拜、男人怎样放美女、无知不会有真正的信仰、跟人民有同样的病、没有足够资格的敌人、聊聊我们台湾这些年……<br>最劲爆、最隐秘、最辛辣的观点，在本书中一一精彩呈现。是目前了解李敖以及台湾，最重要的一本著作！</p>
 <h2 id="目录-3"><a href="#目录-3" class="headerlink" title="目录"></a>目录</h2><p>壹知识老厨现身说法<br>知识老厨现身说法<br>多读书方不受人惑<br>无知不会有真正的信仰<br>大脑要起飞<br>人情练达即文章<br>语言画面各有其长<br>天地之间都是情报<br>贰大卸八块读书法<br>大卸八块读书法<br>温故知新没效率<br>尽信琼瑶不如无琼瑶<br>要把金针度与人<br>读书须看意旨所在<br>好记性不如烂笔头<br>记忆力靠边儿站<br>当物证出现的时候<br>动手动脚找证据<br>现代科技求真法<br>想象力比资料重要<br>叁打假《满江红》<br>诗经里的生殖崇拜<br>留心学到古人难<br>宋朝口语“莫须有”<br>“那无同”与“将无归”<br>打假《满江红》<br>石头有灵<br>蔡氏父女悲情录<br>肆隐藏的范宽签名<br>隐藏的范宽签名<br>周越墨迹再现人间<br>笔端狼藉见工夫<br>历尽磨难的《寒食帖》<br>毛笔字中品人格<br>真假八大山人<br>造假古董不容易<br>你有责任善待国宝<br>虽非我有亦可喜<br>艺术品的旅行<br>伍不出户 知天下<br>好文学没有同义字<br>倾巢而出与罄竹难书<br>不出户　知天下<br>人老去以后的硬度<br>皇帝不如三流富翁<br>男人怎样放美女<br>五百年要醒一次<br>吹牛逼与拍马屁<br>哲学的下场——玄学<br>文告百分比<br>陆用中国话芝麻开门<br>小心烂中文积非成是<br>汉字拉丁化空忙一场<br>中文优点多不胜数<br>好中文李大师把关<br>要经典不要迷信<br>语言文字的雅和俗<br>用中国话芝麻开门<br>一个字的表达<br>传教与宣传<br>不同版本的《圣经》<br>李敖包办五百年</p>
 <h2 id="他不光骂你是王八蛋，还能证明你确实是王八蛋"><a href="#他不光骂你是王八蛋，还能证明你确实是王八蛋" class="headerlink" title="他不光骂你是王八蛋，还能证明你确实是王八蛋"></a><a href="https://book.douban.com/review/6618039/" target="_blank" rel="noopener">他不光骂你是王八蛋，还能证明你确实是王八蛋</a></h2><blockquote>
@@ -311,7 +281,7 @@
 <blockquote>
 <p>我不属于那种天才型的人，我是一个靠着后天的努力而有了一点点小成绩的人。这种后天的努力不是靠着记忆力，而是靠着勤快用功，靠着烂笔头随时记录。我留下了大量的文字记录、文字统计、文字摘要、文字大纲，并且随时复习，所以我会记得很清楚。</p>
 </blockquote>
-<h1 id="传统下的独白"><a href="#传统下的独白" class="headerlink" title="传统下的独白"></a><a href="https://book.douban.com/subject/11601310/" target="_blank" rel="noopener">传统下的独白</a></h1><p><img alt data-src="https://img3.doubanio.com/lpic/s27290132.jpg"></p>
+<h1 id="传统下的独白"><a href="#传统下的独白" class="headerlink" title="传统下的独白"></a><a href="https://book.douban.com/subject/11601310/" target="_blank" rel="noopener">传统下的独白</a></h1><p><img data-src="https://img3.doubanio.com/lpic/s27290132.jpg" alt></p>
 <h2 id="内容简介-4"><a href="#内容简介-4" class="headerlink" title="内容简介"></a>内容简介</h2><p>《李敖50年唯一自选集·传统下的独白》共包括四十几篇文字，篇篇都是名副其实的“杂”文，有的谈男人的爱情，有的谈女人的衣裳，有的谈妈妈的梦幻，有的谈法律的荒谬，有的谈不讨老婆的“不亦快哉”……各文的性质虽是杂拌儿，但是贯串这杂拌儿的却是一点反抗传统、藐视传统的态度。</p>
 <h2 id="目录-4"><a href="#目录-4" class="headerlink" title="目录"></a>目录</h2><p>传统下的独白<br>自序<br>独身者的独白<br>爱情的刽子手<br>一封神气的情书<br>假如我是女人<br>张飞的眼睛<br>中国小姐论<br>由一丝不挂说起<br>不讨老婆之“不亦快哉”<br>妈妈的梦幻<br>妈妈·弟弟·电影<br>长袍心理学<br>红玫瑰<br>旧天子与新皇帝——元末明初的断片<br>无为先生传——以“无”字为典<br>充员官<br>修改“医师法”与废止中医<br>几条荒谬的法律<br>老年人和棒子<br>张天师可以歇歇了<br>十三年和十三月<br>独白下的传统<br>快看“独白下的传统”<br>直笔——“乱臣贼子惧”<br>避讳——“非常不敢说”<br>谏诤——“宁鸣而死，不默而生”<br>传令——全国大跑马<br>新闻——报纸像杂志<br>征兆——来头可不小<br>吃人——动物吃人，人也吃人<br>喝酒——喝也不行，不喝也不行<br>音乐——华夷交响乐<br>家族——人愈多愈好<br>女性——牌坊要大，金莲要小<br>光绪朝对节妇贞女的旌表<br>从高玉树为儿子“冥婚”看中国两面文化<br>欢喜佛<br>中国民族“性”<br>人能感动蝙蝠论<br>人能感动老虎论<br>鼓声咚咚的中国之音<br>一种失传了的言论道具<br>记一个不合作主义者<br>中国艺术新研<br>中国艺术史一个断层的重建——周越墨迹研究<br>《周越墨迹研究》序<br>台湾“故宫”博物院乃是“故宫”赃物院<br>质询秦孝仪先生<br>《冒巢民董小宛夫妇合璧卷真迹神品》说明<br>李敖所藏中国美术精品图说<br>许地山论书法</p>
 
@@ -320,8 +290,11 @@
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Serials/" rel="tag"><i class="fa fa-tag"></i> Serials</a>
               <a href="/tags/Li-Ao/" rel="tag"><i class="fa fa-tag"></i> Li Ao</a>
@@ -334,21 +307,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/F/Flexibility/" rel="next" title="Flexibility">
-                  <i class="fa fa-chevron-left"></i> Flexibility
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/Q/Question/" rel="prev" title="Question">
-                  Question <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/F/Flexibility/" rel="prev" title="Flexibility">
+      <i class="fa fa-chevron-left"></i> Flexibility
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/Q/Question/" rel="next" title="Question">
+      Question <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -361,7 +331,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -392,8 +384,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -402,14 +394,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -420,11 +412,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -458,7 +445,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -470,51 +457,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -523,18 +471,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -544,63 +486,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -608,14 +493,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -642,40 +527,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Book/IPCreator/People/Li Ao/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

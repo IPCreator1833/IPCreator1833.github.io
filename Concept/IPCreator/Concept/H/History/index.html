@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="Hi,Story 观今宜鉴古，无古不成今，用思辨探究歷史，磨砺人生智慧。">
 <meta name="keywords" content="History,Use">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/H/History/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/H/History/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/H/History/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="history.jpg" data-src="http://opb37u589.bkt.clouddn.com/history.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/history.jpg?imageMogr2/thumbnail/!75p" alt="history.jpg"></p>
 <blockquote>
 <p>Hi,<a href="http://deepcreator.com/2017/10/03/Concept/Story/" target="_blank" rel="noopener">Story</a> 观今宜鉴古，无古不成今，用思辨探究歷史，磨砺人生智慧。</p>
 </blockquote>
@@ -296,48 +266,48 @@
 <blockquote>
 <p>站在历史的长河中，自己已经经历或正在经历的事都不是事，无数先人和前辈都曾经历过，未来也会有人遇到类似的问题，只是自己暂时不知和过分在意而已。</p>
 </blockquote>
-<p>一个优秀的企业家，要能够活在未来、创造未来、掌握未来，一定要有这三种本事。首先必须要有一个明确而坚定执着的、正确的价值观，因你而改变环境，因你而使别人更幸福。同时，要掌握一些非常有效的科学技术。光有这两个还不够，还必须有第三个，那就是<a href="https://www.toutiao.com/a1588085268887566/" target="_blank" rel="noopener">历史洞察力</a>，必须掌握历史演进的规律，从过去的得失和教训当中，预见未来可能发生的故事。<br><img alt data-src="https://p3.pstatp.com/origin/53ea00036c1c726e18e5"></p>
-<h2 id="历史有什么用？"><a href="#历史有什么用？" class="headerlink" title="历史有什么用？"></a>历史有什么用？</h2><p><img alt="Image_20180406183031.png" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183031.png?imageMogr2/thumbnail/!75p"></p>
+<p>一个优秀的企业家，要能够活在未来、创造未来、掌握未来，一定要有这三种本事。首先必须要有一个明确而坚定执着的、正确的价值观，因你而改变环境，因你而使别人更幸福。同时，要掌握一些非常有效的科学技术。光有这两个还不够，还必须有第三个，那就是<a href="https://www.toutiao.com/a1588085268887566/" target="_blank" rel="noopener">历史洞察力</a>，必须掌握历史演进的规律，从过去的得失和教训当中，预见未来可能发生的故事。<br><img data-src="https://p3.pstatp.com/origin/53ea00036c1c726e18e5" alt></p>
+<h2 id="历史有什么用？"><a href="#历史有什么用？" class="headerlink" title="历史有什么用？"></a>历史有什么用？</h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183031.png?imageMogr2/thumbnail/!75p" alt="Image_20180406183031.png"></p>
 <blockquote>
 <p>历史就是故事</p>
 </blockquote>
-<p><img alt="Image_20180406183129.png" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183129.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183129.png?imageMogr2/thumbnail/!75p" alt="Image_20180406183129.png"></p>
 <blockquote>
 <p>故事就是过去的事件</p>
 </blockquote>
-<p><img alt="Image_20180406183051.png" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183051.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183051.png?imageMogr2/thumbnail/!75p" alt="Image_20180406183051.png"></p>
 <blockquote>
 <p>故者过去也</p>
 </blockquote>
-<p><img alt="Image_20180406183109.png" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183109.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183109.png?imageMogr2/thumbnail/!75p" alt="Image_20180406183109.png"></p>
 <blockquote>
 <p>事者事件也</p>
 </blockquote>
-<p><img alt="Image_20180406183146.png" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183146.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183146.png?imageMogr2/thumbnail/!75p" alt="Image_20180406183146.png"></p>
 <blockquote>
 <p>小故事里面有大道理</p>
 </blockquote>
-<p><img alt="Image_20180406183204.png" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183204.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183204.png?imageMogr2/thumbnail/!75p" alt="Image_20180406183204.png"></p>
 <blockquote>
 <p>以故事说人物</p>
 </blockquote>
-<p><img alt="Image_20180406183220.png" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183220.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183220.png?imageMogr2/thumbnail/!75p" alt="Image_20180406183220.png"></p>
 <blockquote>
 <p>以人物说历史</p>
 </blockquote>
-<p><img alt="Image_20180406183246.png" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183246.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183246.png?imageMogr2/thumbnail/!75p" alt="Image_20180406183246.png"></p>
 <blockquote>
 <p>以历史说人性</p>
 </blockquote>
-<p><img alt="Image_20180406183300.png" data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183300.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Image_20180406183300.png?imageMogr2/thumbnail/!75p" alt="Image_20180406183300.png"></p>
 <blockquote>
 <p>以人性说文化</p>
 </blockquote>
 <h2 id="呂世浩：「用思辨探究歷史，讓歷史成為大用。」"><a href="#呂世浩：「用思辨探究歷史，讓歷史成為大用。」" class="headerlink" title="呂世浩：「用思辨探究歷史，讓歷史成為大用。」"></a><a href="http://tedxtaipei.com/articles/lu/" target="_blank" rel="noopener">呂世浩：「用思辨探究歷史，讓歷史成為大用。」</a></h2><p><a href="https://www.youtube.com/watch?v=Ap0w3PgSK7g" target="_blank" rel="noopener">Youtube</a></p>
-<p><img alt="why.JPG" data-src="http://opb37u589.bkt.clouddn.com/why.JPG?imageMogr2/thumbnail/!75p"><br><img alt="use.JPG" data-src="http://opb37u589.bkt.clouddn.com/use.JPG?imageMogr2/thumbnail/!75p"><br><img alt="how.JPG" data-src="http://opb37u589.bkt.clouddn.com/how.JPG?imageMogr2/thumbnail/!75p"><br><img alt="humanity.JPG" data-src="http://opb37u589.bkt.clouddn.com/humanity.JPG?imageMogr2/thumbnail/!75p"><br><img alt="goal.JPG" data-src="http://opb37u589.bkt.clouddn.com/goal.JPG?imageMogr2/thumbnail/!75p"><br><img alt="endurefirst.JPG" data-src="http://opb37u589.bkt.clouddn.com/endurefirst.JPG?imageMogr2/thumbnail/!75p"><br><img alt="liu.JPG" data-src="http://opb37u589.bkt.clouddn.com/liu.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/why.JPG?imageMogr2/thumbnail/!75p" alt="why.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/use.JPG?imageMogr2/thumbnail/!75p" alt="use.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/how.JPG?imageMogr2/thumbnail/!75p" alt="how.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/humanity.JPG?imageMogr2/thumbnail/!75p" alt="humanity.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/goal.JPG?imageMogr2/thumbnail/!75p" alt="goal.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/endurefirst.JPG?imageMogr2/thumbnail/!75p" alt="endurefirst.JPG"><br><img data-src="http://opb37u589.bkt.clouddn.com/liu.JPG?imageMogr2/thumbnail/!75p" alt="liu.JPG"></p>
 <p>透過開放式線上課程學習，已成為新的風潮。國立台灣大學的歷史系專任助理教授—呂世浩，在知名平台Coursera開設「中國古代歷史與人物—秦始皇」課程，獲得極大的回響，授課學生廣佈全球。過去我們認為只是「背多分」的歷史，在呂老師的教學下成為另外一種新風貌。</p>
 <p>身為今年年會的講者，一起先來聽聽呂世浩老師對於歷史學與教育的看法。</p>
-<p><img alt data-src="http://tedxtaipei.com/wp-content/uploads/2014/09/IMG_21281.jpg"></p>
+<p><img data-src="http://tedxtaipei.com/wp-content/uploads/2014/09/IMG_21281.jpg" alt></p>
 <p>「思辨，其實是現代人急欲找尋的能力」</p>
 <p>在社會普遍認知「歷史無用」的觀念之下，呂老師的課程帶給學生一個全新的觀點。他將中國古代帝王和精英學習歷史的方法介紹給現代人，他教學生用「思辨」對歷史進行分析與思考，從歷史中啟發智慧。</p>
 <p>由於這樣的歷史教學，和大家從小所學「歷史就是背誦」的觀念，實在大不相同。因此在Coursera上開課之初，呂老師也曾擔心過，現代的同學願意接受這種傳統的智慧嗎？結果出乎呂世浩老師的意料之外，這門課大受歡迎、迴響熱烈，修課人數超過45000人，成為目前網路排名第一的中文課程。</p>
@@ -348,7 +318,7 @@
 <p>我們常問「歷史應該怎麼讀？」呂老師認為歷史就是塊磨刀石，目的是幫助我們磨礪腦中的智慧之刃。就好像我們不會拿磨刀石來切割物品一樣，學歷史不是要直接照搬古時候的經驗，而是用古人的智慧來啟發自己的智慧。呂老師常跟同學說：「當你碰到人生重要難題時，相信我，你絕對不是第一個遇見類似難題的人。在你之前，有無數人遇到相同問題，他們如何解決？我們是否有更好的解決方法？」學歷史就是要思考前人如何解決問題，又各自得到什麼結果。從這樣的角度出發，歷史就會成為無盡的智慧寶庫。</p>
 <p>呂老師舉例，秦始皇的長子扶蘇，在始皇過世時接到了偽造的遺詔，要他自殺。那時扶蘇握有三十萬大軍，身邊還有大將軍蒙恬幫他。如果你是扶蘇，該怎麼辦？結果扶蘇聽從遺詔指示立刻自殺，他的死成為秦朝滅亡的其中一個原因。試想，如果是李世民，他又會怎麼辦？他大概會喊遺詔是假造的，並帶三十萬大軍殺回去。反觀晉文公重耳，他遇見類似問題時，卻是先逃跑觀察情勢，再決定如何行動，在外流浪十九年才成為一國之主。</p>
 <p>呂老師又問，在上述這三個例子中，誰才是真正的孝順？他認為中國人的孝道觀念，其實是「小杖則受，大杖則走」，兒女並非一昧順從，不讓父母犯下不可彌補的錯誤才是真孝。中國人的傳統智慧，並非由上而下強迫服從大道理，是拿很多歷史事例不斷探索更好的解決方法。</p>
-<p><img alt data-src="http://tedxtaipei.com/wp-content/uploads/2014/09/IMG_2133.jpg"></p>
+<p><img data-src="http://tedxtaipei.com/wp-content/uploads/2014/09/IMG_2133.jpg" alt></p>
 <p>對「不懂到懂」的執著，歷史成為良師益友</p>
 <p>呂老師是一個對於別人習以為常的事，願意花費長時間去思考的人。對他來說，「思辨」已成為一種長久的習慣。大部分的人都說考上歷史系沒有用，但呂老師很努力的思考：「為什麼沒用？如何才能有用？」這也成為他研究歷史和人物的動力。</p>
 <p>能夠記載在史書中的歷史人物，不論是好的或壞的，多半出類拔萃。這些人都深知思辨的重要性且善用它，所以許多歷史人物都是思辨智慧的箇中好手，只是其間有高下之分。有人從自我出發，有人則關注人群；有人只考慮當下，有人則思考未來。明白他們的選擇和結果，就能學習到歷史的智慧，這是後世人類文明的寶藏。</p>
@@ -359,9 +329,9 @@
 <p>學歷史的大用：呂世浩(Shih-Hao Lu) at TEDxTaipei 2014<br>整理撰稿：魏妤庭</p>
 <h2 id="失败的总和—-读《黄河青山：黄仁宇回忆录》"><a href="#失败的总和—-读《黄河青山：黄仁宇回忆录》" class="headerlink" title="失败的总和—-读《黄河青山：黄仁宇回忆录》"></a><a href="http://www.ruanyifeng.com/blog/2012/05/ray_huang_s_memoir.html" target="_blank" rel="noopener">失败的总和—-读《黄河青山：黄仁宇回忆录》</a></h2><p>作者： 阮一峰<br>日期： 2012年5月13日</p>
 <p>历史学家黄仁宇的最出名著作，大概非《万历十五年》莫属。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201205/bg2012051301.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201205/bg2012051301.jpg" alt></p>
 <p>可是，我更喜欢他的回忆录《黄河青山》。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201205/bg2012051303.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201205/bg2012051303.jpg" alt></p>
 <p>多年前，在学校图书馆读到的时候，就觉得这本书很特别，讲述了一个国民党军官如何变成一个历史学家，夹叙夹议，将个人命运放在历史背景上，写得非常生动。</p>
 <p>========================================================================</p>
 <p>最近，我重读这本书，才发觉以前读得太粗糙，完全没有领会作者的用意。通常来说，自传总是记录一些令人骄傲的个人经历，可是打开《黄河青山》，你只看到一件接着一件的失败。</p>
@@ -418,7 +388,7 @@
 <p>“以长期观点阅读中国现代历史时，就不会连连沮丧，反而会看到全本的戏剧在眼前开展。中国历史很可能即将融入世界历史，不但是空前的进展，而且是实质上的融和，不再缺乏希望与期许，纵使还会有挫败及暂时的逆转。”</p>
 <p>如果你看到了历史的长期合理性，那么当你经历了种种失败，年老时回望自己人生，才能平静地接受命运，体会其中的必然，然后静静地等待隧道的尽头开始展现一丝曙光，证明那些企图逆转命运的举动，并非无谓和徒劳，一切自有内在的因果。这大概就是《黄河青山》的写作目的吧。</p>
 <p>（完）</p>
-<h2 id="贪官上任记"><a href="#贪官上任记" class="headerlink" title="贪官上任记"></a><a href="http://www.luojiji.com/thread-1956-1-1.html" target="_blank" rel="noopener">贪官上任记</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/20/181256s6yeegcazuetgeed.jpg"><br>作者：当年明月</p>
+<h2 id="贪官上任记"><a href="#贪官上任记" class="headerlink" title="贪官上任记"></a><a href="http://www.luojiji.com/thread-1956-1-1.html" target="_blank" rel="noopener">贪官上任记</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/20/181256s6yeegcazuetgeed.jpg" alt><br>作者：当年明月</p>
 <p>隆庆四年（1570），永不落幕的两广叛乱再次开演了，在当年，这个地方算是蛮荒之地，文盲普及率较高，不读书自然不服管，不服管自然不纳税，不纳税自然是不行的。于是来来往往，双方都喜欢用拳头刀枪讲话，每到逢年过节，不闹腾一下，那就不正常了。</p>
 <p>但这次闹腾的动静很大，两广全境都有叛乱，且叛军有一定的战斗经验，派了几个人去都被打了回来，于是内阁首辅高拱一拍脑门：“没办法了，派殷正茂去吧！”</p>
 <p>殷正茂，嘉靖二十六年进士，是当年传奇科举班的一员，和诸位名人同学相比，他没有张居正的政务能力，王世贞的文采，更没有杨继盛的胆量，但他也有着属于自己的专长——军事。</p>
@@ -559,9 +529,9 @@
 <p>书里说，如果只是单独地那一个人的大脑，和一个大猩猩或者尼安德特人的大脑，来进行对比的话，我们其实没有太大的优势。但如果从整个物种的角度看，人类的优势一下子就显现出来了：因为人类的大脑可以相互共享信息，交换知识，人类的这个财富叫做“集体知识”。</p>
 <p>什么是集体知识呢？比如，动物学家发现，有些动物也能掌握一些比较高级的知识，不过，动物没办法把这类知识保存下来，一旦掌握高级知识的动物死了，这些知识就失传了。但人类就不一样了，我们幸运地掌握了一个工具，叫做“符号语言”，简单理解的话，就是口头语言和书面文字。我们通过符号语言来传递和保存知识，不仅可以再一代人内部共享，也可以在几代人之间共享。而且，<strong>集体知识还有累加效应，就好像在银行里存钱，可以一直利滚利，时间越长，掌握的知识越多，知识增长的速度就越快。</strong></p>
 <p>所以克里斯蒂安就说，自然界里每次出现一个新的复杂事物，都是因为产生了一种新的结构。人类真正的特别之处，不在于我们个体比其他动物有多大优势，而是我们很幸运地掌握了符号语言，人类社会的结构一下子发生了突变，有了一个连接在一起的集体大脑。这种物种之间相互关联、相互作用的方式，才是我们和其他物种的真正区别。</p>
-<h2 id="历史科学基本概念辞典"><a href="#历史科学基本概念辞典" class="headerlink" title="历史科学基本概念辞典"></a><a href="https://book.douban.com/subject/10521374/" target="_blank" rel="noopener">历史科学基本概念辞典</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s8873845.jpg"></p>
+<h2 id="历史科学基本概念辞典"><a href="#历史科学基本概念辞典" class="headerlink" title="历史科学基本概念辞典"></a><a href="https://book.douban.com/subject/10521374/" target="_blank" rel="noopener">历史科学基本概念辞典</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s8873845.jpg" alt></p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>《历史的观念译丛》总序<br>前言<br>1、日常生活史 2、编年史 3、年鉴学派<br>4、生动性 5、启蒙史学 6、自传<br>7、概念史 8、传记 9、年代记<br>10、年代学 11、衰退 12、话语<br>13、学科矩阵 14、固执 15、发展<br>16、时代 17、事件 18、体验<br>19、回忆/遗忘 20、说明 21、描述<br>22、进化 23、虚构 24、进步<br>25、记忆 26、精神史 27、历史意识<br>28、历史教学 29、历史文化 30、历史哲学<br>31、历史理论 32、历史科学 33、性别史<br>34、不同时代的同时代性 35、救赎史 36、启发学<br>37、总体史 38、历史是生活的导师 39、历史知识理论<br>40、历史编纂学 41、历史编纂史 42、历史人类学<br>43、历史辅助学科 44、历史社会科学 45、历史唯物主义<br>46、历史主义 47、观念史 48、个性<br>49、因果性 50、建构主义 51、延续性/变迁<br>52、反事实性的历史 53、危机 54、文化史<br>55、长时段 56、心态 57、隐喻<br>58、历史方法 59、微观史学 60、现代化理论<br>61、神话 62、规律设定性/个体描述性 63、客观性/偏见<br>64、口述史 65、分期 66、可信性<br>67、政治史 68、实证主义 69、实证主义<br>70、后史学 71、史料 72、史料考证<br>73、历史本身/历史认识 74、历史小说 75、历史意义<br>76、社会史 77、结构史 78、历史主体<br>79、主观性/交互主观性 80、系统论 81、事实<br>82、体裁论 83、传统 84、转喻<br>85、类型 86、同时代的不同时代性 87、乌托邦<br>88、过去 89、历史比较 90、历史理性<br>91、理解 92、预言 93、历史真实性<br>94、世界史 95、价值 96、现实性<br>97、时间 98、当代史 99、偶然事件<br>100、未来 101、周期理论<br>参考文献<br>进一步阅读文献<br>人名索引<br>术语索引<br>作者简介<br>译后记</p>
-<h2 id="广岛和长崎为什么那么倒霉"><a href="#广岛和长崎为什么那么倒霉" class="headerlink" title="广岛和长崎为什么那么倒霉"></a><a href="http://www.luojiji.com/thread-2652-1-1.html" target="_blank" rel="noopener">广岛和长崎为什么那么倒霉</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/25/172232thxjejrml0dtxf0j.jpg"></p>
+<h2 id="广岛和长崎为什么那么倒霉"><a href="#广岛和长崎为什么那么倒霉" class="headerlink" title="广岛和长崎为什么那么倒霉"></a><a href="http://www.luojiji.com/thread-2652-1-1.html" target="_blank" rel="noopener">广岛和长崎为什么那么倒霉</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/25/172232thxjejrml0dtxf0j.jpg" alt></p>
 <p>阎京生</p>
 <p>1945年4月，为了确定原子弹轰炸的城市，美国“曼哈顿工程”的负责人与陆军航空兵的专家组成目标选定委员会，要挑出4座日本城市，2座为首要轰炸目标，2座作为备选。</p>
 <p>最初的候选名单是由美国陆军航空兵战略航空参谋长诺斯塔德列出的17个日本城市，依次为：东京、川崎、横滨、名古屋、京都、大阪、神户、广岛、吴、下关、山口、八幡、小仓、熊本、福冈、长崎、佐世保。</p>
@@ -603,8 +573,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/M/Museum/" rel="bookmark">Museum</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/English/IPCreator/English/English Name/" rel="bookmark">English Name</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Story/" rel="bookmark">Story</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/Genealogy of Western thought history/" rel="bookmark">Genealogy of Western Thought History</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/A Brief History of tomorrow/" rel="bookmark">A Brief History of Tomorrow</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/History/" rel="tag"><i class="fa fa-tag"></i> History</a>
               <a href="/tags/Use/" rel="tag"><i class="fa fa-tag"></i> Use</a>
@@ -617,21 +608,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/P/Prejudice/" rel="next" title="Prejudice">
-                  <i class="fa fa-chevron-left"></i> Prejudice
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/C/Change/" rel="prev" title="Change">
-                  Change <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/P/Prejudice/" rel="prev" title="Prejudice">
+      <i class="fa fa-chevron-left"></i> Prejudice
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/C/Change/" rel="next" title="Change">
+      Change <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -644,7 +632,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -675,8 +685,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -685,14 +695,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -703,11 +713,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -741,7 +746,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -753,51 +758,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -806,18 +772,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -827,63 +787,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -891,14 +794,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -925,40 +828,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/H/History/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

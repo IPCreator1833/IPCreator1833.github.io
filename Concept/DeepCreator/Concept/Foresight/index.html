@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="凡事预则立不预则废，人无远虑必有近忧。">
 <meta name="keywords" content="Wisdom,Long,Foresight">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Foresight/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Foresight/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Foresight/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,13 +256,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="Rock20180729.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Rock20180729.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Rock20180729.jpg?imageMogr2/thumbnail/!75p" alt="Rock20180729.jpg"></p>
 <blockquote>
 <p>凡事预则立不预则废，人无远虑必有近忧。</p>
 </blockquote>
 <a id="more"></a>
 <p>当很多人还在追名逐利时，眼光已聚焦到了幸福的终点<br>当很多人还在聚焦当代时，眼光已聚焦到下一代的成长</p>
-<p><img alt="vision20180607.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/vision20180607.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/vision20180607.jpg?imageMogr2/thumbnail/!75p" alt="vision20180607.jpg"></p>
 <p>多问问自己：如果我是对方，此时在关注什么，可能会存在哪些问题，又会需要什么呢?……</p>
 <p>机会留给有准备的人，凡事预则立不预则废。</p>
 <p>所谓的<strong>格局</strong>：——DeepCreator</p>
@@ -372,14 +342,14 @@
 <p>剪刀是最不受欢迎的选择，而男性喜欢出石头。出于这两个原因，一局定胜负时记得选布。</p>
 <p>说出自己要出什么手势，接下来就出什么手势。因为大多数玩家都认为你不会这么做。</p>
 <p>人的行为可以预测</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p888096.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p888096.jpg" alt></p>
 <p>在美国50年代的时候，哈格尔巴格在贝尔试验室做了一台猜心机，它模仿游戏“猜硬币”，猜字还是头。它可以跟来人对话，最初的机器胜率是53%，后来香农重新做了一台机器，跟同一个人连续多次对阵，猜对的比例是65%。</p>
 <p>原理非常简单：</p>
 <p>如果机器需要预测，它就查看玩家前两次碰到同样情况时是怎么做的。要是玩家两次都做出同样的反应，机器就预测他会再做一次相同的反应；要是玩家两次的反应不同，它就用自己不断旋转的电子轮盘随机猜测。</p>
 <p>等到进入网络时代之后，各种大数据开始直接预测人的行为，经常能得出让你非常惊奇的结论，比如一个很有名的故事。一家百货商店的分析软件给一个人在读高中的女儿发了婴儿、婴儿家具和孕妇装的照片邮件，后来发现他女儿真的怀孕了。</p>
 <p>而这个软件的怀孕预测算法建立在25项产品的购买行为上，包括无味洗涤液和肥皂；钙、镁、锌补充剂；棉球；洗手液等。这些品目本身并没有太多意义。但如果女性顾客购买了上述25种产品里的若干种，那就极有可能被预测为怀孕了。甚至还能锁定预产期，并且误差仅为一两周。虽然不是100%准备，但正确性很高。</p>
 <p>心理学预测策略</p>
-<p><img alt data-src="https://img1.doubanio.com/view/thing_review/l/public/p888097.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/thing_review/l/public/p888097.jpg" alt></p>
 <p>美国的考试建议：</p>
 <p>就判断题而言，“对”的答案更常见。就四项选择题而言，第2个选项B往往是对的。“以上皆非”和“以上皆是”选项有着压倒性的正确率。</p>
 <p>期望值为正的投注方案</p>
@@ -407,19 +377,19 @@
 <p>其次，解决了我选择题方面的困惑。<br>读初中开始，我就注意到有些同学在做选择题时采用了概率的方法，例如：ABCD四个选项中，有几个拿不准先空着，最后平均一下各题，看哪个答案出现的少，就用哪个。高中第一次英语考试，全班70多人就一哥们得了64分（平时学习成绩极差），问他是怎么整的，当时的回答是：“掷硬币！”考试时我坐的离他不远，这家伙确实根本没看题一直在反复掷。<br>我自己试过几次，效果不佳就没再用，最大的困惑就是“不能保证已选的正确性，那统计各项出现 次数有什么用呢？”本书100%解答了我的问题，而且相当系统化，要通过前后选项外加可能出现概率高选项，再加各选项之间平衡，从而提升猜对效果。<br>当然，个人建议还是认真学习，掌握正确答案，猜只是一种方法而已。</p>
 <p>第三，选股也有好方法。<br>书里讲了先彩票和选股。彩票这样需要几千年才有机会中。选股权常人倒是可以操作，用希勒市盈率法（即用当前标普500指数 的价格除以企业盈利和10年波动平均值）。希勒市盈率涨到28倍时卖出（说明股价过高了），除到13倍后买入（说明有升职空间）。按这个规则，近132年坦克只需要交易3次，可见股票从长期投资的角度看风险并不太大。与此同时，相对其他渠道，股票 的吸引力没有看起来那么强。</p>
 <p>最后，本书给我最大的启发就是不要被自己所谓的常识蒙蔽，比如：认为有热手现象（连投连中）和会出现不一样的结果（已经出4个黑了，下一把应该是白），真正的随机并不存在以上两种现象。<br>了解自己如何思考，再了解真实世界可能出现的情况和什么是随机性，对我们处理与世界的关系非常重要。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p113603.jpg"><br>要点</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p113604.jpg"><br>案例</p>
-<h2 id="关键洞察力——提前预知别人行为的48个逻辑"><a href="#关键洞察力——提前预知别人行为的48个逻辑" class="headerlink" title="关键洞察力——提前预知别人行为的48个逻辑"></a><a href="https://book.douban.com/subject/30193374/" target="_blank" rel="noopener">关键洞察力——提前预知别人行为的48个逻辑</a></h2><p><img alt="foresight20180804.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/foresight20180804.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p113603.jpg" alt><br>要点</p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p113604.jpg" alt><br>案例</p>
+<h2 id="关键洞察力——提前预知别人行为的48个逻辑"><a href="#关键洞察力——提前预知别人行为的48个逻辑" class="headerlink" title="关键洞察力——提前预知别人行为的48个逻辑"></a><a href="https://book.douban.com/subject/30193374/" target="_blank" rel="noopener">关键洞察力——提前预知别人行为的48个逻辑</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/foresight20180804.jpg?imageMogr2/thumbnail/!75p" alt="foresight20180804.jpg"></p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>前言<br>01借钱的学问<br>02谈判桌上的错觉<br>03我能读懂你的脸<br>04什么样的爱情“见光死”<br>05哪种环境容易拉近关系<br>06演讲要点应如何记录<br>07你适合做新项目吗<br>08怎样更容易被谅解<br>09让老板更喜欢你的秘密<br>10如何选择谈判场合<br>11你为什么没有人缘<br>12怎样握手会让人记住你<br>13何时让人帮忙是最好的<br>14如何获得谈判主导权<br>15真诚的道歉是什么样的<br>16怎样写出吸引人的文案<br>17你为什么对工作没有激情<br>18如何才能不暴漏喜好<br>19如何获得别人的关照<br>20“缺德事”都是谁干的<br>21聪明人如何安排工作<br>22迷人的报告是怎样的<br>23我会更喜欢谁<br>24谁会成为你的朋友<br>25最会说话的人<br>26 参与感的强大魔力<br>27最佳决策是怎样做出来的<br>28人什么时候最谨慎<br>29为什么有的人度日如年<br>30出生时间里隐藏了什么<br>31想放松时应该去哪儿<br>32喜欢冒险的是那种人<br>33 适合投资的天气<br>34为什么烦躁的总是你<br>35哪种图案更容易被关注<br>36你会和谁坐在一起<br>37你喜欢在哪儿喝酒<br>38读不懂的邮件<br>39哪家店的东西更容易卖出<br>40为什么越脏的地方会越脏<br>41抢占先机的沟通方式<br>42谁能种出好吃的西红柿<br>43谁有丰富的创造力<br>44你喜欢哪种角色<br>45如何显得更有威慑力<br>46穿出“权威感”<br>47如何快速消除紧张感<br>48谁是更有行动力的人<br>后记</p>
-<h2 id="理解未来的7个原则-Flash-Foresight：How-to-See-the-Invisible-and-Do-the-Impossible"><a href="#理解未来的7个原则-Flash-Foresight：How-to-See-the-Invisible-and-Do-the-Impossible" class="headerlink" title="理解未来的7个原则 Flash Foresight：How to See the Invisible and Do the Impossible"></a><a href="https://book.douban.com/subject/26816874/" target="_blank" rel="noopener">理解未来的7个原则 Flash Foresight：How to See the Invisible and Do the Impossible</a></h2><p><img alt="foresight20180709.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/foresight20180709.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="理解未来的7个原则-Flash-Foresight：How-to-See-the-Invisible-and-Do-the-Impossible"><a href="#理解未来的7个原则-Flash-Foresight：How-to-See-the-Invisible-and-Do-the-Impossible" class="headerlink" title="理解未来的7个原则 Flash Foresight：How to See the Invisible and Do the Impossible"></a><a href="https://book.douban.com/subject/26816874/" target="_blank" rel="noopener">理解未来的7个原则 Flash Foresight：How to See the Invisible and Do the Impossible</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/foresight20180709.jpg?imageMogr2/thumbnail/!75p" alt="foresight20180709.jpg"></p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>前　言<br>第一章　从确定性开始<br>第二章　洞察先机<br>第三章　变　革<br>第四章　跳出你面临的问题<br>第五章　反其道而行<br>第六章　重新定义和再创造<br>第七章　主导未来<br>后记<br>注　释<br>出版后记</p>
-<h2 id="BCG视野——战略思维的艺术"><a href="#BCG视野——战略思维的艺术" class="headerlink" title="BCG视野——战略思维的艺术"></a><a href="https://book.douban.com/subject/3069880/" target="_blank" rel="noopener">BCG视野——战略思维的艺术</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s5897553.jpg"></p>
+<h2 id="BCG视野——战略思维的艺术"><a href="#BCG视野——战略思维的艺术" class="headerlink" title="BCG视野——战略思维的艺术"></a><a href="https://book.douban.com/subject/3069880/" target="_blank" rel="noopener">BCG视野——战略思维的艺术</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s5897553.jpg" alt></p>
 <h3 id="目录-3"><a href="#目录-3" class="headerlink" title="目录"></a>目录</h3><p>第 1章 洞察力是战略之魂    1<br>“独特性”是制胜战略的钥匙    2<br>洞察力是获得“战略论附加能力”的能力    8</p>
 <p>第 2章 提高思考的“速度”    12<br>逻辑思考的过程    13<br>提高思考速度    17<br>确认模型    19<br>图表思考    30<br>假想演练    35</p>
 <p>第 3章 掌握思维创造力的“视角”    42<br>以3种视角观察事物    43<br>开拓视野的“广角镜”视角    45<br>精深专一的“聚焦镜”视角    58<br>使思维跳跃的“反转镜”视角    68</p>
 <p>第 4章 体验产生洞察力的大脑思维法    84<br>构成洞察力的要素    85<br>产生洞察力的大脑思维法    87</p>
 <p>第 5章 团队力量生成洞察力    95<br>优化组合不同人才    96<br>激发创造性的“氛围”    101<br>结束语    107</p>
-<p><img alt data-src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike72%2C5%2C5%2C72%2C24/sign=7a4ce7ddf603738dca470470d272db34/ac345982b2b7d0a2cfb99ce0cbef76094b369a5f.jpg"></p>
+<p><img data-src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike72%2C5%2C5%2C72%2C24/sign=7a4ce7ddf603738dca470470d272db34/ac345982b2b7d0a2cfb99ce0cbef76094b369a5f.jpg" alt></p>
 <blockquote>
 <p><a href="https://baike.baidu.com/item/BCG/13575658?fr=aladdin" target="_blank" rel="noopener">BCG</a>是一家全球性管理咨询公司，是世界领先的商业战略咨询机构，客户遍及所有行业和地区。</p>
 </blockquote>
@@ -444,9 +414,9 @@
 <p>第一部分 是什么激发了我们的洞察力？<br>第一章　往宝马车里弹烟灰的人是车主还是偷车贼？　3<br>一场偶然的研讨会成就了2008年的诺贝尔化学奖　8<br>不知名的金融分析师花10年时间揭穿庞氏骗局　12<br>第一个发现艾滋病的人　16<br>生活中有许许多多关于洞察力的故事　20<br>第二章　洞察力是一道难解的谜题　23<br>洞察力可以让我们的想法和生活更精彩　32<br>用自然主义而非实验的方法研究洞察力　35<br>激发洞察力的5类策略　41<br>第三章　触类旁通：你会吃到花椰菜还是小金鱼饼干？　45<br>从塔兰托战役预见到珍珠港袭击　45<br>18个月大的婴儿已经具备移情能力　50<br>马尔萨斯的人口论启发达尔文创立进化论　53<br>第一个可以自圆其说的答案　57<br>第四章　巧合事件与好奇心驱使：诺贝尔奖得主们是如何做出重大发现的？　63<br>20世纪最重大的天文学发现——脉冲星　64<br>青霉素、X射线与太阳能电池的发现　70<br>胃溃疡的致病因素和诺贝尔物理学奖　74<br>毒气、蚊子与黄热病　81<br>第五章　自相矛盾：千万别对“这肯定有问题”的警示视而不见　87<br>怀疑的态度帮助他们洞察到美国房地产泡沫的破灭　88<br>找出让霍乱疫情肆虐的罪魁祸首　100<br>光速与爱因斯坦的狭义相对论　108<br>第六章　急中生智：在棋局不利的情况下，如何反败为胜?　111<br>通过点燃另一场火而成功逃生　112<br>化敌为友，从岩缝中成功逃生　119<br>当时间绩效卡遇上“好时之吻”巧克力　120<br>土伦之战，拿破仑带领法国军队以弱胜强　123<br>第七章　探索洞察力从何而来的3种方法　127<br>从数据出发：洞察力不只是茅塞顿开　127<br>制胜的一拳靠的不是运气，而是洞察力　131<br>从科研文献出发：洞察力可以克服决策偏见　135<br>从故事出发：全新的认知模型和研究框架　138<br>第八章　洞察力的逻辑　143</p>
 <p>第二部分 是什么抑制了我们的洞察力？<br>第九章　人类所犯下的种种愚蠢的错误　157<br>生活中的愚蠢举动　162<br>第十章　孪生子悖论：为什么有些人洞察力不凡，有些人抱残守缺？　169<br>被错误的观念所裹挟　171<br>缺乏必需的经验　177<br>态度消极，不做深入探寻　180<br>固守死板的推理方式　182<br>两个初出茅庐的研究者何以解开了DNA的奥秘？　184<br>第十一章 无能的系统：谷歌自作主张地为我们过滤掉了哪些信息？　197<br>谁能解救被绑架的3个女孩　198<br>系统设计得越刻意，越容易扼杀洞察力　210<br>第十二章　组织机构为什么一边倡导创新，一边抹杀员工的创造力？　213<br>完美主义是创新的天敌　213<br>严苛的流程管理制度将创新思维拒之门外　222<br>蹒跚前行的科学家和学者们　237<br>第十三章　被思维定式困住了的洞察力研究者们　241</p>
 <p>第三部分 提升自身、他人和组织的洞察力<br>第十四章　如何提升我们自身的洞察力？　255<br>不可忽视的矛盾与“摆动犯规”警告　256<br>创意源自不同想法的融会贯通　261<br>批判性思维更适用于身处逆境的企业或个人　263<br>洞察力的产生是否需要酝酿的过程？　266<br>第十五章　纠正他人错误认知的最佳方法　271<br>诊断他人的困惑之处并“对症下药”　271<br>将洞见转化为有力的行动　275<br>利用自相矛盾的情形来纠正错误的认知　280<br>一个困扰了我15年的决策难题　286<br>第十六章　帮助组织机构实现“两个箭头”的平衡 　289<br>强化组织的创新机制和能力　290<br>适度弱化组织的创意过滤机制　296<br>增强组织机构开展创新行动的意志力　298<br>找到平衡两个箭头的办法　310<br>第十七章　洞察力捕手：爸爸的鼻子在哪里？　315<br>“反达尔文主义”的零号蜥蜴　317<br>精明家庭主妇的购物策略　322<br>他是怎么知道或做到的？　326<br>一个关于锁和钥匙的小故事　331<br>第十八章　洞察力的魔力　335<br>致谢　349</p>
-<h2 id="远见——用变革理论预见产业未来-Seeing-What’s-Next-Using-Theories-of-Innovation-to-Predict-Industry-Change"><a href="#远见——用变革理论预见产业未来-Seeing-What’s-Next-Using-Theories-of-Innovation-to-Predict-Industry-Change" class="headerlink" title="远见——用变革理论预见产业未来 Seeing What’s Next : Using Theories of Innovation to Predict Industry Change"></a><a href="https://book.douban.com/subject/1843185/" target="_blank" rel="noopener">远见——用变革理论预见产业未来 Seeing What’s Next : Using Theories of Innovation to Predict Industry Change</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s8924485.jpg"></p>
+<h2 id="远见——用变革理论预见产业未来-Seeing-What’s-Next-Using-Theories-of-Innovation-to-Predict-Industry-Change"><a href="#远见——用变革理论预见产业未来-Seeing-What’s-Next-Using-Theories-of-Innovation-to-Predict-Industry-Change" class="headerlink" title="远见——用变革理论预见产业未来 Seeing What’s Next : Using Theories of Innovation to Predict Industry Change"></a><a href="https://book.douban.com/subject/1843185/" target="_blank" rel="noopener">远见——用变革理论预见产业未来 Seeing What’s Next : Using Theories of Innovation to Predict Industry Change</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s8924485.jpg" alt></p>
 <h3 id="目录-5"><a href="#目录-5" class="headerlink" title="目录"></a>目录</h3><p>致谢<br>导言<br>第一部分　如何使用创新理论进行分析<br>第一章　变化的信号：机会在何处<br>第二章　竞争战：如何评估竞争者的实力<br>第三章　战略选择：识别关系重大的选择<br>第四章　非市场因素如何影响创新<br>第二部分　基于理论分析的例证<br>第五章　破坏性的文凭：教育业的未来<br>第六章　破坏展翅高飞：航空业的未来<br>第七章　摩尔定律会继续适用吗：半导体业的未来<br>第八章　治愈庞然大物：医疗保健业的未来<br>第九章　海外创新：运用创新理论评估公司和国家战略<br>第十章　冲破有线网络的束缚：电信业的未来<br>结论　下一步会发生什么<br>注释<br>附录核心概念摘要<br>专业词汇<br>作者简介<br>译后记</p>
-<h2 id="看见"><a href="#看见" class="headerlink" title="看见"></a><a href="https://book.douban.com/subject/20427187/" target="_blank" rel="noopener">看见</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s24468373.jpg"></p>
+<h2 id="看见"><a href="#看见" class="headerlink" title="看见"></a><a href="https://book.douban.com/subject/20427187/" target="_blank" rel="noopener">看见</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s24468373.jpg" alt></p>
 <h3 id="目录-6"><a href="#目录-6" class="headerlink" title="目录"></a>目录</h3><p>序<br>一 别当了主持人就不是人了<br>二 那个温热的跳动就是活着<br>三 双城的创伤<br>四 是对峙，不是对抗<br>五 我们终将浑然难分，像水溶于水中<br>六 沉默在尖叫<br>七 山西，山西<br>八 我只是讨厌屈服<br>九 许多事情，是有人相信，才会存在<br>十 真相常流失于涕泪交加中<br>十一 只求了解与认识而已<br>十二 新旧之间没有怨讼，唯有真与伪是大敌<br>十三 事实就是如此<br>十四 真实自有万钧之力<br>十五 只听到青绿的细流声<br>十六 逻辑自泥土中剥离<br>十七 无能的力量<br>十八 采访是病友间的相互探问<br>十九 不要问我为何如此眷恋<br>二十 陈虻不死<br>后记</p>
 <h3 id="我看见了任性却温柔的水流"><a href="#我看见了任性却温柔的水流" class="headerlink" title="我看见了任性却温柔的水流"></a><a href="https://book.douban.com/review/5715488/" target="_blank" rel="noopener">我看见了任性却温柔的水流</a></h3><p>坦白地说，我并未看过柴静主持的节目，除了她采访卢安克那期，网上看的。采访拍得好，我的注意力都放在卢安克和广西留守儿童们身上，根本没留意记者是谁。我认识柴静，是她的博客，写作家野夫那篇。这人写得好，不是舞文弄墨那种好，很少能找见她用什么特别出挑或艰涩的词句；她的好是内容，文字细密，信息量大，像个电影里的长镜头，从从容容地白描。你以为演完了，才不是，她换个角度喘口气接着来，又是一个新层次，一些更深的东西。我喜欢读她的文章，跟我喜欢读《国家地理》杂志是一个道理——写得踏实，文字里没有戾气。</p>
 <blockquote>
@@ -482,7 +452,7 @@
 <p>读书，读好书，是一种自我教育，这是一个持续终生的过程，只有开始，没有结束——即使在生命的尽头，也还有延续的可能。所以古人说：君子贵乎道者三，太上立德，其次立言，再次立功。</p>
 <p>那么，在一本“立言”的书里，我们是否能够看见这个世界更多的层面，是否会多些宽容，以及对美好的相信？</p>
 <p>教育，永不停止。看见，洞察，永远需要。</p>
-<h2 id="这个世界为什么越来越不平静"><a href="#这个世界为什么越来越不平静" class="headerlink" title="这个世界为什么越来越不平静"></a><a href="http://www.luojiji.com/thread-6260-1-1.html" target="_blank" rel="noopener">这个世界为什么越来越不平静</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201609/16/132939ai11h55nnj4q5104.jpg"></p>
+<h2 id="这个世界为什么越来越不平静"><a href="#这个世界为什么越来越不平静" class="headerlink" title="这个世界为什么越来越不平静"></a><a href="http://www.luojiji.com/thread-6260-1-1.html" target="_blank" rel="noopener">这个世界为什么越来越不平静</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201609/16/132939ai11h55nnj4q5104.jpg" alt></p>
 <p>2016-09-16 何帆 罗辑思维</p>
 <p>01</p>
 <p>从 9 月 13 日起，我在罗辑思维的「得到」App 开辟了一个专栏，叫《何帆大局观》  。在未来的一年内，从周一到周五每日更新，带你体验思想的原生态。我希望这个专栏能够帮助你更好地体察这个快速变化的世界。</p>
@@ -559,8 +529,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Quality/" rel="bookmark">Quality</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Player/" rel="bookmark">Player</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Investment/" rel="bookmark">Investment</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Freedom/" rel="bookmark">Freedom</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Mamba/" rel="bookmark">Mamba</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Wisdom/" rel="tag"><i class="fa fa-tag"></i> Wisdom</a>
               <a href="/tags/Long/" rel="tag"><i class="fa fa-tag"></i> Long</a>
@@ -574,21 +565,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Science/" rel="next" title="Science">
-                  <i class="fa fa-chevron-left"></i> Science
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Success/" rel="prev" title="Success">
-                  Success <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Science/" rel="prev" title="Science">
+      <i class="fa fa-chevron-left"></i> Science
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Success/" rel="next" title="Success">
+      Success <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -601,7 +589,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -632,8 +642,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -642,14 +652,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -660,11 +670,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -698,7 +703,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -710,51 +715,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -763,18 +729,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -784,63 +744,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -848,14 +751,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -882,40 +785,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Foresight/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

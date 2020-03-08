@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="子健 在手机客户端尤其是Android应用的开发过程中，我们经常会接触到“硬件加速”这个词。由于操作系统对底层软硬件封装非常完善，上层软件开发者往往对硬件加速的底层原理了解很少，也不清楚了解底层原理的意义，因此常会有一些误解，如硬件加速是不是通过特殊算法实现页面渲染加速，或是通过硬件提高CPU/GPU运算速率实现渲染加速。 本文尝试从底层硬件原理，一直到上层代码实现，对硬件加速技术进行简单介绍，其">
 <meta name="keywords" content="CPU,GPU,Hardware Accelerate">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Android/IPCreator/Technology/Program/Android/the-essence-of-hardware-accelarate-in-android/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Android/IPCreator/Technology/Program/Android/the-essence-of-hardware-accelarate-in-android/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Android/IPCreator/Technology/Program/Android/the-essence-of-hardware-accelarate-in-android/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -294,7 +264,7 @@
 <p>方案    原理    特点<br>使用PNG图片（BitmapDrawable）    解码PNG图片生成Bitmap，传到底层，由GPU渲染    图片解码消耗CPU运算资源，Bitmap占用内存大，绘制慢<br>使用XML或Java代码实现（ShapeDrawable）    直接将Shape信息传到底层，由GPU渲染    消耗CPU资源少，占用内存小，绘制快</p>
 <h3 id="页面渲染背景知识"><a href="#页面渲染背景知识" class="headerlink" title="页面渲染背景知识"></a>页面渲染背景知识</h3><p>页面渲染时，被绘制的元素最终要转换成矩阵像素点（即多维数组形式，类似安卓中的Bitmap），才能被显示器显示。<br>页面由各种基本元素组成，例如圆形、圆角矩形、线段、文字、矢量图（常用贝塞尔曲线组成）、Bitmap等。<br>元素绘制时尤其是动画绘制过程中，经常涉及插值、缩放、旋转、透明度变化、动画过渡、毛玻璃模糊，甚至包括3D变换、物理运动（例如游戏中常见的抛物线运动）、多媒体文件解码（主要在桌面机中有应用，移动设备一般不用GPU做解码）等运算。<br>绘制过程经常需要进行逻辑较简单、但数据量庞大的浮点运算。</p>
 <h3 id="CPU与GPU结构对比"><a href="#CPU与GPU结构对比" class="headerlink" title="CPU与GPU结构对比"></a>CPU与GPU结构对比</h3><p>CPU（Central Processing Unit，中央处理器）是计算机设备核心器件，用于执行程序代码，软件开发者对此都很熟悉；GPU（Graphics Processing Unit，图形处理器）主要用于处理图形运算，通常所说“显卡”的核心部件就是GPU。</p>
-<p>下面是CPU和GPU的结构对比图。其中：<br><img alt data-src="http://tech.meituan.com/img/hardware-accelerate/cpu-gpu.png"><br>黄色的Control为控制器，用于协调控制整个CPU的运行，包括取出指令、控制其他模块的运行等；<br>绿色的ALU（Arithmetic Logic Unit）是算术逻辑单元，用于进行数学、逻辑运算；<br>橙色的Cache和DRAM分别为缓存和RAM，用于存储信息。</p>
+<p>下面是CPU和GPU的结构对比图。其中：<br><img data-src="http://tech.meituan.com/img/hardware-accelerate/cpu-gpu.png" alt><br>黄色的Control为控制器，用于协调控制整个CPU的运行，包括取出指令、控制其他模块的运行等；<br>绿色的ALU（Arithmetic Logic Unit）是算术逻辑单元，用于进行数学、逻辑运算；<br>橙色的Cache和DRAM分别为缓存和RAM，用于存储信息。</p>
 <p>从结构图可以看出，CPU的控制器较为复杂，而ALU数量较少。因此<strong>CPU擅长各种复杂的逻辑运算，但不擅长数学尤其是浮点运算。</strong></p>
 <p>以8086为例，一百多条汇编指令大部分都是逻辑指令，数学计算相关的主要是16位加减乘除和移位运算。一次整型和逻辑运算一般需要1~3个机器周期，而浮点运算要转换成整数计算，一次运算可能消耗上百个机器周期。<br>更简单的<strong>CPU甚至只有加法指令，减法用补码加法实现，乘法用累加实现，除法用减法循环实现。</strong><br>现代CPU一般都带有硬件浮点运算器（FPU），但主要适用于数据量不大的情况。<br>CPU是串行结构。以计算100个数字为例，对于CPU的一个核，每次只能计算两个数的和，结果逐步累加。<br>和CPU不同的是，<strong>GPU就是为实现大量数学运算设计的。从结构图中可以看到，GPU的控制器比较简单，但包含了大量ALU。GPU中的ALU使用了并行设计，且具有较多浮点运算单元。</strong></p>
 <blockquote>
@@ -302,21 +272,21 @@
 </blockquote>
 <p>扩展：很多计算机中的GPU有自己独立的显存；没有独立显存则使用共享内存的形式，从内存中划分一块区域作为显存。显存可以保存GPU指令等信息。</p>
 <h3 id="并行结构举例：级联加法器"><a href="#并行结构举例：级联加法器" class="headerlink" title="并行结构举例：级联加法器"></a>并行结构举例：级联加法器</h3><p>为了方便理解，这里先从底层电路结构的角度举一个例子。如下图为一个加法器，对应实际的数字电路结构。</p>
-<p>A、B为输入，C为输出，且A、B、C均为总线，以32位CPU为例，则每根总线实际由32根导线组成，每根导线用不同的电压表示一个二进制的0或1。<br>Clock为时钟信号线，每个固定的时钟周期可向其输入一个特定的电压信号，每当一个时钟信号到来时，A和B的和就会输出到C。<br><img alt data-src="http://tech.meituan.com/img/hardware-accelerate/cascade-adder-1.png"></p>
+<p>A、B为输入，C为输出，且A、B、C均为总线，以32位CPU为例，则每根总线实际由32根导线组成，每根导线用不同的电压表示一个二进制的0或1。<br>Clock为时钟信号线，每个固定的时钟周期可向其输入一个特定的电压信号，每当一个时钟信号到来时，A和B的和就会输出到C。<br><img data-src="http://tech.meituan.com/img/hardware-accelerate/cascade-adder-1.png" alt></p>
 <p>现在我们要计算8个整数的和。</p>
 <p>对于CPU这种串行结构，代码编写很简单，用for循环把所有数字逐个相加即可。串行结构只有一个加法器，需要7次求和运算；每次计算完部分和，还要将其再转移到加法器的输入端，做下一次计算。整个过程至少要消耗十几个机器周期。</p>
 <p>而对于并行结构，一种常见的设计是级联加法器，如下图，其中所有的clock连在一起。当需要相加的8个数据在输入端A1~B4准备好后，经过三个时钟周期，求和操作就完成了。如果数据量更大、级联的层级更大，则并行结构的优势更明显。</p>
-<p>由于电路的限制，不容易通过提高时钟频率、减小时钟周期的方式提高运算速度。并行结构通过增加电路规模、并行处理，来实现更快的运算。但并行结构不容易实现复杂逻辑，因为同时考虑多个支路的输出结果，并协调同步处理的过程很复杂（有点像多线程编程）。<br><img alt data-src="http://tech.meituan.com/img/hardware-accelerate/cascade-adder-2.png"></p>
-<p>GPU并行计算举例<br>假设我们有如下图像处理任务，给每个像素值加1。GPU并行计算的方式简单粗暴，在资源允许的情况下，可以为每个像素开一个GPU线程，由其进行加1操作。数学运算量越大，这种并行方式性能优势越明显。<br><img alt data-src="http://tech.meituan.com/img/hardware-accelerate/render-task.png"></p>
+<p>由于电路的限制，不容易通过提高时钟频率、减小时钟周期的方式提高运算速度。并行结构通过增加电路规模、并行处理，来实现更快的运算。但并行结构不容易实现复杂逻辑，因为同时考虑多个支路的输出结果，并协调同步处理的过程很复杂（有点像多线程编程）。<br><img data-src="http://tech.meituan.com/img/hardware-accelerate/cascade-adder-2.png" alt></p>
+<p>GPU并行计算举例<br>假设我们有如下图像处理任务，给每个像素值加1。GPU并行计算的方式简单粗暴，在资源允许的情况下，可以为每个像素开一个GPU线程，由其进行加1操作。数学运算量越大，这种并行方式性能优势越明显。<br><img data-src="http://tech.meituan.com/img/hardware-accelerate/render-task.png" alt></p>
 <h2 id="Android中的硬件加速"><a href="#Android中的硬件加速" class="headerlink" title="Android中的硬件加速"></a>Android中的硬件加速</h2><p>在Android中，大多数应用的界面都是利用常规的View来构建的（除了游戏、视频、图像等应用可能直接使用OpenGL ES）。下面根据Android 6.0原生系统的Java层代码，对View的软件和硬件加速渲染做一些分析和对比。</p>
 <p>DisplayList<br>DisplayList是一个基本绘制元素，包含元素原始属性（位置、尺寸、角度、透明度等），对应Canvas的drawXxx()方法（如下图）。</p>
 <p>信息传递流程：Canvas(Java API) —&gt; OpenGL(C/C++ Lib) —&gt; 驱动程序 —&gt; GPU。</p>
 <p>在Android 4.1及以上版本，DisplayList支持属性，如果View的一些属性发生变化（比如Scale、Alpha、Translate），只需把属性更新给GPU，不需要生成新的DisplayList。</p>
-<p>RenderNode<br>一个RenderNode包含若干个DisplayList，通常一个RenderNode对应一个View，包含View自身及其子View的所有DisplayList。<br><img alt data-src="http://tech.meituan.com/img/hardware-accelerate/canvas-draw.png"></p>
+<p>RenderNode<br>一个RenderNode包含若干个DisplayList，通常一个RenderNode对应一个View，包含View自身及其子View的所有DisplayList。<br><img data-src="http://tech.meituan.com/img/hardware-accelerate/canvas-draw.png" alt></p>
 <h2 id="Android绘制流程（Android-6-0）"><a href="#Android绘制流程（Android-6-0）" class="headerlink" title="Android绘制流程（Android 6.0）"></a>Android绘制流程（Android 6.0）</h2><p>下面是安卓View完整的绘制流程图，主要通过阅读源码和调试得出，虚线箭头表示递归调用。</p>
 <p>从ViewRootImpl.performTraversals到PhoneWindow.DecroView.drawChild是每次遍历View树的固定流程，首先根据标志位判断是否需要重新布局并执行布局；然后进行Canvas的创建等操作开始绘制。</p>
 <p>如果硬件加速不支持或者被关闭，则使用软件绘制，生成的Canvas即Canvas.class的对象；<br>如果支持硬件加速，则生成的是DisplayListCanvas.class的对象；<br>两者的isHardwareAccelerated()方法返回的值分别为false、true，View根据这个值判断是否使用硬件加速。<br>View中的draw(canvas,parent,drawingTime) - draw(canvas) - onDraw - dispachDraw - drawChild这条递归路径（下文简称Draw路径），调用了Canvas.drawXxx()方法，在软件渲染时用于实际绘制；在硬件加速时，用于构建DisplayList。<br>View中的updateDisplayListIfDirty - dispatchGetDisplayList - recreateChildDisplayList这条递归路径（下文简称DisplayList路径），仅在硬件加速时会经过，用于在遍历View树绘制的过程中更新DisplayList属性，并快速跳过不需要重建DisplayList的View。</p>
-<p>Android 6.0中，和DisplayList相关的API目前仍被标记为“@hide”不可访问，表示还不成熟，后续版本可能开放。<br>硬件加速情况下，draw流程执行结束后DisplayList构建完成，然后通过ThreadedRenderer.nSyncAndDrawFrame()利用GPU绘制DisplayList到屏幕上。<br><img alt data-src="http://tech.meituan.com/img/hardware-accelerate/render-func.png"></p>
+<p>Android 6.0中，和DisplayList相关的API目前仍被标记为“@hide”不可访问，表示还不成熟，后续版本可能开放。<br>硬件加速情况下，draw流程执行结束后DisplayList构建完成，然后通过ThreadedRenderer.nSyncAndDrawFrame()利用GPU绘制DisplayList到屏幕上。<br><img data-src="http://tech.meituan.com/img/hardware-accelerate/render-func.png" alt></p>
 <h2 id="纯软件绘制-VS-硬件加速（Android-6-0）"><a href="#纯软件绘制-VS-硬件加速（Android-6-0）" class="headerlink" title="纯软件绘制 VS 硬件加速（Android 6.0）"></a>纯软件绘制 VS 硬件加速（Android 6.0）</h2><p>下面根据具体的几种场景，具体分析一下硬件加速前后的流程与加速效果。</p>
 <p>渲染场景    纯软件绘制    硬件加速    加速效果分析<br>页面初始化    绘制所有View    创建所有DisplayList    GPU分担了复杂计算任务<br>在一个复杂页面调用背景透明TextView的setText()，且调用后其尺寸位置不变    重绘脏区所有View    TextView及每一级父View重建DisplayList    重叠的兄弟节点不需CPU重绘，GPU会自行处理<br>TextView逐帧播放Alpha / Translation / Scale动画    每帧都要重绘脏区所有View    除第一帧同场景2，之后每帧只更新TextView对应RenderNode的属性    刷新一帧性能极大提高，动画流畅度提高<br>修改TextView透明度    重绘脏区所有View    直接调用RenderNode.setAlpha()更新    加速前需全页面遍历，并重绘很多View；加速后只触发DecorView.updateDisplayListIfDirty，不再往下遍历，CPU执行时间可忽略不计</p>
 <p>场景1中，无论是否加速，遍历View树并都会走Draw路径。硬件加速后Draw路径不做实际绘制工作，只是构建DisplayList，复杂的绘制计算任务被GPU分担，已经有了较大的加速效果。<br>场景2中，TextView设置前后尺寸位置不变，不会触发重新Layout。</p>
@@ -335,15 +305,36 @@
 <p>实现同样效果，应尽量使用更简单的DisplayList，从而达到更好的性能（Shape代替Bitmap等）。</p>
 <h2 id="参考资料与扩展阅读"><a href="#参考资料与扩展阅读" class="headerlink" title="参考资料与扩展阅读"></a>参考资料与扩展阅读</h2><p><a href="http://www.cnblogs.com/LBSer/p/4592862.html" target="_blank" rel="noopener">GPU—并行计算利器</a><br><a href="http://www.eechina.com/thread-176224-1-1.html" target="_blank" rel="noopener">显示卡的“心脏”GPU工作原理介绍</a><br><a href="http://hust.cf/matlab/2016/05/15/Matlab%E7%9A%84GPU%E5%8A%A0%E9%80%9F.html" target="_blank" rel="noopener">Matlab的GPU加速</a><br><a href="http://blog.csdn.net/yang_yulei/article/details/22529437" target="_blank" rel="noopener">处理器体系结构：了解CPU的基本运行原理</a><br><a href="http://blog.chinaunix.net/uid-23069658-id-3563960.html" target="_blank" rel="noopener">CPU的内部架构和工作原理</a><br><a href="http://xilinx.eetrend.com/article/10087" target="_blank" rel="noopener">什么是异构多处理系统，为什么需要异构多处理系统</a><br><a href="http://blog.csdn.net/luoshengyang/article/details/45943255" target="_blank" rel="noopener">Android应用程序UI硬件加速渲染的Display List构建过程分析</a><br><a href="http://blog.csdn.net/luoshengyang/article/details/46281499" target="_blank" rel="noopener">Android应用程序UI硬件加速渲染的Display List渲染过程分析</a><br><a href="http://www.jianshu.com/p/996bca12eb1d" target="_blank" rel="noopener">Android Choreographer源码分析</a><br><a href="http://blog.csdn.net/innost/article/details/8272867" target="_blank" rel="noopener">Android Project Butter分析</a></p>
 <p>不想错过技术博客更新？想给文章评论、和作者互动？第一时间获取技术沙龙信息？</p>
-<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img alt data-src="http://tech.meituan.com/img/qrcode_for_gh.jpg"><br>公众号二维码</p>
+<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img data-src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>公众号二维码</p>
 
     </div>
 
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/DataBase/" rel="bookmark">DataBase</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Image/" rel="bookmark">Image</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Chip/" rel="bookmark">Chip</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Linux/" rel="bookmark">Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Video/" rel="bookmark">Video</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
               <a href="/tags/GPU/" rel="tag"><i class="fa fa-tag"></i> GPU</a>
@@ -357,21 +348,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/" rel="next" title="Talking About Clean Code">
-                  <i class="fa fa-chevron-left"></i> Talking About Clean Code
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Program/IPCreator/Technology/Program/Computer/the-anatomy-of-cpu/" rel="prev" title="Anatomy of CPU">
-                  Anatomy of CPU <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/" rel="prev" title="Talking About Clean Code">
+      <i class="fa fa-chevron-left"></i> Talking About Clean Code
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Program/IPCreator/Technology/Program/Computer/the-anatomy-of-cpu/" rel="next" title="Anatomy of CPU">
+      Anatomy of CPU <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -384,7 +372,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -415,8 +425,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -425,14 +435,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -443,11 +453,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -481,7 +486,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -493,51 +498,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -546,18 +512,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -567,63 +527,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -631,14 +534,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -665,40 +568,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Android/IPCreator/Technology/Program/Android/the-essence-of-hardware-accelarate-in-android/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

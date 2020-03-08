@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="如何做？过去，现在，他人。——DeepCreator">
 <meta name="keywords" content="Strategy,Why,What,How,Method,Tactics">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/How/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/How/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/How/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="talent20180808.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/talent20180808.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://pd4vb8220.bkt.clouddn.com/talent20180808.jpg?imageMogr2/thumbnail/!75p" alt="talent20180808.jpg"></p>
 <blockquote>
 <p>如何做？过去，现在，他人。——DeepCreator</p>
 </blockquote>
@@ -559,19 +529,19 @@
 <p>注意，榜样其实不需要完美。只需要确实不断进步，就已经是神一样的榜样了……</p>
 <p>有效沟通，真的很难。与其花时间精力推销，还真不如把那时间花在自己身上，默默地成为榜样好了。</p>
 <h2 id="逆境生存指南-——-特朗博做到了"><a href="#逆境生存指南-——-特朗博做到了" class="headerlink" title="逆境生存指南 —— 特朗博做到了"></a><a href="http://zhibimo.com/read/xiaolai/reborn-every-7-years/A33.html" target="_blank" rel="noopener">逆境生存指南 —— 特朗博做到了</a></h2><p>这一篇原本并没有想到应该放在《新生 —— 七年就是一辈子》里，但整理的过程中发现，这是个很好的补充。</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-1.jpg"></p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-1.jpg" alt></p>
 <p>谁都可能遭遇逆境，因为“好花不常开，好景不常在”。逆境其实也分大小，但每个人遭遇到的时候，都感觉不小。因为大人物的遭遇常常是极大的逆境，否则瞬间就搞定了，而小人物的遭遇，即便是很小的逆境，按比例来看，对他们来说也足够大了 —— 因为搞不定。有些人起初并不伟大，只不过在遇到逆境的时候，不顾比例地不服输，“不知疲倦地翻越、不自量力地还手”（像李宗盛的《山丘》里唱的那样），终于走了过来，在这过程中，配合着逆境自己把自己养成了大人物。</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-02.jpg"></p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-02.jpg" alt></p>
 <p>特朗博（Dalton Trumbo），一名擅长从冗长故事里发现精彩并能快速写出好剧本的好莱坞编剧，在美国的四五六十年代遭遇了极大的逆境：在美国人最恐惧共产主义的时代，他是个坚定的共产主义者，且绝不吝于公开表达。当人们并不真正了解之前并不存在的一样东西的时候（尤其是思想），对其要么恐惧，要么热爱；不管那东西对不对，只要是恐惧者居多，那么热爱那样东西的人就会受到迫害，历史上反复如是 —— 特朗博就这样被迫害了，最终被判入狱 11 个月。</p>
 <p>2015 年有另外一部传记影片，《模仿游戏》，计算机天才图灵的故事，看看那时候的人们是怎样迫害一个同性恋者的罢……</p>
 <p>对特朗博的迫害不仅仅来自于美国政府，也来自于美国当时的整个社会。美国政府判他坐了 11 个月的牢，出狱之后，特朗博要面对的是另外一个“判决”，好莱坞电影协会将特朗博和很多左翼编剧列入了黑名单，禁止电影公司采用这些黑名单中的编剧所写的剧本……</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-03.jpg"><br>（特朗普与他的妻子在 1947 年的听证会上…… 没多久他就被捕了）</p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-03.jpg" alt><br>（特朗普与他的妻子在 1947 年的听证会上…… 没多久他就被捕了）</p>
 <p>想象一下，身体健康的你突然被截肢了 —— 无论是被截掉一只手臂，还是一条腿 —— 有多么痛苦？特朗博相当于突然被剪断了舌头，一个有思想的人说不了话了、写出来却也没人能看到了……</p>
 <p>失业、离婚、自杀…… 这是特朗博很多同伴的结局。特朗博到最后都没有倒下，他不死心。出狱的时候，他说了这样一句：</p>
 <p>… We’ll do what every else doesn’t think we could do.</p>
 <p>…… 我们要做所有人都认为我们做不到的事情。</p>
 <p>要赚钱养家，让妻子和两个孩子好好生活 —— 没有什么比家庭更重要。好莱坞最缺什么？最缺好剧本，所以特朗博知道自己不可能没饭吃 —— 他简直就是一台机器，一分钟 80 词的打字速度（看他的两根手指在机械打字机上飞舞），一天工作 18 小时，醒来就在工作台上敲字，累了就泡进浴缸接着敲…… 一两周就搞出一个高质量的剧本。有才华更应该勤奋，他要把被抢走的时间抢回来。</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-04.jpg"><br>《罗马假日》（Roman Holiday, 1953）就是他这么写出来的，对，就是你知道的那个《罗马假日》。自己在黑名单上怎么办？借用他人的名字，跟人家一九分账，自己要一……对方知道特朗博的才华，被这样的提议惊到了，哪里好意思自己出个名字就要九成？</p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-04.jpg" alt><br>《罗马假日》（Roman Holiday, 1953）就是他这么写出来的，对，就是你知道的那个《罗马假日》。自己在黑名单上怎么办？借用他人的名字，跟人家一九分账，自己要一……对方知道特朗博的才华，被这样的提议惊到了，哪里好意思自己出个名字就要九成？</p>
 <p>特朗博不仅自己搞定了收入，还要帮一群跟他一样被列入黑名单而失业了的编辑搞定收入。策略也很简单，集体匿名创作，批量生产，然后为了躲避耳目让电影公司上门自取或者出动自己的孩子去送剧本……</p>
 <p>真正的才华，别人是看得到的，也是自己藏不住的。这世界上也有形形色色的人物，有人害怕的时候他们不怕。有俩粗人，兄弟俩，搞了个电影公司，叫国王兄弟（King Brothers），专拍 B 级片，他们当然也一样缺好剧本，否则谁只拍 B 级片啊？别人不敢用特朗博，他俩敢。后来好莱坞电影协会的人跑来威胁这俩兄弟，这兄弟俩也不是吃素的，抡起棒球棍把那起初趾高气昂的孙子“打”了出去……</p>
 <p>特朗博的伟大之处在于，他分得清楚，电影就是电影，意识形态就是意识形态，这俩东西即便在少数情况下有所重叠，但不一样就是不一样。于是，他写剧本就好好写剧本，绝不夹带私货。他也不想刻意当什么战士，他只是精神上绝不屈服而已。他最令人感觉温暖的地方在于，他懂得理想之外还有家庭，家人最重要。</p>
@@ -592,13 +562,13 @@
 <p>特朗博在一次采访里说，每个人都有表达的权利，不管是好主意、坏主意、怪主意、还是恶心主意…… 不仅如此，人们还有犯错的权利（The right to be wrong）。</p>
 <p>《斯巴达克斯》这部电影，特朗博的剧本是基于霍华德·法斯特（Howard Fast）的同名小说，就是那个斯大林大奖（Stalin Prize）的得主……</p>
 <p>剧照</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-05.jpg"><br>特朗博的妻子，跟所有热爱生活的人一样，“身怀绝技”……</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-06.jpg"><br>当然不能没有浴缸里创作的桥段……</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-07.jpg"><br>两个指头敲字的镜头也绝对不能没有……</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-08.jpg"><br>累死可以，但不能饿死。另外，板子上贴满了纸片，这是创作者的基本工作方式…… 其实到今天都一样的。</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-09.jpg"><br>导演奥托·普雷明格坚持在他的新电影里，特朗博要实名署名……</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-10.jpg"><br>特朗博看到自己的名字出现在屏幕上，老泪啊！</p>
-<p><img alt data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-11.jpg"><br>Frank King 可是被吓大的，怎么可能怕威胁？</p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-05.jpg" alt><br>特朗博的妻子，跟所有热爱生活的人一样，“身怀绝技”……</p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-06.jpg" alt><br>当然不能没有浴缸里创作的桥段……</p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-07.jpg" alt><br>两个指头敲字的镜头也绝对不能没有……</p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-08.jpg" alt><br>累死可以，但不能饿死。另外，板子上贴满了纸片，这是创作者的基本工作方式…… 其实到今天都一样的。</p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-09.jpg" alt><br>导演奥托·普雷明格坚持在他的新电影里，特朗博要实名署名……</p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-10.jpg" alt><br>特朗博看到自己的名字出现在屏幕上，老泪啊！</p>
+<p><img data-src="http://zhibimo.com/read/xiaolai/reborn-every-7-years/images/trumbo-11.jpg" alt><br>Frank King 可是被吓大的，怎么可能怕威胁？</p>
 <p>补充</p>
 <p>wn.com 做了一个专栏：“How Dalton Trumbo and other blacklisted writers quietly racked up ‘50s Oscar wins”，里面有十几个值得看看的视频文件，包括 “Dalton Trumbo interviewed by Stan Bohrman”……</p>
 <p><a href="http://t.cn/RbEyxbY" target="_blank" rel="noopener">http://t.cn/RbEyxbY</a></p>
@@ -716,7 +686,7 @@
 <p>1心智模型形成思维框架，让你放置你的日益增长的行业知识<br>优秀人士更好地比普通人学习知识和获取新信息，因为他们没有把这些知识当做孤立的数据，而是一个易于理解的大画面的一部分。</p>
 <p>2 心智模型能帮助你把相关信息和不相关信息区分开</p>
 <p>3一个心智模型能帮助你预测下一步将要发生什么</p>
-<h2 id="只管去做"><a href="#只管去做" class="headerlink" title="只管去做"></a><a href="https://book.douban.com/subject/27601521/" target="_blank" rel="noopener">只管去做</a></h2><p><img alt="how20180808.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/how20180808.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="只管去做"><a href="#只管去做" class="headerlink" title="只管去做"></a><a href="https://book.douban.com/subject/27601521/" target="_blank" rel="noopener">只管去做</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/how20180808.jpg?imageMogr2/thumbnail/!75p" alt="how20180808.jpg"></p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>自序：只管去做<br>引子：我该如何存在</p>
 <p>第一章 写给五年后的自己的一封信<br>为什么你的年度计划总是实现不了<br>不走心的目标是假目标<br>让自己怦然心动的一封信</p>
 <p>第二章 让梦想照进现实<br>你的愿景是不是忽略了什么<br>三步把模糊的愿景孵化成明确的目标<br>检查一下年度目标是否合理</p>
@@ -731,7 +701,7 @@
 <p>纯干货回顾。</p>
 <p>一、按照掌控和视角两个维度，把人生活的状态分为四种（戴维艾伦）：</p>
 <p>空想家：想法多，落实少。<br>回应者：混吃等死，安于现状。<br>执行者：执行力强，但忙于琐事，不考虑未来。<br>舰长和指挥官：对未来有清晰规划，也有能力实现。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1204846.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1204846.jpg" alt></p>
 <p>二、大部分年度计划失败的原因：</p>
 <p>假：目标不是发自内心，而是一时激情。<br>大：目标超出能力范围。<br>空：写下了目标，但没有落实到计划。<br>全：贪多求全。</p>
 <p>三、着陆式年度计划法</p>
@@ -741,7 +711,7 @@
 <p>“人生除了活得有意义，还要活得有意思。”  </p>
 <p>“人生的幸福在于平衡”。反例：“事业狂”、“大头娃娃”、“大家长”…       </p>
 <p>三步法：先定义，再计划，后目标。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1204862.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1204862.jpg" alt></p>
 <p>六、明细目标SMART   </p>
 <p>问自己：年度目标符合SMART原则吗？</p>
 <p>Specific:具体的<br>Measurable：可以衡量的<br>Attainable：可以达到的<br>Relevant：与其他目标具有相关性<br>Time-based：明确的时间期限</p>
@@ -750,7 +720,7 @@
 <p>三分钟热度；<br>很努力地坚持，看不到效果，然后就放弃；<br>被打断了一次，灰心丧气。<br>计划项目已时容易遇到的挑战：</p>
 <p>拖到最后一刻；<br>专注细节，忽略整体进度；<br>多个项目同时进行时容易忙乱。<br>抬头看路：甘特图<br>低头走路：倒推分解法</p>
 <p>项目分类：简单-复杂和具体-模糊两个维度+舒适区、学习区、恐慌区三层。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1204864.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1204864.jpg" alt></p>
 <p>从两个维度化解项目：</p>
 <blockquote>
 <p>我如何才能让事情变得更简单；<br>我如何才能让事情变得更具体。</p>
@@ -758,7 +728,7 @@
 <p>好的年度计划三个标准：坚韧、简化、解放。</p>
 <p>八、三步培养好习惯 培养习惯的四个阶段</p>
 <p>带着新鲜感和热情开始<br>用方法和技巧坚持<br>吸纳渴望和奖赏的能力突破<br>伴随着喜悦的习惯成自然</p>
-<p><img alt data-src="https://img1.doubanio.com/view/thing_review/l/public/p1204869.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/thing_review/l/public/p1204869.jpg" alt></p>
 <p>《习惯的力量》</p>
 <p>人生不过是无数习惯的总和<br>养成习惯的秘密：“习惯回路”。<br>习惯不能被消除，却能被替代</p>
 <p>确认自己真正想要培养的习惯：按照痛苦、热情、时机的程度打分汇总比较。</p>
@@ -770,8 +740,8 @@
 <p>3、付氏工作流<br>2min能解决的事情立刻去做，包括授权。<br>把所有要做的事情写下来，不论是计划内还是突发事件。<br>预览所有事情，然后安排好轻重缓急；<br>要事优先。<br>邮件，微信这样非即时交流等有空再处理。</p>
 <p>我喜欢的两句话：</p>
 <p>【人生的幸福在于<a href="https://deepcreator.com/Concept/Balance.html" target="_blank" rel="noopener">平衡</a>】<br>【做事靠<a href="https://deepcreator.com/Concept/System.html" target="_blank" rel="noopener">系统</a>，做人靠<a href="https://deepcreator.com/Concept/Honesty.html" target="_blank" rel="noopener">真心</a>】</p>
-<h2 id="中国群星闪耀时——大师何以成为大师？"><a href="#中国群星闪耀时——大师何以成为大师？" class="headerlink" title="中国群星闪耀时——大师何以成为大师？"></a><a href="https://www.toutiao.com/a6586872446979146248/" target="_blank" rel="noopener">中国群星闪耀时——大师何以成为大师？</a></h2><p><img alt data-src="http://p3.pstatp.com/large/pgc-image/15335512208535f3b3d461b"></p>
-<h2 id="未来八年我们该如何做"><a href="#未来八年我们该如何做" class="headerlink" title="未来八年我们该如何做"></a><a href="https://book.douban.com/subject/10756587/" target="_blank" rel="noopener">未来八年我们该如何做</a></h2><p><img alt="how20180804001.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/how20180804001.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="中国群星闪耀时——大师何以成为大师？"><a href="#中国群星闪耀时——大师何以成为大师？" class="headerlink" title="中国群星闪耀时——大师何以成为大师？"></a><a href="https://www.toutiao.com/a6586872446979146248/" target="_blank" rel="noopener">中国群星闪耀时——大师何以成为大师？</a></h2><p><img data-src="http://p3.pstatp.com/large/pgc-image/15335512208535f3b3d461b" alt></p>
+<h2 id="未来八年我们该如何做"><a href="#未来八年我们该如何做" class="headerlink" title="未来八年我们该如何做"></a><a href="https://book.douban.com/subject/10756587/" target="_blank" rel="noopener">未来八年我们该如何做</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/how20180804001.jpg?imageMogr2/thumbnail/!75p" alt="how20180804001.jpg"></p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>《未来八年我们该如何做》是“青年对话录”系列之一。汪丁丁教授以他的学养深思与家国情怀，和年轻人探讨中国未来的社会图景，也就他长期关注的政治家品格、制度建设、医疗与养老、环保、劳动力与工资以及人类社会过程等诸多问题，提出他的见解、批评与建设性意见，只为期待中国与中国人更加美好的未来。</p>
 <h3 id="作者简介"><a href="#作者简介" class="headerlink" title="作者简介"></a>作者简介</h3><p>汪丁丁，1953年生于北京。当过农民（北大荒知青）和工人。先后获首都师范大学数学学士（1982年）、中国科学院理学硕士（1984年）和美国夏威夷大学经济学博士学位（1990年）。曾任教于香港大学和德国杜伊斯堡大学。现为北京大学国家发展研究院和浙江大学经济学院经济学教授，浙江大学跨学科社会科学研究中心学术委员会主席，《财经》杂志学术顾问。已出版的著作包括《在经济学与哲学之间》、《回家的路：经济学家的思想轨迹》、《走向边缘》、《制度分析基础讲义》、《市场经济与道德基础》、《经济思想史讲义》等二十多种。教学研究领域为经济思想史、制度经济学、行为经济学和新政治经济学等。</p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>未来八年该如何做才好<br>未来八年<br>开放的言论<br>幸福在哪里<br>政治家的品格<br>智识与豁达——政治领袖的品质<br>论政治家的品格<br>社会的历史责任感其实是敬畏感<br>偏激与宽容<br>关于中国人的自由<br>市场，社会，民主<br>一官僚化与“公务员热”<br>官僚们的另一企图<br>中国社会官僚化问题<br>恶的官僚主义与不恶的官僚主义<br>涉及腐败官员或任何行恶者的心理分析<br>再谈民主观念的要素及其文化表达<br>“假如你不想亡党亡国……”<br>医疗与养老<br>白领们的人生与未来<br>每一个健康的人都面临两难选择<br>再谈“医”的问题<br>老龄化时代的智慧<br>关于眼睛的故事<br>日常生活<br>所以，房价不跌，否则……<br>家装业与装修之苦<br>中国的汽车文明与中国人的汽车文化<br>关于汽车的猜想<br>欲反汽车论<br>都市是一种教养<br>车，也是一种教养<br>杭州公交车上的一次体验<br>杭州及西湖必将毁灭在汽车尾气之中<br>关于油价的看法<br>逛上海宜家家居有感于上海的沦落<br>水知道你的罪孽<br>怎能以“人均污染”为中国碳排放立场辩护？<br>正确的生活<br>虚伪及适度虚伪<br>工资及其他<br>工资问题<br>中国劳动工资问题<br>再谈中国的劳动工资问题<br>工薪税负问题<br>资本，资本市场与人力资本<br>杭州龙井茶农<br>节制资本扶助工农<br>财政民主化的原理与表达<br>煤电水气航线通信铁路等网络的垄断问题<br>国际劳动节<br>也谈中国玩具问题<br>为何色情垃圾在一些社会远比在另一些社会普遍<br>制度的文化合理性<br>假如从头烂到脚你打算怎么办？<br>假使寻不出路？<br>社会复杂性的政策涵义<br>制度与人的关系<br>善意的恶法<br>从感觉到感悟<br>这些解释<br>社会过程及其评价</p>
@@ -792,7 +762,7 @@
 <p>1要勤快</p>
 <p>不勤快的人办不好事情，不能当好军事指挥员。应该自己干的事情一定要亲自过目，亲自动手。比如，应该上去看的山头就要爬上去，应该了解的情况就要及时了解，应该检查的问题就要严格检查。</p>
 <p>不能懒，军事指挥员切忌懒，因为懒会带来危险，带来失败。比方说，一个军事指挥员，到了宿营地就进房子，搞水洗脸洗脚，搞鸡蛋煮面吃，吃饱了就睡大觉。他对住的村子有多大，在什么位置，附近有几个山头周围有几条道路，敌情怎么样，群众条件怎么样，可能发生什么情况，部队到齐了没有，哨位在什么地方，发生紧急情况时的处置预案如何，都不过问，都不知道。这样，如果半夜三更发生了情况，敌人来个突然袭击，就没有办法了。到那种时候，即使平时很勇敢的指挥员，也会束手无策，只好三十六计，跑为上计，结果，变成一个机会主义者。</p>
-<p><img alt data-src="https://p3.pstatp.com/large/434a0003f0ea0571cbac"></p>
+<p><img data-src="https://p3.pstatp.com/large/434a0003f0ea0571cbac" alt></p>
 <p>机会主义和打败仗，常常是因为没有思想准备，没有组织准备，工作没有做到家，懒的结果。因此，不论大小指挥员都要勤快，要不惜走路，不怕劳累，要多用脑子，要做到心到、眼到、口到、脚到、手到。事情没有做好以前，不能贪闲。贪闲就隐伏着犯错误的根子。什么事都要心中有底，” 凡事预则立，不预则废 “。雷打不动的干部，牛皮糖式的干部，不管有多大本事，都不是好干部。</p>
 <p>2要摸清上级的意图</p>
 <p>对上级的意图要真正理解，真正融会贯通，真正认识自己所受领的任务在战役、战斗全局中的地位和作用。这样，才能充分发挥自己的主观能动性；才能打破框框，有敢于和善于在新情况中找到新办法的创造性；才能有大勇，才能决心强、决心狠，敢于彻底胜利，有强烈的吞掉敌人的企图和雄心。</p>
@@ -803,12 +773,12 @@
 <p>只要摸清了敌情、我情、地形的底，决心就快，就硬，就坚定。就不会被任何假象所迷惑，就不会被任何困难所吓住。如果情况不清，就会犹豫不决，举棋不定，坐失良机，或者勉强下了决心，一遇风吹草动，听到畏难叫苦和不正确的建议，就容易动摇，可能一念之差，前功尽弃。</p>
 <p>4要有个活地图</p>
 <p>指挥员和参谋必须熟悉地图，要经常读地图。熟读地图可以产生见解，产生智慧，产生办法，产生信心。读的方法是把图挂起来，搬个凳子坐下来，对着地图看，从大的方向到活动地区，从地区全貌到每一地段的地形特点，从粗读到细读，逐块逐块地读，用红蓝铅笔把主要的山脉、河流、城镇、村庄、道路标划出来，边读，边划，等到地图差不多快划烂了，也就差不多把地图背熟了，背出来了。</p>
-<p><img alt data-src="https://p9.pstatp.com/large/43480004133a47da3003"></p>
+<p><img data-src="https://p9.pstatp.com/large/43480004133a47da3003" alt></p>
 <p>在熟读地图的基础上，要亲自组织有关指挥员和参谋对作战地区和战场进行实地勘察，核正地图，把战场的地形情况和敌我双方的兵力部署都装至脑子里去，做到闭上眼睛面前就有一幅鲜明的战场图影，离开地图也能指挥作战。这样，在你死我活、瞬息万变的战斗情况下，可以比敌人来得快，争取先机，先敌一着，掌握主动，稳操胜券。</p>
 <p>5要把各方面的问题想够想透</p>
 <p>每一次战役、战斗的组织，要让大家提出各种可能出现的问题，要让大家来找答案，而且要从最坏的最严重的情况来找答案。把所有提出来的问题都回答了，再没有问题没有回答的了，这样，打起仗来才不会犯大错误，万一犯了错误，也比较容易纠正。没有得到答案的问题，不能因为想了很久想不出来就把它丢开，留下一个疙瘩。如果这样，是很危险的，在紧要关头，这个疙瘩很可能冒出来，就会使你们心中无数，措手不及。<br>当然，在战争环境中，要考虑的问题很多，不可能一次都提完，也不可能一次都回答完，整个战役、战斗的过程，就是不断提出问题和不断回答问题的过程。有时脑子很疲劳，有的问题可能立即回答不了。这时，除了好好地和别人商量以外，就好好地睡一觉，睡好了，睡醒了，头脑清醒了，再躺在床上好好想一想，就可能开窍，可能想通了，回答了，解决了。</p>
 <p>总之，对每一个问题不能含糊了事。问题回答完了，战役、战斗的组织才算完成。</p>
-<p><img alt data-src="https://p9.pstatp.com/large/434b00027cb472f399eb"></p>
+<p><img data-src="https://p9.pstatp.com/large/434b00027cb472f399eb" alt></p>
 <p>6要及时下达决心</p>
 <p>在什么样的情况下可以下决心打呢？指挥员必须以最大努力组织战役、战斗的准备工作，力求确有把握才动手，不打无把握之仗。但是任何一次战斗都不可能完全具备各种条件，不可能有百分之百的把握。一般说有百分之七十左右的把握，就很不错了，就要坚决地打，放手地打。不足的条件，要通过充分发挥人的因素的作用，依靠人民群众的力量，充分发挥人民军队特有的政治上的优势，充分发挥指战员的智慧和英勇顽强的战斗作风来弥补，以主观努力来创造条件，化冒险性为创造性，取得胜利。</p>
 <p>7要有一个很好的很团结的班子</p>
@@ -816,7 +786,7 @@
 <p>8要有一个很好的战斗作风</p>
 <p>有好的战斗作风的部队才能打好仗，打胜仗。好的战斗作风首先是不叫苦，抢着去担负最艰巨的任务，英勇顽强，不怕牺牲，猛打猛冲猛追。特别是要勇于穷追。因为把敌人打垮以后，追击是解决战斗、扩大战果、彻底歼灭敌人最关键的一招。在追击时，要跑步追，快步追，走不动的扶着拐棍追，就是爬、滚，也要往前追，只有抓住敌人，才能吃掉敌人。</p>
 <p>好的战斗作风要靠平时养成，要靠实际锻炼，要在紧张、残酷的战斗中才能锻炼出来。不敢打硬仗、恶仗的部队，让他打几次就打出来了，因为已经见识过硬仗、恶仗的场面，有了体会，有了经验，知道怎么打了，百炼成钢就是这个道理。</p>
-<p><img alt data-src="https://p9.pstatp.com/large/434c0001e568d06500e6"></p>
+<p><img data-src="https://p9.pstatp.com/large/434c0001e568d06500e6" alt></p>
 <p>做工作也要有好的作风，说了就要做，说到那里做到那里，要做得干脆利索，要一竿子插到底，一点不含糊，不做好不撒手。好的作风的养成，关键在于干部。强将手下无弱兵，干部的作风怎么样，部队的作风就会怎么样。因此，首先要抓好干部，要干部做出样子，影响带动部队。只要干部作风好，指挥好战斗，多打胜仗，即使是新建的部队或者原来基础较弱的部队，也会很快打出好作风来，像铁锤一样，砸到那里，那里就碎。</p>
 <p>9要重视政治，亲自做政治工作<br>部队战斗力的提高要靠平时坚强的党的领导、坚强的政治工作。连队的支部一定要建设好，支部的工作要做活，就是要把所有党团员的革命劲头鼓得足足的，充分发挥他们的模范作用、带头作用，通过他们把全连带动起来，通过他们去做政治工作，提高全体指战员的阶级觉悟。有了坚强的党支部的领导，有了坚强的政治工作，就可以做到一呼百应，争先恐后，不怕牺牲，前赴后继。</p>
 <p>战术、技术也要练好，特别是技术，如果枪打不准，战场上就不能消灭敌人，就不能解决战斗。因此，军事训练不能马虎，党政工作要领导好训练。艺高人胆大，胆大艺更高，部队有了高度的无产阶级觉悟，有了好的战斗作风，再加上过硬的作战本领，就如虎添翼，就可以无敌于天下。</p>
@@ -839,8 +809,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/How/" rel="bookmark">How</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/What/" rel="bookmark">What</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Why/" rel="bookmark">Why</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/iDeepLearn/Profession/WWH/" rel="bookmark">WWH</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/What/" rel="bookmark">What</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Strategy/" rel="tag"><i class="fa fa-tag"></i> Strategy</a>
               <a href="/tags/Why/" rel="tag"><i class="fa fa-tag"></i> Why</a>
@@ -857,21 +848,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/What/" rel="next" title="What">
-                  <i class="fa fa-chevron-left"></i> What
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Word/" rel="prev" title="Word">
-                  Word <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/What/" rel="prev" title="What">
+      <i class="fa fa-chevron-left"></i> What
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Word/" rel="next" title="Word">
+      Word <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -884,7 +872,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -915,8 +925,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -925,14 +935,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -943,11 +953,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -981,7 +986,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -993,51 +998,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -1046,18 +1012,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1067,63 +1027,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1131,14 +1034,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1165,40 +1068,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/How/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="一个领域的专业人士关键是发挥稳定。">
 <meta name="keywords" content="Profession">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/P/Profession/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/P/Profession/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/P/Profession/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,13 +256,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://opb37u589.bkt.clouddn.com/p5p1-lg.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/p5p1-lg.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>一个领域的专业人士关键是<strong>发挥稳定</strong>。</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt data-src="https://p2.pstatp.com/origin/662a0005983581c0dcb9"><br><img alt data-src="https://p7.pstatp.com/origin/662b00057f7f09ec4ef2"><br><img alt data-src="https://p7.pstatp.com/origin/662d0004789275ce1751"><br>职业化，专业化</p>
-<p><img alt data-src="http://cdn.iciba.com/news/word/big_20171107b.jpg"><br>Knowing something of everything and everything of something.<br>通百艺而专一长。</p>
+<p><img data-src="https://p2.pstatp.com/origin/662a0005983581c0dcb9" alt><br><img data-src="https://p7.pstatp.com/origin/662b00057f7f09ec4ef2" alt><br><img data-src="https://p7.pstatp.com/origin/662d0004789275ce1751" alt><br>职业化，专业化</p>
+<p><img data-src="http://cdn.iciba.com/news/word/big_20171107b.jpg" alt><br>Knowing something of everything and everything of something.<br>通百艺而专一长。</p>
 <blockquote>
 <p>词霸小编：身兼百计，不如专攻一术；鲜花烹油，不如细水长流。</p>
 </blockquote>
@@ -358,11 +328,11 @@
 <p>内容听完了，我是罗胖。你看，成为一个专业化的人才，视野和见识非常重要。</p>
 <p>吴军老师的每一封来信，都是在分享他的做事方法，和思考问题的方式，其中既有职业发展方面的话题，也有读书学习、艺术修养的生活话题。</p>
 <p>每天和你深谈，帮你拓展视野、升级思维方式，强烈推荐你去订阅《吴军·硅谷来信》，收获更多的人生智慧。</p>
-<h2 id="一封邮件-就能看出你是不是足够专业"><a href="#一封邮件-就能看出你是不是足够专业" class="headerlink" title="一封邮件, 就能看出你是不是足够专业"></a><a href="http://www.luojiji.com/thread-11327-1-1.html" target="_blank" rel="noopener">一封邮件, 就能看出你是不是足够专业</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/03/093656jbv1vbws27qbzbcx.jpg"></p>
+<h2 id="一封邮件-就能看出你是不是足够专业"><a href="#一封邮件-就能看出你是不是足够专业" class="headerlink" title="一封邮件, 就能看出你是不是足够专业"></a><a href="http://www.luojiji.com/thread-11327-1-1.html" target="_blank" rel="noopener">一封邮件, 就能看出你是不是足够专业</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201803/03/093656jbv1vbws27qbzbcx.jpg" alt></p>
 <p>2018-03-03 「得到」 罗辑思维<br>引言</p>
 <p>虽然当下用微信沟通非常方便，但工作中得体使用邮件，仍会给人职业、严谨的感觉。</p>
 <p>很多时候，你和客户、供应商没有见面的机会，邮件是你塑造个人形象的唯一渠道。邮件即礼仪，如何写好一份专业、得体的商务邮件？这篇清单，助你在细节上脱颖而出。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/03/093727pic5yl5cbb4btboq.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201803/03/093727pic5yl5cbb4btboq.jpg" alt></p>
 <ol>
 <li><p>商务邮件，用公司域名的邮箱发。用免费邮箱发送，会给人一种不够专业的感觉。同理，自己的名片上不要印免费邮箱。</p>
 </li>
@@ -389,8 +359,8 @@
 <li><p>如果邮件来来回回，甚至讨论的主题已经发生变动，最好修改邮件主题，或重新发一封新邮件，而不是文不对题的继续“盖楼”。</p>
 </li>
 </ol>
-<h2 id="关于实现职业化的行动清单"><a href="#关于实现职业化的行动清单" class="headerlink" title="关于实现职业化的行动清单"></a><a href="http://www.luojiji.com/thread-9062-1-1.html" target="_blank" rel="noopener">关于实现职业化的行动清单</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201707/04/205939oef3hddi333gsf6y.jpg"><br>2017-07-04 「得到」 罗辑思维<br>引言<br>所谓职业化，是一个人本能的反面，通过职业训练，用职业要求重塑自我。</p>
-<p>「得到」App请中国最贵的商业顾问之一刘润老师，为你创作了这张清单，帮你实现职业化的转变。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201707/04/205950ajxli98jhg9xe9hi.jpg"></p>
+<h2 id="关于实现职业化的行动清单"><a href="#关于实现职业化的行动清单" class="headerlink" title="关于实现职业化的行动清单"></a><a href="http://www.luojiji.com/thread-9062-1-1.html" target="_blank" rel="noopener">关于实现职业化的行动清单</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201707/04/205939oef3hddi333gsf6y.jpg" alt><br>2017-07-04 「得到」 罗辑思维<br>引言<br>所谓职业化，是一个人本能的反面，通过职业训练，用职业要求重塑自我。</p>
+<p>「得到」App请中国最贵的商业顾问之一刘润老师，为你创作了这张清单，帮你实现职业化的转变。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201707/04/205950ajxli98jhg9xe9hi.jpg" alt></p>
 <ol>
 <li><p><strong>职业化的反面是<a href="http://deepcreator.com/2017/11/08/Concept/Instinct/" target="_blank" rel="noopener">本能</a>化</strong>。本能化，是你本人和你在职业中的角色是同一个人；而职业化，是你能用职业的需求去重塑自我。<strong>职业化的<a href="http://deepcreator.com/2017/11/10/Concept/Essence/" target="_blank" rel="noopener">本质</a>是通过<a href>尊重</a>别人，从而赢得尊重，降低<a href="http://deepcreator.com/2017/10/03/Concept/Trust/" target="_blank" rel="noopener">信任</a><a href="http://deepcreator.com/2017/10/16/Economics/Cost/" target="_blank" rel="noopener">成本</a>。</strong>因为工作受委屈、闹情绪，都属于不职业化的行为。</p>
 </li>
@@ -428,7 +398,7 @@
 </blockquote>
 <p>格非举例说，人在照镜子时总会觉得很舒服，“长得美的人越看自己越觉得美；长得有瑕疵的人，比如脸上有个痣，他在镜子前左看右看，总觉得这颗痣长真是长对了地方。他可以用一万个理由来说服自己长得不赖，至少还过得去。”可是，看照片就是另一回事，我们会发现很难接受照片中的自己，甚至会觉得照片中的人一点不像自己，“<strong>和照镜子的舒适相比，照片显得冷酷而陌生</strong>”。</p>
 <p>格非说：“为什么照片所反映的自我形象有时候让人难以接受？那是因为<strong>在照镜子的时候，我们的自我意识参与了形象的产生。而照片来自于他者，来自于外部的视角</strong>。所以说，没有他者的介入，没有外部视角的参照，没有外部知识的刺激，我们就会越来越自恋，我们的想象力也会越来越贫弱。”</p>
-<h2 id="别把专业当生活，因为生活不分专业"><a href="#别把专业当生活，因为生活不分专业" class="headerlink" title="别把专业当生活，因为生活不分专业"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1749&amp;highlight=%E4%B8%93%E4%B8%9A" target="_blank" rel="noopener">别把专业当生活，因为生活不分专业</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/19/151931up6sod3hxpk3hxo3.jpg"></p>
+<h2 id="别把专业当生活，因为生活不分专业"><a href="#别把专业当生活，因为生活不分专业" class="headerlink" title="别把专业当生活，因为生活不分专业"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1749&amp;highlight=%E4%B8%93%E4%B8%9A" target="_blank" rel="noopener">别把专业当生活，因为生活不分专业</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/19/151931up6sod3hxpk3hxo3.jpg" alt></p>
 <p>作者：一只特立独行的猫</p>
 <p>一、陷入了“专业”怪圈</p>
 <p>我收到很多信，大部分从自己大学时候悲催地选错了专业开始，洋洋洒洒数万字，中心思想是想问：究竟要不要放弃自己大学的专业，去追求自己喜欢的事情，但放弃专业总觉得太可惜了。想着想着，就觉得自己完全没有了希望和前途。</p>
@@ -469,7 +439,7 @@
 <p>别把专业当生活，因为生活不分专业。</p>
 <p>本文由“知识拆迁队” 陌上花开 选自《知乎日报》。陌上开花欢迎大家关注她的微信，每天为大家分享好文、好书、书单。<br>罗胖曰：<br><strong>200年的工业社会给我们制造了一个假象——<br>以为顺着专业分工的狭小路径向上攀爬，是出人头地的唯一办法。<br>而在现实的世界中，屌丝逆袭仍然罕有，但是隔行抢饭却越来越常见。</strong></p>
 <p>原因无非是——<br>1，专业资源越来越公开、易得。<br>2，<strong><a href="http://deepcreator.com/2017/10/14/Concept/Interest/" target="_blank" rel="noopener">兴趣</a>越来越能造就一个人。</strong><br>3，<strong><a href="http://deepcreator.com/2017/10/11/Concept/Transboundary/" target="_blank" rel="noopener">跨界</a>越来越是创新的源泉。</strong><br>你是什么专业，真的不再像以前那么重要了。</p>
-<h2 id="滥竽充数-Pretend-to-play-the-Yu"><a href="#滥竽充数-Pretend-to-play-the-Yu" class="headerlink" title="滥竽充数 Pretend to play the Yu"></a><a href="https://baike.baidu.com/item/%E6%BB%A5%E7%AB%BD%E5%85%85%E6%95%B0/538974?fr=aladdin" target="_blank" rel="noopener">滥竽充数 Pretend to play the Yu</a></h2><p><img alt data-src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=2b4c7fb4472309f7e76faa144a356bce/9e3df8dcd100baa1a9172d9b4610b912c8fc2ed2.jpg"></p>
+<h2 id="滥竽充数-Pretend-to-play-the-Yu"><a href="#滥竽充数-Pretend-to-play-the-Yu" class="headerlink" title="滥竽充数 Pretend to play the Yu"></a><a href="https://baike.baidu.com/item/%E6%BB%A5%E7%AB%BD%E5%85%85%E6%95%B0/538974?fr=aladdin" target="_blank" rel="noopener">滥竽充数 Pretend to play the Yu</a></h2><p><img data-src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=2b4c7fb4472309f7e76faa144a356bce/9e3df8dcd100baa1a9172d9b4610b912c8fc2ed2.jpg" alt></p>
 <p>滥竽充数，春秋战国时期的历史典故。字面意思是说：不会吹竽的人混在吹竽的队伍里充数。比喻没有真才实学的人混在内行人之中，以次充好。出自《韩非子·内储说上》。</p>
 <p>寓言故事</p>
 <p>战国时期，齐国的国君齐宣王爱好音乐，尤其喜欢听吹竽，手下有不到300个善于吹竽的乐师。齐宣王喜欢热闹，爱摆排场，总想在人前显示做国君的威严，所以每次听吹竽的时候，总是叫这不到300个人在一起合奏给他听。<br>有个名叫南郭的处士听说了齐宣王喜欢听合奏，觉得有机可乘，是个赚钱的好机会，就跑到齐宣王那里去，吹嘘自己说：“大王啊，听过我吹竽的人没有不被感动的，就是鸟兽听了也会翩翩起舞，花草听了也会合着节拍摆动，我愿把我的绝技献给大王。”齐宣王听得高兴，很爽快地收下了他，把他也编进那支300人的吹竽队中。<br>这以后，南郭处士就随那300人一块儿合奏给齐宣王听，和大家一样享受着优厚的待遇，心里极为得意。</p>
@@ -494,8 +464,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Flag/" rel="bookmark">Flag</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Self/" rel="bookmark">Self</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Steep/" rel="bookmark">Steep</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Scene/" rel="bookmark">Scene</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Circuit/" rel="bookmark">Circuit</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Profession/" rel="tag"><i class="fa fa-tag"></i> Profession</a>
           </div>
@@ -507,21 +498,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Book/IPCreator/Book/The Millionaire Fastlane/" rel="next" title="The Millionaire Fastlane">
-                  <i class="fa fa-chevron-left"></i> The Millionaire Fastlane
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/W/Wisedom/" rel="prev" title="Wisedom">
-                  Wisedom <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Book/IPCreator/Book/The Millionaire Fastlane/" rel="prev" title="The Millionaire Fastlane">
+      <i class="fa fa-chevron-left"></i> The Millionaire Fastlane
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/W/Wisedom/" rel="next" title="Wisedom">
+      Wisedom <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -534,7 +522,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -565,8 +575,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -575,14 +585,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -593,11 +603,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -631,7 +636,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -643,51 +648,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -696,18 +662,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -717,63 +677,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -781,14 +684,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -815,40 +718,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/P/Profession/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

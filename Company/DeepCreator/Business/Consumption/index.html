@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="消费和投资的共同点都是要把钱给用出去，区别在于投资是为了有更大的回报，而消费仅仅是为满足某种欲望。消费是满足当前需求，投资是满足未来需求。">
 <meta name="keywords" content="Consumption">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/DeepCreator/Business/Consumption/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/DeepCreator/Business/Consumption/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/DeepCreator/Business/Consumption/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,13 +256,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="Consumer20180801.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/Consumer20180801.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Consumer20180801.jpg?imageMogr2/thumbnail/!75p" alt="Consumer20180801.jpg"></p>
 <blockquote>
 <p><a href="http://e.hznews.com/paper/hzrb/20170330/T2/3/" target="_blank" rel="noopener">消费和投资的共同点都是要把钱给用出去，区别在于投资是为了有更大的回报，而消费仅仅是为满足某种欲望。</a><a href="https://www.zhihu.com/question/24056800" target="_blank" rel="noopener">消费是满足当前需求，投资是满足未来需求。</a></p>
 </blockquote>
 <a id="more"></a>
 <p>购物易成瘾，消费需谨慎。</p>
-<p><img alt="investmentconsume.jpg" data-src="http://opb37u589.bkt.clouddn.com/investmentconsume.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/investmentconsume.jpg?imageMogr2/thumbnail/!75p" alt="investmentconsume.jpg"></p>
 <h2 id="消费心理学——无所不在的时尚"><a href="#消费心理学——无所不在的时尚" class="headerlink" title="消费心理学——无所不在的时尚"></a><a href="https://book.douban.com/subject/25805146/" target="_blank" rel="noopener">消费心理学——无所不在的时尚</a></h2><p> Consumer Behavior in Fashion</p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>本书分为四个部分，系统阐述了时尚领域中与消费心理、消费者行为相关的概念，消费者人格特征和时尚内涵，时尚沟通和决策，以及伦理和消费者保护等方面的内容。</p>
 <p>本书的最大特点在于将消费与时尚相结合，探讨时尚对人们消费的影响，这种分析的视角对于学习消费心理学的学生具有极强的启发意义，同时也适合那些热衷时尚的广大普通读者阅读。</p>
@@ -335,7 +305,7 @@
 <li>所以很多人都以为，衡量生意的唯一尺度是钱，错了。衡量生意的最好尺度是流动性，财富是由流动性创造的。</li>
 </ol>
 <p>你推动的流动性越高，你周边的网络就越活跃，你在网络中的位置才越稳固。</p>
-<h3 id="如何轻松影响消费者决策？"><a href="#如何轻松影响消费者决策？" class="headerlink" title="如何轻松影响消费者决策？"></a><a href>如何轻松影响消费者决策？</a></h3><p><img alt="consumptiondecision20180508.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/consumptiondecision20180508.jpg?imageMogr2/thumbnail/!75p"></p>
+<h3 id="如何轻松影响消费者决策？"><a href="#如何轻松影响消费者决策？" class="headerlink" title="如何轻松影响消费者决策？"></a><a href>如何轻松影响消费者决策？</a></h3><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/consumptiondecision20180508.jpg?imageMogr2/thumbnail/!75p" alt="consumptiondecision20180508.jpg"></p>
 <p>，我们都以为自己足够理性，但其实，人很容易受影响。人脑的大部分决策，都是在很短时间里，靠直觉、情绪、惯性这些驱动机关作出的。作为卖家，如果提前了解这些开关所在，就能轻松影响消费者的决策，让他们更乐意买你的产品。而作为消费者，也建议你多了解一些，避免被套路。<br>需要提醒的是，如果你已经订阅过我的专栏，这些内容都已经更新过，可以不用再重复购买收听。<br>在这堂精品课中，我将用大约40分钟的时间，与你分享7个话题：</p>
 <ol>
 <li>心理账户：改变顾客对你商品的认知，他会更愿意花钱</li>
@@ -461,7 +431,7 @@
 <p>这下你知道为什么商家要拼命借钱给我们了吧？因为虽然花的都是自己的钱，但<strong>信用卡和互联网金融产品先花钱、后还钱的机制，会欺骗你的大脑，刺激我们的购买欲</strong>。所以说，为了下次不再剁手，结账时尽量用现金吧。</p>
 <p>本文源自：《大脑骗局》</p>
 <h2 id="为什么你要花的钱越来越多"><a href="#为什么你要花的钱越来越多" class="headerlink" title="为什么你要花的钱越来越多"></a><a href="http://www.luojiji.com/thread-10051-1-1.html" target="_blank" rel="noopener">为什么你要花的钱越来越多</a></h2><p>当你的朋友和邻居的消费开支增多时，你也会花更多的钱，很多人把这看作是攀比，但畅销书《牛奶可乐经济学》作者罗伯特·弗兰克不喜欢这个说法，他认为除去嫉妒和羡慕的成分，朋友和邻居的影响也同样强大。弗兰克在新作《<a href="https://book.douban.com/subject/27126738/" target="_blank" rel="noopener">成功与运气</a>》用新概念“支出瀑布”来解释这种现象，第一财经刊载了这本书的部分内容，万维钢也在他的专栏和得到《每天听本书》中都做了解读。</p>
-<p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29530309.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/subject/l/public/s29530309.jpg" alt></p>
 <blockquote>
 <p>Success and Luck：Good Fortune and the Myth of Meritocracy</p>
 </blockquote>
@@ -544,7 +514,7 @@
 <p>她的观察是，在米兰，很多年轻人会在下午或傍晚的时候来10 Corso Como，吃点喝点不是那么贵的食物和酒，然后他们终于放下手机，开始聊天和交流了。对于现在的人来说，面对面的交谈变得越来越重要，每天盯着手机只会带来孤独感。 她说：“ 我们应该停下来，做个梦。眼下人们已经不再拥有梦境了，取代而之的却是焦虑感，以至于人们没有时间停下来享受一下。”</p>
 <p>卡莱·索萨尼做这家店的理念正是“悠闲购物”。她说“我太享受自己发掘惊喜和珍宝的过程了！我要带给每一个进店来访者这样的感受。”她把建筑内部庭院改成了意大利广场，顾客可以在这里体验时装和设计，也可以参加新书签售和现场演出等活动。卡拉·索萨尼所讲的，正是线下店的一种发展思路和趋势，提供不同的体验，<strong>它不仅仅是卖货的一个场所，也要让用户享受线下消费的过程。</strong></p>
 <h2 id="1分钟心理学：双十一不完全防剁手指南"><a href="#1分钟心理学：双十一不完全防剁手指南" class="headerlink" title="1分钟心理学：双十一不完全防剁手指南"></a><a href="http://www.xinli001.com/info/100297810" target="_blank" rel="noopener">1分钟心理学：双十一不完全防剁手指南</a></h2><p>壹心理导读：一年一度的1111又来了！钱包君，你还好吗？键盘你不要拦着我，让我剁手，让我剁手。—— <a href="http://www.xinli001.com" target="_blank" rel="noopener">www.xinli001.com</a></p>
-<p><img alt data-src="http://image.xinli001.com/20151031/051700i5iho0tmmwqfvl02.jpg!600"><br><img alt data-src="http://image.xinli001.com/20151031/051640qcr5hbon0lwa63oo.jpg!600"><br><img alt data-src="http://image.xinli001.com/20151031/0517081uh8bg4omddyq576.jpg!600"></p>
+<p><img data-src="http://image.xinli001.com/20151031/051700i5iho0tmmwqfvl02.jpg!600" alt><br><img data-src="http://image.xinli001.com/20151031/051640qcr5hbon0lwa63oo.jpg!600" alt><br><img data-src="http://image.xinli001.com/20151031/0517081uh8bg4omddyq576.jpg!600" alt></p>
 <h2 id="为什么你要花的钱越来越多-1"><a href="#为什么你要花的钱越来越多-1" class="headerlink" title="为什么你要花的钱越来越多"></a><a href="http://www.luojiji.com/thread-10051-1-1.html" target="_blank" rel="noopener">为什么你要花的钱越来越多</a></h2><p>当你的朋友和邻居的消费开支增多时，你也会花更多的钱，很多人把这看作是攀比，但畅销书《牛奶可乐经济学》作者罗伯特·弗兰克不喜欢这个说法，他认为除去嫉妒和羡慕的成分，朋友和邻居的影响也同样强大。弗兰克在新作《成功与运气》用新概念“支出瀑布”来解释这种现象，第一财经刊载了这本书的部分内容，万维钢也在他的专栏和得到《每天听本书》中都做了解读。</p>
 <p>弗兰克说，美国如今实际平均收入与1980年相比仅仅略有增长，但新住房的平均面积却比1980年大了50%。房子扩大的速度比中等收入家庭的收入增长速度快，这个过程就是“支出瀑布”。支出瀑布的原理是，最高收入群体有了更多的钱，于是开始建造更大的房子，他们可能习惯在家筹备婚宴，所以必须要有个宴会厅才算“够用”。他们的房子改变了周围人的参考框架，于是同一个社交圈内的人也开始建造更大的房子。也就是说，最高收入群体随着自己收入的急速增加，产生了一些额外的开支，低一层收入群体就会效仿，这样一路向下一层传导后，就导致支出瀑布现象出现。</p>
 <p>弗兰克说：“（人们）开始减少储蓄、增加借贷，以跟上周围人的节奏。如此这般，沿着收入阶梯一路向下。<strong>顶层人群的更多开支最终造成了底部人群的压力，对于后者而言，每一笔额外支出都会让生活更加捉襟见肘</strong>。”</p>
@@ -554,7 +524,7 @@
 <blockquote>
 <p>即使不用各种数据，人们也能感知到，中国社会已经迎来了有史以来最大的一波“单身潮”，但个人消费并不局限于单身，它隐含的深层含义是，<strong>新时代的人更愿意为取悦独立的自己而消费</strong>。问题是，对个人消费的想象力到了什么程度，在商业社会取悦自己有什么技术难题？</p>
 </blockquote>
-<p><img alt data-src="http://upload.lifeweek.com.cn/2017/1106/1509972295682.jpg"><br>取悦自己的单身女青年</p>
+<p><img data-src="http://upload.lifeweek.com.cn/2017/1106/1509972295682.jpg" alt><br>取悦自己的单身女青年</p>
 <p>来自安徽一座小城市的肖麦是那种典型的北漂女青年，来北京8年了，一直做新闻编辑，准备一直在这座城市生活下去，至今单身。从去年到今年，她最大的一笔消费是在北京买了房，直接原因是年过三十后，曾连哄带骗撒泼打滚逼她去相亲的父母猛然惊醒，意识到她真的可能会长久单身下去，于是雷厉风行地推动她，花了半年时间，在北京四环内买了一套一居室的房子。她父母在老家有体面的工作和薪水，首付是两位老人付的，房贷则是双方各付一半。</p>
 <p>伴随着单身群体的壮大，一个人的经济正在成为新的主流</p>
 <p>某种意义上，这个大型消费行为是一家人对她单身状态的接受和确认，没有任何人指望那个不知道会不会出现的另一半。买房子能让肖麦的单身生活更安定和舒适，对她和她的父母来说，这就够了。事实上，让自己过得舒适，这也几乎是肖麦对自己生活消费的唯一标准。</p>
@@ -630,8 +600,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/C/Consumption/" rel="bookmark">Consumption</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Consumption/" rel="tag"><i class="fa fa-tag"></i> Consumption</a>
           </div>
@@ -643,21 +622,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Humanity/" rel="next" title="Humanity">
-                  <i class="fa fa-chevron-left"></i> Humanity
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Review/" rel="prev" title="Review">
-                  Review <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Humanity/" rel="prev" title="Humanity">
+      <i class="fa fa-chevron-left"></i> Humanity
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Review/" rel="next" title="Review">
+      Review <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -670,7 +646,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -701,8 +699,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -711,14 +709,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -729,11 +727,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -767,7 +760,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -779,51 +772,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -832,18 +786,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -853,63 +801,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -917,14 +808,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -951,40 +842,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/DeepCreator/Business/Consumption/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

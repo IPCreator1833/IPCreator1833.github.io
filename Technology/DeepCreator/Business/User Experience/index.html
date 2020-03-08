@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="“什么叫用户体验？超过用户预期才叫 体验！”——周鸿祎">
 <meta name="keywords" content="Experience,User">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Technology/" itemprop="url" rel="index">
-                    <span itemprop="name">Technology</span>
-                  </a>
+                  <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Technology/DeepCreator/Business/User Experience/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Technology/DeepCreator/Business/User Experience/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Technology/DeepCreator/Business/User Experience/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="userexperience20180804.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/userexperience20180804.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/userexperience20180804.jpg?imageMogr2/thumbnail/!75p" alt="userexperience20180804.jpg"></p>
 <blockquote>
 <p>“什么叫用户体验？超过用户预期才叫 体验！”——周鸿祎</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt data-src="http://pd4vb8220.bkt.clouddn.com/1_-V-OpQRDZZULzLC7gzF2bQ.png?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/1_-V-OpQRDZZULzLC7gzF2bQ.png?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>There are no stupid users. Just stupid products.</p>
 </blockquote>
@@ -368,7 +338,7 @@
 <ol start="4">
 <li>你看，体验质量的提升，不体现为单点的改进，而是所有的体验点之间，互相不矛盾。</li>
 </ol>
-<h2 id="用户体验——引爆商业竞争力的新法则"><a href="#用户体验——引爆商业竞争力的新法则" class="headerlink" title="用户体验——引爆商业竞争力的新法则"></a><a href="https://book.douban.com/subject/26729269/" target="_blank" rel="noopener">用户体验——引爆商业竞争力的新法则</a></h2><p><img alt="experience20180723.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/experience20180723.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="用户体验——引爆商业竞争力的新法则"><a href="#用户体验——引爆商业竞争力的新法则" class="headerlink" title="用户体验——引爆商业竞争力的新法则"></a><a href="https://book.douban.com/subject/26729269/" target="_blank" rel="noopener">用户体验——引爆商业竞争力的新法则</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/experience20180723.jpg?imageMogr2/thumbnail/!75p" alt="experience20180723.jpg"></p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>第一章：原点<br>你所不知道的用户体验<br>互联网核心价值的撬棒<br>别相信用户<br>感性痛点与理性痛点<br>用户＝盈利，盈利≠用户<br>掏空你的用户，除了钱！<br>从企业为王，到用户为王<br>忘掉那只木桶，我们需要长竿</p>
 <p>第二章：战略<br>用户体验战略核心“一面四点”<br>体验，日本制造的优胜之处<br>创造惊喜应该是一种战略<br>影响用户决策的6个“恋爱”环节<br>欢乐谷的自我VS迪士尼的忘我<br>建立围绕用户体验的战略</p>
 <p>第三章：场景<br>企业为导演，用户为演员<br>产品仅仅是场景的道具<br>商业舞台的主题<br>写一个完美的剧本——体验链<br>尖峰时刻——尖叫，尖叫，尖叫<br>利润引爆点隐藏在场景中</p>
@@ -399,7 +369,7 @@
 <p>我的第一款智能手机是诺基亚手机，在前几年，唯一的只能手机就是诺基亚了，甚至提到智能手机就想到诺基亚。但现在，诺基亚也已经被微软收购，在手机行业迅速发展的几年里，默默无闻。诺基亚曾经占到手机行业绝大部分的份额，但今天的命运，足以给美宜佳企业警醒。如果你还没意识到用户体验的重要性，用户将离你越来越远。</p>
 <p>你最真诚的朋友：极客志强。</p>
 <h2 id="超预期——智能时代提升客户黏性的服务细节"><a href="#超预期——智能时代提升客户黏性的服务细节" class="headerlink" title="超预期——智能时代提升客户黏性的服务细节"></a><a href="https://book.douban.com/subject/27139139/" target="_blank" rel="noopener">超预期——智能时代提升客户黏性的服务细节</a></h2><p>Exceptional Service, Exceptional Profit</p>
-<p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29542828.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/subject/l/public/s29542828.jpg" alt></p>
 <h3 id="内容简介-1"><a href="#内容简介-1" class="headerlink" title="内容简介"></a>内容简介</h3><p>用户体验决定产品成败，只有超预期才能赢得好口碑！</p>
 <p>互联网大佬一致推崇的打造爆款产品及服务的核心理念</p>
 <p>……………….</p>
@@ -461,7 +431,7 @@
 <p>再举个例子。作为滴滴的竞争对手，Uber也没一味讨好用户，它就曾强迫司机和乘客，用完车后必须给评价。如果你不评，就不能接下一单。结果，不论司机还是乘客，不仅没因为这个流失，相反，他们会更加约束自己的行为，因为别人给你评分低的话，以后谁还跟你合作啊？最终，Uber建立起独一无二的评价系统，口碑成了它风靡全球的最大卖点。</p>
 <p>所以你看，只要你的方向是对的，就应该坚持，哪怕短期内强迫用户，会让他们不爽，但长期来看，他们依然还是会选择你。</p>
 <p>本文源自：有效强迫客户，有时会带来意想不到的价值；滴滴的惨痛经历：用户反馈可能是巨大陷阱</p>
-<h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h3 id="人工智能时代，产品如何设计才能给用户良好的体验？"><a href="#人工智能时代，产品如何设计才能给用户良好的体验？" class="headerlink" title="人工智能时代，产品如何设计才能给用户良好的体验？"></a><a href="http://www.woshipm.com/ai/621365.html" target="_blank" rel="noopener">人工智能时代，产品如何设计才能给用户良好的体验？</a></h3><p><img alt data-src="http://image.woshipm.com/wp-files/2017/03/h9zit2UJRqOpxnGZ7vVn.jpg"></p>
+<h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h3 id="人工智能时代，产品如何设计才能给用户良好的体验？"><a href="#人工智能时代，产品如何设计才能给用户良好的体验？" class="headerlink" title="人工智能时代，产品如何设计才能给用户良好的体验？"></a><a href="http://www.woshipm.com/ai/621365.html" target="_blank" rel="noopener">人工智能时代，产品如何设计才能给用户良好的体验？</a></h3><p><img data-src="http://image.woshipm.com/wp-files/2017/03/h9zit2UJRqOpxnGZ7vVn.jpg" alt></p>
 <p>在设计创新领域深耕多年的 Patrick Hoof 教授预测说：</p>
 <p>Design will be less about delivering on a user’s request, and more about responding to the needs they haven’t expressed yet.</p>
 <blockquote>
@@ -472,21 +442,21 @@
 <p>因为用户的下一步行为和围棋对手的下一招一样，都难以预测。现在之所以可能了，是因为我们在数据、算法和计算能力上取得了长足进步。于是，围棋界有了 AlphaGo，而互联网则有了新的产品机会。</p>
 <p>身为设计师，如果你能够掌握人工智能领域最基本的几个概念，并在此基础之上充分发挥对产品的想象力，知道 AI 技术已经可以做到什么、未来有希望做到什么，你就能走在这个浪潮汹涌的时代前面。</p>
 <p>发挥想象力之前，让我们先来看看美国几个巨头公司们，用现有的人工智能技术已经做到了什么，他们把它转化成了哪些产品形态。</p>
-<p><img alt data-src="http://image.woshipm.com/wp-files/2017/03/UB49M04011G87SmOzF6t.jpeg"></p>
+<p><img data-src="http://image.woshipm.com/wp-files/2017/03/UB49M04011G87SmOzF6t.jpeg" alt></p>
 <blockquote>
 <p>Automatic Outline – Google Doc</p>
 </blockquote>
 <p>Google Doc 去年悄悄地上线了一个功能：它会根据文本格式自动为你生成文章大纲（大纲起到全文概览和导航的作用）。也就是说，你不用告诉 Google Doc 某行内容是否是一级标题、二级标题还是三级标题，Google Doc 会分析文字格式、并结合大量历史数据，自动推测出你的意图。</p>
 <p>回想一下，你是否有一套自己偏好的文字样式规范？比如经常把一级标题居中、加粗？二级标题用加粗的 16 号字，正文用 11 号？Google Doc 学习了你的这些习惯（事实上是学习了无数用户的习惯），自动列出文章提纲，从而提升你的工作效率。</p>
 <p>这是一个非常典型的运用人工智能改进现有产品的例子，然而却不容易被普通用户觉察到。正如最好的设计是「感受不到的设计」，最好的智能是「隐形的智能」。</p>
-<p><img alt data-src="http://image.woshipm.com/wp-files/2017/03/575dSR4t9uW7CPzvQvFa.jpeg"></p>
+<p><img data-src="http://image.woshipm.com/wp-files/2017/03/575dSR4t9uW7CPzvQvFa.jpeg" alt></p>
 <blockquote>
 <p>Smart Reply – Inbox by Gmail</p>
 </blockquote>
 <p>Inbox 是 Google Gmail 团队开发的一款邮件应用，它有一个非常经典的功能叫做「智能回复」。例如，同事向你询问是否有某一个文档，在你打开这封邮件的同时，Inbox 就会自动分析这封邮件的内容，并据此自动为你生成一些快捷回复选项。</p>
 <p>更神奇的是，Inbox 还会根据你的过往邮件回复不断学习并修正这些句子，来使得这些句子变得越来越像你平时写邮件的口吻。</p>
 <p>Smart Reply 这样的功能不再是媒体今天争相报道的「黑魔法」，而是实实在在地成为了一个被用户广泛使用的功能。我们在产品设计中运用人工智能技术，目的是为了满足用户的需求，而不是强调技术本身。事实上很多时候，我们做设计的目的就是为了掩盖技术本身，而不是反过来。</p>
-<p><img alt data-src="http://image.woshipm.com/wp-files/2017/03/1MUyEKi04RRLWZ3iWS3w.jpeg"></p>
+<p><img data-src="http://image.woshipm.com/wp-files/2017/03/1MUyEKi04RRLWZ3iWS3w.jpeg" alt></p>
 <blockquote>
 <p>亚马逊旗下智能语音助理 Amazon Echo</p>
 </blockquote>
@@ -500,8 +470,8 @@
 <p>建议一：<strong>「人工智能」不够智能，请随时准备好「擦屁股」</strong></p>
 </blockquote>
 <p>当 AlphaGo 所向披靡，当视频里的语音机器人无所不知，当硅谷黑科技刷遍你的朋友圈，你很难去相信这个事实：「人工智能」在绝大多数领域的智慧水平，其实还只是个婴儿——设计师要谨记这一点。</p>
-<p><img alt data-src="http://image.woshipm.com/wp-files/2017/03/0sVbGyMtyuP8AP1YBzoP.jpeg"></p>
-<p><img alt data-src="http://image.woshipm.com/wp-files/2017/03/amPcs7mP5tSR3424Zmb4.jpeg"></p>
+<p><img data-src="http://image.woshipm.com/wp-files/2017/03/0sVbGyMtyuP8AP1YBzoP.jpeg" alt></p>
+<p><img data-src="http://image.woshipm.com/wp-files/2017/03/amPcs7mP5tSR3424Zmb4.jpeg" alt></p>
 <p>如果机器学习结果出错，你是否为用户提供了方便的「非智能」方式，帮助她解决问题？</p>
 <p>在做 AI 产品设计时，要时时牢记假设机器学习的最坏结果。最坏结果下的「撤退方案」，和最佳结果下的设计一样重要，很多时候甚至更重要。</p>
 <p>一旦用户产生了失望、沮丧的情绪，就很容易放弃这个功能、甚至整个产品，这种结果是很难挽回的。因此，实际上更重要的一条原则是，如果你对「机器智能」的信心不足，宁可选择不做。</p>
@@ -511,7 +481,7 @@
 </blockquote>
 <p>为用户提供个性化内容，是人工智能技术一个非常常见的应用场景。了解用户的一些基本信息，往往是个性化内容的基础。获取用户信息，这件事情听起来简单，但并不容易做好。</p>
 <p>Quora（可以简单理解为英文版知乎）要求新用户在第一次注册完成后，必须选择至少 10 个感兴趣的领域。并且，用户会被要求手动输入自己熟知的领域。我们都理解，这是 Quora 希望通过掌握用户的初始数据，从而为用户展示个性化内容。这个交互流程的初衷很好，然而你却能看到很多用户在 Reddit 和 Twitter 上抱怨。</p>
-<p><img alt data-src="http://image.woshipm.com/wp-files/2017/03/QrBolHtWelgKk5BXoqay.jpeg"></p>
+<p><img data-src="http://image.woshipm.com/wp-files/2017/03/QrBolHtWelgKk5BXoqay.jpeg" alt></p>
 <blockquote>
 <p>Quora 的用户注册流程</p>
 </blockquote>
@@ -546,7 +516,7 @@
 <p>你为不够智能的「人工智能」随时准备好「擦屁股」了吗？<br>用户的使用门槛够低吗？正向的反馈够及时吗？</p>
 </blockquote>
 <p>作者：UX Coffee，微信公众号：uxcoffee</p>
-<h3 id="体验设计学：如何设计出美好瞬间？"><a href="#体验设计学：如何设计出美好瞬间？" class="headerlink" title="体验设计学：如何设计出美好瞬间？"></a><a href="http://www.luojiji.com/thread-12273-1-1.html" target="_blank" rel="noopener">体验设计学：如何设计出美好瞬间？</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/27/092036boax7alossmmx2sf.jpg"></p>
+<h3 id="体验设计学：如何设计出美好瞬间？"><a href="#体验设计学：如何设计出美好瞬间？" class="headerlink" title="体验设计学：如何设计出美好瞬间？"></a><a href="http://www.luojiji.com/thread-12273-1-1.html" target="_blank" rel="noopener">体验设计学：如何设计出美好瞬间？</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/27/092036boax7alossmmx2sf.jpg" alt></p>
 <p>原创： 「罗辑思维」  罗辑思维  今天</p>
 <p>今天，给你介绍的书是——</p>
 <p>《强力瞬间》<br>(The Power of Moment)<br>作者：奇普·希思  丹·希思<br>过去，我们觉得“体验是微妙的，美妙体验可遇不可求”。真的是这样么？</p>
@@ -586,11 +556,11 @@
 <p>第二，<strong>标题越短越好</strong>。在最热门的100个视频标题里，平均每个标题用了6.58个单词，最短的标题一个词都没有，只有3个“笑哭”的表情，还有两个视频的标题只用了1个词。其中最长的视频标题用了22个词，这也是榜单中唯一一个超过20个词的标题。</p>
 <p>第三，在主题方面，与<strong>小孩、动物、食物和DIY</strong>相关的视频更受欢迎。在互动度最高的100个视频里，有19个都是指导式（how-to）的，其中大部分是和孩子一起动手的DIY项目，以及让家务更轻松的窍门和新鲜有趣的食谱。除此之外，励志类的演讲也很受欢迎，有11个相关视频登上了榜单。</p>
 <p>第四，视频要能激发人们的<a href="https://deepcreator.com/Concept/Emotion.html" target="_blank" rel="noopener">情感</a>。在前100个最受欢迎的视频里，有一半内容的目的是为了激发人们特定的情感，其中可爱是视频里最常见的情感驱动，最热门的100个视频中，有26个与可爱有关。此外，悲伤的视频有4个上榜，有趣的视频占比15%。</p>
-<h3 id="用户界面和用户体验的差别"><a href="#用户界面和用户体验的差别" class="headerlink" title="用户界面和用户体验的差别"></a><a href="https://coolshell.cn/articles/3142.html" target="_blank" rel="noopener">用户界面和用户体验的差别</a></h3><p><img alt data-src="https://coolshell.cn/wp-content/uploads/2010/10/UI.gif"></p>
+<h3 id="用户界面和用户体验的差别"><a href="#用户界面和用户体验的差别" class="headerlink" title="用户界面和用户体验的差别"></a><a href="https://coolshell.cn/articles/3142.html" target="_blank" rel="noopener">用户界面和用户体验的差别</a></h3><p><img data-src="https://coolshell.cn/wp-content/uploads/2010/10/UI.gif" alt></p>
 <blockquote>
 <p>用户界面设计</p>
 </blockquote>
-<p><img alt data-src="https://coolshell.cn/wp-content/uploads/2010/10/UX.jpg"></p>
+<p><img data-src="https://coolshell.cn/wp-content/uploads/2010/10/UX.jpg" alt></p>
 <blockquote>
 <p>用户体验设计在便池上放一个假苍蝇会导致男人撒尿的时候会不由自主地瞄准它，有证据表明，这样的用户体验可以减少80%的小便溅出便池。</p>
 </blockquote>
@@ -657,8 +627,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Player/" rel="bookmark">Player</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/HWPM/" rel="bookmark">HWPM</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/ABCDE/" rel="bookmark">ABCDE</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/3C/" rel="bookmark">3C</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/System/" rel="bookmark">System</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Experience/" rel="tag"><i class="fa fa-tag"></i> Experience</a>
               <a href="/tags/User/" rel="tag"><i class="fa fa-tag"></i> User</a>
@@ -671,21 +662,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/AI/DeepCreator/AI/Python/" rel="next" title="Python">
-                  <i class="fa fa-chevron-left"></i> Python
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/AI/DeepCreator/AI/AI Education/" rel="prev" title="AI Education">
-                  AI Education <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/AI/DeepCreator/AI/Python/" rel="prev" title="Python">
+      <i class="fa fa-chevron-left"></i> Python
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/AI/DeepCreator/AI/AI Education/" rel="next" title="AI Education">
+      AI Education <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -698,7 +686,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -729,8 +739,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -739,14 +749,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -757,11 +767,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -795,7 +800,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -807,51 +812,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -860,18 +826,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -881,63 +841,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -945,14 +848,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -979,40 +882,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Technology/DeepCreator/Business/User Experience/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

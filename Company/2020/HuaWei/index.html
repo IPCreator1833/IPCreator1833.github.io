@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="中华有为，民族之光。">
 <meta name="keywords" content="Brand,Internet,Business,Company,HuaWei">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/2020/HuaWei/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/2020/HuaWei/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/2020/HuaWei/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="/img/content/huaweilogo.jpg"></p>
+        <p><img data-src="/img/content/huaweilogo.jpg" alt></p>
 <blockquote>
 <p>中华有为，民族之光。</p>
 </blockquote>
@@ -301,10 +271,10 @@
 <p>只有落后者才说抓住机会，发达国家是创造机会，引导消费。<br>– 任正非</p>
 <p>我在美国时，在和IBM、 CISCO、LUCENT等几个大公司领导讨论问题时谈到，IT是什么？他们说，IT就是裁员、裁员、再裁员。以电子流来替代人工的操作，以降低运作成本，增强企业竞争力。<br>– 任正非《华为的冬天》，2001年</p>
 <p><a href="https://www.bloomberg.com/news/articles/2019-08-08/companies-use-borrowed-billions-to-buy-back-stock-not-to-invest" target="_blank" rel="noopener">美国学者</a>比较了华为和思科。思科公司过去20年，花了1000亿美元回购自己的股票，而不是用来投资或并购。他认为这是思科发展不如华为的原因。</p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020011515.jpg"><br><a href="https://m.yicai.com/news/100467252.html" target="_blank" rel="noopener">华为公司</a>将云和 AI 调整为第四大事业群 BG。前三个 BG 是电信运营商、企业业务、消费者业务。</p>
-<h2 id="品牌"><a href="#品牌" class="headerlink" title="品牌"></a>品牌</h2><p><img alt data-src="https://n.sinaimg.cn/tech/crawl/795/w550h245/20200101/d7f7-imkzenq3453247.jpg"><br>连华为这样的科技公司，在为下一代产品注册商标的时候，也恨不得注册了一本《山海经》。全都是这样的词，操作系统叫鸿蒙，实验室叫玄武。可能有的词我们都不认识，但是这样的字眼总让我们内心澎湃。你怎么解释？只有一个解释，因为中国文化符号。</p>
-<h2 id="公司"><a href="#公司" class="headerlink" title="公司"></a>公司</h2><p><img alt data-src="/img/content/huaweirule.jpeg"></p>
-<h3 id="华为变革史（上篇）丨3-5万字华为成长全景案例"><a href="#华为变革史（上篇）丨3-5万字华为成长全景案例" class="headerlink" title="华为变革史（上篇）丨3.5万字华为成长全景案例"></a><a href="https://www.toutiao.com/a6692530968391057931/" target="_blank" rel="noopener">华为变革史（上篇）丨3.5万字华为成长全景案例</a></h3><p><img alt data-src="http://p3.pstatp.com/large/pgc-image/f431c731576446c8bc757c27d0e2b5db"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/202001/bg2020011515.jpg" alt><br><a href="https://m.yicai.com/news/100467252.html" target="_blank" rel="noopener">华为公司</a>将云和 AI 调整为第四大事业群 BG。前三个 BG 是电信运营商、企业业务、消费者业务。</p>
+<h2 id="品牌"><a href="#品牌" class="headerlink" title="品牌"></a>品牌</h2><p><img data-src="https://n.sinaimg.cn/tech/crawl/795/w550h245/20200101/d7f7-imkzenq3453247.jpg" alt><br>连华为这样的科技公司，在为下一代产品注册商标的时候，也恨不得注册了一本《山海经》。全都是这样的词，操作系统叫鸿蒙，实验室叫玄武。可能有的词我们都不认识，但是这样的字眼总让我们内心澎湃。你怎么解释？只有一个解释，因为中国文化符号。</p>
+<h2 id="公司"><a href="#公司" class="headerlink" title="公司"></a>公司</h2><p><img data-src="/img/content/huaweirule.jpeg" alt></p>
+<h3 id="华为变革史（上篇）丨3-5万字华为成长全景案例"><a href="#华为变革史（上篇）丨3-5万字华为成长全景案例" class="headerlink" title="华为变革史（上篇）丨3.5万字华为成长全景案例"></a><a href="https://www.toutiao.com/a6692530968391057931/" target="_blank" rel="noopener">华为变革史（上篇）丨3.5万字华为成长全景案例</a></h3><p><img data-src="http://p3.pstatp.com/large/pgc-image/f431c731576446c8bc757c27d0e2b5db" alt></p>
 <h3 id="华为早期创业史"><a href="#华为早期创业史" class="headerlink" title="华为早期创业史"></a><a href="https://github.com/F-happy/RenZhengfei/blob/master/1995/19951226_%E7%9B%AE%E5%89%8D%E6%88%91%E4%BB%AC%E7%9A%84%E5%BD%A2%E5%8A%BF%E5%92%8C%E4%BB%BB%E5%8A%A1.md" target="_blank" rel="noopener">华为早期创业史</a></h3><p>以下摘自1995年12月26日任正非在年度总结大会上的讲话。</p>
 <p>华为创建在深圳倒买倒卖的时代，知识无用论有过于文化大革命，搞技术人家说是傻子。深圳的泡沫经济时代（房地产、股票），一个真真实实做学问的公司受到的冲击可以想象。</p>
 <p>创建之初，每月工资200多元，后来升到300多元，还要拼命努力，许多人累垮了身体，看着人家轻松地倒买倒卖就可以舒适生活，勤劳的人有何感想。</p>
@@ -511,7 +481,7 @@
 <p>任正非：我们年初完成了投票选举新一届持股员工代表会，是经历了一年多酝酿，然后一股一票的投票出来的。酝酿了一年多，为什么社会不知道呢？我也不知道为什么员工会自觉保密到这样的程度。选出的持股员工代表，他就不能代表股票了，他是代表人，一人一票投票表决公司决议。董事会以人数来投票表决决议，常务董事会是在董事会授权下操作日常运作。</p>
 <p>42、记者：任总从来没有用过一票否决权，您有没有在某个时刻其实很想用它，或者未来有什么情况可以用一票否决权？</p>
 <p>任正非：本来我的一票否决权有一个截止时期，准备到期就不要了，但我们在通过新章程时，正好碰到英国脱欧事件，如果像脱欧那样民主投票，可能就让一个的企业的命运葬送了，所以就保留了一票否决权，暂时由我来管。等到我们有一部分团队退出，到核心精英团队形成了小集体以后，我就放弃我个人的权力，把权力让渡给由7个人组成的核心精英团队，出现重大问题时进行否决，业务上的事情一般不需要动用。</p>
-<h3 id="任正非《我的父亲母亲》"><a href="#任正非《我的父亲母亲》" class="headerlink" title="任正非《我的父亲母亲》"></a><a href="https://baike.baidu.com/item/%E6%88%91%E7%9A%84%E7%88%B6%E4%BA%B2%E6%AF%8D%E4%BA%B2/6610022" target="_blank" rel="noopener">任正非《我的父亲母亲》</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019080401.jpg"></p>
+<h3 id="任正非《我的父亲母亲》"><a href="#任正非《我的父亲母亲》" class="headerlink" title="任正非《我的父亲母亲》"></a><a href="https://baike.baidu.com/item/%E6%88%91%E7%9A%84%E7%88%B6%E4%BA%B2%E6%AF%8D%E4%BA%B2/6610022" target="_blank" rel="noopener">任正非《我的父亲母亲》</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019080401.jpg" alt></p>
 <p>（图片：军队时期的任正非）</p>
 <p>1978年3月，我出席了全国科学大会，6000人的代表中，仅有150多人在35岁以下，我33 岁，是军队代表中少有的非党人士。</p>
 <p>我有幸在罗瑞卿同志逝世前三个月，聆听了他为全国科学大会军队代表的讲话，说未来十几年是一个难得的和平时期，我们要抓紧全力投入经济建设。我那时年轻，缺少政治头脑，并不明白其含意。过了两、三年大裁军，我们整个兵种全部被裁掉，我才理解了什么叫预见性的领导。</p>
@@ -521,15 +491,15 @@
 <p>当时在广东卖鱼虾，一死就十分便宜，父母他们专门买死鱼、死虾吃，说这比内地还新鲜呢！晚上出去买菜与西瓜，因为卖不掉的菜，便宜一些。我也无暇顾及他们的生活，以致母亲糖尿病严重我还不知道，是邻居告诉我的。华为有了规模发展后，管理转换的压力十分巨大，我不仅照顾不了父母，而且连自己也照顾不了，我的身体也是那一段时间累垮的。</p>
 <p>我父母这时才转去昆明我妹妹处定居。我也因此理解了要奋斗就会有牺牲，<code>华为的成功，使我失去了孝敬父母的机会与责任，也消蚀了自己的健康。</code></p>
 <p>回顾我自己已走过的历史，唯一有愧的是对不起父母，没条件时没有照顾他们，有条件时也没有照顾他们。爸爸妈妈，千声万声呼唤您们，千声万声唤不回。</p>
-<h2 id="产品"><a href="#产品" class="headerlink" title="产品"></a>产品</h2><h3 id="HuaWei-P20Pro"><a href="#HuaWei-P20Pro" class="headerlink" title="HuaWei P20Pro"></a><a href="https://www.ifanr.com/1011160" target="_blank" rel="noopener">HuaWei P20Pro</a></h3><p><img alt data-src="/img/content/p20pro.jpg"><br>华为 P20 Pro 那个 4000 万像素的摄像头里，藏着一支  6 年前的诺基亚团队。</p>
+<h2 id="产品"><a href="#产品" class="headerlink" title="产品"></a>产品</h2><h3 id="HuaWei-P20Pro"><a href="#HuaWei-P20Pro" class="headerlink" title="HuaWei P20Pro"></a><a href="https://www.ifanr.com/1011160" target="_blank" rel="noopener">HuaWei P20Pro</a></h3><p><img data-src="/img/content/p20pro.jpg" alt><br>华为 P20 Pro 那个 4000 万像素的摄像头里，藏着一支  6 年前的诺基亚团队。</p>
 <h3 id="Mate30-Pro-5G"><a href="#Mate30-Pro-5G" class="headerlink" title="Mate30 Pro 5G"></a><a href="https://www.dxomark.com/cn/huawei-mate-30-pro-5g-camera-review/" target="_blank" rel="noopener">Mate30 Pro 5G</a></h3><h4 id="华为Mate30-5G首发评测"><a href="#华为Mate30-5G首发评测" class="headerlink" title="华为Mate30 5G首发评测"></a><a href="https://tech.ifeng.com/c/7r20h3si9Z2" target="_blank" rel="noopener">华为Mate30 5G首发评测</a></h4><p>搭载全球首款旗舰5G SoC麒麟990 5G，首次将5G Modem集成到SoC芯片中，结束了此前5G手机必须外挂5G基带的历史，带来更低的功耗，同时射频、天线等也都大幅领先。10月23日开启预售，11月1日将正式开售。</p>
-<p><img alt data-src="https://x0.ifengimg.com/ucms/2019_43/EBAE93A2675C8B2880C213E590AA7E471133E83C_w759_h1107.jpg"></p>
+<p><img data-src="https://x0.ifengimg.com/ucms/2019_43/EBAE93A2675C8B2880C213E590AA7E471133E83C_w759_h1107.jpg" alt></p>
 <p>5G方面，麒麟990 5G率先支持5G双模全网通，下行速率最高2.3Gbps，上行速率最高1.25Gbps。<br>机身拥有多达21根天线，根据实际使用场景设计上部、中部、下部三个天线群，覆盖手机竖屏、横屏握持使用的全场景全角度。</p>
-<h3 id="华为联手-TomTom-突围-HMS-海外地图服务"><a href="#华为联手-TomTom-突围-HMS-海外地图服务" class="headerlink" title="华为联手 TomTom 突围 HMS 海外地图服务"></a><a href="https://www.ifanr.com/1303459" target="_blank" rel="noopener">华为联手 TomTom 突围 HMS 海外地图服务</a></h3><p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/huawei-tomtom-maps-services.jpg!720"></p>
+<h3 id="华为联手-TomTom-突围-HMS-海外地图服务"><a href="#华为联手-TomTom-突围-HMS-海外地图服务" class="headerlink" title="华为联手 TomTom 突围 HMS 海外地图服务"></a><a href="https://www.ifanr.com/1303459" target="_blank" rel="noopener">华为联手 TomTom 突围 HMS 海外地图服务</a></h3><p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/huawei-tomtom-maps-services.jpg!720" alt></p>
 <p>去年 8 月，华为在开发者大会上宣布要打造自己的生态系统 HMS ，其中包括华为自己的地图服务系统，以替换国外无法使用的 Google 地图。最近，国外传来消息称，荷兰地图厂商 TomTom 已经和华为达成协议，将向华为提供地图数据。</p>
 <p>虽然两家公司还没有确认该消息，但在华为运动健康中将地图引擎调成为「华为」后。我们已经可以看到地图提供商变成 TomTom 了，在华为 HMS 服务的 Map Kit 中，Demo 也替换成了 TomTom 的地图。</p>
-<p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/WechatIMG17-9589210.jpeg!720"><br>▲ 运动健康中已经可选华为地图引擎</p>
-<p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/Snipaste_2020-01-21_14-48-58.png!720"><br>▲ 注意红色箭头，可以看到 TomTom 的 Logo</p>
+<p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/WechatIMG17-9589210.jpeg!720" alt><br>▲ 运动健康中已经可选华为地图引擎</p>
+<p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/Snipaste_2020-01-21_14-48-58.png!720" alt><br>▲ 注意红色箭头，可以看到 TomTom 的 Logo</p>
 <p>为什么华为要和 TomTom 合作，这事还要从国外地图生态上说起。</p>
 <p>因为众所周知的原因，华为在海外无法使用 GMS 服务。对于国内消费者来说，华为的 HMS 服务其实早就可以完全替代 GMS 服务。但对海外来说，华为的 HMS 尚无法替代 GMS 服务，其中最大的短板就是地图服务。</p>
 <p>为什么华为要构建自己的 HMS 地图生态</p>
@@ -537,30 +507,30 @@
 <blockquote>
 <p>定位（我在哪）<br>导航（我如何去目标地）<br>空间关联（两点之间有哪些关联）</p>
 </blockquote>
-<p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/map-banner.png!720"></p>
+<p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/map-banner.png!720" alt></p>
 <p>通过解决这三个问题，电子地图服务能帮助、甚至引导用户做出决策。<code>对用户来说，没有地图服务的智能手机就像没有眼睛的人一样，可见地图服务对用户的重要性。</code></p>
 <blockquote>
 <p>对厂商来说，地图服务是网络和现实世界的信息出口，谁拥有地图服务，谁就能掌控现实世界与网络世界的流量。</p>
 </blockquote>
-<p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/Snipaste_2020-01-21_14-56-43.png!720"><br>▲ 提供导航只是一部分，地图服务是连接虚拟与现实的接口，流量巨大</p>
+<p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/Snipaste_2020-01-21_14-56-43.png!720" alt><br>▲ 提供导航只是一部分，地图服务是连接虚拟与现实的接口，流量巨大</p>
 <p>之前在欧洲发售的华为手机基本都使用了 GMS 提供的地图服务，毕竟是 Google 地图是 Android 手机内置服务，而且 Google 地图在海外确实覆盖全面且好用。</p>
 <p>在无法使用 GMS 地图服务后，华为陷入出了中国就没有地图服务可用的尴尬局面。这对华为手机业务在欧洲市场的布局相当不利，因为 Google 地图在欧洲市场一直有相当大的份额。在欧洲，没有多少人愿意买一台出厂没有 Google 地图的手机，即使他们可以自己安装。</p>
-<p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/B5CE137D4A2CCD2B932C489A8D53F5C6E8B2F626_size39_w728_h400.jpg!720"><br>▲ Google 地图在国外占绝对优势</p>
+<p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/B5CE137D4A2CCD2B932C489A8D53F5C6E8B2F626_size39_w728_h400.jpg!720" alt><br>▲ Google 地图在国外占绝对优势</p>
 <p>但华为服务在国内已经营多年，国内构建生态的经验，加以改造后就可以推向国外。话虽如此，地图服务并不只是一个简单的 APP 而已，地图服务更核心的还是地图数据库。</p>
 <p>如果是在国内打造地图服务，只要同国内拥有电子地图测绘资质的公司合作，就有现成的地图数据可用。但目前国内的地图运营商很少有在国外测绘详细地图， Google 当然无法为华为提供地图了，所以华为找了荷兰地图公司「TomTom」合作，为 HMS 服务构建详细的地图数据库。</p>
 <p>和华为合作的 TomTom 是谁？<br>TomTom 是一家总部位于荷兰阿姆斯特丹的地图公司，成立于 1991 年，在 2001 年就已经在开发手机汽车导航产品。它一度是欧洲最大的汽车导航仪生产厂家，其汽车导航产品市占率曾是欧洲第一。</p>
-<p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/TomTom_GO_Essential_in_car.jpg!720"><br>▲ TomTom 曾经是汽车导航仪厂家</p>
+<p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/TomTom_GO_Essential_in_car.jpg!720" alt><br>▲ TomTom 曾经是汽车导航仪厂家</p>
 <p>不过 TomTom 的优势没有保持太久，在智能手机的浪潮下，大部分汽车导航仪都消失在市场中，TomTom 也逐渐转型地图服务提供商，并为大众、戴姆勒、丰田等提供地图数据服务。</p>
-<p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/2221.jpg!720"><br>▲ 在智能手机兴起后，TomTom 逐渐转型地图数据提供商</p>
+<p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/2221.jpg!720" alt><br>▲ 在智能手机兴起后，TomTom 逐渐转型地图数据提供商</p>
 <p><strong>从 2012 年起，改版后的 iOS 6 放弃了 Google 的地图服务，转而使用 TomTom 提供的地图数据，从此之后，苹果就一直是 TomTom 的客户。即使 2018 年苹果改版 iOS 地图后，使用的也是 TomTom 的数据。可见 TomTom 在海外的地图覆盖相当全面。</strong></p>
 <p>拥有 TomTom 的地图服务，对华为来说意味着什么</p>
 <p>这次华为地图选择 TomTom 地图提供数据，至少解决了海外无图可用的尴尬。有了 TomTom 的地图服务，华为可以直接着手进行地图 APP 开发，底层数据直接接入 TomTom 即可，最短的时间内就能开始提供地图服务。</p>
-<p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/dfc60e268a668ce1.jpg!720"><br>▲ 英文版的 HMS Map Kit 已经接入 TomTom 地图数据</p>
+<p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/01/dfc60e268a668ce1.jpg!720" alt><br>▲ 英文版的 HMS Map Kit 已经接入 TomTom 地图数据</p>
 <p>对于欧洲的消费者来说，TomTom 的地图也足够日常使用。有了地图服务的 HMS 生态，已经可以为开发者提供地图工具，可以算是「搭好房顶的毛坯房」，虽然住着不算舒适，但可以解决燃眉之急。至于 HMS 软件生态问题，还是需要华为长期的投资 + 时间来解决。</p>
 <p>「罗马」不是一天就能建成的。</p>
 <h3 id="协商一年未果-华为对美国运营商Verizon发起专利诉讼"><a href="#协商一年未果-华为对美国运营商Verizon发起专利诉讼" class="headerlink" title="协商一年未果 华为对美国运营商Verizon发起专利诉讼 "></a><a href="http://www.caixin.com/2020-02-06/101512409.html" target="_blank" rel="noopener">协商一年未果 华为对美国运营商Verizon发起专利诉讼 </a></h3><p>2020年02月06日 20:29 来源于 财新网</p>
 <p>华为于2019年2月7日首次联系Verizon协商专利授权事宜。此次诉讼涉及的专利主要与光传送网相关，属于国际标准的一部分</p>
-<p><img alt data-src="http://img.caixin.com/2020-02-06/1580992554049694_480_320.jpg"></p>
+<p><img data-src="http://img.caixin.com/2020-02-06/1580992554049694_480_320.jpg" alt></p>
 <p>【财新网】（记者 张而弛）在协商一年未果之后，华为决定起诉美国电信运营商Verizon。2月6日，华为宣布，已在美国德克萨斯州东区和西区法院向Verizon提起诉讼，请求法院认定Verizon侵犯了华为的12项专利，同时要求Verizon就其专利侵权行为向华为进行赔偿。</p>
 <p>华为称，已经与Verizon进行了较长时间的谈判，并向其提供了详细的专利清单和Verizon使用华为专利的事实证据，但双方至今无法就许可条款达成一致。</p>
 <p>“多年来，华为与众多业界厂商通过谈判达成了专利许可协议，但在谈判不能解决问题的情况下，寻求第三方司法机关的裁决是业界惯例。”华为首席法务官宋柳平在声明中表示，Verizon应尊重华为的研发和知识产权成果，付费使用或停止侵权行为。</p>
@@ -580,7 +550,7 @@
 <p>请使用文章顶部或底部的共享按钮来进行共享文章的链接。未经允许复制文章内容分享给他人是违反FT中文网条款和条件以及版权政策的行为。发送电子邮件至<a href="mailto:licensing@ftchinese.com" target="_blank" rel="noopener">licensing@ftchinese.com</a>以购买其他权利。有关更多信息，请访问<a href="http://www.ftchinese.com/m/corp/copyright.html。" target="_blank" rel="noopener">http://www.ftchinese.com/m/corp/copyright.html。</a></p>
 <p><a href="http://www.ftchinese.com/premium/001086205?exclusive" target="_blank" rel="noopener">http://www.ftchinese.com/premium/001086205?exclusive</a></p>
 <h3 id="华为起诉美国运营商侵犯专利"><a href="#华为起诉美国运营商侵犯专利" class="headerlink" title="华为起诉美国运营商侵犯专利"></a><a href="http://www.ftchinese.com/premium/001086205?exclusive" target="_blank" rel="noopener">华为起诉美国运营商侵犯专利</a></h3><p>华为指控威瑞森窃取知识产权，要求美国法院命令后者向其支付专利许可使用费和损害赔偿金。</p>
-<p><img alt data-src="https://thumbor.ftacademy.cn/unsafe/1340x754/http://i.ftimg.net/picture/9/000088799_piclink.jpg"><br>更新于2020年2月7日 07:00 英国《金融时报》 黄淑琳 深圳 ， 基兰•斯泰西 华盛顿报道</p>
+<p><img data-src="https://thumbor.ftacademy.cn/unsafe/1340x754/http://i.ftimg.net/picture/9/000088799_piclink.jpg" alt><br>更新于2020年2月7日 07:00 英国《金融时报》 黄淑琳 深圳 ， 基兰•斯泰西 华盛顿报道</p>
 <p>华为(Huawei)起诉威瑞森(Verizon)，索赔逾10亿美元。这一迹象表明，在努力恢复声誉的同时，该公司对于在美国采取法律行动的立场日益强硬。</p>
 <p>这家中国电信设备制造商指控威瑞森窃取知识产权，并要求该美国电信运营商为使用华为的约230项专利支付专利费。此前双方未能就许可条款达成一致。</p>
 <p>华为周四表示，它已就威瑞森的专利侵权行为向美国得克萨斯州东区和西区法院提起诉讼。</p>
@@ -604,12 +574,12 @@
 <p>来听听一位名为 Turbofrog 的美国网友是怎么说的：</p>
 <p>我对整个情况的进展很失望。我有一个超级便宜的荣耀 8 手机，那是我在上一部手机不能用了之后买的。但是就像你一样，对于没有 Google Play 的新手机，我没有任何购买的兴趣——不管它的硬件多么令人印象深刻、多么流畅。</p>
 <p>Turbofrog 还说，这真是一个遗憾。</p>
-<p><img alt data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e564a39ed.png?imageView2/2/w/740"></p>
+<p><img data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e564a39ed.png?imageView2/2/w/740" alt></p>
 <p>为什么外国用户离不开 Google？ </p>
 <p>对于外国人来说，Google 简直是不可或缺的。 </p>
 <p>且不说在 Android 智能手机中，单说在整体的互联网生态环境中，Google 已经凭借其种类丰富的软件和互联网产品构建出了一个庞大的 Google 服务生态。</p>
 <p>其中，以 Google 搜索引擎（全球份额 78.23%）为根基，以 Google Chrome 浏览器（全球份额 67.15%）、Google Maps 地图、YouTube 视频、Gmail 邮箱、Google Photos 图片管理服务、Google Drive 云盘等活跃用户数早已经超越 10 亿的优秀产品为辅，Google 可以说是构建起了整个国外互联网服务的基础设施。 </p>
-<p><img alt data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e59f59103.png?imageView2/2/w/740"></p>
+<p><img data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e59f59103.png?imageView2/2/w/740" alt></p>
 <p>退一步说，即使在国外互联网空间中不乏 “Live Without Google” 这样的声音，而且实际上也的确存在针对 Google 诸多产品的替代方案，但这些声音都像是茫茫大海中偶然激起的浪花，无足轻重——其中，就有一位来自 Gizmodo 的编辑说：我把 Google 从我的生活中剔除，然后，一切都搞砸了。</p>
 <p>当然，Google 对国外用户的影响力也是体现在智能手机上的，无论操作系统是 Android 还是 iOS——不仅如此，如果撇开 iOS，那么在整个 Android 的世界里，Google 可以说是变本加厉。</p>
 <p>可以说，几乎每一个国外 Android 用户，恐怕都离不开 Google 全家桶。</p>
@@ -617,7 +587,7 @@
 <p>第一部分是支撑 Google 诸多应用的基础服务，包括 Google 服务框架、 Google 账号、Google Play 应用商店、Google 安全认证服务等——当然，也包括各种各样的 Kit；</p>
 <p>第二部分是基于上述基础服务的诸多 Google 旗下的 App，包括 Google 搜索、Google Photos、YouTube、Google Maps、Google Drive 等。</p>
 <p>需要说明的是，在 GMS 缺少了第一部分的情况下，其第二部分是根本无法完美安装和运行的，二者本质上是统一服务生态下的绑定关系——换句话说，如果外国用户想要正常使用 Google 的一系列 App，就必须在其 Android 手机上搭载完整的 GMS。</p>
-<p><img alt data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e60e57a09.jpg?imageView2/2/w/740"></p>
+<p><img data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e60e57a09.jpg?imageView2/2/w/740" alt></p>
 <p>而在 GMS 的支撑之下，国外用户群体从拿到 Android 手机的那一刻，就已经进入到了 Google 的生态体系之中，他们可以像在 PC 上那样，习惯性地在 Google 的世界里搜信息、看视频、存文件、写文档、发邮件、查地图…… </p>
 <p>显然，GMS 是一个国外用户群体极为熟悉并严重依赖的移动服务生态，也是 Google 希望在每一款 Android 设备中提供的。</p>
 <p>毕竟，<code>GMS 也是 Google 在移动设备中获取广告利润的核心。</code></p>
@@ -625,14 +595,14 @@
 <p>本来，作为 Android 阵营中的核心成员之一，华为在海外市场发售的智能手机都预装了 GMS——但是在 2019 年 5 月 16 日，随着美国政府的一纸禁令，华为无法再获得 Google 的 GMS 授权。 </p>
 <p>后来的事情我们都知道了：在数个月的时间里，华为在海外推出了 HMS 移动服务和 AppGallery 应用商店，并且已经预装在最新的 Mate 30 系列中并已经面向海外市场发售，并计划推出 10 亿美元拉拢全球开发者参与其中。</p>
 <p>看起来，华为是打算用 HMS 要替代 GMS——但实际效果如何呢？</p>
-<p><img alt data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e62e86499.png?imageView2/2/w/740"></p>
+<p><img data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e62e86499.png?imageView2/2/w/740" alt></p>
 <p>如果是一个普通的小白用户，自然只能在华为手机内置的 AppGallery 中下载应用——但他如果打开 App Gallery，他会发现他无法在 AppGallery 中直接下载任何一个来自 Google 的应用，包括 Google Search、Google Maps、Gmail、YouTube、Google Photos 等。</p>
 <p>甚至于，数十亿外国用户群体绝对离不开的社交应用，比如说 Facebook、Instagram、Whatsapp 等，在 AppGallery 中也不存在。</p>
 <p><code>Google 旗下 App 和 FaceBook 旗下 App 的缺失，让华为 AppGallery 对国外普通用户基本上没有任何吸引力——毕竟，在众多关于全球最受欢迎 App 的榜单中，Facebook 和 Google 占据半壁江山。</code></p>
-<p><img alt data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e6a30856f.png?imageView2/2/w/740"></p>
+<p><img data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e6a30856f.png?imageView2/2/w/740" alt></p>
 <p>关于华为 AppGallery 究竟能够在何种程度上满足国外用户的需求，外媒 TechRadar 前不久整理了一个数据——其中，在 Google Play 应用商店英国版最受欢迎的 15 款 App 中，只有 4 款可以在华为 AppGallery 中进行下载。</p>
 <p>如下图所示：</p>
-<p><img alt data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e6c13b08c.png?imageView2/2/w/740"></p>
+<p><img data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e6c13b08c.png?imageView2/2/w/740" alt></p>
 <p>图自：Techradar</p>
 <p>当然，在普通小白用户之外，国外的少数极客用户也可以选择利用手中的华为手机下载相应的 APK 安装包，然后直接在 Android 系统的基础上使用——这是一个可行的办法，但显然也是一个很大的妥协。 </p>
 <p>雷锋网注意到，一位来自 AndroidPolice 的编辑利用手中的荣耀 9X Pro 手机中国版（自然不含 GMS）进行了这样的测试，他所测试的 App 都是他本人最常用的 App，其结果如下：</p>
@@ -645,7 +615,7 @@
 <p>雷锋网(公众号：雷锋网)总结</p>
 <p>当然，考虑到 HMS 和 AppGallery 并非是在摆脱 Android 生态自辟江山，而只是在 Google 全家桶之外另起炉灶，则华为手机在海外面临的应用生态问题并非是完全无解的，只是需要更多的努力——事实上，这些努力并<code>不仅仅是技术实力和资金的问题，也是时间的问题。</code></p>
 <p>实际上，就在近日，华为消费者业务 CEO 余承东在接受外媒采访时明确表示：<code>Facebook 旗下的 Facebook/Twitter/Instagram 等 App 将登陆华为 AppGallery 应用商店。</code></p>
-<p><img alt data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e774f2819.jpg?imageView2/2/w/740"></p>
+<p><img data-src="https://static.leiphone.com/uploads/new/images/20200228/5e58e774f2819.jpg?imageView2/2/w/740" alt></p>
 <p>这的确是一个好消息——但对于华为来说，这离它的 “想要应用生态层面彻底踢开 Google” 的目标，还有十万八千里的距离。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
 <li><a href="https://github.com/ttpianobirds/RenZhengfei" target="_blank" rel="noopener">任正非思想 400余篇讲话</a></li>
@@ -664,8 +634,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Tesla/" rel="bookmark">Tesla</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Sony/" rel="bookmark">Sony</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/ByteDance/" rel="bookmark">ByteDance</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Alipay/" rel="bookmark">Alipay</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Facebook/" rel="bookmark">Facebook</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Brand/" rel="tag"><i class="fa fa-tag"></i> Brand</a>
               <a href="/tags/Internet/" rel="tag"><i class="fa fa-tag"></i> Internet</a>
@@ -681,21 +672,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Profession/2020/Profession/" rel="next" title="Profession">
-                  <i class="fa fa-chevron-left"></i> Profession
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Wisdom/2020/Period/" rel="prev" title="Period">
-                  Period <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Profession/2020/Profession/" rel="prev" title="Profession">
+      <i class="fa fa-chevron-left"></i> Profession
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Wisdom/2020/Period/" rel="next" title="Period">
+      Period <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -708,7 +696,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -739,8 +749,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -749,14 +759,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -767,11 +777,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -805,7 +810,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -817,51 +822,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -870,18 +836,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -891,63 +851,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -955,14 +858,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -989,40 +892,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/2020/HuaWei/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

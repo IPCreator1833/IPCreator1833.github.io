@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="微软对DOS的解释是”磁盘操作系统”（Disk Operating System）。">
 <meta name="keywords" content="Password,Dos">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Program/IPCreator/Technology/Program/Computer/Dos/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Computer/Dos/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Computer/Dos/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072805.png"></p>
+        <p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072805.png" alt></p>
 <blockquote>
 <p>微软对DOS的解释是”磁盘操作系统”（Disk Operating System）。</p>
 </blockquote>
@@ -299,76 +269,76 @@
 <p>DOS的历史</p>
 <p>作者：阮一峰</p>
 <p>1.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072801.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072801.jpg" alt></p>
 <p>1974年4月，Intel推出8位芯片8080。这块芯片的体积和性能，已经能够满足开发微型电脑的需要，标志微机时代即将来临。</p>
 <p>2.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072802.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072802.jpg" alt></p>
 <p>1975年初，MITS电脑公司推出了基于8080芯片的Altair 8800微机，这是人类历史上第一台PC（个人电脑）。</p>
 <p>3.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072803.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072803.jpg" alt></p>
 <p>1975年1月，Popular Electronics杂志以封面报道的形式，介绍了Altair 8800。这是历史上第一篇关于微机的新闻报道。</p>
 <p>4.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072804.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072804.jpg" alt></p>
 <p>22岁的西雅图程序员Paul Allen看到了这一期杂志，深感震动，就把它拿给好友20岁的Bill Gates看。</p>
 <p>两人决定为Altair 8800开发一套BASIC解释器，卖给MITS公司。1975年7月，他们用这个产品成立了微软公司。</p>
 <p>5.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072805.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072805.png" alt></p>
 <p>1975年，另一家公司Digital Research为Altair 8800开发了操作系统CP/M。它很快成为Intel 8080芯片的标准操作系统。（上图为CP/M的运行界面。）</p>
 <p>6.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072806.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072806.jpg" alt></p>
 <p>1978年，Intel公司推出历史上第一块16位芯片8086。</p>
 <p>7.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072807.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072807.jpg" alt></p>
 <p>1979年，一家名叫Seattle Computer Products（SCP）的公司，决定开发基于8086芯片的个人电脑。</p>
 <p>它原计划采用CP/M作为操作系统，但是此时CP/M还未完成针对16位芯片的升级。</p>
 <p>8.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072808.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072808.jpg" alt></p>
 <p>1980年4月，足足一年之后，CP/M还是没有推出16位的版本。SCP决定不等了，自己开发16位操作系统。</p>
 <p>24岁的程序员Tim Paterson负责这个任务。</p>
 <p>9.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072809.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072809.jpg" alt></p>
 <p>1980年8月，Tim Paterson完成了原始的操作系统，取名为QDOS，意思是”简易的操作系统”（Quick and Dirty Operating System）。</p>
 <p>在设计上，他充分借鉴了CP/M，用户界面和编程接口几乎完全一样，这使得CP/M上的应用程序，可以直接在QDOS上运行。他做出的最大改变，就是<strong>为QDOS引入了微软公司BASIC解释器的FAT文件系统。</strong></p>
 <p>10.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072810.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072810.jpg" alt></p>
 <p>1980年10月，IBM公司决定推出基于Intel 8086芯片的PC。</p>
 <p>它找到Digital Research公司，要求获得授权使用CP/M系统。但是，协议没有谈成。于是，IBM又去找微软公司，要求微软为它提供操作系统。</p>
 <p>当时，微软没有操作系统产品，但是Bill Gates知道SCP公司正在开发QDOS。微软支付2.5万美元给SCP，获得了QDOS的使用许可。（上图为DOS的运行界面。）</p>
 <p>11.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072811.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072811.jpg" alt></p>
 <p>1981年7月，微软对IBM PC的整个设计已经相当了解，Bill Gates意识到未来PC市场的巨大规模，决定不再使用许可证模式，而是直接把QDOS买下来。这又花费了微软公司5-7万美元。</p>
 <p>与此同时，Tim Paterson也从SCP辞职了，微软雇用了他。</p>
 <p>12.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072812.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072812.jpg" alt></p>
 <blockquote>
 <p>1981年7月27日，协议达成。QDOS成了微软的财产，名称正式改为MS-DOS。微软对DOS的解释是”磁盘操作系统”（Disk Operating System）。</p>
 </blockquote>
 <p>这一天，就是微软公司DOS操作系统的诞生纪念日。</p>
 <p>13.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072816.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072816.jpg" alt></p>
 <p>1981年8月12日，IBM公司正式推出个人电脑产品IBM PC，使用的操作系统是MS-DOS 1.14版。</p>
 <p>14.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072813.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072813.jpg" alt></p>
 <p>1983年3月8日，IBM又推出增强版IBM PC/XT，第一次在PC上配备了硬盘，使用的操作系统是MS-DOS 2.0版。</p>
 <p>15.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072817.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072817.jpg" alt></p>
 <p>1984年，IBM推出了下一代个人电脑IBM PC/AT，操作系统是MS-DOS 3.0版。</p>
 <p>16.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072814.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072814.jpg" alt></p>
 <p>1989年，MS-DOS 4.0版发布，开始支持鼠标和图形界面。</p>
 <p>此时，微软已经准备终结DOS这个产品了。微软公开表态，用户可以考虑放弃DOS，转而使用由IBM和微软共同开发的OS/2操作系统。</p>
 <p>但是不久以后，Windows 3.0获得巨大成功，微软也就不再考虑OS/2了。</p>
 <p>17.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072818.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072818.png" alt></p>
 <p>1991年，MS-DOS 5.0版发布，内置QBasic编程环境。这是MS-DOS最后一次作为单独产品出现。</p>
 <p>18.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072819.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072819.png" alt></p>
 <p>1993年，MS-DOS 6.0版发布，具备了磁盘压缩技术。</p>
 <p>19.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072821.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072821.jpg" alt></p>
 <p>1995年，MS-DOS 7.0版支持FAT32文件系统，它随同Windows 95一起发布。</p>
 <p>20.</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072820.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011072820.jpg" alt></p>
 <p>2000年9月14日，MS-DOS的最后一个版本8.0版发布，只用于Windows XP系统的启动盘。至此，微软公司的DOS开发正式宣告全部结束。</p>
 <p>==========================================</p>
 <p>[参考文献]</p>
@@ -387,8 +357,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Program/IPCreator/Technology/Program/Computer/Cryptogram/" rel="bookmark">Cryptogram</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Password/" rel="tag"><i class="fa fa-tag"></i> Password</a>
               <a href="/tags/Dos/" rel="tag"><i class="fa fa-tag"></i> Dos</a>
@@ -401,21 +380,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Program/IPCreator/Technology/Program/Computer/Computer/" rel="next" title="Computer">
-                  <i class="fa fa-chevron-left"></i> Computer
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Program/IPCreator/Technology/Program/Computer/Linux/" rel="prev" title="Linux">
-                  Linux <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Program/IPCreator/Technology/Program/Computer/Computer/" rel="prev" title="Computer">
+      <i class="fa fa-chevron-left"></i> Computer
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Program/IPCreator/Technology/Program/Computer/Linux/" rel="next" title="Linux">
+      Linux <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -428,7 +404,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -459,8 +457,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -469,14 +467,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -487,11 +485,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -525,7 +518,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -537,51 +530,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -590,18 +544,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -611,63 +559,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -675,14 +566,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -709,40 +600,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Program/IPCreator/Technology/Program/Computer/Dos/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

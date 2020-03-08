@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="开源的奇迹，取之于众，用之于众。">
 <meta name="keywords" content="Linux">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Program/IPCreator/Technology/Program/Computer/Linux/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Program/IPCreator/Technology/Program/Computer/Linux/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/Program/Computer/Linux/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,31 +256,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="linux20180329.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/linux20180329.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/linux20180329.jpg?imageMogr2/thumbnail/!75p" alt="linux20180329.jpg"></p>
 <blockquote>
 <p>开源的奇迹，取之于众，用之于众。</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="User-space-与-Kernel-space"><a href="#User-space-与-Kernel-space" class="headerlink" title="User space 与 Kernel space"></a><a href="http://www.ruanyifeng.com/blog/2016/12/user_space_vs_kernel_space.html" target="_blank" rel="noopener">User space 与 Kernel space</a></h2><p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2016/bg2016120201-2.png"></p>
+<h2 id="User-space-与-Kernel-space"><a href="#User-space-与-Kernel-space" class="headerlink" title="User space 与 Kernel space"></a><a href="http://www.ruanyifeng.com/blog/2016/12/user_space_vs_kernel_space.html" target="_blank" rel="noopener">User space 与 Kernel space</a></h2><p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2016/bg2016120201-2.png" alt></p>
 <p>简单说，Kernel space 是 Linux 内核的运行空间，User space 是用户程序的运行空间。为了安全，它们是隔离的，即使用户的程序崩溃了，内核也不受影响。Kernel space 可以执行任意命令，调用系统的一切资源；User space 只能执行简单的运算，不能直接调用系统资源，必须通过系统接口（又称 system call），才能向内核发出指令。</p>
 <h2 id="如何读懂火焰图？"><a href="#如何读懂火焰图？" class="headerlink" title="如何读懂火焰图？"></a><a href="http://www.ruanyifeng.com/blog/2017/09/flame-graph.html" target="_blank" rel="noopener">如何读懂火焰图？</a></h2><h2 id="Linux-的启动流程"><a href="#Linux-的启动流程" class="headerlink" title="Linux 的启动流程"></a><a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html" target="_blank" rel="noopener">Linux 的启动流程</a></h2><p>作者： 阮一峰<br>日期： 2013年8月17日</p>
 <p>半年前，我写了《计算机是如何启动的？》，探讨BIOS和主引导记录的作用。</p>
 <p>那篇文章不涉及操作系统，只与主板的板载程序有关。今天，我想接着往下写，探讨操作系统接管硬件以后发生的事情，也就是操作系统的启动流程。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081701.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081701.png" alt></p>
 <p>这个部分比较有意思。因为在BIOS阶段，计算机的行为基本上被写死了，程序员可以做的事情并不多；但是，一旦进入操作系统，程序员几乎可以定制所有方面。所以，这个部分与程序员的关系更密切。</p>
 <p>我主要关心的是Linux操作系统，它是目前服务器端的主流操作系统。下面的内容针对的是Debian发行版，因为我对其他发行版不够熟悉。</p>
 <p>第一步、加载内核</p>
 <p>操作系统接管硬件以后，首先读入 /boot 目录下的内核文件。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081702.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081702.png" alt></p>
 <p>以我的电脑为例，/boot 目录下面大概是这样一些文件：</p>
 <p>　　$ ls /boot<br>　　<br>　　config-3.2.0-3-amd64<br>　　config-3.2.0-4-amd64<br>　　grub<br>　　initrd.img-3.2.0-3-amd64<br>　　initrd.img-3.2.0-4-amd64<br>　　System.map-3.2.0-3-amd64<br>　　System.map-3.2.0-4-amd64<br>　　vmlinuz-3.2.0-3-amd64<br>　　vmlinuz-3.2.0-4-amd64<br>　　<br>第二步、启动初始化进程</p>
 <p>内核文件加载以后，就开始运行第一个程序 /sbin/init，它的作用是初始化系统环境。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081703.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081703.png" alt></p>
 <p>由于init是第一个运行的程序，它的进程编号（pid）就是1。其他所有进程都从它衍生，都是它的子进程。</p>
 <p>第三步、确定运行级别</p>
 <p>许多程序需要开机启动。它们在Windows叫做”服务”（service），在Linux就叫做”守护进程”（daemon）。</p>
 <p>init进程的一大任务，就是去运行这些开机启动的程序。但是，不同的场合需要启动不同的程序，比如用作服务器时，需要启动Apache，用作桌面就不需要。Linux允许为不同的场合，分配不同的开机启动程序，这就叫做”运行级别”（runlevel）。也就是说，启动时根据”运行级别”，确定要运行哪些程序。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081704.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081704.png" alt></p>
 <p>Linux预置七种运行级别（0-6）。一般来说，0是关机，1是单用户模式（也就是维护模式），6是重启。运行级别2-5，各个发行版不太一样，对于Debian来说，都是同样的多用户模式（也就是正常模式）。</p>
 <p>init进程首先读取文件 /etc/inittab，它是运行级别的设置文件。如果你打开它，可以看到第一行是这样的：</p>
 <p>　　id:2:initdefault:<br>　　<br>initdefault的值是2，表明系统启动时的运行级别为2。如果需要指定其他级别，可以手动修改这个值。</p>
@@ -321,13 +291,13 @@
 <p>第四步、加载开机启动程序</p>
 <p>前面提到，七种预设的”运行级别”各自有一个目录，存放需要开机启动的程序。不难想到，如果多个”运行级别”需要启动同一个程序，那么这个程序的启动脚本，就会在每一个目录里都有一个拷贝。这样会造成管理上的困扰：如果要修改启动脚本，岂不是每个目录都要改一遍？</p>
 <p>Linux的解决办法，就是七个 /etc/rcN.d 目录里列出的程序，都设为链接文件，指向另外一个目录 /etc/init.d ，真正的启动脚本都统一放在这个目录中。init进程逐一加载开机启动程序，其实就是运行这个目录里的启动脚本。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081705.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081705.png" alt></p>
 <p>下面就是链接文件真正的指向。</p>
 <p>　　$ ls -l /etc/rc2.d<br>　　<br>　　README<br>　　S01motd -&gt; ../init.d/motd<br>　　S13rpcbind -&gt; ../init.d/rpcbind<br>　　S14nfs-common -&gt; ../init.d/nfs-common<br>　　S16binfmt-support -&gt; ../init.d/binfmt-support<br>　　S16rsyslog -&gt; ../init.d/rsyslog<br>　　S16sudo -&gt; ../init.d/sudo<br>　　S17apache2 -&gt; ../init.d/apache2<br>　　S18acpid -&gt; ../init.d/acpid<br>　　…<br>　　<br>这样做的另一个好处，就是如果你要手动关闭或重启某个进程，直接到目录 /etc/init.d 中寻找启动脚本即可。比如，我要重启Apache服务器，就运行下面的命令：</p>
 <p>　　$ sudo /etc/init.d/apache2 restart<br>　　<br>/etc/init.d 这个目录名最后一个字母d，是directory的意思，表示这是一个目录，用来与程序 /etc/init 区分。</p>
 <p>第五步、用户登录</p>
 <p>开机启动程序加载完毕以后，就要让用户登录了。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081706.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081706.png" alt></p>
 <p>一般来说，用户的登录方式有三种：</p>
 <p>　　（1）命令行登录</p>
 <p>　　（2）ssh登录</p>
@@ -338,7 +308,7 @@
 <p>（3）图形界面登录：init进程调用显示管理器，Gnome图形界面对应的显示管理器为gdm（GNOME Display Manager），然后用户输入用户名和密码。如果密码正确，就读取/etc/gdm3/Xsession，启动用户的会话。</p>
 <p>第六步、进入 login shell</p>
 <p>所谓shell，简单说就是命令行界面，让用户可以直接与操作系统对话。用户登录时打开的shell，就叫做login shell。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081707.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081707.png" alt></p>
 <p>Debian默认的shell是Bash，它会读入一系列的配置文件。上一步的三种情况，在这一步的处理，也存在差异。</p>
 <p>（1）命令行登录：首先读入 /etc/profile，这是对所有用户都有效的配置；然后依次寻找下面三个文件，这是针对当前用户的配置。</p>
 <p>　　~/.bash_profile<br>　　~/.bash_login<br>　　~/.profile<br>　　<br>需要注意的是，这三个文件只要有一个存在，就不再读入后面的文件了。比如，要是 ~/.bash_profile 存在，就不会再读入后面两个文件了。</p>
@@ -347,7 +317,7 @@
 <p>第七步，打开 non-login shell</p>
 <p>老实说，上一步完成以后，Linux的启动过程就算结束了，用户已经可以看到命令行提示符或者图形界面了。但是，为了内容的完整，必须再介绍一下这一步。</p>
 <p>用户进入操作系统以后，常常会再手动开启一个shell。这个shell就叫做 non-login shell，意思是它不同于登录时出现的那个shell，不读取/etc/profile和.profile等配置文件。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081708.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201308/bg2013081708.png" alt></p>
 <p>non-login shell的重要性，不仅在于它是用户最常接触的那个shell，还在于它会读入用户自己的bash配置文件 ~/.bashrc。大多数时候，我们对于bash的定制，都是写在这个文件里面的。</p>
 <p>你也许会问，要是不进入 non-login shell，岂不是.bashrc就不会运行了，因此bash 也就不能完成定制了？事实上，Debian已经考虑到这个问题了，请打开文件 ~/.profile，可以看到下面的代码：</p>
 <p>　　if [ -n “$BASH_VERSION” ]; then<br>　　　　if [ -f “$HOME/.bashrc” ]; then<br>　　　　　　. “$HOME/.bashrc”<br>　　　　fi<br>　　fi<br>　　<br>上面代码先判断变量 $BASH_VERSION 是否有值，然后判断主目录下是否存在 .bashrc 文件，如果存在就运行该文件。第三行开头的那个点，是source命令的简写形式，表示运行某个文件，写成”source ~/.bashrc”也是可以的。</p>
@@ -370,15 +340,15 @@
 <p>daemon英 [ˈdi:mən]   美 [‘dimən]<br>n.  （希腊神话中）半人半神的精灵; 守护神; [计]守护进程;</p>
 <h2 id="Systemd-入门教程：命令篇"><a href="#Systemd-入门教程：命令篇" class="headerlink" title="Systemd 入门教程：命令篇"></a><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html" target="_blank" rel="noopener">Systemd 入门教程：命令篇</a></h2><h2 id="Systemd-入门教程：实战篇"><a href="#Systemd-入门教程：实战篇" class="headerlink" title="Systemd 入门教程：实战篇"></a><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html" target="_blank" rel="noopener">Systemd 入门教程：实战篇</a></h2><h2 id="Systemd-定时器教程"><a href="#Systemd-定时器教程" class="headerlink" title="Systemd 定时器教程"></a><a href="http://www.ruanyifeng.com/blog/2018/03/systemd-timer.html" target="_blank" rel="noopener">Systemd 定时器教程</a></h2><p>Systemd 作为 Linux 的系统启动器，功能强大。</p>
 <p>本文通过一个简单例子，介绍 Systemd 如何设置定时任务。这不仅实用，而且可以作为 Systemd 的上手教程。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018033001.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018033001.jpg" alt></p>
 <h2 id="理解Linux系统负荷"><a href="#理解Linux系统负荷" class="headerlink" title="理解Linux系统负荷"></a><a href="http://www.ruanyifeng.com/blog/2011/07/linux_load_average_explained.html" target="_blank" rel="noopener">理解Linux系统负荷</a></h2><p>作者： 阮一峰<br>日期： 2011年7月31日</p>
 <p>一、查看系统负荷</p>
 <p>如果你的电脑很慢，你或许想查看一下，它的工作量是否太大了。</p>
 <p>在Linux系统中，我们一般使用uptime命令查看（w命令和top命令也行）。（另外，它们在苹果公司的Mac电脑上也适用。）</p>
 <p>你在终端窗口键入uptime，系统会返回一行信息。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073001.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073001.png" alt></p>
 <p>这行信息的后半部分，显示”load average”，它的意思是”系统的平均负荷”，里面有三个数字，我们可以从中判断系统负荷是大还是小。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073003.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073003.png" alt></p>
 <p>为什么会有三个数字呢？你从手册中查到，它们的意思分别是1分钟、5分钟、15分钟内系统的平均负荷。</p>
 <p>如果你继续看手册，它还会告诉你，当CPU完全空闲的时候，平均负荷为0；当CPU工作量饱和的时候，平均负荷为1。</p>
 <p>那么很显然，”load average”的值越低，比如等于0.2或0.3，就说明电脑的工作量越小，系统负荷比较轻。</p>
@@ -387,10 +357,10 @@
 <p>判断系统负荷是否过重，必须理解load average的真正含义。下面，我根据”Understanding Linux CPU Load”这篇文章，尝试用最通俗的语言，解释这个问题。</p>
 <p>首先，假设最简单的情况，你的电脑只有一个CPU，所有的运算都必须由这个CPU来完成。</p>
 <p>那么，我们不妨把这个CPU想象成一座大桥，桥上只有一根车道，所有车辆都必须从这根车道上通过。（很显然，这座桥只能单向通行。）</p>
-<p>系统负荷为0，意味着大桥上一辆车也没有。<br><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073004.png"></p>
-<p>系统负荷为0.5，意味着大桥一半的路段有车。<br><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073005.png"></p>
-<p>系统负荷为1.0，意味着大桥的所有路段都有车，也就是说大桥已经”满”了。但是必须注意的是，直到此时大桥还是能顺畅通行的。<br><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073006.png"></p>
-<p>系统负荷为1.7，意味着车辆太多了，大桥已经被占满了（100%），后面等着上桥的车辆为桥面车辆的70%。以此类推，系统负荷2.0，意味着等待上桥的车辆与桥面的车辆一样多；系统负荷3.0，意味着等待上桥的车辆是桥面车辆的2倍。总之，当系统负荷大于1，后面的车辆就必须等待了；系统负荷越大，过桥就必须等得越久。<br><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073007.png"></p>
+<p>系统负荷为0，意味着大桥上一辆车也没有。<br><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073004.png" alt></p>
+<p>系统负荷为0.5，意味着大桥一半的路段有车。<br><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073005.png" alt></p>
+<p>系统负荷为1.0，意味着大桥的所有路段都有车，也就是说大桥已经”满”了。但是必须注意的是，直到此时大桥还是能顺畅通行的。<br><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073006.png" alt></p>
+<p>系统负荷为1.7，意味着车辆太多了，大桥已经被占满了（100%），后面等着上桥的车辆为桥面车辆的70%。以此类推，系统负荷2.0，意味着等待上桥的车辆与桥面的车辆一样多；系统负荷3.0，意味着等待上桥的车辆是桥面车辆的2倍。总之，当系统负荷大于1，后面的车辆就必须等待了；系统负荷越大，过桥就必须等得越久。<br><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073007.png" alt></p>
 <blockquote>
 <p>CPU的系统负荷，基本上等同于上面的类比。大桥的通行能力，就是CPU的最大工作量；桥梁上的车辆，就是一个个等待CPU处理的进程（process）。</p>
 </blockquote>
@@ -406,7 +376,7 @@
 <p>上面，我们假设你的电脑只有1个CPU。如果你的电脑装了2个CPU，会发生什么情况呢？</p>
 <p>2个CPU，意味着电脑的处理能力翻了一倍，能够同时处理的进程数量也翻了一倍。</p>
 <p>还是用大桥来类比，两个CPU就意味着大桥有两根车道了，通车能力翻倍了。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073008.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201107/bg2011073008.png" alt></p>
 <p>所以，2个CPU表明系统负荷可以达到2.0，此时每个CPU都达到100%的工作量。推广开来，n个CPU的电脑，可接受的系统负荷最大为n.0。</p>
 <p>五、多核处理器</p>
 <p>芯片厂商往往在一个CPU内部，包含多个CPU核心，这被称为多核CPU。</p>
@@ -509,7 +479,7 @@
 <p>=======================================</p>
 <p>SSH原理与运用（二）：远程操作与端口转发</p>
 <p>作者：阮一峰</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201112/bg2011122301.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201112/bg2011122301.jpg" alt></p>
 <p>七、远程操作</p>
 <blockquote>
 <p>SSH不仅可以用于远程主机登录，还可以直接在远程主机上执行操作。</p>
@@ -584,8 +554,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Linux/" rel="bookmark">Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/IPCreator/Technology/Program/Tools/Linux/the-basic-concepts-of-linux-server/" rel="bookmark">The Basic Concepts of Linux Server</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/IPCreator/Technology/Program/Tools/Linux/the-basic-concepts-of-linux/" rel="bookmark">The Basic Concepts of Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/IPCreator/Technology/Program/Tools/Linux/linux-trouble-resolver/" rel="bookmark">Linux Trouble Resolver</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/IPCreator/Technology/Program/Android/linux-tips/" rel="bookmark">Top Commands of Linux</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
           </div>
@@ -597,21 +588,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Program/IPCreator/Technology/Program/Computer/Dos/" rel="next" title="Dos">
-                  <i class="fa fa-chevron-left"></i> Dos
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Program/IPCreator/Technology/Program/Computer/Filesystem/" rel="prev" title="Filesystem">
-                  Filesystem <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Program/IPCreator/Technology/Program/Computer/Dos/" rel="prev" title="Dos">
+      <i class="fa fa-chevron-left"></i> Dos
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Program/IPCreator/Technology/Program/Computer/Filesystem/" rel="next" title="Filesystem">
+      Filesystem <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -624,7 +612,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -655,8 +665,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -665,14 +675,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -683,11 +693,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -721,7 +726,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -733,51 +738,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -786,18 +752,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -807,63 +767,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -871,14 +774,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -905,40 +808,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Program/IPCreator/Technology/Program/Computer/Linux/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

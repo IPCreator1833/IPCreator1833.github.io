@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="行业、职业、公司、岗位、团队…一切选择的根源上都是自己。">
 <meta name="keywords" content="Management,Career">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/C/Career/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/C/Career/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/C/Career/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,13 +256,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="career.jpg" data-src="http://opb37u589.bkt.clouddn.com/career.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/career.jpg?imageMogr2/thumbnail/!75p" alt="career.jpg"></p>
 <blockquote>
 <p>行业、职业、公司、岗位、团队…一切选择的根源上都是自己。</p>
 </blockquote>
 <a id="more"></a>
 <p>七年一辈子——李笑来。</p>
-<h2 id="25岁-35岁的你，要怎样经营人际关系？"><a href="#25岁-35岁的你，要怎样经营人际关系？" class="headerlink" title="25岁-35岁的你，要怎样经营人际关系？"></a><a href>25岁-35岁的你，要怎样经营人际关系？</a></h2><p><img alt="mature001.jpeg" data-src="http://opb37u589.bkt.clouddn.com/mature001.jpeg?imageMogr2/thumbnail/!75p"><br><img alt="mature002.jpeg" data-src="http://opb37u589.bkt.clouddn.com/mature002.jpeg?imageMogr2/thumbnail/!75p"><br><img alt="mature003.jpeg" data-src="http://opb37u589.bkt.clouddn.com/mature003.jpeg?imageMogr2/thumbnail/!75p"><br><img alt="mature004.jpeg" data-src="http://opb37u589.bkt.clouddn.com/mature004.jpeg?imageMogr2/thumbnail/!75p"><br><img alt="mature005.jpeg" data-src="http://opb37u589.bkt.clouddn.com/mature005.jpeg?imageMogr2/thumbnail/!75p"><br><img alt="mature006.jpeg" data-src="http://opb37u589.bkt.clouddn.com/mature006.jpeg?imageMogr2/thumbnail/!75p"><br><img alt="mature007.jpeg" data-src="http://opb37u589.bkt.clouddn.com/mature007.jpeg?imageMogr2/thumbnail/!75p"><br><img alt="mature008.jpeg" data-src="http://opb37u589.bkt.clouddn.com/mature008.jpeg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="25岁-35岁的你，要怎样经营人际关系？"><a href="#25岁-35岁的你，要怎样经营人际关系？" class="headerlink" title="25岁-35岁的你，要怎样经营人际关系？"></a><a href>25岁-35岁的你，要怎样经营人际关系？</a></h2><p><img data-src="http://opb37u589.bkt.clouddn.com/mature001.jpeg?imageMogr2/thumbnail/!75p" alt="mature001.jpeg"><br><img data-src="http://opb37u589.bkt.clouddn.com/mature002.jpeg?imageMogr2/thumbnail/!75p" alt="mature002.jpeg"><br><img data-src="http://opb37u589.bkt.clouddn.com/mature003.jpeg?imageMogr2/thumbnail/!75p" alt="mature003.jpeg"><br><img data-src="http://opb37u589.bkt.clouddn.com/mature004.jpeg?imageMogr2/thumbnail/!75p" alt="mature004.jpeg"><br><img data-src="http://opb37u589.bkt.clouddn.com/mature005.jpeg?imageMogr2/thumbnail/!75p" alt="mature005.jpeg"><br><img data-src="http://opb37u589.bkt.clouddn.com/mature006.jpeg?imageMogr2/thumbnail/!75p" alt="mature006.jpeg"><br><img data-src="http://opb37u589.bkt.clouddn.com/mature007.jpeg?imageMogr2/thumbnail/!75p" alt="mature007.jpeg"><br><img data-src="http://opb37u589.bkt.clouddn.com/mature008.jpeg?imageMogr2/thumbnail/!75p" alt="mature008.jpeg"></p>
 <h2 id="观点：职业生涯的3个主要阶段"><a href="#观点：职业生涯的3个主要阶段" class="headerlink" title="观点：职业生涯的3个主要阶段"></a><a href="http://www.luojiji.com/thread-11218-1-1.html" target="_blank" rel="noopener">观点：职业生涯的3个主要阶段</a></h2><p>奥美互动全球CEO、资深职业顾问布赖恩·费瑟斯通豪在新书《远见：如何规划职业生涯3大阶段》中，介绍了职业生涯的3个主要阶段和“职场燃料”这个概念。这本书由湛庐文化出版。</p>
 <p>费瑟斯通豪介绍，人们的职业生涯可以分成3个主要阶段，每个阶段分别持续大约 15 年，所以加起来至少有 45 年，而且未来很可能会进一步延长，</p>
 <blockquote>
@@ -324,7 +294,7 @@
 </ol>
 <h2 id="七个对我最重要的职业建议（译文）"><a href="#七个对我最重要的职业建议（译文）" class="headerlink" title="七个对我最重要的职业建议（译文）"></a><a href="http://www.ruanyifeng.com/blog/2015/09/career-advice.html" target="_blank" rel="noopener">七个对我最重要的职业建议（译文）</a></h2><p>作者： 阮一峰<br>日期： 2015年9月18日</p>
 <p>Nicholas C. Zakas 是全世界最著名的 JavaScript 程序员之一。<br>两年前，他写了一篇长文，回顾自己的职业生涯，提到七个对他来说最重要的建议。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015091801.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015091801.jpg" alt></p>
 <p>我读完很受启发，决定做一点摘录。你可以先读下面的精简版，再去读全文。</p>
 <p>===============================</p>
 <p>七个对我最好的职业建议（精简版）<br>作者：Nicholas C. Zakas</p>
@@ -356,7 +326,7 @@
 <blockquote>
 <p>“找到那些比你水平更高、更聪明的人，尽量和他们在一起，吃饭或者喝咖啡，向他们讨教，了解他们拥有的知识。你的职业，甚至你的生活，都会因此变得更好。”</p>
 </blockquote>
-<h2 id="木桶理论已死，长板理论才是你必须掌握的"><a href="#木桶理论已死，长板理论才是你必须掌握的" class="headerlink" title="木桶理论已死，长板理论才是你必须掌握的"></a><a href="http://www.luojiji.com/thread-4571-1-1.html" target="_blank" rel="noopener">木桶理论已死，长板理论才是你必须掌握的</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201604/20/151853ee8r9682zoce6n6n.jpg"><br>2016-04-17 古典 罗辑思维</p>
+<h2 id="木桶理论已死，长板理论才是你必须掌握的"><a href="#木桶理论已死，长板理论才是你必须掌握的" class="headerlink" title="木桶理论已死，长板理论才是你必须掌握的"></a><a href="http://www.luojiji.com/thread-4571-1-1.html" target="_blank" rel="noopener">木桶理论已死，长板理论才是你必须掌握的</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201604/20/151853ee8r9682zoce6n6n.jpg" alt><br>2016-04-17 古典 罗辑思维</p>
 <p>以前有一个著名的木桶理论：<br>一个木桶能装多少水，取决于最短的一块板。</p>
 <p>在工业化时代，这个理论的确非常有效；<br>但是在全球互联网的时代，这个理论实际早已破产。</p>
 <p>1<br>——————</p>
@@ -430,11 +400,11 @@
 <p>英国雷丁大学教授、社会语言学家罗德里·琼斯（Rodney Jones）对比2016年的领英数据认为，求职者由强调个人性格特质的词汇如“专注的”和“积极的”，向可以更加精准描述自身技能和能力的词汇转移，反映了职场中对工作的要求正变得越来越专业化。而“专家”这个词在2016年重返榜单前十，并在2017年上升到第六位；“擅长”这个词分别占据2017年榜首和2016年第二，这说明求职者们更偏好展现出自己可被验证的专业技能。琼斯说：“这类词汇被看做是社会关注问责制和可验证的一个缩影，经济的不确定性让真实性频频遭到质疑，人们开始更关注和依靠可验证这一特质。”</p>
 <p>如今雇主倡导<strong>“T”型人才</strong>，要求候选人能在某一领域深入钻研，同时横向上又有足够延展性，这就是“领导力”备受重视的原因。领导力并不是站在管理岗位上领导他人，而是主动、果决、有判断力等综合素质的评定。琼斯说：“这说明在当今趋势下，公司不再按资排辈，即使是年轻员工也渴望展示自己的领导能力。相反，‘有条理的’一词自2015年后退出榜单前十，说明求职者更着重证明自己的管理能力，而非执行能力。”</p>
 <p>在2017年中国榜单中，“领导力”排在第三，通过与全球榜单对比不难发现，中国职场人对于“责任感”，“主人翁意识”及“创新”等词有高度热情，这一现象与90甚至95后职场力量的崛起以及国内近几年的创业浪潮密不可分。</p>
-<h2 id="忙碌的职场女性，如何获取最大的自由？"><a href="#忙碌的职场女性，如何获取最大的自由？" class="headerlink" title="忙碌的职场女性，如何获取最大的自由？"></a><a href="http://www.luojiji.com/thread-10947-1-1.html" target="_blank" rel="noopener">忙碌的职场女性，如何获取最大的自由？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/18/073354h6fs77iu7kkslkuo.jpg"></p>
+<h2 id="忙碌的职场女性，如何获取最大的自由？"><a href="#忙碌的职场女性，如何获取最大的自由？" class="headerlink" title="忙碌的职场女性，如何获取最大的自由？"></a><a href="http://www.luojiji.com/thread-10947-1-1.html" target="_blank" rel="noopener">忙碌的职场女性，如何获取最大的自由？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/18/073354h6fs77iu7kkslkuo.jpg" alt></p>
 <p>2018-01-18 「得到」 罗辑思维<br>引言</p>
 <p>随着都市生活节奏的加快，提到“职场女性”，给人的印象往往是拼命加班、不懂生活。女性就一定要被工作束缚？不。</p>
 <p>作为一名典型的职场女性，脱不花虽然创业很忙，但生活依旧井井有条。秘诀何在？以下13条建议，供你参考。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/18/073429jwutvuzt72uxp0ul.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/18/073429jwutvuzt72uxp0ul.jpg" alt></p>
 <ol>
 <li><p>不存在平衡工作与生活这件事。生命是连贯的，一天只有24小时，所以你只有一张清单，要把自己过成连贯的Feed流。</p>
 </li>
@@ -477,7 +447,7 @@
 <p>第二，树立互联网企业的技术价值观——<strong>技术必须产生价值</strong>。在3D技术刚开始流行时，腾讯有一个项目用最先进的3D技术加上最火的游戏类型，做出了一款游戏，结果发现两个好的东西加在一起并不等于一个好的产品，推出后玩家也不认可。这个例子带来了一个反思：选择技术方向的时候，永远要考虑和洞察用户此刻最急需的是什么。曾宇还介绍了一个技术产生价值的正面例子，数据科学家奥伦·埃奇奥尼（Oren Etzioni）喜欢以低价买机票，有次他发现其他乘客买的机票价格比他还便宜，于是他把影响机票的各个因素放在一个模型中，运用机器学习的算法，做了一个预测机票价格的产品。后来，这个机票价格预测网站被微软以1.15亿美元收购。</p>
 <p>第三，保持<strong>好奇心</strong>和<strong>创新</strong>精神。曾宇认为，真正意义上看得见的蓝海其实并不存在，因为以现在的市场效率，它一旦被证明后就已经变成红海了，所以“蓝海只是临时意义上的东西，而红海是一个常态，真正创新、真正突破，真正要找蓝海市场，需要从没有的地方去找”。曾宇引用了《道德经》里的一句话：“万物生于有，有生于无。”万物生于有，是说强势的产品可能会带动起一个生态，比如微信出现后，可以衍生出很多东西；有生于无，是指微信就是从没有的地方长出来的，从技术的角度说，如果有人说某个技术不可能，也许这里就蕴藏着一个机会。</p>
 <p>以上就是腾讯副总裁曾宇对技术人员自我提升的思考，供你参考。</p>
-<h2 id="35个职场真相，可能永远不会有人告诉你"><a href="#35个职场真相，可能永远不会有人告诉你" class="headerlink" title="35个职场真相，可能永远不会有人告诉你"></a><a href="http://www.luojiji.com/thread-2658-1-1.html" target="_blank" rel="noopener">35个职场真相，可能永远不会有人告诉你</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/25/173807djkjcbj28jf04ojc.jpg"></p>
+<h2 id="35个职场真相，可能永远不会有人告诉你"><a href="#35个职场真相，可能永远不会有人告诉你" class="headerlink" title="35个职场真相，可能永远不会有人告诉你"></a><a href="http://www.luojiji.com/thread-2658-1-1.html" target="_blank" rel="noopener">35个职场真相，可能永远不会有人告诉你</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/25/173807djkjcbj28jf04ojc.jpg" alt></p>
 <p>求职篇| getting a job</p>
 <p>——首先，你得有一份工作。</p>
 <ol>
@@ -603,12 +573,12 @@
 <blockquote>
 <p>重要的不是你是什么，而是你在他人的事业中扮演什么样的角色。<br>强者仅是小赢。<br>乐于、善于为他人所用的强者，赢面更大。</p>
 </blockquote>
-<h2 id="一篇清单，看懂猎头这个神秘行业"><a href="#一篇清单，看懂猎头这个神秘行业" class="headerlink" title="一篇清单，看懂猎头这个神秘行业"></a><a href="http://www.luojiji.com/thread-10632-1-1.html" target="_blank" rel="noopener">一篇清单，看懂猎头这个神秘行业</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/12/072702q12hkeszzskihks1.jpg"></p>
+<h2 id="一篇清单，看懂猎头这个神秘行业"><a href="#一篇清单，看懂猎头这个神秘行业" class="headerlink" title="一篇清单，看懂猎头这个神秘行业"></a><a href="http://www.luojiji.com/thread-10632-1-1.html" target="_blank" rel="noopener">一篇清单，看懂猎头这个神秘行业</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/12/072702q12hkeszzskihks1.jpg" alt></p>
 <p>2017-12-12 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>随着电视剧《猎场》的热播，猎头这个“神秘”的行业被放大到聚光灯下。</p>
 <p>但是，猎头的工作真的如电视剧里那般光鲜吗？他们日常的工作状态是怎样的？这篇清单，为你揭开猎头行业的真相。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/12/072722z0p8wxv2p4ad0bpw.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/12/072722z0p8wxv2p4ad0bpw.jpg" alt></p>
 <ol>
 <li><p>猎头的工作，其实没那么神秘。打个比方，猎头就是公司和优秀人才之间的桥梁，帮需要招聘的公司在大量人才中挑出合适的人选，然后获取佣金。</p>
 </li>
@@ -649,12 +619,12 @@
 <li><p>顶级猎头的品质之六：诚实。电视剧中猎头尔虞我诈、诡计多端的玩法，在现实中基本不可能。一方面，客户和候选人往往背景不俗，被忽悠的几率很小。另一方面，欺骗会让猎头“身败名裂”，难以在行业立足。长远来看，猎头最后拼的是<strong>人品</strong>。只有“不湿鞋”的，才会成为顶级猎头。</p>
 </li>
 </ol>
-<h2 id="如何利用猎头，让自己“增值”？"><a href="#如何利用猎头，让自己“增值”？" class="headerlink" title="如何利用猎头，让自己“增值”？"></a><a href="http://www.luojiji.com/thread-10876-1-1.html" target="_blank" rel="noopener">如何利用猎头，让自己“增值”？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/10/073414kssxxuxxsx2usuus.jpg"></p>
+<h2 id="如何利用猎头，让自己“增值”？"><a href="#如何利用猎头，让自己“增值”？" class="headerlink" title="如何利用猎头，让自己“增值”？"></a><a href="http://www.luojiji.com/thread-10876-1-1.html" target="_blank" rel="noopener">如何利用猎头，让自己“增值”？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/10/073414kssxxuxxsx2usuus.jpg" alt></p>
 <p>2018-01-10 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>通常来说，猎头代表着不错的职位和优渥的薪资。但怎样“勾搭”猎头？怎样利用猎头帮自己找到好工作？是困扰不少职场人的问题。</p>
 <p>猎聘创始人兼CEO戴科彬在这篇清单中，与你分享了与猎头交流的13点心法。建议收藏践行，让猎头成为你职业发展的助推器。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/10/073455zpck4spc6kj4qqrk.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/10/073455zpck4spc6kj4qqrk.jpg" alt></p>
 <ol>
 <li><p>目前国内的猎头行业，鱼龙混杂。如果要保证服务质量，最简单的方法是——选择正规的猎头平台。不仅有公司信誉担保，对猎头也有严格的资质审核，安全性更高。</p>
 </li>
@@ -703,8 +673,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/2020/Policy/" rel="bookmark">Policy</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/2020/UnfairCompetition/" rel="bookmark">Unfair Competition</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/2020/Antitrust/" rel="bookmark">Antitrust</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/2020/PatentManagement/" rel="bookmark">Patent Management</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Triangle/" rel="bookmark">Triangle</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Management/" rel="tag"><i class="fa fa-tag"></i> Management</a>
               <a href="/tags/Career/" rel="tag"><i class="fa fa-tag"></i> Career</a>
@@ -717,21 +708,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/Open Source License/" rel="next" title="Open Source License">
-                  <i class="fa fa-chevron-left"></i> Open Source License
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/People/IPCreator/People/Zhi-Yuan Xu/" rel="prev" title="Zhi-Yuan Xu">
-                  Zhi-Yuan Xu <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/Open Source License/" rel="prev" title="Open Source License">
+      <i class="fa fa-chevron-left"></i> Open Source License
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/People/IPCreator/People/Zhi-Yuan Xu/" rel="next" title="Zhi-Yuan Xu">
+      Zhi-Yuan Xu <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -744,7 +732,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -775,8 +785,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -785,14 +795,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -803,11 +813,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -841,7 +846,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -853,51 +858,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -906,18 +872,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -927,63 +887,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -991,14 +894,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1025,40 +928,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/C/Career/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

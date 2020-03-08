@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="比特币是世界上第一个，也是迄今为止最成功的区块链应用。">
 <meta name="keywords" content="Bit,Coin,Block,Chain">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Program/IPCreator/Technology/BlockChain/BitCoin/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Program/IPCreator/Technology/BlockChain/BitCoin/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Program/IPCreator/Technology/BlockChain/BitCoin/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="bitcoin.jpg" data-src="http://opb37u589.bkt.clouddn.com/bitcoin.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/bitcoin.jpg?imageMogr2/thumbnail/!75p" alt="bitcoin.jpg"></p>
 <blockquote>
 <p>比特币是世界上第一个，也是迄今为止最成功的区块链应用。</p>
 </blockquote>
@@ -294,9 +264,9 @@
 <h2 id="比特币入门教程"><a href="#比特币入门教程" class="headerlink" title="比特币入门教程"></a><a href="http://www.ruanyifeng.com/blog/2018/01/bitcoin-tutorial.html" target="_blank" rel="noopener">比特币入门教程</a></h2><p>作者： 阮一峰<br>日期： 2018年1月 4日</p>
 <p>比特币（bitcoin）诞生于2008年的一篇<a href="https://bitcoin.org/en/bitcoin-paper" target="_blank" rel="noopener">论文</a>。</p>
 <p>一个署名为中本聪的人，提出了革命性的构想：让我们创造一种不受政府或其他任何人控制的货币！这个想法堪称疯狂：一串数字，背后没有任何资产支持，也没有任何人负责，你把它当作钱付给对方，怎么会有人愿意接受？</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010401.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010401.jpg" alt></p>
 <p>但是，狂想居然变成了现实。随后的几年，在全世界无数爱好者的支持下，比特币网络运行起来了，越来越多的人和资本参与，星星之火，终成燎原。刚刚过去的2017年，比特币迎来了爆发式的增长，从年初的1000美元，最高涨到了2万美元，全世界都为之震动，上到政府，下到普通百姓都在关注。事实就是比特币已经并将继续改变世界。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010402.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010402.png" alt></p>
 <p>新闻媒体往往只关注它的火爆表现，忽视或者无法回答一些基本的问题。</p>
 <blockquote>
 <p>比特币的原理是什么？<br>为什么这个无人管理的体系可以成功运作？<br>比特币交易的流程是怎么回事？<br>它与区块链又是什么关系？</p>
@@ -305,7 +275,7 @@
 <p>有一点说明，本文只讨论技术问题，不涉及如何投资比特币，更不会预测价格走势。事实上，我也不知道，如果我知道怎么发财，可能就不会在这里写博客了。</p>
 <p>一、非对称加密<br>首先，理解比特币，必须理解非对称加密。</p>
 <p>你可能听说过这个词，所谓非对称加密，其实很简单，就是加密和解密需要两把钥匙：一把公钥和一把私钥。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010403.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010403.png" alt></p>
 <p>公钥是公开的，任何人都可以获取。私钥是保密的，只有拥有者才能使用。他人使用你的公钥加密信息，然后发送给你，你用私钥解密，取出信息。</p>
 <blockquote>
 <p>反过来，你也可以用私钥加密信息，别人用你的公钥解开，从而证明这个信息确实是你发出的，且未被篡改，这叫做数字签名（更详细的介绍请看《<a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html" target="_blank" rel="noopener">什么是数字签名</a>》）。</p>
@@ -318,9 +288,9 @@
 <p>对于比特币来说，钱不是支付给个人的，而是支付给某一把私钥。这就是交易匿名性的根本原因，因为没有人知道，那些私钥背后的主人是谁。</p>
 <p>所以，比特币交易的第一件事，就是你必须拥有自己的公钥和私钥。</p>
 <p>你去网上那些比特币交易所开户，它们会让你首先生成一个比特币钱包（wallet）。这个钱包不是用来存放比特币，而是存放你的公钥和私钥。软件会帮你生成这两把钥匙，然后放在钱包里面。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010404.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010404.png" alt></p>
 <p>根据协议，公钥的长度是512位。这个长度不太方便传播，因此协议又规定，要为公钥生成一个160位的指纹。所谓指纹，就是一个比较短的、易于传播的哈希值。160位是二进制，写成十六进制，大约是26到35个字符，比如 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2。这个字符串就叫做钱包的地址，它是唯一的，即每个钱包的地址肯定都是不一样的。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010405.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010405.png" alt></p>
 <p>你向别人收钱时，只要告诉对方你的钱包地址即可，对方向这个地址付款。由于你是这个地址的拥有者，所以你会收到这笔钱。</p>
 <p>由于你是否拥有某个钱包地址，是由私钥证明的（具体的证明方法稍后介绍），所以一定要保护好私钥。这是极其重要的，如果你的私钥被偷了，你的比特币也就等于没了，因为他人可以冒用你的身份了，把钱包里面的钱都转走。</p>
 <p>同样的，你向他人支付比特币，千万不能写错他人的钱包地址，否则你的比特币就支付到了另一个不同的人了。</p>
@@ -343,7 +313,7 @@
 <blockquote>
 <p>根据比特币协议，一个区块的大小最大是 1MB，而一笔交易大概是500字节左右，因此一个区块最多可以包含2000多笔交易。矿工负责把这2000多笔交易打包在一起，组成一个区块，然后计算这个区块的 Hash。</p>
 </blockquote>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010406.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010406.jpg" alt></p>
 <p>计算 Hash 的过程叫做采矿，这需要大量的计算。矿工之间也在竞争，谁先算出 Hash，谁就能第一个添加新区块进入区块链，从而享受这个区块的全部收益，而其他矿工将一无所获。</p>
 <p>一笔交易一旦写入了区块链，就无法反悔了。这里需要建立一个观念：比特币不存放在钱包或其他别的地方，而是只存在于区块链上面。区块链记载了你参与的每一笔交易，你得到过多少比特币，你又支付了多少比特币，因此可以算出来你拥有多少资产。</p>
 <p>五、矿工的收益</p>
@@ -361,10 +331,10 @@
 <p>《区块链入门教程》说过，比特币协议规定，平均10分钟诞生一个区块。区块的大小只有 1MB，最多只能包含2000多笔交易。也就是说，比特币网络每10分钟，最多只能处理2000多笔交易，换算一下，就是处理速度为3～5笔/秒。</p>
 <p>全世界的比特币交易这么多，可是区块链每秒最多只能处理5笔，这已经成为制约比特币发展的一个瓶颈。</p>
 <p>很早就有人呼吁，改革比特币协议，提升处理速度。这件事在2017年8月有了一点眉目，当时区块链发生了一次分叉，诞生了一个新协议，称为 Bitcoin Cash（简称 BCH）。这种新货币其他方面都与比特币一致，就是每个区块的大小从 1MB 增加到了 8MB，因此处理速度提升了8倍，手续费也低得多。该协议是对原有区块链的分叉，因此当时持有比特币的人，等于一人获赠了一份同样数量的 BCH。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010407.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010407.png" alt></p>
 <p>BCH 等于创造了一种新货币，还有人提议，原始比特币的区块大小提升到 2MB，这称为 SegWit2x 。这个建议原定于2017年11月实施，但是最后一刻由于缺乏共识，就被取消了，目前还在讨论中。</p>
 <p>七、点对点网络<br>比特币是一个全世界的开放网络，只要你有服务器，就能加入这个网络，成为一个节点。每个节点都包含了整个区块链（目前大概 100多 GB），并且节点之间时刻不停地在同步信息。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010408.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010408.png" alt></p>
 <p>当你发生了一笔支付，你所在的节点就会把这笔交易告诉另一个节点，直至传遍整个网络。矿工从网上收集各种新发生的交易，将它们打包写入区块链。一旦写入成功， 矿工所在节点的区块链，就成为最新版本，其他节点都会来复制新增的区块，保证全网的区块链都是一致的。</p>
 <p>最后，你所在的节点也拿到了最新的区块链，从而得知你早先的那笔交易，已经写在里面了，至此交易确认成功。</p>
 <p>八、还有一个问题</p>
@@ -375,23 +345,23 @@
 <h2 id="加密货币的本质-http-www-ruanyifeng-com-blog-2018-01-cryptocurrency-tutorial-html"><a href="#加密货币的本质-http-www-ruanyifeng-com-blog-2018-01-cryptocurrency-tutorial-html" class="headerlink" title="[加密货币的本质]http://www.ruanyifeng.com/blog/2018/01/cryptocurrency-tutorial.html)"></a>[加密货币的本质]<a href="http://www.ruanyifeng.com/blog/2018/01/cryptocurrency-tutorial.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2018/01/cryptocurrency-tutorial.html</a>)</h2><p>作者： 阮一峰<br>日期： 2018年1月11日</p>
 <p>去年，比特币暴涨，其他币也像雨后春笋一样冒出来，已经有1000多种了。</p>
 <p>很多人都在问，加密货币（cryptocurrency）的时代，真的来临了吗？将来会不会人类不再使用美元、人民币，改用加密货币？那么多品种，我应该使用哪一种币？要不要现在就去投资一些？</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011101.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011101.jpg" alt></p>
 <p>这些问题的答案，我也想知道，就花了很多时间查阅资料、研究协议。前两周发表的《区块链入门教程》和《比特币入门教程》，是我的学习心得。但是，那两篇教程主要介绍基本概念、探讨协议的可行性，没回答一个根本的问题：加密货币到底是什么？</p>
 <p>下面就是我对这个问题的思考。阅读之前，如果你已经了解区块链和比特币，那很好；如果不了解，也没关系，本文不涉及技术，只讨论最基本的原理。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011102.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011102.jpg" alt></p>
 <p>一、钱是什么？<br>我们都知道，人民币是钱，美元是钱，金银财宝是钱。我问一个问题，它们为什么能成为钱？</p>
 <p>你可能回答，因为它们有价值，或者是价值的代表。但是，有价值的东西多了，为什么只有这些品种成为了钱？</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011103.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011103.jpg" alt></p>
 <p>答案很容易想到，因为人们普遍相信（认同）它们的价值，其他东西的价值难以得到普通认同，无法成为钱。比如，邮票的价值就没有普遍的认同，除了集邮爱好者，其他地方都不能当钱用。一般来说，认同的人越多，这种钱的通用性就越高。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011104.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011104.jpg" alt></p>
 <p>我曾经去俄罗斯旅行，当地货币是卢布。可是，一旦离开俄国，没人相信它的购买力，所以卢布离开俄国就没用了。相反，全世界人民都相信美元的价值，所以全世界都能用。我用美元付账的时候，我发现那些俄国人都很满意。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011105.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011105.jpg" alt></p>
 <p>所以，钱的本质，或者说货币的本质，就是它的可信性。它必须使人们相信，它是有价值的，然后才能成为钱，才能被收藏和支付。</p>
 <p>二、可信性</p>
 <p>为什么钱必须是可信的？因为对方必须相信它的价值，否则你没法支付出去。那么，接下来的问题就是，可信的东西是否就是钱？</p>
 <p>我的回答是 Yes。一样东西能否成为钱，只取决于人们是否相信它的价值，至于它是不是真的有价值，根本不重要。</p>
 <p>如果马云在一张纸条上写”这张纸条价值10000元”，下面签了他的名，并且附上防伪标记。你说这纸条是钱吗？我跟你保证，这就是钱，你用来支付，人们都会接受，马云等同于发行了一种新的纸币。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011106.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011106.jpg" alt></p>
 <p>比特币也是如此，它是什么，其实不太重要。重要的是，它必须保证自己是可信的，这样才能让足够的人相信它的价值，然后才能成为钱。</p>
 <p>三、比特币的可信性</p>
 <p>比特币要解决的核心问题，就是创造一种可信的数字凭证。由于这种凭证可信，所以能够当做货币。</p>
@@ -407,13 +377,13 @@
 <p>你可能会说，钱都有实体，怎么可能存在无形的钱呢？答案正好相反，钱就应该是无形的，那些实体的钱其实是对物质材料的浪费，由于技术不够发达，不得不做成实体。</p>
 <p>我小时候买东西，都必须用现金，否则没法证明，自己拥有购买力。只有通过实体的钱，才能保证对方确实收到了钱。如果银行业发达，就不用现金了，可以使用银行卡。支付的时候，对方抄一下银行卡号码，查询银行”这个账户有钱吗”。银行回答有钱，OK，成交。</p>
 <p>但是，互联网使得实体的银行卡也不需要了。如果存在一个开放的中央记账系统，任何人都可以查询，你把钱划到老板的账户，老板查询一下，发现收到了，交易自动成交，整个过程都是无形的，还需要什么银行卡呢？</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011108.jpg"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011108.jpg" alt></p>
 <p>这个中央记账系统已经实现了，就叫做区块链。</p>
 <p>六、区块链的作用</p>
 <p>区块链就是一个数据库，记载了所有的交易，用作中央记账系统。</p>
 <p>每笔交易的核心，就是一句话，比如”张三向李四转移了1个比特币”。为了证明这句话可信，张三为它加上了数字签名。任何人都可以用张三的公钥，证明这确实是张三本人的行为。另一方面，其他人无法伪造张三的数字签名，所以不可能伪造这笔交易。</p>
 <p>矿工们收到这句话，首先验证数字签名的可信性，然后验证张三确实拥有这些比特币（每一笔交易都有上一笔交易的编号，用来查询比特币的来源）。验证通过以后，就着手把这句话写入区块链了。一旦写入区块链，所有人就都可以查询到，因此这笔比特币就被认为，从张三转移到了李四。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011107.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011107.png" alt></p>
 <p>区块链的作用就是把这句话永久保存下来了，让任何人都可以查看，并且任何人（包括张三本人在内）都无法再修改了。</p>
 <p>货币是什么？其实就是这句话。这一句话就完成了一次支付。我们平时用人民币支付，其实只是用纸币表达这条信息。如果每个人都可以实时写入/读取中央记账系统（区块链），那么完全可以不携带货币。</p>
 <p>七、双重支出</p>
@@ -422,13 +392,13 @@
 <p>比较麻烦的是另一种情况，就是张三把同一笔钱付给两个人。他先向区块链提交一个交易”张三向李四转移了1个比特币”，然后又提交了另一个交易”张三向王五转移了1个比特币”。这两个交易都可能被认为是真实的交易，从而进入区块链。因此，必须有办法防止出现这种情况。</p>
 <p>情况一：同一个矿工收到了这两个交易。那么他会察觉到，它们不可能同时成立，因此选择其中的一笔写入区块链。</p>
 <p>情况二：矿工 A 收到了第一笔交易，矿工 B 收到了第二笔交易，他们各自都会认定这是合法的交易，分别把这两笔交易写入了两个区块，这时区块链就出现了分叉。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011109.png"></p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018011109.png" alt></p>
 <p>比特币协议规定，分叉点之后最先达到6个区块的那个分支，被认定为正式的区块链，其他分支都将被放弃。由于区块的生成速度由计算能力决定，所以到底哪一笔交易最后会被写入区块链，完全由它所在的分支能吸引多少计算能力决定。<strong>隐藏的逻辑是，如果大多数人（计算能力）选择相信某一笔交易，那么它就应该是真的。</strong></p>
 <p>综上所述，双重支出不可能发生。因为中央记账系统总有办法发现，你把同一笔钱花了两遍。但是，这也说明了比特币的一个代价，就是交易不能实时确认，必须等待至少一个小时。</p>
 <p>八、参考链接<br>How the Bitcoin protocol actually works, by Michael Nielsen</p>
 <h2 id="比特币的用途"><a href="#比特币的用途" class="headerlink" title="比特币的用途"></a><a href="http://www.ruanyifeng.com/blog/2013/10/bitcoin.html" target="_blank" rel="noopener">比特币的用途</a></h2><p>作者： 阮一峰<br>日期： 2013年10月25日</p>
 <p>这两周，比特币（bitcoin）的价格大幅上涨，我也凑热闹关注了一阵。</p>
-<p><img alt data-src="http://www.ruanyifeng.com/blogimg/asset/201310/bg2013102401.png"><br>比特币价格走势</p>
+<p><img data-src="http://www.ruanyifeng.com/blogimg/asset/201310/bg2013102401.png" alt><br>比特币价格走势</p>
 <p>首先说明，我对比特币所知甚少，从未参与过生产/交易，对它的了解仅限于新闻报道和维基百科，但我有一些不成熟的想法。</p>
 <p>看着比特币的价格节节上升，我就在想，它有什么用？</p>
 <blockquote>
@@ -531,8 +501,26 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Program/IPCreator/Technology/BlockChain/Block Chain/" rel="bookmark">Block Chain</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/AI/DeepCreator/AI/Block Chain/" rel="bookmark">Block Chain</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Program/IPCreator/Technology/Program/BlockChain/Block Chain/" rel="bookmark">Block Chain</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/IPCreator/IPR/Bit Torrent/" rel="bookmark">Bit Torrent</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Bit/" rel="tag"><i class="fa fa-tag"></i> Bit</a>
               <a href="/tags/Coin/" rel="tag"><i class="fa fa-tag"></i> Coin</a>
@@ -547,21 +535,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/AI/DeepCreator/AI/Block Chain/" rel="next" title="Block Chain">
-                  <i class="fa fa-chevron-left"></i> Block Chain
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Book/IPCreator/Book/Thought can not Drift/" rel="prev" title="Thought can not Drift">
-                  Thought can not Drift <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Program/IPCreator/Technology/BlockChain/Block Chain/" rel="prev" title="Block Chain">
+      <i class="fa fa-chevron-left"></i> Block Chain
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Book/IPCreator/Book/Thought can not Drift/" rel="next" title="Thought can not Drift">
+      Thought can not Drift <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -574,7 +559,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -605,8 +612,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -615,14 +622,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -633,11 +640,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -671,7 +673,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -683,51 +685,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -736,18 +699,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -757,63 +714,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -821,14 +721,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -855,40 +755,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Program/IPCreator/Technology/BlockChain/BitCoin/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

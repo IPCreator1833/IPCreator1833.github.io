@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="We invent the tech the world loves.">
 <meta name="keywords" content="Qualcomm">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/DeepCreator/Company/Qualcomm/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/DeepCreator/Company/Qualcomm/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/DeepCreator/Company/Qualcomm/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="Capture20180322.JPG" data-src="http://p53s4d2qk.bkt.clouddn.com/Capture20180322.JPG?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/Capture20180322.JPG?imageMogr2/thumbnail/!75p" alt="Capture20180322.JPG"></p>
 <blockquote>
 <p><a href="https://www.qualcomm.com/" target="_blank" rel="noopener"> We invent the tech the world loves.</a></p>
 </blockquote>
@@ -324,7 +294,7 @@
 <p>从2010年智能手机爆发开始算起，过去8年时间手机基带市场格局经历了几轮巨变。其中包括华为海思的杀入、Marvell的衰败、博通的退出等。</p>
 </blockquote>
 <p>到了4G时代，呈现高通一家独大的格局。Strategy Analytics研究报告指出，2018年Q1，高通、三星LSI、联发科、海思和UNISOC（展讯和RDA）在全球蜂窝基带处理器市场中收益份额囊获前五。其中Q1高通继续以52%的基带收益份额保持第一；其次是三星LSI，占14％；联发科占13％。</p>
-<p><img alt data-src="http://pd4vb8220.bkt.clouddn.com/15345939918418.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/15345939918418.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <p>不过，此次苹果、高通、英特尔的“三角恋情”，或许将带来5G基带芯片格局巨变。</p>
 <p>第一、英特尔有望借助苹果，再冲击手机基带第一阵营</p>
 <p>上文也提到了，苹果的选择将改变英特尔5G基带芯片的命运。这其中不仅因为每年2亿多部手机基带芯片出货量，英特尔也将因此获取更多的技术、市场优势，助力其产品基带芯片扩张到物联网领域。</p>
@@ -340,7 +310,7 @@
 <p>与此同时更尴尬的则是联发科。小厂商消失、大厂商与高通面临激烈竞争。上文数据显示，Q1季度，三星仅依靠自己的采购量就超越了联发科的份额。</p>
 <p>总之，当前全球基带芯片市场看似稳定，其实背后暗流涌动，5G时代依然变数不小。 （校对/范蓉）</p>
 <h2 id="高通下调专利授权费-年底前有望与苹果和解"><a href="#高通下调专利授权费-年底前有望与苹果和解" class="headerlink" title="高通下调专利授权费 年底前有望与苹果和解"></a><a href="http://tech.sina.com.cn/it/2018-04-27/doc-ifztkpip3845450.shtml?cre=tianyi&amp;mod=pctech&amp;loc=4&amp;r=25&amp;doct=0&amp;rfunc=2&amp;tj=none&amp;tr=25" target="_blank" rel="noopener">高通下调专利授权费 年底前有望与苹果和解</a></h2><p>2018年04月27日 19:08 新浪科技</p>
-<p><img alt data-src="http://n.sinaimg.cn/tech/transform/w630h354/20180306/0r3u-fxipenn9135013.jpg"></p>
+<p><img data-src="http://n.sinaimg.cn/tech/transform/w630h354/20180306/0r3u-fxipenn9135013.jpg" alt></p>
 <p>新浪科技讯 北京时间4月27日晚间消息，高通公司日前表示，将下调向手机厂商收取的专利费的上限，目前已下调了三星的专利授权费。</p>
 <p>　　众所周知，三星是高通的重要大客户。高通表示，三星目前向高通支付的专利费已低于从前。</p>
 <p>　　此外，高通CEO史蒂夫·莫伦科夫(Steve Mollenkopf)还表示，高通还希望与公司的另一大客户苹果公司达成专利和解。</p>
@@ -351,7 +321,7 @@
 <h2 id="高通在人工智能上做了什么？一图就读懂"><a href="#高通在人工智能上做了什么？一图就读懂" class="headerlink" title="高通在人工智能上做了什么？一图就读懂"></a><a href="http://www.ifanr.com/1039799" target="_blank" rel="noopener">高通在人工智能上做了什么？一图就读懂</a></h2><p>作为一家移动通信公司，Qualcomm 如何看待人工智能的演进？</p>
 <p>谈到人工智能，到 2021 年人工智能衍生的商业价值将达 3.3 万亿美元，距离现在仅仅只有几年。随着终端将变得越来越智能互连，同时与云端相联，并从数据和行为中进行学习，Qualcomm 认为人工智能将成为驱动所有行业变革的关键。</p>
 <p>Qualcomm 从多年前开始人工智能的研究，在 2007 年就启动首个人工智能项目，在 5 月 24 日，Qualcomm 在北京召开人工智能创新论坛，详细阐述了 Qualcomm 在人工智能上的布局，会上讲了什么，看图便知：</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2018/05/Qualcomm-AI-day.jpg"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2018/05/Qualcomm-AI-day.jpg" alt></p>
 <h2 id="高通股价重挫：启动涉及1500人大裁员-收购交易或被否"><a href="#高通股价重挫：启动涉及1500人大裁员-收购交易或被否" class="headerlink" title="高通股价重挫：启动涉及1500人大裁员 收购交易或被否"></a><a href="https://view.inews.qq.com/a/STO201804200030120A?uid=100001738577" target="_blank" rel="noopener">高通股价重挫：启动涉及1500人大裁员 收购交易或被否</a></h2><p>腾讯证券讯 高通(QCOM)周四宣布裁员后，股价重挫4.82%，报收于52.57美元。据外媒报道，为了兑现之前向投资者做出的削减10亿美元成本的承诺，高通已开始在加州裁员，此次裁员规模涉及约1500名员工。高通在一份电子邮件声明中证实，此次裁员的对象既有全职员工也有临时员工，但它未说明各地区或各部门的具体裁员数量。</p>
 <p>据知情人士称，加州的裁员是整个裁员计划的主要内容，其他地区也会进行裁员，但是规模会相对小一些。目前，高通在全球范围拥有大约3.4万名员工。</p>
 <p>高通在声明中表示：“我们首先评估了非人力资源开支的削减情况，但是我们得出的结论是，公司必须裁员才能支持长期增长和成功，这将最终惠及我们所有的股东。”高通表示，公司将会为被裁掉的员工提供遣散费。</p>
@@ -364,7 +334,7 @@
 </blockquote>
 <p>随着周四的下跌，高通在2018年已经下跌了超过10%，在52周高点69.28美元的基础上下跌了超过20%。（尔夫）</p>
 <h2 id="传中国商务部阻止高通收购NXP，要求后者提供更多让步"><a href="#传中国商务部阻止高通收购NXP，要求后者提供更多让步" class="headerlink" title="传中国商务部阻止高通收购NXP，要求后者提供更多让步"></a><a href="https://www.toutiao.com/i6535599003558478350/" target="_blank" rel="noopener">传中国商务部阻止高通收购NXP，要求后者提供更多让步</a></h2><p>2018 年 3 月 21 日，据彭博社报道，中国监管希望在批准高通收购 NXP 之前为本地企业寻求更多的保护。同时这篇文章还指出，中国商务部对于高通提出的条件并不满意，商务部已经告知高通要求他们提供更多的让步。</p>
-<p><img alt data-src="http://p9.pstatp.com/large/pgc-image/1521687714969e82093809c"></p>
+<p><img data-src="http://p9.pstatp.com/large/pgc-image/1521687714969e82093809c" alt></p>
 <p>在彭博社的报道中写到，中国企业认为在高通收购了 NXP 之后，前者将会获得更多的专利权，而且这些专利权将会进入移动支付以及无人驾驶系统领域。但是彭博社在文章中声明，这些消息来自于一位不愿意透露姓名的知情人士，其真实性无法验证。</p>
 <p>截止至目前，商务部与高通公司均未对此事作出回应。Raymond James &amp; Co. 的一位分析师在一份研究报告中指出：“高通短期最重要的事情就是完成对 NXP 的收购。如果中国阻碍了高通收购 NXP，高通在股市上的表现将会受到影响。”</p>
 <p>高通在 2018 年 3 月 16 日的会议中，把收购 NXP 一事延后到了 2018 年 3 月 23 日。如果商务部的阻挠效果显著，那么高通很有可能则会因为临近期限，而选择向中国商务部、中国企业等所提出的要求让步，以谋求收购 NXP。</p>
@@ -452,7 +422,7 @@
 <p>计算机巨头惠普于当地时间周四宣布，已将 2400 项移动技术专利出售给了无线芯片厂商高通。惠普并未披露此次专利收购交易具体财务条款，但表示，售出的技术专利包括 1400 项美国专利和专利申请，及另外 100 项在其他国家注册的专利和专利申请。</p>
 <p>在这 2400 项专利中，包括 Palm、iPAQ 以及 Bitphone 等涉及移动通讯技术的专利。</p>
 <h2 id="高通反垄断案幕后：收取专利费是如何被认定是垄断行为的？"><a href="#高通反垄断案幕后：收取专利费是如何被认定是垄断行为的？" class="headerlink" title="高通反垄断案幕后：收取专利费是如何被认定是垄断行为的？"></a><a href="https://www.huxiu.com/article/44307.html" target="_blank" rel="noopener">高通反垄断案幕后：收取专利费是如何被认定是垄断行为的？</a></h2><p>虎嗅  2014-10-13 11:45</p>
-<p><img alt data-src="https://img.huxiucdn.com/portal/201410/13/114505hy6eh6gqdyhby65x.jpg?imageView2/1/w/1000/h/750/|imageMogr2/strip/interlace/1/quality/85/format/jpg"></p>
+<p><img data-src="https://img.huxiucdn.com/portal/201410/13/114505hy6eh6gqdyhby65x.jpg?imageView2/1/w/1000/h/750/|imageMogr2/strip/interlace/1/quality/85/format/jpg" alt></p>
 <p>虎嗅注：尽管中国对高通公司的反垄断调查结果即将公布，但是业内对高通收取专利费的行为是否构成垄断依然有争议。本文对高通收取专利费的形式以及这种收取专利费的形式是否构成垄断进行了详尽的分析。本文来自《第一财经日报》，虎嗅对文章有删编。</p>
 <p>文/郭丽琴</p>
 <p>高通在移动通信领域到底有多强势？</p>
@@ -513,8 +483,20 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Qualcomm/" rel="bookmark">Qualcomm</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/IPCreator/Company/Qualcomm/" rel="bookmark">Qualcomm</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Qualcomm/" rel="tag"><i class="fa fa-tag"></i> Qualcomm</a>
           </div>
@@ -526,21 +508,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Company/IPCreator/Company/Qualcomm/" rel="next" title="Qualcomm">
-                  <i class="fa fa-chevron-left"></i> Qualcomm
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/IPR/IPCreator/IPR/Digital Rights Management/" rel="prev" title="Digital Rights Management">
-                  Digital Rights Management <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Company/IPCreator/Company/Qualcomm/" rel="prev" title="Qualcomm">
+      <i class="fa fa-chevron-left"></i> Qualcomm
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/IPR/IPCreator/IPR/Digital Rights Management/" rel="next" title="Digital Rights Management">
+      Digital Rights Management <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -553,7 +532,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -584,8 +585,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -594,14 +595,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -612,11 +613,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -650,7 +646,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -662,51 +658,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -715,18 +672,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -736,63 +687,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -800,14 +694,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -834,40 +728,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/DeepCreator/Company/Qualcomm/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

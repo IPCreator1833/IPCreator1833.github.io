@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="喜欢的+擅长的+能创造价值的。——DeepCreator">
 <meta name="keywords" content="Career">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Career/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Career/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Career/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,15 +256,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="career20180803.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/career20180803.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/career20180803.jpg?imageMogr2/thumbnail/!75p" alt="career20180803.jpg"></p>
 <blockquote>
 <p>喜欢的+擅长的+能创造价值的。——DeepCreator</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt="Image_20180824202332.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/Image_20180824202332.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/Image_20180824202332.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180824202332.jpg"></p>
 <p>思考力+执行力+沟通力</p>
 <p>行业、职业、公司、岗位、团队…一切选择的根源都是自己的初心。</p>
-<p><img alt="idealwork20180428.jpeg" data-src="http://p53s4d2qk.bkt.clouddn.com/idealwork20180428.jpeg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/idealwork20180428.jpeg?imageMogr2/thumbnail/!75p" alt="idealwork20180428.jpeg"></p>
 <p>职场最重要的是什么？——DeepCreator</p>
 <p>——在为公司创造更多价值和业绩的过程中，自我成长进化并聚集到配套的内外部资源。平台、职级、待遇等，主动权就逐步掌握在了自己手上，物以稀为贵，永远不缺好机会，而是缺高手和人才，要发财先成才，要成才，就要善于识别，抓住和珍惜来之不易的好机会，机会永远留给有准备的人。自知者明，自胜者强。当你的才华还不能支撑你的梦想时，要沉下心来安静成长。</p>
 <blockquote>
@@ -304,7 +274,7 @@
 <p>1、成为有价值有用的资源；——执行者<br>2、成为资源的掌控者；——管理者<br>3、成为资源的整合者。——创业者/高层</p>
 <p>构建自己的核心竞争力，构建自己的护城河<br>夯实自己的专业基础，积累实践经验</p>
 <p>AI+IPR<br>Product+Service</p>
-<p>最大的成本——时间成本<br>理解<a href="https://deepcreator.com/2018/04/13/Business/Product/" target="_blank" rel="noopener">恐惧的本质</a><br><img alt data-src="http://p53s4d2qk.bkt.clouddn.com/product005.jpg?imageMogr2/thumbnail/!75p"><br>如何找产品的接入点或者怎么改变自己的人生。</p>
+<p>最大的成本——时间成本<br>理解<a href="https://deepcreator.com/2018/04/13/Business/Product/" target="_blank" rel="noopener">恐惧的本质</a><br><img data-src="http://p53s4d2qk.bkt.clouddn.com/product005.jpg?imageMogr2/thumbnail/!75p" alt><br>如何找产品的接入点或者怎么改变自己的人生。</p>
 <p>快速收敛<br>快速迭代<br>快速优化<br>快速成长</p>
 <p>互联网就是最大的资源库<br>整合资源的宝藏——产品/服务，对外输出</p>
 <h2 id="华为离职副总徐家骏给任正非的辞职信，振聋发聩！"><a href="#华为离职副总徐家骏给任正非的辞职信，振聋发聩！" class="headerlink" title="华为离职副总徐家骏给任正非的辞职信，振聋发聩！ "></a><a href="https://mp.weixin.qq.com/s?__biz=MzAwMjA1MDMyMQ==&amp;mid=2665298453&amp;idx=1&amp;sn=b9261d0ea00dd2396732e42021990c43&amp;chksm=81f9ca6bb68e437dc6835aa87290016f049421e2d5beda09570d2da179caf2ae79380286333b&amp;mpshare=1&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">华为离职副总徐家骏给任正非的辞职信，振聋发聩！ </a></h2><p>导  读  </p>
@@ -398,7 +368,7 @@
 <p>第一，<strong>要接受自己的职业道路是非线性的</strong>。当你问完自己上面四个问题之后，如果意识到目前的工作不适合你，就可以考虑职业转型。很多人都说职业道路是线性的，但米歇尔不这样认为，她说：“你可能往前走两步，再后退两步，或往旁边走，尝试别的东西，这并不意味着你是错的，这说明你在探索新的东西。”</p>
 <p>第二，<strong>每天花20分钟朝着目标前进</strong>。你不需要做一件重大的、富有戏剧性的事情才能取得进步，你每天做的事情比你偶尔做的事更重要。如果你确定了职场目标，就可以把它分成若干个部分，每天花20分钟去完成。在时间管理上，米歇尔认为，这就属于“重要但不紧急”的事情，每个人都有这样的20分钟，只要不看社交媒体上的信息就能挤出这样的时间。</p>
 <p>第三，<strong>问问别人如何看待你</strong>。米歇尔建议，你可以和朋友一起做一些“职业练习”。想想你曾有过的最“激情投入”的时刻，那时你可能完全没注意到时间的流逝。比如曾经策划活动或者准备一份重要报告，你可以问问自己“我在那次经历里做了什么？我感觉如何？还有谁参与其中？我展现了什么样的天赋？我和别人是如何交流的？”把答案讲给朋友听，问问他们的看法。通常朋友会认识到你的一些核心价值。</p>
-<h2 id="程序员的职业素养"><a href="#程序员的职业素养" class="headerlink" title="程序员的职业素养"></a><a href="https://book.douban.com/subject/11614538/" target="_blank" rel="noopener">程序员的职业素养</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s11194203.jpg"></p>
+<h2 id="程序员的职业素养"><a href="#程序员的职业素养" class="headerlink" title="程序员的职业素养"></a><a href="https://book.douban.com/subject/11614538/" target="_blank" rel="noopener">程序员的职业素养</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s11194203.jpg" alt></p>
 <p>The Clean Coder：A Code of Conduct for Professional Programmers</p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>目　录<br>第1章　　专业主义　　1<br>1.1　　清楚你要什么　　2<br>1.2　　担当责任　　2<br>1.3　　首先，不行损害之事　　4<br>1.3.1　　不要破坏软件功能　　4<br>1.3.2　　不要破坏结构　　7<br>1.4　　职业道德　　8<br>1.4.1　　了解你的领域　　10<br>1.4.2　　坚持学习　　11<br>1.4.3　　练习　　11<br>1.4.4　　合作　　12<br>1.4.5　　辅导　　12<br>1.4.6　　了解业务领域　　13<br>1.4.7　　与雇主/客户保持一致　　13<br>1.4.8　　谦逊　　13<br>1.5　　参考文献　　14<br>第2章　　说“不”　　15<br>2.1　　对抗角色　　17<br>2.2　　高风险时刻　　20<br>2.3　　要有团队精神　　22<br>2.3.1　　试试看　　24<br>2.3.2　　消极对抗　　25<br>2.4　　说“是”的成本　　27<br>2.5　　如何写出好代码　　34<br>第3章　　说“是”　　37<br>3.1　　承诺用语　　39<br>3.1.1　　识别“缺乏承诺”的征兆　　40<br>3.1.2　　真正的承诺听起来是怎样的　　41<br>3.1.3　　总结　　43<br>3.2　　学习如何说“是”　　43<br>3.2.1　　“试试”的另一面　　43<br>3.2.2　　坚守原则　　44<br>3.3　　结论　　47<br>第4章　　编码　　48<br>4.1　　做好准备　　49<br>4.1.1　　凌晨3点写出的代码　　50<br>4.1.2　　焦虑时写下的代码　　51<br>4.2　　流态区　　53<br>4.2.1　　音乐　　54<br>4.2.2　　中断　　55<br>4.3　　阻塞　　55<br>4.4　　调试　　57<br>4.5　　保持节奏　　60<br>4.5.1　　知道何时应该离开一会　　60<br>4.5.2　　开车回家路上　　61<br>4.5.3　　洗澡　　61<br>4.6　　进度延迟　　61<br>4.6.1　　期望　　62<br>4.6.2　　盲目冲刺　　62<br>4.6.3　　加班加点　　63<br>4.6.4　　交付失误　　63<br>4.6.5　　定义“完成”　　64<br>4.7　　帮助　　64<br>4.7.1　　帮助他人　　64<br>4.7.2　　接受他人的帮助　　65<br>4.7.3　　辅导　　66<br>4.8　　参考文献　　66<br>第5章　　测试驱动开发　　67<br>5.1　　此事已有定论　　69<br>5.2　　TDD的三项法则　　69<br>5.3　　TDD的优势　　70<br>5.3.1　　确定性　　70<br>5.3.2　　缺陷注入率　　71<br>5.3.3　　勇气　　71<br>5.3.4　　文档　　72<br>5.3.5　　设计　　72<br>5.3.6　　专业人士的选择　　73<br>5.4　　TDD的局限　　73<br>5.5　　参考文献　　74<br>第6章　　练习　　75<br>6.1　　引子　　75<br>6.1.1　　10的22次方　　76<br>6.1.2　　转变　　77<br>6.2　　编程柔道场　　79<br>6.2.1　　卡塔　　80<br>6.2.2　　瓦萨　　81<br>6.2.3　　自由练习　　81<br>6.3　　自身经验的拓展　　82<br>6.3.1　　开源　　82<br>6.3.2　　关于练习的职业道德　　82<br>6.4　　结论　　83<br>6.5　　参考文献　　83<br>第7章　　验收测试　　84<br>7.1　　需求的沟通　　84<br>7.1.1　　过早精细化　　86<br>7.1.2　　迟来的模糊性　　87<br>7.2　　验收测试　　89<br>7.2.1　　“完成”的定义　　89<br>7.2.2　　沟通　　91<br>7.2.3　　自动化　　92<br>7.2.4　　额外工作　　93<br>7.2.5　　验收测试什么时候写，由谁来写　　93<br>7.2.6　　开发人员的角色　　94<br>7.2.7　　测试的协商与被动推进　　95<br>7.2.8　　验收测试和单元测试　　96<br>7.2.9　　图形界面及其他复杂因素　　97<br>7.2.10　　持续集成　　98<br>7.3　　结论　　98<br>第8章　　测试策略　　99<br>8.1　　QA应该找不到任何错误　　100<br>8.1.1　　QA也是团队的一部分　　100<br>8.1.2　　需求规约定义者　　100<br>8.1.3　　特性描述者　　100<br>8.2　　自动化测试金字塔　　101<br>8.2.1　　单元测试　　101<br>8.2.2　　组件测试　　102<br>8.2.3　　集成测试　　103<br>8.2.4　　系统测试　　104<br>8.2.5　　人工探索式测试　　104<br>8.3　　结论　　105<br>8.4　　参考文献　　105<br>第9章　　时间管理　　106<br>9.1　　会议　　107<br>9.1.1　　拒绝　　107<br>9.1.2　　离席　　108<br>9.1.3　　确定议程与目标　　109<br>9.1.4　　立会　　109<br>9.1.5　　迭代计划会议　　109<br>9.1.6　　迭代回顾和DEMO展示　　110<br>9.1.7　　争论/反对　　110<br>9.2　　注意力点数　　111<br>9.2.1　　睡眠　　112<br>9.2.2　　咖啡因　　112<br>9.2.3　　恢复　　112<br>9.2.4　　肌肉注意力　　112<br>9.2.5　　输入与输出　　113<br>9.3　　时间拆分和番茄工作法　　113<br>9.4　　要避免的行为　　114<br>9.5　　死胡同　　115<br>9.6　　泥潭　　115<br>9.7　　结论　　116<br>第10章　　预估　　117<br>10.1　　什么是预估　　119<br>10.1.1　　承诺　　119<br>10.1.2　　预估　　120<br>10.1.3　　暗示性承诺　　121<br>10.2　　PERT　　122<br>10.3　　预估任务　　125<br>10.4　　大数定律　　127<br>10.5　　结论　　127<br>10.6　　参考文献　　128<br>第11章　　压力　　129<br>11.1　　避免压力　　131<br>11.1.1　　承诺　　131<br>11.1.2　　保持整洁　　132<br>11.1.3　　危机中的纪律　　132<br>11.2　　应对压力　　133<br>11.2.1　　不要惊慌失措　　133<br>11.2.2　　沟通　　133<br>11.2.3　　依靠你的纪律原则　　133<br>11.2.4　　寻求帮助　　134<br>11.3　　结论　　134<br>第12章　　协作　　135<br>12.1　　程序员与人　　137<br>12.1.1　　程序员与雇主　　137<br>12.1.2　　程序员与程序员　　140<br>12.2　　小脑　　142<br>12.3　　结论　　143<br>第13章　　团队与项目　　144<br>13.1　　只是简单混合吗　　144<br>13.1.1　　有凝聚力的团队　　145<br>13.1.2　　如何管理有凝聚力的团队　　146<br>13.1.3　　项目承包人的困境　　147<br>13.2　　结论　　148<br>13.3　　参考文献　　148<br>第14章　　辅导、学徒期与技艺　　149<br>14.1　　失败的学位教育　　149<br>14.2　　辅导　　150<br>14.2.1　　DIGI-COMP I, 我的第一台计算机　　150<br>14.2.2　　高中时代的ECP-18　　152<br>14.2.3　　非常规辅导　　154<br>14.2.4　　艰难的锤炼　　155<br>14.3　　学徒期　　156<br>14.3.1　　软件学徒期　　158<br>14.3.2　　现实情况　　159<br>14.4　　技艺　　160<br>14.5　　结论　　161<br>附录　　工具　　162</p>
 <h3 id="总结了15点书中的建议"><a href="#总结了15点书中的建议" class="headerlink" title="总结了15点书中的建议"></a><a href="https://book.douban.com/review/9411098/" target="_blank" rel="noopener">总结了15点书中的建议</a></h3><p>1.每次读代码，都进行点滴改善重构，不变的代码是僵硬危险的<br>2.一套完备的自动化测试，可以让你放心修改重构<br>3.与时俱进，你会雇佣不了解最新律法的律师吗<br>4.说试试等于承诺，也代表你以前没有尽全力，没把握的时候不要说我尽量试试<br>5.提供太多细节，会招致更多的微观管理<br>6.了解自己的极限，疲劳和焦虑的时候写出的代码迟早也要抛弃，不妨花点时间解决一下焦虑让自己安静下来<br>7.结对编程可以激活思维，即使你水平很高，也能从别人不同的视角获益。<br>8.测试先行，迫使你考虑什么是好的设计，模块如何解耦，方便测试。<br>9.站立会议三个问题：我昨天干了什么，今天打算干什么，遇到了什么问题，每人只需要一分钟<br>10.观点短时间（5-30分钟）无法达成一致，继续下去也是没用的，只能用数据说话 or 投票<br>11.任务估算方式：任务分解+三元分析（o+4n+p）/6<br>12.你希望做手术的医生嚷嚷和咒骂不断还是冷静，井井有条。压力下也要表现的像一个专业人士<br>13.应对压力：往最好结果的路径努力+和领导沟通+求助+依依靠平时养成的原则<br>14.有凝聚力的团队，战斗力强磨合不易，不应该项目结束就拆散，源源不断分配任务就好<br>15.招来新人不培训就投入项目，又期待得到好的结果。你能想象把刚实习的医生扔进手术室，期待手术顺利吗？</p>
@@ -454,7 +424,7 @@
 </li>
 </ol>
 <p>这些方法，都来自英特尔创始人安迪·格鲁夫，更多的给领导者的建议，欢迎观看《格鲁夫给经理人的第一课》。</p>
-<h2 id="转行——发现一个未知的自己-Working-Identity-Unconventional-Strategies-for-Reinventing-Your-Career"><a href="#转行——发现一个未知的自己-Working-Identity-Unconventional-Strategies-for-Reinventing-Your-Career" class="headerlink" title="转行——发现一个未知的自己 Working Identity: Unconventional Strategies for Reinventing Your Career"></a><a href="https://book.douban.com/subject/26848745/" target="_blank" rel="noopener">转行——发现一个未知的自己 Working Identity: Unconventional Strategies for Reinventing Your Career</a></h2><p><img alt="career20180717.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/career20180717.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="转行——发现一个未知的自己-Working-Identity-Unconventional-Strategies-for-Reinventing-Your-Career"><a href="#转行——发现一个未知的自己-Working-Identity-Unconventional-Strategies-for-Reinventing-Your-Career" class="headerlink" title="转行——发现一个未知的自己 Working Identity: Unconventional Strategies for Reinventing Your Career"></a><a href="https://book.douban.com/subject/26848745/" target="_blank" rel="noopener">转行——发现一个未知的自己 Working Identity: Unconventional Strategies for Reinventing Your Career</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/career20180717.jpg?imageMogr2/thumbnail/!75p" alt="career20180717.jpg"></p>
 <p>转行并非换个工作那么简单，而是意味着<strong>自我的重塑</strong>。我们应该从实践中认识自我，而不是通过理论；通过在现实中尝试，而不是通过内省。随着尝试新的行动，接触新的组织，寻找新的角色榜样，向周围的人们重新讲述我们的故事，我们的职业追求会变得越来越清晰，逐渐形成一个新的自画像。</p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>推荐序<br>作者简介<br>前　　言<br>致　　谢</p>
 <p>第1章　重塑自我    1<br>●皮埃尔：从精神科医生到僧侣    2<br>●露西：从技术经理到独立教练    7<br>●殊途同归    12<br>●职业身份的转变    15<br>●实践中的职业身份    19<br>●本书概述    22</p>
@@ -522,7 +492,7 @@
 <p>2、重构自我转变的故事<br>在这种身份大幅变化的过程中，我们需要为自己的转变赋予意义，讲述一个把过去自己和未来自己联系在一起的故事，从而让自己和别人都理解和支持自己，才能更好地帮助我们真正转行成功。<br>案例：从行政人员转型为面包师是如何重构经历的</p>
 <p>3、探索转行意义的3个方法<br>在生活中不断利用各种事件进行反思。<br>以退为进<br>利用生活的感悟去审视自己</p>
 <p>本书金句<br>1.“真实的自我”根植于过去，而“可能的自我”则立足于现在和未来。<br>2.当你想要重塑自己新的职业身份的时候，最了解你的人反而最可能阻碍你，而不是帮助你。<br>3.塑造“职业身份”是一种实践，是一个对你“可能的自我”进行测试、检验和了解的过程。<br>4.离开那些以前熟知我们的人，我们会变得更有可塑性。<br>5.任何行业的学习都是一种社交过程：我们积极地参与到社会群体中进行实践，同时在这个群体和成员中塑造新的身份。<br>6.我们真正需要的是曾经有过相同经历并了解自己方向的指引者。</p>
-<h2 id="简约工作"><a href="#简约工作" class="headerlink" title="简约工作"></a><a href="https://book.douban.com/subject/3465508/" target="_blank" rel="noopener">简约工作</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s3616910.jpg"></p>
+<h2 id="简约工作"><a href="#简约工作" class="headerlink" title="简约工作"></a><a href="https://book.douban.com/subject/3465508/" target="_blank" rel="noopener">简约工作</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s3616910.jpg" alt></p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>《简约工作》旨在把这种讲情理的、高效的、双赢的方法介绍给世界各地。在接下来的章节，我们将探讨传统工作场所被打破的原因，揭示隐藏在工作场所问题背后的人们的态度和信仰。然后我们将描述什么是只问结果的工作环境，它是如何运作、如何解决工作问题的。你也可以在ROWE当中体验你的生活将会是什么样子（我们的心得：非常惬意）。在尝试的过程中，你不必害怕承认ROWE对公司带来的挑战。要告诉你的好消息是，我们并不主张公司从根本上改变公司本身的价值观、个性特征，或者核心产业，公司和员工也不必改变他们的身份，要改变的只是工作方式。ROWE全称是“只问结果的工作环境”(Results—Only Work Environment)，该项计划颠覆了业界盛行了数十年的职业信条——出勤才是工作。而只以成果作为业绩评判标准。基于这种思想。ROWE计划让员工自由支配工作时间和工作地点。由此完全打破了一周5天，一天8小时的朝九晚五上班模式。ROWE计划跟弹性工作制也不一样，所谓弹性工作制，是指自由选择具体的工作时间，以代替统一固定的上下班时间的制度。例如早来或者迟来一小时。它强调的是工作时间上的自由，但ROWE计划则根本不考虑工作时间和工作地点。一切都由员工自由安排，唯一的标准就是成果。</p>
 <h3 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a><a href="https://book.douban.com/review/6318904/" target="_blank" rel="noopener">笔记</a></h3><p>引言<br>目标：只问结果的工作环境<br>可供选择的工作方案：基于典型的弹性工作时间安排的组合</p>
 <p>1，时间≠成果<br>知识性的工作需要要专注 和创造力<br>传统思维造成舆论压力</p>
@@ -544,7 +514,7 @@
 <p>每一个会议都是自愿参加的，这样，就可以避开那些冗长而沉闷的无聊会议，不是必须的会议，都可以不参加。上司不能强迫你参加这个会、那个会，你无须将宝贵时间浪费在那些无聊的事情上。你拒绝参加会议，同时也可以提醒上司，让他好好反思这个会议是否真的必要。这样，行政效率将大大提高。</p>
 <p>让那些密密麻麻的日程表见鬼去吧<br>你不用再像个上了发条的闹钟一样，完全按照密密麻麻的日程表来做事。把脚步放慢些，找把椅子，安安静静、舒舒服服地坐在花园里，想想工作怎么做更有效。你不会有负罪感，不会感到被榨干了一样，也不会承受过重的压力。<br>你很羡慕这样的职场生活吧，但是，ROWE计划并不适合所有类型的工作，至少美国总统就是一例。</p>
 <p>ROWE<br>全新工作模式带来职场革命<br>ROWE 就是倡导以结果为导向的工作环境</p>
-<h2 id="向上汇报——Speaking-Up"><a href="#向上汇报——Speaking-Up" class="headerlink" title="向上汇报——Speaking Up"></a><a href="https://book.douban.com/subject/26827388/" target="_blank" rel="noopener">向上汇报——Speaking Up</a></h2><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s28855138.jpg"></p>
+<h2 id="向上汇报——Speaking-Up"><a href="#向上汇报——Speaking-Up" class="headerlink" title="向上汇报——Speaking Up"></a><a href="https://book.douban.com/subject/26827388/" target="_blank" rel="noopener">向上汇报——Speaking Up</a></h2><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s28855138.jpg" alt></p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>第一部分 解密最高管理层那些人<br>第一章 无知的危害<br>第二章 高管们的生活</p>
 <p>第二部分 最高管理层中的生存策略<br>第三章 七大致命挑战<br>第四章 树立良好的时间观念：每小时万美元的投资<br>第五章 如何拉回分心的高管们的注意力？<br>第六章 如何处理部门之间的“食物大战”：你不是裁判<br>第七章 决策者离开：洞察整个会议室内情况<br>第八章 话题转换：即兴创作的时间到了<br>第九章 悄悄话：保持你的风度<br>第十章 热烈的讨论：少说多听</p>
 <p>第三部分 致胜汇报内容创作<br>第十一章 内容 推动力 倾听 即兴创作=成功<br>第十二章 怎样快速进入主题<br>第十三章 汇报风格<br>第十四章 我真的很关心</p>
@@ -588,8 +558,8 @@
 <li>深度倾听，自己的话理解问题含义/理解隐藏在问题背后的问题/推动会议议程。</li>
 <li>确认汇报结构：简短时间、直奔主题、解决问题、数据支持、逻辑清晰。</li>
 </ol>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p428234.jpg"></p>
-<h2 id="快乐竞争力——赢得优势的7个积极心理学法则-The-Happiness-Advantage"><a href="#快乐竞争力——赢得优势的7个积极心理学法则-The-Happiness-Advantage" class="headerlink" title="快乐竞争力——赢得优势的7个积极心理学法则 The Happiness Advantage"></a><a href="https://book.douban.com/subject/10544103/" target="_blank" rel="noopener">快乐竞争力——赢得优势的7个积极心理学法则 The Happiness Advantage</a></h2><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s10196599.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p428234.jpg" alt></p>
+<h2 id="快乐竞争力——赢得优势的7个积极心理学法则-The-Happiness-Advantage"><a href="#快乐竞争力——赢得优势的7个积极心理学法则-The-Happiness-Advantage" class="headerlink" title="快乐竞争力——赢得优势的7个积极心理学法则 The Happiness Advantage"></a><a href="https://book.douban.com/subject/10544103/" target="_blank" rel="noopener">快乐竞争力——赢得优势的7个积极心理学法则 The Happiness Advantage</a></h2><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s10196599.jpg" alt></p>
 <h3 id="内容简介-1"><a href="#内容简介-1" class="headerlink" title="内容简介"></a>内容简介</h3><p>《快乐竞争力:赢得优势的7个积极心理学法则》内容简介：</p>
 <p>1、快乐就是竞争力——一次成功的探索之旅，一场工作理念的革命。</p>
 <p>大部分人认为“成功会促成快乐”，但来自哈佛的著名心理学者、幸福课设计者肖恩•埃科尔认为——“先有快乐，然后才有成功，快乐是最强的生产力与竞争力”。肖恩•埃科尔这一观念绝不是空穴来风和心灵鸡汤，来自48个国家、275 000人、225个子课题的数据有力证明，快乐可以给组织与个人带来巨大变革：组织生产力平均提高31%，企业的客户满意度平均提高12%，工作效率提高16%，工作投入程度高出32%，工作满意度高出46%。此外，更快乐的员工甚至因更多走进领导的办公室进行积极沟通，而多赢得588美金的薪酬！</p>
@@ -601,7 +571,7 @@
 <p>第一部分 快乐是一种工作理念<br>第1步 发现快乐优势 3<br>第2步 在工作中赢得快乐优势 15<br>第3步 现在开始改变 21</p>
 <p>第二部分 7个积极心理学法则<br>法则1 接受快乐29<br>快乐带来竞争力<br>法则2 支点与杠杆 52<br>改变心态增加潜能<br>法则3 俄罗斯方块效应 74<br>训练思维发现机会<br>法则4 向上跌倒 93<br>利用低谷竖立向上的动力<br>法则5 佐罗的圈 115<br>缩小注意力范围，扩大能力范围<br>法则6 20秒法则 133<br>把变革的障碍最小化<br>法则7 社会投资 159<br>赢得社会支持<br>第三部分 传播快乐<br>终极法则 你可以改善1000个人的生活 187<br>译者后记199</p>
 <h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><p><a href="http://www.luojiji.com/thread-9243-1-1.html" target="_blank" rel="noopener">一个人的工作能力，主要就体现在他能把一个问题拆解成可执行的步骤的能力。</a></p>
-<h3 id="你在工作，但是你真的会工作吗？"><a href="#你在工作，但是你真的会工作吗？" class="headerlink" title="你在工作，但是你真的会工作吗？"></a><a href="http://www.luojiji.com/thread-12334-1-1.html" target="_blank" rel="noopener">你在工作，但是你真的会工作吗？</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201807/04/095633e5o83znt4p959ozn.jpg"></p>
+<h3 id="你在工作，但是你真的会工作吗？"><a href="#你在工作，但是你真的会工作吗？" class="headerlink" title="你在工作，但是你真的会工作吗？"></a><a href="http://www.luojiji.com/thread-12334-1-1.html" target="_blank" rel="noopener">你在工作，但是你真的会工作吗？</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201807/04/095633e5o83znt4p959ozn.jpg" alt></p>
 <p>你一定听过一个词叫“<strong>刻意练习</strong>”，建议你还应该掌握一个词，叫“<strong>深度工作</strong>”。</p>
 <p>它来自今天介绍的这本书，一上市就登上了美国亚马逊职场类的榜首——</p>
 <p>《深度工作》</p>
@@ -639,7 +609,7 @@
 <p>第五、你工作有纪律吗，够努力吗？你得善于自我激励，还要非常敬业，客户才会选你。</p>
 <p>第六、如果你辞职，你的老板能成为你的第一个客户吗？就算老板不行，你也别忘了和前同事保持好关系，谁知道以后谁会和你合作呢。</p>
 <h3 id="听完这几个问题，你觉得自由工作适合你吗？"><a href="#听完这几个问题，你觉得自由工作适合你吗？" class="headerlink" title="听完这几个问题，你觉得自由工作适合你吗？"></a><a href="http://www.luojiji.com/thread-12373-1-1.html" target="_blank" rel="noopener">听完这几个问题，你觉得自由工作适合你吗？</a></h3><p>未来二十年，文科生如何逆袭？</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201807/09/091726kyn8pjm8qqykpt08.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201807/09/091726kyn8pjm8qqykpt08.jpg" alt></p>
 <p>原创： 万维钢  罗辑思维  今天</p>
 <p>大数据、人工智能……算法在很多领域，都已经比人类专家更靠谱。不夸张的说，人类正在迎来一个算法至上的世界。</p>
 <p>这就引发一个问题：如果算法这么厉害，那人文学科是不是就没用了？</p>
@@ -721,7 +691,7 @@
 <p>第三类，被称为“同化型中间人”。这类员工在邮件中的语言风格和其他员工的匹配度最高，他们可能就是协调公司各部门工作的那些人，这类人深知如何不露痕迹地在各部门间穿梭，尽管各部门之间的文化完全不同，他们也依然可以混得风生水起。但是他们始终也无法获得晋升。研究者认为他们不被提拔正是因为他们跟谁都谈得来，如果一个人太过八面玲珑，就会很容易给人一种虚伪、不值得信任的印象，因而也就得不到晋升。</p>
 <p>第四类，叫做“综合性不守规则者”。通常，因为他们在工作中处于重要的地位，在组织结构中站得稳当，即使他们邮件中的语言风格不同于他人，他们仍能通过自己的创新性的思想和行为，大放异彩。这类人在职场中是最有利，也是最容易取得成功的。因为他们<strong>敢想敢做</strong>，在重要的岗位上总能取得优异的成绩。</p>
 <p>综上可知，要想在职场上平步青云，我们不仅得与各部门成员相处融洽，同时还得保持<a href="https://deepcreator.com/Concept/Self.html" target="_blank" rel="noopener">自己</a>的个性，适当地展现自我。做好二者之间的<a href="https://deepcreator.com/Concept/Balance.html" target="_blank" rel="noopener">平衡</a>，这点非常重要。   </p>
-<h3 id="必读-十条建议，助你快速实现职场跃迁"><a href="#必读-十条建议，助你快速实现职场跃迁" class="headerlink" title="必读 | 十条建议，助你快速实现职场跃迁"></a><a href="http://www.luojiji.com/thread-11861-1-1.html" target="_blank" rel="noopener">必读 | 十条建议，助你快速实现职场跃迁</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201805/07/111629xbgr7z7b1mii1m8g.jpg"></p>
+<h3 id="必读-十条建议，助你快速实现职场跃迁"><a href="#必读-十条建议，助你快速实现职场跃迁" class="headerlink" title="必读 | 十条建议，助你快速实现职场跃迁"></a><a href="http://www.luojiji.com/thread-11861-1-1.html" target="_blank" rel="noopener">必读 | 十条建议，助你快速实现职场跃迁</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201805/07/111629xbgr7z7b1mii1m8g.jpg" alt></p>
 <p>职场中，总有一些道理让人“相见恨晚”。工作中要避开那些坑，怎么才能实现最快地成长？</p>
 <ol>
 <li><p>学会向上管理自己的老板。主动向领导汇报自己的工作进展，逐步建立信任。其次你要明白：只有用你的时间和工作能力，节省领导的时间，他才会感激你。你提供的<strong>帮助</strong>越多，在他的心中的影响力也会越来越大。</p>
@@ -833,11 +803,11 @@
 <p>在采取行动前，最好确保自己掌握了全部的信息，弄清楚了必要的问题，比如：“这次的失信行为是否属于他/她可掌控的范围？”“其他公司同事有没有类似经历？”当你掌握的信息越多，你对情况的判断就会越准确，比如是该保持沉默，还是跟领导提出问题、或是要求补偿等等。</p>
 <p>有时遇到雇主不守承诺，最好什么都不要做。这种“无为而治”不是要让你在工作场合看到或是遭到不公平待遇时保持沉默，而是要审慎思考，有所为，有所不为。采取任何行动前，你都要先确认在雇佣合同里哪项对你来说是寸土不让的，而哪些属于锦上添花不用去争辩的。</p>
 <h3 id="别的程序员是怎么读你的简历的"><a href="#别的程序员是怎么读你的简历的" class="headerlink" title="别的程序员是怎么读你的简历的"></a><a href="https://coolshell.cn/articles/1695.html" target="_blank" rel="noopener">别的程序员是怎么读你的简历的</a></h3><p>下面这个图片来源国外，是一个关于程序员面试时的简历，被人事部门和程序员本身评审的角度不同的图片。当然，这是一个从国外面试的视角制作的图片，不过，可以看出，其中很多东西都是和国内是相同的。让我们通过这个图片也来了解一下自身吧。</p>
-<p><img alt data-src="https://coolshell.cn/wp-content/uploads/2009/11/resume_comic-552x1024.png"></p>
+<p><img data-src="https://coolshell.cn/wp-content/uploads/2009/11/resume_comic-552x1024.png" alt></p>
 <p>下面是我对其做的翻译，翻译水平有限，请大家指正。</p>
 <p>人事部门是这样阅读简历的<br>（+15分）如果简历中说到了和工作职位相符的技能超过5次以上。<br>（+8分）如果简历中说到了和工作职位相符的技能3次到5次。<br>（+4分）如果简历中说到了和工作职位相符的技能1次到2次。<br>（+4分）Cover Letter（“求职信”或“自荐信”）提到了招聘人员。<br>（+2分）简历中有Cover Letter（求职信）。<br>（-10分）没有提到和职位描述相关的技能。<br>（-15分）没有受过大专教育。<br>程序员是这样阅读简历的<br>（+15分）曾经因为好玩而写过操作系统或编译器。<br>（+12分）简历被LaTeX编译过。<br>（+11分）为开源软件贡献过代码。<br>（+9分）上学的时候曾经写过操作系统或编译器。<br>（+8分）有一个BLOG分享技术知识。<br>（+8分）编程/机器人/工程俱乐部主席。<br>（+7分）编程/机器人/工程竞赛参与者。<br>（+7分）在Google和Microsoft实习过。<br>（+6分）使用动态语言（Python/Perl/Ruby）写过非试验性的程序。<br>（+5分）知道3种或多于3种的编程语言。<br>（+5分）之前的工作和目前的职位有很相似的经验。<br>（+4分）有过实习经验。<br>（+4分）自己创过业开过公司。<br>（+4分）有一个通过Rail, PHP或ASP.NET的个人主页。<br>（+3分）有一个自己域名的邮件地址。<br>（+3分）改过一些由动态语言（Python/Perl/Ruby）写的程序。<br>（+2分）有一个个人主页。<br>（+1分）高学历，学习成绩优秀，等。<br>（+0分）有奖学金。<br>（+0分）在快餐店工作过。<br>（-0.5分）Fackbook上有一张看上去喝醉了的照片。<br>（-1分）有博士头衔。<br>（-2分）有一个一般的求职信。<br>（-2分）在简历中说自己懂Word/Excel。<br>（-2分）在简历中有拼写和语法错误。<br>（-3分）简历的字体太小。<br>（-4分）所有的编程经验只是在学校中。<br>（-4分）只知道一门编程语言。<br>（-6分）简历有三页以上。<br>（-6分）简历中有一些无关的东西。<br>（-7分）得到过一些课程的认证。<br>（-8分）相关专业课程很低的成绩。<br>（-10分）在技能中，把Visual Basic列在第一的位置。<br>（-12分）在Facebook中，有过光膀子的照片。<br>（-15分）简历中的缩进同时使用了空格和Tab键。</p>
 <p><a href="https://coolshell.cn/articles/1870.html" target="_blank" rel="noopener">我是怎么招聘程序员的</a><br><a href="https://coolshell.cn/articles/1870.html" target="_blank" rel="noopener">程序员需要具备的基本技能</a><br><a href="https://coolshell.cn/articles/222.html" target="_blank" rel="noopener">优秀程序员的十个习惯</a></p>
-<h3 id="如何找到命中注定的工作"><a href="#如何找到命中注定的工作" class="headerlink" title="如何找到命中注定的工作"></a><a href>如何找到命中注定的工作</a></h3><p><img alt="BornforThis.jpeg" data-src="http://p53s4d2qk.bkt.clouddn.com/BornforThis.jpeg?imageMogr2/thumbnail/!75p"></p>
+<h3 id="如何找到命中注定的工作"><a href="#如何找到命中注定的工作" class="headerlink" title="如何找到命中注定的工作"></a><a href>如何找到命中注定的工作</a></h3><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/BornforThis.jpeg?imageMogr2/thumbnail/!75p" alt="BornforThis.jpeg"></p>
 <p>基本准则：</p>
 <p>大部分人想找一份能带来快乐和金钱的工作，让自己学以致用，做喜欢的事情，并且能到大钱，把这种想法归纳一下，就是：</p>
 <blockquote>
@@ -904,7 +874,7 @@
 <p>犯错或在改正时改变方向没有关系，但最终你应该做出选择。你不应该担心犯一个错误，甚至很多错误。每个人都会犯错，真正重要的是你如何振作。不过，最终你肯定希望你的错误可以让你更接近命中注定的工作。而你离得越近，就越有选择性。</p>
 <p>10   如果某事行不通，就放弃。</p>
 <p>的确，如果你不去射门，就不能射中，但也许你不应该在一开始就射门。如果你始终射门失败，最终你就会被淘汰，然后再也不会有同样的机会。<strong>不要只是反复尝试，而要尝试不同的东西</strong>。“赢家永不言弃”是又一个有误导性的假设。真正的赢家一直在放弃，有时恰恰在他们中奖之前。</p>
-<h3 id="重新认识职场价值"><a href="#重新认识职场价值" class="headerlink" title="重新认识职场价值"></a><a href>重新认识职场价值</a></h3><p><img alt="careervalue20180508.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/careervalue20180508.jpg?imageMogr2/thumbnail/!75p"></p>
+<h3 id="重新认识职场价值"><a href="#重新认识职场价值" class="headerlink" title="重新认识职场价值"></a><a href>重新认识职场价值</a></h3><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/careervalue20180508.jpg?imageMogr2/thumbnail/!75p" alt="careervalue20180508.jpg"></p>
 <p>我相信，大部分职场中人，职业生涯中，不止有一次晋升机会摆在面前。<br>你也一定会发现，身边有一些晋升很快的人，甚至有的跟你年纪差不多，已经坐上了重要的管理位置。<br>但是，可能你工作多年，始终还是一个中基层的员工，也许是因为各种原因，比如开窍比较晚，不知道怎么经营自己，不知道怎么和上级相处，等等。<br>也可能你频繁跳槽，结果却是越跳越“糟”。还有可能，你在不远的将来，就面临着一次晋升的机会，你很想好好地把握。<br>我的这堂课，对那些工作有一定年限，已经进入职场上升通道的人有用，对刚刚进入职场的人一样有用。因为 它本质上是帮你改善工作方法，实现你“职场价值”的最大化。 而且，这些道理和方法，你越早知道越好。<br>我有十几年的职场经历，大学毕业后，就加入了宝洁公司，很多人称它是“职业经理人黄埔军校”。<br>在我们那一届管理培训生中，我第一个晋升为项目经理，又第一个晋升为销售总监。目前我是一家互联网公司创始合伙人，同时领导人力资源模块。<br>我面试过超过1000位候选人，签署过超过300份晋升委任状，也是超过200名管培生的职场教练。<br>正是因为有大型外企和草根创业的双重职业经历，所以我拥有丰富的职场视角。<br>作为职业经理人，我非常了解职场上人才晋升的规律；<br>作为企业管理者，我也非常清楚公司选人、育人、用人、留人，这些人力资源决策，背后的规律。<br>说到这里，我们先来谈谈，职场晋升背后，到底有没有规律、有什么规律。可能有的人，会联想到“办公室政治”“职场潜规则”这样的字眼。<br>这些说法，我并不想在这里反驳它，但是在这堂课里，我会带你更正确地去看待职场和职场晋升，告诉你该怎么去认识和提升你的“职场价值”。<br>首先，我想告诉你， 职场上，存在普遍的“价值评价偏差”。<br>雇主和员工视角的不同，会导致他们做价值评价的时候不一样。<br>在是否晋升这一点上，员工往往认为：“因为我过去对公司做出了贡献，我的表现比其他同事好，所以就应该晋升我。”<br>而在雇主那里， 晋升，不仅是对你过去工作的认可，更是对你未来价值的预期。 晋升一个员工，意味着企业马上就要付出更高的工资成本。<br>这种成本，如果不能由这个员工在未来为公司创造更多的价值来抵消，对于企业来说，就等于增加了经营风险。<br>那么对雇主来说，到底什么样的员工是有晋升潜力的，什么样的员工是在未来能给公司带来更大价值的呢？<br>简单说起来，有 三个要素：一、出色的业绩，二、职场领导力，以及第三，职场能见度。<br>有的人会认为，自己工作有一定年份了，业绩还不错，比平均水平好，就应该升职加薪，否则心里就不平衡。但在雇主看来，只有那些业绩足够出色的员工，才有承担更多责任、获得更大考验的机会。<br>另外，也有的人会认为，自己的业绩已经足够出色了，所以理应得到晋升；但在雇主看来，能否 让你周围的人业绩提升，也是评估你是否具有“未来价值”的一个重要指标。<br>因为 晋升，意味着你要承担更大的责任，调动更大的资源，领导更大的团队。 这种能够带领周围的人一起提升业绩的能力，我管它叫 “职场领导力”。<br>还有的人会认为，自己业绩出色，也能带领团队进步，所以，总该得到晋升了吧。可是雇主会认为，晋升是稀缺资源，给了你，就不能给他。<br>如果你的能力不能被广泛看到，并得到大家的“公认”，很可能就会发生“晋升一个人，疏远所有人”的事情。<br>同时，一个员工如果在组织内部没有能见度，也就意味着他没有足够的影响力。换而言之，他将来能整合调动的资源是有限的，为公司创造的价值也是有限的。所以，职场能见度，对晋升也非常重要。<br>个人业绩、领导力与能见度之间的关系，用一个比喻来概括，叫做 “蛋糕上的奶油与樱桃”。<br>我们都知道，一个生日蛋糕，如果只有下面的蛋糕层，没有上面的奶油和樱桃，这样的蛋糕是卖不出大价钱的。<br>同样的，如果这个生日蛋糕，有厚厚的奶油和美味的樱桃，可是却没有下面的蛋糕层做支撑，这样的生日蛋糕，不用说卖了，连立都立不起来。<br>在这里，出色的业绩和领导力，就是下面的蛋糕；能见度，就是蛋糕上面的奶油和樱桃。<br>那么，接下来的六讲，我会带你认识职场晋升规则，用一套方法提升你的职场价值，这六讲分别是：<br>第一讲，谁在决定你的晋升。我会告诉你，一般来说，公司里晋升一个人的决策流程是怎么样的，哪些人会对你的晋升产生影响，以及你要避开哪些晋升雷区。<br>第二讲，学会“聪明地工作”。我会告诉你，在职场上如何通过“做正确的事”和“正确地做事”，提升你的业绩表现。<br>第三讲，职场领导力的自我养成。我会提供一些容易上手的工作方法，告诉你如何快速有效地提升你的领导力。<br>第四讲，如何提升职场“能见度”。我会讲五个重要的途径。<br>第五讲，把握外部的晋升机会。我会告诉你该怎么主动跳槽。<br>第六讲，开放的职场心态和“隐性晋升”。我会告诉你，不要用僵化的眼光去看待晋升，以及怎么做到隐性晋升。<br>在进入下面的课程前，我还想说，尽管很多员工想晋升而不得，但往往同时，在老板和上级的心中，他们也会渴望自己的下属能快速成长成为合格的接班人，希望你不要错过这样的机会。</p>
 <h4 id="1-谁在决定你的晋升"><a href="#1-谁在决定你的晋升" class="headerlink" title="1. 谁在决定你的晋升"></a>1. 谁在决定你的晋升</h4><p>在第一讲，我先不说如何晋升的具体办法，而是先带你来了解一下，晋升这件事到底谁说了算？<br>影响你晋升的三类角色<br>不同的公司，具体的人事制度有所不同。<br>如果你在不远的将来，面临一次晋升机会，建议你和公司的老员工或相关同事，好好了解一下公司的晋升流程和规矩。<br>但是，总体来说， 公司里直接关系到你的晋升的，有三种角色，分别是评估者、决策者和影响者。<br>我先来说第一种角色，叫 评估者。 他们通常是人力资源部相关同事，以及你的直接老板。<br>一般来说，在财务周期结束前，人力资源部根据财务部分配的预算，制定出晋升的细则，比如像评判标准、预算、名额数、流程。<br>再具体点来说：你在岗位呆了多久，表现怎样，你们部门有多少名额，等等。<br>一般而言，公司不会给刚刚加入公司六个月以内的新员工升职加薪，因为很可能入职的时候已经涨过了。<br>你的直接老板，我们称他为“小老板”，他会给他的上级提出晋升评估方案。<br>评估方案包括，他的所有直接下属的业绩表现、领导力、价值观评估等，并且提报晋升的候选人，来给决策者做最终的决定。<br>在正式得到晋升前，你很有可能会进入一个非常重要的中间状态，叫“考察期”，成为“晋升候选人”。而不是像平时我们想的那样，领导决定让你晋升你就晋升。<br>第二种叫 决策者， 通常是你老板的老板，我们也叫他“大老板”。<br>他决定了一个部门的最终升职加薪情况；对“考察期”中的晋升候选人，是否转正有最终的决策权。他往往是一个部门的负责人，在一些小公司，可能就是CEO了。<br>为什么企业一般要安排高两级的管理者来进行晋升决策呢？那是因为，人是有私心的。<br>如果你的晋升完全由小老板决定，那么，很可能会发生，你越能干，他越舍不得让你晋升走的情况。<br>毕竟，再来一个新人重新开始磨合，肯定不如一个用惯了的下属。而大老板，比你高两级，或者干脆就是一把手，那么，他就会从全局来进行协调。<br>好了，说完了评估者、决策者，一定不要忽略第三种角色，就是影响者。他们可能是你的同事，也可能是你的客户，他们一起构成了一个舆论圈，你的大小老板，或多或少都会被他们影响。<br>避开三个晋升雷区<br>明白了这层关系以后，我们就可以来说说职场晋升的三个雷区。<br>首先，你得避开第一个雷区： 不要搞砸和你的大老板一起工作的机会， 比如一起拜访客户，一起准备一次重要会议，一起完成一次重大的项目上线等等。<br>本来你和大老板一起工作的机会就少，如果你把它搞砸了，很可能再难找到翻盘的机会；而且大老板在评估你的时候，顺带把小老板的培养人的能力也给评估了。<br>如果在大老板面前留下一个好的印象，相当于间接也帮助到了你的小老板。因此在和大老板一起工作之前，一定要做好准备工作。<br>这里给你一个提醒：处理和大小老板之间的关系，最重要的一点，就是 尽量不要绕过你的直接老板，越级汇报。<br>如果是大老板直接来找的你，那么，结束后记得主动告诉小老板一声；如果大老板给你发邮件，回的时候，记得抄送你的小老板；要发给大老板的材料，建议先交给小老板过目。<br>其次，避开 第二个雷区：不要在职场晋升前的考察期松懈。<br>很多企业，会对晋升候选人，进行特殊考察，在考察期内，往往会让他承担更多的责任，通常是一些重要的项目。<br>如果能够胜任额外的项目工作，到了年底，只要有预算，基本上就通过了。<br>而且，独立出来一个项目交给候选人，就可以非常方便地进行考察；有些规范的、上规模的企业，干脆成立了项目部，只有最优秀的晋升候选人，才有资格全职进入，成为项目经理。这样相当于建立了一个人才储备池。<br>不过，在做这类项目时，你平时独立工作时不容易被看到的优缺点，都会暴露出来，比如领导力、全局观、沟通合作能力等。因此考察期是一把双刃剑，这个阶段要用心去工作。<br>有些企业不会明白地告诉你说：“只要你完成了这个项目，我们就给你升职加薪。”或者清楚地和你说：“你现在就在我们的考察期内，请一定要注意哦。”所以，千万不要把这种“额外”的工作，当成是老板给你穿小鞋，老板给你制造麻烦；恰恰相反，这可能就是“组织正在考验你”。<br>退一步讲，项目机会、学习机会，都能提升你的市场价值，哪怕在公司内部，将来晋升的机会有限，简历上能写上这些经历，对你跳槽找工作也有好处。所以，如果有这样的机会，你一定要珍惜。<br>关于职场晋升，你还得避开 第三个雷区：远离谣言，并且不要在背后评价你的职场伙伴。<br>有的时候，职场背后的人际关系是错综复杂的，很有可能，你感觉八竿子打不着的两个人，居然互相认识。<br>工作圈子小得远远超出我们的想象。而你的同事或者你的客户，又构成了对你评估的一个舆论圈。<br>你的一个不经意的八卦或者吐槽，说不定转了一圈就传到别人耳朵里了，如果因为这个失去了晋升的机会，实在是得不偿失。<br>我自己就有过一次惨痛的教训，刚参加工作的时候，嘴上没遮拦，想到啥说啥，向一个女同事，抱怨另外一个男同事的工作，说他的工作如何的不靠谱，记性太差，老是错过重要的时间节点等等，结果这个女同事淡淡地说：“我先生是有‘健忘’这个毛病，回头我提醒他一下。”<br>你看，这就非常尴尬了。而且他们两位都是对我有重要影响的内部合作伙伴，好在他们都非常的大度和专业，没有在以后的工作里给我小鞋穿。但我自己却感到非常不好意思，在这里谢谢他们当年的“不杀之恩”。<br>本讲小结<br>总结一下，人力资源部和你的直接上级，是晋升的评估者；大老板，是晋升的决策者；你的同事、客户等，是晋升的影响者。并且，你要避开职场晋升的三个雷区：不要搞砸你和大老板一起工作的机会；不要在考察期松懈；并且远离谣言。<br>下一讲，我们开始进入晋升三要素的第一要素：出色的业绩。它来源于“聪明地工作”。</p>
 <h4 id="2-学会“聪明地工作”"><a href="#2-学会“聪明地工作”" class="headerlink" title="2. 学会“聪明地工作”"></a>2. 学会“聪明地工作”</h4><p>在试听里，我讲了，出色的业绩，是晋升的基础。<br>需要特别指出的是，业绩并不是只有“销售部”或“市场部”才有的指标，而是雇主对员工的客观表现结果的评估，人人都有份。<br>请注意，客观，是很重要的一点。 如果你发现，你的工作，不能用 客观的数字或者案例 来描述，那么，这对你的晋升，将是非常被动的。<br>因为，这意味着对你的评价，完全取决于老板的主观感受——他 感觉 你不错，你就不错；他 感觉 你不行，你就不行。<br>例如，对于一名招聘经理来说，业务部门招聘需求的完成度、招聘预算的使用比例等等，就比“他是一个勤勤恳恳的员工”，这种笼统的评价，要更加客观。<br>当然了，不同岗位工作内容不同。这堂课不会教每个人，怎么去具体提升某个类型工作的业绩。<br>我想告诉你的是，表现好的员工，除了本身具备优秀的专业技能之外，他们在工作方法上是有一些共性的。<br>比方说，他们知道公司和上级的需要，拎得清工作重点；他们善于创造性地提升工作表现，那么这一节课里，我总结了一些要点和相应的操作性建议，我把它们统称为“聪明的工作方式”。<br>两个动作，做“拎得清”的下属<br>先说第一点，了解公司的需要和上级的期望，拎得清工作重点。<br>管理大师彼得·德鲁克有一个经典的观点：“效率是以正确的方式做事，而效能则是做正确的事”。<br>在雇主的眼中，优秀的员工，无论是哪个岗位的，往往有一个共性，那就是：不满足于“正确地做事”，首先懂得如何“做正确的事”。<br>当你接到一个新任务，或者到达一个新岗位时，你首先考虑和处理的是什么事情？<br>是自己熟悉的事情？擅长的事情？喜欢的事情？容易的事情？安排好的事情？<br>都不是，而是公司认为的重要的事情。<br>首先，你要 把工作重点放在长期规划的事项中，而不是短期的上级派给你的任务，更不是各种突发事件。<br>回想一下，你上次和直接领导，进行季度，或年度工作计划，是啥时候？还是从来没有过？如果有，那么，你目前的日常工作有多少是围绕工作重点来的？有多少是临时加进来的？<br>如果你和上级的合作关系，是由一系列短期的任务组成的，但是没有长期的规划，那么，你就很容易变成了个“救火队员”。<br>比如，一位零售门店的运营经理，他的长期工作重点，应该是：提升销量、降低成本，可是，不可避免地，他的精力，会被例如“报表反馈”“顾客投诉”“员工休假”这样的琐事牵扯走。<br>如果他没有和上级一起进行清晰的工作重点规划，或者，没有把主要资源和精力放在重点事情上，很可能，干了一年，能拿得出手的业绩，无外乎是“及时反馈公司报表”“处理了多少顾客投诉”“有效安排员工休假”，等等无关痛痒的事情。<br>所以，我给你几点建议： 跟上级一起明确你的工作重点，并且定期沟通；当你的精力被其他工作占据过多的时候，必要时跟上级反馈和沟通，请他帮你减轻负担或梳理优先级。<br>说完了明确长期的工作重点，再来说在处理临时接到的具体任务时，你也需要确认上级的期望。<br>老板们事情多，不是在开会，就是在准备开会。他们布置任务，也常常会犯自以为是的错误。<br>比如，我可能经常对我的助理是这么安排工作的：<br>“小李，明天会从新加坡来两位客人，我明晚才会来，你中午帮我招待一下。”<br>有的下属，就会迫不及待地回答：<br>“汤总，您放心，一定招待好。”<br>可是，拎得清的下属，会确认一些关键细节，她们会问：<br>“他们几点到，要不要安排车去接？中午招待的预算是多少？要不要安排其他同事随行？”<br>甚至还会问：<br>“有哪些不方便说的话，或者一定要和他们说的事？”<br>你看，每个人对“招待好”的定义，是不一样的。<br>下属理解的“招待得好”，也许只是“吃顿大餐”；而有可能上级理解的“招待得好”，是要给客人一个好的第一印象。不去追问确认，很容易发生误会。<br>所以，当你不确定老板的想法时，一定不要怕多问，否则你辛辛苦苦干了半天，结果完全不是老板想要的。<br>三个重要的工作习惯<br>说完了“做正确的事”，我们来说如何“正确地做事”。<br>“正确地做事”说白了就是如何高效开展工作，我想讲三个要点，也可以说是三个重要的工作习惯。<br>它们包括： 一、“不要重新发明轮子”，二、成为改进者，三、及时复盘。 我一个个来和你解释。<br>第一，“不要重新发明轮子”，这一点针对的主要是常规性的工作。<br>这个比喻意思是说，你要相信，在职场上，你遇到的大部分问题，都是已经有了现成的解决方法或者工具的，就像“车轮”早就存在了一样。<br>而你要做的，就是迅速找到那个现成的方法或者工具，把你手头的工作快速地完成；而不是凭一己之力，或者自己的一厢情愿去做事情。<br>举一个我的部下的例子，有一个周末，我到单位去取周五落在办公室的东西，我看到他聚精会神地在电脑前工作。<br>于是我问他，你在干嘛呀，他说“两张商品报表里的价格我想合并在一起做个对比，但是呢，有1300多行，我周五已经搞了一下午了，我想还是用周末的时间把它贴完吧。”<br>我当时听了，又气又好笑，你说这个员工不努力吧，的确，人家挺委屈的，大周末的跑来加班；你说这种行为值得表扬吗？实际上Excel里的v look up功能，早就解决了快速匹配合并报表的问题，还肯定不会贴错。<br>所以，当你接到一个任务的时候，首先不要自己“吭哧吭哧”地跳进去就开始干了，而是先想一想，问一问，找一找，看看能不能发现一些快捷的工具，或者现成的经验和方法。<br>说完了不要重新发明轮子，我再来跟你说 第二个工作习惯，成为改进者。 是指工作中当你在做重复的事情时，试着用不同的办法去做，找到更好的办法。<br>有位创业公司的CEO曾和我分享了一个困惑，她说，她有个老员工，负责渠道开拓，兢兢业业干了2年了，忠诚度可嘉。但是这位员工和她说自己感觉审美疲劳了，想晋升到管理岗位去。她却觉得哪不对，可又说不上来。<br>我提醒她：你的那位老员工，这两年的时间，有没有尝试过开拓更多的销售渠道、有没有用过新的人脉更快地完成销售指标、有没有提出过更好的流程改进建议、有没有减少过销售管理费用的开支等等。<br>这位朋友马上明白了，她的这位员工只是把这个工作原地重复了2年，而且，为了让他成为管理者，将来还要多招一到两个新人来接手他的业务。<br>这就等于企业在利润没有明显提高的同时，增加了近一倍的管理成本。<br>我们在前面说过，职场上“客观的业绩”比主观的评价要有说服力得多，你要提升自己的工作业绩，其实无外乎四种思路： 选择比以前多一些、速度上快一些、质量上好一些，或者成本上省一些。也就是俗话说的多、快、好、省。<br>那么，怎么去找到能够提升的点呢？这里和你分享一个 “why-why分析法” 。也就是 对一个问题，连续进行追问“why——为什么”，直到找到真正的原因为止。<br>我在一家知名电商担任企业大学校长的时候，就用过这个办法。当时，我们公司需要提升整体的利润率，而采购的谈判水平，直接关系着这一指标的达成。<br>以往，到了年底，公司就会请各种内外部讲师，对采购部的员工进行谈判技巧的培训，这听起来也是理所当然的。我上任了以后，就开始问“为什么”了。<br>为什么我们的采购，在谈判桌上，谈不回更好的条款？<br>那是因为谈判能力不强。<br>为什么 说他们谈判能力不强？<br>那是因为每次和供应商谈判，仅仅是针对商品的供货价格，来来回回磨嘴皮，而不知道怎么去向供应商，要他们公司的市场部的费用。供应商在别的同类型网站的市场费用的投入是我们的两倍。<br>为什么 不去要市场部的费用？<br>那是因为我们的采购不知道拿网站上什么资源去和他们市场部换。<br>为什么 不知道我们有哪些资源？<br>因为从来没有人，把公司的网站资源进行定价，采购们都是凭感觉自己报价格。<br>你看，真的是采购的谈判技巧不行吗？如果网站资源定价的问题不解决，再牛的谈判高手也不可能从供应商那里要来关键的资源。<br>经过了这一系列的why-why分析，我果断地把单纯讲谈判技巧的课压缩，而是跟运营和市场的同事们一起，把网站资源做了统一定价，并针对这一块业务能力，加强了培训。<br>那一年，公司的合同谈判收到了前所未有的好效果。<br>无论你手头的工作是什么，你都可以从多、快、好、省这四个方面去运用“why-why分析法”，试试看能否通过一些改进，做出不同的结果来。<br>作为员工，如果你能把重复的事情做出差异，那么，就能一下子脱颖而出。<br>说完了成为改进者，我们再来说聪明工作的 第三个习惯，复盘。<br>我在宝洁公司工作时，学到了一个习惯，那就是每一次重要的客户拜访结束之后，或者是会议结束之后，与团队一起复盘。<br>你可以问大家和自己：我们这一次做得好的地方有哪些？请举出三个我们的“长处”。我们这一次还可以改进的地方有哪些？请举出两个“短处”。<br>这种复盘法我叫它 “三长两短法”。<br>之所以长处要多于短处，是要让团队和你自己不要被一时的困难所吓倒，扬长避短，而不是过多地被自己的短板牵扯精力、打击士气。<br>我建议你也用上这个“三长两短”的复盘法，它有趣、好用，坚持下来你会发现它巨大的价值。<br>你可以把职场的工作想象成打一款动作类游戏，你遇到障碍物的时候，那就该跳，遇到敌人，就该射击。<br>障碍物和敌人的出现，其实是有规律性的。如果你经常性地去总结，你就会找到应对的套路。<br>不总结不复盘的人，就容易 “同一个坑摔两次”。 而你就相当于多了很多次存档、读档、再来的机会。<br>前面说的这些聪明工作的习惯，能够帮你有效提升业绩，关于个人业绩和晋升的关系，有三个经验可以分享给你：<br>第一，业绩不是万能的，企业在做晋升决策时，业绩的权重，可能只占10%，剩下的我在后面两讲会和你细细展开；<br>第二，没有业绩是万万不能的，在好的企业中，基本不会有业绩差还能得到提拔的员工；<br>第三，新到一个岗位，短期能做出出色业绩的人，更有可能被提拔。<br>这里解释一下第三点。<br>因为，你刚刚到一个岗位的时候，最能够观察到这个岗位的机会点，一方面你的新鲜感还在，另一方面，大家也比较愿意接受新人带来的新气象。<br>如果时间过得太久，你也慢慢地被周围的环境同化了。<br>所以一般来说，能给新岗位带来改变，以及自我成长的最佳时机，往往就是你初到这个岗位的前三个月。 “好的开头是成功的一半” 这个道理，也很适用于职场发展。<br>本讲小结<br>总结一下，这一讲我们说了，要跟上级的期望同步、拎得清工作重点，“做正确的事”；通过“不要重新发明轮子”，持续改进，以及复盘，来“正确地做事”。<br>接下来，我们马上进入下一讲，职场领导力，如何养成。<br>课后作业<br>对最近的一次工作，用“三长两短”法进行复盘，并分享给你的工作伙伴。</p>
@@ -912,7 +882,7 @@
 <h4 id="4-有效提升职场能见度"><a href="#4-有效提升职场能见度" class="headerlink" title="4. 有效提升职场能见度"></a>4. 有效提升职场能见度</h4><p>我在试听里提到过，在雇主视角里，没有能见度基本就等同于认为这个员工没有影响力，企业对于他未来晋升后可以创造更多价值这件事，是没信心的。<br>而且，你的能力，不能得到公认，企业就要承担舆论的压力。<br>同时，你个人就像一个品牌，也需要有品牌定位、营销渠道等等，不能只把自己的影响力，停留在公司，甚至部门内部。<br>五个途径提升能见度<br>那么，具体怎么做呢？<br>你可以从五个方面去提升自己的职场能见度：<br>一、让你的名字与一个正面能力相挂钩；<br>二、参加跨部门合作的公司级项目，让更多同事认识你；<br>三、找到职场导师；<br>四、穿得更高一级；<br>五、营销自己的业绩。<br>第一个方法，让你的名字与一个正面能力相挂钩。<br>你要想获得晋升，首先得让你的名字被影响者、评估者、决策者们记住，尤其是被决策者记住。<br>很多员工，我称之为职场“小黄牛”：兢兢业业工作，结果到头来干了一两年，大老板连你的名字都不知道，同事对你也非常陌生。<br>如果是这样，你基本上就和晋升绝缘了。<br>我这里说的“记住名字”，不是简简单单地说，知道你叫什么，而是指，知道你擅长做什么。光被记住名字，是远远不够的。<br>人的记忆特点，是喜欢把 两样东西关联在一起，这样才记得牢。<br>在职场中，总有一个你相对得心应手的领域或能力，我管这个叫： “统治区域”。<br>把你的名字，与这个“统治区域”里的正面能力相挂钩，是提升你在大家脑海中印象的好方法。<br>例如：PPT做得好、口才特别好、数字敏感度特别好、执行力特别强等等；在这个区域，你的同事都不如你。<br>如果你还没有发现自己的“统治区域”，我建议你可以向自己的上级，或者是有关系近的同事，请教他们对你的反馈，听听看在他们心中，你最大的优点是什么。<br>你也可以先找几个大家对你反馈不错的优点，然后逐步地去尝试，看看到底哪一个是自己真正最擅长的。<br>一旦找到这个“统治区域”之后，你就应该有意无意地，在职场建立起，自己与这个能力之间的关联；去争取与这个能力相关的项目。甚至你的朋友圈，也应该多转发跟这个能力相关的文章。<br>做到让别人一遇到相关的问题，就能想到你。<br>下面，我就拿我自己举例子。<br>虽然我刚进职场时，主要工作是营销，但我对人才培训非常痴迷。<br>公司内部一有培训新人的机会，我就义务去参加；锻炼的机会多了，自然培训的能力也进一步提高，反过来又提升了我的自信和积极性。<br>以至于公司有各种大大小小的和培训相关的项目，同事们总是第一时间想到我；而培训这件事本身，又大大地加强了我在公司内部的曝光机会。<br>这样，“培训”就成为了我的一个“个人品牌定位”，而且也非常方便我的朋友们在需要的时候想到我。<br>这里我还要提醒你注意， 不要自己给自己打上负面的标签。<br>我举个例子，有的同事，Excel可能使用得没有那么熟练，在请教完其他同事的时候，总喜欢谦虚地说：“你看，我Excel这块还真是不行。”<br>这样自己给自己贴负面标签的行为，哪怕是“Excel这种小事”，也是对自己这个品牌不负责任的表现。<br>如果你要表示谢意，你直接告诉对方：“哎呀，小红，你的Excel真是厉害”，或者“小红，我发现你特别会教别人”，是不是比“说自己不行”要好一些？<br>在职场上， “永远不要说自己不行”。<br>说完了第一种方法，“把自己的名字与一个正面能力相挂钩”，我再来和你说说， 用“跨部门合作的项目”提升自己的职场能见度。<br>在公司内部，经常会出现和你的业务没有直接关系的“公司级项目”。<br>比如，年会的节目表演、公司的运动会、支援新员工的培训、参加新项目的测试，或者到大学去做宣讲会招聘学弟学妹等等。<br>很多人一听到老板要布置这一类的项目，第一反应是“老板又来找免费劳动力了”，恨不得找个地方躲起来。<br>其实，这些看似对你本职工作没有帮助的事情，却可以让你有机会，走出你的部门，和许多部门外的同事、领导一起工作，这对提升你的“职场能见度”有非常大的帮助。<br>尤其是像协助人力资源部进行“招聘”“培训”这一类工作，可以让你了解很多管理方面的细节，对于你走上管理岗位也是有很大帮助的。<br>就拿支援人力资源部进行校园招聘这件事来说，很多公司都会到学校去进行新员工的招聘，这基本上是人力资源部一年一度最重要的项目。<br>如果有机会加入这种项目，一来，可以近距离接触到人力资源部的同事；二来，你可以有机会从公司用人的角度，重新审视自己的能力、价值观与公司的契合度；三来，你可以有机会观察到一次大型的跨部门协作是如何发生的。<br>像这类的好事，应该抢着做才是。<br>当然，还是那句话，只有你把本职工作做好，参加这些提升能见度的项目，对你才有意义。<br>第三种方法，找到职场导师。<br>有句俗语：“首先，你得行！第二，得有人说你行！第三，说你行的人得行！”<br>那么如何能够找到这样的导师呢？<br>有的公司，有现成的导师制度，那相对比较容易；如果你的公司，没有成熟的导师制度，也没有关系，不用搞得那么严肃，非要有一个“导师”的名头。<br>你通过积极参加公司级别的活动，一定有机会认识大量的高级别的管理人员。或者，你可以请你的上级，或者公司的老员工帮忙推荐认识。<br>你还可以参加行业沙龙，在相关论坛保持一定的活跃度等等。<br>我个人最推荐的办法是多参加权威的培训，其实工作之后，书本上的东西能够带给你的能力提升，已经非常有限了，参加这些培训，更重要的是有机会接触到行业内的高手。<br>你也许会说，遇到了这些大人物，可是，如何请他们来帮助自己呢？<br>最好的办法，是 通过具体事情，寻求他们的帮助， 建立实实在在的合作，而不是仅仅吃个饭。<br>这里和你分享一个向“大咖”们寻求帮助的心得，那就是 说清楚“你自己想做什么+遇到的困难”。<br>即使对方再乐于助人，如果你上去就问人家：“请问我该不该去参加我们公司的合规项目呢？”这种让人搞不清状况的问题，别人想帮都帮不了你。<br>我有一个师弟，他刚刚转行到新媒体营销的时候，他就遇到自己人脉不够、经验不足的问题。他是这么寻求大咖们的帮助的，他对这些营销界的前辈们说：<br>“您好，我希望能够把我们这个城市里，负责新媒体的职场新人组织起来，成立一个学习小组，一起学习新媒体运营的前沿知识。但是我们非常需要行业前辈做我们的导师，和我们一起分享经验，希望您能来我们的学习小组，进行一个简短的分享。”<br>你看，这样是不是比上来就问“我该不该”“我能不能”“你可不可以”这种没有目标、没有思考过程的问题，要更方便别人帮助你呢？<br>接下来，第四个方法。那就是通过 “穿得更高一级”， 来提升你的“领导范”，也就是你的形象。<br>当然，穿着首先要考虑公司的大环境。<br>如果你在一家互联网公司，整天西装领带，肯定不合适；反过来，你在一家传统企业，整天穿着拖鞋大裤衩，那也不对。这样就会和整个组织格格不入，这种形象也是非常糟糕的。<br>不过，通常而言，级别越高的人，在职场上的着装越是正式。仔细观察你们公司的领导是怎么穿着的，向他们靠拢；而不是向级别比你低的同事靠拢。<br>第五个办法，叫 “营销”自己的业绩。<br>我们的传统的教育，告诉我们要“谦虚”“低调”，所以也许你听到“营销”自己的时候，会觉得抵触。其实，“营销”自己的业绩，也有“聪明的”办法。<br>具体来说，就是 “分享经验而不是炫耀成绩；教会同事而不是卖弄技巧”。<br>公司对于某个员工，取得了成绩，最重视的，不仅仅是成绩本身；而是这种成绩的获得，是否是可持续的、可复制的。<br>如果员工能够分享他是如何做到的，并且带领周围的同事一起进步，这是上级更看重的。<br>因此，“营销”的重点，不是在于“炫耀自己的成绩”，而是利用“经验总结会”“内部邮件分享”“与同事一起工作”等等场合，把你的经验和心得，分享出去。<br>利用外部曝光窗口<br>最后，除了内部的“职场能见度”，我还要提醒你，注意外部的曝光窗口。<br>比如，<br>如果你是程序员，多上Github这种论坛，认识大牛，发表作品；<br>如果你是一个运营，试着自己运营一个私人公众号，对自己的作品、运营心得进行传播；<br>如果你是HR，多参加一些你们所在行业的论坛、峰会，既可以帮你认识更多的人，也可以让你提升专业知识，等等。<br>千万不要把公司当做自己的“唯一”，要记住，你只是公司的“之一”。<br>当然，我不鼓励过度跳槽，或者“身在曹营心在汉”。但扩大你的外部视野，既可以反过来提升你在公司内的价值，也可以帮助你找到新机会。<br>你在行业有影响力以后，反而会让公司更加珍惜你的 市场价值。<br>本讲小结<br>总结一下，这一讲，我和你分享了五个提升内部能见度的方法，它包括：<br>让你的名字与一个正面能力相挂钩；<br>参加跨部门合作的公司级项目，让更多同事认识你；<br>找到职场导师；<br>穿得更高一级；<br>营销自己的业绩。<br>最后，除了公司内部的能见度，也不要忘了公司外部的曝光窗口。<br>下一讲，我们来讲，怎么把握外部的晋升机会。</p>
 <h4 id="5-把握外部晋升机会"><a href="#5-把握外部晋升机会" class="headerlink" title="5. 把握外部晋升机会"></a>5. 把握外部晋升机会</h4><p>不可否认的是，对于大多数公司，存在着这样一种现象，叫做“跳槽的涨薪幅度远高于公司内加薪幅度”。<br>也就是说，很多公司宁愿付出一万五的月薪从外部引进一个新人，也不愿给月薪八千块的老人加两千，哪怕两人对公司贡献差不多。<br>这背后的原因是，一方面，企业会倾向认为外来的和尚会念经，另一方面设计一套平衡的对应不同职级、不同业绩的加薪制度，是非常复杂的。<br>而从公司外挖人，则没有这种顾虑。<br>这种大环境下，通过看外面的机会，利用跳槽来升职加薪，自然也就成为了一个重要选项。<br>用主动跳槽代替被动跳槽<br>除非你对你的公司有不可动摇的感情，或者你就是公司的老板，那么，我觉得你可以不需要考虑跳槽这件事。<br>这堂课里我们讨论的跳槽，指的是能带来“升职加薪”的， 能实现更高的“职场价值”的工作更换； 而不是简简单单地因为可能离家更近，或者工作环境更优美等等原因，而去换一个工作。<br>经济学上有个概念，叫 无差异曲线，它是指，有这样一条曲线，在它上面的每一个点，虽然商品的组合不同，但它带给人们的效用是一样的。<br>职场也是如此，在你自身能力、资源、外部行业没有发生质的变化的时候，工作换来换去，其实都是在这样一条“无差异曲线”上。<br>这个机会，可能工资高一点，但福利要差一些；那个机会，可能老板要好一点，但工作量又大了一点。本质上讲，是“无差异的”。<br>所以，这堂课里我们讨论的跳槽，其实是能够让你从原来的无差异曲线，跳到另外一条整体效用更高的无差异曲线上的跳槽。<br>那么什么时候才是跳槽的好时机呢？<br>这里不得不提到，很多人跳槽，是因为工作不开心了、不顺心了。<br>从管理者的角度而言，你在上一家公司事情办不好、人际关系理不顺，很难说在自身不做改变的情况下，换一家公司就马上变好了。<br>我建议你在看外部工作的同时，调整自己，并反复问自己，要提升目前工作的主要办法，是不是已经超出了自己努力的范围。<br>如果通过改变和调整自己，可以提升业绩，那么我建议你做出成绩后再跳也不迟。<br>比如，与老板的沟通出现严重冲突，影响你的工作。<br>那么，你就得去判断，是不是无论你如何改变，你的老板就是针对你，给你穿小鞋；如果不是，那么我建议你等到与老板关系理顺后，再跳槽。<br>还有一种情况是，等到公司发展不好的时候跳槽。其实职场上要把主动权握在自己手里。公司发展的最好的时候，恰恰是你开始看新机会的时候。<br>这是因为，这时候跳槽你的市场价值是最高的，市场会因为你公司牛，连带着觉得你也牛；反过来，等到公司发展不好了你再跳槽，你谈工资的筹码都小了很多。<br>这时候，你的“无差异曲线”的整体效用是缩小了的。<br>所以，我们这堂课里真正主张的是 “主动跳槽”， 也就是指在你业绩优异，或者公司发展也不错的时候，依然不放过外部的机会，因为这样才会为你带来更多的升职加薪筹码。<br>你也许会怀疑：业绩优异，公司发展也不错，还需要跳槽吗？<br>是的，仍然需要。一般有这么两种情况：<br>第一种，你能够明显地看到自己成长快，业绩出众，但公司内机会总轮不到你。<br>轮不到你，有各种各样的原因，比如老板任人唯亲，或者公司按部就班，论资排辈等等。<br>如果你非常渴望迅速成长，那么你应该把视野打开，寻找外部机会。<br>第二种，尽管公司目前是行业老大，或者发展得不错，而且可以给到你升职加薪的机会。<br>但长期来看，新行业、新机会，将对你目前的公司，甚至所在的行业，产生毁灭性打击。<br>要知道，在行业的巨变面前，一家公司，或者一个个体能够改变局势的情况是很少的。就连劳模雷军同学，也不得不感慨：“站在风口上，猪都会飞”。<br>尤其在当下中国，新技术、新模式风起云涌。而你原来在行业里积累的经验和资源，可能正是这些新兴的商业领域需要的，你的能力，在一个新的领域，能够产生更大的价值。<br>这样的机会，也应该在你的考虑范围内。<br>如何跟猎头打交道<br>说完了什么是主动跳槽，为什么要主动跳槽，我们来说，具体怎么去找外面的机会。<br>有三个重要的渠道：简历投递、朋友推荐以及猎头联系。<br>简历投递我就不在这里多说了。从公司的角度来说，发布招聘信息这种做法效率最低。<br>企业最喜欢的，其实是内部员工推荐。<br>这样做有几个好处。一方面，内部员工与候选人熟悉，他可以和对方提前介绍公司的信息，同时对候选人知根知底，也能帮助公司更快地了解候选人的优缺点，降低了沟通成本和双方的试错风险。<br>另一方面，如果内部员工推荐了自己的朋友加入公司，某种意义上，在公司看来，增加了他的忠诚度。<br>所以，千万不要以为靠熟人找工作是“走后门”。有机会就积极地向你的亲朋好友推销自己，告诉他们自己是做什么的，说不定，机会就这么聊出来了。<br>接下来我重点说一下猎头。<br>你也许会以为，猎头只盯着总监、总经理、CEO这种级别的高管去“挖人”。其实，随着这些年，竞争的加剧，以及新兴的行业、岗位出现，越来越多的猎头公司开始切入中基层岗位。通过猎头跳槽也变得越来越普遍。<br>那么，如何才能引起猎头的注意力呢？<br>有两个主要的渠道。 第一是，经常更新你的职场社交媒体以及招聘平台简历。 这里我就不打广告了。<br>第二，积极参加行业论坛。 很多猎头也会抱着找人的心态，去参加这些业内权威的论坛和峰会，说不定你就能遇上帮你搞定未来的工作机会的贵人。<br>在这里，我非常建议你，即使你目前完全没有跳槽的需求，也保持半年更新一次自己在各招聘网站上的简历的频率。<br>一方面是可以增加自己外部的曝光机会，另一方面，也是时时地总结自己的工作经历。<br>甚至，如果有面试的机会，大胆地接受邀请，去聊一聊。<br>相信你和我一样，刚刚接到猎头电话时，是既新鲜又紧张的。<br>哪些话该说，哪些话不该说？怎么判断他们是否专业？怎么和他们谈自己的薪水？我短期没有跳槽打算，该如何拒绝他？等等。<br>其实，你只要掌握一个总方针，就好了。那就是：“猎头是你的合作伙伴”。<br>具体来说，猎头比你清楚，行业发展前景、行业薪酬福利范围、不同公司发展水平、业内口碑、目标公司的面试风格、用人特点等等。<br>猎头不清楚的是：你自己到底想要什么？你与别人不一样在哪里？通过和猎头的坦诚地进行信息交换，他可以帮助你想明白，自己职业发展的目标、现状，以及能不能通过跳槽接近这个目标。<br>比如，你就是希望通过跳槽，带来薪资上的提升，那么，就把自己的薪资期望值的范围告诉对方，而不是让对方去猜。总之，只有你自己想的越明白，猎头才可能帮助到你。<br>在与猎头沟通中，你也需要辨别这个猎头是否专业。<br>不专业的猎头，只会不断地刺探你们公司的机密，却说不出你行业的信息；他只会不断地推销这个新机会工资有多高，却不关心你到底想的是什么？<br>遇到这样的猎头，建议你礼貌地挂断电话，不要再浪费时间。<br>反过来，猎头也在评估你是否专业：对于公司的机密，是否做到守口如瓶；是否清楚自己的优势、职业目标等等。<br>本讲小结<br>总结一下， 在职场中，看公司外的晋升机会是非常正常的。<br>把握自己职场价值上升期，抓住主动跳槽的最好时机。把猎头当做一个合作伙伴，与他坦诚地交流自己的职业想法，能够让你保持对行业和对自身价值的敏感度。<br>下一讲，我还有一些经验和心得想跟你分享，关于在职场如何保持开放的心态，和如何“隐性晋升”。</p>
 <h4 id="6-开放的职场心态和“隐性晋升”"><a href="#6-开放的职场心态和“隐性晋升”" class="headerlink" title="6. 开放的职场心态和“隐性晋升”"></a>6. 开放的职场心态和“隐性晋升”</h4><p>我在前面讲到，晋升，是需要持续出色的业绩作为支撑的。<br>升职加薪这条路，走起来不那么容易。它意味着你比你的同事要付出更多的努力，但未必能够马上见到效果。<br>所以在这里，我还想跟你灌点鸡汤，教你怎么保持开放的职场心态。<br>摆脱职场发展的线性思维<br>在职业发展上，我们常常会犯一种错误，叫 “只要……就” 的“线性思维”。<br>只要我业绩好，就可以升职加薪；<br>只要我的老板不给我穿小鞋，我就可以升职了；<br>只要我升职了，就从此过上了幸福的生活，等等。<br>其实，在职场上，还真的没有太多这种“只要做了什么，就可以怎么样”的“一竿子插到底”的好事。<br>大多数情况下，我们得接受“只有……才”这种思维方式：一方面，有了这个东西，未必能成功；另一方面，没有这个东西，那么必然不行。<br>比如，就算业绩好，也有可能不会被优先考虑进入晋升名单，但是，如果绩效差，肯定没有机会。<br>因此，我们会认为，“只有业绩好，才有晋升的机会”，而不是“只要业绩好，就能够晋升”。<br>另外，我还想提醒你的是， 晋升并不是职场的唯一一条路。<br>公司的高管的位置永远是有限的，生活也远远不止晋升这一条路、一件事。父母、孩子、配偶、事业、友情、兴趣等等，究竟哪一个是你人生中 最重要的“正确的事”。<br>如果你的晋升，带来的是越来越少的陪伴家人的时间，是否值得？而且，如果只用“晋升”，来论职场的成败，那么，难道除了CEO，所有人都是“失败者”？<br>所以，在这一讲，我想和你分享，除了晋升之外，还有哪些职业发展的思路。<br>“隐性晋升”：成为“职场老水手”<br>在企业里，200个员工中，能够有30个主管，5个经理，1个总监，已经是非常不容易的了，副总和CEO这种金字塔尖的职务，那更是少之又少。<br>其实，除了晋升这一条路外，还有一条“隐性晋升”的路。<br>我们在企业中，常常能够发现一些业绩出色的员工，他们因为各种原因，不愿意承担更高的领导责任，或者企业高管位置有限，但他们同样拥有优秀的领导力、足够的能见度。<br>对于这样的员工，我称之为“职场老水手”，他们是团队的稳定器，有时候比“船长”，更接地气，甚至在其他员工中，有更高的号召力。<br>很多时候，领导在做重要决策时，还需要来征询他们的意见。<br>《论语》里有一句话，叫“施于有政，是亦为政”，说的就是“虽然不在那个位置上，但依然有影响政治的力量”。<br>如果你对一个岗位，施加了充分的影响力，那么，你是不是领导，抬头是不是叫“经理”或者“总监”，其实已经不重要了。<br>这样的人，在行业内是非常抢手的，所以，企业也是愿意付更高的工资来挽留的。<br>在人力资源的语言里，关于薪资，有个概念，叫 薪资带宽， 意思是每一个职级，对应的工资上限与下限。<br>很多企业，会为“职场老水手”这一类员工，设计较宽的薪资带宽。也就是说，“职场老水手”的工资，高过他们的上级领导的情况，是很有可能的。<br>这种地位的获得，本质上，还是由个人职场价值的提升所带来的。<br>听起来，这种“隐性晋升”非常理想，既没有领导那么大的压力，却又享受到了还不错的报酬。<br>不过，“职场老水手”也不是那么好当的，有三个注意事项，你一定要牢记在心。<br>首先，要降低姿态，而不要成为“职场老油条”。<br>再出色的水手，最终也应该听船长的。一个团队十几号人，甚至几十号人，他必须要有自己的威望，但又不可能眉毛胡子一把抓。<br>如果团队里最资深的“老水手”，站在团队领导这一边，帮助他影响团队、带头做出业绩，那么这种“老水手”的价值就非常高了。<br>而“职场老油条”，则是仗着自己资历老，总觉得自己比上级懂得多，甚至觉得上级比自己年轻，从而对上级的要求爱理不睬。<br>那么，一个思路清晰的领导，很可能会在第一时间，把老油条清理出自己的团队，从而保证自己的权威。<br>其次，要以身作则，不要“倚老卖老”。<br>说到底，企业之所以允许“职场老水手”存在，拿着和“船长”差不多的薪水，还是因为“业绩”“领导力”与“能见度”。<br>而躺在功劳簿上，却无法持续证明自己的职场价值的老人，是最容易被企业辞退的，因为你价格贵嘛。<br>最后，要持续学习。<br>某种意义上，“职场老水手”是一直呆在一个舒适区里的。<br>做的是自己擅长的事，经验又比普通员工丰富，很容易“生于忧患死于安乐”。尤其在这样一个知识更新换代如此之快的时代。<br>我就有不少老同事，在某些不断下滑的渠道里，一直没有更新自己的知识库。<br>的确，由于在这个领域工作多年，人脉、资源、经验，都非常的丰富，他们的业绩，也始终是部门第一第二；可是，一旦这个渠道、行业萎缩到了一定程度，他们的生存能力将极大地被削弱。<br>总结一下这一讲，职场里并不是只有晋升一条路通向成功，通过“隐性晋升”，成为一名经验丰富的“职场老水手”，也是一个好选项。<br>但是，你需要注意做到是，“降低姿态”“以身作则”和“持续学习”。<br>小结<br>好了，关于晋升这件事，我就说到这里。和你回顾一下整堂课的内容。<br>第一讲， 我们谈了谁在决定你的晋升。我们了解了“评估者”“决策者”和“影响者”这三种角色，并且告诉了你避免三个雷区，分别是：不要搞砸你和大老板一起工作的机会；不要在考察期松懈；并且远离谣言。<br>第二讲， 我们学习了如何“聪明地工作”。有五个要点：明确长期的工作重心、明确上级期望、“不要重新发明轮子”、成为改进者、保持复盘的习惯。<br>第三讲， 我和你分享了“职场领导力”的自我养成：锻炼大局观思维，给团队带来“方向感”，用赞美和驱动给团队带来“能量感”，有原则、有应对利益和资源竞争的策略，让团队对你产生“信任感”。<br>第四讲， 我们学习了如何提升职场“能见度”。它包括，第一，让你的名字与一个正面能力相挂钩；第二，参加跨部门合作的公司级项目，让更多同事认识你；第三，找到职场导师；第四，穿得更高一级；第五，营销自己的业绩。除了在公司内部的职场能见度，也不要忘了行业内的曝光。<br>第五讲， 把握外部的晋升机会。我和你分享了建立主动跳槽的心态，以及寻找外部机会的技巧，每半年更新一次简历，多和朋友介绍你自己，以及和把猎头当成你的合作伙伴。<br>第六讲， 我讲了开放的职场心态和“隐性晋升”。不要用僵化的眼光去看待晋升，隐性晋升也是一条道路。<br>最后，我希望努力的你，早日获得期待已久的那个晋升机会！</p>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="一篇清单，看懂猎头这个神秘行业"><a href="#一篇清单，看懂猎头这个神秘行业" class="headerlink" title="一篇清单，看懂猎头这个神秘行业"></a><a href="http://www.luojiji.com/thread-10632-1-1.html" target="_blank" rel="noopener">一篇清单，看懂猎头这个神秘行业</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/12/072722z0p8wxv2p4ad0bpw.jpg"></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="一篇清单，看懂猎头这个神秘行业"><a href="#一篇清单，看懂猎头这个神秘行业" class="headerlink" title="一篇清单，看懂猎头这个神秘行业"></a><a href="http://www.luojiji.com/thread-10632-1-1.html" target="_blank" rel="noopener">一篇清单，看懂猎头这个神秘行业</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/12/072722z0p8wxv2p4ad0bpw.jpg" alt></p>
 <ol>
 <li><p>猎头的工作，其实没那么神秘。打个比方，猎头就是公司和优秀人才之间的桥梁，帮需要招聘的公司在大量人才中挑出合适的人选，然后获取佣金。</p>
 </li>
@@ -945,7 +915,7 @@
 <li><p>顶级猎头的品质之六：<strong>诚实</strong>。电视剧中猎头尔虞我诈、诡计多端的玩法，在现实中基本不可能。一方面，客户和候选人往往背景不俗，被忽悠的几率很小。另一方面，欺骗会让猎头“身败名裂”，难以在行业立足。长远来看，猎头最后拼的是人品。只有“不湿鞋”的，才会成为顶级猎头。</p>
 </li>
 </ol>
-<h3 id="如何利用猎头，让自己“增值”？"><a href="#如何利用猎头，让自己“增值”？" class="headerlink" title="如何利用猎头，让自己“增值”？"></a><a href="http://www.luojiji.com/thread-10876-1-1.html" target="_blank" rel="noopener">如何利用猎头，让自己“增值”？</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/10/073455zpck4spc6kj4qqrk.jpg"></p>
+<h3 id="如何利用猎头，让自己“增值”？"><a href="#如何利用猎头，让自己“增值”？" class="headerlink" title="如何利用猎头，让自己“增值”？"></a><a href="http://www.luojiji.com/thread-10876-1-1.html" target="_blank" rel="noopener">如何利用猎头，让自己“增值”？</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/10/073455zpck4spc6kj4qqrk.jpg" alt></p>
 <ol>
 <li><p>目前国内的猎头行业，鱼龙混杂。如果要保证服务质量，最简单的方法是——选择正规的猎头平台。不仅有公司信誉担保，对猎头也有严格的资质审核，安全性更高。</p>
 </li>
@@ -1219,7 +1189,7 @@
 <h2 id="他们曾在35岁陷入职场中年危机，现在却找回了高光时刻｜CBNweekly"><a href="#他们曾在35岁陷入职场中年危机，现在却找回了高光时刻｜CBNweekly" class="headerlink" title="他们曾在35岁陷入职场中年危机，现在却找回了高光时刻｜CBNweekly"></a><a href="https://www.toutiao.com/a6578985892151558659/" target="_blank" rel="noopener">他们曾在35岁陷入职场中年危机，现在却找回了高光时刻｜CBNweekly</a></h2><p>35岁，是成晶心中的职场红线，她的焦虑感也在这一年达到了顶峰。</p>
 <p>成晶生活在成都，是一家传媒公司的中层管理，曾是很多人眼中的“女强人”，但30岁时孩子的出生打破了她原本生活和工作的平衡。尽管已经竭力完成从职业女性到职场妈妈的角色转变，来自家庭和工作的双重压力还是让她感到喘不过气。与此同时，现实的问题也摆在眼前，房贷、教育等经济重担以及对自我实现的渴望，都让成晶无法停下脚步。她渴望稳定，却又不想安于现状，眼看着晋升通道很难再有突破，换一家公司的成本又太高，于是“我的人生就要这样了吗”的念头每天都在她脑中拉起警报。</p>
 <p>相比事业遇到瓶颈的成晶，张思宏的职场前半场看上去要顺遂得多。大学毕业后，他一路从麦当劳的实习生，做到了戴尔销售总监，实现了自己21岁进入职场后就要成为“成功”职业经理人的目标：爬到更高的位置、赚到更多的钱，并最终获得他人和社会的认可……</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/153178951730206e124348e"></p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/153178951730206e124348e" alt></p>
 <p>张思宏／49岁／自由职业</p>
 <blockquote>
 <p>“前半生为了活着而生活，下半生要为了生活而活着。”</p>
@@ -1252,7 +1222,7 @@
 <p>第二道闪光出现在2016年年中。此时的张思宏刚刚经历了职业生涯中最惨痛的一次失败——短短的6个月之后，他就从乐视“逃”了出来，铩羽而归回到亚马逊。“我这个人很轴，再加上满肚子酸腐的书生气，所以我就把自己在乐视6个月的真实经历和感受，经过整理和加工写成了文章，而且放在了网上。”没想到这篇评论外企和民企的文章瞬间引爆了网络。在给张思宏招惹了无尽麻烦的同时，也将他送上了第二条斜杠的人生道路：以文字为媒，和他人分享自己多年来的职场感悟，专栏作家的身份因此而来。</p>
 <p>“这种闪光时刻极为稀少，如果意识到这种时刻，就一定要抓住它，好好琢磨，这可能会让你找到自己与生俱来的given gift。”张思宏认为，这种闪光时刻虽少，但在每个人的成长历程中，总会发生这么几回。</p>
 <p>保持积极，<br>永远不要等到万事ready才开始做</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/153178951773913513c7ef7"><br>如果把时钟拨回3年前，刘常科可能也不会想到，45岁“高龄”的他，在花了18年把昂立教育送上市后，还会挤入那群85后中，在当时厮杀极为激烈的O2O教育领域里创业。</p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/153178951773913513c7ef7" alt><br>如果把时钟拨回3年前，刘常科可能也不会想到，45岁“高龄”的他，在花了18年把昂立教育送上市后，还会挤入那群85后中，在当时厮杀极为激烈的O2O教育领域里创业。</p>
 <p>35岁前的刘常科是感知不到焦虑的，他把全副心思都放在了准备企业的上市上。而当昂立走上正轨后，他反而担心，如何更有活力地帮助企业向前走。刘常科短暂的一段“后焦虑时期”发生在2015年。他早已实现了财务自由，之所以创业，初衷很简单：教育中还存在问题，也蕴含商机，这可以通过创新的方式解决，而这在原来的体制内难以实现。</p>
 <p>想到，就去做，这是刘常科的思维逻辑。他没有从原先的企业中带走一人，而选择从零开始一个个招聘。他回忆起那段“又要重头白手起家”的日子，能扛过压力最需要感谢的，是长期保持积极、时刻准备的状态。</p>
 <p>刘常科几乎时刻都在准备中，所以他才会毫不犹豫地再次创业。他当然也会害怕，尤其是创业初期，每天人来人走，团队为招聘发愁，“当时的市场很浮躁，特别浮躁，被资本裹挟着往悬崖上冲，就害怕两年以后就倒了。”</p>
@@ -1260,7 +1230,7 @@
 <blockquote>
 <p>真正的危机是没有养成<br>应对变幻市场的习惯</p>
 </blockquote>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/1531789519466e536871c31"></p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/1531789519466e536871c31" alt></p>
 <blockquote>
 <p>如果把人生比作一个金字塔，越往上走，同路人就越来越少。没有人激励，就只能自我激励，就像张思宏所言，“30多岁了，你不能指望别人给你整一个鸡血的配方。”人到中年，多少都有一套自我激励的办法，在邢波身上，则是一套极为规律和克制的习惯的力量。</p>
 </blockquote>
@@ -1324,8 +1294,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Independence/" rel="bookmark">Independence</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Career/" rel="bookmark">Career</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Time/" rel="bookmark">Time</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Review/" rel="bookmark">Review</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/iDeepLearn/Profession/Career/" rel="bookmark">Career</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Career/" rel="tag"><i class="fa fa-tag"></i> Career</a>
           </div>
@@ -1337,21 +1328,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Emotion/" rel="next" title="Emotion">
-                  <i class="fa fa-chevron-left"></i> Emotion
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Relation/" rel="prev" title="Relation">
-                  Relation <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Emotion/" rel="prev" title="Emotion">
+      <i class="fa fa-chevron-left"></i> Emotion
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Relation/" rel="next" title="Relation">
+      Relation <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -1364,7 +1352,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -1395,8 +1405,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -1405,14 +1415,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1423,11 +1433,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -1461,7 +1466,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -1473,51 +1478,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -1526,18 +1492,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1547,63 +1507,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1611,14 +1514,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1645,40 +1548,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Career/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

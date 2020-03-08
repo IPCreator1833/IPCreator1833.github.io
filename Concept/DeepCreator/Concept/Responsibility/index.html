@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="对自己负责就是最大的负责,人最大的责任就是先照顾好自己。">
 <meta name="keywords" content="Responsibility,Duty">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Responsibility/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Responsibility/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Responsibility/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,19 +256,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="winston-churchill-the-price-of-greatness20180824.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/winston-churchill-the-price-of-greatness20180824.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://pd4vb8220.bkt.clouddn.com/winston-churchill-the-price-of-greatness20180824.jpg?imageMogr2/thumbnail/!75p" alt="winston-churchill-the-price-of-greatness20180824.jpg"></p>
 <blockquote>
 <p>对自己负责就是最大的负责,人最大的责任就是先照顾好自己。</p>
 </blockquote>
 <a id="more"></a>
 <p>分清是不是自己真正<a href="https://deepcreator.com/Concept/Responsibility.html" target="_blank" rel="noopener">责任</a>的几个简单判断方法：<br>1、是不是真正<strong>因为</strong>自己，所以才XXX<br>2、是不是真正<strong>为了</strong>自己，所以才XXX<br>常见的陷阱：被道德绑架，被自私的小人利用…</p>
 <p>每个人都需要为自己的选择和行为负全责，<br>每个人只需要为自己的选择和行为负责，<br>划清界线，分清责任，豁然开朗，瞬间放松。</p>
-<p><img alt="Responsibility-Starts-with-ME-box-letters.jpg" data-src="http://opb37u589.bkt.clouddn.com/Responsibility-Starts-with-ME-box-letters.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/Responsibility-Starts-with-ME-box-letters.jpg?imageMogr2/thumbnail/!75p" alt="Responsibility-Starts-with-ME-box-letters.jpg"></p>
 <p><a href="https://www.douban.com/people/elainxu/" target="_blank" rel="noopener">曾尽匹夫责，不负少年头。</a></p>
 <p>今天给大伙说个小伙吧！说母亲走进儿子卧室，叫醒他，“儿子该起来去学校了。”</p>
 <p>“不嘛！不嘛妈！我你想去学校。”<br>“哎呀！你的去啊！”<br>“孩子们不喜欢我，老师们也不喜欢我。”<br>“嗨！你地去啊！妈告诉你两个理由吧。第一，你已经五十二岁了。第二，你是校长啊！”</p>
 <p>这其实仅仅不止是一个笑话，前几天咱们微信后台就有一位朋友向我抱怨，他父母死活不肯花钱让他去参加一门培训。我说，慢着点，你今年多大岁数？他说，我二十五啦！这件事就让我想起来肉唐僧前几天讲过的一句话：<strong>长期在集权生活的人们最大的悲剧不是没有自由而是不肯承担责任。</strong></p>
-<h2 id="《跳出自己——责任与自我欺骗》"><a href="#《跳出自己——责任与自我欺骗》" class="headerlink" title="《跳出自己——责任与自我欺骗》"></a><a href="https://book.douban.com/subject/20263606/" target="_blank" rel="noopener">《跳出自己——责任与自我欺骗》</a></h2><p><img alt="self20180801.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/self20180801.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="《跳出自己——责任与自我欺骗》"><a href="#《跳出自己——责任与自我欺骗》" class="headerlink" title="《跳出自己——责任与自我欺骗》"></a><a href="https://book.douban.com/subject/20263606/" target="_blank" rel="noopener">《跳出自己——责任与自我欺骗》</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/self20180801.jpg?imageMogr2/thumbnail/!75p" alt="self20180801.jpg"></p>
 <p>目录  · · · · · ·<br>前言</p>
 <p>第一章 巴德VS汤姆：自欺行为就像困在“盒子”里<br>1、巴德先生<br>2、你必须知道的问题<br>3、自我欺骗<br>4、寻找自欺的病因<br>5、潜在的自欺隐患<br>6、“盒子”内外两世界<br>7、别做“盒子”里的人<br>8、不止我困在“盒子”里</p>
 <p>第二章 凯特VS汤姆：为什么会陷入自欺的“盒子”里<br>9、凯特女士<br>10、沉默的开场白<br>11、自我背叛<br>12、自我辨解<br>13、“盒子”里的生活<br>14、原来大家都在“盒子”里<br>15、不可忽视的传播效应<br>16、困在“盒子”里挣扎</p>
@@ -340,7 +310,7 @@
 </blockquote>
 <p>本文源自：熊秉元：儿童意外，父母与社会谁的责任？</p>
 <p>柳传志先生曾经引用过一个聊斋里面的故事，我觉得有意思啊，他说有一个著名的医生叫叶天士，这是个名医啊！但是有一次他母亲得了重病，在给自己母亲用药的时候，名医就很犯踌躇了，因为有一味药是虎狼之药啊，用好了之后他妈的病就好了，用错了就真的可能酿成大祸的。他自己就紧张的不得了，这个时候呢外面来了个医生，他就去问人家，说这个药能不能用呢？那医生听了之后断言就说，可以用，一定要用！柳传志先生就分析说，我觉得后面来的那个医生的心态是不对头的，他主要就是觉得治好了就名利双收，因为治好了名医的妈妈嘛！治不好呢反正是你妈不是我妈，我为什么不选那条风险最大的路来走呢！所以你看，<strong>人的行为其实是和自己的观点有关的，他只和这个行为要负的责任有关。</strong></p>
-<h2 id="AA制让人更浪费"><a href="#AA制让人更浪费" class="headerlink" title="AA制让人更浪费"></a><a href="http://www.luojiji.com/thread-1802-1-1.html" target="_blank" rel="noopener">AA制让人更浪费</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/19/171337ihsnnxtu1x3nt8bb.jpg"></p>
+<h2 id="AA制让人更浪费"><a href="#AA制让人更浪费" class="headerlink" title="AA制让人更浪费"></a><a href="http://www.luojiji.com/thread-1802-1-1.html" target="_blank" rel="noopener">AA制让人更浪费</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/19/171337ihsnnxtu1x3nt8bb.jpg" alt></p>
 <p>作者：Esther Inglis-Arkell</p>
 <p>每次和朋友吃完饭平摊账单都是一个十分尴尬的时刻。这个时刻总是充满很多惊愕，于是有三位科学家决定找一些人去餐厅用餐，看看到底会发生什么。</p>
 <p>“无耻”食客的困境</p>
@@ -355,7 +325,7 @@
 <p>更有趣的是，研究还暗示了我们是如何做决定的。从好的角度来看，这是支持“最大自由”的论据。如果让人们可以选择参与一个制度，这个制度下他们必须为他们的选择负责任，那么他们做出的选择就会引向最高的效率。而如果将一种制度强加于人，人们就会想方设法地从中谋取私利，即使这样做会让整个制度更糟糕。作者认为“效率低下是人们博弈的平衡结果，哪怕他们根本不想进行这种博弈。”不过，研究也暗示了人们的恶意。人们宁愿点谁都觉得不值那么多钱的东西，也不愿意做一个只点一杯咖啡还要付10美元的蠢蛋。宁可每个人都比预期付出更多的钱，也不要让别人占自己的便宜。</p>
 <p>不过，这项研究倒也诞生了一些有效的怪点子。如果要提供免费餐，科学家们建议增加一个有趣的额外条款。正常情况下，人们如果有免费的饭吃，他们总会点最贵的菜，这对所有人都不利：付款方花了大钱，而消费者却没吃到值这么多钱的菜。但是，<strong>如果付款方提供一个额外的选择——你可以选择点最贵的菜，或者点便宜点的菜然后得到一些现金补贴（金额小于两种菜的差价），这样双方都会更高兴。出更少的钱，人们都觉得自己得到了更多。</strong></p>
 <p>“知识拆迁队” 张俊丰 来稿。</p>
-<h2 id="承担责任"><a href="#承担责任" class="headerlink" title="承担责任"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1143&amp;highlight=%E8%B4%A3%E4%BB%BB" target="_blank" rel="noopener">承担责任</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/14/223357p5i2p95y522zp3b7.jpg"></p>
+<h2 id="承担责任"><a href="#承担责任" class="headerlink" title="承担责任"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1143&amp;highlight=%E8%B4%A3%E4%BB%BB" target="_blank" rel="noopener">承担责任</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/14/223357p5i2p95y522zp3b7.jpg" alt></p>
 <p>作者：M·斯科特·派克</p>
 <p>本文摘自《少有人走的路》</p>
 <p>不能及时解决人生的难题，它们就会像山一样横亘在我们眼前。</p>
@@ -405,8 +375,23 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/R/Responsibility/" rel="bookmark">Responsibility</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/iDeepLearn/Meaning/Responsibility/" rel="bookmark">Responsibility</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Borderline/" rel="bookmark">Borderline</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Responsibility/" rel="tag"><i class="fa fa-tag"></i> Responsibility</a>
               <a href="/tags/Duty/" rel="tag"><i class="fa fa-tag"></i> Duty</a>
@@ -419,21 +404,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Feedback/" rel="next" title="Feedback">
-                  <i class="fa fa-chevron-left"></i> Feedback
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/Justice/" rel="prev" title="Justice">
-                  Justice <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Feedback/" rel="prev" title="Feedback">
+      <i class="fa fa-chevron-left"></i> Feedback
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/Justice/" rel="next" title="Justice">
+      Justice <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -446,7 +428,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -477,8 +481,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -487,14 +491,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -505,11 +509,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -543,7 +542,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -555,51 +554,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -608,18 +568,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -629,63 +583,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -693,14 +590,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -727,40 +624,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Responsibility/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

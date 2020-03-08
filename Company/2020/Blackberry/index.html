@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="因为键盘上的按钮很像草莓种子，因此命名为“黑莓手机”。">
 <meta name="keywords" content="Brand,Business,Company,Blackberry">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/2020/Blackberry/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/2020/Blackberry/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/2020/Blackberry/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,66 +256,66 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="/img/content/Blackberry-Cover.png"></p>
+        <p><img data-src="/img/content/Blackberry-Cover.png" alt></p>
 <blockquote>
 <p>因为键盘上的按钮很像草莓种子，因此命名为“黑莓手机”。</p>
 </blockquote>
 <a id="more"></a>
 <h2 id="品牌"><a href="#品牌" class="headerlink" title="品牌"></a>品牌</h2><h3 id="黑莓落幕：从「总统专用机」到「戒网瘾手机」"><a href="#黑莓落幕：从「总统专用机」到「戒网瘾手机」" class="headerlink" title="黑莓落幕：从「总统专用机」到「戒网瘾手机」"></a><a href="https://mp.weixin.qq.com/s/jI2K0cbzznwPStUTZrbjQw?scene=25#wechat_redirect" target="_blank" rel="noopener">黑莓落幕：从「总统专用机」到「戒网瘾手机」</a></h3><p>原创 爱否编辑部  爱否科技  5天前</p>
 <p>作为前 iPhone 时代「商务手机」中最有代表性的品牌，黑莓曾经是「菁英」的象征、「公务」的代表。而就在昨天，已经被 TCL 收购的黑莓正式发布公告<code>「将停止所有内部硬件研发工作」，硬件外包给富士康等合作伙伴。</code></p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhyzn9p88H7FCfPD1I1ibXxYoB3kswVNic2mvrweibhmJFOiaZFR6IHftyrA/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhyzn9p88H7FCfPD1I1ibXxYoB3kswVNic2mvrweibhmJFOiaZFR6IHftyrA/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>❶</p>
 <p>黑莓诞生于 1984 年，早期以生产当时的移动智能设备为主要产品，1999 年推出了黑莓 850，而在这部机器里黑莓已经将「强大的电子邮件功能」作为主推功能：依靠BIS（BlackBerry Internet Service）、BES(BlackBerry Enterprise Server)和 BBM（BlackBerry Messenger）服务器，黑莓先进的 <code>Push Mail</code> 电邮服务能够让用户像使用短信一样实时收发电子邮件，并且能够保证用户的隐私性和安全性；而且在这部 6320 上就已经使用了黑莓颇具代表性的全键盘按键。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhVc1okxk4F7f5RXSj8icFMwzX7sN5cpQiazWFhLPourdicrS70zic563w0Q/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhVc1okxk4F7f5RXSj8icFMwzX7sN5cpQiazWFhLPourdicrS70zic563w0Q/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>事实上「BlackBerry 黑莓」这个名字就是因为全键盘的小按键神似由一个个小球组成的黑色莓果外观。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhpoupXNmgictr6dPF4vyP5OnfRawxR0BXFXOiafk4JNxUyibuwoz4oCJzg/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhpoupXNmgictr6dPF4vyP5OnfRawxR0BXFXOiafk4JNxUyibuwoz4oCJzg/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>随后几年里黑莓也推出了几款面向商务市场、主打电邮功能的手机，而真正让黑莓声名鹊起的还要归功于它在美国 911 事件的表现。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh5xRU2cH2HC4Ih10OWTQrhYBDLxWvqry6o33VxC51iboO8AMgW3PsAaQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh5xRU2cH2HC4Ih10OWTQrhYBDLxWvqry6o33VxC51iboO8AMgW3PsAaQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>在 911 事件当中，纽约市的通信网络由于爆发式的高峰导致整个通讯系统的瘫痪。而在这样的情况下，黑莓不占用带宽的 Push Mail 电邮服务成为了当时唯一能够使用的通讯系统。官员用黑莓发布指令，救护人员用黑莓开展营救行动，而那些被困在世贸中心里的人，能在最后时分联系他们与家人的，只有黑莓发出的邮件。</p>
 <p>而在随后 2003 年的美加大停电中，Push Mail 电邮服务也越过了当时超负荷的手机网络实现了正常通信；2005 年的卡特琳娜飓风中黑莓的表现同样出彩。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhhPfwoO0e4VI4hQGGhtONdqMmdPnPgMndgABtqcDvBNpP9aPibzfvVicw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhhPfwoO0e4VI4hQGGhtONdqMmdPnPgMndgABtqcDvBNpP9aPibzfvVicw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>依靠这些可靠的表现，黑莓收获了极佳的市场口碑，甚至有媒体称其为「灾难来临时的生命线」。2005 年巅峰时的黑莓年增长率高达惊人的 36%，这是当时商界的记录，几年后才被 iPhone 打破；而当年黑莓的用户突破四百万，其中还有超过 20 万的美国政府官员，这无形中为黑莓打了巨大的广告。<br>而在这些使用者中，最有代表性的还是美国前总统奥巴马。奥巴马对黑莓相当专情，从还在竞选总统时就开始使用黑莓 Curve 8300 来处理每天繁杂的公务，就连当选美国总统当天群发的感谢信也是用黑莓发的。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhuNDNvBuqP7Z3zzdQ4y9y2yR6FibwJb2ZIBgw6Smsd0BK4ZSUtaY3Huw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhuNDNvBuqP7Z3zzdQ4y9y2yR6FibwJb2ZIBgw6Smsd0BK4ZSUtaY3Huw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>而在当选之后，奥巴马甚至「冲冠一怒为黑莓」：出于安全考虑，美国总统当时不允许拥有自己的私人手机，但是在奥巴马坚持下，白宫和特勤部门最终允许他使用一部定制过的黑莓 8830 —— 没有摄像头、有限制的通信网络（不能发短信、打电话）、全加密。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh7pyjahKgW4SCiby7zPbexAv1lkxOJ5vianN4PHKaECDdMHibwlhFicoriaw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh7pyjahKgW4SCiby7zPbexAv1lkxOJ5vianN4PHKaECDdMHibwlhFicoriaw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>除了奥巴马，英国王室包括女王在内也用黑莓，甚至还在王宫里架设了黑莓邮件服务；法国前总统萨科齐甚至还在和教皇会面的时候忍不住看黑莓手机，据说是和模特妻子布吕尼发邮件。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhjWHTLbXR0Gkmwl1J4tlRRXHgzj8kFdVP1icltDDtysdT1gjZBJvCySA/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhjWHTLbXR0Gkmwl1J4tlRRXHgzj8kFdVP1icltDDtysdT1gjZBJvCySA/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>在明星中黑莓粉丝同样多：流行天后艾薇儿、NBA 巨星詹姆斯、名媛金·卡戴珊、影星莱昂纳多、陈冠希、张艺兴……这些人绝大多数都表示自己是出于高效的邮件系统和可靠的安全性能选择黑莓。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh4IyBzo8jT2jziceNQ7pNwnBOXw4jaicdYibSQn5NicarltuYcWhmc3pzicQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh4IyBzo8jT2jziceNQ7pNwnBOXw4jaicdYibSQn5NicarltuYcWhmc3pzicQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>当时还诞生了一个词 —— Crackberry 莓瘾来形容黑莓手机的火爆程度，现在同名网站还可以正常访问。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhWFxdcWPhicyeuicsm7oEvvRaRpBJDh3gH513qNjb4a4EqhVeiaT5icjEHQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhWFxdcWPhicyeuicsm7oEvvRaRpBJDh3gH513qNjb4a4EqhVeiaT5icjEHQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>❷</p>
 <p>而在中国市场，2006 年中国移动引进了行货黑莓手机，同年三大运营商都接入了黑莓邮件服务，而在这之前水货黑莓已经在国内的手机卖场里销售许久。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_png/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh6KsMmDI3RaNppk14GC18mJfibDGkpjg4btUBVrpf9DJ3ricQu08WLnHQ/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh5IEOBBaAJZPcsa8DHIGoE7jSNjXWMAqva3noqcwJTiaOF5HVR7l2oPQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_png/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh6KsMmDI3RaNppk14GC18mJfibDGkpjg4btUBVrpf9DJ3ricQu08WLnHQ/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh5IEOBBaAJZPcsa8DHIGoE7jSNjXWMAqva3noqcwJTiaOF5HVR7l2oPQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>黑莓的市场影响力远不如来的更早的摩托罗拉、诺基亚和索爱，定位也更加商务和极客，主打邮件功能、全键盘和高昂的售价也注定了不会有很高的销量。<br>而且，水货带来的「打孔飞线机」泛滥成灾，一大批主板打孔强制报废的板子在华强北能工巧匠的「飞线」修复下成功复原，装进翻新机里又成为了一部新手机。而这样的手机在没有保修的前提下很容易出现质量问题，久而久之「黑莓水深」就在消费者口中流传开来。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhOfMkBgicDpexlMuibvvUCQHZ8XE8RJTALLtAGlzAzVZIs83Auw5ad4Pw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhOfMkBgicDpexlMuibvvUCQHZ8XE8RJTALLtAGlzAzVZIs83Auw5ad4Pw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>最重要的是，2007 年 iPhone 来了。这个在发布会上公开 DISS 黑莓等全键盘手机的异类开始在全球收割用户，甚至打破了之前由黑莓保持的年增长率记录。更重要的是，乔布斯和他的 iPhone 带来的「全触摸」的操作逻辑改变了行业和用户对手机交互的看法。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh3IcVaBNpxyBprDsGr3TiamOWkVEueQKeeicBqsnoXsdFRT3pLibTrZQeQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh3IcVaBNpxyBprDsGr3TiamOWkVEueQKeeicBqsnoXsdFRT3pLibTrZQeQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>尽管当时的黑莓 CEO 拉扎瑞迪斯认为「不是每个人都能在玻璃上打字」，他还认为黑莓的主要客户是政府和企业，这些人才是市场的主体。当然现在我们都知道他错了，个人消费者已经无可争议地成为了电子消费品市场最大的购买方，「掌上电脑」定位的黑莓的全键盘输入效率或许更高。但是市场已经不给黑莓改变的时间了。</p>
 <p>❸</p>
 <p>出了没有跟上时代，黑莓最引以为傲的「安全性」也出了大问题。</p>
 <p>2008 年 11 月，印度孟买发生了一系列恐怖袭击。从有 100 多年历史的利奥波德咖啡馆开始，到孟买地标建筑泰姬玛哈酒店，恐怖分子们肆无忌惮地施展暴行。更可怕的是，恐怖分子似乎对当地警方的行动了如指掌。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh1NrRibh7HsMxUy8mibPAOKEhwOpibqO6Vlw7lJ4YfhzjuUTcG5c5gMrhw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yh1NrRibh7HsMxUy8mibPAOKEhwOpibqO6Vlw7lJ4YfhzjuUTcG5c5gMrhw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>事后，警方在恐怖分子的背包里发现了黑莓手机。他们怀疑，正是这个黑乎乎的东西阻止了政府解密恐怖分子策划袭击的讯息，甚至在警察行动时，恐怖分子也是通过黑莓手机准确获得了外界信息。</p>
 <p>这起事件，造成超过 195 人死亡，孟买几大地标建筑都染上了鲜血。印度政府要求黑莓公司交出解密其电邮与信息服务的密码，否则就封锁黑莓手机服务。<br>一下子，黑莓手机成为众矢之的。在印度和黑莓手机制造商 RIM 公司僵持期间，阿联酋也因为一起外国高管被刺事件向黑莓手机问责。祸不单行，黎巴嫩、印尼也要求 RIM 公司与当地政府合作，欧盟则干脆封杀了黑莓手机。</p>
 <p>紧接着黑莓就陷入到了和全球政府斡旋的泥潭中，同一时间里 iPhone 和安卓则在全球攻城略地。</p>
 <p>面对市场的变革，黑莓也考虑过调整，但是无论是机海战术还是取消全键盘的新机都没有受到消费者的青睐，反而失去了老用户的支持。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhibcF9ZVnqqbT58BFbkibSvlJmJ60GSN17H3pIBiax1wdS2YbjyNj7MX6g/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhibcF9ZVnqqbT58BFbkibSvlJmJ60GSN17H3pIBiax1wdS2YbjyNj7MX6g/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>新的 BB10 系统和 WP 系统面临的问题一样，缺乏开发者支持的系统没有吸引用户的第三方应用，缺乏生命力。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhoo9cCTc08bFyl0VKfYgRF5d0iaCRF0BGpP4mqdHat7USzpkUQt5vDbw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhoo9cCTc08bFyl0VKfYgRF5d0iaCRF0BGpP4mqdHat7USzpkUQt5vDbw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>就连前面提到的死忠粉奥巴马也曾经抱怨「黑莓有点太无聊了，总统也想玩点有趣的」。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhP4OsWXfAATr9CRuaDRbz6TAgAtmyNxoDlQrjKHtkYoVMjNVv2QqoWg/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_jpg/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhP4OsWXfAATr9CRuaDRbz6TAgAtmyNxoDlQrjKHtkYoVMjNVv2QqoWg/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>如果你现在在淘宝搜索黑莓手机的话，你会发现很多的名称里写有「戒网瘾」，因为黑莓的娱乐功能实在是太少了，反而成为了考研学生等群体摆脱手机依赖症的利器。</p>
-<p><img alt data-src="https://mmbiz.qpic.cn/mmbiz_png/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhpVfdXWhGoxK5wljg9RSwQAzvfp31Wu2c96fXrYgVgFteV1jzcbmEyw/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p>
+<p><img data-src="https://mmbiz.qpic.cn/mmbiz_png/gzneO9mOv2BicIqTMJ3PyQwZUtCG2U5yhpVfdXWhGoxK5wljg9RSwQAzvfp31Wu2c96fXrYgVgFteV1jzcbmEyw/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
 <p>在被 TCL 收购之后，黑莓也并没有成为 TCL 的移动主力品牌（TCL 手里还有 Palm），陆续推出的几款产品也没有完成「重返市场」的目标，现在 TCL 选择放弃黑莓，也算是互相解脱。</p>
 <p>不过黑莓粉丝们也别太难过，因为放弃了黑莓移动业务之后，整个黑莓集团依靠智能汽车系统 QNX 反而实现了连续几年的盈利，虽然现状依然是不容乐观，但是已经好过了 10 年前的状态。</p>
-<h2 id="公司"><a href="#公司" class="headerlink" title="公司"></a>公司</h2><h3 id="黑莓宣布与-TCL-终止合作，又一个品牌扫进历史"><a href="#黑莓宣布与-TCL-终止合作，又一个品牌扫进历史" class="headerlink" title="黑莓宣布与 TCL 终止合作，又一个品牌扫进历史"></a><a href="https://www.ifanr.com/1305244" target="_blank" rel="noopener">黑莓宣布与 TCL 终止合作，又一个品牌扫进历史</a></h3><p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/02/De3FpJYVQAAi2Rp-side.jpg!720"></p>
+<h2 id="公司"><a href="#公司" class="headerlink" title="公司"></a>公司</h2><h3 id="黑莓宣布与-TCL-终止合作，又一个品牌扫进历史"><a href="#黑莓宣布与-TCL-终止合作，又一个品牌扫进历史" class="headerlink" title="黑莓宣布与 TCL 终止合作，又一个品牌扫进历史"></a><a href="https://www.ifanr.com/1305244" target="_blank" rel="noopener">黑莓宣布与 TCL 终止合作，又一个品牌扫进历史</a></h3><p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/02/De3FpJYVQAAi2Rp-side.jpg!720" alt></p>
 <p>在上学的时候有段时间曾极为痴迷全键盘手机，也一度曾在要不要选择黑莓上挣扎，最后还是买了适用性更广的诺基亚 E71。一直到几年之后，终于还是按捺不住的我入手了唯一一台黑莓手机——Passport。</p>
-<p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/02/dsc03601_blackberrykey2le-100790776-large.jpg!720"><br>▲ 黑莓 Key2. 图片来自：PCWorld</p>
+<p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/02/dsc03601_blackberrykey2le-100790776-large.jpg!720" alt><br>▲ 黑莓 Key2. 图片来自：PCWorld</p>
 <p>再往后，iPhone 和 Android 手机崛起，曾经的巨头黑莓逐渐势微，终于在 2016 年的时候将品牌授权给了 TCL。在之后的一段时间中，TCL 也推出过一系列的黑莓手机，像是黑莓 Keyone、Motion、Key2 以及 Key2 LE 等多款机型。</p>
 <p>其中 Key 系列机型还曾经引起了一定的关注，虽然没有采用经典设计，但也是在主流的设计上融入了直板全键盘的设计。只是在这个时代中要想特立独行并不是一件容易事，要么像 Pixel 背后有体量庞大的 Google，要么就真的有一群敢于掏钱，不是只会喊喊口号的死忠粉。显然 TCL 并不具备这样的号召力。</p>
-<p><img alt data-src="https://s3.ifanr.com/wp-content/uploads/2020/02/c01c0a588d1ed2d9716f7b1c817951f2.jpg!720"><br>▲ 图片来自：Pinterest</p>
+<p><img data-src="https://s3.ifanr.com/wp-content/uploads/2020/02/c01c0a588d1ed2d9716f7b1c817951f2.jpg!720" alt><br>▲ 图片来自：Pinterest</p>
 <p>今天，黑莓在官方推特上表示和 TCL 的合作将在今年 8 月 31 日结束，之后 TCL 将停止设计、制造和出售黑莓手机。不过 TCL 将会为现有的黑莓用户再提供一段时间技术支持，保修等服务将延续到 2022 年 8 月 31 日。</p>
 <p>值得一提的是，在今年的 CES 上，TCL 推出了 TCL 10 Pro、TCL 10 L 以及 TCL 10 5G 三款新机型宣布进军美国。从设计上看，这几款机型的设计更加接近韩系，已经再也没有了黑莓这个加拿大品牌的任何影子，在这样的情况下，黑莓握在 TCL 手中也没有任何的意义了。好聚好散可能就是最好的结局。</p>
 <p>而黑莓这个品牌目前也没有看到有任何品牌去接盘，很可能会就此消失在历史的长河中。如今的手机市场已经迎来了大浪淘沙的阶段，以往的许多小众品牌几乎消失殆尽，黑莓能坚持到今天，其实也不枉曾经有这么多人喜爱它了。</p>
@@ -358,8 +328,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/HTC/" rel="bookmark">HTC</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Tesla/" rel="bookmark">Tesla</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Sony/" rel="bookmark">Sony</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/Amazon/" rel="bookmark">Amazon</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/2020/XiaoMi/" rel="bookmark">XiaoMi</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Brand/" rel="tag"><i class="fa fa-tag"></i> Brand</a>
               <a href="/tags/Business/" rel="tag"><i class="fa fa-tag"></i> Business</a>
@@ -374,21 +365,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Company/2020/HTC/" rel="next" title="HTC">
-                  <i class="fa fa-chevron-left"></i> HTC
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Technology/2020/Linux/" rel="prev" title="Linux">
-                  Linux <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Company/2020/HTC/" rel="prev" title="HTC">
+      <i class="fa fa-chevron-left"></i> HTC
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Technology/2020/Linux/" rel="next" title="Linux">
+      Linux <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -401,7 +389,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -432,8 +442,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -442,14 +452,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -460,11 +470,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -498,7 +503,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -510,51 +515,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -563,18 +529,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -584,63 +544,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -648,14 +551,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -682,40 +585,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/2020/Blackberry/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="探究人生的不同阶段，从生命的诞生、婴儿成长、青春期、由怀孕至分娩、晚年、以及面对死亡这一最后的旅程，全部采用真人真事的拍摄手法。">
 <meta name="keywords" content="Body">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/B/Body/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/B/Body/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/B/Body/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="https://img3.doubanio.com/lpic/s1491316.jpg"></p>
+        <p><img data-src="https://img3.doubanio.com/lpic/s1491316.jpg" alt></p>
 <blockquote>
 <p>探究人生的不同阶段，从生命的诞生、婴儿成长、青春期、由怀孕至分娩、晚年、以及面对死亡这一最后的旅程，全部采用真人真事的拍摄手法。</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="人体设计的十大缺陷"><a href="#人体设计的十大缺陷" class="headerlink" title="人体设计的十大缺陷"></a><a href="http://www.luojiji.com/thread-6845-1-1.html" target="_blank" rel="noopener">人体设计的十大缺陷</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201611/12/142615jpzy8aya8zzytifi.jpg"></p>
+<h2 id="人体设计的十大缺陷"><a href="#人体设计的十大缺陷" class="headerlink" title="人体设计的十大缺陷"></a><a href="http://www.luojiji.com/thread-6845-1-1.html" target="_blank" rel="noopener">人体设计的十大缺陷</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201611/12/142615jpzy8aya8zzytifi.jpg" alt></p>
 <p>2016-11-12 Chip Rowe 罗辑思维</p>
 <p>人体的缺陷  进化<br>完善自身  演化的结果不是完美<br>偏见  不可靠的大脑</p>
 <p>古希腊人痴迷于在数学意义上完美的身体。但对所有追求这一理想的人来说，我们的身体并非完美，而是充满了缺陷。在演化中，用于打造我们身体的材料相当于生物界的防水胶带和碎木片。</p>
@@ -359,12 +329,12 @@
 <p>　　the Human Body 7 - The End Of Life<br>　　【生命的尽头】死亡自古以来就是一个难解之谜，但人类身体的秘密却比死<br>　　亡更为神秘难懂，此集将真实纪录并观察一位癌症末期病患，他在其生命最<br>　　后的旅途中如何地对抗死亡，进而接受死亡…..</p>
 <p>　　【回顾人体世界】本集以人类超现代的进步科技与发展来回溯人体世界的整个制作过程，而为人体构造出一个完美的回顾与总结…..</p>
 <p><a href="https://movie.douban.com/review/5740086/" target="_blank" rel="noopener">1，亚里士多德是第一个思考人体作用机制的人<br>2，酒精会是让脂肪酸覆盖神经元，阻止神经元释放化学物质，使反映速度减慢<br>3,，白蚁的协同作用，让几乎无脑的白蚁靠化学讯号，在没有蓝图的情况下完成了复杂的蚁窝，风墙。。。<br>4，复杂的动作学习后变成熟练工，无意识的动作是小脑的作用。多数的哺乳动物和人类有一样发达的小脑，比如老鼠。<br>5，大脑负责语言，1/4处理视觉。记忆，认知，感情是最高能技巧每个有一部分区域负责，而意识却并不清楚是哪个区域负责。<br>6，意识是也许大脑通力合作的结果，有的人大脑接受了中部切开的手术之后，出现了双重人格。</a></p>
-<h2 id="人体奥秘-Inside-the-Human-Body-2011"><a href="#人体奥秘-Inside-the-Human-Body-2011" class="headerlink" title="人体奥秘 Inside the Human Body (2011)"></a><a href="https://movie.douban.com/subject/6558363/" target="_blank" rel="noopener">人体奥秘 Inside the Human Body (2011)</a></h2><p><img alt data-src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2408166698.webp"></p>
+<h2 id="人体奥秘-Inside-the-Human-Body-2011"><a href="#人体奥秘-Inside-the-Human-Body-2011" class="headerlink" title="人体奥秘 Inside the Human Body (2011)"></a><a href="https://movie.douban.com/subject/6558363/" target="_blank" rel="noopener">人体奥秘 Inside the Human Body (2011)</a></h2><p><img data-src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2408166698.webp" alt></p>
 <p>人体奥秘的剧情简介 · · · · · ·<br>　　我们有史以来第一次以如此清晰的方式，目睹胚胎在一个月大到十星期大这个过程中的面部形成过程——直到这个过程结束，胚胎的体积也还只有一颗菜豆那么大。不过，更令人震惊的或许是影片本身——在子宫中，人类的“变形”并不比什么科幻动画与电影作品中的机器人来得平淡。胚胎的发育是地球生物演化数十亿年的缩影，人类的本源和几乎所有其它生物一样，在于鱼类。因此，人类的眼睛也同样是先出现在头的两侧，到后来才转移到中间；你的下唇与颚部最初出现在颈部的位置，一如鱼类的腮，而上唇和鼻孔则是从脑袋的上方逐渐降下来和下面“合体这一切扭曲、旋转、移动与拼接浑然天成，没有一道疤痕和缺口，不过在拼接的交汇处终究还是留下了一点痕迹，那就是你的人中以上内容出自BBC节目Inside the Human Body，由Michael Mosley博士主持。节目中还介绍了诸如“打嗝是从鱼类和两栖类继承下来的行为哦”等等有趣知识。</p>
-<h2 id="五官奥秘-The-Human-Face-2001"><a href="#五官奥秘-The-Human-Face-2001" class="headerlink" title="五官奥秘 The Human Face (2001)"></a><a href="https://movie.douban.com/subject/1442653/" target="_blank" rel="noopener">五官奥秘 The Human Face (2001)</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s1459715.jpg"></p>
+<h2 id="五官奥秘-The-Human-Face-2001"><a href="#五官奥秘-The-Human-Face-2001" class="headerlink" title="五官奥秘 The Human Face (2001)"></a><a href="https://movie.douban.com/subject/1442653/" target="_blank" rel="noopener">五官奥秘 The Human Face (2001)</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s1459715.jpg" alt></p>
 <p>五官奥秘的剧情简介 · · · · · ·<br>　　这是覆盖在头颅下<strong>四十四条肌肉</strong>，还是身份的表征?每个人都有一张脸,但我们真的了解脸部吗?这是全世界人脸的完整故事.演员、谐星、康乃尔大学荣誉教授, 以及心理学畅销作者约翰克里斯,以机智幽默的分析探索脸部:其构成、功能、性别、沟通、身份以及认知.参与本节目的人还包括明星伊丽莎白赫莉、麦克帕林、皮尔斯布洛斯南、琼瑞福斯、甘蒂丝柏根,以及BBC自然历史节目名主持人戴维艾登堡禄等.</p>
 <p><a href="https://movie.douban.com/subject/1442653/" target="_blank" rel="noopener">能够本能地作出人类拥有的7千种表情，能够本能地认出这些表情是一种privledge啊，跟健康的身体一样，当你失去的时候才会发现表情能力跟听说读写手脚健全一样，不要当它理所当然，拥有它是一种幸运。</a></p>
-<h2 id="透视人体极限-Human-Body-Pushing-the-Limits-2008"><a href="#透视人体极限-Human-Body-Pushing-the-Limits-2008" class="headerlink" title="透视人体极限 Human Body: Pushing the Limits (2008)"></a><a href="https://movie.douban.com/subject/3220918/?from=subject-page" target="_blank" rel="noopener">透视人体极限 Human Body: Pushing the Limits (2008)</a></h2><p><img alt data-src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2405467585.webp"></p>
+<h2 id="透视人体极限-Human-Body-Pushing-the-Limits-2008"><a href="#透视人体极限-Human-Body-Pushing-the-Limits-2008" class="headerlink" title="透视人体极限 Human Body: Pushing the Limits (2008)"></a><a href="https://movie.douban.com/subject/3220918/?from=subject-page" target="_blank" rel="noopener">透视人体极限 Human Body: Pushing the Limits (2008)</a></h2><p><img data-src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2405467585.webp" alt></p>
 <p>透视人体极限的剧情简介 · · · · · ·</p>
 <p>　　将以前所未见的深入角度探索人体-人体在危机时刻如何因应？当生存本能涌现时，细胞与纤维又怎反应？</p>
 <p>　　成年人体自有其独特之处，让我们成为地球上最优异的物种，更使我们得以统御自然界。它让我们足以超越地球极限，挑战无垠的外层空间，如今我们甚至能进一 步深入探索人体内在的奥秘。Discovery频道的《透视人体极限》，将带领观众深入表皮下的神秘世界，探索那些足以让我们在最危急艰困情境下，依旧能 游刃有余的优越本领。</p>
@@ -381,8 +351,20 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Health/DeepCreator/Travel/Body Building/" rel="bookmark">Body Building</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Health/IPCreator/Journey/Health/Why are you/" rel="bookmark">Why Are You?</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Body/" rel="tag"><i class="fa fa-tag"></i> Body</a>
           </div>
@@ -394,21 +376,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Book/IPCreator/Book/Douban/" rel="next" title="Douban">
-                  <i class="fa fa-chevron-left"></i> Douban
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/English/IPCreator/English/English/" rel="prev" title="English">
-                  English <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Book/IPCreator/Book/Douban/" rel="prev" title="Douban">
+      <i class="fa fa-chevron-left"></i> Douban
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/English/IPCreator/English/English/" rel="next" title="English">
+      English <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -421,7 +400,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -452,8 +453,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -462,14 +463,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -480,11 +481,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -518,7 +514,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -530,51 +526,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -583,18 +540,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -604,63 +555,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -668,14 +562,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -702,40 +596,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/B/Body/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

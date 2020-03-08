@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="为什么去健身？  健身！就是在重塑自我  1自律给我自由，爱上健身后，就不会再有结束。">
 <meta name="keywords" content="Body Building">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/B/Body Building/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/B/Body Building/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/B/Body Building/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1505483565263&amp;di=9b47678bfd8d85eab8c3f95698f4e8be&amp;imgtype=0&amp;src=http%3A%2F%2Fimg14.360buyimg.com%2Fcms%2Fjfs%2Ft2605%2F154%2F622626899%2F89827%2F6d70bc28%2F571dd16bNd5abbbe5.jpg"></p>
+        <p><img data-src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1505483565263&amp;di=9b47678bfd8d85eab8c3f95698f4e8be&amp;imgtype=0&amp;src=http%3A%2F%2Fimg14.360buyimg.com%2Fcms%2Fjfs%2Ft2605%2F154%2F622626899%2F89827%2F6d70bc28%2F571dd16bNd5abbbe5.jpg" alt></p>
 <p>为什么去健身？</p>
 <blockquote>
 <p>健身！就是在<strong>重塑自我</strong></p>
@@ -294,7 +264,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">自律给我自由，爱上健身后，就不会再有结束。</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h2 id="践行"><a href="#践行" class="headerlink" title="践行"></a>践行</h2><p>研究结果还表明， 如果你每天必须花费大部分时间坐在椅子上，<strong>那么每隔30分钟左右活动一下，就有可能减轻长期有害影响</strong>。 文章最后说，这只是一项相关性研究，不能证明久坐会损害健康，只能证明二者之间存在关系，但你可以考虑在手机或电脑上设置半小时一次的提醒，告诉自己现在最好起来活动一下。</p>
-<p><img alt="gym.jpg" data-src="http://opb37u589.bkt.clouddn.com/gym.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/gym.jpg?imageMogr2/thumbnail/!75p" alt="gym.jpg"></p>
 <p>腰：滚球、挺腰、按压小球<br>肩：拉升、按压、调整</p>
 <p><strong>2017.07.31体验课</strong><br><strong>2017.08.11</strong><br><strong>2017.08.14中午暴晒，无力感</strong><br><strong>2017.08.21肌肉控制</strong><br><strong>2017.08.25系统计划</strong></p>
 <p>一对一训练模式：<br>1、目标/需求<br>2、期望/惊喜</p>
@@ -303,7 +273,7 @@
 <p>譬如：站姿、坐姿、弯腰、提重物、拉伸、按压等</p>
 <p>简单、实用、即时效果、积累效应<br>找教练就是练基本功</p>
 <p><strong>2017.9.2日开始系统训练</strong><br>推胸时，再往外一点，增强拉伸，有时候窍门就是那么一点；<br>跑步机的坡度+速度，有氧运动消耗脂肪，锻炼心肺功能；<br>自我的拉伸，扶墙同侧脚<br>猫伸展、打坐时的转体、十字飞身的变种<br>巨大的进步：S型身形，节奏的控制<br>注意事项：多喝水，多吃蔬菜水果</p>
-<p><img alt="keepfit.jpg" data-src="http://opb37u589.bkt.clouddn.com/keepfit.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/keepfit.jpg?imageMogr2/thumbnail/!75p" alt="keepfit.jpg"></p>
 <p>下一阶段目标：通过饮食控制和快走，再减少3公斤到62公斤</p>
 <p>还有身形控制</p>
 <p><strong>2017.9.7日</strong><br>第一次锻炼后，有了全身通畅的感觉<br>挺胸夹背<br>俯卧撑，重心在手跟，并且挺直和弯曲的幅度要有缓冲余地</p>
@@ -311,9 +281,9 @@
 <p><strong>2017.9.14日</strong><br>无处不健身<br>躺着、坐着、站着、走着、支撑位<br>坐着，顶脚<br>头放桌上，反手锻炼三头<br>躺着，顶脚，锻炼腹部<br>如果感觉颈腰有不适，及时停止，以免受伤</p>
 <p><strong>2017.9.15日</strong><br>老婆加入健身队伍，平板支撑、十字飞身、跳跃拍手，臀桥+转体+按摩球<br>运动完了之后，可以通过拉伸、按摩等方式进行放松，全身通畅的感觉</p>
 <p>深蹲，膝盖朝外，臀部往后坐，腰背挺直，大腿与地面平行</p>
-<p><a href="http://m.wanhuajing.com/d837676" target="_blank" rel="noopener">背影杀！如此美背回头率百分之两百</a><br><img alt data-src="http://m.wanhuajing.com/pic/1707/2012/5214648/5_476_467.jpg"></p>
-<p><strong>引体向上</strong><br>要领：挺胸<br><img alt data-src="http://m.wanhuajing.com/pic/1707/2012/5214648/6_621_423.jpg"></p>
-<p><strong>交叉滑轮下拉</strong><br>要领：夹背，收缩背阔肌，然后反向回到起始位置。<br><img alt data-src="http://m.wanhuajing.com/pic/1707/2012/5214648/7_640_432.jpg"></p>
+<p><a href="http://m.wanhuajing.com/d837676" target="_blank" rel="noopener">背影杀！如此美背回头率百分之两百</a><br><img data-src="http://m.wanhuajing.com/pic/1707/2012/5214648/5_476_467.jpg" alt></p>
+<p><strong>引体向上</strong><br>要领：挺胸<br><img data-src="http://m.wanhuajing.com/pic/1707/2012/5214648/6_621_423.jpg" alt></p>
+<p><strong>交叉滑轮下拉</strong><br>要领：夹背，收缩背阔肌，然后反向回到起始位置。<br><img data-src="http://m.wanhuajing.com/pic/1707/2012/5214648/7_640_432.jpg" alt></p>
 <p><strong>2017.9.10日</strong><br>完成第一个阶段的锻炼，开启第二阶段训练<br>训练完成之后，全身通畅</p>
 <p><strong>2017.9.18日</strong><br>登顶鹏程第一峰</p>
 <p><strong>2017.9.19日</strong><br>继续早上锻炼，没有浑身酸痛的感觉<br>相对体质而言，这是一个质的跨越。</p>
@@ -327,11 +297,11 @@
 <p><strong>硬派</strong> S型、腹肌、胸肌、二头初具原形，硬块</p>
 <p><strong>2017.9.24日</strong><br>有用，有趣</p>
 <p><strong>2017.9.25日</strong><br>工欲善其事必先利其器<br>俯卧撑支架<br>少而精，开始越来越标准<br>结合<a href="http://deepcreator.com/2017/09/25/Health/The%20ultimate%20guide%20to%20the%20middle-aged%20people/" target="_blank" rel="noopener">《肌肉训练完全图解：中年人士的终极健身指南》</a>，更系统更全面</p>
-<p><img alt="7779cd9dd9c21cdd10c72fb5f01e892b.jpg" data-src="http://opb37u589.bkt.clouddn.com/7779cd9dd9c21cdd10c72fb5f01e892b.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="50f4d11ee56986675b6ba4d86095dfac.jpg" data-src="http://opb37u589.bkt.clouddn.com/50f4d11ee56986675b6ba4d86095dfac.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="f9e136fcae9f276c11ad398cf8a4df12.jpg" data-src="http://opb37u589.bkt.clouddn.com/f9e136fcae9f276c11ad398cf8a4df12.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/7779cd9dd9c21cdd10c72fb5f01e892b.jpg?imageMogr2/thumbnail/!75p" alt="7779cd9dd9c21cdd10c72fb5f01e892b.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/50f4d11ee56986675b6ba4d86095dfac.jpg?imageMogr2/thumbnail/!75p" alt="50f4d11ee56986675b6ba4d86095dfac.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/f9e136fcae9f276c11ad398cf8a4df12.jpg?imageMogr2/thumbnail/!75p" alt="f9e136fcae9f276c11ad398cf8a4df12.jpg"></p>
 <p><strong>2017.9.27日</strong><br>劳逸结合，动静结合，快慢结合</p>
-<p><img alt="0ac493fdaa479e487aa3c61e4399aef1.jpg" data-src="http://opb37u589.bkt.clouddn.com/0ac493fdaa479e487aa3c61e4399aef1.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/0ac493fdaa479e487aa3c61e4399aef1.jpg?imageMogr2/thumbnail/!75p" alt="0ac493fdaa479e487aa3c61e4399aef1.jpg"></p>
 <p>教练评价：士别三日，当刮目相看<br>划船、引体向上、平板支撑</p>
 <p>可以慢，可以半程，但是不要停<br>调换锻炼顺序，给肌肉新的刺激</p>
 <p>要记得带汗巾，以免汗水侵到眼睛里面<br>要记得带换的衣服，以免汗水侵湿之后，吹空调感冒<br>要记得带一些能量食物和饮料，及时补充能量和水分</p>
@@ -339,14 +309,14 @@
 <h2 id="正形正身正气：站如松、坐如钟、行如风、卧如弓"><a href="#正形正身正气：站如松、坐如钟、行如风、卧如弓" class="headerlink" title="正形正身正气：站如松、坐如钟、行如风、卧如弓"></a><a href="http://www.sohu.com/a/107859756_445247" target="_blank" rel="noopener">正形正身正气：站如松、坐如钟、行如风、卧如弓</a></h2><p>“站如松、坐如钟、行如风、卧如弓”即，站着要像松树一样挺拔，坐着要像座钟那样端正，行走要像风那样快而有力，睡卧时将躯体侧弯成“弓”形睡的更安稳，更有利于健康。</p>
 <p>脊柱形成三个生理性的弯曲，即：<strong>颈曲、胸曲、腰曲</strong>。这些生理性弯曲随着年龄增长而逐步巩固，大约20岁左右脊柱最后定型，在整个儿童青少年时期要注意预防脊柱弯曲畸形。</p>
 <p>胸廓是由胸骨、肋骨、脊柱形成一个腔状结构。在儿童时期，所以的骨、软骨连接处正逐渐巩固，很容易受外界影响而发生变形，甚至影响内脏。</p>
-<p><img alt data-src="http://img.mp.itc.cn/upload/20160727/a365f47143704fbb911f4aa49728210c_th.jpg"></p>
+<p><img data-src="http://img.mp.itc.cn/upload/20160727/a365f47143704fbb911f4aa49728210c_th.jpg" alt></p>
 <p>正确的坐姿是：坐如钟</p>
 <p>抬头，两眼正视前方，躯干挺直，两肩呈水平状，躯干与大腿垂直，两小腿与地面垂直或向前伸，两足平放地面，使膝关节后面的肌肉、血管、神经不受压迫，坐时感到舒适而又不易产生疲劳的感觉。</p>
-<p><img alt data-src="http://img.mp.itc.cn/upload/20160727/c441fe2353454b2e9a3a37e10a1573c6_th.jpg"><br>正确的立姿是：站如松</p>
+<p><img data-src="http://img.mp.itc.cn/upload/20160727/c441fe2353454b2e9a3a37e10a1573c6_th.jpg" alt><br>正确的立姿是：站如松</p>
 <p>应使头背、臀和脚跟在一条直线上，两肩在同一水平上自然下垂，抬头、挺胸、两眼向前平视，腹部微内收，两脚稍稍分开约两拳距离，脚尖微向外斜，把全身重量落在两脚的脚跟和外缘上。</p>
-<p><img alt data-src="http://img.mp.itc.cn/upload/20160727/6e9a0ea9ef2e4882864534280349fa68_th.jpg"><br>正确的行姿是：行如风</p>
+<p><img data-src="http://img.mp.itc.cn/upload/20160727/6e9a0ea9ef2e4882864534280349fa68_th.jpg" alt><br>正确的行姿是：行如风</p>
 <p>为了维护身体的左右平衡，上身要保持端正姿势，当右脚向前迈步时，左手同时向前摆动，身体重心向前移;当左脚向前迈步时，右手同时向前摆动，身体重心又向前移。如此反复，两脚脚尖，应该指向前方，不要向里勾或向外撇。</p>
-<p><img alt data-src="http://img.mp.itc.cn/upload/20160727/b390350822074641b3fcd5665d944fc3_th.jpg"></p>
+<p><img data-src="http://img.mp.itc.cn/upload/20160727/b390350822074641b3fcd5665d944fc3_th.jpg" alt></p>
 <p>正确的卧姿是：卧如弓</p>
 <p>正确的睡觉姿势应该是<strong>向右侧卧</strong>，微曲双腿，弯成“弓”形。这样，心脏处于高位，不受压迫；肝脏处于低位，供血较好，有利新陈代谢；胃内食物借重力作用，朝十二指肠推进，可促进消化吸收。同时，全身处于放松状态，呼吸匀和，心跳减慢，大脑、心、肺、胃肠、肌肉、骨骼得到充分的休息和氧气供给。对于健康人来说，不必过分拘泥自己的睡眠姿势，因为一夜之间，人往往不能保持一个固定的姿势睡到天明，绝大多数的人是在不断变换着睡觉的姿势，这样更有利于解除疲劳。<br>良好的姿势对我们的身心有多方面的促进作用。</p>
 <h2 id="新手健身的十个注意事项"><a href="#新手健身的十个注意事项" class="headerlink" title="新手健身的十个注意事项"></a><a href="http://weibo.com/ttarticle/p/show?id=2309404103084748985344" target="_blank" rel="noopener">新手健身的十个注意事项</a></h2><p>​​新手健身时要注意的问题很多。比如选择合适的健身教练，选择合适的健身项目。瑞百丽健身整理十个健身注意事项供大家参考。</p>
@@ -381,7 +351,7 @@
 <h3 id="8、动作频率太急"><a href="#8、动作频率太急" class="headerlink" title="8、动作频率太急"></a>8、动作频率太急</h3><p>当你正挤出时间完成你的锻炼针划时，你可能会冒险地加快动作频率，并且不顾身体的反应而坚持练习。尤其像举重之类的锻炼，如果你做得太快，剧烈的动作会使你的肌肉超出负荷，从而容易受到伤害，因此，这里有一个简单的规则：2秒举起，4秒放下你总该保持有节奏地动作超落，你要知道，<strong>你做得越慢，你收到的效果会越好。</strong></p>
 <h3 id="9、运动中不要吃喝"><a href="#9、运动中不要吃喝" class="headerlink" title="9、运动中不要吃喝"></a>9、运动中不要吃喝</h3><p>听起来很“残酷”，但是你完全可以不做任何食品补充，而坚持完成一个一般性的健身训练。事实上，任何不超过2小时的运动，都不要求必须补充体力，而你 <strong>只要在运动之前的1小时内，确保进餐就已经足够了。</strong> 你还要明白：虽然运动饮料对你没有坏处，但还有什么比纯水更有益于身体呢?另外，酒精含量高的饮食对你的运动是徒劳无功的。</p>
 <h3 id="10、运动后的必要“冷却”"><a href="#10、运动后的必要“冷却”" class="headerlink" title="10、运动后的必要“冷却”"></a>10、运动后的必要“冷却”</h3><p>如同健身之前，你的身体需要时间“预热”一样，你的身体在锻炼之后，也需要时间恢复平静，让心率重归正常。你可以缓缓地放慢你的动作，直到心跳还原至每分钟120下或更少。当你感到自己的心跳趋于缓和，呼吸也逐渐平稳时，你就完成了最后的“冷却”工作。</p>
-<h2 id="程序员健康指南"><a href="#程序员健康指南" class="headerlink" title="程序员健康指南"></a><a href="https://book.douban.com/subject/25981248/" target="_blank" rel="noopener">程序员健康指南</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28066372.jpg"></p>
+<h2 id="程序员健康指南"><a href="#程序员健康指南" class="headerlink" title="程序员健康指南"></a><a href="https://book.douban.com/subject/25981248/" target="_blank" rel="noopener">程序员健康指南</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28066372.jpg" alt></p>
 <h3 id="内容简介-·-·-·-·-·-·"><a href="#内容简介-·-·-·-·-·-·" class="headerlink" title="内容简介  · · · · · ·"></a>内容简介  · · · · · ·</h3><p>本书是为程序员量身制作的健康指南，针对头痛、眼部疲劳、背部疼痛和手腕疼痛等常见的问题，简要介绍了其成因、测试方法，并列出了每天的行动计划，从运动、饮食等方面给出详细指导，帮助程序员在不改变工作方式的情况下轻松拥有健康。<br>本书适合程序员、长期伏案工作的其他人群以及所有关心健康的人士阅读。</p>
 <h3 id="作者简介-·-·-·-·-·-·"><a href="#作者简介-·-·-·-·-·-·" class="headerlink" title="作者简介  · · · · · ·"></a>作者简介  · · · · · ·</h3><p>Joe Kutner<br>运动员和健身教练出身的资深程序员，住在美国的火箭城亨茨维尔。Joe从事软件开发十余年，专业特长有Ruby、Java以及iOS等。他曾服务于IBM等国际知名公司，也曾在创业公司打拼，现在是一位Ruby独立开发者，不仅为各种规模的公司构建Ruby和JRuby的应用，而且还向很多开源项目贡献代码，其中包括TorqueBox和Warbler。</p>
 <h3 id="目录-·-·-·-·-·-·"><a href="#目录-·-·-·-·-·-·" class="headerlink" title="目录  · · · · · ·"></a>目录  · · · · · ·</h3><p>第1章　做出改变　　1<br>1.1 　对健康进行单元测试　　2<br>1.2 　身与心的联系　　3<br>1.3 　迭代式升级健康　　4<br>1.4 　习惯背后的科学　　6<br>1.5 　改编“习惯”程序　　8<br>目标1 　改掉一个习惯　　9<br>1.6 　回顾　　10</p>
@@ -397,11 +367,11 @@
 <p>第11章　组起队来　　149<br>11.1 　传递信息　　150<br>目标17 　主持一次午餐研讨会　　151<br>11.2 　为健康投资　　151<br>11.3 　和同伴们好好玩　　154<br>目标18 　与同事一起成立或加入一个运动小组　　157<br>11.4 　成立更棒的运动小组　　158<br>11.5 　回顾　　159</p>
 <p>第12章　继续行动吧，健康的程序员　　161<br>12.1 　持续取得进步　　162<br>目标19 　不断制定新目标　　163<br>12.2 　建立群体习惯　　163<br>12.3 　保持身心健康的快乐　　165</p>
 <p>附录A 　目标　　166<br>附录B 　示例　　167<br>附录C 　延伸阅读　　170<br>译后记　　174<br>图灵访谈之Joe Kutner：<br>在运动中工作　　176</p>
-<h2 id="拉伸"><a href="#拉伸" class="headerlink" title="拉伸"></a><a href="https://book.douban.com/subject/5068077/" target="_blank" rel="noopener">拉伸</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s4464243.jpg"></p>
-<p>电脑使用者<br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p24521456-2.jpg"></p>
-<p>上网<br><img alt data-src="https://img1.doubanio.com/view/page_note/large/public/p24521456-7.jpg"></p>
-<p>久坐后<br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p24521456-5.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p23990791-1.jpg"></p>
+<h2 id="拉伸"><a href="#拉伸" class="headerlink" title="拉伸"></a><a href="https://book.douban.com/subject/5068077/" target="_blank" rel="noopener">拉伸</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s4464243.jpg" alt></p>
+<p>电脑使用者<br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p24521456-2.jpg" alt></p>
+<p>上网<br><img data-src="https://img1.doubanio.com/view/page_note/large/public/p24521456-7.jpg" alt></p>
+<p>久坐后<br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p24521456-5.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p23990791-1.jpg" alt></p>
 <p> 谁应当拉伸？ 如果你身体健康，没有患特殊的疾病，那么你就可以学习如何安全而愉快的拉伸。 ## 什么时候拉伸？ 运动前后当然应当拉伸，其他时间也应当尽可能的做拉伸运动。比如说： <em> 在早晨，开始一天的活动之前 </em> 工作中，感到紧张或压力大的时候 <em> 久坐或者久站之后 </em> 当你感到浑身僵硬时 * 一天中的零碎时间，比如看电视、听音乐、看书或者闲坐聊天时</p>
 <p> 为什么要拉伸？ <em> 缓解肌肉紧张，使身体放松 </em> 提高身体的协调性 <em> 扩大身体的动作范围 </em> 预防肌肉扭伤等运动损伤 <em> 保持现有的柔韧度 </em> 提高你对自己身体的了解 <em> 有助于放松大脑对身体的控制，使身体“为运动而运动” </em> 让你感觉好极了</p>
 <p> 如何拉伸？ 正确的方法是放松的、持续的拉伸，将注意力集中于被拉伸的肌肉上。错误的方法是动作极快，并且拉伸到身体疼痛的程度。 <em>轻松拉伸</em> 开始一个拉伸动作前，先花5-15秒钟的时间进行轻松动作。动作不要太快。拉伸到感觉有轻微的拉伸张力，保持这个动作，同时注意放松。在这一过程中，拉伸张力会慢慢消失。如果不是这样，那么稍稍放松身体，达到一个令你感到舒适的拉伸感。 <em>进阶拉伸</em> 动作依然不要太快。拉伸时一点一点移动身体，知道你再次感觉到轻微的拉伸张力，然后保持着个姿势5-15秒。你要控制自己的身体。拉伸感依然会慢慢消失；如果没有的话，请稍稍放松身体。 记住：在保持某个姿势的时候，如果你的拉伸感增加了，并且/或者你感觉到疼痛，那么你就是拉伸过度了。 <em>呼吸</em> 控制自己的呼吸，使其缓慢而有节奏。如果你身体前屈做拉伸动作，那么你应当在向前屈体时呼气，在保持姿势时吸气。拉伸时不能屏住呼吸。如果某个拉伸动作让你无法自然呼吸，那么很显然，你是得不到放松的。这时，请放缓动作，以便自然的呼吸。 <em>计数</em> 刚开始，在做每个拉伸动作时，你都要在心里默默数数，这样可以确保你将合适的拉伸感保持足够长的时间。 <em>牵张反射</em> 过度拉伸肌肉纤维，神经会发出信号让肌肉收缩。因此，过度拉伸反而会使你想要拉伸的肌肉变得紧张。 <em>有痛苦，就没有收获</em> 正确的拉伸不会产生任何疼痛感。要学会将注意力集中在你的身体上，疼痛意味着你有什么地方做错了。 <em>热身活动</em> 建议在拉伸之前做几分钟类似于散步、摆动手臂之类的活动，让肌肉预热。 <em>整理活动</em> 在解除某种运动时，应当通过降低运动的幅度来进行整理，使你的心率降低至休息时</p>
@@ -431,9 +401,9 @@
 <p>跑步（后）拉伸：<br>1.直腿弓步<br>2.坐立腹股沟拉伸<br>3.侧卧单腿拉伸<br>4.仰卧单腿拉伸<br>5.屈膝仰卧双手抱头起拉颈背部<br>6.仰卧曲腿抬腿<br>7.仰卧伸长拉伸</p>
 <p>远足、爬山/攀岩和利用登山杖拉伸动作我这里就不一一描述了，对应每个动作的语言描述很难三两个字就能说清楚，后面我可能要扫描那几页并反复练习后才能再写出来。</p>
 <h3 id="最简单的往往最有效，开始拉伸吧"><a href="#最简单的往往最有效，开始拉伸吧" class="headerlink" title="最简单的往往最有效，开始拉伸吧"></a><a href="https://book.douban.com/review/6008166/" target="_blank" rel="noopener">最简单的往往最有效，开始拉伸吧</a></h3><p>这书的章节设置简直是逻辑课。<br>who？what？where？why？when？how？要素齐全。<br>谁该拉伸？什么时候拉？为什么拉？如何拉？在什么地方拉？<br>齐活！<br>为我这皮囊，我也曾从我微薄的薪水挤出来购置过跑步机，仰卧板，臂力器等等设备来锻炼它。<br>设备往往成为闲置，皮囊仍是那副窝囊模样。<br>拉伸，就是各种角度各种方向各种轻松舒服的伸展呀，像树往天空伸展，像草根往突然伸展，像小麦往饭碗里伸展。<br>【作者】<br>作者是搞随队教练的，从1975年就写了本拉伸的小册子，号称拉伸运动专家，霍霍，好厉害的样子。<br>【拉伸原则】<br>拉伸是为放松，缓解肌肉紧张<br>放松地持续地拉<br>慢点，别快<br>有痛苦，就没有收获<br>拉伸不是比赛<br>每个人都是与众不同的，拥有不同的身体极限和身体潜能，锻炼这个事情，慢慢来，发挥最好的自己就够了。<br>【内容】<br>拉伸动作讲解<br>日常放松拉伸<br>清晨的拉伸<br>睡前的拉伸<br>每天必做的拉伸<br>双手、手臂以及肩膀的拉伸<br>颈部和肩膀的拉伸<br>腰部的拉伸<br>腿部．腹股沟以及髋部的拉伸<br>随时随地进行的拉伸<br>60岁以上老年人的拉伸<br>儿童的拉伸<br>看电视时的拉伸<br>散步前后的拉伸<br>家庭劳动前后的拉伸<br>驾驶者和旅行者的拉伸<br>第四章 办公室拉伸<br>办公室健康<br>工作开始前的拉伸<br>电脑使用者的拉伸<br>专业设计师的拉伸<br>开会时的拉伸<br>上网时的拉伸<br>利用复印机进行的拉伸<br>打电话时的拉伸<br>压力过大时的拉伸<br>久坐后的拉伸<br>出差乘飞机的拉伸<br>体力工作前的拉伸<br>体育运动拉伸<br>【评价】<br>五颗星<br>好全好全，时间，地点，方式，种类，局部，事无巨细的写遍各种拉伸的方法，这个版本还配有大图，推荐购买啊。<br>结构逻辑清晰，语言通俗，方法傻瓜式，适合懒人一步一步来。<br>办公室的，爱好运动的，懒人们，胖子们，赶紧搞一本吧。重要的是开始拉。</p>
-<h2 id="硬派健身"><a href="#硬派健身" class="headerlink" title="硬派健身"></a><a href="https://book.douban.com/subject/26359758/" target="_blank" rel="noopener">硬派健身</a></h2><p><img alt data-src="https://img1.doubanio.com/lpic/s28065888.jpg"></p>
+<h2 id="硬派健身"><a href="#硬派健身" class="headerlink" title="硬派健身"></a><a href="https://book.douban.com/subject/26359758/" target="_blank" rel="noopener">硬派健身</a></h2><p><img data-src="https://img1.doubanio.com/lpic/s28065888.jpg" alt></p>
 <p>十年前，我开始了自己的健身训练。然而，我却走了不少弯路，听信了不少错误的传言。<br>十年间，我发现这世界有太多的人云亦云，太多的误人子弟，太多的急功近利，太多的寡廉鲜耻。<br>十年后，此时、此地，我愿《硬派健身》，成为你的第一本健身书。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p35264932-1.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p35264932-1.jpg" alt></p>
 <p>蛋白质<br>吃蛋白质含量丰富的食物会让人觉得肚子更饱，更有满足感。目前绝大多数观点认为，这可能和大脑调节食欲的机制相关。有研究发现，大脑调节食欲的机制可能和血清氨基酸的浓度有一定的相关性，血清氨基酸浓度可以对食欲进行调节。而高蛋白饮食提高了血清内氨基酸的浓度，让人们吃得更少，不容易饿，也不那么馋。<br>人类的身体没有储存蛋白质的能力，大多数蛋白质吃进肚子里都会被消化掉，消化不掉的部分则会转化为尿素排出体外，而不像碳水化合物和脂肪，即使是无法被身体及时消耗掉的部分，也会充分地被身体吸收并储存成肚子上的肥油。<br>提高蛋白质在饮食结构中的比例，可以导致碳水化合物和脂肪的比例相应降低，从而有利于身体减少可储存的热量与脂肪。<br>关于补充蛋白质与肌肉生长的相关性，首先我们要知道，力量训练后的3个小时，是肌肉生长的黄金时间。此时，肌肉中蛋白质合成速率提高了3倍多。肌肉正在非常积极地生长和修复。<br>碳水<br>一般的健身者，可以并且最好在运动前两小时摄入低血糖指数的优质碳水化合物。<br>运动后的碳水化合物补充则最为重要。碳水化合物的消化吸收与身体里的胰岛素分泌密切相关。<br>训练后立即补充碳水化合物，比训练结束数小时后再补充碳水化合物，更能增加肌糖原的合成。同时，运动后立即补充碳水化合物，还可以高效率地刺激胰岛素的分泌，让身体得到恢复和增长。而且为了加速胰岛素的分泌，此时我们需要摄入可使血糖速升的GI值高的食物。<br>增肌健身运动中，你可以自己配一份运动饮料，大概是30克左右的蛋白粉加几大勺蜂蜜，更懒一些的同学也可以直接用脱脂奶加白砂糖来代替。<br>运动后的那一餐，为了高效地提高胰岛素的分泌水平，你可以尽情享受一顿高血糖指数的正餐，摄入100～200克的优质碳水化合物。<br>脂肪<br>在健身饮食中，抛开摄入量和摄入时间谈坏食物的，都是耍流氓。<br>在健身训练前后的两个小时内，请远离脂肪！</p>
 <p>-练大肌群： 胸、背、臀、腿<br>改变所有人第一眼就能看到的部位，塑造一种直观上整体完美的体形，而不是改变那些只有你自己才在乎的微小细节。对体形修饰效果好的大肌群。那就是： 胸、背、臀、腿。除了这一点，训练大肌群还有一个好处，那就是相对于大肌群，小肌群消耗的热量是微不足道的，在减脂塑身方面效果甚小。<br>-高强度间歇训练更减脂<br>研究发现，虽然在运动中，低强度有氧运动所消耗的脂肪量明显高于高强度间歇训练，但是在运动结束后的一段时间里，相对于低强度有氧运动，高强度间歇训练的减脂作用一直在持续，最终在24小时内，所消耗的脂肪总量居然超过了低强度有氧训练。而更令人感到神奇的是，高强度间歇运动所造成的持续燃烧脂肪、消耗热量的时间竟能持续72个小时左右。 这也就是说，如果你进行高强度间歇训练，那么，在运动结束后的很长一段时间内，你的身体还是可以继续保持高效率的热量、脂肪消耗。16其效果就是，你真的能实现躺着就能变瘦的梦想！<br>-胸肌·俯卧撑·多做<br>大臂移动，向内夹，活动肩关节，水平内收！真正的俯卧撑是用胸肌发力，将自身推起并有控制地落下，相当于一个负重训练，而重量就是你本人的体重。<br>身体要挺直，无论上升还是下降，躯干都应该是一条直线，即腹肌、背肌、臀肌绷紧，这样可以更好地传达力量，并训练到核心肌群。 在做动作的过程中，注意发力的方式是夹紧胸部，用胸部发力，而不是伸直肘部，这样能更好地训练到胸。 动作过程中试着逐渐减轻胳膊的负担，把手臂当作支架，只配合，不用力。一开始可能觉得有些难度，但随着训练的次数越来越多、胸肌越来越发达，你会觉得手臂的重要性越来越小，这个时候，你就算是真正地锻炼到胸部了。 宽距俯卧撑能更好地训练胸肌。 在做俯卧撑的过程中，越是找不到胸部发力感觉的人，越要多做俯卧撑啦。<br>训练计划：如果你的目的是塑身、丰胸、增肌，俯卧撑每组8～20个，每天3～6组就可以了。如果你是女性，或者没办法完成标准的俯卧撑，所有动作都可以采用跪姿，即双膝跪地、双手支撑的动作。<br>-臀大肌·大重量<br>臀大肌的主要作用是改变髋角，训练时一定要记住。 臀大肌力量极大，小重量训练很难刺激其生长。半蹲是臀部肌群发力的最佳角度，而侧向行走则是臀中肌等肌群的主要运动方式，该动作正是通过合理的发力姿势与运动方式激活臀部肌群。<br>训练计划：如果是自重训练（不是HIIT哟），那么一组做10～20个，每次3组就可以了。最好是双腿3组，单腿3组，一周2次，安排在臀部或下肢训练的日子。 如果觉得掌握要领了，还可以做单腿的臀桥，这样可以有效训练到臀中肌，进一步提拉曲线。 如果你能轻松做到30个以上，你就该进阶了，你可以将杠铃或小杠铃片放置在小腹上，这样会对臀部产生负荷。也可以做一些变形，时常改变角度（上身放在健身凳上或脚放在健身凳上），多方位、全角度刺激臀部发展。<br>-核心·平板支撑<br>卷腹：保持颈椎在正常位置，必要时可以扶着耳朵。脖子痛的朋友在做这些动作的时候，一定要注意脖子的位置，别让自己的颈椎超过正常位置太多。<br>根本就没有所谓最标准的平板。<br>总结而言，无论你做平板支撑时采取什么姿势，都有一个目标核心肌群在被重点训练。 也就是说，如果你的腹部微微拱起，像在做卷腹一样，那么腹直肌等就会得到很好的锻炼。 如果你的下背部发力绷住，你的下背部核心肌群和脊柱旁的深层肌群就会得到很好的训练。 如果你重心向后移，放在脚尖，你的大腿前部和内侧肌群会主要发力。 如果你把重心放在前面，不但手臂肌群发力，而且肩袖四肌、前锯肌等也会参与。<br>所以，在做平板支撑的时候，如果你没有特别鲜明的目的，只需撑住，顺其自然。撑不住的时候，左晃晃、右晃晃、前晃晃、后晃晃、弓下背等等，都不要紧，所有的核心肌群都还是会得到很好的锻炼的。 当然，一些基本要点还是要注意的。比如，无论怎么变化姿势，核心肌群都要保持绷紧、出力的状态。如果你的腰部塌下去，下背部又不出力绷紧，就可能受伤或劳损。训练过程中，有些动作不熟悉就慢慢来，循序渐进是最重要的。<br>训练计划：平板支撑训练可以放在传统力量训练前，也可以放在其后。放在力量训练前可以增加核心肌群的募集，提高力量训练的训练效果（但不要过劳，做1～3组就可以）。放在传统力量训练后，则对核心肌群的耐力指标训练效果更佳（多练几次，3～5组）。<br>腹肌训练的要点 腹肌训练不同于其他肌群，你可以经常练，也不必把它放在第一组当作训练的重点。最好的办法是把腹肌放到力量训练之后，有氧训练之前。一般一周训练3～5次即可。因为腹肌是极耐疲劳的红肌，所以不需要非常长的两三天的休息时间，很多健美运动员和靠身材吃饭的明星也是天天训练腹肌的。 除了上面介绍过的三个强化腹肌的训练动作外，在腹肌训练过程中，我们还要注意以下三点： 1.在做腹肌动作时，速度越快、频率越高，腹直肌、腹外斜肌、竖脊肌表面肌电均方根振幅越大，肌肉活动越激烈。 2.做腹部训练时，保持腹肌紧绷，向外推挤肚脐。在卷腹的时候，试着缩短胸腔底部和腹股沟之间的距离；同时，注意让肋部向下和向内运动。研究报告说，这种改良的卷腹训练能更有效地刺激腹直肌。 3.腹外和腹内斜肌可以完全卷起腹肌，使得肚脐朝向地板方向；保持腹肌紧绷；在卷腹时，注意让胸腔保持向前的力量。<br>-tips<br>-休息日：如果你前一天在健身房已经挥汗如雨了，目前不妨在家里穿插做上五组无氧运动双璧（深蹲+平板支撑），再穿上鞋子，出去慢慢跑或者快步走，感受一下春光春色。这样，既能促进身体的恢复，又可以在晚上心安理得地吃上一顿好饭！<br>-运动可以治愈心理疲劳<br>日常生活中上班、上学所遭遇的疲劳，大多数是心理疲劳，与体力疲劳不沾边。也就是说，上班导致的疲劳不会影响健身运动，而且运动也不会让上班的累加深。 更好的消息是：大量的研究和实验证明，适当的体育运动不但有助于身体健康，而且可以让日常工作导致的心理疲劳得到缓解。在同样条件下，运动会起到比听音乐更好的缓解疲劳、集中注意力的作用。<br>-关节弹响<br>我们从两个方面进行简单判断，如果符合如下几种情况，则是生理性的。 1.只在关节运动时发出声音。 2.响声发生时，没有特别疼痛不适的感觉。 如果上述都符合，那么关节发出的声音只是生理性的，并无大碍。<br>-热身方法<br>目前国际上主流的热身标准是按照体温来算的，只要准备活动后腋下温度在37.8摄氏度到38.8摄氏度之间，心率调整到最大心率的70%到80%，就能达到很好的热身效果。 增肌增力训练的人，可以采用今日训练部位30%到40%的最大负重，20次到30次一组，2到3组的多关节复合动作来热身。比如，腿部可选深蹲，背部可选高位下拉，胸可选卧推，肩可选固定的肩部推举器械。<br>-8～12RM，0秒到90秒的组间休息<br>以肌肉体积增长、无氧耐力增加为主的训练，主要采取8～12RM的训练重量次数，采取30秒到90秒的组间休息。注意这里是指你做到12个已经力竭了！不是说你做12个就有用，是要找一个你只能做12个的大重量！<br>-训练后拉伸：外力拉伸-对抗-外力拉伸<br>如果力量训练后进行拉伸，男性增加肌肉、女性丰胸翘臀的效果是会加倍的，堪比信用卡刷卡消费积分翻倍。 PNF拉伸法，本体感受神经促进技术拉伸法（proprioceptive neuro-muscular facilitation）。 PNF伸展分三步： 第一步，找一个外力，拉伸目标肌肉，直至有轻微酸痛感，持续10秒钟。比如，手推墙、蹬腿转腰，提供一个外力拉伸胸大肌。 第二步，对抗外力，被拉伸部位主动发力，主动收缩，缓缓归位。比如，手推墙、蹬腿转腰拉伸胸大肌。胸肌对抗这个拉伸，缓缓转腰回来。 第三步，放松目标肌群，继续由外力拉伸——也就是重复第一步。这个动作可以重复四五次，这样目标肌群可以得到很好的拉伸。 为什么PNF训练法如此有效？研究认为，PNF拉伸法的第一个阶段可以极限拉伸目标肌肉，消除牵张反射，让其达到最大的伸展范围。 第二个阶段，在抗肌牵张反射被消除的情况下，主动收缩目标肌肉，使得肌肉被伸展，提升了柔韧度，又保护其不容易受伤。这种现象称为交互抑制现象。 也就是说，PNF训练法，不仅仅是一种肌肉拉伸的训练，同时还是一种神经训练法。在PNF训练下，不仅能提升柔韧度、增强力量、减少受伤，同时还可以训练你的神经系统，让神经系统也提升性能，从而增加力量、减少伤害。101 总的来说，PNF训练法，就是在拉伸训练中，增加一个主动对抗外力发力的阶段，也就是拉伸、收缩、拉伸。效果是肌肉、肌腱、韧带的性能更好，神经系统的性能提高。<br>-GI<br>那什么食物的GI值比较高？ 常见的有精米精面、面包糕饼、熟的去皮根茎类食物、糖果等。简单来讲，就是越经过精制加工、去粗存精的食物，GI值越高。其中最需要杜绝的是单纯的糖（食品配料表里常见的是白砂糖、果葡糖浆、玉米糖浆）等，比如富含糖的汽水、果汁、糖果、糕饼。它们不但GI值高，吃了容易胖容、易饿，而且由于添加了大量的食品添加剂，对人体有非常大的危害。<br>与此相对应，GI值低的食物一般是粗粮、瘦肉、坚果等没有经过精加工的食品。在日常生活中可以多吃，或者部分替代高GI值的食物。 当然，GI值的高低也不是判断食物是否健康的唯一标准。高GI值并不一定代表非常不健康，比如有些水果蔬菜的GI值可能也比较高（胡萝卜的GI值就很高），但从营养摄入的角度来讲，它们就比较健康；而有像巧克力豆、士力架等脂肪含量高的食物，GI值相对而言比较低，但是并不健康，我们在日常生活中也应该尽可能减少食用。 此外，大家还应该在运动后多吃高GI值食物，这能更好地促进身体的吸收和恢复，这也是健身减肥最爽的时候。关于这一点，我们在下面的健身饮食——碳水化合物篇还会详细讲到。 概念理解了，之后的就简单了。想一想自己平时喜欢吃的、常吃的食物，查一查GI值，并相应地进行调整。一般GI值高于60的食物你就要警惕了，一下子完全杜绝，听上去有些困难，但试着找一些相似的替代品，并逐渐减少，可能是个不错的办法。<br>与通常的认知相反，比起高血糖值的食物，低GI值食物更能提高运动耐力。132这也就是说，在训练前吃燕麦片，可能会比吃糖、吃白面包更能提升你的运动表现。一个实验中的数据显示，低GI组比高GI组的21千米跑时间缩短了2.8分钟。所以，如果你经常完不成训练，细细想想，会不会是因为你训练前吃的东西不对呢？<br>-健身餐：脱脂奶+糖，瘦肉+麦片+脱脂奶<br>健身中、健身后都应该补充足量的优质蛋白质。<br>健身中：脱脂奶和鸡蛋清+吃点儿糖果、喝一瓶运动饮料来在运动中补充碳水化合物。带些香蕉、苹果、葡萄等高糖分的水果也是很不错的选择。<br>健身后：吃巴掌大小的瘦肉和一些主食。运动后的那一餐，为了高效地提高胰岛素的分泌水平，你可以尽情享受一顿高血糖指数的正餐，摄入100～200克的优质碳水化合物。如果你没有时间吃一顿正餐的话，也应该尽可能在短时间内补充优质碳水化合物，比如可以用脱脂奶和燕麦片或者脱脂酸奶和谷物早餐之类的搭配来及时补充蛋白质和碳水化合物。 还是那句话：练后不吃，视同白练。所以，谨记运动后及时补充营养。<br>训练前，请绝对绝对不要摄入脂肪！ 训练中、训练后2小时内，不要摄入脂肪！ 既然训练前不能摄入脂肪，那训练中和训练后可以吗？ 答案是，训练中、训练后2小时内，也请远离脂肪。<br>-训练频率和排表<br>一周3练的人正好可以每次安排一个大肌群训练，在此基础上再加上核心或肩部等小肌群训练，在做完大肌群的训练后，抽出10～15分钟时间来完善一些细节，就足够让身材变得很好了。比如，想要练马甲线的人，可以多做平板支撑、卷腹等；而以减肥为主的人，则可以做做HIIT，加快减肥进程。 如果是一周4练或者一周5练的人，在3天轮流的大肌群训练内容后，剩下的1～2天，你可以安排自己觉得比较薄弱的部位，做强化练习，比如对男女都很重要的核心肌群等。<br>为了让自己的身体在每次健身训练后都能有更好的恢复和生长，最好能让两次大肌群训练间隔72小时左右，也就是3天。<br>大训练量：你状态最好的时候的训练负荷。 中训练量：大训练量×90%。 小训练量：大训练量×85%。<br>一般是大训练量→小训练量（恢复期）→中训练量（超量恢复期）→中训练量（超量恢复期）→大训练量，如此循环。 需要注意的是，我们在设计训练强度时，考虑的身体自然恢复期是以“天”为时间单位的。<br>臀腿-肩&amp;核心-胸，大-休-小-中-休-中-休</p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>Introduction<br>当我们在聊健身的时候，我们在聊些什么<br>Chapter 1当我们在聊健身的时候，我们在聊些什么？<br>Chapter 2什么样的身材才是好身材？<br>一、那些让你看起来更棒的部位<br>二、体重能代表什么？<br>你为什么会减肥失败？<br>一、节食失败的原因<br>1.节食会让人变蠢——你知道你的大脑会被吃掉吗？<br>2.节食会反弹——减肥2斤长回10斤，这就是节食的下场<br>3.节食导致暴食——管不住自己的嘴巴，都是因为你节食！<br>二、运动失败的原因——你太容易听信他人了！<br>1.常识破坏1：只有40分钟以上的有氧运动才减肥？——大错特错！<br>2.常识破坏2：长时间的有氧运动是最 好的减肥方式？——没错，但不一定对你有用！<br>3.常识破坏3：支出脂肪就等于体脂降低？——话虽如此，但减肥不是数学<br>4.常识破坏4：超重者应该多做有氧运动？——但你也得跑得起来啊！<br>Chapter 3什么样的有氧运动最减脂？<br>一、什么是HIIT？——精明减肥者的选择<br>二、为什么要采取高强度间歇式的方式？——风靡全球的HIIT是怎么减肥的？<br>1.变化的高强度——持久减脂，刺激生长激素分泌<br>2.间歇运动——强效减脂，促进脂肪代谢<br>3.HIIT——更好的有氧运动<br>三、HIIT训练的重点——怎么做HIIT效果才最 好？<br>四、简易HIIT训练计划<br>1.体重向下、楼层向上的高效减脂运动——爬楼梯<br>2.HIIT针对室内的懒人操<br>第一套 翘臀大法：侧弓步+沙发深蹲跳+臀桥<br>第二套 超速减脂大法：跳跃拍手+直膝前踢+俯卧登山<br>第三套 胸大腰细大法：俯卧撑+俯卧撑跳+平板支撑<br>第四套 美好身姿大法：十字挺身+俯卧撑跳+平板支撑<br>第五套 全面与细节：直膝前踢+哑铃深蹲推举+卷腹<br>Chapter 4塑形的抗阻训练——雕塑身体细节，从抗阻做起<br>一、胸大显腰细——对抗地心引力的关键<br>二、臀翘显腿长——完美曲线的黄金分割点<br>三、私藏的性感腹肌——身体视觉上最亮丽的风景线<br>四、挺拔而有气质的肩膀——成为衣架的关键<br>五、纤细修长vs性感而有力量的胳膊<br>——拜拜了，拜拜肉<br>六、匀称而性感的小腿——比腰更显瘦的利器<br>Chapter 5健身十问<br>一、健身后肌肉酸痛怎么办？<br>二、上完班后很累，应该运动吗？<br>三、空腹训练是更减脂还是对身体有害？<br>四、无器械健身真的更好吗？<br>五、骑车与跑步、跑步与快走，哪个更减肥？<br>六、关节有异响，还能运动吗？<br>七、害怕关节疼，能做抗阻训练吗？<br>八、拉伸能让我避免受伤，还是更容易受伤？<br>九、增肌与减脂可以同时进行吗？<br>十、如何选择健身房？<br>Chapter 6当我们健身时，我们吃什么？<br>一、健身时到底该怎么吃，才能增肌又减脂？<br>1.卡路里篇<br>2.健身饮食——蛋白质篇<br>3.碳水化合物——最重要的营养，让肉长在该长的地方<br>4.脂肪——关键在于时间<br>二、运动对食欲的影响<br>三、为什么健身者只吃牛肉、鸡肉而不吃瘦猪肉？<br>1.健身文化<br>2.烹饪方式<br>Chapter 7每日训练计划</p>
@@ -701,14 +671,14 @@ b健身前后两小时远离脂肪（远离士力架、巧克力，脂肪影响�
 训练分强度，区分状态
 臀腿、肩部&amp;核心、胸部&amp;三头肌、臀腿、肩部&amp;核心
 再就是具体计划了，详见书。
-</code></pre><h2 id="一平米健身：硬派健身"><a href="#一平米健身：硬派健身" class="headerlink" title="一平米健身：硬派健身"></a><a href="https://book.douban.com/subject/26774272/" target="_blank" rel="noopener">一平米健身：硬派健身</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28637271.jpg"></p>
+</code></pre><h2 id="一平米健身：硬派健身"><a href="#一平米健身：硬派健身" class="headerlink" title="一平米健身：硬派健身"></a><a href="https://book.douban.com/subject/26774272/" target="_blank" rel="noopener">一平米健身：硬派健身</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28637271.jpg" alt></p>
 <p>到底是什么，阻碍了我们健身？<br>“69%的人说，我没时间；37%的人说，花销太大；<br>30%的人说，我没有地方。”<br>我们，为什么不健身？<br>“29%的人说，我不知该怎么做；<br>29%的人说，运动时有外人会让我尴尬。”<br>然而，从此开始，一切阻碍全部被推翻，一切困难通通被克服。<br>你不再需要花几千元办一张只去洗澡的健身卡，你不再需要买下一台只能晾衣服的跑步机，你不再需要每天花费1小时出去吸着雾霾跑步，你也不再需要用节食损害自己的生活质量和身体健康。<br>这本书，教会你如何在只有1平米的空间内塑造出大胸、细腰、翘臀、长腿。教会你在最短只有1分钟的运动时间里，打造坐着消耗脂肪的“躺瘦”好身材！教会你花费百余元，在家拥有小型健身房。<br>从此开始，与更好的自己，在未来重逢。</p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>Chapter1：减肥，从何开始？<br>一、减肥靠饿？越饿越胖！<br>二、久坐不动，如何开始运动？<br>三、去不了健身房，如何更好地训练？<br>四、如何百元打造，属于自己的健身房？</p>
 <p>Chapter2：想要好身材？如何制定健身计划？<br>一、训练方向｜正确的开始，才有正确的结果！<br>二、训练部位｜好身材，该练哪？<br>三、训练频率｜一周练几次？每次都练哪？<br>四、训练内容｜塑形动作，多重？几个？几组？怎么休息？<br>五、训练配比｜哑铃和跑步，怎么搭配最有效？<br>六、训练顺序｜那么多动作，如何安排顺序？<br>七、训前训后｜训前拉伸是作死？运动热身怎么做？</p>
 <p>Chapter3：运动，只要60秒就有效！<br>一、超短时间，超强效果＝燃脂神器HIIT！<br>二、居家必备，超强燃脂动作大全<br>弹力带原地跑｜跳绳｜弹力带上台阶｜自重侧弓步｜站姿肘击膝｜弹力带波比跳｜抱拳侧踢｜<br>弹力带纵跳｜弹力带前后跳｜弹力带沙发深蹲跳｜弹力带俯卧撑｜伏地登山<br>三、燃脂塑形，好身材打造计划</p>
 <p>Chapter4：胸——好身材，更聚焦！<br>一、胸部训练重点<br>二、为什么要练胸？<br>三、什么是好看的胸型？<br>四、好胸型，怎么练？<br>胸部整体：宽距俯卧撑｜跪姿俯卧撑（初阶)｜击掌俯卧撑（进阶）<br>上胸训练：下斜俯卧撑｜钻石俯卧撑｜弹力带反手夹胸<br>下胸训练：上斜俯卧撑<br>胸肌中部：弹力带对握夹胸｜弹力带交叉夹胸｜弹力带屈臂夹胸<br>女性美胸动作：地板哑铃卧推｜健身球哑铃飞鸟<br>胸部拉伸：扩胸弹振拉伸｜胸部单侧静态拉伸<br>四、胸部训练计划：男性版&amp;女性版</p>
 <p>Chapter5：背——完美背影的关键！<br>一、背部训练重点<br>二、为什么要练背：身姿健康，身材轮廓的重点<br>三、背部训练有重点，男女练背大不同<br>四、有型背部，怎么练？<br>颈后宽距引体向上｜反手窄距引体向上｜正手宽距引体向上｜反手俯身哑铃划船｜<br>正手俯身哑铃划船｜弹力带高位对握划船｜弹力带低位对握划船｜跪姿伏地背部拉伸<br>五、背部训练计划：男性版&amp;女性版</p>
-<h2 id="无器械健身"><a href="#无器械健身" class="headerlink" title="无器械健身"></a><a href="https://book.douban.com/subject/11608712/" target="_blank" rel="noopener">无器械健身</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s24403715.jpg"></p>
+<h2 id="无器械健身"><a href="#无器械健身" class="headerlink" title="无器械健身"></a><a href="https://book.douban.com/subject/11608712/" target="_blank" rel="noopener">无器械健身</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s24403715.jpg" alt></p>
 <h3 id="目录-3"><a href="#目录-3" class="headerlink" title="目录"></a>目录</h3><p>前进！<br>1 任务目标：结实、强壮、自信<br>2 我的历程<br>3 为什么进行自身体重训练？<br>4 为什么进行力量训练？<br>5 究竟什么是体能？<br>6 营养：回归基础<br>7 力量训练的常见认识误区<br>8 借口和动力<br>9 锻炼强度<br>10 锻炼方法<br>11 练习动作<br>12 推力练习<br>13 拉力练习<br>14 腿部和臀部练习<br>15 核心区练习<br>16 全身练习<br>17 健身计划<br>18 更短、更强的20分钟锻炼！<br>附录一　自制健身装备<br>附录二　成功健身必须遵循的6个原则<br>附录三　健身计划背后的科学<br>附录四　练习索引<br>附录五　健身日志</p>
 <h3 id="一些笔记"><a href="#一些笔记" class="headerlink" title="一些笔记"></a><a href="https://book.douban.com/review/5957427/" target="_blank" rel="noopener">一些笔记</a></h3><p>这本书的中文翻译叫做用你自身的体重训练，言简意赅，大标题叫无器械健身，其实不太用管这个概念，用不用器械视乎你所有条件，关键在理念。（PS：中文版有些翻译有问题，看到很疑惑的地方，记得百度谷歌一下。）<br>（这里附上两个连接，支持盗版光荣！！！（PSS，還是買書和APP吧，我這裡是開玩笑的，請支持保護知識產權）<br><a href="http://ishare.iask.sina.com.cn/f/24237330.html?sudaref=www.baidu.com&amp;retcode=0" target="_blank" rel="noopener">http://ishare.iask.sina.com.cn/f/24237330.html?sudaref=www.baidu.com&amp;retcode=0</a> 这是u r ur own gym的英文版。<br><a href="https://itunes.apple.com/us/app/bodyweight-training-you-are/id416981420?mt=8" target="_blank" rel="noopener">https://itunes.apple.com/us/app/bodyweight-training-you-are/id416981420?mt=8</a> 这是中文版苦逼没光盘而或许可以用的途径，收费的app，不过个人感觉不太需要了吧）</p>
 <pre><code>然后开始写吧~
@@ -766,7 +736,7 @@ b健身前后两小时远离脂肪（远离士力架、巧克力，脂肪影响�
 </em>简单方法：乳清或大豆蛋白补剂配以麦芽糖糊精或简单糖类作为碳水化合物的来源。<br>*选择蛋白粉是留意蛋白粉中的碳水化合物含量，不应超过蛋白含量的一半。购买那种蛋白质并不重要，只要是人体必需的氨基酸蛋白质就行，乳清鸡蛋牛奶大豆蛋白都ok。<br>(17)饮食是否健康两点：每种宏量营养素我们分别摄入了多少？<br>我们摄入的总热量。</p>
 <h2 id="（18）避免吃垃圾食物的最好方法就是压根不让他们在你的家里出现。"><a href="#（18）避免吃垃圾食物的最好方法就是压根不让他们在你的家里出现。" class="headerlink" title="（18）避免吃垃圾食物的最好方法就是压根不让他们在你的家里出现。"></a>（18）避免吃垃圾食物的最好方法就是压根不让他们在你的家里出现。</h2><p>7、力量训练常见误区<br>（1）局部减肥——eg仰卧起坐能减肚子~呸！——脂肪减少是在全身同时进行的，只有热量摄入少于消耗量时才有可能实现，增加肌肉是提高热量消耗效率最有效的方法。——好好吃饭，通过力量训练打造肌肉，身体不同部位的减脂速度是由基因决定的。<br>（2）肌肉变成脂肪——肌肉和脂肪细胞有完全不同的功能，两者不会相互转换。<br>（3）力量训练会使你的肌肉过度发达——你以为长肌肉跟长肥肉一样拉么容易？呸~对女性而言能每个月长0.5磅已经很不错了，男性每月1.5磅ok啦！！肌肉发达的身体是坚持力量训练和摄入合理营养的结果，不会一夜之间或一不小心炼成。<br>（4）女性的锻炼方法有别于男性——肌肉都是一样的，打造并维持肌肉就是燃烧脂肪和消耗热量的最有效手段。<br>（5）越多越好——肌肉增长发生在你休息的时候。营养不良和过度锻炼是健身新手和老手都最容易犯的错误。过度便是错！调整饮食，睡眠，锻炼强度频率时间。<br>（6）孤立练习能改变肌肉形状——肌肉大小改变后的形状是由基因决定的，而非具体联系决定的，肌肉只能变大or变小。<br>（7）高次数能增加清晰度，地次数能增加尺寸——肌肉轮廓的清晰度是有它的大小和周围脂肪的多少决定的，仅此而已。为了显现出来，最有效的是打造肌肉和燃烧脂肪，为了消耗额外的的热量而做很多次反复是低效的，增肌成效也有限。<br>（8）力量训练使你变壮，有氧运动使你变瘦：饮食是决定身体组成的重要因素。最佳的热量消耗方法就是增加肌肉量从而提高静息代谢。<br>（9）增肌的同时不可能减脂</p>
 <h2 id="（10）严格节食——饿肚子会使机体降低基代率以弥补热量不足，会努力守住你摄入的每一点儿热量，因为他不知道你什么时候才会吃下一顿饭，而在你的热量摄入量恢复到正常水平后，你的新陈代谢率依然维持在低位，so非常容易反弹。"><a href="#（10）严格节食——饿肚子会使机体降低基代率以弥补热量不足，会努力守住你摄入的每一点儿热量，因为他不知道你什么时候才会吃下一顿饭，而在你的热量摄入量恢复到正常水平后，你的新陈代谢率依然维持在低位，so非常容易反弹。" class="headerlink" title="（10）严格节食——饿肚子会使机体降低基代率以弥补热量不足，会努力守住你摄入的每一点儿热量，因为他不知道你什么时候才会吃下一顿饭，而在你的热量摄入量恢复到正常水平后，你的新陈代谢率依然维持在低位，so非常容易反弹。"></a>（10）严格节食——饿肚子会使机体降低基代率以弥补热量不足，会努力守住你摄入的每一点儿热量，因为他不知道你什么时候才会吃下一顿饭，而在你的热量摄入量恢复到正常水平后，你的新陈代谢率依然维持在低位，so非常容易反弹。</h2><p>8、借口和动力：<br>（1）我们真正的家不是房子、城市甚至是国家而是我们的身体，只要你还在这世上，它就是你的灵魂和精神唯一一刻都不离的栖居之所，我们要好好照料自己的身体还是任由时间侵蚀它。<br>（2）体型最好的人往往是那些独自锻炼的人，他们有动力和知识来制定自己的健身计划。健身房，训练班，教练，卧推哑铃器械都是拐杖，是人们不去全力以赴来使自己的体能水平达到最好的借口。<br>（3）你当然可以找一个健身伙伴一起完成健身计划，但永远不要依赖他——那不过是一根拐杖，另一个不能在任何你想要的时间、地点独自锻炼的借口。你需要在精神上完全的独立，才能取得长期的成功。只有你知道自己需要什么以及什么时候需要，也只有你能感受你自己的肌肉，心肺和筋骨的感觉，最终只有你能使自己的身材变好，所以你需要的一切就是你自己。<br>（4） 永不言弃和保持一个成功者的心态事关长远的目标能否实现。知道你想要什么，订立计划按计划锻炼。没有针对目标制定计划是一个常见的错误。<br>（5）你将会掌管一个更强壮健康的身体。每一天你的投入、坚持以及梦想将决定你的身材。你会无视当你疲劳或忙碌时大脑制造出的种种借口然后继续前行，因为你有目标。半途而废就像生活中其他事情一样会成为习惯，你意识到，如果这次想借口屈服，那你就会越来越容易向他屈服，相反你每次坚持下来你的意志力都会增强。<br>（6）把你的目标和借口都写下来，认清自己的借口会是你对他们更敏感。<br>（7）目标制定：要尽量具体和可量化，越具体越好。虽然总体目标可能是变得更健康，但太宽泛不利于实现。设定的每一个目标都是一个靶心，学会把有限的精力用在具体的任务上。同时目标必须可行。</p>
-<h2 id><a href="#" class="headerlink" title></a><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p28270939-1.jpg"></h2><p>9、锻炼强度<br>（1）要想看到行之有效的最佳效果，对于有些高强度的运动，得准备好时不时的把舒适抛在一边。<br>（2）你在生活中做的任何事情都会对你的行为模式和习惯造成潜移默化的影响。<br>（3）挑战极限的方法：<br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p28270939-3.jpg"></p>
+<h2 id><a href="#" class="headerlink" title></a><img data-src="https://img3.doubanio.com/view/page_note/large/public/p28270939-1.jpg" alt></h2><p>9、锻炼强度<br>（1）要想看到行之有效的最佳效果，对于有些高强度的运动，得准备好时不时的把舒适抛在一边。<br>（2）你在生活中做的任何事情都会对你的行为模式和习惯造成潜移默化的影响。<br>（3）挑战极限的方法：<br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p28270939-3.jpg" alt></p>
 <p>【1.任务目标：结实、强壮、自信】<br>P2<br>以前没有类似的书。然而，千百年来——从古希腊的奥林匹克运动员到今天的特种部队，人类中体格最棒的那些人并不依赖城里的健身中心或者家里的哑铃。<br>如果我告诉你，你已经拥有了有史以来最先进的健身器械呢？别惊讶，就是你自己的身体。这台健身器械有个很大的有点：它一直在你身边，它是唯一一个你永远不会没有的东西。现在你手里拿着的就是你所需要的全部额外装备，你没必要再一小时接一小时地泡在健身房里。事实上，你根本不必再去健身房。无论你在哪里锻炼，所需时间都极少，每周两小时，就这么多。有了这些练习，你不会再因为使用无效的训练方法而浪费宝贵时间，而且你也将没有机会再使用“我没时间”这一头号偷懒借口。<br>P3<br>忘掉那种像一只被困在笼子里的仓鼠一样，每天都在同一个跑步机上跑步，日复一日地做着相同的练习的生活吧。你不需要换衣服、装好健身包、开车、停车、找一个更衣柜、找一台空闲的机器……然后，在漫长且无趣的锻炼之后，再把整个过程反过来做一遍。你只需要开始锻炼，不管是在家里、办公室，还是在宾馆房间里，20-30分钟就完成了。<br>[……]<br>你真的认为我们进化到了需要器材才能保持健康的地步？对自己身体潜能的无知使得现代人没完没了地追求无用的健身鬼把戏。实际上，达到终极健康状态的办法非常简单。不过，终归还得你自己亲身实践，把你自己对器械、教练的依赖和常见误解的束缚中解放出来。它们都不过是妨碍你拥有最佳形体的拐杖，现在是回归自然的时刻了！<br>你的健康不应该依赖任何东西，除了你自己。<br>【2.我的历程】<br>P5<br>我们最终明白，无论我们感到多么疲劳、僵硬和没精神，只要再次经过热身，我们其实都没问题。<br>P6<br>我们学会了投入、镇定，不管多痛苦也要一次完成。全身心投入是要义所在，投入等于成功。<br>[……]<br>你的脑子总会在处境艰难时寻找退路。放松，保持好姿势，在你的身心都在央求你别这样的时候继续坚持，这是对你的决心的检验。<br>【3.为什么进行自身体重训练？】<br>P9<br>健身器械、训练系统和流行减肥法大行其道主要是市场营销的结果，它们不是真诚地想要帮助一个身体普遍不健康的社会改善健康状况、提升幸福感。<br>[……]<br>多数重量训练只是孤立地锻炼某些肌肉，仅仅调动你身体全部肌肉的很少一部分，而自身体重训练则会同时调动很多肌肉。另外，自身体重训练还有一个好处，那就是相比那些需要自由重量和组合器械的练习，它对身体核心区力量的要求更高。（想要6块腹肌吗？）<br>自身重量训练的练习能避免诸如关节炎之类的慢性伤病，这些伤病是由长时间的举重以及那些不自然的、在日常生活中毫无实用价值的练习引起的。一种练习或训练，必须尽可能地与其“用武之地”接近或相似，才是有用的。普通人的日常活动主要是操控他们的自身体重。那么，在增强日常活动的力量方面，有什么能比自身体重训练更有效呢？然而，我们要么坐在沙发上一动不动，要么在卧推架上锻炼——坐着和躺着，这使得我们整个民族都缺少真正有用的体能。<br>P10<br>下面是无需增加重量而改变练习难度的4中简单方法：</p>
 <ul>
 <li>提高或降低支撑点的高度</li>
@@ -774,7 +744,7 @@ b健身前后两小时远离脂肪（远离士力架、巧克力，脂肪影响�
 <li>在动作的起始、结束或中间位置暂停一会儿</li>
 <li>仅用单侧肢体来完成动作<br>【4.为什么进行力量训练？或为什么有氧运动是浪费时间？】<br>【5.究竟什么是体能？】<br>P16<br>我想大多数人都认为，短跑运动员比举重运动员更有吸引力，跳芭蕾的比跑马拉松的更漂亮，我说这些并没有冒犯任何人的意思。芭蕾舞演员和短跑运动员的体能水平比举重运动员和马拉松运动员要高，他们的肌肉以一种非常有效的方式联系在一起。大多数人都同意，各方面都得到充分发展的人的体型比那些只在某些特定方面突出的人更有吸引力。在各种能力上全面均衡发展的身体不仅更实用，而且更漂亮。<br>[……]<br>肌肉力量、爆发力、肌肉耐力、心肺耐力、速度、协调性、平衡能力以及柔韧性。你的体能水平由以上8项身体素质指标决定。<br>P17<br>自然而然，体能水平最高的人有最强的生存能力，而拥有最强生存能力的人是最具有吸引力的，这是大自然的进化机制所决定的。<br>【6.营养：回归基础】<br>P18<br>在我们这个到处充斥着空头承诺和急功近利的时代，合理可靠的饮食原理似乎已经被丢弃；相反，我们被无效且不健康的流行饮食法以及与之相伴的来自所谓“专家”们的每每相互矛盾的建议所淹没。没有什么神奇药丸或创新饮食法能够让你轻松愉快地解决你所有的问题。想要拥有健康并长久保持这种状态，唯一可靠的方法就是理解并且坚持遵循健康饮食的基本原则。<br>P19<br>诚然，持续的热量短缺会使你的体重减轻，但如果你体内有限的热量主要来自没什么营养的深加工食品，你就会感觉很糟并且一直想吃。此外，这样的饮食还会严重干扰你的内分泌，导致你的身体消耗肌肉而不是燃烧脂肪。这就是大多数人采取的节食方法，减肥者绝少能不反弹的原因也正在于此。<br>P21<br>血糖生成指数低的碳水化合物吸收得慢（好），而血糖生成指数高的碳水化合物吸收的快（不好）。<br>[……]<br>理想情况下，我们食用的碳水化合物应当尽量接近它们的原处形式，如我们应食用水果（而不是果汁）、生的或者煮熟的蔬菜、牛奶和燕麦片。当今社会的肥胖问题很大程度上源于人们摄入大量营养价值很低甚至毫无营养价值而血糖生成指数却很高的碳水化合物。很多人错误地认为，只要是脂肪含量低的食物就可以随便吃，血糖生成指数、营养价值和热量含量都无所谓。饼干、酸奶、能量型巧克力、果汁、麦片、汽水中都含有大量食糖，而食糖正是我们应当避免摄入的。<br>不时地想吃点儿糖很正常，但含糖过高的饮食会使这种欲望失控。问题之一是这些糖将引发胰岛素高峰，胰岛素会把血液中的葡萄糖洗劫一空，然后你就会感到疲劳，想要再吃一些糖，这是个恶性循环。<br>解决办法？摄入血糖生成指数低的碳水化合物。这种碳水化合物摄入的比例要尽可能地高，尤其对想要甩掉脂肪的人们来说，要将水果和生的或煮熟的蔬菜作为主要的碳水化合物来源，因为它们的血糖生成指数最低而且有营养，其次则是奶制品和全谷物制品。<br>P30<br>避免吃垃圾食品的最好方法是压根就不让它们在你家里出现。你不会受到诱惑而吃得不健康，因为根本没有能诱惑你的东西。你会发现你吃的都是有益健康的事物，而它们才是你的身体一直渴望的，即使你的脑子并不是这样想的。<br>【7.力量训练的常见认识误区】<br>认识误区：局部减肥<br>认识误区：肌肉能变成脂肪<br>认识误区：力量许梿会使你的肌肉过度发达<br>认识误区：女性的锻炼方法有别于男性<br>认识误区：越多越好<br>认识误区：孤立练习能改变肌肉形状<br>认识误区：高次数能加大清晰度，低次数能增大尺寸<br>认识误区：力量训练使你变壮，而有氧运动使你变瘦<br>认识误区：增肌的同时不可能减脂<br>认识误区：严格节食<br>【8.借口和动力】<br>P35<br>每当我走进一座漂亮的房子见到一脸自豪、浑身赘肉的主人时，我都非常震惊。他们没有搞明白本末终始，我们真正的家不是房子、城市甚至国家，而是我们的身体。只要你还在这世上，它就是你的灵魂和精神唯一一刻都不离的栖居之所。它是这世上你能照料的有形之物中最最重要的。<br>我们需要做出选择：是好好照料我们的身体，还是任由时间侵蚀它。此时此刻，我们就必须做出决定，而不是以后再说。这个世界上的大多数人都没有好好照顾自己的身体，他们体重超标、精神倦怠地度过平庸的人生；他们任由岁月摆布，他们的腰围渐宽、身高缩短、腰伤背驼；最后，他们衰老得行动困难，他们往往不能活到自己应有的寿命。<br>有一少部分人则与此不同，他们真真正正地决心为自己的健康做些什么。他们坚持锻炼，同时也关注自己的饮食，但并不会摄入过量的营养。他们懂得基本的营养知识，每周有四五天都会锻炼，每天锻炼20-30分钟——只占他们总时间的不到1.2%，而这完全足够。他们有身体、精神和灵魂上的力量来应对人生中的困难。他们在意自己的外表，而他们看起来也很棒。由于坚持锻炼，他们每一天都精力充沛。抑郁、焦虑、神经质、紧张、厌烦、急躁等等这些生活中的负面情绪都一扫而空，他们因此而思维清晰敏捷。他们知道，如果不锻炼，生活会变得多糟糕，所以他们根本不会让这种情况发生。他们掌控着自己，而不会让他们的借口掌控自己。<br>[……]<br>人们对于健身的很多认识其实阻碍了他们的进步。健身中心、训练班、教练、卧推、哑铃、器械等等都是拐杖，都是人们不去全力以赴来使自己的体能水平达到最好的借口。<br>P36<br>请记住，你当然可以找一个健身伙伴一起完成我的健身计划，但永远不要依赖他/她——那不过是另一根拐杖，另一个不能在任何你想要的时间、地点独自锻炼的借口。在我所认识的真正健康的人中，有99%都是自己一个人锻炼的。<br>你需要在精神上完全独立，才能取得长期成功。只有你知道自己需要什么以及什么时候需要，也只有你能感受你自己的肌肉、心肺和筋骨的感觉，最终只有你能使自己的身材变好。你所需要的一切就是：你自己。<br>你永远不会等到完美的健身时间和健身条件。你要主动创造它们，就像我们每天、每分、每秒都在寻找不锻炼的借口一样。<br>如果你在早晨锻炼，闹钟上的止闹按钮会诱惑你，把你引向身材走样的平庸生活。起床锻炼还是关掉闹钟？我们面临抉择：是再睡30分钟，还是开始健身？你想练出最棒的身材，但是你真的很累，昨晚工作到半夜，而今天更忙……理由很多，我们都遇到过这种情况。<br>你想练出最棒的身材，但你不愿放弃30分钟的舒适；你想变瘦却不愿意改变不健康的饮食习惯；你想健身但也想坐在沙发里休息……这样的例子不胜枚举。你的大脑制造借口的能力高得惊人。到底什么对你更重要：你的目标还是阻碍你实现目标的那些东西？<br>下一次你因为某个理由而取消锻炼的时候，你就明白了：对你来说，那个理由比你为自己设定的目标更重要。你失败了。<br>我一次又一次地见到这样的事情。放弃和失败很快就会成为习惯。我们会越来越容易让步，而如果每次我们能不向自己的软弱低头，我们的担当和决心就会越来越强。<br>一旦完成我的简短锻炼，你就会获得巨大的收益：紧张情绪一扫而空，身心如获新生，自信大增，能使你情绪高涨的内啡肽在你体内充盈。这就是把借口和身外世界放在一边，为自己拿出几分钟时间的结果，绝对物超所值。<br>永不言弃和保持一个成功者的心态事关长远的目标能否实现——无论是更大的肌肉、小一号的腰围、更好看的腿还是连续做5个倒立撑——你就必须立刻制定计划，并按计划锻炼。<br>没有针对目标制定计划是一个常见的错误。在军事上，任务计划是逆向制定的。在目标完全明确之后，你从目标达到时的行动开始，反向计划任务成功的标注是什么以及达到目标所应采取的手段。之后，计划的执行只是一个坚持不放弃的过程。<br>P37<br>撸起袖子，迈开步子<br>万事开头难，健身也不例外。下一次你不想锻炼时，请试着哄骗自己。告诉自己只做几组或者锻炼10分钟就好。通常，你会发现在热身之后，你就想运动了，你的能量开始澎湃，那几组热身动作最终发展为全套的锻炼。最差的情况，你也完成了一次缩水版健身，这也比完全不锻炼好。<br>【9.锻炼强度】<br>P40<br>你在生活中做的任何事情都会对你的行为模式和习惯造成潜移默化的影响。如果你经常半途而废或者消极怠工，那么当你需要负重前行的时候，你很有可能再一次退缩。类似地，每一次你心无旁骛迎难而上时，你的意志力都会变得更强。你现在的行为直接影响你将来的行为。<br>如果你发觉自己在某次锻炼结束后有一点儿愧疚，怀疑自己本可以做得更好，那就下定决心下一次多完成几次反复。专注于进步，而且要知道决定你是继续提高还是停滞不前的通常就是需要你拼劲权力才能完成的最后几次反复，你的水平越高，就越是这样。阿诺德·施瓦辛格曾说：“促使肌肉生长的是每一组的最后几次反复。”精英和常人的区别就在于此。<br>【10.锻炼方法】<br>P43<br>练到力竭是指你不间断地做一组练习，直到无法再多完成一次反复。这样做时锻炼强度很大，需要很大的动力和决心，但这绝对物有所值。正是那最后一次反复向你的身体传递了需要增强力量和增加肌肉的信息！在此之前的所有练习组和反复的目的是使你达到力竭的临界点。</li>
 </ul>
-<h2 id="肌肉训练完全图解：中年人士的终极健身指南"><a href="#肌肉训练完全图解：中年人士的终极健身指南" class="headerlink" title="肌肉训练完全图解：中年人士的终极健身指南"></a><a href="https://book.douban.com/subject/26358150/" target="_blank" rel="noopener">肌肉训练完全图解：中年人士的终极健身指南</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28040310.jpg"></p>
+<h2 id="肌肉训练完全图解：中年人士的终极健身指南"><a href="#肌肉训练完全图解：中年人士的终极健身指南" class="headerlink" title="肌肉训练完全图解：中年人士的终极健身指南"></a><a href="https://book.douban.com/subject/26358150/" target="_blank" rel="noopener">肌肉训练完全图解：中年人士的终极健身指南</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28040310.jpg" alt></p>
 <h3 id="目录-4"><a href="#目录-4" class="headerlink" title="目录"></a>目录</h3><p>简介：练出你的精彩</p>
 <p>人体构造<br>灵活性练习<br>瑞士球跪姿背阔肌伸展<br>站姿股四头肌拉伸<br>侧压腿<br>站姿腿后肌拉伸<br>站姿腓肠肌拉伸<br>肱三头肌拉伸<br>肩膀拉伸<br>胸部拉伸<br>站姿肱二头肌拉伸<br>仰卧下背拉伸<br>猫牛式拉伸<br>鹰式和犬式<br>瑞士球腹部拉伸<br>耐力训练<br>交替推胸<br>单臂划船<br>过头推举<br>侧平举<br>站姿飞行<br>肱二头肌弯举<br>单臂肱三头肌臂屈伸<br>蹲坐<br>分腿下蹲弯举<br>弹力带劈柴<br>单腿下压<br>形体训练<br>站立健美腹肌<br>站姿股四头肌拉伸<br>桥式<br>俯卧抬臂<br>瑞士球骨盆倾斜<br>瑞士球坐姿过渡到桥式<br>眼镜蛇式拉伸<br>双侧肩胛伸缩<br>动作范围训练<br>颈部和肩部训练<br>手臂训练<br>前臂训练<br>腿部训练<br>核心强健训练<br>平板支撑<br>瑞士球抬腿平板支撑<br>侧平板支撑<br>T型稳定<br>眼镜蛇式俯卧<br>瑞士球屈体<br>瑞士球滚动<br>仰卧起坐<br>反向卷腹<br>抬腿<br>坐姿俄罗斯转体<br>空中骑车卷腹<br>瑞士球转髋<br>坐姿实心球抬臂<br>过肩投实心球<br>实心球画圈<br>塑形训练<br>瑞士球飞行<br>伏地哑铃划船<br>瑞士球手臂上拉<br>瑞士球坐姿肩部推举<br>哑铃交替弯举<br>仰卧臂屈伸<br>相扑下蹲<br>箭步蹲<br>直腿硬拉<br>哑铃提踵<br>站姿哑铃划船<br>侧蹲<br>瑞士球仰卧屈腿<br>训练计划<br>术语表<br>致谢名单</p>
 
@@ -783,8 +753,11 @@ b健身前后两小时远离脂肪（远离士力架、巧克力，脂肪影响�
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Body-Building/" rel="tag"><i class="fa fa-tag"></i> Body Building</a>
           </div>
@@ -796,21 +769,18 @@ b健身前后两小时远离脂肪（远离士力架、巧克力，脂肪影响�
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/AI/IPCreator/Technology/AI/Business/wujun-intelligence times/" rel="next" title="Intelligence Times">
-                  <i class="fa fa-chevron-left"></i> Intelligence Times
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Music/Bye bye bye/" rel="prev" title="Bye bye bye">
-                  Bye bye bye <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/AI/IPCreator/Technology/AI/Business/wujun-intelligence times/" rel="prev" title="Intelligence Times">
+      <i class="fa fa-chevron-left"></i> Intelligence Times
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Music/Bye bye bye/" rel="next" title="Bye bye bye">
+      Bye bye bye <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -823,7 +793,29 @@ b健身前后两小时远离脂肪（远离士力架、巧克力，脂肪影响�
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -854,8 +846,8 @@ b健身前后两小时远离脂肪（远离士力架、巧克力，脂肪影响�
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -864,14 +856,14 @@ b健身前后两小时远离脂肪（远离士力架、巧克力，脂肪影响�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -882,11 +874,6 @@ b健身前后两小时远离脂肪（远离士力架、巧克力，脂肪影响�
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -920,7 +907,7 @@ b健身前后两小时远离脂肪（远离士力架、巧克力，脂肪影响�
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -932,51 +919,12 @@ b健身前后两小时远离脂肪（远离士力架、巧克力，脂肪影响�
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -985,18 +933,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1006,63 +948,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1070,14 +955,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1104,40 +989,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/B/Body Building/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

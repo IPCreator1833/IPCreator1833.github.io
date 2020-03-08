@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="快乐=期望-现实，Happiness is a choice.">
 <meta name="keywords" content="Guo-Ping Zhou,Happiness,Growing Up">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/H/Happiness/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/H/Happiness/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/H/Happiness/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="https://img1.doubanio.com/lpic/s28501457.jpg"></p>
+        <p><img data-src="https://img1.doubanio.com/lpic/s28501457.jpg" alt></p>
 <blockquote>
 <p>快乐=期望-现实，Happiness is a choice.</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt data-src="http://opb37u589.bkt.clouddn.com/f001c2227a64dd6b5c51498b80280be0--choose-happiness-choosing-happiness-quotes.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/f001c2227a64dd6b5c51498b80280be0--choose-happiness-choosing-happiness-quotes.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>IPCreator：所谓的幸福感，就是你与你所在的世界之间的强关联——李笑来</p>
 </blockquote>
@@ -321,12 +291,12 @@
 </blockquote>
 <p>在现实生活中，关于幸福和不幸福要从两个方面看，即我们的欲望与满足欲望的能力之间是不是能够平衡。<br>如果有了一个欲望，然后通过自己的能力或者外部提供的条件满足这个欲望，你会有一种幸福感；当这个平衡被打破，你会感觉到痛苦。欲望本身在那里，我们改变不了，但我们可以想办法提高我们的能力，去奋斗，获得更高的财富、能力，甚至权力。<br>欲望表现为一种奋斗，表现为一种资源获取，表现为对外部环境的博弈。这样就出现了很多故事，多数人想通过奋斗使自己达到一种幸福状态，结果却往往并不幸福。小到我们做生意，大到追求国家民族的复兴，<strong><a href="https://www.toutiao.com/a1589817803864071/" target="_blank" rel="noopener">膨胀的欲望往往导致很多悲剧</a></strong>。——冯仑</p>
 <h2 id="My-Views-of-Happiness"><a href="#My-Views-of-Happiness" class="headerlink" title="My Views of Happiness"></a>My Views of Happiness</h2><p>2017-04-07 14:45:06</p>
-<p><img alt data-src="http://ong8f1obl.bkt.clouddn.com/Happiness-is-a.png"></p>
+<p><img data-src="http://ong8f1obl.bkt.clouddn.com/Happiness-is-a.png" alt></p>
 <blockquote>
 <p>Healthy, Family, Enterprise, Thanksgiving<br>Love her，accompany her.</p>
 </blockquote>
 <!--more-->
-<h2 id="Healthy"><a href="#Healthy" class="headerlink" title="Healthy"></a>Healthy</h2><h3 id="Walking"><a href="#Walking" class="headerlink" title="Walking"></a>Walking</h3><h3 id="Sleeping"><a href="#Sleeping" class="headerlink" title="Sleeping"></a>Sleeping</h3><h3 id="Diet"><a href="#Diet" class="headerlink" title="Diet"></a>Diet</h3><h3 id="Mentality"><a href="#Mentality" class="headerlink" title="Mentality"></a>Mentality</h3><h2 id="Family"><a href="#Family" class="headerlink" title="Family"></a>Family</h2><h3 id="Resposibility"><a href="#Resposibility" class="headerlink" title="Resposibility"></a>Resposibility</h3><h3 id="Independency"><a href="#Independency" class="headerlink" title="Independency"></a>Independency</h3><h2 id="Enterprise"><a href="#Enterprise" class="headerlink" title="Enterprise"></a>Enterprise</h2><h3 id="Growing-up"><a href="#Growing-up" class="headerlink" title="Growing up"></a>Growing up</h3><h3 id="Startup"><a href="#Startup" class="headerlink" title="Startup"></a>Startup</h3><h2 id="Thanksgiving"><a href="#Thanksgiving" class="headerlink" title="Thanksgiving"></a>Thanksgiving</h2><h3 id="Face-to-Reality"><a href="#Face-to-Reality" class="headerlink" title="Face to Reality"></a>Face to Reality</h3><h3 id="Appreciation"><a href="#Appreciation" class="headerlink" title="Appreciation"></a>Appreciation</h3><h3 id="Try-your-best"><a href="#Try-your-best" class="headerlink" title="Try your best"></a>Try your best</h3><h3 id="Let-it-Go"><a href="#Let-it-Go" class="headerlink" title="Let it Go"></a>Let it Go</h3><p><img alt data-src="http://cdn.iciba.com/news/word/big_20171030b.jpg"><br>You will never be happy if you continue to search for what happiness consists of. You will never live if you are looking for the meaning of life.<br>如果你继续去寻找幸福是由什么组成的，那你永远不会找到幸福。如果你一直在找人生的意义，你永远不会生活。</p>
+<h2 id="Healthy"><a href="#Healthy" class="headerlink" title="Healthy"></a>Healthy</h2><h3 id="Walking"><a href="#Walking" class="headerlink" title="Walking"></a>Walking</h3><h3 id="Sleeping"><a href="#Sleeping" class="headerlink" title="Sleeping"></a>Sleeping</h3><h3 id="Diet"><a href="#Diet" class="headerlink" title="Diet"></a>Diet</h3><h3 id="Mentality"><a href="#Mentality" class="headerlink" title="Mentality"></a>Mentality</h3><h2 id="Family"><a href="#Family" class="headerlink" title="Family"></a>Family</h2><h3 id="Resposibility"><a href="#Resposibility" class="headerlink" title="Resposibility"></a>Resposibility</h3><h3 id="Independency"><a href="#Independency" class="headerlink" title="Independency"></a>Independency</h3><h2 id="Enterprise"><a href="#Enterprise" class="headerlink" title="Enterprise"></a>Enterprise</h2><h3 id="Growing-up"><a href="#Growing-up" class="headerlink" title="Growing up"></a>Growing up</h3><h3 id="Startup"><a href="#Startup" class="headerlink" title="Startup"></a>Startup</h3><h2 id="Thanksgiving"><a href="#Thanksgiving" class="headerlink" title="Thanksgiving"></a>Thanksgiving</h2><h3 id="Face-to-Reality"><a href="#Face-to-Reality" class="headerlink" title="Face to Reality"></a>Face to Reality</h3><h3 id="Appreciation"><a href="#Appreciation" class="headerlink" title="Appreciation"></a>Appreciation</h3><h3 id="Try-your-best"><a href="#Try-your-best" class="headerlink" title="Try your best"></a>Try your best</h3><h3 id="Let-it-Go"><a href="#Let-it-Go" class="headerlink" title="Let it Go"></a>Let it Go</h3><p><img data-src="http://cdn.iciba.com/news/word/big_20171030b.jpg" alt><br>You will never be happy if you continue to search for what happiness consists of. You will never live if you are looking for the meaning of life.<br>如果你继续去寻找幸福是由什么组成的，那你永远不会找到幸福。如果你一直在找人生的意义，你永远不会生活。</p>
 <blockquote>
 <p>词霸小编：一个人活得幸福不幸福，一要看是不是能睡着，二要看是不是想醒来。<strong>能睡着，说明心安，此前问心无愧；想醒来，说明心美，当下正是所要。</strong>人生，也不过是这六字的快活。</p>
 </blockquote>
@@ -341,7 +311,7 @@
 <blockquote>
 <p>感受快乐的方法一共有两种，一种是<strong>追求多样性，新奇的、不一样的刺激</strong>会让你快乐。另一种是<strong>追求间隔性</strong>，间隔一段时间，哪怕是以前经历过的刺激，也会感到快乐。也就是说，再好吃的东西，也别一次吃太多；再好玩的游戏，也别无限制地玩。适可而止是为了长期的享受。而且，这种间隔性的快乐还涉及到你对生活的主动权，被多样性吸引是“被动”吸引，而间隔总是你主动。所以，间隔出来的快乐更稀缺、更宝贵。</p>
 </blockquote>
-<h2 id="名利与幸福"><a href="#名利与幸福" class="headerlink" title="名利与幸福"></a>名利与幸福</h2><h2 id="职业生涯与人生"><a href="#职业生涯与人生" class="headerlink" title="职业生涯与人生"></a>职业生涯与人生</h2><h2 id="破解幸福密码"><a href="#破解幸福密码" class="headerlink" title="破解幸福密码"></a><a href="https://book.douban.com/subject/4269612/" target="_blank" rel="noopener">破解幸福密码</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s4169562.jpg"></p>
+<h2 id="名利与幸福"><a href="#名利与幸福" class="headerlink" title="名利与幸福"></a>名利与幸福</h2><h2 id="职业生涯与人生"><a href="#职业生涯与人生" class="headerlink" title="职业生涯与人生"></a>职业生涯与人生</h2><h2 id="破解幸福密码"><a href="#破解幸福密码" class="headerlink" title="破解幸福密码"></a><a href="https://book.douban.com/subject/4269612/" target="_blank" rel="noopener">破解幸福密码</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s4169562.jpg" alt></p>
 <p>★幸福是什么？<br><strong>有意义的快乐就是幸福。</strong><br>真正幸福的人，不仅仅指的是他生活中的每一个时刻都是快乐的，而是指他的生命整个状态，即使有经历痛苦的时刻，但他明白这些痛苦的真实意义，他知道这些痛苦过后，依然指向幸福。甚至可以说，这些痛苦也是幸福的一部分，他在总体上仍然是幸福的。</p>
 <p>★幸福有哪些敌人？<br>自卑：自卑者主要的误区，在于认为自己不配享有真正的幸福。<br>悲伤：悲伤是“丧失”后不可避免的情感创伤，不必强求消失，让其成为生命的一部分。<br>焦虑：焦虑和人们的性格类型密切相关。A型焦虑，B型长寿，C型高发癌症，D型孤僻。</p>
 <p>★如何寻找幸福？<br>幸福是一种心灵的感受，拥有一颗健康的心才能感知幸福的存在。<br>从容享受现在，不沉迷过去，不给生活开空头支票。<br>恰切评估，对自己有正确的期望，不用完美苛求自己。<br>接纳不可逆转的改变，从生活中寻找新力量，寻找幸福面。<br>建立良好的社会支持网络，有效抗击各种危机。</p>
@@ -353,7 +323,7 @@
 <p>第五章 适当应激，缓解焦虑<br>适当的焦虑，让你保持清醒与活力<br>利用“应激”机制化解焦虑<br>A型性格的人是紧张焦虑的高发分子<br>B、D型性格的心理特征与自我调节<br>给A型开方：放慢生活节奏，学会等待<br>缓解焦虑的生活法则：必须当心，切勿担心<br>良好的社会支持网络，能有效抗击焦虑和危机<br>C型性格的人是癌症的高发分子</p>
 <p>第六章 幸福不是奢侈品<br>了解幸福的真相，构建自己的幸福体系<br>幸福，最重要的是要有目标感<br>自己幸福，也传播分享你的幸福<br>附录 社会再适应评定量表<br>后记 念叨着一种坚定的幸福</p>
 <h3 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a>读书笔记</h3><p> 在毕淑敏心中，幸福最重要的是要有目标感。那到底要如何树立自己的目标感？书中写到，人要有一点使命感，是要有一点崇高感的。一个人可以不信教，但必须要信点什么东西。要信一己私利之上的高远的东西。如果一点都没有，埋在世俗和庸常尘灰之中，每天都是卿卿我我柴米油盐，那就会觉得一辈子和过一天没有多少区别，那就让人萎缩和了无生气。最后，毕淑敏说，“人是一种奇怪的动物，他一定要为生活找点意义。生活本没有意义，所以我们要让它变得有点意义。生活本身并不幸福，所以我们要幸福地生活。”</p>
-<h2 id="《幸福的方法》-苏菲解读"><a href="#《幸福的方法》-苏菲解读" class="headerlink" title="《幸福的方法》| 苏菲解读"></a>《幸福的方法》| 苏菲解读</h2><p> <img alt="1dc1249becdcb8245600bb1ec52e176b.jpg" data-src="http://opb37u589.bkt.clouddn.com/1dc1249becdcb8245600bb1ec52e176b.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="《幸福的方法》-苏菲解读"><a href="#《幸福的方法》-苏菲解读" class="headerlink" title="《幸福的方法》| 苏菲解读"></a>《幸福的方法》| 苏菲解读</h2><p> <img data-src="http://opb37u589.bkt.clouddn.com/1dc1249becdcb8245600bb1ec52e176b.jpg?imageMogr2/thumbnail/!75p" alt="1dc1249becdcb8245600bb1ec52e176b.jpg"></p>
 <p>关于作者<br>泰勒·本-沙哈尔，哈佛大学积极心理学课程讲师，在哈佛创造了选课人数最多的记录，他本人也被哈佛学生评为“最受欢迎的哈佛导师”。</p>
 <p>关于本书<br>在本书里，作者阐述了幸福是什么，影响幸福的因素有哪些，以及如何提升幸福水平。“积极心理学之父”马丁·塞利格曼对这本书进行了高度评价，认为它把教给人们获得幸福的方法和关于幸福的科学研究成果完美地结合了起来。</p>
 <p>核心内容<br><strong>幸福是快乐与意义的结合</strong>。幸福需要兼顾当下利益和未来利益，既有长远而有意义的目标，也享受实现目标的过程。影响一个人幸福水平的因素中，有40%的部分是个人可控的，也就是说，每个人都可以通过自己的努力让自己更加幸福。</p>
@@ -415,7 +385,7 @@
 <p>这条结论也提示我们，<strong>婚姻或许不是获得幸福感的关键，拥有稳固且亲密的社会关系，同样重要</strong>。亲密社会关系的重要性，其实在研究结果里也有体现，虽然四种人群在各个单项指标上的分数，有高有低，但单身的老年男性，各项压力指标都是最高的，也就是说独身的老年男性最不幸福，这一点，也提供给你作为借鉴。</p>
 <p>以上就是心理学家对婚姻与幸福感之间的关系所做的研究，供参考。</p>
 <p>本文源自：Psychology Today（No Partner, No Worries: New Study of Psychological Health）</p>
-<h2 id="没钱更不容易幸福"><a href="#没钱更不容易幸福" class="headerlink" title="没钱更不容易幸福"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=2995&amp;highlight=%E5%B9%B8%E7%A6%8F" target="_blank" rel="noopener">没钱更不容易幸福</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/29/161606dbmwbbtxuorjbs0x.jpg"></p>
+<h2 id="没钱更不容易幸福"><a href="#没钱更不容易幸福" class="headerlink" title="没钱更不容易幸福"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=2995&amp;highlight=%E5%B9%B8%E7%A6%8F" target="_blank" rel="noopener">没钱更不容易幸福</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/29/161606dbmwbbtxuorjbs0x.jpg" alt></p>
 <p>2015-12-03李笑来</p>
 <p>什么是高品质生活？</p>
 <p><strong>在我看来，高品质生活从停止自欺欺人开始。</strong></p>
@@ -495,7 +465,7 @@
 <h2 id="《幸福的方法》-苏菲解读-1"><a href="#《幸福的方法》-苏菲解读-1" class="headerlink" title="《幸福的方法》| 苏菲解读"></a><a href>《幸福的方法》| 苏菲解读</a></h2><p>关于作者<br>泰勒·本-沙哈尔，哈佛大学积极心理学课程讲师，在哈佛创造了选课人数最多的记录，他本人也被哈佛学生评为“最受欢迎的哈佛导师”。</p>
 <p>关于本书<br>在本书里，作者阐述了幸福是什么，影响幸福的因素有哪些，以及如何提升幸福水平。“积极心理学之父”马丁·塞利格曼对这本书进行了高度评价，认为它把教给人们获得幸福的方法和关于幸福的科学研究成果完美地结合了起来。</p>
 <p>核心内容<br>幸福是快乐与意义的结合。幸福需要兼顾当下利益和未来利益，既有长远而有意义的目标，也享受实现目标的过程。影响一个人幸福水平的因素中，有40%的部分是个人可控的，也就是说，每个人都可以通过自己的努力让自己更加幸福。</p>
-<p><img alt="1dc1249becdcb8245600bb1ec52e176b.jpg" data-src="http://opb37u589.bkt.clouddn.com/1dc1249becdcb8245600bb1ec52e176b.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/1dc1249becdcb8245600bb1ec52e176b.jpg?imageMogr2/thumbnail/!75p" alt="1dc1249becdcb8245600bb1ec52e176b.jpg"></p>
 <p>一、幸福的定义</p>
 <p>幸福，是快乐与意义的结合。以当下利益和未来利益为横竖两个坐标轴，人生可以分为四个象限：注重未来利益轻视当下利益的“忙碌奔波型”、注重当下利益轻视未来利益的“享乐主义型”、两者都放弃的“虚无主义型”、两者都看重的“感悟幸福型”。积极心理学认为，只有最后一种类型才是真正的幸福，也就是做到了快乐与意义的结合。</p>
 <p>影响一个人幸福水平的因素中，50%与基因相关，10%与环境相关，剩下的40%是个人可控因素。由此可见，尽管有着先天的决定因素，每个人依然可以通过自己的努力提升幸福水平。<br>财富属于环境因素中的一个。心理学家发现，当生活已经解决了温饱，获得了基本保障，幸福与财富之间的关联性非常低。要想获得幸福，不应该以追求财富为目标，而应该直接追求幸福。当然，这并不意味着要牺牲成功，因为人在获得快乐感受到意义的时候，会激发出更大的潜力，所以幸福的人往往会取得更大的成就。</p>
@@ -514,7 +484,7 @@
 <li>如果你无条件地爱一个人，你就会看重对方的核心价值，而不是他的外在表现。</li>
 <li>把追求财富当作人生目标，并不能保证会得到幸福。</li>
 </ol>
-<h2 id="生命中最美好的事都是免费的"><a href="#生命中最美好的事都是免费的" class="headerlink" title="生命中最美好的事都是免费的"></a><a href="https://book.douban.com/subject/25794725/" target="_blank" rel="noopener">生命中最美好的事都是免费的</a></h2><p><img alt data-src="https://img1.doubanio.com/lpic/s27184117.jpg"></p>
+<h2 id="生命中最美好的事都是免费的"><a href="#生命中最美好的事都是免费的" class="headerlink" title="生命中最美好的事都是免费的"></a><a href="https://book.douban.com/subject/25794725/" target="_blank" rel="noopener">生命中最美好的事都是免费的</a></h2><p><img data-src="https://img1.doubanio.com/lpic/s27184117.jpg" alt></p>
 <h2 id="笔记及摘抄"><a href="#笔记及摘抄" class="headerlink" title="笔记及摘抄"></a>笔记及摘抄</h2><p>你面对阳光的时候，你看什么都是亮堂的。可是你非背对着太阳，那你只能在自己的阴影里。</p>
 <p>当我读到《孟子·离娄下》这一句的时候，突然发现这才是一切的答案：“大人者，不失其赤子之心者也。”</p>
 <p>啥意思？网上有一个解释我认为很好——伟大的人是童心未泯的人。</p>
@@ -612,7 +582,7 @@
 <p>这些是尼尔·帕斯理查这本《生命中最美好的事都是免费的》这本书中少部分内容，他用一颗敏感的心收集到了很多让人们感觉很美好的寻常小事。作者曾创建了一个专门收集这种小快乐的博客，叫“1000件了不起的事”，这些事情，看似微不足道，但确实很美妙。这个博客在2009年获得Webby 奖。这个奖被称作互联网的奥斯卡，可见其分量。</p>
 <p>为什么这么一个网站会受人追捧？其实回到开头的问题，可以知道，人们花时间去收集和整理这些令你愉悦的瞬间，实际上有助于你找回那种与生俱来的天赋！这本书中所涉及到的内容是免费的也是快乐的，是微笑的但是是实实在在的，awesome things是极好的小事，正如小确幸一词！村上村树也说过，没有小确幸的人生，不过是干巴巴的沙漠罢了。</p>
 <p>希望我们在干巴巴的成人世界里，能逐渐找回遗失掉的寻找快乐的天赋！</p>
-<h2 id="哈佛幸福课"><a href="#哈佛幸福课" class="headerlink" title="]哈佛幸福课"></a><a href="https://book.douban.com/subject/6990052/" target="_blank" rel="noopener">]哈佛幸福课</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s7006195.jpg"></p>
+<h2 id="哈佛幸福课"><a href="#哈佛幸福课" class="headerlink" title="]哈佛幸福课"></a><a href="https://book.douban.com/subject/6990052/" target="_blank" rel="noopener">]哈佛幸福课</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s7006195.jpg" alt></p>
 <p>如果明天你接到一个电话：通知你中了1000万元大奖，你猜你会是什么感觉？大多数人可能会说：我会因为这一好运而高兴上很长一段时间。</p>
 <p>如果明天你接到一个电话：通知你被学校退学，或被公司解雇。你又会有何感受？大多数人可能会觉得：自己会因此而消沉上很长一段时间。</p>
 <p>Gilbert这本书所阐述的一个重要发现就是：人类对于未来自己的情感预期，往往和实际有着很大的偏差。你以为中大奖可以让你快乐长久，被解雇会让你一蹶不振，但<strong>事实上，中奖的快乐远没有你预期的那样强烈恒久，被解雇的失落也远没有你想象的那么不可接受。</strong> 一段时间以后，中奖者和失业者都会回归他们中奖和解雇之前的快乐水平。</p>
@@ -693,8 +663,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/People/IPCreator/People/Guo-Ping Zhou/" rel="bookmark">Guo-Ping Zhou</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/Life is not Stubborn/" rel="bookmark">Life is not Stubborn</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/To be yourself/" rel="bookmark">To be Yourself</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Happiness/" rel="bookmark">Happiness</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Life/" rel="bookmark">Life</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Guo-Ping-Zhou/" rel="tag"><i class="fa fa-tag"></i> Guo-Ping Zhou</a>
               <a href="/tags/Happiness/" rel="tag"><i class="fa fa-tag"></i> Happiness</a>
@@ -708,21 +699,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/E/Experts/" rel="next" title="Expert">
-                  <i class="fa fa-chevron-left"></i> Expert
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/A/Art/" rel="prev" title="Art">
-                  Art <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/E/Experts/" rel="prev" title="Expert">
+      <i class="fa fa-chevron-left"></i> Expert
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/A/Art/" rel="next" title="Art">
+      Art <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -735,7 +723,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -766,8 +776,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -776,14 +786,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -794,11 +804,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -832,7 +837,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -844,51 +849,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -897,18 +863,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -918,63 +878,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -982,14 +885,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1016,40 +919,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/H/Happiness/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

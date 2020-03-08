@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="万丈高楼平地起。">
 <meta name="keywords" content="Wisdom,Base,Logic,Concept,Connection">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Wisdom/" itemprop="url" rel="index">
-                    <span itemprop="name">Wisdom</span>
-                  </a>
+                  <a href="/categories/Wisdom/" itemprop="url" rel="index"><span itemprop="name">Wisdom</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Wisdom/2020/Base/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Wisdom/2020/Base/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Wisdom/2020/Base/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="/img/content/baseface.jpg"></p>
+        <p><img data-src="/img/content/baseface.jpg" alt></p>
 <blockquote>
 <p>万丈高楼平地起。</p>
 </blockquote>
@@ -296,27 +266,27 @@
 <p>套路是指我们解决问题的方法论，这个也非常重要。比如，5W2H 分析法就是一个非常好的，可以帮助我们分析问题的一个”套路”。试想一下，面对任何一个问题，你都能从 Why、Who、When、Where、What、How 和 How much（如下图所示），七个方面去思考。是不是比不知道这个方法论的人，用点状的思考，5W2H 分析法就全面得多。</p>
 <p>例如，我们在对问题域进行分析和领域知识提炼的时候，就可以用上5W2H。5W2H模型给出了具有指导意义的约束，要求我们提炼的领域知识必须具备模型的六个要素。这就好比两位侃侃而谈的交谈者，因为有了确定的主题与话题边界，一场本来是漫无目的野鹤闲云似的闲聊就变成了一次深度交流的专题高端对话。</p>
 <p>逻辑是一种能力，而套路是方法论，是经验。逻辑是道的东西，而方法论是术的东西。二者都很重要，只有熟练的掌握二者我们才能更好的进行结构化思考。</p>
-<p><img alt data-src="/img/content/5w2h.jpeg"></p>
+<p><img data-src="/img/content/5w2h.jpeg" alt></p>
 <p><a href="http://www.luojiji.com/thread-9101-1-1.html" target="_blank" rel="noopener">莫言：当不好士兵的人也当不好将军</a></p>
 <p>在汕头大学的毕业典礼上，诺贝尔文学奖得主莫言鼓励毕业生们，即使毕业之后做一份普通的工作，也应该尽职尽责。莫言当过20年的兵，在当兵时有一句耳熟能详的话，不想当将军的士兵不是好士兵。但莫言认为， “这句话其实是片面的，如果所有的士兵都能成为将军，谁来冲锋陷阵？一将功成万骨枯，当了将军的士兵是极少数，构成一支军队的大多数是根本不当将军的士兵，而不想当将军的士兵未必不是好士兵”。 后来，有人告诉他，拿破仑的原话是，<code>不想当将军的士兵，不是好士兵，而当不好士兵，永远当不好将军。</code></p>
 <p>莫言说：“我们希望大家创新、创业，立大志，做大事，发大财。但毕竟最终能当上大官、做成大事、发了大财的是极少数人，而大多数人在普通的岗位上<code>勤勤恳恳的、踏踏实实的、一丝不苟的认真负责地工作着，这样的人是支撑这个社会宝塔的最坚实的基座。</code>他们虽然得不到万千粉丝的追捧，虽然得不到勋章和奖牌，虽然得不到绚丽的舞台上出彩的机会，但作为一个为社会为他人也为自己辛勤劳动的人，也是值得尊敬的、平凡而伟大的、了不起的人。</p>
 <h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><h3 id="宇宙中已知的17种粒子"><a href="#宇宙中已知的17种粒子" class="headerlink" title="宇宙中已知的17种粒子"></a><a href="https://www.toutiao.com/a6748396804523426316/" target="_blank" rel="noopener">宇宙中已知的17种粒子</a></h3><p>茶杯、冰块、圆珠笔、绿植、沙发……这些我们日常生活中所熟悉的东西都是由什么组成的？</p>
 <p>​显然，它们有着不同的材质、颜色和形状，这是否意味着它们是由不同的东西组成的？如果我们能够将它们一直分割下去，是否会发现它们其实都是由一个最小的单元组成的？</p>
 <p>一开始，原子被认为是构成物质的基础单元，<code>原子的英文“atom”一词有“不可分割”之意</code>。科学家发现了100多种不同类型的原子，将它们排列在那张悬挂于世界各地化学教室墙上的元素周期表中（今年是门捷列夫提出元素周期表的150周年）。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/2991a250a91d4a0f9f74006d6fc29bda"><br>| 图片来源：Jennifer Johnson</p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/2991a250a91d4a0f9f74006d6fc29bda" alt><br>| 图片来源：Jennifer Johnson</p>
 <p>○ 元素周期表中的元素并不是在宇宙诞生后就全部出现的，而是在漫长的宇宙演化历史中，逐渐在不同的物理过程中形成的。</p>
 <p>但原子并非故事的结局，它并不是不可分割的存在。如果将原子进一步分割就会发现，它实际上是由<code>质子、中子和电子</code>构成的。</p>
 <blockquote>
 <p>质子和中子组成了原子核，而电子则围绕着原子核旋转。原子核周围的电子会与其他原子中的电子结合，并形成复杂的排列；这种结合正是化学的基础，也是我们周围各种物质之所以形态、性质各异的基础。</p>
 </blockquote>
 <p>然而，<code>质子和中子仍不是不可分割的结构，它们是由被称为上夸克和下夸克的微小组分构成的，质子由两个上夸克和一个下夸克组成，中子由一个上夸克和两个下夸克组成。</code></p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/b6283ae46f7947558293ddea88ad7a83"></p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/b6283ae46f7947558293ddea88ad7a83" alt></p>
 <p>现在，我们可以回答开头的问题：日常生活中的所有物质都是由三种粒子——<code>电子、上夸克、下夸克</code>——组成的。所有千变万化的不同物质之间的区别都源于这些粒子是如何排列组合在一起的。</p>
 <p>宇宙中的粒子</p>
 <p>一个有趣的问题是，有没有什么东西不是由夸克和电子构成的？乍听之下你可能很难立即想到这样一个问题的答案。但有一种熟悉的“物质”可能最终会跃入脑海——光。</p>
 <p>把光称为“物质”似乎是很奇怪的，但现代物理学已经确定，光实际上与物质很相似：它以有限地的速度传播（约300000km/s），它会受到引力的影响（这是由爱因斯坦广义相对论所预测的），它甚至是由微小的粒子——光子——组成的。</p>
 <p>如果连光都是由粒子构成的，那么说“一切事物都是由粒子构成的”似乎是一个合理的猜测。那么除了刚才说到的电子、上夸克、下夸克、光子之外，我们还能找到更多这样的粒子吗？答案是肯定的。自现代粒子物理学诞生以来，科学家已经从宇宙射线和粒子对撞机中发现了大量的粒子。幸运的是，在克服了许多令人费解的难题之后，他们发现这些粒子都是由一小组基本粒子所形成的不同组合。这里，基本粒子是指那些无法由更小的物质组成的粒子，是真正不可再分割的，它们共有17个（不包括反物质粒子）：</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/77b7c9c617a9410bbbdd68947db0b561"></p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/77b7c9c617a9410bbbdd68947db0b561" alt></p>
 <p>首先，我们有三个家族，物理学家称为三代，每代都包含了四种物质粒子：两个夸克和两个轻子。在第一代中，我们看到熟悉的上夸克（u）、下夸克（d）和电子（e），以及第四种粒子——电子中微子（ve）。电子中微子是一种非常轻的粒子，它大量产生于太阳之中，由于几乎不与物质相互作用，因此大部分都会直接穿过普通物质。</p>
 <p>第二代和第三代的粒子的性质与第一代粒子完全相同，除了它们更加的重。物理学家至今都不知道，为什么会有三代粒子。这非常奇怪，但事实就是如此。</p>
 <p>除了6种夸克和6种轻子之外，还有四个所谓的规范玻色子，它们是传递力的粒子。例如，光子（γ）负责传递电磁力，即当两个电子相互排斥时，它们实际上是在交换一个光子。此外，另外三种规范玻色子与另外两种基本力有关：胶子（g）负责传递强核力，W和Z玻色子传递弱核力。（注意，这里没有涉及到的是第四种基本的力：引力）。</p>
@@ -381,7 +351,7 @@
 <p>——本期看点——</p>
 <p>罗胖在跨年演讲中提出一个新概念，“国民总时间”。今天我也说一个概念，叫“国民智商”。这个概念可不是我拍脑袋想出来的，我是要说一本书，Hive Mind: How Your Nation’s IQ Matters So Much More Than Your Own（族群心智：为什么你们国家的智商比你自己的智商重要那么多），作者是乔治梅森大学经济学教授加雷特·琼斯（Garett Jones）。</p>
 <p>“智商”是我们非常熟悉，但又很有争议的一个概念。我们知道智商和学习成绩、工作能力都密切相关。可你要说智商重要吧，高智商的人不见得收入和社会地位就高。</p>
-<p>而这本书说的是，国与国之间的智商差异，比人与人之间的智商差异重要得多。下面这张图表现了各国平均智商和人均GDP之间的关系。我们可以看到大致的趋势就是国民智商越高，人均GDP就越高。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201702/04/181139uediqql9fguegg99.jpg"><br>（横坐标是各国平均智商，纵坐标是人均GDP）</p>
+<p>而这本书说的是，国与国之间的智商差异，比人与人之间的智商差异重要得多。下面这张图表现了各国平均智商和人均GDP之间的关系。我们可以看到大致的趋势就是国民智商越高，人均GDP就越高。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201702/04/181139uediqql9fguegg99.jpg" alt><br>（横坐标是各国平均智商，纵坐标是人均GDP）</p>
 <p>可惜图上没有中国。中国的国民平均智商大约是105，算是智商最高的几个国家之一，如果在这张图上的话将会在韩国下面一点。图上还有一些特例，比如卡塔尔的国民智商只有72，人均GDP却非常之高，这是因为卡塔尔是个产油国。中国的人均GDP不高，但是经济增长速度是最快的。</p>
 <p>为什么国民智商比个人智商重要呢？咱们先说一个实验。</p>
 <p>范德比尔特大学的研究者找一群学生做了两个游戏。第一个游戏是简单的做买卖，一人卖东西，一人买东西。卖东西的人希望价格越高越好，买东西的人则希望价格越低越好，双方讨价还价。</p>
@@ -410,7 +380,7 @@
 <p>美军对士兵的所有数据都有一个很好的记录，现在经济学家就很容易用当年的数据做分析研究。结果不出所料，智商越高的人越愿意接受分期付款的形式，而智商低的则都选择了拿25,000美元走人。</p>
 <p>从个人来说，高智商的人更善于考虑长远。琼斯分析这可能是因为想象力。高智商者很容易想象未来，对他们来说，未来和现在的价值是一样的。而低智商的人只知道现在，对未来没想法。</p>
 <p>而对一个国家的群体来说，消费还有一个互相模仿的效应。有研究就发现，如果一个人买彩票中了大奖，不但他会买辆好车，而且他家的邻居也会买辆好车 —— 这是因为邻居想跟他攀比。《精英日课》有篇文章叫《攀比动力学》，说的就是高消费主要是攀比的结果。如果你身边的人都是有钱就花的月光族，那你很可能也是月光族。如果你身边的人都爱存钱，那你很可能也爱存钱。</p>
-<p>那要是一个国家的人总体智商都比较高，都爱存钱呢？这个国家的储蓄率就会特别高。而事实正是如此，下面这张图说的是各国平均智商和储蓄率的情况 ——<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201702/04/181435jsfr7fsgc53srke7.jpg"><br>（横坐标是各国平均智商，纵坐标是储蓄率）</p>
+<p>那要是一个国家的人总体智商都比较高，都爱存钱呢？这个国家的储蓄率就会特别高。而事实正是如此，下面这张图说的是各国平均智商和储蓄率的情况 ——<br><img data-src="http://www.luojiji.com/data/attachment/forum/201702/04/181435jsfr7fsgc53srke7.jpg" alt><br>（横坐标是各国平均智商，纵坐标是储蓄率）</p>
 <p>中国和几个东亚国家在这张图上非常显眼，高智商，高储蓄率。中国政府有时候觉得储蓄率太高是个烦恼，而对其他国家的经济学家来说，有这么高的储蓄率简直是上天的眷顾！储蓄率高，银行就有更多的钱投资，国家就有更好的基础设施，工人就能用上更好的设备。这就是耐心的好处。</p>
 <p>事实上，最有耐心、最愿意储蓄的国家，有一个逆天的力量。经济学家有个推理，说如果实行真正的全球化，资本能在各国随便流动，那么结果就是最有耐心的国家将拥有未来世界的，全部资产。</p>
 <p>因为这个国家可以提供一个最低的贷款利率。如果贷款利率是3%，那对别国很多人来说，这是不借白不借的钱，不但应该借钱投资，而且应该借钱消费！人们会不停地去借钱，一直到那个耐心国家不愿意再借为止。那么接下来，世界上这些借钱的人的所有的工作就都是为了偿还利息！耐心国家实际上拥有世界全部资产，坐等收益。</p>
@@ -469,11 +439,11 @@
 3.如果春节期间家人给你安排了相亲 —— 《精英日课》给你的建议是选个智商高的。不一定准，但统计表明，总体而言，高智商夫妇哪怕将来闹离婚，都能找到一个双赢的方式。
 </code></pre><p>好了，今天的《罗辑思维》节目就到这里，祝大家春节好！</p>
 <p>——本期荐书——</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201702/04/181454mmhh75reqnnht75c.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201702/04/181454mmhh75reqnnht75c.jpg" alt></p>
 <p>Hive Mind: How Your Nation’s IQ Matters So Much More Than Your Own<br>作者： Garett Jones<br>ISBN13： 9780804785969<br>类型： 精装<br>出版日期： 2015-11-11<br>出版社： Stanford Economics and Finance<br>页数： 224<br>重量（克）： 453</p>
 <p>——本期荐文——</p>
 <p>关于人的各项技能之间“相关”的话题，推荐你看《精英日课》中对《平均的终结》这本书的一篇解读文章：《不规则人才》，现已更新在本专栏里，欢迎阅读。</p>
-<h3 id="品味是个什么鬼？"><a href="#品味是个什么鬼？" class="headerlink" title="品味是个什么鬼？"></a><a href="http://www.luojiji.com/thread-4857-1-1.html" target="_blank" rel="noopener">品味是个什么鬼？</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201605/12/111028td6nd3mncef0uf3k.jpg"><br>2016-05-12 张佳玮 罗辑思维</p>
+<h3 id="品味是个什么鬼？"><a href="#品味是个什么鬼？" class="headerlink" title="品味是个什么鬼？"></a><a href="http://www.luojiji.com/thread-4857-1-1.html" target="_blank" rel="noopener">品味是个什么鬼？</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201605/12/111028td6nd3mncef0uf3k.jpg" alt><br>2016-05-12 张佳玮 罗辑思维</p>
 <p>“伟大的莎士比亚，老年间在欧洲大陆几个国家，常被绅士们骂成色情、暴力、粗俗。可是在 2016 年，朗诵莎翁的诗，在哪里都是有品味的事。”<br>1<br>——————</p>
 <p>巴尔扎克是个俗气的死胖子，每当骗到预付稿费，他便迫不及待去搞花里胡哨的装饰，勾搭贵妇人。</p>
 <p>同时代的诸位，大家都觉得他没品味，甚至对他推崇不已的毛姆，都觉得他故事讲得好，可是文笔差。但这不妨碍如今，你书架上放一本他的书，客人翘大拇指：有品味！</p>
@@ -530,7 +500,7 @@
 <li>强烈的情绪永远没有“品味”。</li>
 <li>“品味”是加入一个圈子的通行证。如果你不想加入，那就不用鸟他们了。</li>
 </ol>
-<h3 id="自相矛盾才有第一等智慧"><a href="#自相矛盾才有第一等智慧" class="headerlink" title="自相矛盾才有第一等智慧"></a><a href="http://www.luojiji.com/thread-3966-1-1.html" target="_blank" rel="noopener">自相矛盾才有第一等智慧</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201602/21/075201gtfc39ftdddxzf2d.jpg"><br>2016-02-21王烁</p>
+<h3 id="自相矛盾才有第一等智慧"><a href="#自相矛盾才有第一等智慧" class="headerlink" title="自相矛盾才有第一等智慧"></a><a href="http://www.luojiji.com/thread-3966-1-1.html" target="_blank" rel="noopener">自相矛盾才有第一等智慧</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201602/21/075201gtfc39ftdddxzf2d.jpg" alt><br>2016-02-21王烁</p>
 <p>1<br>————————</p>
 <p>人们重视一致性。言行一致，前后一致，无论历经什么处境，我们要求一个人得始终如一，做得到就是信人，做不到就是伪君子，而伪君子比真小人还要坏，因为真小人好歹还有个一致性。对一致性的爱好基至超越了善举恶行之分。</p>
 <p>可是，事情没有这么简单。</p>
@@ -583,7 +553,7 @@
 <p>本文由作者 王烁 授权罗辑思维发布，选自作者微信公众号 “BetterRead”，推荐关注。</p>
 <p>罗胖日：</p>
 <p>存在主义哲学有一个核心主张——<br>人生，就是一系列面向未来的选择。<br>“人在把自己投向未来之前，什么都不存在。”<br>小到点菜，大到恋爱，所有的选择都是——<br>在两个截然相反的“正确道理”之间，找到那条细如发丝的黄金中道。</p>
-<h3 id="假如可以回到过去，你能否改变自己的命运？"><a href="#假如可以回到过去，你能否改变自己的命运？" class="headerlink" title="假如可以回到过去，你能否改变自己的命运？"></a><a href="http://www.luojiji.com/thread-15285-1-1.html" target="_blank" rel="noopener">假如可以回到过去，你能否改变自己的命运？</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201908/14/113238piu2uhu1dj282321.jpg"><br>原创： 老喻  罗辑思维  今天<br>┌<br>今天我们来讨论一个问题：</p>
+<h3 id="假如可以回到过去，你能否改变自己的命运？"><a href="#假如可以回到过去，你能否改变自己的命运？" class="headerlink" title="假如可以回到过去，你能否改变自己的命运？"></a><a href="http://www.luojiji.com/thread-15285-1-1.html" target="_blank" rel="noopener">假如可以回到过去，你能否改变自己的命运？</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201908/14/113238piu2uhu1dj282321.jpg" alt><br>原创： 老喻  罗辑思维  今天<br>┌<br>今天我们来讨论一个问题：</p>
 <p>假如可以乘时光穿梭机回到过去，改变人生中任意一件事，你能否改变自己的命运？</p>
 <p>每个人都有自己的答案，关于这个问题，「得到」作者老喻也给出了自己的回答，希望对你有所启发。</p>
 <p>—————————— 1 ——————————<br>我们能改变命运吗</p>
@@ -609,8 +579,8 @@
 <p>但大数定律告诉我们，下一次出现正面或者反面的概率仍然各是50%，下一次的结果与之前无关。硬币是没有记忆的。</p>
 <p>如果你是扔硬币的那个人，你可能会疑惑，都连续抛出了20个正面了，我们还能相信扔硬币反面朝上的概率是50%吗？是不是正面的概率就要高一些呢？</p>
 <p>有这样的疑问，是因为你尝试的次数还不够。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s28278582.jpg"></p>
-<p>1939年，南非数学家克里奇冒失地跑到欧洲，结果被关进集中营。百无聊赖的时候，他给自己找到了一个乐子：他把一枚硬币抛了1万次，记录了正面朝上的数量。统计结果用一张图来表示更直观：<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201908/14/113656nopz922vzt8v2b10.jpg"><br>注：图片来自《<a href="https://book.douban.com/subject/26594366/" target="_blank" rel="noopener">魔鬼数学</a>》</p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s28278582.jpg" alt></p>
+<p>1939年，南非数学家克里奇冒失地跑到欧洲，结果被关进集中营。百无聊赖的时候，他给自己找到了一个乐子：他把一枚硬币抛了1万次，记录了正面朝上的数量。统计结果用一张图来表示更直观：<br><img data-src="http://www.luojiji.com/data/attachment/forum/201908/14/113656nopz922vzt8v2b10.jpg" alt><br>注：图片来自《<a href="https://book.douban.com/subject/26594366/" target="_blank" rel="noopener">魔鬼数学</a>》</p>
 <p>从这张图里，我们可以看到，一开始的<a href>概率</a>偏离50%特别远，很多次都是正面。随着抛硬币的次数越来越多，正面朝上的概率明显地向50%靠近。</p>
 <p>其实，计算机模拟的结果也是这样：①抛10枚硬币，正面朝上的比例范围是30%-90%；②抛100枚，比例范围就缩小了，变为了40%-60%；③抛1000枚，比例范围就缩小到46.2%-53.7%。越来越接近50%。</p>
 <p>那是不是有一种神秘力量，让结果不断逼近50%呢？</p>
@@ -661,7 +631,7 @@
 <p>第五个是企业一定要记住四个字，那就是<code>广、深、高、速</code>，就是广度、深度、高度和速度。很多创业者有高度，概念都很高大上；速度也有，团队没几天就能冲到百十号人；广度也有，一下就覆盖了几个城市，但容易欠缺的是深度。阿里当年成功重要的一点就是深度。2005年在全国只有江浙沪三个区，但是三个区都做得很深，都做到乡镇级，别人插不进来。深度够了，才可以跑广度、拉速度。但今天很多人搞创业，只做好了广、高、速三个字，没做好深度，摊子到处铺，产品线一大堆，这很危险。<code>其实创业第一件事就是要活下来，要活下来就必须要有自己的一亩三分地，做好深度。</code></p>
 <p>所以你看，不管是哪个行业，无论你怎么创新，总有一些颠扑不破的真理。因为社会、商业的本质属性都是不变的，违背本质规律，必然会失败，再新奇也没有用。所以，<code>无论是创业还是什么，都不要把眼光只盯在新上，前人用双脚踏出来的路还是值得你参考参考。</code></p>
 <p>本文源自：微信公众号“投资人说”（嘉御基金 · 卫哲：有些商业本质是拿来尊重的，决不能随意改变）</p>
-<h3 id="3k党和房产中介是一路货色"><a href="#3k党和房产中介是一路货色" class="headerlink" title="3k党和房产中介是一路货色"></a><a href="http://www.luojiji.com/thread-5239-1-1.html" target="_blank" rel="noopener">3k党和房产中介是一路货色</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29014970.jpg"></p>
+<h3 id="3k党和房产中介是一路货色"><a href="#3k党和房产中介是一路货色" class="headerlink" title="3k党和房产中介是一路货色"></a><a href="http://www.luojiji.com/thread-5239-1-1.html" target="_blank" rel="noopener">3k党和房产中介是一路货色</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29014970.jpg" alt></p>
 <p>我们都听说过三K党，是美国最为臭名昭著的黑帮组织。最近有一本新书《<a href="https://book.douban.com/subject/1676611/" target="_blank" rel="noopener">魔鬼经济学</a>》，里面说房产中介和三K党是一路货色，这是为什么呢？难不成是因为房产中介之间也都拉帮结派？当然不是，房产中介和三K党之间的共通之处在于，<code>他们都是信息的垄断者，他们的权利也源自信息的垄断</code>。具体怎么回事呢？我们来听听。</p>
 <p>先来说说三K党。三K党的发展可以说是跌宕起伏，从美国南北战争结束之后，三K党就成立了，到了20世纪的20年代，三K党在全国已经有800万门徒。二战期间，三K党遭到一次大的打击，但是在战后就很快就又卷土重来了，生命力非常顽强。但是，如此顽强的三K党，最终还是被消灭了。你可能很好奇，它是怎么被消灭的呢？</p>
 <p>说来简单到你都可能不信，就是因为三K党内部的消息被公开了。当时肯尼迪一心想消灭三K党，他收集了大量三K党的情报。肯尼迪还和一个叫布朗的人合作，这个人打入到了三K党内部，获取了大量的内幕消息。总之，这两个人把三K党摸的门儿清。然后他们干了一件事，就是把这些消息通过广播都给播出去了。他们编了一个节目叫《超人历险》，在故事里把三K党设置为反派角色，把调查到的内幕消息全都播出去。从那以后，三K党就再也不是一个既神秘又酷的组织了，大家都知道了三K党的内幕消息之后，就不再向往加入三K党了。慢慢的，没有了信息的不对称，三K党的特权消散了，没人加入了，也就消失了。也就是说，<code>内部消息的保密性是维持三K党生存的关键。</code></p>
@@ -803,7 +773,7 @@
 <p>继续吃饭，睡觉，旅行，刷抖音？</p>
 <p>这能赚钱吗？可以。</p>
 <p>不过你得先了解什么是“感官兴趣”、“自觉兴趣”和“志趣”。</p>
-<p><img alt data-src="/img/content/interest001.jpg"></p>
+<p><img data-src="/img/content/interest001.jpg" alt></p>
 <p>刷抖音只是“感官兴趣”。</p>
 <p>这种兴趣很原始。好奇，多变，不稳定。就好像你在抖音上刚被一个小哥哥/小姐姐撩得动了心，下一秒又被一个更美的迷住了眼。这样的我们和一只追逐毛球的猫没什么区别。我们不停地被主人手中变幻的玩具所吸引。外界的刺激决定了感官兴趣的长度和强度。这很动物！</p>
 <p>当你开始琢磨怎么拍，怎么运镜，怎么设计分镜头，你就进入到“自觉兴趣”。</p>
@@ -833,15 +803,15 @@
 <p>那么如何具备持续学习的能力？</p>
 <p>在我看来，首先要搭建底层逻辑思维，缺乏系统思考及输出能力的人，不懂得复盘进化的人，最终会沦为螺丝钉。</p>
 <p>当然，除了系统思维外，结构化思维和复利思维也很重要。本篇主要分享系统思维的能力（提炼于系统之美）。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/RTqE1aoI5r0yrh"></p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/RTqE1aoI5r0yrh" alt></p>
 <p>——— 温馨提示：以下全是费脑子的干货 ———</p>
 <p>一、什么是系统思考？<br>系统思考是整体地、动态地、连续地思考问题的思维模式，是在复杂动态系统中的一种以简驭繁的智慧。</p>
 <p>我们每天都会遇到各式各样的问题，但很多人都只是机械的应对，专注于事件层面的响应，而未触及问题产生的原因。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/RTqE1b4HIXe9ez"></p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/RTqE1b4HIXe9ez" alt></p>
 <p>面对这些问题，我们更应提升系统思考能力，因为系统思考是“见树又见林”的能力，它能够帮助人们解决复杂问题、推动组织成长、提升组织能力、能够建设学习型组织的核心技能。</p>
 <p>二、系统的基本组成<br>那么想要具备系统思考的能力，需要先了解身边都存在什么系统，人自身是一种系统、森林是一种系统、社会组织也是一种系统，系统无所不在。但无论是心智模型还是数学模型，系统都是对现实世界的一种简化。</p>
 <p>无论系统如何千变万化，但都离不开三种构成要件：·要素、连接、目标·。没有任何内在连接或功能的组合体不是一个系统。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/RTqE1bF4skHQmP"></p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/RTqE1bF4skHQmP" alt></p>
 <ul>
 <li>要素：不一定是有形的，对于一所知名大学来说学术能力和声誉也是要素之一；</li>
 <li>连接：那些把要素整合在一起的关系；</li>
@@ -851,15 +821,15 @@
 <p>举个栗子：互联网团队是一种系统。</p>
 <p>团队的要素：包括人员（产品经理、设计师）、产出物（需求文档/设计文档）、设计流程（协作）、工作沉淀（规范经验）、设计影响力等；<br>团队的连接：是共同目标下的跨职能协同、经验分享、业务导向的设计配合等；<br>团队的目标：满足用户诉求，并以可视化的方式将需求转化为产品，保证体验上的有用、好用、想用等。</p>
 <p>三、系统的三大特征<br>纵观身边的系统，譬如一台机器、一个社区、亦或是一个生态系统，能够和谐运转的前提是具备至少一个以下的特征：<code>适应力、自组织、层次性。</code></p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/RTqE1bQAk7Lhm3"></p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/RTqE1bQAk7Lhm3" alt></p>
 <p>怎么理解呢？</p>
 <p>（1）<strong>适应力</strong></p>
 <p>有适应力的系统是会动态变化的，一直保持恒定不动的系统是没有适应能力的，可以理解为活水与死水：活水有水的流入流出，遇到旱季和雨季可以灵活调节应对；死水因为没有流入流出的渠道，遇到干涸季只能蒸干旱涝。</p>
 <p><em>DeepCreator：问渠那得清如许，为有源头活水来</em></p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/RTqE1rnEeDe9B0"></p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/RTqE1rnEeDe9B0" alt></p>
 <p>（2）自组织</p>
 <p>人类是相比而言复杂的系统，比较显著的特征包括能自我学习、多元化、复杂化和进化的能力。人类从刀耕火种，进化到蒸汽机、专业流水线作业以及全球化通信网络的发展，都是自组织的特征。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/RTqE1s3GbjqxGK"></p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/RTqE1s3GbjqxGK" alt></p>
 <p>（3）层次性</p>
 <p>系统和子系统的包含和生成关系，就是层次性。譬如我们体内的细胞是器官的一个子系统、器官又是身体的一个子系统。</p>
 <p>举个栗子：</p>
@@ -867,7 +837,7 @@
 <p>四、系统思考的6大障碍<br>想要全面地具备系统思考纬度，先逆向了解一下哪些问题会阻碍你系统思考，譬如：系统思考不能只看短暂的、外在表象层，应该挖掘系统内在解构；譬如系统思考需要考虑各种限制性因素，如时间的延迟。接下来将一一剖析。</p>
 <p>（1）挖掘系统的本质</p>
 <p>当遇到一个问题时，善于进行系统思考的人要做的第一件事是<code>寻找数据</code>，了解系统的<code>历史情况</code>以及行为随时间变化的<code>趋势图</code>。要做到<code>知其然，知其所以然</code>。分析行为层而非表象层的事件才能找到根源所在。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/RTqE1sGBNde1Ll"></p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/RTqE1sGBNde1Ll" alt></p>
 <p>（2）在非线性的世界里，不要用线性的思维模式</p>
 <p>很多人都知道一分耕耘一分收获，那么两分耕耘就会得到两分收获吗？在非线性的系统里，有可能只会得到1/2的收获，也可能会得到4倍的收获，或者根本得不到收获。</p>
 <p><em>DeepCreator：先复杂，再简化</em></p>
@@ -877,7 +847,7 @@
 <p>任何成长都存在限制因素，有些限制是自发的；有些这是系统施加的。譬如小朋友不管吃多少碳水化合物，如果缺少蛋白质，身体也不会健康。同理，不管会有多少客户，没有资本，公司也无法正常运转。因此，从根本上讲，关键不是追求持续成长，而是选择在哪些因素的限制下维持生存。</p>
 <p>（5）无所不在的时间延迟</p>
 <p>生活中，系统延迟比比皆是。改变延迟的长短可以彻底地改变系统行为，譬如提升团队的设计质量可以通过内审评估完成，但培养设计师赋能和沉淀复盘需要的时间往往比改动设计方案长很多。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/RTqE1sSE00TRoV"></p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/RTqE1sSE00TRoV" alt></p>
 <p>（6）有限理性</p>
 <p>人们会基于掌握的信息制定理性决策，但由于人们掌握的信息通常都是有限的、不完整的，尤其是对于系统中相隔较远或不熟悉的部分，由此导致他们的决策往往并非整体最优。</p>
 <p>举个栗子，世界各地的游客蜂拥而至青海茶卡盐湖，却导致了景点被个人意愿所破坏；再譬如今年农民生产了过多的小麦，导致了价格暴跌；再譬如穷人本来就不富裕，却比富人生育和扶养着更多的孩子。</p>
@@ -893,7 +863,7 @@
 <p>8种普世基模及对策（划重点）</p>
 <p>系统思维就好比学数学，精通数学的前提一定是能将基础数学公式及用法熟记于心。同理要想训练系统思维，首先要了解世界上已经存在的基础模型（以下简称基模）。</p>
 <p>接下来我们将介绍8种世界上常见的系统基模以及解决策略。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/RTte3aRDEyRj58"></p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/RTte3aRDEyRj58" alt></p>
 <p>一、目标冲突</p>
 <p>这种系统基模中，各子系统的目标不同或不一致时，就会产生变革的阻力。譬如当今社会毒品泛滥，政府采取了各种禁止、打击措施，但毒品泛滥依旧；再譬如当经济不景气之时，政府出台减税和刺激投资的政策，但事实上依然没什么效果。</p>
 <p>在一个具有“政策阻力”的系统中，多个参与者有不同的目标。</p>
@@ -967,7 +937,7 @@
 <p>其实身边很多事情都围绕着这8个系统模型：譬如团队驱动乏力、遇到瓶颈无法突破很可能存在团队内目标冲突亦或是目标错位；譬如和别人沟通为什么容易不欢而散，可以考虑使用竞争升级的对策；譬如沉迷游戏无法自拔，抵御上瘾，可以试试构建长期目标而非被短期重点所吸引。</p>
 <p>不断有意识地训练自己能够预先识别陷阱，不去触发它们或改变其结构，让自己的思维更有深度、更加系统化。譬如重设目标，增强、减弱反馈，增加新的反馈，都可以使自己获得额外的机会。</p>
 <h3 id="NLP”逻辑层次“理论"><a href="#NLP”逻辑层次“理论" class="headerlink" title="NLP”逻辑层次“理论"></a><a href="http://www.sohu.com/a/288462673_718241" target="_blank" rel="noopener">NLP”逻辑层次“理论</a></h3><p>”逻辑层次“理论，它是由NLP（神经语言程序）大师罗伯特迪尔茨提出的。</p>
-<p><img alt data-src="/img/content/base.jpg"><br>（逻辑层级理论图）</p>
+<p><img data-src="/img/content/base.jpg" alt><br>（逻辑层级理论图）</p>
 <p>从这个图上我们可以看出：</p>
 <p>愿景层位于最高层，是关于我们想要实现的愿景是怎样的？梦想是怎样的？<br>身份层是关于“我是谁”的。<br>价值观层是关于“什么是重要的？以及为什么？”的。<br>能力层是关于我的能力的，包括状态、策略和处世模式。<br>行为层则是关于我做什么或者我已经做了什么的，具体的行动步骤和行为。<br>而最低一层的环境层则是指我所处的环境究竟是怎么样的。</p>
 <p>根据罗伯特·迪尔茨的这套“逻辑层次”理论，当我们想要去改变较低层次时，通过改变更高一层往往更加有效。同时，当我们在思考低层次的问题时，也不该忘了还得去更高层级看看导致低层次<a href="https://hazyman.com/Profession/Habit/">习惯</a>发生的根本原因。</p>
@@ -1109,7 +1079,7 @@
 </li>
 </ol>
 <h3 id="为什么名正才能言顺？没有比改朝换代更强的经验了"><a href="#为什么名正才能言顺？没有比改朝换代更强的经验了" class="headerlink" title="为什么名正才能言顺？没有比改朝换代更强的经验了"></a><a href="http://www.luojiji.com/thread-14505-1-1.html" target="_blank" rel="noopener">为什么名正才能言顺？没有比改朝换代更强的经验了</a></h3><p>原创： 「罗辑思维」  罗辑思维  今天</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201903/27/111523qf37xggzx34xzv71.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201903/27/111523qf37xggzx34xzv71.jpg" alt></p>
 <p>今天，我们来讨论一个问题：</p>
 <p>为什么名正才能言顺？</p>
 <p>人生一切难题，知识给你答案。</p>
@@ -1158,11 +1128,11 @@
 </ol>
 <p>让我们对《吾国与吾名》的作者胡阿祥，出版方江苏人民出版社，说一声感谢！</p>
 <p>最后，与你分享金句，欢迎你收藏并转发：</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201903/27/112052ap7lbaxlyb7kzlqs.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201903/27/112052ap7lbaxlyb7kzlqs.jpg" alt></p>
 <h3 id="为什么一定要自学？"><a href="#为什么一定要自学？" class="headerlink" title="为什么一定要自学？"></a><a href="https://b.xinshengdaxue.com/A24.html" target="_blank" rel="noopener">为什么一定要自学？</a></h3><p>自学从来都是少数人的特长。<br>我们所谓的“自主升级自己的操作系统”，就是反复自学的过程。人为什么一定要有自学能力呢？每个人的理由不一样，我分享一下我自己的理由。<br>许多年前，听到人家说，<br>教师是人类灵魂的工程师。<br>这句话吓坏我了。几乎从一开始我就担心有些老师其实是滥竽充数的，而许多年之后自己也不幸做了好多年的教师，确凿地证实了自己当年的怀疑就是正确的…… 古今中外，大多数教师其实是无照执业的，剩下的就算有照，那证照也是胡乱发的。当年一想到自己的灵魂可能被他们胡搞乱搞，当场就慌了、当场就怕了、当场就知道自己必须学会自学，自己的灵魂必须自己塑造，交给谁搞都不可能放心 —— 这事儿必须自己来。<br>我个人对这个想法有多么坚定呢？几乎从一开始我就相信：<br>教，才是最好的学习方法。<br>这个道理永远都是对的。不过，小时候的我，是个混蛋，常常无所顾忌，开玩笑没边没沿。那时候我经常自得地说，这其实是“通过搞乱别人的思想净化自己的灵魂。” 成年之后深刻地明白这有多么恶毒，连开这种玩笑都应该是万劫不复的。当然，很多滥竽充数的老师，最终事实上做到的，其实是“用被搞乱了的灵魂继续毒害他人的思想”……真不知道要比许多年前那个无所顾忌的小王八蛋差出多少个等级呢。<br>随着时间的推移，我越来越发现自学真的很简单，简单到什么程度呢？若是一个人竟然在成年后依然没有掌握这个基础的技能，那么他就注定一生只不过是个低级动物。<br>自学很简单，其实就是不断习得、积累、研究、打磨、升级那些概念和方法论。进一步来看，<br>自学能力是靠积累增强的。<br>开始自学的人，越学越快。自学的人好比给自己的脑子开了个黑洞，刚开始看不出来，因为那黑洞的质量太小，乃至于跟没有一样；但随着时间的推移，那黑洞的质量逐步积累，渐渐地，另外一个现象终究会产生 —— 很多知识就好像是“不由自主”地飞进他们的脑子里。<br>如何解释这个现象呢？善于自学的人，最终会形成一个重要的能力：<br>融会贯通。<br>而融会贯通的前提是什么呢？在《惊喜与创造惊喜的方法论》里，我其实已经论述过此事：<br>只有概念多到一定程度的时候，它们之间才有机会产生“意外的连接” —— 即，所谓的融会贯通。<br>善于自学的人，时时刻刻都在学习、在思考，这极大地增加了他们“偶然”发现什么、“突然”想到什么、“忽然”就得到了什么新结论诸如此类的概率，对他们来说，即便是“偶然”，也是更为高频的“偶然”，进步、持续进步、大幅度进步，对他们来说是斜率更大的必然线条。那只苹果掉下来的时候，正好被牛顿看到，而后那一瞬间牛顿的“顿悟”，就是这种现象的体现 —— 掉下来的是不是苹果根本不重要，有没有那只苹果也不重要，迟早而已的事情，因为牛顿早晚会在某一时刻看到其他的什么东西，“突然”想到早晚该想到的东西。<br>不仅如此，善于学习的人会越来越善于学习，学习能力会越来越强，因为在一个知识点上的感悟，不知道什么时候会在另外一个知识点上发挥效用。知识点（概念与方法论）就好像是有生命的东西一样，它们自己会发酵，它们自己会相互连接，它们自己会相互碰撞，进而产生出更多有生命的东西。<br>学习几乎是唯一一个可以必然产生惊喜（意外的好运，Serendipity）的日常活动。并且，那些伴随着惊喜的幸福感（多巴胺分泌）就是一直在持续增长。<br>刚开始并不明显，到了后来，就完全不一样了，你自己就是自己的灵魂的工程师。你就真的像个工程师一样，在塑造自己的灵魂，常常要花很长时间“发呆” —— 用自己的灵魂思考自己的灵魂还缺什么，还需要什么，还有哪些地方需要加强，活着需要弥补……然后，动用自己的灵魂的所有能量去做该做的事情……<br>偶尔我会听一首老歌，Pink Floyd 有句歌词：<br>We don’t need no education.<br>这看起来深刻的歌词在我眼里有着诡异的扭曲，因为这世界上有一类人，从来都不需要 education，他们从一开始就 edmecation —— 不知道大家看出来没有，我和身边的一些同类一样，每天都在造词，乐此不疲 —— 这是一种貌似无聊却必然惊喜连连的隐秘游戏。<br>另外，自学这事儿， 方法并不首要，首要的是态度。<br>所有讨厌学习、抗拒学习，最终彻底放弃学习的人，都是因为学习这事儿对他们来说，从来都不是为自己做的事情。他们从来都是“为了别人学习”，比如为了满足父母的要求，或者为了保持面子的需求 —— 反正不是为了自己进步的需求。 不为自己做的事儿，做久是不大可能的 ，于是，自然而然产生讨厌，产生抗拒，自然最终能放弃就马上放弃。<br>所以最终，离开学校之后，到了工作岗位上，绝大多数人都不是 给自己打工 ，而是 给别人打工 …… 这只不过是在延续他们长期的生活方式而已。<br>有个现象，人们经常看到，就是：<br>有些在学校里成绩一般的人步入社会之后却最终成就很大；<br>同时，还有很多在学校里成绩很好的，后来却泯然众人矣……<br>遇到一个普遍的现象，而后对其做出正确的分析，得到正确的结论，是一个人有良好的思维能力和习惯的重要表现和进一步成长的前提。<br>遇到上面提到的现象，人们普遍对其的解释是完全不经分析、禁不住推敲的：<br>…… 这就证明上学没什么用麽！<br>真正靠谱的解释是这样的：<br>人无非分为两种：<br>有一类人做什么事儿都是为了自己而做，即便在某件事儿上做得并不好；<br>另一类人做什么事儿都是为了别人而做，即便在某件事儿上做的还不错；<br>在这样的理解下，是无论如何都得不出“上学其实没什么用”的结论的。<br>在这一点上，人与人之间开始分化，为自己而努力的人逐步变成所谓的精英，为别人对付事儿的人逐步变成所谓的庸众。是啊，为自己做事儿，就肯定更努力啊！为别人做事儿就自然而然地应付了事么！<br>如果你想创业找个靠谱合伙人，那么请注意两个根基：<br>远离那些“表现型”选手 ，无论多费劲也要去找到那些“进取型”选手。<br>远离那些应付了事的人 ，无论多费劲也要去找到那些“把事情当作自己的事儿来做”的人。<br>（想了解什么叫“表现型”选手（Be-Good Type）、“进取型”选手（Be-Better Type），请阅读《成功，动机与目标》，豆瓣链接：<a href="http://book.douban.com/subject/22994632/" target="_blank" rel="noopener">http://book.douban.com/subject/22994632/</a> ）<br>其实这两个根基是同根生的特质。那些“表现型”选手，更在意的是自己当前的表现，别人对自己的看法；那些“进取型”选手，更在意的是自己当前的进步过程，更重视自己对自己的评估及其准确性，以便“明天会更好”。后者才可能成为“ 活在未来”的人。<br>“表现型”选手做事常常不是为了自己的进步 ，而是为了自己当下表现得多好，也就是说，为了获得更多的当时的认可。这细微的差异，长期却造成天壤之别。对于“表现型”选手来说，外部的反馈，构成了全部的“回报”，决定了努力的成本。家长多夸几句，就再多学一点点，以便继续被夸；工资多涨一点，就尽量显得多做一点，否则多不划算啊！这是他们真实的念头。<br>“进取型”选手做事是为了自己的进步 ，做事的收获，最大的部分不是来自外部的奖励或者赞赏，最大的部分是自己的进步；即便在做得不足够好的时候，甚至外部只有忽视和鄙视的时候，收获依然清晰：无论如何都有一些哪怕看不着但确实体会得到的进步啊！<br>但这也确实是个非常隐蔽的陷阱：<br>明明是为了别人而活，却真切地感觉是“为了自己的利益”；<br>明明是为了自己而活，却最终不仅显得也确实是“大公无私”。<br>为什么要 直接远离第一种人 呢？首先是因为，他们的这种习惯，这种态度，实在是根深蒂固，他们几乎从刚开始“懂事儿”就已经这样了，基本上都是因为来自于父母的习惯与态度而不断加强。其次是因为，随着时间的推移，他们对每个结果的理解都会因此不同，进而进一步固化这种习惯与态度。更重要的是，这是最底层的价值观，位于“操作系统”的核心位置，很难与不同的操作系统相互兼容。尝试着改造他们是全无意义的，谁都做不到 —— 除非有一天他们自己意识到了，自己改，可说实话这希望也太渺茫了。<br>知识没办法随着基因遗传，智商也是这样。但，父母对孩子的影响却从出生的一刹那就开始（甚至有人认为胎教已经很重要）。所以，如果你要找个终生伴侣的话，也请注意这两个根基，因为它们直接影响你的孩子的未来 —— 其实与找创业合伙人是一样的道理。如果你现在已经为人父母，过去的事儿就算了，现在开始要把自己变成进取型选手，要把自己变成“为了自己的进步而努力的人”，否则，你的孩子注定成为庸众，对你来说，这个后果一定很严重。</p>
 <h3 id="活在未来，而不是当下"><a href="#活在未来，而不是当下" class="headerlink" title="活在未来，而不是当下"></a><a href="https://b.xinshengdaxue.com/A23.html" target="_blank" rel="noopener">活在未来，而不是当下</a></h3><p>“ 活在当下 ”是个很流行的说法。但，我一直觉得这是比较愚蠢的建议，因为绝大多数人根本不需要这条建议，因为他们就是活在当下的。相反，活在当下很可能是绝大多数人最终非常吃亏的最根本原因，因为不管愿意不愿意，一个人时时刻刻都在走入未来，或者反过来说，未来就是会自顾自地走入一个人的生活。<br>28 岁的时候， 我做出了一个艰难的、依然含混的，但却是主动的决定，那是我重生的起点，而后反复重生，都是幸亏有了那个决定。而我在很艰难的情况下死活要那么做的原因在于，我看到了自己的未来。理由很简单，逻辑也很简单，如果我所销售的东西是我自己做出来的，卖得越好，赚得越多的同时，我会越幸福。可现在卖的东西不是我自己做的，赚钱也很开心，但就是缺了点什么：<br>对，缺的是幸福。<br>我当时就是这么想的。一旦想到这些，后面的决定其实就很自然了，因为 我们永远不要在容易和艰难之间选择，要在错误与正确之间选择 。要做正确的事情，哪怕很艰难也要做；错误的事情，越容易越不应该做。这很清楚，不是吗？<br>超越绝大多数人的窍门其实很简单，就是<br>想办法活在未来。<br>准确地讲，活在不久的未来。想太远了，就容易憋出个海市蜃楼，不切实际，过分好高骛远。但完全活在当下，就是泯然众人矣。我们要想办法活在不久的将来，生活幸福美满的窍门就在于比别人早半步，早太多了不安全，晚半步就始终遗憾，相对于别人不早不晚，其实就是一样，那就没意思。<br>可是，如何活在未来呢？这听起来好像是不大可能的事情。但实际上却很简单，就两件事儿：<br>笃信逻辑。<br>用逻辑去判断明天会发生什么。<br>认为未来完全不可知的人是愚蠢的，尤其是在今天这样一个世界里。我不太理解为什么到了今天还有人认为未来是完全不可知的，因为这些人明明活在一个天天都有天气预报的世界里啊！天气预报并不一定准确，但谁都知道这是个有比没有强出太多的事情。预测一个月之后的天气不大可能完全准确，预测明天的天气成功概率就已经高很多了，预测两小时之后的天气，就很容易准确了…… 不是这样的吗？未来不是完全不可预测的。<br>如果我们判定这是个知识变现越来越容易地世界，难道你不能预测这样一个结果吗？<br>你的孩子受教育程度越高，将来的收入就会越高。<br>虽然不一定百分之百，但概率上来看，这个论断就是很可能正确的。可是，知识无用的结论怎么会那么流行呢？<br>对我个人来说，有两个经历可以特别说明问题。第一个经历之前我已经讲过，28 岁的时候，我有个判断，在未来，创造的价值肯定比销售的价值更高，尤其是对我个人来说。所以我即便已经很擅长销售，我还是要暂时放弃它、不管它，我要让自己变成一个能创造的人。我笃信这个道理，于是就那么做了，随着时间的推移，正确的结果渐渐展现。那么也就是说，在我想明白并开始笃信的那一刻，我已经某种程度上“活在未来”了，只不过，我的未来需要时间证明，而我需要要用行动与耐心等待早已经决定的结果最终落实。<br>第二个经历就是我购买比特币的过程。<br>2011 年年初，在我听说比特币之后，就开始认真研究，最终得到个结论：<br>姑且不管这个东西有多严谨 —— 尽管事实上它确实非常严谨 —— 只要这个系统被一定程度的人数接受，那么它的价格不知道能涨到多少。当时我认为这个东西的基本面，就是最终有多少人直接、间接使用，甚至有多少人关注都可能起很大作用。<br>我个人判断，这个逻辑是简单而又完整的。于是，我是笃信这个结果的。既然我笃信这个逻辑推断出来的结果，我就只能去买了，能买多少就买多少，而我就是这么做的。<br>两年过去，到了 2013 年 4 月 1 日，被别人认为“惊人”的结果出现了，单个比特币的价格突破了一百美元。<br>这个结果于我来说，是两年前的逻辑推断的结果，至于是两年实现还是二十年实现其实并不重要，重要的是在结果展现之前我已经笃定了它，而且按照这个逻辑推断行事，于是，这两年之中，我就是某种程度上活在未来的。<br>说实话，两年就出现我所想象的结果，对我来说还是很意外的，我以为需要至少十年。从别人的角度，我相当于中了一个彩票；从我个人的角度，这事儿其实挺让人气馁的，因为它让我失去了一个“证明自己可以看到十年以后”的机会……事实上，我根本不知道这样说的时候，究竟有多少人能真正理解我。<br>很小的时候接触并学习了基础的编程语言，这经历并没有使我自动成为一名软件工程师；相反，那点经历对我来说，可能的实际作用是“事实上成功阻止了我最终成为一名软件工程师”，但那段经历却为我锻造了一个很有用的方法论：<br>凡事都可以预演。<br>我接触到的第一台计算机，除了闪存之外是没有其它存储设备的 —— 使用过程中断电的话，重启之后就什么都没有了…… 于是，那时候我们写程序是在纸上写的，一个字母一个字母地写下来，然后要在那里检查很多遍，尽量确保“万无一失” —— 尽管事实上那几乎不可能。记得有一次我们几个人在那里把我写的上百行的程序（还有很多 GOTO 语句）一点一点敲进去，然后竟然直接跑出正确结果，大家都兴奋得跳起来！<br>于是，“ 做事之前常常要在脑子里预演至少一次 ”，渐渐就成了我的习惯。再后来发现这个习惯还真不是每个人都有，绝大多数人好像一辈子永远只靠临场发挥 —— 这并不令人羡慕，因为“临场发挥”的结果常常并不好。<br>进而，我开始对那个朴素的建议越发地重视起来：<br>做好你的功课。 （Do your homework.）<br>再后来，有位朋友的口头禅深刻地影响了我。现在的我早已与他失去联系，但我总是记得他随口说的那句：<br>咱是谁啊？！<br>比如，当某些同学考试作弊之后竟然因为那分数洋洋自得的时候，他就会甩出一句，“咱是谁啊？！” —— 这个意思是说，“我们是有原则的人，那种事情和我们没关系！”<br>再比如，做一件事情的时候，会想办法做到最好，因为“咱是谁啊？！” —— 咱做出来的东西一定是足够好的，否则都不够丢人的……<br>许多年后我才发现这个简短的句子无形之中处处提高了对自我判断的标准，无形之中为了满足那被抬高了的标准做出了更多的努力，进而因此比别人多走出很远的一段距离；长此以往，最终的差异着实巨大。所以，有意识地提高自我要求，是切实提高自己水准的前提 —— 我的确相信这事儿。<br>对自己抬高一点点要求，然后做足功课，更好一点的结果就是自然而然的了。<br>又过了一段时间，在某个地方读到大致这么一段：<br>花一点时间，想象一下几年之后的你，你希望到那个时候，你自己是什么样子？然后，倒推回来， 提前 按照那个标准 学习、工作 。<br>（确实想不起来从哪里读来的，这两天我在网上搜索了一下，估计是许多年前从 Brian Tracy 的小册子里读来的……）<br>我想，一定有很多人跟我一样读过类似的文字，只不过很少有人像我一样，觉得这是有道理的，且之后就 真的就那么做了 。<br>注意，我把“生活、工作、学习”这三样东西里面的“生活”去掉了，然后把“学习”放在了“工作”之前。因为，<br>按照未来的你所需要的标准去学习、去工作，将会构建一个完全不同的生活。<br>很多人会以为这样的生活一定很枯燥，这样的生活一定过于苛刻，可事实上，我相信会有一定数量的人群会和我一样，没多久就会发现 这实际上是一种格外刺激的生活方式 ，因为在这种方式之下，多巴胺的分泌明显是高于平均水准的 —— 这其实就是生理学家和心理学家对“幸福”这个词的量化定义。<br>最重要的是，还有一件事情可做：</p>
 <p>提前成为未来的你。<br>多花点时间想想自己未来的样子，多花点时间预演一下，多抬高一点点的标准，多做足一点点的功课，就这样，差异应该就一点点地积累形成了。</p>
-<h3 id="人人都是控制狂"><a href="#人人都是控制狂" class="headerlink" title="人人都是控制狂"></a><a href="http://www.luojiji.com/thread-8245-1-1.html" target="_blank" rel="noopener">人人都是控制狂</a></h3><p><img alt data-src="/img/content/controlface.jpg"></p>
+<h3 id="人人都是控制狂"><a href="#人人都是控制狂" class="headerlink" title="人人都是控制狂"></a><a href="http://www.luojiji.com/thread-8245-1-1.html" target="_blank" rel="noopener">人人都是控制狂</a></h3><p><img data-src="/img/content/controlface.jpg" alt></p>
 <p>2017-04-06 万维钢 罗辑思维</p>
 <p>本文作者万维钢，网名“同人于野”，前物理学家。他是罗胖极为佩服的一个人，称“万维钢是我见过<code>阅读速度、记笔记速度，以及写作速度</code>最惊人的一个”。</p>
 <p>1 你可能也有“算法厌恶”</p>
@@ -1216,14 +1186,14 @@
 <li><code>收费用户觉得免费用户很傻，陪自己玩。</code></li>
 <li><code>免费用户觉得收费用户很傻，花钱陪自己玩。</code><br>你看，每个人都有了控制感。哈哈。<br>再次、再次、强烈、强烈推荐万维钢的专栏。<br>我自己受益匪浅。</li>
 </ol>
-<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><h3 id="大国崛起：你如何御风而行"><a href="#大国崛起：你如何御风而行" class="headerlink" title="大国崛起：你如何御风而行"></a><a href="http://www.luojiji.com/thread-4016-1-1.html" target="_blank" rel="noopener">大国崛起：你如何御风而行</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201602/26/110249n2y7cq8e88cfqnne.jpg"></p>
+<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><h3 id="大国崛起：你如何御风而行"><a href="#大国崛起：你如何御风而行" class="headerlink" title="大国崛起：你如何御风而行"></a><a href="http://www.luojiji.com/thread-4016-1-1.html" target="_blank" rel="noopener">大国崛起：你如何御风而行</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201602/26/110249n2y7cq8e88cfqnne.jpg" alt></p>
 <p>今天推荐给大家的新书《<a href="https://book.douban.com/subject/26741233/" target="_blank" rel="noopener">天下的当代性</a>》，出自著名哲学家赵汀阳之手。</p>
 <p>赵汀阳先生，是为数不多的有世界影响力的大师级中国哲学家。 </p>
 <p>赵汀阳先生说：<br>中国是个<a href="https://hazyman.com/Profession/Story/">故事</a>，而天下是个理论。</p>
 <p>按照以色列历史学家赫拉利在《<a href="https://book.douban.com/subject/26953606/" target="_blank" rel="noopener">人类简史</a>》中的观点，人类社会的众多结构，包括国家、<a href="https://hazyman.com/Law/Law/">法律</a>、<a href="https://hazyman.com/Profession/Business/">公司</a>，都是想象的产物。这跟赵汀阳先生说“中国是个故事”，是一个意思。</p>
 <p>但显然，赵汀阳的野心更大，他想建构的是一个超越于“故事”之上的政治哲学理论。</p>
 <p>对，他想说的，不只是“中国”是什么，而是——<br><a href="https://hazyman.com/Wisdom/World/">世界</a>应该是什么样子。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201602/26/110254u2wy292p1v669heh.jpg"><br>“天下”从哪里来</p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201602/26/110254u2wy292p1v669heh.jpg" alt><br>“天下”从哪里来</p>
 <p>今天的中国，已经在舞台中央，聚光灯下，就不能对世界无话可说。</p>
 <p>迄今为止，人们从政治角度思索世界时，使用的最高级别观念是国家和国家利益。</p>
 <p>这个结构所带来的结果是世界无从作为整体呈现，纷争不断，战事迭起。</p>
@@ -1248,7 +1218,7 @@
 <p>你想要哪一种？</p>
 <h3 id="如何克制自己的“推销”欲望"><a href="#如何克制自己的“推销”欲望" class="headerlink" title="如何克制自己的“推销”欲望"></a><a href="https://b.xinshengdaxue.com/A16.html" target="_blank" rel="noopener">如何克制自己的“推销”欲望</a></h3><p>好多年以前，有一天，我终于拿到当时还是禁书的《Animal Farm》（动物农庄），一口气读完，掩卷长叹。思绪万千，然后又忍不住读了好几遍…… 后来甚至干脆敲了一遍。<br>然后我就进入了“天真的疯狂推销员模式” —— 恨不得向身边每一个人推荐这本书。那分享的欲望实在太强烈了，于是，分享演变成了推销，每次都是不由自主地“喷”，而不是正常的“说说”或者“讲讲”。每次喷起来，对方还一头雾水呢，我自己先脑高潮了，滔滔不绝…… 许多年后回想起来，我猜，那时候对方感觉到的更多是我唾沫横飞而已，绝不是那我想传递的耀眼的思想的光芒。<br>我甚至复印了几本带回来，送给我最好的几个朋友…… 然后呢？然后就没有然后了。<br>又过了一小段时间，我没忍住，跑去问其中的一位，“看了没有？”然后又开始自顾自地喷个不停…… 他应付了我一阵子，最后彻底不耐烦了：<br>别他妈的看了一本书就觉得自己不一样了似的，至于嘛！<br>可我就是知道我自己确实已经不一样了啊！不过，问题在于，这个不一样，又不是印在脑门子上的，又如何让别人看到？<br>于是，那句不耐烦的回应打在我脸上的那一瞬间，我彻底傻了。那是我人生最重要的教训之一：<br>即便是最好的朋友，也有可能并不理解你的真诚。<br>那次，我多少带着怨气离开的。可没多久，我也想明白了：<br>真诚这个东西，说出来的时候是最容易被低估的，甚至不像是真的。<br>想通之后，觉得道理其实非常简单明了：<br>做出来的真诚，甚至不用说。<br>但若不是被那么重重地打击一下，还真不容易刻骨铭心呢。<br>再以后，我就开始警惕自己，常常刻意提醒自己放弃“疯狂推销员”模式 —— 那股劲儿冲上来，刚开始还真挺难克制。<br>读好书读进去之后是不大可能没有变化的。操作系统不断升级，处理事情的方式也会不断更新，行为模式当然也就不一样起来…… 有时候，身边的朋友会奇怪：<br>嗯？这你是怎么知道的呢？<br>嗯？你什么时候开始这么做的？<br>当且只当这样的时候，我会尽量轻描淡写：<br>有本书，叫……，还真值得看看。<br>甚至有时候我会装糊涂，说，“哎呀，卡住了，想不起来书名了…… 等我回去找找，再告诉你……” 对方会很期待，“那你千万别忘了帮我找找啊！”过几天，我会买一本送给对方，对方会很开心，很感激，反正不会这样骂我：“别他妈的看了一本书就觉得自己不一样了似的，至于嘛！”<br>时间久了，身边的朋友开始主动起来：<br>哎呀，笑来，最近有啥好玩的书？<br>这样的时候，分享的成本几近于零。对，分享就是成本很高的活动 —— 虽然原本不应该有成本，原本应该双方都自动受益…… 可现实终归不是理想状态。<br>其实，知识是很难传播的。可以瞬间传播的，通常只不过是段子、谣言和八卦。系统有效的知识，常常被敬而远之，真不知道为什么。<br>推销知识，实在是太难了。你看学校一个又一个，学生一批又一批，老师们前仆后继，就那点东西却常常压根传递不出去。<br>分享，绝对是好事儿。但要是转过来变成负担，甚至引发负能量，那就实在太不划算了。所以，别闲着没事儿推销知识 —— 那原本是应该先收钱再去做的事情，难倒不是吗？不收钱，还受堵，何必？<br>再反过来看，推销知识很难的更深层次的原因在于：<br>仅仅说是肯定没用的，得做，不然说没分量；<br>做都不一定是有用的，得有改变，没改变不算数；<br>有改变也不一定够，得有看得见的改变，看不见还是没分量；<br>有看得见的改变还是不一定成功，因为对方可能并不服气；<br>改变太大了也不行，因为对方一看，吓倒了，直接放弃了……<br>你看看，推销知识其实真的很难。如此看来，之前的“热情”，常常只不过是“无知者无畏”而已。<br>有时候，对方把你的分享欲望勾了起来，你又忘了，于是张口就喷，没一会儿，对方就说，<br>行啦行啦，就直接告诉我怎么做吧，你说的太复杂，我听不懂，也不想懂……<br>瞬间一切又变得索然无味，感觉比被骂了还难受 —— 尤其在曾经误以为对方勤于思考的情况下…… 浪费生命。<br>真的感谢互联网，它给了我们另外一个可以分享的通道。自从我开始写博客之后，之前此类的烦恼彻底消失了。有分享欲望的时候，可以喷在网上，又由于没有了特定的对象，反倒没有了“获取认可”的压力，分享变成了一个纯粹开心的行为。能否有因获得认可而产生的快乐，只取决于两个因素，<br>我是否真的真诚（这个不用提）;<br>我是否运气好，消息能传递给那些能理解我的人（我好像这方面运气一直都不错）……<br>于是，整个人就感觉少了很大一个负担，<br>该干嘛就去干嘛，说那么多有什么用？<br>做了，就有变化，有变化，自己先开心，别人看不看得到其实并不重要罢？<br>少说导致更专注，更专注导致变化最大化，有时候吓到别人，也怪不得自己罢？<br>这样的感悟，反过来倒也算是意外了。<br>说服他人有两个重要的终极诀窍。<br>第一个：让对方自己得出结论，而不是把结论塞给对方。<br>有一本书，叫《金字塔原理》，是讲写作逻辑与思维逻辑的。书的内容不错，也很正确。但我个人的看法是，用那个框架写论文，写报告都还可以；基本上只能用来说服少数严格遵循逻辑的人，因为大部分人受心理因素影响更多，而不是受逻辑影响更多。<br>为什么呢？那本书主张的是，“结论先行”…… 试试就知道了，更多的时候，这么做收获到的只有抵触。这根本不是东西方文化差异的问题，而是人类共有的思考感受模式的问题。如果那结论是对方原本就可以接受的，接下来不用更多的说明；如果那结论与对方的观念不一致、甚至相反，接下来的说明进程绝对不会顺利的，因为对方从一开始就会不断尝试反驳你的说法，维护他自己的立场……这种情况下，能说服对方才怪了呢。<br>第二个，实际上是第一个的升级版：自己成为榜样，对方若是认同，自然就会追随。</p>
 <p>践行，才是真正的学习；也只有践行，才可能带来真正的改变；只有改变，才会成为榜样。若是已经成为了榜样，根本不需要说服过程，用不着费那些口舌。就是这样。<br>注意，榜样其实不需要完美。只需要确实不断进步，就已经是神一样的榜样了……<br>有效沟通，真的很难。与其花时间精力推销，还真不如把那时间花在自己身上，默默地成为榜样好了。</p>
-<h3 id="聪明人要花笨力气"><a href="#聪明人要花笨力气" class="headerlink" title="聪明人要花笨力气"></a><a href="http://www.luojiji.com/thread-2445-1-1.html" target="_blank" rel="noopener">聪明人要花笨力气</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/24/001245q6incc6zioin31si.jpg"></p>
+<h3 id="聪明人要花笨力气"><a href="#聪明人要花笨力气" class="headerlink" title="聪明人要花笨力气"></a><a href="http://www.luojiji.com/thread-2445-1-1.html" target="_blank" rel="noopener">聪明人要花笨力气</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/24/001245q6incc6zioin31si.jpg" alt></p>
 <p>周晓枫</p>
 <p>我喜欢美国演员丹尼尔·戴·刘易斯，变色龙一样的刘易斯，无人能抵抗他的魅力——而针对他极其苛刻的体验派表演方法而言，说喜欢两字，几乎是一种轻慢。应该说，是格外的尊重。</p>
 <p>为了表演患先天脑麻痹的主人公，刘易斯练习到能用左脚夹起一根针再放下；为体验《因父之名》中主人公身陷囹圄的感觉，他把自己禁闭在一个牢房般的环境中长达数月；为了出演拳击手，他在拳击冠军手下受训长达一年半；为了饰演杀人不眨眼的屠夫，除了练就令人胆寒的基本功，在片场，每个人都被要求用角色的名字称呼他，如果拍摄打斗场面，他提前几天就会酝酿愤怒，目光凶狠地盯视所有人。</p>
@@ -1293,7 +1263,7 @@
 <blockquote>
 <p>第一，这个时代，专长太重要了。就像在这个例子里，哪怕你不太懂商业，但是你能贡献传播力，也会很受欢迎。<br>第二，专长之间也并不平等。像<a href="https://hazyman.com/Science/Writing/">写作</a>、<a href>演讲</a>，这种有放大效应的能力，就尤其重要。</p>
 </blockquote>
-<h2 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h2><h3 id="一文读懂：房价的底层逻辑"><a href="#一文读懂：房价的底层逻辑" class="headerlink" title="一文读懂：房价的底层逻辑 "></a><a href="http://www.sohu.com/a/315586620_100188847" target="_blank" rel="noopener">一文读懂：房价的底层逻辑 </a></h3><p><img alt data-src="http://5b0988e595225.cdn.sohucs.com/images/20190522/c094ff7e6acf432694ae7982c54fbee1.jpeg"></p>
+<h2 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h2><h3 id="一文读懂：房价的底层逻辑"><a href="#一文读懂：房价的底层逻辑" class="headerlink" title="一文读懂：房价的底层逻辑 "></a><a href="http://www.sohu.com/a/315586620_100188847" target="_blank" rel="noopener">一文读懂：房价的底层逻辑 </a></h3><p><img data-src="http://5b0988e595225.cdn.sohucs.com/images/20190522/c094ff7e6acf432694ae7982c54fbee1.jpeg" alt></p>
 <p>催化剂-货币<br>助推剂-储蓄、收入与杠杆<br>住房的供给与需求本源</p>
 <ul>
 <li>1.政策供给</li>
@@ -1340,7 +1310,7 @@
 <p>以上观点，供你参考。</p>
 <p>本文源自：公众号“创业家”（周鸿祎：创业公司的民主，其实不过是在讨好每个人）</p>
 <h3 id="谈谈我的“三观”"><a href="#谈谈我的“三观”" class="headerlink" title="谈谈我的“三观”"></a><a href="https://coolshell.cn/articles/19085.html" target="_blank" rel="noopener">谈谈我的“三观”</a></h3><p> 2019年02月26日  陈皓 </p>
-<p><img alt data-src="https://coolshell.cn/wp-content/uploads/2019/02/cross.road_-300x200.jpg"></p>
+<p><img data-src="https://coolshell.cn/wp-content/uploads/2019/02/cross.road_-300x200.jpg" alt></p>
 <p>也许是人到了四十多了，敢写这么大的命题，我也醉了，不过，我还是想把我的想法记录下来，算是对我思考的一个snapshot，给未来的我看看，要么被未来的我打脸，要么打未来我的脸。无论怎么样，我觉得对我自己都很有意义。注意，这篇文章是长篇大论。</p>
 <p>三观是<code>世界观、人生观和价值观</code>，</p>
 <p><strong>世界观</strong>代表你是怎么看这个世界的。是左还是右，是激进还是保守，是理想还是现实，是乐观还是悲观……</p>
@@ -1376,7 +1346,7 @@
 <p>创业。前两天，有个小伙来跟我说，说他要离开BAT要去创业公司了，说在那些更自由一些，没有大公司的种种问题。我毫不犹豫地教育了他一下，我说，你选择这个创业公司的动机不对啊，你无非就是在逃避一些东西罢了，你把创业公司当做是一个避风港，这是不对的，创业公司的问题可能会更多，去创业公司的更好的心态是，这个创业公司在干的事业是不是你的事业？说白了，如果你是为了你的事业，为了解决个什么，为了改进个什么，那么，创业是适合你的，也只有在做自己事业的时候，你才能不惧困难，才会勇敢地面对一切。那种想找一个安稳的避风港呆着的心态是不会让你平静地，你要知道世界本来就是不平静的，找了自己的归宿和目标才可能让你真正的平静。所以，在我现的创业团队，我不要求大家加班，我也不鸡汤洗脑，对于想要加入的人，我会跟他讲我现在遇到的各种问题以及各种机遇，并一直在让他自己思考，我们在做的事是不是自己的事业诉求？还可不可以更好？每个人都应该为自己的事业为自己的理想去活一次，追逐自己的事业和理想并不容易，需要有很大的付出，而也只有你心底里的那个理想值得这么大的付出……</p>
 <p>客户。基于上述的价值观，在我现在创业的时候，我在面对客户的时候，也是一样的，我并不会完全的迁就于客户，我的一些银行客户和互联网客户应该体会到我的做的方式了，我并不觉得迁就用户，用户要什么我就应该给什么，用户想听什么，我就说什么，虽然这样可以省着精力，更圆滑，但这都不是我喜欢的，我更愿意鲜明地表达我的观点，并拉着用户跟我一起成长，因为我并不觉得完成客户的项目有成就感，我的成就感来自客户的成长。所以，面对客户有些做得不对有问题有隐患的地方，或是有什么做错的事，我基本上都是直言不讳地说出来，因为我觉得把真实的相法说出来是对客户和对自己最基本的尊重，不管客户最终的选择是什么，我都要把利弊跟客户讲清楚。我并不是在这里装，因为，我也想做一些更高级更有技术含量的事，所以，对于一些还达到的客户，我如果不把他们拉上来，我也对不起自己。</p>
 <p>在我“不惑之年”形成了这些价值观体系，也许未来还会变，也许还不成熟，总之，我不愿跟大多数人一样，因为大多数人都是随遇而安随大流的，因为这样风险最小，而我想走一条属于自己的路，做真正的自己，就像我24岁从银行里出来时想的那样，我选择对了一个正确的专业（计算机科学），呆在了一个正确的年代（信息化革命），这样的“狗屎运”几百年不遇，如果我还患得患失，那我岂不辜负活在这样一个刺激的时代？！我所要做的就是在这个时代中做有价值的事就好了！这个时代真的是太好了！</p>
-<h3 id="接受现实吧，其实我们并不完美"><a href="#接受现实吧，其实我们并不完美" class="headerlink" title="接受现实吧，其实我们并不完美"></a><a href="http://www.luojiji.com/thread-4929-1-1.html" target="_blank" rel="noopener">接受现实吧，其实我们并不完美</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201605/17/114126um8545m59q45mcm5.jpg"><br>2016-05-17 土摩托 罗辑思维</p>
+<h3 id="接受现实吧，其实我们并不完美"><a href="#接受现实吧，其实我们并不完美" class="headerlink" title="接受现实吧，其实我们并不完美"></a><a href="http://www.luojiji.com/thread-4929-1-1.html" target="_blank" rel="noopener">接受现实吧，其实我们并不完美</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201605/17/114126um8545m59q45mcm5.jpg" alt><br>2016-05-17 土摩托 罗辑思维</p>
 <p>“文科生们喜欢说一句话：大自然是完美的。你干了反自然的事，自然定会在某一天加倍地报复你。——这个说法其实是错的。”</p>
 <p>Q： 一切都是自然选择？<br>——————————</p>
 <p>有人问：既然进化论是唯一正确的理论，那么生物体的任何一部分都应该是自然选择的结果喽？</p>
@@ -1406,7 +1376,7 @@
 <p>说了这么多，就是想说明一个问题：</p>
 <p>进化不是完美的。</p>
 <p>很多时候进化并不能解释一切。所以，很多所谓的终极问题都是没有意义的，它们属于大自然的小错误，没有研究的价值。</p>
-<p>Q：进化具有无穷大的潜力？<br>————————————<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201605/17/114129g3qe7prm3uerj33h.jpg"></p>
+<p>Q：进化具有无穷大的潜力？<br>————————————<br><img data-src="http://www.luojiji.com/data/attachment/forum/201605/17/114129g3qe7prm3uerj33h.jpg" alt></p>
 <p>看到上面这张图，任何人都会立刻知道，这是做出来的，自然界不会出现一只随身携带机关枪的松鼠，即使这样做会对松鼠的生存带来天大的好处，这是为什么呢？</p>
 <p>有人认为，进化具有无穷大的潜力，只要我们能想象出来的东西，一定会进化得出来。</p>
 <p>曾经有人认为轮子是人类发明的，可是科学家已经发现了一些会把自己卷成圆形，以便能迅速滚下山去逃之夭夭的虫子。</p>
@@ -1478,8 +1448,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Boundary/" rel="bookmark">Boundary</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Society/" rel="bookmark">Society</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/How/" rel="bookmark">How</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/What/" rel="bookmark">What</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Why/" rel="bookmark">Why</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Wisdom/" rel="tag"><i class="fa fa-tag"></i> Wisdom</a>
               <a href="/tags/Base/" rel="tag"><i class="fa fa-tag"></i> Base</a>
@@ -1495,21 +1486,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Wisdom/2020/Listening/" rel="next" title="Listening">
-                  <i class="fa fa-chevron-left"></i> Listening
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Technology/2020/Science/" rel="prev" title="Science">
-                  Science <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Wisdom/2020/Listening/" rel="prev" title="Listening">
+      <i class="fa fa-chevron-left"></i> Listening
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Technology/2020/Science/" rel="next" title="Science">
+      Science <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -1522,7 +1510,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -1553,8 +1563,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -1563,14 +1573,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1581,11 +1591,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -1619,7 +1624,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -1631,51 +1636,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -1684,18 +1650,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1705,63 +1665,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1769,14 +1672,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1803,40 +1706,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Wisdom/2020/Base/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

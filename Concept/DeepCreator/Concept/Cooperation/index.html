@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="人脉的本质，共同成长，协作共赢。——DeepCreator">
 <meta name="keywords" content="Cooperation,Teamwork">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Cooperation/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Cooperation/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Cooperation/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="cooperation20180725.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/cooperation20180725.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/cooperation20180725.jpg?imageMogr2/thumbnail/!75p" alt="cooperation20180725.jpg"></p>
 <blockquote>
 <p>人脉的本质，共同成长，协作共赢。——DeepCreator</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt="rawpixel-684806-unsplash.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/rawpixel-684806-unsplash.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/rawpixel-684806-unsplash.jpg?imageMogr2/thumbnail/!75p" alt="rawpixel-684806-unsplash.jpg"></p>
 <p>朋友不会自动变为<a href="http://zhibimo.com/read/xiaolai/reborn-every-7-years/A14-1.html" target="_blank" rel="noopener">战友</a>。要满足以下几个条件或者经过以下几个阶段，朋友才可能转变成战友：</p>
 <p>共同目标–&gt;并肩战斗–&gt;共享成果</p>
 <p>找到共同的目标，并且经过沟通，确立共同的目标，这很重要 —— 否则没有战斗，就算有也是各自的战斗。有了共同的目标，才有并肩战斗，才有同甘共苦，才有荣辱与共，才有出生入死，才有共进退……没有共同目标的，不是战友，是狐朋狗友，不是团队，是团伙。</p>
@@ -300,7 +270,7 @@
 <p>IPCreator:<br>为什么很多人只信仰个人英雄主义？因为缺乏团队合作精神，没有见识也未曾尝到团队合作的真正甜头。</p>
 </blockquote>
 <p><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=3632&amp;highlight=%E6%83%8A%E5%96%9C" target="_blank" rel="noopener">“<strong>分工协作产生财富。</strong>”<br>“<strong>契约和法治扩展协作。</strong>”<br>“<strong>信息透明增进协作。</strong>”</a></p>
-<p><img alt="cooperation20180621.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/cooperation20180621.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/cooperation20180621.jpg?imageMogr2/thumbnail/!75p" alt="cooperation20180621.jpg"></p>
 <p><a href="http://www.luojiji.com/thread-8617-1-1.html" target="_blank" rel="noopener">朋友圈状态只应有三条：我挺忙，但很好；我很强，且有用；我这人很有趣。</a></p>
 <h2 id="罗胖60秒：什么是好的合作伙伴？"><a href="#罗胖60秒：什么是好的合作伙伴？" class="headerlink" title="罗胖60秒：什么是好的合作伙伴？"></a><a href="http://www.luojiji.com/thread-12784-1-1.html" target="_blank" rel="noopener">罗胖60秒：什么是好的合作伙伴？</a></h2><ol>
 <li>听李翔说到一个词，叫“橙汁测试”。什么意思呢？如果你想判断一个酒店好不好，那你就给他出一个大难题。</li>
@@ -324,14 +294,14 @@
 </blockquote>
 <p>你看，什么是好的合作伙伴，<strong>就是让人清晰地看到你的意愿、方法和代价。</strong></p>
 <h2 id="罗辑思维创始人：罗振宇，这个时代没有孤胆英雄"><a href="#罗辑思维创始人：罗振宇，这个时代没有孤胆英雄" class="headerlink" title="罗辑思维创始人：罗振宇，这个时代没有孤胆英雄"></a><a href="http://www.luojiji.com/thread-2188-1-1.html" target="_blank" rel="noopener">罗辑思维创始人：罗振宇，这个时代没有孤胆英雄</a></h2><p>课程简介：<br>在硅谷，很多公司从自家车库创意开干，到上市或者获得几十亿美金的估值，往往只有一年时间。为什么这么快？因为有了共同协作，不用事事都自己干。罗振宇说，在这样一个协作的时代，你去做一个企业和创新，如果是孤胆英雄…</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201609/17/153200rtimr6c95qxrz9wy.jpg"><br>演讲者｜罗振宇（罗辑思维创始人）</p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201609/17/153200rtimr6c95qxrz9wy.jpg" alt><br>演讲者｜罗振宇（罗辑思维创始人）</p>
 <p>硅谷正在出现一个现象，大公司快完蛋了。为什么？因为一旦大组织出现，它的创新效率一定会下降。罗辑思维现在有100多人，我们已经感觉不堪重负了，当我不能随时坐下来跟每个人聊天时，我知道思想流已经在凝滞了。</p>
 <p>过去大公司拯救自己的方法是什么？买。我有钱，但凡行业里出现一些不错的小公司，买了就是。到了2016年，硅谷已经出现了一种哀叹：来不及。一家公司从自家车库创意开干，到上市或者获得几十亿美金的估值，往往只有一年，大公司来不及买。</p>
 <blockquote>
 <p>为什么会这么快？因为现在开公司不必什么都自己干了，通过共同协作，可以迅速拼接出一个协作体系，这个体系的成长效率是惊人的。凝结<a href="https://deepcreator.com/MVP/Resource.html" target="_blank" rel="noopener">资源</a>形成协作，成为这个时代最重要的方式。</p>
 </blockquote>
 <p>如果重新理解工业时代，就是“共同体的黄昏”，对人的控制几乎到了最弱的一环，为什么在工业时代出现了一门显学是管理学，因为再想控制一个稳定的共同体变得极其困难。而进入互联网时代，一个明显的趋势就是，公司已经慢慢变成联盟。</p>
-<p> <img alt data-src="http://www.luojiji.com/data/attachment/forum/201609/17/153242omh4h3nqn5c23h3c.jpg"></p>
+<p> <img data-src="http://www.luojiji.com/data/attachment/forum/201609/17/153242omh4h3nqn5c23h3c.jpg" alt></p>
 <p>罗辑思维没有任何规矩<br>我们不能让这家公司定型<br>创新和效率不可兼得</p>
 <p>我们公司著名的CEO脱不花没有上过大学，19岁就创办了一家咨询公司，两年前我们一起合作创业。脱不花做CEO有一个很重要的特点：不允许这个公司有任何一条规矩。</p>
 <p>所以我们公司没有规矩，从上班时间到团队KPI一概没有。这一点我极其赞成，因为这家公司不能做老。我们为什么让别人觉得有一点妖气，因为我们在基因上和别人不一样，我们是为数不多的以人为核心成长起来的企业。</p>
@@ -435,7 +405,7 @@
 <p>能真正让自己变强大的，不是征服别人，而是全力创造合作。</p>
 </blockquote>
 <h2 id="合作的进化"><a href="#合作的进化" class="headerlink" title="合作的进化"></a><a href="https://book.douban.com/subject/26901444/" target="_blank" rel="noopener">合作的进化</a></h2><p>The evolution of cooperation</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29410670.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29410670.jpg" alt></p>
 <h2 id="合作的前提：读《合作的进化》"><a href="#合作的前提：读《合作的进化》" class="headerlink" title="合作的前提：读《合作的进化》"></a><a href="https://book.douban.com/review/1421768/" target="_blank" rel="noopener">合作的前提：读《合作的进化》</a></h2><p>[美]罗伯特.阿克塞尔罗德：《合作的进化》，吴坚忠译，上海世纪出版集团2007年版</p>
 <p>这本书最早的译名是“对策之中的制胜之道”，不仅有点“媚俗”，而且还有点引人误解，因为人与人的“合作”关系与力求“制胜”的竞争关系有显著的不同，而书中所谓的“一报还一报”行为策略，并不是一个一心争胜的策略，事实上，它在单次博弈中的得分从不会“超过”对方，其竞争优势在于能促使合作秩序扩展从而能够和合作伙伴一起胜过“总是背叛”或“一有机会就背叛”的“小人”。这次再版，书名更为“合作的进化”，要确切多了，但更恰当的译名似乎应该是“合作的演化”。</p>
 <p>按照自利理性人的假设，在人类社会中广泛存在囚徒困境（双方合作比不合作好；但一方背叛一方合作时，背叛方得分高于合作时得分；结果双方出于“理性”都选择背叛）是不足为奇的，陷入困境的“囚徒们”不互相背叛反而彼此合作，才是一件很奇怪而需要解释的事。</p>
@@ -483,12 +453,12 @@
 <p>因此在一个非零和的世界里，为了你自己做得好，你没有必要非得比对方做得好。特别当你要和许多不同的对手打交道时更是这样。只要你自己能做得更好就能让他们每个人做得和你一样或略好些。没有理由去嫉妒对方的成功。因为在长时间的“重复囚徒困境”中，其他人的成功是你自己成功的前提。</p>
 <h3 id="为何关羽被奉为圣人？"><a href="#为何关羽被奉为圣人？" class="headerlink" title="为何关羽被奉为圣人？"></a><a href="https://book.douban.com/review/5168542/" target="_blank" rel="noopener">为何关羽被奉为圣人？</a></h3><p>以前写的一篇文章，聊作书评了<br>——————————</p>
 <p>最近《赤壁》热映，继易中天教授之后给三国历史又烧上一把火。我今天想谈谈三国之中最被神话的一个人物——关羽。是的，最大的神话不是多智近妖的诸葛亮，而是我们的武圣关二哥。在正史《三国志》中功绩平平（实在是一介武夫）的关二哥最终成为了武圣，在民间香火不断的关帝庙中接受了近千年的顶礼膜拜，这被神化的根源是什么呢？<br>　　<br>　　在大多数人三国知识来源的演义小说《三国演义》中，武功并非天下第一（前五都排不上）的关羽被当作最大的英雄。因为关羽的行为是遵循“投桃报李，以牙还牙”的典型，所谓忠义二字挂心间。关羽是世俗中国的图腾，他的这一特质便是中华文明在几千年文明演化中习得的朴素智慧。无独有偶，孔圣人也有类似的话：“以德报怨，何以报德？以直报怨,以德报德。”一个历史悠久的文明，会在长期的不断进行的重复博弈过程中找出优势的竞争策略，这是不足为奇的。<br>　　<br>　　老祖宗所说的“投桃报李，以牙还牙”用一个经济学时髦说法是“一报还一报”策略。这和主流经济学的一些理论相冲突。主流经济学假定参与人是理性人，他们的决策过程都是按照追求效用最大化的目标来进行的。其实如果这样假定，就相当说参与人是上帝而不是人了。理性假定是说，参与人都是能够掌握足够的信息和具有足够的计算能力，从而找出实现其效用最大化的具体途径。但是，我们知道，人不是上帝，人的计算能力是有限的，是有成本的，而获得信息的途径也是有限的。人是进化而来的，即使是现在，人类仍然处于进化的过程之中。处于进化过程中的人类行为具有进化特征，许多人类的行为并不简单地遵循所谓效用极大化的规定，而是遵循进化优势的规则或者策略。<br>　　<br>　　所谓的进化优势策略，是说在进化中可以获得竞争成功的策略。进化博弈理论已经发现，在进化博弈中，某些策略可以使得参与人取得竞争优势，从而成功繁衍自己的后代。不具有竞争优势的策略会使得参与人在竞争中失败，从而导致自己物种的灭绝。人是亿万年长期进化的结果，在人与人之间的竞争中，也一定有其行为方面的优势竞争策略。这样的策略是什么呢？大家很可能想到的是，这样的竞争优势策略就是追求效用最大化的策略。<br>　　<br>　　主流经济学家会说，尽管人类行为有多样性，但是，如果不是追求个人效用最大化，在激烈的生存竞争中，这样行为的个人会因为缺乏竞争优势而被淘汰；所以，理性人假设是针对那些能够在生存竞争中获得生存能力来说的。那些非理性人从长久看来是不存在的了，所以经济学假定理性人是合理的，优势竞争策略就应该是追求效用最大化策略。<br>　　<br>　　这样的辩护逻辑也就是1960年代那场发生在罗伯特. 西蒙与米尔顿.弗里德曼之间的著名辩论中后者提出的关键性观点。前者提出经济学理性人假定的非现实性，并建议用有限理性假定去取代理性人假定，而后者就从这样的逻辑去为理性人假定进行辩解。当时普遍认为弗里德曼在这场大争论中获得胜利。但是，现在看来说这场辩论中谁是最后的赢家还仍然为时过早，尽管这两位诺贝尔经济学奖得主都已过世了，但是硝烟还未散尽！（学工科的朋友请联想波尔和爱因斯坦的大辩论）。<br>　　<br>　　近年来不仅在行为经济学和心理学领域的进展不断发现不利于理性人假定的证据，而且，进化博弈方面的研究更加有力地使得理性人假定陷入困境。董志强博士最近在我校985学术创新论坛上宣读的一篇论文，通过数字仿真模拟实验，发现在生存进化中取胜的不仅不是那些追求个人效用最大化的理性行为人，而且反而是追求公平效用的非理性行为人。<br>　　<br>　　在我看来，弗里德曼失误在没有考虑人类的策略性行为。在一次性博弈中，理性行为是具有生存优势的；但是，如果是长期的重复性多次博弈，追求公平目标的策略可能会给人带来更加多的竞争优势。这是因为，公平行为会使得个人在重复博弈中获得他人的公平回报，而自私自利的理性人却反而会因为过去因为与他人进行利益争夺遭受到他人“以牙还牙”的报复。从长期看来，目光短浅的理性人其实是吃亏的，因而不具有生存竞争优势。不同的个人之间形成策略性合作其实比只考虑个人短期利益的理性人来说是更加具有生存能力的。<br>　　<br>　　其实，来自心理学家，生物学家和博弈论经济学家的大量模拟实验结果都表明，在长期而不是短期的重复性博弈中，采取“一报还一报”的策略是优势策略。为什么“一报还一报”会成为优势策略呢。计算机模拟只是告诉我们有这样的结果，凡是采用“一报还一报”策略的参与人都会在进化博弈中获胜，而采用其他策略的参与人会失败。但是，计算机模拟并不告诉我们为什么是这样。这个任务要由行为博弈专家来完成。<br>　　<br>　　Rabin（1993）在J.Geanakoplos,D.Pearce和E.Stacchetti(文献中简称为GPS)所提出的“心理博弈”框架基础上，构造了一个引入公平偏好的博弈论体系。他的关键性工作是通过对“公平”概念加以严密的定义来改造传统博弈论中的支付函数，从而发现了一些新的均衡。他得到的结果是，除了传统博弈论中已知道的纳什均衡之外，还出现新的“公平均衡”。这个工作还发现了许多“合作性均衡”，它们并不象传统博弈论那样要求无限次重复博弈或甚至重复博弈。这种结果对利他行为和合作现象的解释是强有力的。<br>　　<br>　　Rabin的方法可以带来两种博弈均衡，即合作的（互惠的）和不合作的均衡（互损的）。投桃报李均衡是合作的，而以牙还牙均衡是不合作的。这可以解释现实中我们的观察，现实里是既有合作又有不合作的，无论是在经济的，政治军事的以及一般的人际交往里都是如此的。<br>　　<br>　　合作的均衡可以为所有的参与人带来比不合作均衡更多的收益，因此，导致合作性行为的“投桃报李，以牙还牙”策略理应受到大家的推崇，这是一个社会的文明内涵，是规范人们行为的标准，因而中华文明将一贯遵循“投桃报李，以牙还牙”的关羽关云长推上了神坛，奉为武圣世世代代接受世人的膜拜。其实这个关羽已非历史中的关羽，我们膜拜的是古老中华文明的智慧。</p>
-<h2 id="合作式思维——如何有效掌控、激活群体智慧"><a href="#合作式思维——如何有效掌控、激活群体智慧" class="headerlink" title="合作式思维——如何有效掌控、激活群体智慧"></a><a href="https://book.douban.com/subject/27118336/" target="_blank" rel="noopener">合作式思维——如何有效掌控、激活群体智慧</a></h2><p><img alt="cooperationthinking20180716.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/cooperationthinking20180716.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="合作式思维——如何有效掌控、激活群体智慧"><a href="#合作式思维——如何有效掌控、激活群体智慧" class="headerlink" title="合作式思维——如何有效掌控、激活群体智慧"></a><a href="https://book.douban.com/subject/27118336/" target="_blank" rel="noopener">合作式思维——如何有效掌控、激活群体智慧</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/cooperationthinking20180716.jpg?imageMogr2/thumbnail/!75p" alt="cooperationthinking20180716.jpg"></p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>CHAPTER 1打造合作型组织的必要性<br>未来取决于合作<br>合作和可持续发展<br>“合作学习”游戏<br>合作的本质<br>合作失败的原因<br>合作的四大必备条件<br>发掘合作背后的真正原因</p>
 <p>CHAPTER 2合作的准则<br>合作是一种强有力的领导方式<br>合作的价值<br>与利益相关方进行合作<br>合作创造可持续发展的企业<br>开放性思维打造合作型组织<br>评估组织的合作生态系统<br>卓越合作领导力<br>优秀的领导者知道自己并不是无所不知<br>询问、倾听和学习<br>用开放心态接受他人观点<br>从“不知道”开始<br>合作需要新的商业模式</p>
 <p>CHAPTER 3合作的十大基本步骤<br>第1步：设置意向，表明目的<br>第2步：注意对抗性行为，以开放心态参与<br>第3步：接受冲突：寻找那些敢于说话的人<br>第4步：寻求多样性：引进多样化视角<br>第5步：创造成功型的合作<br>第6步：走到一起，带着尊重与信任参与合作<br>第7步：深度倾听：认识到什么是人们想听到、却不想说的<br>第8步：在愿景下合作，开发集体智慧<br>第9步：在目标与责任下进行领导<br>第10步：实现合作——合作推动能源转型，共同享受美好未来</p>
 <p>CHAPTER 4突破<br>附录A 合作路上的障碍<br>附录B 经验与教训<br>致谢</p>
-<h2 id="合作的进化——The-evolution-of-cooperation"><a href="#合作的进化——The-evolution-of-cooperation" class="headerlink" title="合作的进化——The evolution of cooperation"></a><a href="https://book.douban.com/subject/2259198/" target="_blank" rel="noopener">合作的进化——The evolution of cooperation</a></h2><p><img alt="cooperation20180710.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/cooperation20180710.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="合作的进化——The-evolution-of-cooperation"><a href="#合作的进化——The-evolution-of-cooperation" class="headerlink" title="合作的进化——The evolution of cooperation"></a><a href="https://book.douban.com/subject/2259198/" target="_blank" rel="noopener">合作的进化——The evolution of cooperation</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/cooperation20180710.jpg?imageMogr2/thumbnail/!75p" alt="cooperation20180710.jpg"></p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>《合作的进化》(修订版)是行为领域的经典之作，主题是合作的产生和进化。作者以组织的两轮“重复囚徒困境”竞赛为研究对象，结果发现在两轮竞赛中胜出的都是最简单的策略“<strong>一报还一报</strong>”。这一策略简洁明晰，具有<strong>善良性、宽容性、可激怒性和策略性</strong>，其出色的竞赛表现为我们了解个人、组织和国家间合作产生和进化提供了积极的前景。</p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>序　理查德·道金斯<br>中文版前言<br>英文版前言<br>第一部分　导论<br>第一章　合作的问题<br>第二部　分合作的出现<br>第二章 “一报还一报”在计算机竞赛中的胜利<br>第三章　合作的建立<br>第三部　分没有友谊和预见的合作<br>第四章　第一次世界大战堑壕战中的“自己活也让别人活”的系统<br>第五章　生物系统中的合作进化(与威廉·D．汉密尔顿合著)<br>第四部分　对参与者和改革者的建议<br>第六章　如何有效地选择<br>第七章　如何促进合作<br>第五部分　结论<br>第八章　合作的社会结构<br>第九章　回报的鲁棒性<br>附录A　竞赛结果<br>附录B　理论命题的证明<br>参考文献<br>译后记</p>
 <h3 id="清晰胜于机巧"><a href="#清晰胜于机巧" class="headerlink" title="清晰胜于机巧"></a><a href="https://book.douban.com/review/4900199/" target="_blank" rel="noopener">清晰胜于机巧</a></h3><p>什么样的合作策略是最优策略？是最善良的策略，以德抱怨？还是最聪明的策略，机关算尽？或者干脆拒绝合作，永远的背叛？</p>
@@ -504,9 +474,9 @@
 <p>互联网今天的技术正在根本性的改变人的合作方式，但合作的进化原理依然适用，而且在互联网上，合作的进化速度明显有加速迹象。<br>维基百科，Facebook，到处有大规模合作，KK说人类的行为在快速的数字化，而数字化的行为的一大特征就是可以快速识别，如果一个人有了不符合团体公约的行为（背叛），可以被迅速的被识别(Google/Facebook)出来，而Facebook的另一大革命在于提供了持久的唯一真实身份，世界上任何两个人只要有一次合作，就有无数的重遇机会，按照博弈理论，这增大了未来的权值，也就是书中所说的折扣系数。</p>
 <p>这样按照书中的观点，我们可以推导出来合作的促进程度将被极大幅度的提升，实际上，我们已经看到Facebook对北非和中东的影响，在&lt;Facebook效应&gt;这本书里已经描述了合作形成的速度远远超出了人的想象，在OpenStreetMap上我们看到短时间内一群人重新绘制了全世界的地图。</p>
 <p>生物系统的合作进化花费了几亿年，而人类的合作进化的速度则在加速上升。</p>
-<h2 id="合作的复杂性——基于参与者竞争与合作的模型-The-Complexity-of-Cooperation：Agent-Based-Models-of-Competition-and-Collaboration"><a href="#合作的复杂性——基于参与者竞争与合作的模型-The-Complexity-of-Cooperation：Agent-Based-Models-of-Competition-and-Collaboration" class="headerlink" title="合作的复杂性——基于参与者竞争与合作的模型 The Complexity of Cooperation：Agent-Based Models of Competition and Collaboration"></a><a href="https://book.douban.com/subject/3094759/" target="_blank" rel="noopener">合作的复杂性——基于参与者竞争与合作的模型 The Complexity of Cooperation：Agent-Based Models of Competition and Collaboration</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s3123724.jpg"></p>
+<h2 id="合作的复杂性——基于参与者竞争与合作的模型-The-Complexity-of-Cooperation：Agent-Based-Models-of-Competition-and-Collaboration"><a href="#合作的复杂性——基于参与者竞争与合作的模型-The-Complexity-of-Cooperation：Agent-Based-Models-of-Competition-and-Collaboration" class="headerlink" title="合作的复杂性——基于参与者竞争与合作的模型 The Complexity of Cooperation：Agent-Based Models of Competition and Collaboration"></a><a href="https://book.douban.com/subject/3094759/" target="_blank" rel="noopener">合作的复杂性——基于参与者竞争与合作的模型 The Complexity of Cooperation：Agent-Based Models of Competition and Collaboration</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s3123724.jpg" alt></p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>从合作的进化到合作的复杂性<br>英文版前言<br>导论<br>第一章 演化新策略<br>第二章 处理噪音<br>第三章 发展规范<br>第四章 选择阵营<br>第五章 设定标准<br>第六章 建构新的政治行动者<br>第七章 文化的散布<br>附录A 复制基于参与者模型<br>附录B 基于参与者模型的学习指引<br>译后记</p>
-<h2 id="团队协作的五大障碍"><a href="#团队协作的五大障碍" class="headerlink" title="团队协作的五大障碍"></a><a href="https://book.douban.com/subject/25338822/" target="_blank" rel="noopener">团队协作的五大障碍</a></h2><p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p36303394-1.jpg"></p>
+<h2 id="团队协作的五大障碍"><a href="#团队协作的五大障碍" class="headerlink" title="团队协作的五大障碍"></a><a href="https://book.douban.com/subject/25338822/" target="_blank" rel="noopener">团队协作的五大障碍</a></h2><p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p36303394-1.jpg" alt></p>
 <p>如何克服团队协作的五大障碍？<br>第一大障碍：缺乏信任<br>第二大障碍：惧怕冲突<br>第三大障碍：欠缺投入<br>第四大障碍：逃避责任<br>第五大障碍：无视结果</p>
 <p><a href="https://book.douban.com/annotation/36303394/" target="_blank" rel="noopener">企业最根本竞争优势来自团队协作。</a><br>｛第一部分 寓言｝</p>
 <p>第1章 一支运转失灵的团队<br>凯瑟琳新上任决策科技公司，缺乏专业经验，大家不满和担心。</p>
@@ -576,9 +546,9 @@
 <p>亚当·卡亨在《与敌人合作》（Collaborating with the Enemy: How to Work with People You Don’t Agree with or Like or Trust）这本书里提出，与不认同、不喜欢或不信任的人维持合作关系的2大原则：</p>
 <p>第一，就算会激烈的争执，也要把冲突点摊开来说。卡亨说，谈到合作，很多人往往会觉得应该在不争吵的情况下和谐共事，但实际中有时会是一个非常复杂、涉及到很多人利益的过程。卡亨认为，这时候既要吵，也要将事情谈妥。他建议，会议负责人要引导每个参会者表达看法，这样也许会导致激烈的争吵，但只要不是单纯的情绪宣泄，每个人都能提出纠结的地方，针对自己在意的部分进行沟通，就会对后续的共事有所帮助。</p>
 <p>第二，<strong>计划需要多次修正和调整才会愈加完善</strong>。人们对合作的另一个想像是，共同协商、拟订计划并去执行就好了。但实际上，计划要通过无数次的修正和调整，才能越来越完善。卡亨引用了组织理论学家卡尔‧韦克（Karl Weick）的观点：“人们找到可行的解决方案，不一定因为一开始就有好的计划，而是因为他们‘开始行动，并从中学习，最终得到具体有效的成果。’”卡亨建议，合作时，与其要把计划的细节讨论到尽善尽美才行动，不如在制定出目标后，通过多次行动来验证各自的想法是否行得通。</p>
-<h2 id="如果工作中被人无端攻击，该如何正确破解？"><a href="#如果工作中被人无端攻击，该如何正确破解？" class="headerlink" title="如果工作中被人无端攻击，该如何正确破解？"></a><a href="http://www.luojiji.com/thread-11391-1-1.html" target="_blank" rel="noopener">如果工作中被人无端攻击，该如何正确破解？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/11/093210yyxlogj36gb2utyc.jpg"><br>2018-03-11 「得到」 罗辑思维<br>引言</p>
+<h2 id="如果工作中被人无端攻击，该如何正确破解？"><a href="#如果工作中被人无端攻击，该如何正确破解？" class="headerlink" title="如果工作中被人无端攻击，该如何正确破解？"></a><a href="http://www.luojiji.com/thread-11391-1-1.html" target="_blank" rel="noopener">如果工作中被人无端攻击，该如何正确破解？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201803/11/093210yyxlogj36gb2utyc.jpg" alt><br>2018-03-11 「得到」 罗辑思维<br>引言</p>
 <p>所有人都渴望和睦的职场氛围，但在一个充满利益纠葛的地方打拼，难免会遇到无端攻击。</p>
-<p>被攻击时要怎么改？该如何有力回击？熊太行老师的这篇清单，助你轻松应对。这些招数，你最好一辈子用不到，但不能不知道。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/11/093225cyfddoa1t4uzctju.jpg"></p>
+<p>被攻击时要怎么改？该如何有力回击？熊太行老师的这篇清单，助你轻松应对。这些招数，你最好一辈子用不到，但不能不知道。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201803/11/093225cyfddoa1t4uzctju.jpg" alt></p>
 <ol>
 <li><p>首先明确一点：不要相信“明枪易躲，暗箭难防”。这句话是不对的。真正的明枪，往往按照看似合理的规则和流程进行，很多时候都是躲无可躲，只能面对。</p>
 </li>
@@ -622,12 +592,12 @@
 <li>在被攻击时，不要相信所谓的“和气生财”。我们不去无端攻击别人，但要坦荡荡捍卫属于自己的东西。</li>
 </ol>
 </blockquote>
-<h2 id="如果同时跟10个团队协作，你该怎么办？"><a href="#如果同时跟10个团队协作，你该怎么办？" class="headerlink" title="如果同时跟10个团队协作，你该怎么办？"></a><a href="http://www.luojiji.com/thread-10529-1-1.html" target="_blank" rel="noopener">如果同时跟10个团队协作，你该怎么办？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201711/30/100409ta69gggjg1lqfe41.jpg"></p>
+<h2 id="如果同时跟10个团队协作，你该怎么办？"><a href="#如果同时跟10个团队协作，你该怎么办？" class="headerlink" title="如果同时跟10个团队协作，你该怎么办？"></a><a href="http://www.luojiji.com/thread-10529-1-1.html" target="_blank" rel="noopener">如果同时跟10个团队协作，你该怎么办？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201711/30/100409ta69gggjg1lqfe41.jpg" alt></p>
 <p>2017-11-30 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>跨组织协作能力，是现代职场人的必备素质。工作中，你是否在供应商、渠道商、客户和自己公司的夹缝中焦头烂额、筋疲力竭？</p>
 <p>作为公司CEO，脱不花每天要花大量时间处理对外工作。关于如何提高跨组织协作效率，来自“实战”中的11点心得，建议你阅读收藏。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201711/30/100421pdlmam8l9aaldv5w.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201711/30/100421pdlmam8l9aaldv5w.jpg" alt></p>
 <ol>
 <li><p>目前已经被总结出来的协作和管理经验，绝大多数是基于同一个组织内的。但事实上，我们至少一半的精力投入在与供应商、渠道商、服务商、客户等的沟通和协作上。所以对于跨组织协作这件事，很多人是没有做好准备的。</p>
 </li>
@@ -683,8 +653,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/C/Cooperation/" rel="bookmark">Cooperation</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/3C/" rel="bookmark">3C</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/iDeepLearn/Profession/Communication/" rel="bookmark">Communication</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/iDeepLearn/Profession/3C/" rel="bookmark">3C</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/DeepCreator/IPR/PCT/" rel="bookmark">PCT</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Cooperation/" rel="tag"><i class="fa fa-tag"></i> Cooperation</a>
               <a href="/tags/Teamwork/" rel="tag"><i class="fa fa-tag"></i> Teamwork</a>
@@ -697,21 +688,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Game/" rel="next" title="Game">
-                  <i class="fa fa-chevron-left"></i> Game
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Universe/" rel="prev" title="Universe">
-                  Universe <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Game/" rel="prev" title="Game">
+      <i class="fa fa-chevron-left"></i> Game
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Universe/" rel="next" title="Universe">
+      Universe <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -724,7 +712,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -755,8 +765,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -765,14 +775,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -783,11 +793,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -821,7 +826,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -833,51 +838,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -886,18 +852,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -907,63 +867,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -971,14 +874,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1005,40 +908,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Cooperation/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

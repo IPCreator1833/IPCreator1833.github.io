@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="金字塔模型，二八原则/幂律分布。">
 <meta name="keywords" content="Profession,Wisdom,Habit,Serendipity,Desire,Wealth,Investment,Economy,Money">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Profession/" itemprop="url" rel="index">
-                    <span itemprop="name">Profession</span>
-                  </a>
+                  <a href="/categories/Profession/" itemprop="url" rel="index"><span itemprop="name">Profession</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Profession/2020/Wealth/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Profession/2020/Wealth/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Profession/2020/Wealth/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,13 +256,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="/img/content/world-wealth-map-2018.png"></p>
+        <p><img data-src="/img/content/world-wealth-map-2018.png" alt></p>
 <blockquote>
 <p>金字塔模型，二八原则/幂律分布。</p>
 </blockquote>
 <a id="more"></a>
 <p>立场观点<br>屁股脑袋<br>经济基础决定上层建筑<br>弱国无外交<br>人脉的本质——能够为他人提供帮助</p>
-<p><img alt data-src="/img/content/pyramid-of-wealth.jpg"></p>
+<p><img data-src="/img/content/pyramid-of-wealth.jpg" alt></p>
 <h2 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h2><p><a href="https://www.coindesk.com/massive-1-billion-bitcoin-whale-transaction-makes-waves" target="_blank" rel="noopener">9月5日</a>，发生了一笔10亿美元的比特币交易。这就是比特币的一个特点，所有人都可以看见这笔交易，但是不知道是谁交易。整笔交易的手续费是600美元，这个费用是传统银行不可想象的。</p>
 <h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><p>每个人的财富，基本来自三个渠道：</p>
 <ol>
@@ -300,7 +270,7 @@
 <li>继承了别人挣的；</li>
 <li>找到了钱生钱的良性循环。</li>
 </ol>
-<h3 id="你所拥有的最宝贵的财富究竟是什么？"><a href="#你所拥有的最宝贵的财富究竟是什么？" class="headerlink" title="你所拥有的最宝贵的财富究竟是什么？"></a><a href="https://www.toutiao.com/i6502052610340553229/" target="_blank" rel="noopener">你所拥有的最宝贵的财富究竟是什么？</a></h3><p><img alt data-src="https://img9.doubanio.com/view/subject/l/public/s29578695.jpg"></p>
+<h3 id="你所拥有的最宝贵的财富究竟是什么？"><a href="#你所拥有的最宝贵的财富究竟是什么？" class="headerlink" title="你所拥有的最宝贵的财富究竟是什么？"></a><a href="https://www.toutiao.com/i6502052610340553229/" target="_blank" rel="noopener">你所拥有的最宝贵的财富究竟是什么？</a></h3><p><img data-src="https://img9.doubanio.com/view/subject/l/public/s29578695.jpg" alt></p>
 <p>本文节选自其新书《<a href="https://book.douban.com/subject/27170672/" target="_blank" rel="noopener">财富自由之路</a>》。</p>
 <p>你可能从来都没有把“注意力”这个概念当成自己的“财富”品类之一。</p>
 <p>一提到财富，绝大多数人能直接想到的概念肯定是“金钱”，甚至不是“时间”，当然更不会是一个原本不在自己的操作系统里的概念 —— 注意力。</p>
@@ -358,13 +328,13 @@
 <p>读书本来就不是以量取胜的事，读得多本身只是书呆子，不仅要做到真正的理解，还要做到有品，就是能分清什么是好的，什么是差的。</p>
 <p>所以<code>选书比读书更重要。</code></p>
 <p>有一个很好的方法是：<code>看看牛人在读什么。</code></p>
-<h3 id="想要升职需要趁早掌握的一项能力"><a href="#想要升职需要趁早掌握的一项能力" class="headerlink" title="想要升职需要趁早掌握的一项能力"></a><a href="https://www.toutiao.com/i6457653117432365581/" target="_blank" rel="noopener">想要升职需要趁早掌握的一项能力</a></h3><p><img alt data-src="http://p1.pstatp.com/large/313b000077aa6f5b0a06"></p>
+<h3 id="想要升职需要趁早掌握的一项能力"><a href="#想要升职需要趁早掌握的一项能力" class="headerlink" title="想要升职需要趁早掌握的一项能力"></a><a href="https://www.toutiao.com/i6457653117432365581/" target="_blank" rel="noopener">想要升职需要趁早掌握的一项能力</a></h3><p><img data-src="http://p1.pstatp.com/large/313b000077aa6f5b0a06" alt></p>
 <p>我常在两岸三地的上市企业进行内部培训，在和这些高管讨论新产品和新事业的过程中，我发现，不少人对于财务的观念不是那么熟悉。</p>
 <p>在我看来，即使是非财务背景出身，也要有基本的了解与概念，这样才能在事业与工作上趋吉避凶。</p>
 <p>然而，许多人有个误区是，要学财务管理，就要背好会计科目。其实对于高管更重要的是，阅读财报，了解公司运营状况，并做出相对应的决策。</p>
 <p>下面就来说说，成为一位高管，所需具备的财务数字力。</p>
 <p>在财务管理当中，最关键的三张报表依序是：<code>利润表、资产负债表、现金流量表。</code></p>
-<p><img alt data-src="http://p3.pstatp.com/large/31370003ed1fb5883156"></p>
+<p><img data-src="http://p3.pstatp.com/large/31370003ed1fb5883156" alt></p>
 <p>无形资产表<br>重大风险表<br>重大案件表<br>——IPCreator</p>
 <p>利润表</p>
 <blockquote>
@@ -393,7 +363,7 @@
 <p>有些企业因为没有足够现金，在碰到紧急状况时无法因应，即使利润表上有净利，还是因此倒闭。</p>
 <p>要了解公司的现金状况，我们应该观察经营活动现金流量（Operating Cash Flow），数字若是正的，代表公司赚的利润有变回现金回到公司。</p>
 <p>这几天令大家印象深刻的乐视网贾老板，他曾声称公司盈利状况很好，现金流位于历史高位，但该公司当时的经营活动现金流却是历史最差水平（负 10.68 亿）。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/313b000077aceb516d37"><br>所以真正的财报高手才会说：凡是没有营运现金流的故事都是假的！就是这么简单！</p>
+<p><img data-src="http://p1.pstatp.com/large/313b000077aceb516d37" alt><br>所以真正的财报高手才会说：凡是没有营运现金流的故事都是假的！就是这么简单！</p>
 <ol start="2">
 <li>公司有没有投资未来？</li>
 </ol>
@@ -406,16 +376,16 @@
 <p>我们可以从以下三个状况来思考并应用：</p>
 <p>状况题</p>
 <p>状况1. 当景气不好时</p>
-<p><img alt data-src="http://p3.pstatp.com/large/31370003ed20ed163c18"><br>从利润表的概念当中可以了解，景气不好的时候，公司营收会下降；在什么事情都不做的情况之下，净利也会下修。</p>
+<p><img data-src="http://p3.pstatp.com/large/31370003ed20ed163c18" alt><br>从利润表的概念当中可以了解，景气不好的时候，公司营收会下降；在什么事情都不做的情况之下，净利也会下修。</p>
 <p>身为管理层，为了让净利不要掉那么快，你就必须在中间采取一些做法，可以试着去思考是否砍掉一些营业费用，例如营销、管理，或是研发等费用。</p>
 <p>这也是为什么景气不好，公司最后会做出裁员的决策。假设市场景气下滑，业绩掉了 50％，所有情况都不变的话，净利也会掉 50％，这就是一种连动。</p>
 <p>若平时没有这样的了解，等到公司得裁员或减薪求生存时，身为主管可能也会感到措手不及。</p>
 <p>状况2. 当外部资金减少时</p>
-<p><img alt data-src="http://p1.pstatp.com/large/31380003e7ded17f8fe9"><br>假设公司跟银行借了 900 亿，自己投入的资金是 100 亿，但之后银行发现产业环境状况不太好，决定收回 500 亿借款。</p>
+<p><img data-src="http://p1.pstatp.com/large/31380003e7ded17f8fe9" alt><br>假设公司跟银行借了 900 亿，自己投入的资金是 100 亿，但之后银行发现产业环境状况不太好，决定收回 500 亿借款。</p>
 <p>公司的资产负债表右边的外部资金少了 500 亿，左边的资产也会跟着少 500 亿，尽管公司有满手的厂房和设备，若是无法换回现金，依然可能面临倒闭的危机。</p>
 <p>这时公司恐怕必须得尽快变卖存货或是设备，以换取现金。</p>
 <p>状况3 . 公司应该投入新事业吗？</p>
-<p><img alt data-src="http://p1.pstatp.com/large/31380003e7df57550e35"><br>一家公司现金流量表中的投资活动现金流量是负的，代表这家公司有投资未来。</p>
+<p><img data-src="http://p1.pstatp.com/large/31380003e7df57550e35" alt><br>一家公司现金流量表中的投资活动现金流量是负的，代表这家公司有投资未来。</p>
 <p>若你发现同产业的竞争对手全部都是负的，而且都在加大力度投资，从一年投资 10 亿，变成一年投资 100 亿，这可能显示了某个警讯：同行们一次投了这么多钱，代表日后供给量会大增，几年后这个市场很可能会杀得血流成河。</p>
 <p>当感觉市场上可能有这样的趋势，又看到这个情况时，可以采取的一个做法是：</p>
 <p>将原本预计投资的 10 亿，留 50％ 现金在公司，以防景气突然反转，公司可弹性应变运用；将另外的50％拿去投入新的产品研发或项目，适度降低未来投资额。</p>
@@ -480,9 +450,9 @@
 <p>这一讲我向你介绍了央行的数字货币。</p>
 <p><code>它的本质是现钞的替代，虽然在央行这一层，我们并没有采用区块链技术，但我们把区块链的内核拿了出来，也就是说，它是具有价值特征的数字支付工具，脱离账户也可以进行价值转移，能够满足可控匿名的支付需求。</code></p>
 <p>同时，我们也讲了央行数字货币反洗钱的手段，任何一种支付工具，都需要在便利性和合法上进行平衡。</p>
-<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><h3 id="我如何一个人实现亚马逊上的100万美元销售额？（英文）"><a href="#我如何一个人实现亚马逊上的100万美元销售额？（英文）" class="headerlink" title="我如何一个人实现亚马逊上的100万美元销售额？（英文）"></a><a href="https://dollarsanity.com/amazon-fba-selling-my-products/" target="_blank" rel="noopener">我如何一个人实现亚马逊上的100万美元销售额？（英文）</a></h3><p><img alt data-src="https://www.wangbase.com/blogimg/asset/201909/bg2019091101.jpg"></p>
+<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><h3 id="我如何一个人实现亚马逊上的100万美元销售额？（英文）"><a href="#我如何一个人实现亚马逊上的100万美元销售额？（英文）" class="headerlink" title="我如何一个人实现亚马逊上的100万美元销售额？（英文）"></a><a href="https://dollarsanity.com/amazon-fba-selling-my-products/" target="_blank" rel="noopener">我如何一个人实现亚马逊上的100万美元销售额？（英文）</a></h3><p><img data-src="https://www.wangbase.com/blogimg/asset/201909/bg2019091101.jpg" alt></p>
 <p>一个美国大学生讲述，他如何通过代理中国产品，没有雇佣任何人，一个人在亚马逊上年销售额达到100万美元。</p>
-<h3 id="新认知丨钱如何越花越多？"><a href="#新认知丨钱如何越花越多？" class="headerlink" title="新认知丨钱如何越花越多？"></a><a href="http://www.luojiji.com/thread-8169-1-1.html" target="_blank" rel="noopener">新认知丨钱如何越花越多？</a></h3><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s28929737.jpg"></p>
+<h3 id="新认知丨钱如何越花越多？"><a href="#新认知丨钱如何越花越多？" class="headerlink" title="新认知丨钱如何越花越多？"></a><a href="http://www.luojiji.com/thread-8169-1-1.html" target="_blank" rel="noopener">新认知丨钱如何越花越多？</a></h3><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s28929737.jpg" alt></p>
 <p>说到会花钱，很多人立刻就会想到要省钱，要勤俭持家。真的是这样吗？最近有本新书《<a href="https://book.douban.com/subject/26844959/" target="_blank" rel="noopener">学会花钱</a>》就提出了不同的观点。本书作者野口真人是日本有名的MBA导师，长期活跃在金融界，先后在瑞德银行、摩根大通、高盛等公司工作，是一个金融界的大咖。作者说我们多数人在花钱上都存在误区，真正的会花钱不是省钱，而是把钱越花越多。</p>
 <p>钱怎么能越花越多呢？作者说，要想把钱越花越多，首先要学会区分三个钱包。这三个钱包分别是投机钱包，投资钱包和消费钱包。</p>
 <p>第一种投机钱包，是指花钱做撞大运的事情。比如买彩票，赌博，或者买艺术品、收藏品，想着没准它日后就会升值。作者建议这类钱包不要用，因为投机这件事是完全没法掌控的，如果想要挣钱而沉溺于投机行为里，很可能会败光家里辛苦积累的资产。</p>
@@ -496,7 +466,7 @@
 <p>最后总结一下：学会区分三个钱包，只买以后会更值钱的东西，才能把钱越花越多，成为一个会花钱的人。以上观点，供你参考。</p>
 <h2 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h2><p>如果你已经富裕，2％的收入增长速度就很不错了，可以让你保持并变得更加富裕。<br>但是，对于几乎没有收入的人来说，2％的收入增长速度，基本上就代表他们将永远贫穷。<br>如果 GDP 增长2％，人口增长1.2％，通货膨胀率为1％，那么人均 GDP 将下降。<br>– <a href="https://news.ycombinator.com/item?id=20997415" target="_blank" rel="noopener">HN 读者评论中国经济增长速度降到6%</a></p>
 <h3 id="星巴克的储值卡"><a href="#星巴克的储值卡" class="headerlink" title="星巴克的储值卡"></a><a href="https://jpkoning.blogspot.com/2019/08/starbucks-monetary-superpower.html" target="_blank" rel="noopener">星巴克的储值卡</a></h3><p>下面这篇文章解释了，为什么很多公司让用户预付款购买服务，而且预付款很难拿回来。</p>
-<p><img alt data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019082301.jpg"></p>
+<p><img data-src="https://www.wangbase.com/blogimg/asset/201908/bg2019082301.jpg" alt></p>
 <p>星巴克发行储值卡，用户可以把钱存在里面，然后用储值卡购买咖啡。目前，星巴克公司所有储值卡的余额为16亿美元，这相当于用户给星巴克免费贷款16亿美元。</p>
 <p>星巴克不是唯一一家从客户那里获得免费贷款的公司，PayPal 也是如此。持有 PayPal 余额的客户实际上是 PayPal 的债权人，PayPal 的客户贷款目前超过200亿美元。与星巴克一样，PayPal 也不会向客户支付任何利息。</p>
 <p>但是 PayPal 必须把这些钱放在银行，防止用户随时提款。星巴克的储值卡只能用来买咖啡，所以星巴克可以随时动用这些钱，用于自己的用途。</p>
@@ -516,8 +486,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Investment/" rel="bookmark">Investment</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Freedom/" rel="bookmark">Freedom</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Desire/" rel="bookmark">Desire</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Review/" rel="bookmark">Review</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Logic/" rel="bookmark">Logic</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Profession/" rel="tag"><i class="fa fa-tag"></i> Profession</a>
               <a href="/tags/Wisdom/" rel="tag"><i class="fa fa-tag"></i> Wisdom</a>
@@ -537,21 +528,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Wisdom/2020/How/" rel="next" title="How">
-                  <i class="fa fa-chevron-left"></i> How
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Profession/2020/Writ/" rel="prev" title="Writ">
-                  Writ <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Wisdom/2020/How/" rel="prev" title="How">
+      <i class="fa fa-chevron-left"></i> How
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Profession/2020/Writ/" rel="next" title="Writ">
+      Writ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -564,7 +552,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -595,8 +605,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -605,14 +615,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -623,11 +633,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -661,7 +666,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -673,51 +678,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -726,18 +692,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -747,63 +707,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -811,14 +714,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -845,40 +748,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Profession/2020/Wealth/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="情绪不仅是自己的好朋友，也是一种有效的沟通工具。——DeepCreator">
 <meta name="keywords" content="Emotion,Mood">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Emotion/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Emotion/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Emotion/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="emotion20180816.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/emotion20180816.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://pd4vb8220.bkt.clouddn.com/emotion20180816.jpg?imageMogr2/thumbnail/!75p" alt="emotion20180816.jpg"></p>
 <blockquote>
 <p>情绪不仅是自己的好朋友，也是一种有效的沟通工具。——DeepCreator</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt="Image_20180824202255.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/Image_20180824202255.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/Image_20180824202255.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180824202255.jpg"></p>
 <p><strong>知者不惑，仁者不忧，勇者不惧。</strong>——《论语》</p>
 <p>译文：聪明的人不会迷惑，有仁德的人不会忧愁，勇敢的人无所畏惧。</p>
 <p>了解，体察，控制，利用<br>和情绪对抗了很久，最终只能和情绪合作。<br>焦虑的原因来自多方面，一个是和他人比较，第二是缺乏<a href="https://deepcreator.com/Concept/Patience.html" target="_blank" rel="noopener">耐心</a>，没有相信<a href="https://deepcreator.com/Concept/Accumulation.html" target="_blank" rel="noopener">积累</a>的力量。</p>
@@ -304,7 +274,7 @@
 <p>情绪才是我们人体的底层操作系统，理性是运行在这个系统之上的应用软件。</p>
 </blockquote>
 <p>这就是今天要介绍的这本面世不久的新书所研究的问题——</p>
-<p><img alt data-src="http://pd4vb8220.bkt.clouddn.com/s29709284.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://pd4vb8220.bkt.clouddn.com/s29709284.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>《情绪是什么》</p>
 </blockquote>
@@ -369,7 +339,7 @@
 <p>首先，<strong>运用自我同理心。善待自己和愿意原谅自己，可以减轻羞愧感的负面影响</strong>。想像你正在给与你相同处境的另一个人提供建议，比如一位好几个项目都进度落后的某位朋友。你很可能会愿意告诉别人，应该让自己休息一下。你也应该给自己相同的建议。</p>
 <p>其次，<strong>专注在已完成的事情上</strong>。当你把焦点放在已经完成的事，以及你想要达成的某个成果之间的差距上时，就会感到不满意。这种能量可能会激励人们采取行动。假如你无法采取任何行动，不如就专注在你已完成的事项上，对自己的成就感到自豪，这样就能排除内疚感。</p>
 <p>第三，<strong>练习宽容接纳</strong>。接受现况，提醒自己，在那个时候感到内疚，其实毫无帮助。当你所处的情况可以让你完成工作时，就应善用内疚感，把它当成激励工具。当你的情况不能完成工作时，就拟定策略忘掉内疚感，并寻找方法来减少羞愧感。马克曼说：“无法完成某些工作，并不会让你变成‘坏人’，只是显示出你是个普通人而已。”</p>
-<h2 id="如何管理自己的坏情绪？"><a href="#如何管理自己的坏情绪？" class="headerlink" title="如何管理自己的坏情绪？"></a><a href="http://www.luojiji.com/thread-12680-1-1.html" target="_blank" rel="noopener">如何管理自己的坏情绪？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201808/11/100715n4tvpvllte5rqiq5.jpg"></p>
+<h2 id="如何管理自己的坏情绪？"><a href="#如何管理自己的坏情绪？" class="headerlink" title="如何管理自己的坏情绪？"></a><a href="http://www.luojiji.com/thread-12680-1-1.html" target="_blank" rel="noopener">如何管理自己的坏情绪？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201808/11/100715n4tvpvllte5rqiq5.jpg" alt></p>
 <p>无论生活还是工作，我们常会有情绪失控的时候。</p>
 <p>一味让坏情绪控制自己，只会把情况变得更糟糕。</p>
 <p>今天这篇书单，就给你管理情绪的具体心法。你也可以转发给需要的朋友。</p>
@@ -437,7 +407,7 @@
 </li>
 </ol>
 <p>更多的情绪修炼技巧，推荐观看《拆除你的情绪地雷》。</p>
-<h2 id="《情绪管理定律》"><a href="#《情绪管理定律》" class="headerlink" title="《情绪管理定律》"></a><a href="https://www.toutiao.com/a1606701894762503/" target="_blank" rel="noopener">《情绪管理定律》</a></h2><p><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/bdc3f96682b44549825d53ad9d11bcc5~1047x1394_noop.image"></p>
+<h2 id="《情绪管理定律》"><a href="#《情绪管理定律》" class="headerlink" title="《情绪管理定律》"></a><a href="https://www.toutiao.com/a1606701894762503/" target="_blank" rel="noopener">《情绪管理定律》</a></h2><p><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/bdc3f96682b44549825d53ad9d11bcc5~1047x1394_noop.image" alt></p>
 <p>绝望=苦难－意义（凝聚力=苦难+胜利，譬如台儿庄）<br>失望=期望－现实<br>遗憾=失望＋责任感<br>猜忌=不信任/自尊<br>妒忌=（傲慢＋虚荣）/慈悲<br>焦虑=不确定性×无力感<br>使命=快乐/痛苦<br>工作狂=你在逃避什么/你为何而活<br>心流=惊奇/挑战<br>好奇心=惊奇＋敬畏<br>真实性=自我觉知×勇气<br>自恋症=（自尊心）×2×特权<br>正直=真实×无形×可靠<br>幸福=想要拥有的/拥有想要的<br>喜悦=爱－恐惧<br>活力=积极的频率/消极的频率<br>信仰=信念/智力<br>智慧=经历开平方根</p>
 <h2 id="关于面对批评"><a href="#关于面对批评" class="headerlink" title="关于面对批评"></a><a href>关于面对批评</a></h2><p>——罗辑思维CEO脱不花 脱不花</p>
 <p>01 没有人对被批评感到高兴。如果有，TA撒谎。</p>
@@ -462,7 +432,7 @@
 <p>第二步是专注，专注和唤醒几乎同时发生，除非你被唤醒了，否则你不可能集中注意力。专注需要你保持清醒，有目的、有意识地完成工作。</p>
 <p>最后是超然与释放。这里说的是对待事情不要回避，我们在做事的时候很容易会产生各种想法，这时候不要把想法拒之门外，而要客观地观察它们，承认它们只是想法而已，不关注它们，将它们放下。</p>
 <p>以上就是《工作不焦虑》这本书对焦虑的解释，以及书里给出的应对焦虑的办法，希望对你有帮助。</p>
-<h2 id="别让坏情绪，赶走好运气——超图解心情调节术"><a href="#别让坏情绪，赶走好运气——超图解心情调节术" class="headerlink" title="别让坏情绪，赶走好运气——超图解心情调节术"></a><a href="https://book.douban.com/subject/27091789/" target="_blank" rel="noopener">别让坏情绪，赶走好运气——超图解心情调节术</a></h2><p><img alt="emotion20180720.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/emotion20180720.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="别让坏情绪，赶走好运气——超图解心情调节术"><a href="#别让坏情绪，赶走好运气——超图解心情调节术" class="headerlink" title="别让坏情绪，赶走好运气——超图解心情调节术"></a><a href="https://book.douban.com/subject/27091789/" target="_blank" rel="noopener">别让坏情绪，赶走好运气——超图解心情调节术</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/emotion20180720.jpg?imageMogr2/thumbnail/!75p" alt="emotion20180720.jpg"></p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>别让坏情绪，赶走好运气<br>别让坏脾气毁了你<br>别让自己后悔当时忍住就好了<br>要知道，不生气你就赢了</p>
 <p>这是一本轻松改善我们工作、生活、人际关系的实用心理自助读本。本书采用生活场景剧的插画形式展示了：我们的心情受哪些因素影响？是如何变糟的，又是如何变好的？心情好坏对我们身心乃至人生的影响是怎样的？形象地演绎出了那些左右我们心情的人和事，帮助我们转变思维模式，改变行为方式，从而成为一个更加健康快乐的人。</p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>第一章 心理和大脑的机能<br>我们不得不了解的心理和大脑的10项机能<br>1 不能掌控情绪的人，也无法掌控自己的人生<br>2 不要被情绪左右，而要让它为己所用<br>3 控制不了情绪的人满脸写着“不高兴”<br>4 情感需求得不到满足的人容易生气<br>5 委屈自己讨好别人的人快乐不起来<br>6 如果你一直情绪低落，要警惕是否陷入了自责的泥潭<br>7 担心也许只是因为你想多了<br>8 负面情绪会反弹回自己身上<br>9 为什么费力不讨好的工作总是落到自己的头上<br>10 悲观的人会认为“答案只有一个”<br>心情调整练习 ①</p>
@@ -534,7 +504,7 @@
 <ol start="4">
 <li>你看，他时刻在意态度和情绪，因此不坚持任何行动。这就是为什么老是妥协，但是不幸的根源啊。</li>
 </ol>
-<h3 id="压力"><a href="#压力" class="headerlink" title="压力"></a><a href="http://www.xinli001.com/info/100014508" target="_blank" rel="noopener">压力</a></h3><p><img alt data-src="https://image.xinli001.com/20150227/144708c5f3503e8ada8513.jpg!600"></p>
+<h3 id="压力"><a href="#压力" class="headerlink" title="压力"></a><a href="http://www.xinli001.com/info/100014508" target="_blank" rel="noopener">压力</a></h3><p><img data-src="https://image.xinli001.com/20150227/144708c5f3503e8ada8513.jpg!600" alt></p>
 <p>压力分精神与物理两个领域的定义。</p>
 <p>物理定义具有客观属性，是指垂直作用于流体或固体界面单位面积上的力。</p>
 <p>而从心理学角度看，压力是心理压力源和心理压力反应，共同构成的一种认知和行为体验过程。</p>
@@ -564,7 +534,7 @@
 <p>卡巴金也在企业推广正念训练的方法。比如，一般开会的时候，往往是很多人坐在一起绞尽脑汁讨论。但如果能在会议开始之前，拿出5分钟让大家冥想一下，让人把心思安定下来，人们也许就能比较自然地从现状中发现做事的方法。</p>
 <p>卡巴金说，我们<strong>太容易评判</strong>，觉得别人说的话没道理，认为只有自己知道什么是对错。其实这都是浪费<a href="https://deepcreator.com/Concept/Energy.html" target="_blank" rel="noopener">精力</a>。正念强调的就是不要轻易评判。团队合作时，要学会彼此倾听。想找到新办法解决问题，就要学会集思广益，而不是因为某些想法还不成熟就把它扼杀了。有时候，新的洞见并不是来自某个人，而是来自<a href="https://deepcreator.com/Concept/Communication.html" target="_blank" rel="noopener">交流与对话</a>。如果每个人都能少一些评判，少陷入思考，新的想法就会浮现出来。</p>
 <h3 id="五个常见问题，带你从心理学的视角重新理解"><a href="#五个常见问题，带你从心理学的视角重新理解" class="headerlink" title="五个常见问题，带你从心理学的视角重新理解"></a><a href="http://www.luojiji.com/thread-11846-1-1.html" target="_blank" rel="noopener">五个常见问题，带你从心理学的视角重新理解</a></h3><p>大脑发育是匀速的吗？自由意志决定了我们的行为吗？贫穷的危害只是物质的匮乏吗？……</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201805/05/092213bkntg0ldwl0gvln0.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201805/05/092213bkntg0ldwl0gvln0.jpg" alt></p>
 <ol>
 <li>什么影响了我们对一件物品的评价？</li>
 </ol>
@@ -600,7 +570,7 @@
 <p>示例：返老还童实验</p>
 <p>哈佛大学兰格教授搭建了一个“时空胶囊”，将房间布置得和20年前一模一样。他邀请16位老人，在时空胶囊里生活了一个星期。</p>
 <p>结果发现，在20年前的环境里生活一周后，这些老人的身体都有了明显改善。视力、听力、记忆力和反应速度，也都明显提高。</p>
-<h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h3 id="关于如何管理负面情绪的清单"><a href="#关于如何管理负面情绪的清单" class="headerlink" title="关于如何管理负面情绪的清单"></a><a href="http://www.luojiji.com/thread-8825-1-1.html" target="_blank" rel="noopener">关于如何管理负面情绪的清单</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201707/09/163535bqwtrrwvqu61cug8.jpg"></p>
+<h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h3 id="关于如何管理负面情绪的清单"><a href="#关于如何管理负面情绪的清单" class="headerlink" title="关于如何管理负面情绪的清单"></a><a href="http://www.luojiji.com/thread-8825-1-1.html" target="_blank" rel="noopener">关于如何管理负面情绪的清单</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201707/09/163535bqwtrrwvqu61cug8.jpg" alt></p>
 <p>生活中，总有负面情绪失控的时候。但这不仅解决不了问题，还让工作生活更加糟糕。其实，负面情绪从来都不需要控制，而是需要管理。</p>
 <p>这篇清单教你如何管理自己的负面情绪，12条建议，供你参考。</p>
 <ol>
@@ -673,7 +643,7 @@
 <p>比如家长可以给孩子的焦虑的情绪取一个绰号，叫“大虫子”，每次孩子感到焦虑时，家长就可以问问是不是“大虫子”又来了。这种方式可以让孩子觉得焦虑不是自己的错，而是外来的东西，长此以往就可以减少孩子的焦虑情绪。</p>
 <p>其次是增强孩子对焦虑的抵抗力。</p>
 <p>增强抵抗力，不是让家长一下子把孩子暴露在他们害怕的东西面前，而是<strong>要从孩子最容易接受的事情，慢慢培养习惯</strong>。比如孩子怕狗，不敢出门，家长可以先和孩子一起看画着小狗的图书，然后带孩子远远地看邻居家的狗，最后试着让孩子慢慢接近笼子里的狗，这样一步步增加难度，能让孩子知道自己在安全的环境里，从而逐渐放松。每当孩子变得更勇敢的时候，家长就可以对孩子进行奖励。在奖励时，不用把规矩定的太严格，比如，目标是让孩子5天都自己乖乖上床睡觉，有时就算孩子很努力还是做不到，那么就可以适当放宽标准，就算不是连续5天完成任务，在半个月里自己睡了5天也可以给予奖励。琼斯基表示，<strong>孩子几乎不可能一次就掌握抵抗焦虑的要领，家长需要重复地让孩子暴露在焦虑里，直到孩子可以轻松应对，那么就可以适当减少奖励了。</strong></p>
-<h3 id="心理学专家教你如何管理焦虑情绪"><a href="#心理学专家教你如何管理焦虑情绪" class="headerlink" title="心理学专家教你如何管理焦虑情绪"></a><a href="http://www.luojiji.com/thread-11697-1-1.html" target="_blank" rel="noopener">心理学专家教你如何管理焦虑情绪</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201804/17/093209nb6shgc4sg3gsh43.jpg"></p>
+<h3 id="心理学专家教你如何管理焦虑情绪"><a href="#心理学专家教你如何管理焦虑情绪" class="headerlink" title="心理学专家教你如何管理焦虑情绪"></a><a href="http://www.luojiji.com/thread-11697-1-1.html" target="_blank" rel="noopener">心理学专家教你如何管理焦虑情绪</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201804/17/093209nb6shgc4sg3gsh43.jpg" alt></p>
 <blockquote>
 <p>如何摆脱焦虑情绪，自主地掌控生活呢？</p>
 </blockquote>
@@ -734,16 +704,37 @@
 <p>第一，你后悔的时候，要提醒自己，别的结果不一定就比现在好。因为大多数人都有一种乐观的倾向，觉得明天会更好，那些不好的事情不会发生在自己身上。所以当你后悔的时候可以这么做，找一张纸，写5个更不好的结果，比如你后悔没去参加舞会，那你就写5个去参加舞会的更不好的结果。</p>
 <p>第二，为了你在今后的人生里不后悔，大胆去做。咱们之前说了，在很长的时间段里，那些没做的事情会让你后悔一生。所以，当你不知道做还是不做的时候，想想这一点。<strong>如果你不想在长期的人生中后悔，做比不做更好。</strong> 但是你做之前，先想清楚自己能不能承受后果，有没有别的办法可以弥补损失。如果你觉得这些都没问题，那就大胆去做吧。</p>
 <p>本文源自：公众号“简里里”（我有后悔药，你要吗？｜关于“后悔”的秘密）</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><h3 id="情绪是什么-How-We-Feel"><a href="#情绪是什么-How-We-Feel" class="headerlink" title="情绪是什么 How We Feel"></a><a href="https://book.douban.com/subject/30163471/" target="_blank" rel="noopener">情绪是什么 How We Feel</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29709284.jpg"></p>
-<h3 id="情绪的语言"><a href="#情绪的语言" class="headerlink" title="情绪的语言"></a><a href="https://book.douban.com/subject/10946200/" target="_blank" rel="noopener">情绪的语言</a></h3><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s11313078.jpg"></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><h3 id="情绪是什么-How-We-Feel"><a href="#情绪是什么-How-We-Feel" class="headerlink" title="情绪是什么 How We Feel"></a><a href="https://book.douban.com/subject/30163471/" target="_blank" rel="noopener">情绪是什么 How We Feel</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29709284.jpg" alt></p>
+<h3 id="情绪的语言"><a href="#情绪的语言" class="headerlink" title="情绪的语言"></a><a href="https://book.douban.com/subject/10946200/" target="_blank" rel="noopener">情绪的语言</a></h3><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s11313078.jpg" alt></p>
 
     </div>
 
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Trust/" rel="bookmark">Trust</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Toleration/" rel="bookmark">Toleration</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Anxiety/" rel="bookmark">Anxiety</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Feeling/" rel="bookmark">Feeling</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Emotion/" rel="bookmark">Emotion</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Emotion/" rel="tag"><i class="fa fa-tag"></i> Emotion</a>
               <a href="/tags/Mood/" rel="tag"><i class="fa fa-tag"></i> Mood</a>
@@ -756,21 +747,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Health/" rel="next" title="Health">
-                  <i class="fa fa-chevron-left"></i> Health
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Career/" rel="prev" title="Career">
-                  Career <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Health/" rel="prev" title="Health">
+      <i class="fa fa-chevron-left"></i> Health
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Career/" rel="next" title="Career">
+      Career <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -783,7 +771,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -814,8 +824,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -824,14 +834,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -842,11 +852,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -880,7 +885,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -892,51 +897,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -945,18 +911,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -966,63 +926,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1030,14 +933,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1064,40 +967,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Emotion/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

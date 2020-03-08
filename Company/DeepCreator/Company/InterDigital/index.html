@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="Interdigital Communication是无线电话通讯的先驱.世界上第一个无线网络就是该公司建成的.">
 <meta name="keywords" content="Smartphone,China,IPR,Interdigital">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/DeepCreator/Company/InterDigital/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/DeepCreator/Company/InterDigital/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/DeepCreator/Company/InterDigital/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="interdigital20180605.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/interdigital20180605.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/interdigital20180605.jpg?imageMogr2/thumbnail/!75p" alt="interdigital20180605.jpg"></p>
 <blockquote>
 <p> <a href="https://baike.baidu.com/item/InterDigital%20Communication/1178346" target="_blank" rel="noopener">Interdigital Communication</a>是无线电话通讯的先驱.世界上第一个无线网络就是该公司建成的.</p>
 </blockquote>
@@ -312,7 +282,7 @@
 <p>　　因为0.019%的费率水平，<strong>与Interdigital与苹果达成专利许可合作费率相当</strong>，而最初Interdigital向华为抛出“橄榄枝”时，要求的许可费率则是0.019%的N倍之多，应该要远远超过2%。</p>
 <p>　　当然，双方在此纠纷的妥善解决，也给interdigital带来了切实的好处，该公司得以从国内反垄断调查中脱身，避免了陷入高通此前被罚70亿元的尴尬。</p>
 <p>　　握手言和：共同寻求专利许可商业化合作路径</p>
-<p><img alt data-src="http://editerupload.eepw.com.cn/201612/9076e8cd90ff2cbe96ac451e68749e79.jpeg"></p>
+<p><img data-src="http://editerupload.eepw.com.cn/201612/9076e8cd90ff2cbe96ac451e68749e79.jpeg" alt></p>
 <p>　　可以说，在过去多年间，华为与Interdigital的关系可谓“水火不容”或者是争得“你死我活”。</p>
 <p>　　但是，这种“剑拔弩张”的关系突然缓和了，两家公司不仅握手言和，而且还达成了“结盟”关系。</p>
 <p>　　2016年9月6日，InterDigital对外宣布，1)两家公司签署了<strong>全球性</strong>的、多年的、非排他专利许可协议。2)双方同时就自2013年12月开始的所有仲裁诉讼达成全面和解，华为将向InterDigital支付专利许可费，3)两家公司还“就未来共同研发合作的谈判达成初步框架协议”。4)<strong>华为会转让一批专利给InterDigital。</strong></p>
@@ -333,13 +303,13 @@
 <p>　　双方合作的消息宣布之后，InterDigital股价连续大涨，9月8日InterDigital股价盘中达到每股73.88美元，为2011年以来的最高值。</p>
 <p>　　与此同时，InterDigital发布的2016年第三季度财务业绩也反映出了双方合作的“效果”。</p>
 <p>　　一方面，该公司第三季度同比收入翻了一番还多，从2015年的1.004亿美元增至现在的2.083亿美元。另一方面，该公司第三季度收取的过往专利使用费大幅上涨，从去年的1.022亿美元提高至今年的1.240亿美元。</p>
-<p><img alt data-src="http://editerupload.eepw.com.cn/201612/369c292e4e01f5e93b4f0d79e068c16a.jpeg"></p>
+<p><img data-src="http://editerupload.eepw.com.cn/201612/369c292e4e01f5e93b4f0d79e068c16a.jpeg" alt></p>
 <p>　　如今，国产手机厂商中的“佼佼者”华为，凭借自身的专利积累和技术实力已经与InterDigital达成了全面合作，那么，对于小米、魅族、OPPO、vivo、金立等专利实力相对薄弱的手机厂商，该怎么办呢?</p>
 <p>　　它们会不会成为下一轮专利诉讼风暴中的“靶心”呢?</p>
 <h2 id="公平、合理、无歧视？浅谈华为与InterDigital案件-组图"><a href="#公平、合理、无歧视？浅谈华为与InterDigital案件-组图" class="headerlink" title="公平、合理、无歧视？浅谈华为与InterDigital案件(组图)"></a><a href="http://roll.sohu.com/20130815/n384239516.shtml" target="_blank" rel="noopener">公平、合理、无歧视？浅谈华为与InterDigital案件(组图)</a></h2><p>2013年08月15日11:46 作者：徐明　管理学博士　上海腾信律师事务所律师</p>
 <p>华为与交互数字集团（Inter Digital Group，简称IDG）之间的相互诉讼有了结果。在IDG诉华为案中，美国国际贸易委员会（ITC）判决华为并未侵权；在华为诉IDG案中，深圳市中级人民法院判决IDG违反了技术标准下专利许可的原则之一：公平、合理、无歧视原则（FRAND），赔偿华为经济损失2000万元。涉案专利包括节约电能以及确保数据接收的准确性等，从判决结果来看华为取得了阶段性的胜利。这两个案件抛出了一个老生常谈的话题：在技术标准下应当如何进行专利许可？</p>
 <p>　　IDG是一家出名的专利组合和专利许可公司，持有超过19500项专利和专利申请，从2G和3G专利技术授权中获得了接近30亿美元的专利许可费。华为在通信领域的专利实力也不可小视，并且已经开拓大片的海外市场。在专利竞争十二分激烈的通信产业中，这两家公司发生专利纠纷的概率就大大增加了。</p>
-<p><img alt data-src="http://photocdn.sohu.com/20130815/Img384239517.jpg"></p>
+<p><img data-src="http://photocdn.sohu.com/20130815/Img384239517.jpg" alt></p>
 <p>利许可是一个法律问题，技术标准是一个产业问题。专利强调一个“专”字，强调一种专用权，他人使用需获得许可；技术标准强调一个“准”字，体现行业准入性，达不到标准往往不能进入相关市场。举个简单的例子，假设手机充电器强制执行统一技术标准（例如Micro USB接口标准），标准中存在某公司的专利，该公司是否就可以依靠着技术标准坐收专利许可的红利呢？</p>
 <p>　　并不完全是这样，因为一旦专利与技术标准相结合，就受到各种原则的制约，其中最主要的就是“公平、合理、无歧视”原则。它要求标准中的专利必须有“reasonable and nondiscriminatory terms（RAND）”（合理和不带歧视性的条款），或者“fair, reasonable, and non-discriminatory terms（FRAND）”（公平、合理、和不带歧视性的条款）。这两个条款通常是互用的。</p>
 <p>　　从理论上看，FRAND原则可以进行四个层次的理解：</p>
@@ -348,7 +318,7 @@
 <p>　　第三，在进行专利许可时，不得以“私有条款”限制某个公司实施技术标准中的专利。</p>
 <p>　　第四，不得将其他专利与必要专利进行搭售。</p>
 <p>　　从实践上看，要判断一家企业是否违反FRAND原则，可以通过以下流程图来初步判断：</p>
-<p><img alt data-src="http://photocdn.sohu.com/20130815/Img384239518.jpg"></p>
+<p><img data-src="http://photocdn.sohu.com/20130815/Img384239518.jpg" alt></p>
 <p>回到深圳中院的判决，法院认为IDG在中国和美国的3G无线通信技术标准中的每一个必要专利许可市场，均构成一个独立的相关市场，拥有完全的份额具有市场支配地位。将IDG授权给苹果、三星等公司的专利许可条件，与其向华为公司发出的要约条件进行对比，对华为的专利许可费高出很多，存在歧视性定价的行为。因此一审判决IDG违反了FRAND原则。</p>
 <p>　　关于技术标准下的专利许可，我去年写过一篇学术型文章，通过建模和推理，得出了两条基本结论：</p>
 <p>　　1.在短期中，专利权人设定合理的专利许可费用，降低了自由谈判的成本，增加了稳定的收益，专利被许可人在合理的专利许可费用下仍然有利可图，整个产业的收益率有所增加。</p>
@@ -362,7 +332,7 @@
 <p>　　尽管谷歌以125亿美元的价格收购了摩托罗拉移动，但谷歌目前还未正式退出竞购InterDigital。第一轮竞购公司已经暂停竞拍，因为需要更多时间来评估InterDigital专利的价值。德意志银行分析师布莱恩·马道夫(Brian Modoff)称，高通已经有一个很好的专利组合，因此可能不会出高价。</p>
 <p>　　InterDigital拥有8800项无线专利，其中大约有15%是与手机技术相关，包括无线数据传输、噪声干扰消除等专利许可。一些分析师认为，这些专利的价值可能超过北电在6月份拍卖的专利，因为其4G技术方面的专利占比较大。此外，InterDigital还有部分专利正在申请。InterDigital在3G上的专利授权覆盖了3G市场的50%以上，其合作伙伴包括三星、苹果、RIM、HTC等众多厂商。</p>
 <h2 id="苹果和-Google-死磕专利：下一个目标-InterDigital"><a href="#苹果和-Google-死磕专利：下一个目标-InterDigital" class="headerlink" title="苹果和 Google 死磕专利：下一个目标 InterDigital"></a><a href="http://www.ifanr.com/46967" target="_blank" rel="noopener">苹果和 Google 死磕专利：下一个目标 InterDigital</a></h2><p>2011-07-23 13:56</p>
-<p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2011/07/google-apple-battle.png"></p>
+<p><img data-src="https://images.ifanr.cn/wp-content/uploads/2011/07/google-apple-battle.png" alt></p>
 <p>苹果和 Google 刚刚结束一场硬仗——北电专利收购案，这场战役以苹果、微软、RIM、SONY、爱立信、AMC 组成的收购联盟获胜，Google、Intel 联盟失败而告终。根据苹果提交给美国证监会（SEC）的文件，苹果在这场收购案中的支出是 26 亿美元（整个专利案收购价格是 45 亿美元）。</p>
 <p>这场收购案还在报送众多管理机构审批的时候，另一场专利争夺战即将打响，这次战争的双方仍然是苹果和 Google ，主题仍然是手机通信专利，争夺的对象是 InterDigital。</p>
 <p>谁是 InterDigital ？</p>
@@ -384,8 +354,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/DeepCreator/Company/TCL/" rel="bookmark">TCL</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/DeepCreator/Company/Motorola/" rel="bookmark">Motorola</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/DeepCreator/Company/HTC/" rel="bookmark">HTC</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/DeepCreator/Company/MeiTu/" rel="bookmark">MeiTu</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/DeepCreator/Company/MeiZu/" rel="bookmark">MeiZu</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Smartphone/" rel="tag"><i class="fa fa-tag"></i> Smartphone</a>
               <a href="/tags/China/" rel="tag"><i class="fa fa-tag"></i> China</a>
@@ -400,21 +391,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Company/DeepCreator/Company/Motorola/" rel="next" title="Motorola">
-                  <i class="fa fa-chevron-left"></i> Motorola
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/Agent/" rel="prev" title="Agent">
-                  Agent <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Company/DeepCreator/Company/Motorola/" rel="prev" title="Motorola">
+      <i class="fa fa-chevron-left"></i> Motorola
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/Agent/" rel="next" title="Agent">
+      Agent <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -427,7 +415,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -458,8 +468,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -468,14 +478,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -486,11 +496,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -524,7 +529,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -536,51 +541,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -589,18 +555,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -610,63 +570,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -674,14 +577,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -708,40 +611,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/DeepCreator/Company/InterDigital/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

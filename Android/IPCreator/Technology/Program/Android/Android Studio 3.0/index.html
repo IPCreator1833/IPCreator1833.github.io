@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="一套全新的应用分析工具，用于快速诊断性能问题；支持 Kotlin 编程语言；一组全新的工具和向导，用于加快您在最新的 Android Oreo API 上进行开发的速度。">
 <meta name="keywords" content="Android,Studio">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Android/IPCreator/Technology/Program/Android/Android Studio 3.0/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Android/IPCreator/Technology/Program/Android/Android Studio 3.0/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Android/IPCreator/Technology/Program/Android/Android Studio 3.0/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,11 +256,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="https://bp.googleblog.cn/-DAAJWGccTCQ/We_MGiMuSFI/AAAAAAAAEtk/5_COppUTDusIIx725jENI3fd9rqlRl0gQCLcBGAs/s1600/image8.png"></p>
+        <p><img data-src="https://bp.googleblog.cn/-DAAJWGccTCQ/We_MGiMuSFI/AAAAAAAAEtk/5_COppUTDusIIx725jENI3fd9rqlRl0gQCLcBGAs/s1600/image8.png" alt></p>
 <p>一套全新的应用分析工具，用于快速诊断性能问题；支持 Kotlin 编程语言；一组全新的工具和向导，用于加快您在最新的 Android Oreo API 上进行开发的速度。</p>
 <a id="more"></a>
 <h2 id="Practice"><a href="#Practice" class="headerlink" title="Practice"></a>Practice</h2><p>【17.11.20日】升级到3.0</p>
-<p><img alt="androidstudio3.0.JPG" data-src="http://opb37u589.bkt.clouddn.com/androidstudio3.0.JPG?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/androidstudio3.0.JPG?imageMogr2/thumbnail/!75p" alt="androidstudio3.0.JPG"></p>
 <p>分析日志，找出关键字</p>
 <ol>
 <li>Google</li>
@@ -307,7 +277,7 @@
 <p>开发</p>
 <p><strong>Kotlin 编程语言</strong> - 正如我们在 Google I/O 2017 上公布的一样，Android 开发现在已正式支持 Kotlin 编程语言。Kotlin 是一种富于表现力且简洁的语言，可与现有 Android 语言和运行时互操作。也就是说，您可以根据自己的需要在应用中使用任意数量的语言。Kotlin 是一种可投入生产的语言，目前，Google Play 上许多热门的 Android 应用都在使用这种语言。</p>
 <p>此版本的 Android Studio 是第一个将 Kotlin 语言支持集成到 IDE 中的捆绑包里程碑。您最喜欢的许多功能（例如代码自动完成和语法突出显示）都可以在此版本上平稳运行，我们也会在后期版本中继续改进剩余的编辑器功能。您可以选择使用 Code → Convert Java File to Kotlin File 中提供的内置转换工具将 Kotlin 添加到您的项目，也可以使用 New Project 向导创建启用 Kotlin 的项目。详细了解 Android Studio 中的 Kotlin 语言支持。</p>
-<p><img alt data-src="https://bp.googleblog.cn/-ezg28xkLIKw/We_NGmvtLqI/AAAAAAAAEts/B5GMGAi639gLNAv9AHMh6yAjtd3ETDVBACLcBGAs/s1600/image1.png"><br>Android Studio 中的 Kotlin 语言转换</p>
+<p><img data-src="https://bp.googleblog.cn/-ezg28xkLIKw/We_NGmvtLqI/AAAAAAAAEts/B5GMGAi639gLNAv9AHMh6yAjtd3ETDVBACLcBGAs/s1600/image1.png" alt><br>Android Studio 中的 Kotlin 语言转换</p>
 <p>Java 8 语言功能 - 在 Android Studio 3.0 中，我们继续完善了对 Java 8 语言功能的支持。迁移到基于 javac 的工具链后，在您的项目中使用 Java 8 语言功能变得更加简单。要更新您的项目以支持全新的 Java 8 语言工具链，只需在 Project Structure 对话框中将您的 源代码 和 目标代码 兼容性级别更新至 1.8。了解详情。</p>
 <p>布局编辑器 - 我们更新了布局编辑器中的组件树，提供更好用的拖拽式视图插入功能以及全新的错误面板。了解详情。</p>
 <p>自适应图标向导 - 全新的向导可创建一组启动图标资源并可预览自适应图标在不同启动器屏幕图标蒙版上的外观。此版本新增了对 VectorDrawable 层的支持。了解详情。</p>
@@ -320,15 +290,15 @@
 <p>Google 的 Maven 代码库 - 为了实现更小更快的更新，Android Studio 3.0 默认利用 Google 的 Maven 代码库而不是 Android SDK 管理器来查找 Android 支持库、Google Play 服务和 Firebase Maven 依赖项的更新。如果结合使用最新的命令行 SDK 管理器工具和 Gradle，持续集成构建应迁移至 Google 的 Maven 代码库，方便未来的 Maven 代码库更新。了解详情。</p>
 <p>测试和调试</p>
 <p>Google Play 系统映像 - 我们还更新了 Android Oreo 的模拟器系统映像，现在已在其中添加 Google Play 商店。捆绑 Google Play 商店让您能够使用 Google Play 端到端地测试应用，同时也方便您在 Android Virtual Device (AVD) 中使 Google Play 服务保持最新状态。就像实际设备上的 Google Play 服务更新一样，您也可以在 AVD 上启用同样的更新。</p>
-<p><img alt data-src="https://bp.googleblog.cn/-8UIAKpGRG-M/We_OiL3ry_I/AAAAAAAAEt4/_5rhIttX47QS0bptRPo9DU7X9Ak2ycG_QCLcBGAs/s1600/image4.png"><br>Android Emulator 中的 Google Play 商店</p>
+<p><img data-src="https://bp.googleblog.cn/-8UIAKpGRG-M/We_OiL3ry_I/AAAAAAAAEt4/_5rhIttX47QS0bptRPo9DU7X9Ak2ycG_QCLcBGAs/s1600/image4.png" alt><br>Android Emulator 中的 Google Play 商店</p>
 <p>为确保应用安全性以及与实际设备一致的体验，包含 Google Play 商店的模拟器系统映像已使用发布密钥签名。这意味着您将无法获得高级权限。如果您要求使用高级权限 (root) 来帮助您排查应用问题，您可以使用不包含 Google 应用或服务的 Android 开放源代码项目 (AOSP) 模拟器系统映像。了解详情。<br>Android Emulator 中的 OpenGL ES 3.0 支持 - 最新版的 Android Emulator 针对 Android Oreo 系统映像引入了 OpenGL ES 3.0 支持，针对旧版模拟器系统映像，则大幅增强了 OpenGL ES 2.0 的图形性能。了解详情。</p>
 <p>Android Emulator 中的应用错误报告程序 - 为帮助记录应用中的错误，我们新增了一种通过 Android Emulator 生成错误报告的更简便方法，该报告程序提供所有必要的配置设置以及捕获重现步骤的空间。了解详情。</p>
 <p>Android 中的代理支持 - 如果您需要使用代理访问互联网，我们新增了一个界面，可用于管理模拟器使用的 HTTP 代理设置。了解详情。</p>
 <p>Android Emulator Quick Boot (Canary) - 我们听到的最常见抱怨之一是模拟器的启动时间过长。为了解决这一问题，我们非常高兴地宣布推出一项名为 Quick Boot 的新功能预览，它可以显著缩短模拟器的启动时间。启用此功能后，在您第一次启动 AVD 时将发生冷启动（就像接通设备电源），但是，所有后续启动的速度都会非常快，系统将恢复到您关闭模拟器时的状态（类似于唤醒设备）。如果您想要试用此功能，请确保您已加入 Canary 更新版本渠道，随后，您会在 SDK 管理器中发现版本为 v26.2.0 的 Android Emulator。了解详情。</p>
-<p><img alt data-src="https://bp.googleblog.cn/-H5uYgwbhIRw/We_UsZFBx8I/AAAAAAAAEuI/lhVHeO4bU5QEzge2T9yaPQuc7UInPRnogCLcBGAs/s1600/image9.png"><br>APK 调试 - Android Studio 3.0 允许您调试任意 APK。对于在其他 IDE 中编写 Android C++ 代码而想在 Android Studio 环境中调试和分析 APK 的开发者而言，此功能尤为有用。只要您有可调试版本的 APK，您就可以使用新的 APK 调试功能来静态分析、动态分析和调试 APK。而且，如果您可以访问 APK 的源代码，您可以将此源代码链接到 APK 调试流，以提高调试流程的保真度。只需在 Android Studio 欢迎屏幕中选择 Profile or debug APK，或者选择 File → Profile or debug APK，即可使用此功能。了解详情。</p>
-<p><img alt data-src="https://bp.googleblog.cn/-mORkxmNXgJc/We_VOWmeGYI/AAAAAAAAEuQ/LLWPUICDIKgHFLRVDIYDFV9r1mk9bYUlwCLcBGAs/s1600/image6.png"><br>APK 调试<br>布局检查器 - 在这个版本中，我们为布局检查器添加了其他几项增强功能，其中包括更好地将属性分组到常用分类中，以及视图树和 Properties 面板中的搜索功能等。了解详情。</p>
+<p><img data-src="https://bp.googleblog.cn/-H5uYgwbhIRw/We_UsZFBx8I/AAAAAAAAEuI/lhVHeO4bU5QEzge2T9yaPQuc7UInPRnogCLcBGAs/s1600/image9.png" alt><br>APK 调试 - Android Studio 3.0 允许您调试任意 APK。对于在其他 IDE 中编写 Android C++ 代码而想在 Android Studio 环境中调试和分析 APK 的开发者而言，此功能尤为有用。只要您有可调试版本的 APK，您就可以使用新的 APK 调试功能来静态分析、动态分析和调试 APK。而且，如果您可以访问 APK 的源代码，您可以将此源代码链接到 APK 调试流，以提高调试流程的保真度。只需在 Android Studio 欢迎屏幕中选择 Profile or debug APK，或者选择 File → Profile or debug APK，即可使用此功能。了解详情。</p>
+<p><img data-src="https://bp.googleblog.cn/-mORkxmNXgJc/We_VOWmeGYI/AAAAAAAAEuQ/LLWPUICDIKgHFLRVDIYDFV9r1mk9bYUlwCLcBGAs/s1600/image6.png" alt><br>APK 调试<br>布局检查器 - 在这个版本中，我们为布局检查器添加了其他几项增强功能，其中包括更好地将属性分组到常用分类中，以及视图树和 Properties 面板中的搜索功能等。了解详情。</p>
 <p>设备文件浏览器 - 利用 Android Studio 3.0 中全新的设备文件浏览器，您可以查看 Android 设备或模拟器的文件和目录结构。现在，您在测试应用时，可以直接在 Android Studio 中快速预览和修改应用数据文件。了解详情。<br>Android Test Orchestrator 支持 - 结合使用 AndroidJUnitRunner 1.0 或更高版本时，Android Gradle 插件 3.0 支持使用 Android Test Orchestrator。Android Test Orchestrator 让您可以在它的仪器内运行每一项应用测试。了解详情。</p>
-<p>优化<br>Android 分析器 - Android Studio 3.0 包含一套全新的工具，可以帮助调试应用的性能问题。我们对之前的 Android Monitor 工具集进行彻底重写，代之以 Android 分析器。您将应用部署到正在运行的设备或模拟器后，点击 Android Profiler 标签，即可在实时、统一的视图中访问应用的 CPU、内存和网络活动。每个性能事件映射到界面事件时间线中，该时间线突出显示触摸事件、按键和活动变更，以便您更清楚地了解特定事件发生的时间和原因。点击每个时间线可深入了解应用的性能情况。了解详情。<br><img alt data-src="https://bp.googleblog.cn/-bK0QeifFdfs/We_V8zjOtDI/AAAAAAAAEuc/QGusE3IQcdQeQf7l0Qzq6WyXIGBRKeWigCLcBGAs/s1600/image2.png"><br>Android 分析器 - 时间线组合视图<br><img alt data-src="https://bp.googleblog.cn/-btyJv3ipa5o/We_WRgdwxAI/AAAAAAAAEug/_-fbm6vmk_cEOL4IZYpgoXYlfNvuS0lvwCLcBGAs/s1600/image7.png"><br>CPU 分析器<br><img alt data-src="https://bp.googleblog.cn/-GiKRADK4aAQ/We_Wdc6GjTI/AAAAAAAAEuo/zLzrnL2WH70EMNzscaB95H3obVsUUJB8wCLcBGAs/s1600/image3.png"><br>内存分析器<br><img alt data-src="https://bp.googleblog.cn/-dOzg6FLRIP0/We_WsU_av9I/AAAAAAAAEus/sK0AMLwvAqk8sQ8Gqe5kfIhfnnvyAOUpgCLcBGAs/s1600/image5.png"><br>网络分析器<br>APK 分析器改进 - 我们还对 APK 分析器新增了一些额外的增强功能，以帮助您进一步优化 APK 的大小。了解详情。</p>
+<p>优化<br>Android 分析器 - Android Studio 3.0 包含一套全新的工具，可以帮助调试应用的性能问题。我们对之前的 Android Monitor 工具集进行彻底重写，代之以 Android 分析器。您将应用部署到正在运行的设备或模拟器后，点击 Android Profiler 标签，即可在实时、统一的视图中访问应用的 CPU、内存和网络活动。每个性能事件映射到界面事件时间线中，该时间线突出显示触摸事件、按键和活动变更，以便您更清楚地了解特定事件发生的时间和原因。点击每个时间线可深入了解应用的性能情况。了解详情。<br><img data-src="https://bp.googleblog.cn/-bK0QeifFdfs/We_V8zjOtDI/AAAAAAAAEuc/QGusE3IQcdQeQf7l0Qzq6WyXIGBRKeWigCLcBGAs/s1600/image2.png" alt><br>Android 分析器 - 时间线组合视图<br><img data-src="https://bp.googleblog.cn/-btyJv3ipa5o/We_WRgdwxAI/AAAAAAAAEug/_-fbm6vmk_cEOL4IZYpgoXYlfNvuS0lvwCLcBGAs/s1600/image7.png" alt><br>CPU 分析器<br><img data-src="https://bp.googleblog.cn/-GiKRADK4aAQ/We_Wdc6GjTI/AAAAAAAAEuo/zLzrnL2WH70EMNzscaB95H3obVsUUJB8wCLcBGAs/s1600/image3.png" alt><br>内存分析器<br><img data-src="https://bp.googleblog.cn/-dOzg6FLRIP0/We_WsU_av9I/AAAAAAAAEus/sK0AMLwvAqk8sQ8Gqe5kfIhfnnvyAOUpgCLcBGAs/s1600/image5.png" alt><br>网络分析器<br>APK 分析器改进 - 我们还对 APK 分析器新增了一些额外的增强功能，以帮助您进一步优化 APK 的大小。了解详情。</p>
 <p>简要回顾一下，Android Studio 3.0 包含以下主要的新功能：<br>开发<br>Kotlin 语言<br>Java 8 语言<br>布局编辑器改进<br>自适应图标向导<br>XML 字体和可下载字体<br>Android Things<br>Intellij 平台更新 2017.1</p>
 <p>构建<br>免安装应用支持<br>构建速度的提升<br>Google 的 Maven 代码库变更</p>
 <p>优化<br>CPU 分析器<br>内存分析器<br>网络分析器<br>APK 分析器改进<br>有关更多详细信息，请查看版本说明。</p>
@@ -342,8 +312,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Linux/" rel="bookmark">Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Smartphone/" rel="bookmark">Smartphone</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Technology/2020/Android/" rel="bookmark">Android</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/DeepCreator/IPR/Android/" rel="bookmark">Android</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/AI/IPCreator/Technology/AI/Tensorflow and Android/" rel="bookmark">Tensorflow and Android</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
               <a href="/tags/Studio/" rel="tag"><i class="fa fa-tag"></i> Studio</a>
@@ -356,21 +347,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/AI/IPCreator/Technology/AI/TensorFlow/Tensorflow Lite/" rel="next" title="Tensorflow Lite">
-                  <i class="fa fa-chevron-left"></i> Tensorflow Lite
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Android/IPCreator/Technology/Program/Android/Android 8.1 Developer Preview/" rel="prev" title="Android 8.1 Developer Preview">
-                  Android 8.1 Developer Preview <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/AI/IPCreator/Technology/AI/TensorFlow/Tensorflow Lite/" rel="prev" title="Tensorflow Lite">
+      <i class="fa fa-chevron-left"></i> Tensorflow Lite
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Android/IPCreator/Technology/Program/Android/Android 8.1 Developer Preview/" rel="next" title="Android 8.1 Developer Preview">
+      Android 8.1 Developer Preview <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -383,7 +371,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -414,8 +424,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -424,14 +434,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -442,11 +452,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -480,7 +485,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -492,51 +497,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -545,18 +511,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -566,63 +526,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -630,14 +533,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -664,40 +567,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Android/IPCreator/Technology/Program/Android/Android Studio 3.0/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

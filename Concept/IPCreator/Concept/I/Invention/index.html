@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="《时代周刊》每年都会评出一份有趣的发明榜单，悉数一年间世界范围内的重大发明。">
 <meta name="keywords" content="Invention">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/I/Invention/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/I/Invention/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/I/Invention/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125450rxxwe44www1s4mqz.jpg"></p>
+        <p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125450rxxwe44www1s4mqz.jpg" alt></p>
 <blockquote>
 <p>《时代周刊》每年都会评出一份有趣的发明榜单，悉数一年间世界范围内的重大发明。</p>
 </blockquote>
@@ -295,7 +265,7 @@
 <p>引言</p>
 <p>《时代周刊》每年都会评出一份有趣的发明榜单，悉数一年间世界范围内的重大发明。</p>
 <p>今年的榜单出来后，「得到」作者马徐骏抢先进行了解读。带你一起看看，2017年有哪些发明正在悄然改变我们的生活。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125506i5hd0ml5ppfd6mhh.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125506i5hd0ml5ppfd6mhh.jpg" alt></p>
 <ol>
 <li>阿迪达斯的4D跑鞋——Futurecraft</li>
 </ol>
@@ -303,140 +273,143 @@
 <p>这款鞋的特殊之处是可以根据每个人的不同脚型和尺码来进行定制，让你穿上之后跑得更快，转向更好，也跳得更高。</p>
 </blockquote>
 <p>之前定制一款鞋得花好几周的时间，而且一般只有名人才能享受到。但这款鞋，只需要两小时就可以制作完成，有点立等可取的感觉。这款鞋将于今年12月中旬开售基于运动员选手数据定制的“标准”版本。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125622yadaafnuhgd2k4gz.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125622yadaafnuhgd2k4gz.jpg" alt></p>
 <ol start="2">
 <li>磁悬浮电梯—— Thyssenkrupp MULTI</li>
 </ol>
 <p>这款电梯突破了我们以往对于电梯的认知，不但可以上下，还可以朝各个方向移动，有点像电影《查理的巧克力工厂》或者《哈利·波特》里魔法部的神奇电梯。这个发明最重要的意义在于，它会改变今后的建筑方式。<strong>预计2021年会在柏林投入使用。</strong></p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125639hdmhlhldymyqdaqf.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125639hdmhlhldymyqdaqf.jpg" alt></p>
 <ol start="3">
 <li>面向大众的特斯拉轿车——MODEL 3</li>
 </ol>
 <p>一般说来，电动车有两个很致命的问题，要么是太贵，要么就是充一次电行驶里程数太短，而特斯拉的MODEL 3同时解决了这两个问题。</p>
 <p>这款车售价35000美元，而且充一次电，<strong>能够跑320公里</strong> 以上。尽管特斯拉尚未将这款轿车面向大众发售，但已经开启了预约，差不多每天会接到1800张订单。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125657jkjfshmyde3rew9h.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125657jkjfshmyde3rew9h.jpg" alt></p>
 <ol start="4">
 <li>便携式可穿戴吸奶器——Willow Pump</li>
 </ol>
 <p>这款产品解决的是哺乳期的工作女性给孩子喂奶的问题。一般电动吸奶器是吸盘式的结构，连接在一个声音很响的机器上，使用的时候会让人觉得很不舒服，还尴尬。</p>
 <p>这款吸奶器非常轻巧，使用电池驱动，声音很轻，可以直接放在文胸里，随时随地使用。还配有存储奶水的容器袋，能更好解决困扰“背奶妈妈”们的哺乳问题。售价：480美金。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125726qc9iww9siwmctzei.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125726qc9iww9siwmctzei.jpg" alt></p>
 <ol start="5">
 <li>家庭安全系统——Nest Secure</li>
 </ol>
 <p>今年9月，Nest发布了一套名为Nest Secure的智能家庭安全系统。你不用输入那些复杂的密码，只需要有感应钥匙挂件就可以进入，然后它也可以分时段、分对象地进行准入。</p>
 <p>户主还可以通过手机来远程操控系统。没有被授权的人闯入家里，或者家里面的门窗被打破的时候，这个报警器会发出85分贝的警告，同时直接向主人报警。售价：499美金。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125757zy7d0e2ijet5e3zy.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125757zy7d0e2ijet5e3zy.jpg" alt></p>
 <ol start="6">
 <li>无人机交互——DJI Spark</li>
 </ol>
 <p>SPARK是中国大疆公司研发的自拍无人机。这台特别轻巧的自拍无人机，可以让你摆脱举着一个长杆傻呵呵拍照的尴尬。</p>
 <p>首先这款机器人非常容易操纵，拍照的时候只需要朝它挥挥手，它就可以执行拍摄。其次在空中的安全性很高，有多个传感器避免碰撞，充一次电可以维持16分钟左右的飞行。最关键的是，它很便宜，只要500美金左右。这款产品自从6月份发布以来，已经占据了美国一半的无人机市场。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125825z3939eif3zftbadw.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125825z3939eif3zftbadw.jpg" alt></p>
 <ol start="7">
 <li>火星探测——NASA Mars Insight</li>
 </ol>
 <p>火星是离地球最近也是和地球的生存环境接近的行星，NASA对火星的探索从上世纪60年代到今天，一直没停止过。</p>
 <p>NASA的火星探测器MARS INSIGHT，可以固定在一个地点，深入16英尺的深度，勘测火星的地表内温度，帮助科学家们研究火星的地质年龄，分析火星的成分构成，同时，帮助绘制3D立体影像。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125847yss44k1dud447u74.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125847yss44k1dud447u74.jpg" alt></p>
 <ol start="8">
 <li>不会发胖的冰激凌——HALO TOP</li>
 </ol>
 <p>这是一款味道很好，但是含糖量很低的冰激凌。一品脱，也就是568毫升，只有360卡路里的热量。一般的冰淇淋，一小杯的卡路里都上千了。那些贪嘴但是又怕胖的人有福了。</p>
 <p>这种冰激凌在美国大受欢迎，甚至成为了美国最受欢迎的冰激凌品牌。当然了，这种冰激凌卖得也不便宜，一品脱要5美元。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125901ghe5hk8sex7knnlu.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125901ghe5hk8sex7knnlu.jpg" alt></p>
 <ol start="9">
 <li>智能马克杯——Ember智能马克杯</li>
 </ol>
 <p>咖啡的温度始终是一个很难解决的问题，太烫了，下不了口，太凉了，味道又不好。你只有大概37秒的时间，能喝到温度和口感达到最佳平衡的咖啡。</p>
-<p>Ember Technologies解决了这个问题，他们生产了一款智能马克杯，可以用手机的App来控制，在一小时内让杯子里咖啡的温度保持在48.8℃到62.7℃之间。现在，美国的4600家星巴克都开卖了这种智能保温杯，每个售价80美元。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125919q1zssdm7yc1ykbbc.jpg"></p>
+<p>Ember Technologies解决了这个问题，他们生产了一款智能马克杯，可以用手机的App来控制，在一小时内让杯子里咖啡的温度保持在48.8℃到62.7℃之间。现在，美国的4600家星巴克都开卖了这种智能保温杯，每个售价80美元。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125919q1zssdm7yc1ykbbc.jpg" alt></p>
 <ol start="10">
 <li>疾病预防诊所——Forward</li>
 </ol>
 <p>Wavii的前创始人Adrian Aoun于2016年在旧金山开创了这家名为Forward的疾病预防诊所。它看起来很像高端的健身房，里面配备检查室以及Forward的各种特制仪器。经过一轮体检后，AI会告知你体检结果和调养方案。</p>
 <p>与此同时，会员也可以在这里通过AI及专业医生无限次进行遗传筛查、血液检测、定制减肥计划等咨询。费用是149美元一个月。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125945lu044z4mso3jmlio.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/125945lu044z4mso3jmlio.jpg" alt></p>
 <ol start="11">
 <li>针对所有肤色的粉底——Fenty Beauty</li>
 </ol>
 <p>美国是个多民族的国家，之前的化妆品主要是针对白人女性，有色人种女性这个群体是被忽略的。</p>
-<p>但是流行音乐巨星蕾哈娜的化妆品公司，在今年9月份出了一款40种颜色的粉底，不同肤色的女性，都可以在里面找到适合自己的颜色。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130001lt8180d6l803d1h7.jpg"></p>
+<p>但是流行音乐巨星蕾哈娜的化妆品公司，在今年9月份出了一款40种颜色的粉底，不同肤色的女性，都可以在里面找到适合自己的颜色。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130001lt8180d6l803d1h7.jpg" alt></p>
 <ol start="12">
 <li>智能烹饪——Tasty One Top</li>
 </ol>
-<p>通过与手机应用程序关联后，Tasty One Top会根据用户喜爱推荐菜谱并指导人们做菜，甚至可以进行傻瓜式的指导。比如说，煎牛排什么时候应该翻面了；当烹饪过程中需要添加配料时，Tasty One Top 都会提醒用户。售价：149美金。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130032m3rxfq3q7ofwtwwv.jpg"></p>
+<p>通过与手机应用程序关联后，Tasty One Top会根据用户喜爱推荐菜谱并指导人们做菜，甚至可以进行傻瓜式的指导。比如说，煎牛排什么时候应该翻面了；当烹饪过程中需要添加配料时，Tasty One Top 都会提醒用户。售价：149美金。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130032m3rxfq3q7ofwtwwv.jpg" alt></p>
 <ol start="13">
 <li>会杀菌的空气净化器——Molekule</li>
 </ol>
-<p>Molekule是一个纳米滤网的空气净化器，它不只是用滤网来过滤灰尘，还可以通过纳米滤网感光的方式杀死细菌。在进行空气净化的同时，将残留的有害物质通过光线刺激滤网的氧化反应进行分解。售价：799美金+99美金（一片滤网）。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130056eo01j31orzthzvip.jpg"></p>
+<p>Molekule是一个纳米滤网的空气净化器，它不只是用滤网来过滤灰尘，还可以通过纳米滤网感光的方式杀死细菌。在进行空气净化的同时，将残留的有害物质通过光线刺激滤网的氧化反应进行分解。售价：799美金+99美金（一片滤网）。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130056eo01j31orzthzvip.jpg" alt></p>
 <ol start="14">
 <li>不用充气的轮胎——Michelin Vision Concept</li>
 </ol>
 <p>开过车的人都知道，轮胎上面有两个问题是比较棘手的，一个是气压的问题，另外一个就是轮胎上花纹磨损的问题。</p>
-<p>米其林的这款轮胎同时解决了这两个问题。首先这个轮胎不需要充气，其次它的轮胎内采用独特的蜂窝结构，在面对复杂的路面时，轮胎可根据道路情况进行变化。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130116voujlm3oq3kcg2c5.jpg"></p>
+<p>米其林的这款轮胎同时解决了这两个问题。首先这个轮胎不需要充气，其次它的轮胎内采用独特的蜂窝结构，在面对复杂的路面时，轮胎可根据道路情况进行变化。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130116voujlm3oq3kcg2c5.jpg" alt></p>
 <ol start="15">
 <li>海底农场——GreenWave 3D Ocean Farm</li>
 </ol>
 <p>今年9月， GREENWAVE推出了全球第一个3D 海底农场，养殖的物种是分层的，上下层不一样，形成形态循环。</p>
-<p>简单地说，就是用绳子从海面垂到海床上，然后种植和培养牡蛎、蚌、蛤蜊，还有海带。构成一个让渔民自给自足的生态链，不再因过度捕捞而造成生态破坏。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130132wzzvp8op2xx0500k.jpg"></p>
+<p>简单地说，就是用绳子从海面垂到海床上，然后种植和培养牡蛎、蚌、蛤蜊，还有海带。构成一个让渔民自给自足的生态链，不再因过度捕捞而造成生态破坏。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130132wzzvp8op2xx0500k.jpg" alt></p>
 <ol start="16">
 <li>帮助视障人士看东西的眼镜——eSight 3</li>
 </ol>
 <p>eSight 3是一款通过AR技术来帮助视障患者恢复清晰的眼镜。通过高速高画质的摄影机，代替眼睛捕捉面前的画面信息，信息被处理后，会以画面的形式传输到用户眼前的两块OLED屏幕上。大部分有视力障碍的人可以通过它看清眼前的东西，甚至可以参加体育锻炼。</p>
 <p>用户可以通过遥控器对眼镜的显示色彩、对比度、焦距、亮度和放大倍率进行设置。售价：9995美金。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130156powo8hagm1k3ookk.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130156powo8hagm1k3ookk.jpg" alt></p>
 <ol start="17">
 <li>监控婴儿体温的手环——Bempu</li>
 </ol>
 <p>这款手环可以帮助医生和诊所更好地监测孩子的体温。它用起来非常的方便，只要把它绑在孩子的手腕上，一旦体温数据出现问题，它就会发出警报和橙色的亮光。</p>
 <p>目前为止这款发明已经帮助了遍布25个国家，超过10,000名新生儿更健康地成长。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130214alo4gu7ztomab2ug.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130214alo4gu7ztomab2ug.jpg" alt></p>
 <ol start="18">
 <li>穆斯林女性的运动头巾——Nike Pro Hijab</li>
 </ol>
 <p>这是给穆斯林妇女参与运动的希贾布，也就是头巾。穆斯林女运动员要遵守宗教规则，但是如果希贾布太重的话，不利于运动，但是如果太轻，运动时可能会掉下来。而Nike的这款产品完美地解决了这些问题。定价：35美元。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130356d9sla6xxxplcucaz.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130356d9sla6xxxplcucaz.jpg" alt></p>
 <ol start="19">
 <li>装饰与安全兼备的路由器——Norton Core</li>
 </ol>
-<p>Norton Core是一个更安全的wi-fi路由器，如果家里有电子设备出现安全隐患，这款路由器会直接把它从家庭网络中断开，就好像医院隔离那些有传染性的病人一样，有效防止被黑客入侵。Norton Core还会定时更新软件，应对新的威胁。售价：280美金。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130412ule3ufpbyipb3pyq.jpg"></p>
+<p>Norton Core是一个更安全的wi-fi路由器，如果家里有电子设备出现安全隐患，这款路由器会直接把它从家庭网络中断开，就好像医院隔离那些有传染性的病人一样，有效防止被黑客入侵。Norton Core还会定时更新软件，应对新的威胁。售价：280美金。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130412ule3ufpbyipb3pyq.jpg" alt></p>
 <ol start="20">
 <li>家用社交机器人——Jibo</li>
 </ol>
 <p>Jibo可以通过感应你的位置把脸转向你，它的显示屏上还会根据不同的情景显示出不同的表情和不同的语气。</p>
-<p>这样一款机器人的出现，是为了更好地消除僵硬和机械的感觉，这对于人跟机器的互动，也是一种很重要的探索。售价：899美金。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130438s7mg15ggs7tigjji.gif"></p>
+<p>这样一款机器人的出现，是为了更好地消除僵硬和机械的感觉，这对于人跟机器的互动，也是一种很重要的探索。售价：899美金。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130438s7mg15ggs7tigjji.gif" alt></p>
 <ol start="21">
 <li>苹果手机——iPhone X</li>
 </ol>
 <p>刚上市的新一代iPhone X是苹果精心打造的，号称全世界最复杂的智能手机，用了新的显示屏，取消了home键，采用人脸识别技术。它也是苹果目前最昂贵的一款手机。</p>
-<p>这可以说是苹果产品的一个分界线，iPhone X是到现在为止最棒的一代，完全实至名归。售价：999+美金。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130454z0tzk76rii68tnn8.jpg"></p>
+<p>这可以说是苹果产品的一个分界线，iPhone X是到现在为止最棒的一代，完全实至名归。售价：999+美金。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130454z0tzk76rii68tnn8.jpg" alt></p>
 <ol start="22">
 <li>橄榄球运动头盔——ZERO1</li>
 </ol>
-<p>多年以来，橄榄球的头盔都是使用坚硬的塑料头盔。ZERO1的这款头盔用弹性聚合物制成，很像汽车前面的保险杠，可以减少撞击时候的冲击，保护运动员的头部。售价：1500美金。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130524tvcljl5cjzqqjl66.jpg"></p>
+<p>多年以来，橄榄球的头盔都是使用坚硬的塑料头盔。ZERO1的这款头盔用弹性聚合物制成，很像汽车前面的保险杠，可以减少撞击时候的冲击，保护运动员的头部。售价：1500美金。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130524tvcljl5cjzqqjl66.jpg" alt></p>
 <ol start="23">
 <li>减压玩具——Fidget Spinners</li>
 </ol>
-<p>小时候转过笔吗？这种指尖陀螺就是放在手上可以不停旋转的小玩意儿，帮助人们打发无聊，对抗焦虑，有很多人已经玩上瘾了。普通的很便宜，贵的可以达到好几万美金一个。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130538z0tz16qeg3c0g15c.gif"></p>
+<p>小时候转过笔吗？这种指尖陀螺就是放在手上可以不停旋转的小玩意儿，帮助人们打发无聊，对抗焦虑，有很多人已经玩上瘾了。普通的很便宜，贵的可以达到好几万美金一个。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130538z0tz16qeg3c0g15c.gif" alt></p>
 <ol start="24">
 <li>VR 虚拟现实装置——Oculus Go</li>
 </ol>
 <p>这是facebook出的新型VR眼镜，之前的VR眼镜，一般不能单独使用，需要接手机或者电脑，关键是还很贵。而facebook新款的OCULUS GO ，可以完全独立地使用，降低了VR可穿戴设备的门槛，售价200美金左右。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130552zd404q73qj4dgkgy.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130552zd404q73qj4dgkgy.jpg" alt></p>
 <ol start="25">
 <li>掌上游戏机——Switch</li>
 </ol>
 <p>在这样一个游戏主机衰落，大型游戏慢慢向移动端转变的风潮下，任天堂公司又给游戏玩家带来了非常大的惊喜。当你在电视上玩这款Switch游戏机正起劲，可是突然需要出门的时候，它可以变成便携式游戏设备直接拿着走。</p>
 <p>另外它的两个摇杆还可以拆分，支持单人模式和多人游戏模式。自从3月份上市以来，Switch已经卖了763万台。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130615hjwyvzjjd4mypdmq.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/02/130615hjwyvzjjd4mypdmq.jpg" alt></p>
 
     </div>
 
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Invention/" rel="tag"><i class="fa fa-tag"></i> Invention</a>
           </div>
@@ -448,21 +421,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Program/IPCreator/Technology/Program/Computer/Emoji/" rel="next" title="Emoji">
-                  <i class="fa fa-chevron-left"></i> Emoji
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/People/IPCreator/People/Xiao-Ping Xu/" rel="prev" title="Xiao-Ping Xu">
-                  Xiao-Ping Xu <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Program/IPCreator/Technology/Program/Computer/Emoji/" rel="prev" title="Emoji">
+      <i class="fa fa-chevron-left"></i> Emoji
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/People/IPCreator/People/Xiao-Ping Xu/" rel="next" title="Xiao-Ping Xu">
+      Xiao-Ping Xu <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -475,7 +445,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -506,8 +498,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -516,14 +508,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -534,11 +526,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -572,7 +559,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -584,51 +571,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -637,18 +585,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -658,63 +600,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -722,14 +607,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -756,40 +641,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/I/Invention/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="接纳，相信和欣赏自己，知足常乐，感恩长存">
 <meta name="keywords" content="Compare">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/C/Compare/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/C/Compare/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/C/Compare/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://opb37u589.bkt.clouddn.com/469769-db15e474261aeadf.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/469769-db15e474261aeadf.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>接纳，相信和欣赏自己，知足常乐，感恩长存</p>
 </blockquote>
@@ -344,7 +314,7 @@
 <p>最最后我讲个我老婆给我讲的故事。</p>
 <p>她老家在江苏农村，从小就在那长大，上的是乡下小学。在她们小学有个同学，学习很差，傻乎乎的，明显属于智商偏低类型，按正态分布打分，应该是2-3分，属于略微不正常的人群。而且这同学人际能力、身体运动啥的各种能力都傻乎乎的。好在他家是道士，专门给人婚丧嫁娶吹唢呐。于是他就早早退学，当个道士，跟他爹学吹唢呐。就这样学了好多年，才算学会。而今到了三十大几岁，他老父亲也吹不动了，他就正式接班。最近一次我们回老家，听说他现在在各个村镇都很滋润。因为没几个人懂婚丧习俗，更没人会吹唢呐。反而各个村镇一旦有了红白事，就必须请他去做法事，这都是银两，他家反倒吃穿不愁，还盖了新房，比他们镇上很多苦哈哈的人都滋润。</p>
 <p>看了这个故事，你明白我要说的是什么了吗？</p>
-<h2 id="跟他比起来，我还不够好-如何摆脱上行社会比较带来的焦虑"><a href="#跟他比起来，我还不够好-如何摆脱上行社会比较带来的焦虑" class="headerlink" title="跟他比起来，我还不够好 | 如何摆脱上行社会比较带来的焦虑"></a><a href="http://www.xinli001.com/info/100369594" target="_blank" rel="noopener">跟他比起来，我还不够好 | 如何摆脱上行社会比较带来的焦虑</a></h2><p><img alt data-src="http://ossimg.xinli001.com/20170607/f8c4201834791de653e10477b5733b2e.jpg"></p>
+<h2 id="跟他比起来，我还不够好-如何摆脱上行社会比较带来的焦虑"><a href="#跟他比起来，我还不够好-如何摆脱上行社会比较带来的焦虑" class="headerlink" title="跟他比起来，我还不够好 | 如何摆脱上行社会比较带来的焦虑"></a><a href="http://www.xinli001.com/info/100369594" target="_blank" rel="noopener">跟他比起来，我还不够好 | 如何摆脱上行社会比较带来的焦虑</a></h2><p><img data-src="http://ossimg.xinli001.com/20170607/f8c4201834791de653e10477b5733b2e.jpg" alt></p>
 <p>文：阿弗｜微信公众号：京师心理大学堂（ID：bnupsychology）</p>
 <p>题图来源：视觉中国</p>
 <p>“诶，又出成绩了，太烂了。”<br>“多少分呀！”<br>“才95……你呢？”<br>“大神呀，我才94……”</p>
@@ -401,27 +371,30 @@
 <p>在不久的以后，或者是将来的某个时候，当你变得越来越平和、越来越积极的时候，你或许愿意像上面这样将经验总结出来。也或许不，你会选择保持一个适用于你，能够让你保持平衡的方法。</p>
 <h2 id="攀比，它会让我们失去幸福感"><a href="#攀比，它会让我们失去幸福感" class="headerlink" title="攀比，它会让我们失去幸福感"></a><a href="http://www.jianshu.com/p/46b4050a0d83" target="_blank" rel="noopener">攀比，它会让我们失去幸福感</a></h2><p>2016.04.24 22:47 字数 1410 阅读 46评论 1喜欢 2</p>
 <p>文/陈高勇<br>一不留神，猴年已过了不少，想起过年和家人、朋友开心团聚的同时，我相信很多人也有和我一样的烦恼，过年期间，有关工作？婚姻？收入？饭局？一大堆的追问，让你不断的应对，甚感疲惫，假期过了，似乎也有松了口气的舒畅。</p>
-<p><img alt data-src="http://upload-images.jianshu.io/upload_images/469769-61c5bb1d244370fc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br>回家过年的烦恼</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/469769-61c5bb1d244370fc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>回家过年的烦恼</p>
 <p>过年是亲朋好友难得团聚的时刻，有叙旧、温暖、开心、也有伤感、攀比与无奈，我曾是一个蛮不自信的人，当我试着寻找原因时，发现我不自信的隐含有“攀比”的因子，所以试着谈谈“攀比”，尽量的回顾及剖析过往的自己，还是能感觉到它的存在，可以说，曾经被“攀比”绑架过，在有形无形间，有意无意中，或许也是导致不自信的一个重要原因。</p>
 <p>在儿时记忆里翻出几个场景，父母言语中都有一个很好的“人家”，看人家孩子多听话、人家孩子多懂事等等；家长们也都明里暗力比孩子，比分数、比学校等，孩子们自己也从比衣服、比鞋，到比爸妈等等。</p>
-<p><img alt data-src="http://upload-images.jianshu.io/upload_images/469769-9da28e040360e927.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br>总有一个特牛的人叫“人家“</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/469769-9da28e040360e927.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>总有一个特牛的人叫“人家“</p>
 <p>当我们渐渐长大，知识与见识也逐渐更宽广，似乎那个因子没有发芽，可不管初中、高中、大学，直到进入社会，大家依然在盲目比较，也许藏的更深，最让人遗憾的是攀比意识逐渐在被进化为习惯而悄悄进入潜意识，校园比学习、比谁穿的好、比谁有钱、比爹……进入社会依然在比，谁更会赚钱、比男女朋友、比房子、比权利……，明里暗里，好像在潜意识里觉得，都在用各种金钱与物质的炫耀来建立自信，发现社会环境与风气并没有因你长大而变的更好，也许精神上的进步远落后于物质的增长太多了。</p>
 <p>随着社会的进步，时间的流逝，发现那因子不仅在，并在世俗的土壤中发芽的更茁壮，我们好像已经习惯将构筑自信的权利放在了他人手中或眼中，过渡贪婪的依赖别人给予的认可，然而，总忘记自己，建立自信其实是一件自己能够独立完成的事情，当发现自信来源并非来自虚荣及物质的攀比中，即便从中获得了也是短暂而脆弱的，正因如此，恰恰是空虚与不自信的表现之时，才发觉它夺取了我们多少幸福感，带来多少不必要的烦恼，才知道世界那么大，每个人都有不一样的人生，不管大梦想小梦想，钱多钱少，攀比没完没了，也没意义，仅仅外在的自信将是海市蜃楼。</p>
-<p><img alt data-src="http://upload-images.jianshu.io/upload_images/469769-acfcacc1338863be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br>有些时候似乎总是长不大</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/469769-acfcacc1338863be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>有些时候似乎总是长不大</p>
 <p>我们试着回想下自己是否有过类似的经历与想法，当你看到朋友、同学、同事等，在某些方面做的很好，收获到的结果比你多或少时，总会有意或无意种下一颗类似“攀比”的因子，千万别让它发芽而变得盲目，从而给自己和生活带来困扰，陷入自卑或自傲中无法自拔。</p>
 <p>试着再仔细想想，我们每个人都有不一样的背景、能力、努力程度、时机、专长等，你会发现有一些因背景多些（家庭原因等）、有一些靠运气多些、有一些更努力等等不一样的情况造成的最终结果，其实就大部分人而言，智商都差不多，所以在某一方面比你强或弱，今天结果比你好或差，都只是人生中的一个小片段，而在另一方面一定有你更擅长的，时机到了一样会有不错的收获，因为每个人都有独特的一面，也有不同的背景、家世、成长、地域与生活环境等，也许对方正在炫耀，我们依然从内心为他高兴，从中去学习，更多的了解自己，不断充实自己，努力发挥最好自己就可以了，才不会因此而让自己感到不幸福，至于能力有成千上万种体现方式，所以笼统的对结果加以攀比，本身就大错特错了。</p>
-<p><img alt data-src="http://upload-images.jianshu.io/upload_images/469769-95a5898a07f20a88.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br>一场只剩炫耀的聚会</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/469769-95a5898a07f20a88.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>一场只剩炫耀的聚会</p>
 <p>其实每个人都是独一无二的，只要我们每天不断充实自己，做自己喜爱的事情，正确的认知自己与他人，无论别人比你看上去多强或弱，都以诚相对，并勇敢的面对并改善负面的自我，做真诚自己，记得一切由自己掌控，多思考，避免以结果断论，盲目攀比，定会获得应有的认可与赞许。</p>
 <p>当然这些都不能一蹴而就，尤其在这样一个“面子社会”，炫耀盛行的年代，说的容易做起来可不简单，略显生涩的我，一直在学习与努力的路上，但如果早些认知并理解，将更快、更好的遇见自信的自己！</p>
-<p><img alt data-src="http://upload-images.jianshu.io/upload_images/469769-79f463129731c978.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br>远离攀比，遇见更好的自己</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/469769-79f463129731c978.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>远离攀比，遇见更好的自己</p>
 
     </div>
 
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Compare/" rel="tag"><i class="fa fa-tag"></i> Compare</a>
           </div>
@@ -433,21 +406,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/R/Reminiscence/" rel="next" title="Reminiscence">
-                  <i class="fa fa-chevron-left"></i> Reminiscence
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/H/Habit/" rel="prev" title="Habit">
-                  Habit <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/R/Reminiscence/" rel="prev" title="Reminiscence">
+      <i class="fa fa-chevron-left"></i> Reminiscence
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/H/Habit/" rel="next" title="Habit">
+      Habit <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -460,7 +430,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -491,8 +483,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -501,14 +493,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -519,11 +511,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -557,7 +544,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -569,51 +556,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -622,18 +570,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -643,63 +585,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -707,14 +592,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -741,40 +626,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/C/Compare/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="运用一定的方式（工具）传递信息、交流思想的意识，以达到某种目的的社会各项活动。">
 <meta name="keywords" content="Connection,Social">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/S/Social/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/S/Social/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/S/Social/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,12 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="https://img1.doubanio.com/lpic/s28771507.jpg"></p>
+        <p><img data-src="https://img1.doubanio.com/lpic/s28771507.jpg" alt></p>
 <blockquote>
 <p>运<a href="https://baike.baidu.com/item/%E7%A4%BE%E4%BA%A4/2089809?fr=aladdin" target="_blank" rel="noopener">用一定的方式（工具）传递信息、交流思想的意识，以达到某种目的的社会各项活动。</a></p>
 </blockquote>
 <a id="more"></a>
-<h2 id="社交恐惧症——Why-amp-How"><a href="#社交恐惧症——Why-amp-How" class="headerlink" title="社交恐惧症——Why &amp; How"></a><a href="https://www.toutiao.com/a1596541219917827/" target="_blank" rel="noopener">社交恐惧症——Why &amp; How</a></h2><p><img alt data-src="https://p7.pstatp.com/origin/663200000e5beb55c8c6"><br><img alt data-src="https://p7.pstatp.com/origin/662c0006493d43b05915"><br><img alt data-src="https://p7.pstatp.com/origin/662e0006331cc22fbe9c"><br><img alt data-src="https://p7.pstatp.com/origin/662d000637167449adcb"><br><img alt data-src="https://p7.pstatp.com/origin/662e00063320e6774c1e"><br><img alt data-src="https://p2.pstatp.com/origin/663200000e6444cd8424"><br><img alt data-src="https://p7.pstatp.com/origin/663100002c05ec1a4c07"><br><img alt data-src="https://p7.pstatp.com/origin/663200000e5e31f80b9a"><br><img alt data-src="https://p2.pstatp.com/origin/663100002c07f6d81a9b"></p>
+<h2 id="社交恐惧症——Why-amp-How"><a href="#社交恐惧症——Why-amp-How" class="headerlink" title="社交恐惧症——Why &amp; How"></a><a href="https://www.toutiao.com/a1596541219917827/" target="_blank" rel="noopener">社交恐惧症——Why &amp; How</a></h2><p><img data-src="https://p7.pstatp.com/origin/663200000e5beb55c8c6" alt><br><img data-src="https://p7.pstatp.com/origin/662c0006493d43b05915" alt><br><img data-src="https://p7.pstatp.com/origin/662e0006331cc22fbe9c" alt><br><img data-src="https://p7.pstatp.com/origin/662d000637167449adcb" alt><br><img data-src="https://p7.pstatp.com/origin/662e00063320e6774c1e" alt><br><img data-src="https://p2.pstatp.com/origin/663200000e6444cd8424" alt><br><img data-src="https://p7.pstatp.com/origin/663100002c05ec1a4c07" alt><br><img data-src="https://p7.pstatp.com/origin/663200000e5e31f80b9a" alt><br><img data-src="https://p2.pstatp.com/origin/663100002c07f6d81a9b" alt></p>
 <h2 id="方法：拓展社交网络的三个策略"><a href="#方法：拓展社交网络的三个策略" class="headerlink" title="方法：拓展社交网络的三个策略"></a><a href="http://www.luojiji.com/thread-11424-1-1.html" target="_blank" rel="noopener">方法：拓展社交网络的三个策略</a></h2><p>很多人觉得自己缺乏人脉，没有机会，又找不到解决办法。针对如何拓展社交网络，组织社会学家坦雅·门农（Tanya Menon）在TedTalk演讲中分享了三个策略。</p>
 <p>第一，寻找一条不完美的社交路线。门农建议，首先，我们要把自己每天习惯性的社交地图列出来，你会发现，你每天走的是同样的路，坐在教室或者办公室同样的区域，甚至使用相同的厕所。这样的结果是，你每天遇到的很可能也是相同的那些人。这条路线让我们的生活效率很高，但是社交圈会很狭窄。</p>
 <p>想要拓展社交网络，要从选择一条效率不那么高的社交路线开始，比如选一条较远的路回家，尝试和不同的同事或同学一起吃饭，或者刻意地换一间健身房。</p>
@@ -315,7 +285,7 @@
 </blockquote>
 <p>今天你就可以尝试一个小实验：开展两段对话。第一段，关注你自己的心情变化，注意你的身体感受，思考你该说什么；第二段对话，关注外部环境。最后告诉你自己，哪一段对话你感觉更舒服以及更有效率，哪一段对话你更喜欢？</p>
 <p>以上就是亨瑞克森分享的克服社交恐惧症的4种策略，希望对你有所启发。</p>
-<h2 id="如何把握人际关系，做一个社交高手"><a href="#如何把握人际关系，做一个社交高手" class="headerlink" title="如何把握人际关系，做一个社交高手"></a><a href="http://www.luojiji.com/thread-11548-1-1.html" target="_blank" rel="noopener">如何把握人际关系，做一个社交高手</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/30/091909q5n71kz016mc571u.jpg"> </p>
+<h2 id="如何把握人际关系，做一个社交高手"><a href="#如何把握人际关系，做一个社交高手" class="headerlink" title="如何把握人际关系，做一个社交高手"></a><a href="http://www.luojiji.com/thread-11548-1-1.html" target="_blank" rel="noopener">如何把握人际关系，做一个社交高手</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201803/30/091909q5n71kz016mc571u.jpg" alt> </p>
 <p>2018-03-30 林特特 罗辑思维</p>
 <p>你好，我是林特特。</p>
 <p>欢迎来到我的「得到」精品课——《如何成为社交高手·女性篇》，我会侧重职场女性的社交管理。</p>
@@ -330,7 +300,7 @@
 我又要工作又要带孩子又要做家务，实在腾不出时间，朋友聚会都不叫我了。
 
 男人喝酒吹牛的饭局，其实我不爱参加，可他们会不会觉得我不随和？
-</code></pre><p>这些困扰，都是你的社交问题，也许我这门女性社交管理课，能够帮到你。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/30/091935d4wolkk5l6o5vfaf.jpg"></p>
+</code></pre><p>这些困扰，都是你的社交问题，也许我这门女性社交管理课，能够帮到你。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201803/30/091935d4wolkk5l6o5vfaf.jpg" alt></p>
 <p>女性担负着复杂而多样的社会角色，社交管理，是自我管理的重要一步。</p>
 <p>尤其对女性而言，它是对自己人生角色的管理和分配。</p>
 <p>不同的成长不同阶段，要应对的主要矛盾不同，社交的重点也不一样：</p>
@@ -373,7 +343,7 @@
 <p>4.扬长避短</p>
 </blockquote>
 <p>女性可能面子薄、胆子小、圈子窄、害怕说“不”、害怕被说“不”。</p>
-<p>如何发挥女性同理心强、沟通能力强、耐心亲和的优势？<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/30/092009dsgjpjke9m9n5erm.jpg"></p>
+<p>如何发挥女性同理心强、沟通能力强、耐心亲和的优势？<br><img data-src="http://www.luojiji.com/data/attachment/forum/201803/30/092009dsgjpjke9m9n5erm.jpg" alt></p>
 <p>让我们开始一段新的旅程吧！</p>
 <p>通过学习，让你的生活清明有序。</p>
 <p>拥有良好的人际关系，在工作、生活中进退自如。</p>
@@ -392,12 +362,12 @@
 <p>20世纪90年代美国股市一片繁荣，很多股民开始抱团分析股票，一起投资赚钱。不过研究发现，由朋友组成的俱乐部往往会做出更糟糕的投资决定。这些俱乐部的成员为了维护友谊会避开争议和矛盾，而成员关系更疏远的俱乐部就能及时否决糟糕的投资方案。因此，必须坚信强迫自己走出舒适区是能带来积极结果的，过于看重“团队和谐”的结果往往就是一事无成，在面对社交压力时，要勇于从圈子外获取新的视角，用新的知识去解决自己面临的问题。</p>
 <p>以上就是哈福德关于走出社交舒适圈的三个建议：创造环境，重视“超级联系人”，以及坚信走出圈子会促成积极的结果。</p>
 <p>来源:得到</p>
-<h2 id="女性指南-如何在社交饭局中掌握主动？"><a href="#女性指南-如何在社交饭局中掌握主动？" class="headerlink" title="女性指南 | 如何在社交饭局中掌握主动？"></a><a href="http://www.luojiji.com/thread-11497-1-1.html" target="_blank" rel="noopener">女性指南 | 如何在社交饭局中掌握主动？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/24/093451okdqximg4008rzfn.jpg"></p>
+<h2 id="女性指南-如何在社交饭局中掌握主动？"><a href="#女性指南-如何在社交饭局中掌握主动？" class="headerlink" title="女性指南 | 如何在社交饭局中掌握主动？"></a><a href="http://www.luojiji.com/thread-11497-1-1.html" target="_blank" rel="noopener">女性指南 | 如何在社交饭局中掌握主动？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201803/24/093451okdqximg4008rzfn.jpg" alt></p>
 <p>2018-03-24 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>饭局，作为一种应酬式社交的场所，它的重要性不言而喻。</p>
 <p>作为女性，如何在饭局中减少被动，轻松应对，让自己的社交高效、愉快？「得到」作者林特特给你12条建议，供你参考践行。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/24/093458b1f813tn1qty21qn.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201803/24/093458b1f813tn1qty21qn.jpg" alt></p>
 <ol>
 <li><p>对于正在开拓社交圈的女性来说，饭局是结识陌生人、结交新朋友的好机会，人多安全，还能避免冷场的尴尬。遇到邀约，不妨抱着好奇心愉快赴约。不善言谈，表现得善于倾听也不错。</p>
 </li>
@@ -462,8 +432,8 @@
 <p>为什么有的人天生善于社交，而有的人总是充满障碍？<br>为什么智商越高的人越难相处？<br>心痛对人的伤害甚至超过头痛？<br>慈善组织如何激发人们的捐赠行为？<br>比金钱更有效的激励员工的方式是什么？</p>
 <p>如何理解他人的思想和行为、<br>如何与他人合作，<br>如何帮助孩子高效学习、<br>如何激励员工努力工作</p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>各方赞誉<br>前 言 被忽略的社交天性<br>第一部分 大脑天生爱社交<br>01 “我们”到底是谁<br>整个社会对个人的预期长久地忽略了我们的天性:我们本来是一枚方形(具备社交天性)的<br>钉子,却身不由己地被固定在一个圆形(非社交性的环境)的孔中。<br>怎样选出一个总统<br>大脑中的“社交网络”<br>令人望而生畏的脑科学<br>02 大脑的“一生最爱”<br>大脑把几乎所有空闲时间都用于一件事情:思考他人以及他人与自己的关系。大脑不断回到这种活动上,完全是为了帮助我们成为极其复杂的社交圈里的专家。<br>默认网络，大脑中最活跃的神经网络<br>大脑“空闲”时做什么<br>为什么智商越高的人越不好相处<br>社会群体越大,越需要更大的大脑<br>找谁写推荐信比写了什么更重要<br>第二部分 人类社交的三大驱动力之一：连接<br>03 心痛不是矫情，是真痛!<br>人对社交的需求甚至大于对食物和温暖的需求,不甚理想的社交关系给人带来的痛苦与真实的身体疼痛无异。<br>颠覆马斯洛需求理论<br>孩子为何依恋母亲<br>大脑中的警报系统<br>难过时服用两片阿司匹林吧<br>谩骂比拳头可能伤人更深<br>04 他人并没有你想的那么自私，合作才是人类天性<br>相互合作本身就能激活大脑的奖赏系统,无论是否期望得到回报, 帮助他人都会让我们体验到真正的快乐。<br>赞美本身就是意义<br>超级合作者<br>博弈中的人类天性<br>大脑更喜欢给予而不是索取<br>小赠品更能激发人们的捐赠行为<br>第三部分 人类社交的三大驱动力之二：心智解读<br>05心智化，决定了你是理解还是误解他人<br>每一天,我们都在利用心智化系统去预测与我们的生活密切相关的他人的需要和欲望,并采取行动让他们过得更好。<br>“我知道你知道我知道”<br>一般智能系统<br>社会智能系统<br>怎样打牌次次都能赢<br>在产品出来前挖掘客户需求<br>06 镜像神经元，使心智解读成为可能<br>镜像神经元通过“模仿”使得大脑理解他人行为背后的思想和意义,从而使与他人的互动成为可能。<br>镜像神经元，10 年来最重要的科学发现<br>模仿<br>“反镜像”神经元<br>为什么做比做了什么更重要<br>07 共情，利他行为的催化剂<br>当观察到另一个人正在经历某种情感体验时,我们自己的脸部肌肉马上就会以一种微妙的方式模仿这个人的表情,从而达到情感共鸣。<br>“我感受到了你的痛苦”<br>你会向慈善机构捐款吗<br>自闭症患者失去了什么<br>破镜假说<br>激烈世界假说<br>第四部分 人类社交的三大驱动力之三：协调<br>08自我，让你的大脑成为他人思想的跑马场<br>对社会影响来说,自我更像是一条畅通无阻的“高速公路”,而不是我们曾经认为的坚不可摧的“私人堡垒”。<br>神经二元论<br>黑猩猩也有自我吗<br>粉色的给男孩,蓝色的给女孩<br>人天生就易受他人影响<br>广告有没有效,大脑先知道<br>09自我控制，让“随大流”的人更易成功<br>自我控制是我们进入社会的代价。那些更容易接受群体的信念和价值观的人,获得的成就往往也更大。<br>棉花糖实验<br>大脑的制动系统<br>自我控制的受益者是别人,而不是自己<br>防盗绝招:贴一张“有眼睛”的海报<br>第五部分 通过社会眼看世界<br>10大脑爱社交胜过金钱<br>生活中的“社会因素”比直接的物质满足对人们的幸福意义更重大,比如,更频繁地参加志愿服务就可以带来更大的幸福感。<br>更多的钱并不代表更幸福<br>凄凉的人生景象<br>改良公寓楼的设计<br>“社交零食”和“社交代用品”<br>11社会奖赏，企业激励员工更有效的手段<br>智力和社交能力都被认为是一个成功的领导者的必要条件,但是,社交 能力的重要性几乎是智力的两倍。高效领导者更应该注重培养自己的社 交能力。<br>比金钱更有效的激励手段<br>关心造就成功<br>高效领导者拥有更强的社交能力<br>把握领导力的核心<br>12有效互动，孩子高效学习的推动器<br>初中生成绩下滑的一个重要原因是,学生在一个新的社交环 境——新学校、新老师与新学生中缺乏归属感。教育改革应 该关注学生对归属感的需求,鼓励学生之间的有效互动。<br>让学生彼此建立连接<br>“你真的打了我”<br>如何学习历史和语言<br>为教而学<br>塑造一个更高效的社会脑<br>结 语 不断扩大的社会脑<br>致 谢<br>译者后记</p>
-<h2 id="害羞与社交焦虑症"><a href="#害羞与社交焦虑症" class="headerlink" title="害羞与社交焦虑症"></a><a href="https://book.douban.com/subject/26611852/" target="_blank" rel="noopener">害羞与社交焦虑症</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28296523.jpg"></p>
-<h2 id="社交礼仪守则"><a href="#社交礼仪守则" class="headerlink" title="社交礼仪守则"></a><a href="https://book.douban.com/subject/20499985/" target="_blank" rel="noopener">社交礼仪守则</a></h2><p><img alt data-src="https://img1.doubanio.com/lpic/s26097437.jpg"></p>
+<h2 id="害羞与社交焦虑症"><a href="#害羞与社交焦虑症" class="headerlink" title="害羞与社交焦虑症"></a><a href="https://book.douban.com/subject/26611852/" target="_blank" rel="noopener">害羞与社交焦虑症</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28296523.jpg" alt></p>
+<h2 id="社交礼仪守则"><a href="#社交礼仪守则" class="headerlink" title="社交礼仪守则"></a><a href="https://book.douban.com/subject/20499985/" target="_blank" rel="noopener">社交礼仪守则</a></h2><p><img data-src="https://img1.doubanio.com/lpic/s26097437.jpg" alt></p>
 <h2 id="新书丨四招搞定有效社交"><a href="#新书丨四招搞定有效社交" class="headerlink" title="新书丨四招搞定有效社交"></a><a href="http://www.luojiji.com/thread-8559-1-1.html" target="_blank" rel="noopener">新书丨四招搞定有效社交</a></h2><p>这条音频来跟你说说如何实现有效社交。</p>
 <p>在和他人交流的时候，说服、冲突这些场景在所难免。那么交流过程中该如何组织交流语言、如何让别人牢记自己要传达的信息呢？最近，得到的“每天听本书”栏目上的一本新书，叫《如何实现有效社交》，就专门解答了这个问题。这本书的作者叫做凯伦·伯格，她花了足足30多年的时间，去仔细研究“有效社交”这个问题，先后为很多跨国企业高管、好莱坞明星、大牌作家以及白宫政客等人进行过“社交培训”，受到了广泛认可和欢迎。接下来，咱们来听听她的解决方案。</p>
 <p>首先，作者提醒我们说，在开口交流之前，一定要先琢磨透你的沟通对象，弄清对方此时的<strong>真正需求或兴趣点</strong>。比如说，你想给自己的员工分配比较难的任务，你就需要站在员工的角度去想一想，此时他们最大的障碍是什么？怎样才能激发他们的动力？他们最大的需求是什么？想清楚这些再开口，你的谈话才会事半功倍。</p>
@@ -482,8 +452,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Society/" rel="bookmark">Society</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Boundary/" rel="bookmark">Boundary</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Base/" rel="bookmark">Base</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Relation/" rel="bookmark">Relation</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/IPR/IPCreator/IPR/TianYanCha/" rel="bookmark">TianYanCha</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Connection/" rel="tag"><i class="fa fa-tag"></i> Connection</a>
               <a href="/tags/Social/" rel="tag"><i class="fa fa-tag"></i> Social</a>
@@ -496,21 +487,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/IPR/IPCreator/IPR/Patent/" rel="next" title="Patent">
-                  <i class="fa fa-chevron-left"></i> Patent
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/J/Judgement/" rel="prev" title="Judgement">
-                  Judgement <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IPR/IPCreator/IPR/Patent/" rel="prev" title="Patent">
+      <i class="fa fa-chevron-left"></i> Patent
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/J/Judgement/" rel="next" title="Judgement">
+      Judgement <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -523,7 +511,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -554,8 +564,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -564,14 +574,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -582,11 +592,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -620,7 +625,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -632,51 +637,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -685,18 +651,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -706,63 +666,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -770,14 +673,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -804,40 +707,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/S/Social/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

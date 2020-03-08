@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="幽默是智慧的展现。   笑一笑，十年少。">
 <meta name="keywords" content="Humor">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/H/Humor/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/H/Humor/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/H/Humor/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="humor.jpg" data-src="http://opb37u589.bkt.clouddn.com/humor.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/humor.jpg?imageMogr2/thumbnail/!75p" alt="humor.jpg"></p>
 <blockquote>
 <p>幽默是<a href="http://deepcreator.com/2017/10/14/Concept/Wisedom/" target="_blank" rel="noopener">智慧</a>的展现。</p>
 </blockquote>
@@ -296,19 +266,19 @@
 <a id="more"></a>
 <p><a href="http://deepcreator.com/2017/10/11/Book/Serials%20from%20Li%20Ao/" target="_blank" rel="noopener">幽默源于智慧，源于见识，源于学识，源于童心，也源于大无畏的胸襟和精神。</a></p>
 <p><a href="https://baike.baidu.com/item/%E5%B2%B3%E6%99%93%E4%B8%9C" target="_blank" rel="noopener">幽默，由英文Humor一词音译而来，发明这个音意双绝的译名的林语堂认为“<strong>幽默处于俏皮与正经之间</strong>”。在美学和心理学概念中，幽默专指一种“引人发笑或感受情趣的能力”。幽默是一种消解的力量，它消解人生中的荒谬和沉重，但又绝不直白浅薄，幽默是一种生活的智慧，让人活得更乐观豁达。</a></p>
-<h1 id="To-be-a-funny-Person"><a href="#To-be-a-funny-Person" class="headerlink" title="To be a funny Person"></a>To be a funny Person</h1><p><img alt data-src="https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D39%2C0%2C1361%2C900%3Bc0%3Dbaike180%2C5%2C5%2C180%2C60/sign=8e00ff911dce36d3b64bd97007c003ab/2f738bd4b31c8701743eb1ad2f7f9e2f0608fff5.jpg"></p>
+<h1 id="To-be-a-funny-Person"><a href="#To-be-a-funny-Person" class="headerlink" title="To be a funny Person"></a>To be a funny Person</h1><p><img data-src="https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D39%2C0%2C1361%2C900%3Bc0%3Dbaike180%2C5%2C5%2C180%2C60/sign=8e00ff911dce36d3b64bd97007c003ab/2f738bd4b31c8701743eb1ad2f7f9e2f0608fff5.jpg" alt></p>
 <blockquote>
 <p>类似于腹有诗书气自华，要有趣得有料。</p>
 </blockquote>
 <p>有趣的人大抵都聪明、乐观、幽默，并且感性。她们有自己的爱好、不怕独处，<strong>有自己的生活圈</strong>；她们<strong>有自己的坚持</strong>，哪怕没人在乎。你能看到她们身上<strong>对生活无穷的热爱</strong>，<strong>对自我成长的不断追求</strong>，<strong>对人生无穷的创造力</strong>，<strong>对身边人事不倦的兴趣</strong>。一个有趣的人，不一定必须具备深厚的学识，但内心必然丰富；不一定走过很多的路，但他的生命中必然一直有故事在发生。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">真正的成熟，应当是独特个性的形成，真实自我的发现，精神上的结果和丰收。我不想知道你有什么，只想知道你在寻找什么——你就是你所寻找的东西。”</span><br></pre></td></tr></table></figure>
-<p><img alt data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Lisboa-Pessoa-A_Brasileira-1.jpg/330px-Lisboa-Pessoa-A_Brasileira-1.jpg"></p>
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Lisboa-Pessoa-A_Brasileira-1.jpg/330px-Lisboa-Pessoa-A_Brasileira-1.jpg" alt></p>
 <p>你不快乐的每一天都不是你的<br>            ——费尔南多·佩索阿 Fernando Pessoa</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">你不快乐的每一天都不是你的：</span><br><span class="line"></span><br><span class="line">你只是虚度了它。</span><br><span class="line">无论你怎么活</span><br><span class="line">只要不快乐，你就没有生活过。</span><br><span class="line"></span><br><span class="line">夕阳倒映在水塘，假如足以令你愉悦</span><br><span class="line">那么爱情，美酒，或者欢笑 便也无足轻重。</span><br><span class="line"></span><br><span class="line">幸福的人，是他从微小的事物中</span><br><span class="line">汲取到快乐，每一天都不拒绝自然的馈赠！</span><br></pre></td></tr></table></figure>
 <p>工作也好，创业也罢，都是为了更好地生活<br>不要舍本逐末，每一天就是一辈子<br>有趣好玩</p>
 <h2 id="为何你的生活那么无趣"><a href="#为何你的生活那么无趣" class="headerlink" title="为何你的生活那么无趣"></a><a href="http://www.luojiji.com/thread-1654-1-1.html" target="_blank" rel="noopener">为何你的生活那么无趣</a></h2><p>心理学认为，兴趣是一种情绪，而情绪，是人类进化出来的一种生存工具。这种情绪能够穿过百万年的进化留下来，一定是因为其有莫大的好处。</p>
-<p>先来了解一下兴趣是如何产生的？<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/18/180021hbf69w3gc5fgb6fz.jpg"></p>
-<p>看看上面这幅图，你觉得哪一个多边形最有趣？哪一个最让你愉悦？<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/18/180021ii9smfffimg1fz9r.jpg"></p>
+<p>先来了解一下兴趣是如何产生的？<br><img data-src="http://www.luojiji.com/data/attachment/forum/201512/18/180021hbf69w3gc5fgb6fz.jpg" alt></p>
+<p>看看上面这幅图，你觉得哪一个多边形最有趣？哪一个最让你愉悦？<br><img data-src="http://www.luojiji.com/data/attachment/forum/201512/18/180021ii9smfffimg1fz9r.jpg" alt></p>
 <p>这是心理学家Berlyne关于“有趣”的一个实验，实验中出现的多边形没有任何的特定意义，由计算机按照不同的复杂程度随机生成，越往后面，复杂度越高。Berlyne发现大部分人的最有趣选项在第三排中，这一组复杂程度让人一眼看不懂，从而产生各种联想——在我看来，左边像仙鹤，中间的像一个发出闪电的老巫师，右边的像一个跳麦克杰克逊舞蹈的树人。但是当选择最让你愉悦的一个时候，情况却有所改变，大部分人选择了第一排，最简单的这几个。</p>
 <p>其中复制的数据筛选与分析过程跳过，实验有个清晰的结论：</p>
 <blockquote>
@@ -334,7 +304,7 @@
 <p>如果你真的希望生活过得特有趣，让我告诉你兴趣的真相——兴趣不是那件让你舒舒服服就成功拿到结果的事，兴趣是那件让你白天痛苦的想、晚上睡不好、早上五点爬起来，一边苦笑着骂娘一边咧着嘴干完的事情。那才是兴趣本来的样子。</p>
 <p>摘自古典新书《你的生命有什么可能》，5月上市。</p>
 <p>罗胖曰：<br>看完这篇文章，从此，填表的时候请不要再在“兴趣”这一栏里填“电影”、“音乐”、“读书”神马的了。<br>真正的兴趣至少有以下几个特征：<br>1，干前很向往。<br>2，干时很痛苦。<br>3，干后自我感觉很牛逼。<br>4，很费钱。很费时间。<br>5，干到很好的时候可以挣到钱。</p>
-<h2 id="一辈子很长，要和有趣的人在一起"><a href="#一辈子很长，要和有趣的人在一起" class="headerlink" title="一辈子很长，要和有趣的人在一起"></a><a href="https://book.douban.com/subject/26921021/" target="_blank" rel="noopener">一辈子很长，要和有趣的人在一起</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s29170151.jpg"></p>
+<h2 id="一辈子很长，要和有趣的人在一起"><a href="#一辈子很长，要和有趣的人在一起" class="headerlink" title="一辈子很长，要和有趣的人在一起"></a><a href="https://book.douban.com/subject/26921021/" target="_blank" rel="noopener">一辈子很长，要和有趣的人在一起</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s29170151.jpg" alt></p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>壹 一辈子很长，要和有趣的人在一起<br>0 0 2 和对的人在一起，连你的植物都会变得好起来<br>0 1 3 遇见有趣的人，过有趣的生活<br>0 1 9 忘记那些非如此不可的人生指南<br>0 2 5 爱做饭的姑娘，运气总不会太差<br>0 3 1 与君初相识，似是故人归<br>0 3 8 这世界上，有没有另一个你？<br>0 4 2 告诉他们，我度过了美好的一生<br>0 4 6 尘世喧嚣，给自己留一片精神的后花园<br>0 5 2 和你一起装扮家，是我能想到的最浪漫的事<br>0 5 9 找个能够一起玩的人就嫁了吧</p>
 <p>贰 你所以为的幸运，是别人努力了好久发出的光亮<br>0 7 0 从来没有完美的生活，只有适合你的生活<br>0 7 5 女孩如何度过二十出头的穷困日子<br>0 8 0 敢于直面负能量，才是真的正能量<br>0 8 5 你不是没时间，你只是不够热爱<br>0 9 0 在追寻梦想的路上，什么时候出发都不算太晚<br>0 9 7 一个人要挣多少钱才够？<br>1 0 3 断尾求生，好过慢慢等死<br>1 0 9 真正的优雅，能对抗世间所有不安</p>
 <p>叁 别害怕和这个世界不一样<br>1 1 4 三十岁以后的容貌靠自己修炼<br>1 2 0 朋友圈那些对你连赞也不点的人<br>1 2 5 一个不能上升到金钱的爱情故事<br>1 3 5 没有任何一场考试，能够决定你人生的成败<br>1 4 2 婚姻里最难忍受的是什么<br>1 4 8 多少求不得，最后尽释然<br>1 5 4 世界那么忙，没空针对你<br>1 5 9 别害怕和这个世界不一样<br>1 6 8 纵然人生是苦，别忘了往里加一点甜<br>1 7 4 看脸的世界，男人们也开始健身了</p>
@@ -351,7 +321,7 @@
    随着阅读深入，在书中，我不仅发现了如何才能变得更加有趣---“ **与其坐而论道，不如起而践行。该跑步跑步，该旅行旅行，哪怕是出去喝喝酒泡泡妞，也好过坐在家里最后变成一颗浑圆的沙发土豆***”，更发现了作者希望带给我们的思考：**如何与自己，与这个世界和解?---遵从自己的内心去生活。**
 
    用书中我最喜欢的一句话结尾吧： **如果说这世上只有一种活法的话，那就是诚实地活着，诚实地面对内心，诚实地面对自己。**
-</code></pre><h2 id="在无趣的时代活得有趣"><a href="#在无趣的时代活得有趣" class="headerlink" title="在无趣的时代活得有趣"></a><a href="https://book.douban.com/subject/26695154/" target="_blank" rel="noopener">在无趣的时代活得有趣</a></h2><p><img alt data-src="https://img1.doubanio.com/lpic/s28369949.jpg"></p>
+</code></pre><h2 id="在无趣的时代活得有趣"><a href="#在无趣的时代活得有趣" class="headerlink" title="在无趣的时代活得有趣"></a><a href="https://book.douban.com/subject/26695154/" target="_blank" rel="noopener">在无趣的时代活得有趣</a></h2><p><img data-src="https://img1.doubanio.com/lpic/s28369949.jpg" alt></p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>序言/真性情</p>
 <p>01面对<strong>虚无</strong>——<br>我们总得做点什么<br>012从生存向存在的途中<br>018没有目的的旅行<br>025失去的岁月<br>032度一个创造的人生<br>035追求<br>041幸福是灵魂的事<br>044幸福与痛苦</p>
 <p>02 <strong>孤独</strong>——<br>享受独处的乐趣<br>054独处的充实<br>057孤独的价值<br>068人人都是孤儿<br>071感觉<br>080一个人和三个人称<br>083论沉默</p>
@@ -360,11 +330,11 @@
 <p>05<strong>文字</strong>——<br>在读与写中照见自己<br>174人与书之间<br>178书与人生<br>183平淡的境界<br>188读书的癖好<br>191愉快是基本标准<br>195读永恒的书<br>198私人写作</p>
 <p>06<strong>真性情</strong>——<br>呵护日渐稀薄的童真<br>210平常心<br>214每个人都是一个宇宙<br>226人生贵在行胸臆<br>234闲适，享受生命本身<br>242回归简单的生活<br>245自爱和自立<br>249时光村落里的往事<br>254生命本来没有名字<br>260心灵也是一种现实</p>
 <p>07<strong>探寻自己</strong>——<br>我的心灵生活<br>266点与面<br>274成为你自己——<br>《作为教育家的叔本华》译者导言之二</p>
-<p><img alt data-src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=6b3e4e92c33d70cf4cfaad0bc0e7b63d/f31fbe096b63f6247f6025a88d44ebf81a4ca35f.jpg"><br>亚瑟·叔本华（德文原名：Arthur Schopenhauer，1788年2月22日—1860年9月21日，享年72岁），德国著名哲学家。亚瑟·叔本华是哲学史上第一个公开反对理性主义哲学的人并开创了非理性主义哲学的先河。</p>
+<p><img data-src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=6b3e4e92c33d70cf4cfaad0bc0e7b63d/f31fbe096b63f6247f6025a88d44ebf81a4ca35f.jpg" alt><br>亚瑟·叔本华（德文原名：Arthur Schopenhauer，1788年2月22日—1860年9月21日，享年72岁），德国著名哲学家。亚瑟·叔本华是哲学史上第一个公开反对理性主义哲学的人并开创了非理性主义哲学的先河。</p>
 <p>282我不愿意愿意死<br>290尘世遭遇的意义<br>292精神生活<br>299灵魂的在场</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/large/public/p525266.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/large/public/p525266.jpg" alt></p>
 <p>“许多人所谓的成熟，不过是被习俗磨去了棱角，变得世故而实际了。那不是成熟，而是精神的早衰和个性的夭亡。<strong>真正的成熟，应当是独特个性的形成，真实自我的发现，精神上的结果和丰收。我不想知道你有什么，只想知道你在寻找什么——你就是你所寻找的东西。</strong>”</p>
-<h2 id="如何成为一个有趣的人"><a href="#如何成为一个有趣的人" class="headerlink" title="如何成为一个有趣的人"></a><a href="https://book.douban.com/subject/27055728/" target="_blank" rel="noopener">如何成为一个有趣的人</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s29481590.jpg"></p>
+<h2 id="如何成为一个有趣的人"><a href="#如何成为一个有趣的人" class="headerlink" title="如何成为一个有趣的人"></a><a href="https://book.douban.com/subject/27055728/" target="_blank" rel="noopener">如何成为一个有趣的人</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s29481590.jpg" alt></p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>第 1 章　有趣是一场令人愉悦的意外 / 1</p>
 <p>1.1　无聊，一场悄悄袭来的现代瘟疫 / 2<br>没有选择 / 2<br>回避选择 / 6<br>无聊是一种特权 / 8</p>
 <p>1.2　有趣是个什么东西 / 14<br>生活是否有趣 / 14<br>有趣的人 / 18<br>有趣和“逗比”的差别 / 23</p>
@@ -472,7 +442,7 @@
 <p>10、把重复的日子投入到不重复的实践中，人生体验就会增加地更有效率。<strong>年轻就该出去“浪”，没见过“大风大浪”，如何在年老时有脸说“平淡是真”呢？</strong></p>
 <p>11、尼尔波兹曼在《娱乐至死》中认为，尽管大量数据的收集和取用对于大规模的组织来说非常珍贵，但是对于个人来说，海量资源能起到的作用却十分有限。消遣的知识太多了，真正有用的知识就被隐藏在海量信息之后，埋藏起来不容易找到了。</p>
 <p>12、知识结构的“广度”是一个人“有聊”还是“无聊”的关键，而知识结构的“深度”是一个人“肤浅”还是“深刻”的关键。“深刻”与否正是“有趣”和“逗比”的核心差别。</p>
-<h2 id="不那么拼，去过一种更有趣的生活"><a href="#不那么拼，去过一种更有趣的生活" class="headerlink" title="不那么拼，去过一种更有趣的生活"></a><a href="https://book.douban.com/subject/26426810/" target="_blank" rel="noopener">不那么拼，去过一种更有趣的生活</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28111723.jpg"></p>
+<h2 id="不那么拼，去过一种更有趣的生活"><a href="#不那么拼，去过一种更有趣的生活" class="headerlink" title="不那么拼，去过一种更有趣的生活"></a><a href="https://book.douban.com/subject/26426810/" target="_blank" rel="noopener">不那么拼，去过一种更有趣的生活</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28111723.jpg" alt></p>
 <p>世界再大，你唯一始终拥有的也只是自己，你即是原点，也是终点。<br>因此，我们所需要的，并不是换一个地方，而是换一种更适合自己的有趣的活法。</p>
 <p>心屋先生认为，之所以有的人会活得那么累，陷入付出与回报不对等的困境，不是因为不够“拼”，反而是因为“太拼”。当你充分认识自我，肯定自我时，“不拼”也能得到最匹配的回报。</p>
 <p>现在，一点点读完这本书，从发现未知的自己开始，肯定自己，自然表达自己，学习13种“不拼生活法”，不要那么完美主义，不要让自己生活在枷锁之中，不要那么拼，偶尔偷懒懈怠、随心所欲，拒绝别人包括上司，辜负别人的期待，求助于他人……对于一直太拼的你，这些“不拼”反而能让你得到更多。</p>
@@ -507,7 +477,7 @@
 <p>我当时看到这里的时候很惊讶，名校的高材生尚且有这样的例子出来，其实也就反应了我们千千万万的年轻人的现状。我们把看起来的那种“拼搏”，“努力”当成了自己的原动力，而实际上我们并不一定有一个现实的目标，能够得以实现的期望值。我想这本书并不是教我们在生活里不要去拼，去努力。它是在告诉我们过上自己喜欢的一种生活方式，不去成为那个不是为了自己去拼，而是为了活在别人眼中的那个你而拼搏。</p>
 <p><strong>如果你想成为别人眼中成功的样子，那你一定会失去你自己原来的样子。</strong></p>
 <p>在我们的成功模式里，成功的人总是从小就拥有高远的志向，详实的人生清单。我觉得这样并不是不对。可是，正如书里所说的，“人类具有无数的可能性，那么我们能够获得的东西也是无限的。我们的财富，我们的幸福，都是可以无限放大的。”书里鼓励我们不要再给自己列清单了，取而代之的是进入“不知道为什么”的境界，从“努力拼搏，获得预想的东西”这个频道，换到“<strong>虽然不知道为什么，但就会实现的频道</strong>”。</p>
-<h2 id="永远别放弃做个有趣的人"><a href="#永远别放弃做个有趣的人" class="headerlink" title="永远别放弃做个有趣的人"></a><a href="https://book.douban.com/subject/26935090/" target="_blank" rel="noopener">永远别放弃做个有趣的人</a></h2><p><img alt data-src="https://img1.doubanio.com/lpic/s29218259.jpg"></p>
+<h2 id="永远别放弃做个有趣的人"><a href="#永远别放弃做个有趣的人" class="headerlink" title="永远别放弃做个有趣的人"></a><a href="https://book.douban.com/subject/26935090/" target="_blank" rel="noopener">永远别放弃做个有趣的人</a></h2><p><img data-src="https://img1.doubanio.com/lpic/s29218259.jpg" alt></p>
 <p>这世间的美好，其实不是数钱数到手软，颜值万人盛赞，人脉随处可见，而是能在平淡无奇的岁月里活得有生趣，把日子过成段子。<br>这世间的不幸，其实不是信用卡月月要还，生病没人陪伴，朋友渐渐失联，而是逐渐被苦闷的生活磨成一个无趣的人，自己却浑然不觉。</p>
 <p>成为有趣的人，是人生的至高境界，远比优秀、地位、名利更重要。和有趣的人做有趣的事，这才是真正的生活。愿你无论际遇如何，永远别放弃做个有趣的人。</p>
 <p>关于这本书：</p>
@@ -594,7 +564,7 @@
 <p>不知你是否感觉到：有趣，已经成为当今社会人类必备的一项非常重要的技能。一个有趣的人，我相信她身上总是发光的，不管走到哪里，总能顺利吸引别人燃起想要靠近她，了解她的欲望；有趣的生活，是个人一辈子最珍贵的财富。</p>
 <p><strong>钱会花光房会倒。人的一生，终如一款上市的凤梨罐头，总会过期。唯独有趣的人，能将有限的日子过出幸福的滋味。</strong></p>
 <p>阅读这本书，跟莫主编一起学做有趣儿的人，过有趣味的生活。</p>
-<h2 id="做一个有趣的人"><a href="#做一个有趣的人" class="headerlink" title="做一个有趣的人"></a><a href="https://book.douban.com/subject/27036093/" target="_blank" rel="noopener">做一个有趣的人</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s29479634.jpg"></p>
+<h2 id="做一个有趣的人"><a href="#做一个有趣的人" class="headerlink" title="做一个有趣的人"></a><a href="https://book.douban.com/subject/27036093/" target="_blank" rel="noopener">做一个有趣的人</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s29479634.jpg" alt></p>
 <h3 id="目录-5"><a href="#目录-5" class="headerlink" title="目录"></a>目录</h3><p>序 / VI</p>
 <p>画一辈子不重样，因为我双脚踏在土地上<br>清华大学美术学院教授，韩美林 / X<br>汉子就要顶天立地 / 2<br>艺术家就要到基层去 / 4<br>让中国文化“杀”到西方去 / 7</p>
 <p>让梦想回到开始的地方<br>京东集团首席执行官，刘强东 / 10<br>我出身于穷苦的农村 / 12<br>怀揣周游世界的梦想 / 14<br>渴望公平的农村娃 / 17<br>物质上的匮乏难掩精神上的愉悦 / 19</p>
@@ -615,7 +585,7 @@
 <p>医学是科学，更是人学<br>中日友好医院院长，王辰 / 224<br>医学不是万能的 / 226<br>20世纪最不争的医学结论就是，吸烟危害健康 / 228<br>医患关系是人际间最美好的关系之一 / 231</p>
 <p>舌尖上的安全<br>香料与食品添加剂专家，孙宝国 / 236<br>味料同源 / 238<br>正确认识食品添加剂 / 241</p>
 <p>一个医生的内心独白<br>解放军总医院老年心内科主任医师，李小鹰 / 246<br>好医生就是把病人放到第一位 / 248<br>病人有事，随叫随到 / 251<br>学成归来酬故土 / 252<br>好医生，要有爱 / 255</p>
-<h2 id="谁都不会拒绝一个有趣的人"><a href="#谁都不会拒绝一个有趣的人" class="headerlink" title="谁都不会拒绝一个有趣的人"></a><a href="https://book.douban.com/subject/27103165/" target="_blank" rel="noopener">谁都不会拒绝一个有趣的人</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s29507785.jpg"></p>
+<h2 id="谁都不会拒绝一个有趣的人"><a href="#谁都不会拒绝一个有趣的人" class="headerlink" title="谁都不会拒绝一个有趣的人"></a><a href="https://book.douban.com/subject/27103165/" target="_blank" rel="noopener">谁都不会拒绝一个有趣的人</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s29507785.jpg" alt></p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>我们为什么要变得有趣？因为在这个时代，有趣就是正义，那些消极的东西，暗黑、负能量、伤痛、悲催，都将被有趣的人和事驱除殆尽。</p>
 <p>有趣能彻底根治“无聊症”，让我们以全新的姿态迎接世间的一切美好。有趣意味着情商高、眼界宽、懂人情、有格调、不盲从。一个有趣的人，能轻松打败所有的平淡无奇，并能给身边的人带来欢乐和满足。</p>
 <p>很多人都能靠努力得到自己想要的东西，但如果人生被功利和世俗所累，变得乏味无趣，也就失去了奋斗的意义。为自己保留一点童真、为自己找回旧日初心，为自己珍藏一个梦想，任何时候都让自己充满生趣，这样，我们就能活出自己的风格。</p>
@@ -657,7 +627,7 @@
 <p>比方说乔布斯死的时候，潘石屹在网上说了一句特别不合适的话：苹果公司应该降价，把苹果手机降到一千块钱，来纪念乔布斯。所以很多人就骂潘石屹，乔布斯是谁啊？那可是在果粉心里神一般的人啊。大伙就拼命骂他？说他为什么不把房价降到一千块钱啊，然后给一千起了个名字–一潘。那怎么办啊？潘石屹难道像公关大师讲的那样开发布会把事情说清楚，公众是不会给你讲道理的，公众是女性主义思维。所以潘石屹很聪明，他既不往前走，也不往后退，而是往旁边跨一步，他让自己的平面设计人员设计出一潘的钞票，印了几箱子，逢人就发，把这件事变成一个玩笑，而不是我跟你讲道理。这就回到夫妻吵架的场景，男人赢从来不是因为他把道理掰扯清了，而是他跟你兜了个闷子，说了个玩笑。对方破涕为笑，于是重归于还，因为女性思维觉得这个人有意思，远比觉得你有道理重要的多。所以我们每一个跟公众打交道的政府干部，企业家，包括每一个要在公众面前呈现自己的个人，我们都要理解，其实跟公众打交道，就是泡妞嘛。</p>
 <p>很多人都说现在的女孩子太实际了，就会扎到那些又老又丑但是很有钱的老男人怀抱里，真的是这么回事吗？难道我们的有志青年又穷又丑所以对她们就没有吸引力吗？我觉得这是男性思维对女性最大的误解。在几百万年的人类进化史上，女性一直是坐在裁判席上的，你们雄性去斗，然后斗赢的我来选。可是在进入父权社会后，形成一种古怪的思维，他觉得我征服世界我就可以征服女人。在男人的思维里，生活是足球赛进一个进两个，我赢了是铁板钉钉的事情，但是在女人看来，生活确实跳水和体操，你们在台上表演，我们最在裁判席上给你们打分，你因为光是那些硬的技法才重要吗？不是，你的体型你的笑容，你如水的姿态，你的自信洋溢在外面的气场都会影响你的加分。所以这是一个非常多元的，由女性来主导的两性世界，它绝不像男性想的那样单一，枯燥，乏味。</p>
 <p>所以你看这个世界就是这样，男人改变世界，女人改变男人的世界。而女性对于互联网的实质性的影响在与，通过推动互联网主义女性主义特征的形成，改变了人们的思维方式，从而改变了我们的整个世界。</p>
-<h2 id="和无趣的人生活，就是一场牢狱之灾"><a href="#和无趣的人生活，就是一场牢狱之灾" class="headerlink" title="和无趣的人生活，就是一场牢狱之灾"></a><a href="http://www.xinli001.com/info/100373645?from=shouye" target="_blank" rel="noopener">和无趣的人生活，就是一场牢狱之灾</a></h2><p><img alt data-src="http://ossimg.xinli001.com/20170905/f4fc36e86e7458dec4b29d8de7648140.jpeg"></p>
+<h2 id="和无趣的人生活，就是一场牢狱之灾"><a href="#和无趣的人生活，就是一场牢狱之灾" class="headerlink" title="和无趣的人生活，就是一场牢狱之灾"></a><a href="http://www.xinli001.com/info/100373645?from=shouye" target="_blank" rel="noopener">和无趣的人生活，就是一场牢狱之灾</a></h2><p><img data-src="http://ossimg.xinli001.com/20170905/f4fc36e86e7458dec4b29d8de7648140.jpeg" alt></p>
 <p>和缺乏好奇心的人生活在一起，厌倦是迟早的事情。但很多人没有在关系的初期注意到这一点。</p>
 <p>如果你自认为还算一个对世界有点好奇心的人，如果找到的另一半是一个缺乏好奇心的人，那你自己不断的成长需求就会不断的和对方的故步自封产生矛盾，也就共同无法体味生活的趣味和乐趣，最后分手也就是大概率的事件。</p>
 <p>一个人是不是有意思，是否对世界充满好奇心，我们可以通过以下方面来观察：</p>
@@ -732,7 +702,7 @@
 <p>这里的机会少一点点，那里的见识少一点点，朋友少一点点，日积月累，最终会形成巨大的人生鸿沟。</p>
 <p>对有好奇心的人来说，世界像个大游乐场，永远可以发现好玩的。而没有好奇心的人，他们进入陌生的环境、面对陌生的事物时，会拒绝、排斥，甚至恐惧，而不愿意去探索、尝试。</p>
 <p>只有找到也对新世界充满求知欲的人，你们新信息同步的频率才能相仿。和有好奇心的人在一起，才能真正的避免审美疲劳。</p>
-<h2 id="蔡澜：活得好一点，简单一点"><a href="#蔡澜：活得好一点，简单一点" class="headerlink" title="蔡澜：活得好一点，简单一点"></a><a href="http://www.toutiao.com/i6472870239141888525/" target="_blank" rel="noopener">蔡澜：活得好一点，简单一点</a></h2><p><img alt data-src="http://p9.pstatp.com/large/3e5800027a5927673c5e"></p>
+<h2 id="蔡澜：活得好一点，简单一点"><a href="#蔡澜：活得好一点，简单一点" class="headerlink" title="蔡澜：活得好一点，简单一点"></a><a href="http://www.toutiao.com/i6472870239141888525/" target="_blank" rel="noopener">蔡澜：活得好一点，简单一点</a></h2><p><img data-src="http://p9.pstatp.com/large/3e5800027a5927673c5e" alt></p>
 <p>作者简介</p>
 <p>蔡澜：活得好一点，简单一点</p>
 <p>蔡澜，电影监制、美食家、专栏作家、电影节目主持人、商人。与<strong>金庸、黄沾、倪匡</strong>并称为“香港四大才子”。</p>
@@ -796,10 +766,10 @@
 <blockquote>
 <p>人生意义到底是什么呢？吃得好一点，睡得好一点，多玩玩，不羡慕别人，不听管束，多储蓄人生经验，死而无憾，这就是最大的意义吧，一点也不复杂。</p>
 </blockquote>
-<h2 id="逻辑大师的感性"><a href="#逻辑大师的感性" class="headerlink" title="逻辑大师的感性"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1246&amp;highlight=%E9%80%BB%E8%BE%91" target="_blank" rel="noopener">逻辑大师的感性</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/15/181236c0xv0xxsqjxvct3j.jpg"></p>
+<h2 id="逻辑大师的感性"><a href="#逻辑大师的感性" class="headerlink" title="逻辑大师的感性"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1246&amp;highlight=%E9%80%BB%E8%BE%91" target="_blank" rel="noopener">逻辑大师的感性</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/15/181236c0xv0xxsqjxvct3j.jpg" alt></p>
 <p>金岳霖最有名的癖好是养鸡。​<br>​<br>金岳霖头一次养的鸡是从北京庙会上买来的一对黑狼山鸡。在老金的精心呵护下，没多久公鸡已经长到了九斤四两，母鸡也超过了九斤。冬天来了，老金担心它们受冻，看到书上说可以喂点鱼肝油御寒，他就用灌墨水笔的管子灌了它们一管子鱼肝油。结果，这两只宝贝鸡很快就在窝里寿终正寝了。​<br>​<br>后来，老金又养了一只云南斗鸡。这只公鸡能把脖子伸上来，和老金在同桌吃饭，老金与鸡平等共餐，安之若素。晋朝的阮咸曾经与猪一起喝酒，这又是老金魏晋风度的一个表现。偶尔，金岳霖会带着大公鸡出去溜达，引来很多路人围观，但鸡不在乎，老金也不在乎。​<br>​<br>据赵元任的夫人杨步伟回忆，有一次她接到老金的一个紧急电话，让她赶快进城。杨步伟问什么事，老金支支吾吾，只是让她越快越好。当时老金正跟秦丽琳热恋，杨步伟以为是秦丽琳怀孕了，一路忐忑。到了金家，杨步伟才知道这件事跟秦丽琳无关。​<br>​<br>原来，金岳霖养了一只母鸡，最近反常地连续三天不下一个蛋。老金担心鸡难产，赶紧请东京帝国大学医科博士毕业的杨步伟过来看一看。杨步伟听了之后又好气又好笑，把鸡抓来一看，原来老金经常给鸡喂鱼肝油，以至于这只鸡营养过剩，鸡蛋卡在屁股眼出不来。杨步伟伸手一掏，问题马上解决。金岳霖一见，欣喜不已。为表感谢，他特地邀请杨步伟一家去吃烤鸭。​<br>​<br>贪玩的金岳霖像小孩子一样率性天真，我行我素，因此，也闹了不少笑话。​<br>​<br>有一天，梁思成看到金岳霖的厨师外出采购，手捏一张5000余元的人民币活期存折，大为惊讶。在上世纪60年代，5000多块可是一笔巨款。梁思成忙问金岳霖缘由，老金答：“这样方便。”梁思成说：“若不慎遗失，岂不是很冤枉？”老金还是说：“这样方便。”梁思成只好跟他建议：“这样吧，存个死期，存个活期，两全其美，而且死期利率高于活期……”谁知金岳霖连连摆手：“使不得的，本无奉献，那样岂不占了国家便宜？”梁思成无可奈何，只得详细为他解释储蓄规则，金岳霖这才理解了，满脸笑容，对梁思成说：“你真聪明。”​<br>​<br>没想到，到了改存之日，金岳霖又打起了退堂鼓。原来他预备在自己死后留1000元钱给自己的厨师，他想：“如果将剩余的钱都存了死期，万一某日我突然死了，钱不就取不出了？”这下梁思成哭笑不得，只好又将如何把那1000元抽出为厨师另立户头之事细细为他讲解了一番。金岳霖听完之后恍然大悟，喜作一团，竖起大拇指对梁思成说：“你真聪明。”据说，梁思成经常从金岳霖的嘴里得到这样的夸奖。​</p>
 <p>罗胖日：<br>有逻辑+够趣味=逻辑学家<br>有逻辑-够趣味=类“方舟子”</p>
-<h2 id="金圣叹之不亦快哉三十三则"><a href="#金圣叹之不亦快哉三十三则" class="headerlink" title="金圣叹之不亦快哉三十三则"></a><a href="http://www.luojiji.com/thread-2956-1-1.html" target="_blank" rel="noopener">金圣叹之不亦快哉三十三则</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/29/142317jrzaahgrfpfby2fl.jpg"></p>
+<h2 id="金圣叹之不亦快哉三十三则"><a href="#金圣叹之不亦快哉三十三则" class="headerlink" title="金圣叹之不亦快哉三十三则"></a><a href="http://www.luojiji.com/thread-2956-1-1.html" target="_blank" rel="noopener">金圣叹之不亦快哉三十三则</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/29/142317jrzaahgrfpfby2fl.jpg" alt></p>
 <p>2015-11-15金圣叹</p>
 <blockquote>
 <p>IPCreator：别人笑我太疯癫，我笑别人看不穿。</p>
@@ -847,8 +817,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Hobby/" rel="bookmark">Hobby</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Chat/" rel="bookmark">Chat</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Humor/" rel="bookmark">Humor</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Interest/" rel="bookmark">Interest</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/A/Amusing/" rel="bookmark">Amusing</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Humor/" rel="tag"><i class="fa fa-tag"></i> Humor</a>
           </div>
@@ -860,21 +851,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/T/Thanksgiving/" rel="next" title="Thanksgiving">
-                  <i class="fa fa-chevron-left"></i> Thanksgiving
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/W/Work/" rel="prev" title="Work">
-                  Work <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/T/Thanksgiving/" rel="prev" title="Thanksgiving">
+      <i class="fa fa-chevron-left"></i> Thanksgiving
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/W/Work/" rel="next" title="Work">
+      Work <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -887,7 +875,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -918,8 +928,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -928,14 +938,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -946,11 +956,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -984,7 +989,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -996,51 +1001,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -1049,18 +1015,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1070,63 +1030,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1134,14 +1037,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1168,40 +1071,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/H/Humor/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

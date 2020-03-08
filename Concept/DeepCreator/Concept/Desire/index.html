@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="欲望&amp;gt;实力，就是穷人。">
 <meta name="keywords" content="Desire,Wish">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Desire/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Desire/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Desire/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="DQEIfGsXkAEw9gr.jpg" data-src="http://pd4vb8220.bkt.clouddn.com/DQEIfGsXkAEw9gr.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://pd4vb8220.bkt.clouddn.com/DQEIfGsXkAEw9gr.jpg?imageMogr2/thumbnail/!75p" alt="DQEIfGsXkAEw9gr.jpg"></p>
 <blockquote>
 <p>欲望&gt;实力，就是穷人。</p>
 </blockquote>
@@ -297,8 +267,8 @@
 <blockquote>
 <p><a href="https://www.toutiao.com/a1589817953388558/" target="_blank" rel="noopener">现实世界往往强调如何管理满足欲望的手段、条件和外部环境，但有趣的是宗教，宗教只教人去管理自己内心的欲望。</a>——冯仑</p>
 </blockquote>
-<p><img alt data-src="https://p3.pstatp.com/origin/594000020d4d3bc57300"></p>
-<h2 id="欲望之源——从性到钱再到吃：驯服我们的原始本能"><a href="#欲望之源——从性到钱再到吃：驯服我们的原始本能" class="headerlink" title="欲望之源——从性到钱再到吃：驯服我们的原始本能"></a><a href="https://book.douban.com/subject/1128662/" target="_blank" rel="noopener">欲望之源——从性到钱再到吃：驯服我们的原始本能</a></h2><p><img alt="desire20180801.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/desire20180801.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="https://p3.pstatp.com/origin/594000020d4d3bc57300" alt></p>
+<h2 id="欲望之源——从性到钱再到吃：驯服我们的原始本能"><a href="#欲望之源——从性到钱再到吃：驯服我们的原始本能" class="headerlink" title="欲望之源——从性到钱再到吃：驯服我们的原始本能"></a><a href="https://book.douban.com/subject/1128662/" target="_blank" rel="noopener">欲望之源——从性到钱再到吃：驯服我们的原始本能</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/desire20180801.jpg?imageMogr2/thumbnail/!75p" alt="desire20180801.jpg"></p>
 <p>Mean Genes: From Sex to Money to Food: Taming Our Primal Instincts</p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>导言 最强大的敌人就是我们自己<br>瘪钱包和肥躯体 1<br>债务 一路笑到达尔文银行 3<br>破产.储蓄.大生意<br>肥胖 请勿喂食人类 19<br>减肥.懒惰.抽脂<br>欲壑难平 37<br>麻醉剂 快乐之路上的劫匪 39<br>咖啡因.酒精.百忧解.嗜好.希望<br>冒险 寻求刺激的基因欺骗了我们 59<br>卡西诺.墨西哥胡椒.过山车.奖励<br>贪婪 在快乐的脚踏车上飞转 77<br>金钱.欢乐.物质主义.进步.欢乐<br>罗曼史与繁殖 97<br>性别 女孩对男孩 99<br>火星和金星.荷尔蒙.同性恋.文化<br>美丽 并不肤浅 117<br>魅力.欲望.时尚<br>不忠 欺骗的心 133<br>婚姻.骗子.爱情.性欲.诺言<br>家庭、朋友和敌人 151<br>家庭 不解之带 153<br>血缘.兄弟姐妹.冲突.母性<br>朋友和敌人 靠近朋友，更靠近敌人 165<br>战争.种族.闲聊.马路暴怒.忠实<br>结语 不死的欲望 189<br>致谢</p>
 <h3 id="我们都是信息时代的远古人"><a href="#我们都是信息时代的远古人" class="headerlink" title="我们都是信息时代的远古人"></a><a href="https://book.douban.com/review/1287071/" target="_blank" rel="noopener">我们都是信息时代的远古人</a></h3><p>8500万年前，灵长目动物首次出现；从那个时候到它们终于开始直立行走，用去了漫长的8000万年。250万年前，人类学会了使用石器。又过了100万年，人类学会了驾驭火种。而解剖学上的现代人类（智人）则出现于大约20万年前。这之后，又过了几万年，智人走出了非洲，灭掉了其它人种（包括一度繁荣于欧洲的尼安德特人）。与漫长的人类进化史相比，有历史记载的人类文明则只有短短数千年，而进入工业社会更是只有区区数百年，实在只仿佛一瞬。</p>
@@ -407,12 +377,12 @@
 <p>好，今天的话题就聊到这里，明天见。</p>
 <p>本节目参考了徐静波的文章《日本情人旅馆为何纷纷倒闭》，见于微信公众号“静说日本”。</p>
 <p>欢迎你在留言区写下今天的想法。</p>
-<p>把下图分享出去，与更多的朋友一起终身学习。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/21/074832ojlxllrwd9qlmwld.jpg"></p>
+<p>把下图分享出去，与更多的朋友一起终身学习。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201708/21/074832ojlxllrwd9qlmwld.jpg" alt></p>
 <p>来源:得到</p>
 <h2 id="洞察：欲望不是问题，执着才是"><a href="#洞察：欲望不是问题，执着才是" class="headerlink" title="洞察：欲望不是问题，执着才是"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=9092&amp;highlight=%E6%AC%B2%E6%9C%9B" target="_blank" rel="noopener">洞察：欲望不是问题，执着才是</a></h2><p>宗萨钦哲仁波切是当今世界上最知名的藏传佛教导师之一。他同时也拍电影和写书，作品如《正见》、《人间是剧场》等都很受欢迎。在接受《新京报》采访时，宗萨钦哲说：“<strong>佛教只对一件事感兴趣，就是洞见真理。</strong> 摆脱欲望并不是佛教的终极目标，佛教的终极目标是获得对真理的证悟。如果欲望是你洞见真理的障碍，那么，是的你需要放弃欲望；如果欲望并不构成障碍，那就没有关系。<strong>处理欲望和情绪的过程，也是引导你洞见真理的过程。</strong>”</p>
 <p>他说，“我的朋友当中有些是世俗意义上的名人，我从来没有告诉他们要放弃名利和金钱，我总是鼓励他们要有抱负，要更加有名。佛教跟世俗生活并不冲突，世俗生活从来不是问题，对它的执着才是问题。假如你有1000公斤的黄金，但你并不执着于它，那没有任何问题；假如你有一块饼干，但你的注意力都在如何守住它、不失去它，那即使只是一块饼干，也是个很大的问题。因为你太执着。”</p>
 <p>一个例子是，电影明星李连杰是虔诚的佛教徒。他曾经很多次想要退出演艺圈，但是宗萨钦哲就劝他说：“你要利用你的身份，来度化更多的人。”</p>
-<h2 id="利益驯化欲望，是资本主义的美德"><a href="#利益驯化欲望，是资本主义的美德" class="headerlink" title="利益驯化欲望，是资本主义的美德"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=2620&amp;highlight=%E6%AC%B2%E6%9C%9B" target="_blank" rel="noopener">利益驯化欲望，是资本主义的美德</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/25/162518u2twv8cn2cwbcqkb.jpg"></p>
+<h2 id="利益驯化欲望，是资本主义的美德"><a href="#利益驯化欲望，是资本主义的美德" class="headerlink" title="利益驯化欲望，是资本主义的美德"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=2620&amp;highlight=%E6%AC%B2%E6%9C%9B" target="_blank" rel="noopener">利益驯化欲望，是资本主义的美德</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/25/162518u2twv8cn2cwbcqkb.jpg" alt></p>
 <p>冯克利</p>
 <p>赚钱的动机是每个时代都常见的动机。正如中国有重农抑商的传统一样，它们在欧洲的基督教文明中，过去也仅仅是被人默默接受，而从不给予道德上的张扬。</p>
 <p>需要一项观念上的重大转变，才能把一种原来被视为人性中恶的因素，变为值得称颂的美德。</p>
@@ -437,7 +407,7 @@
 <p>他们对欲望可能释放出的能量有着强烈的道德忧虑，所以才将利益驯化欲望作为商业社会的伟大成就之一。而一个多世纪之后，这项成就却被谴责为资本主义最恶劣的特征。</p>
 <p>本文由罗友 humeless 推荐整理。由作者 冯克利 授权罗辑思维发布，选自赫希曼《欲望与利益》中译者序。作者译著有《邓小平时代》、《乌合之众》等。</p>
 <p>罗胖曰：<br>在富兰克林之前，很少有人敢为商人辩护。<br>在乔布斯之前，很少有人敢宣称不做公益。<br>在谷歌之前，很少有人敢挑战知识产权的正当性。<br>商业不是道德的破坏者。<br>商业也未必是旧道德的对手。<br>但是<strong>商业永远指出道德演进的方向。</strong></p>
-<h2 id="梦露：成为欲望女神，必有残酷青春"><a href="#梦露：成为欲望女神，必有残酷青春" class="headerlink" title="梦露：成为欲望女神，必有残酷青春"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=2439&amp;highlight=%E6%AC%B2%E6%9C%9B" target="_blank" rel="noopener">梦露：成为欲望女神，必有残酷青春</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/24/000356xdkak5zz8dh8lltd.jpg"><br>威廉·曼彻斯特</p>
+<h2 id="梦露：成为欲望女神，必有残酷青春"><a href="#梦露：成为欲望女神，必有残酷青春" class="headerlink" title="梦露：成为欲望女神，必有残酷青春"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=2439&amp;highlight=%E6%AC%B2%E6%9C%9B" target="_blank" rel="noopener">梦露：成为欲望女神，必有残酷青春</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/24/000356xdkak5zz8dh8lltd.jpg" alt><br>威廉·曼彻斯特</p>
 <p>她是严重精神分裂症患者格拉迪丝·珀尔·贝克的私生女。1926年，格拉迪丝以当时无声电影明星诺玛·塔尔梅奇的名字给那个不该出生的孩子取名。若干年后，那个小婴儿长大成人。20世纪福克斯电影公司的导演为她改名为玛丽莲·梦露。在她成名前，梦露曾试着打电话给亲生父亲。父亲的秘书说：“他不想见你。如果你有什么问题，可以到洛杉矶见他的律师。”</p>
 <p>她一声不响地挂断电话。如果一个小女孩有理由控诉她的童年生活，她会那样做的。她曾被12个家庭领养过，他们各有各的粗俗行为。在其中一个家中，她的玩具是空的威士忌酒瓶。另有两个家庭是狂热的宗教徒，其中一个家庭教她唱《耶稣爱我》作为惩罚。若她有不纯洁的思想，便会用磨刀用的皮带抽她；当她脱掉衣服与小男孩对比身体的不同之处时，她被叫作荡妇。她喜欢一条小狗，但邻居杀了它。她的外婆看望她时，想要用枕头闷死她。她在孤儿院待了21个月，16岁时嫁给了一个老男人。她不爱他，于是逃离了那种监禁般的悲惨生活。她像变了个人似的，说话开始结结巴巴，患上慢性失眠症。她成为一个绝望的女子，贪婪地想要被人恋慕。</p>
 <p>她的第一任丈夫教会她销魂的性爱。她热爱这种感觉，终其一生都在追求性爱。但这无法满足她，她渴望受到万人的崇拜。</p>
@@ -452,7 +422,7 @@
 <p>她的尸体（档案号：81128号）一直放在洛杉矶停尸处，无人认领。后来狄马乔前来认领，为她举行了葬礼。梦露从未想过自己灵柩的样子，但她一定想过自己死后的事情。她曾做出了具体安排。按她的要求，艾伦·斯奈德为她化妆，玛吉·普利彻做衣服，阿格尼丝·弗拉纳根做发型。</p>
 <p>本文节选自 威廉·曼彻斯特 著作《光荣与梦想》，中信出版社2015年第一版，有所删节。</p>
 <p>罗胖曰：<br>古今中外的好“笔法”都是一样的——<br>1.细节有趣味；<br>2.寥寥几个细节就可以呈现整体。<br>举个中国的例子吧，张岱写西湖雪景——<br>“天与云与山与水，上下一白。湖上影子，惟长堤一痕、湖心亭一点、与余舟一芥，舟中人两三粒而已。”<br>仅此一段，明式小品文在中国文学史上的地位就已确立。<br>读《光荣与梦想》这样的书的好处就是——<br>它既是长河巨浪，<br>又涓滴可饮。</p>
-<h2 id="女性在网络世界中的欲望"><a href="#女性在网络世界中的欲望" class="headerlink" title="女性在网络世界中的欲望"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1272&amp;highlight=%E6%AC%B2%E6%9C%9B" target="_blank" rel="noopener">女性在网络世界中的欲望</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/15/235721vovnhvhlnvgp4l95.jpg"></p>
+<h2 id="女性在网络世界中的欲望"><a href="#女性在网络世界中的欲望" class="headerlink" title="女性在网络世界中的欲望"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1272&amp;highlight=%E6%AC%B2%E6%9C%9B" target="_blank" rel="noopener">女性在网络世界中的欲望</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/15/235721vovnhvhlnvgp4l95.jpg" alt></p>
 <p>作者：OgiOgas</p>
 <p>Annuska翻译来自译言网</p>
 <p>如果一个女人被一位男演员吸引住后，她挑选的故事，可能会有他塑造过的角色之一，就象奥兰多·布鲁姆饰演过的莱格拉斯（电影《魔戒》中的角色。——译者注）。</p>
@@ -476,7 +446,7 @@
 <p>但是，对很多女人来说，马普尔小姐掌管探究。要想达到身心愉悦的性，她必须完成对实际问题的考察。</p>
 <p>——作者;Ogas先生,他是一位神经学科学家，通过计算机模型研究。他和SaiGaddam共同撰写了新书《无数肮脏念头：世界最庞大实验发现的人类欲望》</p>
 <p>罗胖曰：<br>在两性关系中，男女双方谁获得的快感最大？<br>有位爷是这么说的——<br>“好比挖鼻孔。请问是手指更舒服？还是鼻孔更舒服？”</p>
-<h2 id="志气和欲望"><a href="#志气和欲望" class="headerlink" title="志气和欲望"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1089&amp;highlight=%E6%AC%B2%E6%9C%9B" target="_blank" rel="noopener">志气和欲望</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/14/172530r35cyyt88jlx5cjl.jpg"></p>
+<h2 id="志气和欲望"><a href="#志气和欲望" class="headerlink" title="志气和欲望"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1089&amp;highlight=%E6%AC%B2%E6%9C%9B" target="_blank" rel="noopener">志气和欲望</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/14/172530r35cyyt88jlx5cjl.jpg" alt></p>
 <p>梁漱溟<br>本文来自友@于震推荐</p>
 <p>在这个时代的青年，能够把自己安排对了的很少。在这个时代，有一个大的欺骗他，或耽误他，容易让他误会，或让他不留心的一件事，就是把欲望当志气。</p>
 <p>这样的用功，自然不得其方。也许他很卖力气，因为背后存个贪的心，不能不如此。可是他这样卖力气，却很不自然，很苦，且难以长进。虽有时也会起一个大的反动，觉得我这样是干什么？甚或会完全不干，也许勉强干。但当自己勉强自己时，读书做事均难入，无法全副精神放在事情上。甚且会自己搪塞自己。</p>
@@ -490,8 +460,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/D/Desire/" rel="bookmark">Desire</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Investment/" rel="bookmark">Investment</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Wealth/" rel="bookmark">Wealth</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Desire/" rel="bookmark">Desire</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/iDeepLearn/Profession/WOOP/" rel="bookmark">WOOP</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Desire/" rel="tag"><i class="fa fa-tag"></i> Desire</a>
               <a href="/tags/Wish/" rel="tag"><i class="fa fa-tag"></i> Wish</a>
@@ -504,21 +495,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Memory/" rel="next" title="Memory">
-                  <i class="fa fa-chevron-left"></i> Memory
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Journey/DeepCreator/Travel/HongKong/" rel="prev" title="HongKong">
-                  HongKong <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Memory/" rel="prev" title="Memory">
+      <i class="fa fa-chevron-left"></i> Memory
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Journey/DeepCreator/Travel/HongKong/" rel="next" title="HongKong">
+      HongKong <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -531,7 +519,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -562,8 +572,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -572,14 +582,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -590,11 +600,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -628,7 +633,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -640,51 +645,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -693,18 +659,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -714,63 +674,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -778,14 +681,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -812,40 +715,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Desire/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

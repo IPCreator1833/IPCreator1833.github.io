@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="心理学是一门与人类幸福密切相关的科学。">
 <meta name="keywords" content="Psychology">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/P/Psychology/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/P/Psychology/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/P/Psychology/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="https://img3.doubanio.com/lpic/s28338983.jpg"></p>
+        <p><img data-src="https://img3.doubanio.com/lpic/s28338983.jpg" alt></p>
 <blockquote>
 <p>心理学是一门与人类幸福密切相关的科学。</p>
 </blockquote>
@@ -297,7 +267,7 @@
 <blockquote>
 <p>【17.11.20】IPCreator：<br>如果你不知道该怎么办时，想象一个朋友遇到类似的问题，向你咨询，你会怎样建议，记录下来，然后按照去做一般错不了。人一般都是这样，灯下黑，原则要求的手电筒照的是别人，而自己脚下往往一片黑。</p>
 </blockquote>
-<p><img alt data-src="http://om280wrd3.bkt.clouddn.com/psychology.jpg"></p>
+<p><img data-src="http://om280wrd3.bkt.clouddn.com/psychology.jpg" alt></p>
 <h2 id="幸存心理学：怎样在绝望中成就自己"><a href="#幸存心理学：怎样在绝望中成就自己" class="headerlink" title="幸存心理学：怎样在绝望中成就自己"></a><a href="http://www.luojiji.com/thread-11453-1-1.html" target="_blank" rel="noopener">幸存心理学：怎样在绝望中成就自己</a></h2><p>我们每个人都会或多或少遇到挫折、逆境，甚至还可能遭遇改变一生的重大变故，陷入绝望。我们应该如何应对这样的情景？怎样治愈自己？有没有可能变逆境为优势？美国心理学研究专家戴维·B.费尔德曼和李·丹尼尔·克拉韦茨就在新书《幸存心理学》里回答了这个问题，他们从心理学、精神病学、社会学、人类学甚至商业等角度，探讨了怎样才能走出逆境，以及如何在苦难中成就自己。下面和你介绍四个走出逆境、将逆境变为优势的方法。</p>
 <p>第一，积极思维的悖论。人们常认为，乐观能消除灾难，成功源于积极思维。书里说，乐观的态度肯定不是坏事，但是如果将好结果都归功于积极思维，尤其是认为积极思维一定能帮人们走出逆境，那就不对了，甚至反而会产生相反的结果。有研究表明，鼓励自己“没有什么大问题”“一切都会好起来”，有可能降低自己努力改变现状的行动力。盲目乐观会导致人们期待奇迹，不愿面对现实。放弃不切实际的目标，才能认清真正的希望，这样的乐观才能真正推动个人的成长。</p>
 <p>作者举了一个例子，荷兰游泳选手马尔滕·范德韦登19岁就是当地的游泳冠军，但却患上了致命的急性淋巴细胞白血病，游泳生涯暂停，三年后痊愈，重回泳池。但他没有一味地鼓励自己，他明白自己成为世界冠军的希望不大了，所以不再像以前那样瞄准国际比赛冠军，而是努力赢得小型比赛。在这些小型比赛中，他一次次夺冠，然后取得了2008年北京奥运会10公里马拉松游泳的参赛资格，他清楚自己并不是这里最强的参赛选手，所以比赛的时候故意落后，避免遇到别人游泳时划过来的水流。他在最后拼尽全力，竟然获得了的冠军。书里说，马尔滕就不是那种相信积极思维可以战胜一切的人，相反，他非常谨慎，步步为营。他的态度比积极要消极一些，但又比消极更实际，这种状态才是真正的希望，或者说是有基础的希望。这种思维要求我们充分了解现实再做判断，跳出所谓的积极思维，直面现实，仔细规划。不要念叨“一切都会好起来的”，而是问自己“现在要怎么办”。</p>
@@ -330,11 +300,11 @@
 <p>你会说，我是为了认识自己。那我和你说，认识自己不必那么刻意，而且更不能为了改变自己而去认识自己。认识自己，只需要一个概念化的程度，比如自己是如何的性格、自己真正想要的生活是什么等等，即可。对于你是如何思考、如何行为（比如为何我如此注重自己的形象、为何我这么容易害羞、为何我今天又失眠了等等）的，这些就像一个黑洞，你若是深究自己，会越陷越深，而且得不到答案。</p>
 <p>有这样的说法：六十年前，老衲看山是山，看水是水：三十年前，老衲看山不是山，看水不是水；现在老衲看山还是山，看水还是水。也就是说，<strong>当你认识得越多，理解的可能性就越多，那样事实的真相反倒有可能被蒙蔽住。</strong> 认识自己也是如此，如果刻意，反倒看不清自己，但是又只有经历认识这个过程，才能更清楚的看清自己。有可能绕了一圈，你发现认识了自己（怕已是老大不小了），但是回头细看，原来自己还是当初的自己，而且生活中的问题并未有所改观，但却已无多少时日抱以行动改变之。</p>
 <p>没有必要活得太明白，那样太累。去挖掘自己时，会被多重人格的自己所困扰，那样容易被情绪束缚住，就不可能有目的的生活。生活中布满了巧合和意外，很多问题是无法用脑子解决的，想的在透彻也无济于事，只能通过行动用身体的体验去理解。</p>
-<h2 id="社会心理学（第11版，精装彩印）"><a href="#社会心理学（第11版，精装彩印）" class="headerlink" title="社会心理学（第11版，精装彩印）"></a><a href="https://book.douban.com/subject/25982198/" target="_blank" rel="noopener">社会心理学（第11版，精装彩印）</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28019380.jpg"></p>
-<h2 id="发展心理学-人的毕生发展-第6版"><a href="#发展心理学-人的毕生发展-第6版" class="headerlink" title="发展心理学:人的毕生发展(第6版)"></a><a href="https://book.douban.com/subject/25726681/" target="_blank" rel="noopener">发展心理学:人的毕生发展(第6版)</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s27047082.jpg"></p>
-<h2 id="改变心理学的40项研究（第6版）"><a href="#改变心理学的40项研究（第6版）" class="headerlink" title="改变心理学的40项研究（第6版）"></a><a href="https://book.douban.com/subject/26287450/" target="_blank" rel="noopener">改变心理学的40项研究（第6版）</a></h2><p><img alt data-src="https://img1.doubanio.com/lpic/s27969847.jpg"></p>
-<h2 id="人格心理学-第八版-（万千心理）"><a href="#人格心理学-第八版-（万千心理）" class="headerlink" title="人格心理学(第八版)（万千心理）"></a><a href="https://book.douban.com/subject/26004131/" target="_blank" rel="noopener">人格心理学(第八版)（万千心理）</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s27489215.jpg"></p>
-<h2 id="进化心理学-第4版"><a href="#进化心理学-第4版" class="headerlink" title="进化心理学(第4版)"></a><a href="https://book.douban.com/subject/26683297/" target="_blank" rel="noopener">进化心理学(第4版)</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28360942.jpg"></p>
+<h2 id="社会心理学（第11版，精装彩印）"><a href="#社会心理学（第11版，精装彩印）" class="headerlink" title="社会心理学（第11版，精装彩印）"></a><a href="https://book.douban.com/subject/25982198/" target="_blank" rel="noopener">社会心理学（第11版，精装彩印）</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28019380.jpg" alt></p>
+<h2 id="发展心理学-人的毕生发展-第6版"><a href="#发展心理学-人的毕生发展-第6版" class="headerlink" title="发展心理学:人的毕生发展(第6版)"></a><a href="https://book.douban.com/subject/25726681/" target="_blank" rel="noopener">发展心理学:人的毕生发展(第6版)</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s27047082.jpg" alt></p>
+<h2 id="改变心理学的40项研究（第6版）"><a href="#改变心理学的40项研究（第6版）" class="headerlink" title="改变心理学的40项研究（第6版）"></a><a href="https://book.douban.com/subject/26287450/" target="_blank" rel="noopener">改变心理学的40项研究（第6版）</a></h2><p><img data-src="https://img1.doubanio.com/lpic/s27969847.jpg" alt></p>
+<h2 id="人格心理学-第八版-（万千心理）"><a href="#人格心理学-第八版-（万千心理）" class="headerlink" title="人格心理学(第八版)（万千心理）"></a><a href="https://book.douban.com/subject/26004131/" target="_blank" rel="noopener">人格心理学(第八版)（万千心理）</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s27489215.jpg" alt></p>
+<h2 id="进化心理学-第4版"><a href="#进化心理学-第4版" class="headerlink" title="进化心理学(第4版)"></a><a href="https://book.douban.com/subject/26683297/" target="_blank" rel="noopener">进化心理学(第4版)</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28360942.jpg" alt></p>
 <h2 id="为何不该宣传扶梯有紧急制动钮"><a href="#为何不该宣传扶梯有紧急制动钮" class="headerlink" title="为何不该宣传扶梯有紧急制动钮"></a><a href="http://www.luojiji.com/thread-3073-1-203.html" target="_blank" rel="noopener">为何不该宣传扶梯有紧急制动钮</a></h2><p>今年发生过各种扶梯伤人事件，对怎么使用扶梯紧急按钮的文章也被大家各种转发。但央视评论员王志安在微博上说，对扶梯紧急制动按钮广泛宣传是错的，<strong>因为对于关系到集体安全的设备来说，防范非理性比防范危险更重要。</strong></p>
 <p>你看，为什么楼宇电梯并没有紧急开门的按钮，只有一个紧急呼叫按钮呢？这样设置就是为了防止有人误按或故意按紧急按钮，而导致更危险的事故。</p>
 <p>再比如，高铁上的紧急制动按钮，位置就设计得特别高，你必须站在椅子上才能够着，这也是为了防范误操作或乱操作。</p>
@@ -358,7 +328,7 @@
 <p>名称    原文    描述<br>选择偏误（英语：Selection bias）    Selection bias<br>取样偏误    Sampling bias    亦作以偏概全，即以局部事例解释整体原因。<br>自我选择偏误（英语：Self-selection bias）    Self-selection bias<br>谱带偏误（英语：Spectrum bias）    Spectrum bias<br>预筛选偏误（英语：Pre-screening bias）    Pre-screening bias    筛选样本时预先排除了某些不应排除的样本。<br>排除偏误（英语：Exclusion bias）    Exclusion bias    研究进行时不当排除某些看似不符预期的样本。<br>选择性观察偏误（英语：Observation selection bias）    Observation selection bias    观察时不可避免受到前置条件的限制而筛选了样本，因而得出不适当的结论。例如问卷调查到的人一定是个性热心、愿意填问卷的人，因而其结果未必能反映不热心、不愿意填问卷的人的想法。<br>观察者期望效应    Observer-expectancy effect    由于研究者期待某种结果，因而下意识中不适当地操作实验或诠释资料（参见受试者期望效应）。<br>受试者期望效应    Subject-expectancy effect    由于受试者期待某种结果，因而下意识地扭曲了回报内容。常见的例子是安慰剂效应。<br>安慰剂效应或伪药效应    Placebo effect    给予无效的药物或治疗，病人却相信或觉得情况改善。<br>反安慰剂效应（英语：Nocebo effect）或反伪药效应（英语：Nocebo effect）    Nocebo effect    给予有效的药物或治疗，病人却相信或觉得情况恶化。<br>实验者偏误或期望偏误    Experimenter’s bias; Expectation bias    实验者倾向相信、认可、发布符合他们期望的结果，而不信、贬低、弃置不符合的。[103]<br>循环分析（英语：Circular analysis）    Circular analysis<br>遗漏变数偏误（英语：Omitted-variable bias）    Omitted-variable bias<br>经费偏误（英语：Funding bias）    Funding bias    选择研究方法或诠释研究结果时，倾向迎合经费提供者的立场。<br>通报偏误（英语：Reporting bias）    Reporting bias<br>社会期许偏误（英语：Social desirability bias）    Social desirability bias    说明自己的看法时，倾向于多报符合社会期许的意愿或实情，而少报不符合的。例如询及是否有不良嗜好、性伴侣数量时，会有意或无意地隐瞒或淡化实情。[104]<br>资料探勘偏误（英语：Data-snooping bias）    Data-snooping bias<br>前导时间偏误（英语：Lead-time bias）    Lead-time bias<br>时距偏误（英语：Length-time bias）    Length-time bias<br>过度诊断偏误（英语：Overdiagnosis bias）    Overdiagnosis bias</p>
 <h2 id="成因理论"><a href="#成因理论" class="headerlink" title="成因理论"></a>成因理论</h2><p>以下列出解释认知偏误成因的常见理论：</p>
 <p>有限理性 - 理性与最佳化的限制<br>前景理论<br>心理账户<br>适应偏误 - 在资讯有限下做出决策而造成偏误，并以可能的错误为代价<br>属性替代 - 建立复杂、困难的判断，却不自觉地换成简单地判断[105]<br>归因理论<br>显着性<br>素朴实在论<br>认知失调，及相关的：<br>印象管理<br>自我知觉理论<br>判断与决策的捷思，包括：<br>可用性捷思 - 估计哪些比较容易从计忆中取得，例如生动的、不寻常的、或激起情绪的例子[42]<br>代表性捷思 - 根据相似性判断可能性[42]<br>情感捷思 - 根据情绪反应决策，而非计算风险与效益[106]<br>情感的一些其他理论，如：<br>情绪二因论<br>体细胞标记假说<br>内省错觉<br>统计的误解与误用；数学盲。<br>2012年一篇《心理学公报》文章表明，至少有八种看似无关的偏误可由同一种信息论的产生机制产生，此机制假设从人类记忆储存与提取资讯时，杂乱的资讯处理过程导致了偏误。[21]</p>
-<h2 id="我不想给你安全感，只想教会你无所畏惧"><a href="#我不想给你安全感，只想教会你无所畏惧" class="headerlink" title="我不想给你安全感，只想教会你无所畏惧"></a><a href="http://www.xinli001.com/info/100366728" target="_blank" rel="noopener">我不想给你安全感，只想教会你无所畏惧</a></h2><p><img alt data-src="http://ossimg.xinli001.com/20170320/059b378d2ad38ac338e3fbe5eaa30aea.jpg"></p>
+<h2 id="我不想给你安全感，只想教会你无所畏惧"><a href="#我不想给你安全感，只想教会你无所畏惧" class="headerlink" title="我不想给你安全感，只想教会你无所畏惧"></a><a href="http://www.xinli001.com/info/100366728" target="_blank" rel="noopener">我不想给你安全感，只想教会你无所畏惧</a></h2><p><img data-src="http://ossimg.xinli001.com/20170320/059b378d2ad38ac338e3fbe5eaa30aea.jpg" alt></p>
 <p>人生最黑暗的时刻，就是我们拼刺刀的时候，拼的是什么？拼的就是两个声音：<strong>一个是自我安抚的声音；一个是自我指引的声音。</strong></p>
 <p>为什么会有被家暴的女人十几年都无法离开那个施虐的男人？为什么一个男人反复出轨，对一个女人长期冷暴力，她却无法离婚？为什么他总是忍受老板的侮辱，却一直不能辞职离开，哪怕所有人都看到他有足够的能力开创自己的事业？</p>
 <p>为什么有那么多人过着其实不值得他们过的生活？</p>
@@ -367,7 +337,7 @@
 <p><strong>因为她太穷了，她的内在的燃料太少了，不能像弗兰克一样，在完全断绝了外在的供应以后，依然可以自我供给。</strong></p>
 <p>直到有一天我忽然想到，也许黑暗没有那么可怕，也许死没有那么可怕，也许到了老了那一天，我可以平静或欣喜地等待它的到来。</p>
 <p>也许那时是我内在真正的自由的时候，是我<strong>内在精神的火焰可以永远燃烧下去</strong>的时候，我将终于可以免于无尽的恐惧，和这个世界和解了。</p>
-<h2 id="碎片化信息面前，如何保持深度思考能力？"><a href="#碎片化信息面前，如何保持深度思考能力？" class="headerlink" title="碎片化信息面前，如何保持深度思考能力？"></a><a href="http://www.xinli001.com/info/100366339" target="_blank" rel="noopener">碎片化信息面前，如何保持深度思考能力？</a></h2><p><img alt data-src="http://ossimg.xinli001.com/20170316/4c59e9e269ee85ef813d3a4f5646d3a3.jpg"></p>
+<h2 id="碎片化信息面前，如何保持深度思考能力？"><a href="#碎片化信息面前，如何保持深度思考能力？" class="headerlink" title="碎片化信息面前，如何保持深度思考能力？"></a><a href="http://www.xinli001.com/info/100366339" target="_blank" rel="noopener">碎片化信息面前，如何保持深度思考能力？</a></h2><p><img data-src="http://ossimg.xinli001.com/20170316/4c59e9e269ee85ef813d3a4f5646d3a3.jpg" alt></p>
 <h3 id="1-培养逻辑能力-树状分析任务"><a href="#1-培养逻辑能力-树状分析任务" class="headerlink" title="1.培养逻辑能力 树状分析任务"></a>1.培养逻辑能力 树状分析任务</h3><p>老司机和菜鸟最大的区别就是，当老板下达”一堆”任务工作安排（这些任务工作就好比碎片化信息）之后，老司机会从容悠闲地把任务分个主次，然后再分一个123，主要任务可以理解为树干，次要任务就是主干里的树枝。</p>
 <h3 id="2-学会联想“无关”的能力-连接碎片信息"><a href="#2-学会联想“无关”的能力-连接碎片信息" class="headerlink" title="2.学会联想“无关”的能力 连接碎片信息"></a>2.学会联想“无关”的能力 连接碎片信息</h3><h3 id="3-学会批判能力-挑战权威"><a href="#3-学会批判能力-挑战权威" class="headerlink" title="3.学会批判能力 挑战权威"></a>3.学会批判能力 挑战权威</h3><p>这两年我们经常看见这样的话：创业N大军规，但你从来不怀疑，因为他们成功了。但你不知道的是：成功不可复制，失败有迹可循。</p>
 
@@ -376,8 +346,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Psychology/" rel="bookmark">Psychology</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Health/IPCreator/Journey/Brain/Cultivate your Brain/" rel="bookmark">Cultivate Your Brain</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/People/IPCreator/People/Xiao-Dong Yue/" rel="bookmark">Xiao-Dong YUE</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Book/IPCreator/Book/Hooked！！How to Build Habit-Forming Products/" rel="bookmark">Hooked——How to Build Habit-Forming Products</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/People/IPCreator/People/Zhi-Hong Wu/" rel="bookmark">Zhi-Hong Wu</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Psychology/" rel="tag"><i class="fa fa-tag"></i> Psychology</a>
           </div>
@@ -389,21 +380,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Movie/To Live/" rel="next" title="To Live">
-                  <i class="fa fa-chevron-left"></i> To Live
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Technology/IPCreator/Technology/Program/Tools/Others/csdn/" rel="prev" title="CSDN">
-                  CSDN <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Movie/To Live/" rel="prev" title="To Live">
+      <i class="fa fa-chevron-left"></i> To Live
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Technology/IPCreator/Technology/Program/Tools/Others/csdn/" rel="next" title="CSDN">
+      CSDN <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -416,7 +404,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -447,8 +457,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -457,14 +467,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -475,11 +485,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -513,7 +518,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -525,51 +530,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -578,18 +544,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -599,63 +559,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -663,14 +566,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -697,40 +600,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/P/Psychology/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

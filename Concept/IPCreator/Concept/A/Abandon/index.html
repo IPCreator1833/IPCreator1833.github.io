@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="Independence,Freedom,Leisure">
 <meta name="keywords" content="Share">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/A/Abandon/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/A/Abandon/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/A/Abandon/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://opb37u589.bkt.clouddn.com/断舍离.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/断舍离.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p>Independence,Freedom,Leisure</p>
 </blockquote>
@@ -310,10 +280,10 @@
 <p>通过整理和舍弃多余的物质，摆脱对物质的迷恋，使自己达到生存舒适、内心轻快的愉悦状态。</p>
 </blockquote>
 <p><strong>怎样断舍离？</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1. 摒弃心中的定式思维</span><br><span class="line">2. 只问现在是否需要、是否合适、是否舒服</span><br><span class="line">3. 半年内都没用过，扔</span><br><span class="line">4. 只考虑自己的感受</span><br><span class="line">5. 所谓提高空间利用率的收纳工具，扔</span><br><span class="line">6. 只买该品类中自己所能负担的最好的</span><br><span class="line">7. 不要做所谓的业余二手生意</span><br><span class="line">8. 一种简单生活、不断净化的心智模式</span><br><span class="line">9. 务必要避开亲妈</span><br></pre></td></tr></table></figure></p>
-<h2 id="践行"><a href="#践行" class="headerlink" title="践行"></a>践行</h2><p><img alt="c8c233af1e8af7b819c503e7fbee0b47.jpg" data-src="http://opb37u589.bkt.clouddn.com/c8c233af1e8af7b819c503e7fbee0b47.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="0acd0b1958e7cc413db48a7f95565dc2.jpg" data-src="http://opb37u589.bkt.clouddn.com/0acd0b1958e7cc413db48a7f95565dc2.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="80b0341e21f65e29bce2c80afe7eb3a5.jpg" data-src="http://opb37u589.bkt.clouddn.com/80b0341e21f65e29bce2c80afe7eb3a5.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt="a3f7137e7e82ddabe947807b381814d9.jpg" data-src="http://opb37u589.bkt.clouddn.com/a3f7137e7e82ddabe947807b381814d9.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="践行"><a href="#践行" class="headerlink" title="践行"></a>践行</h2><p><img data-src="http://opb37u589.bkt.clouddn.com/c8c233af1e8af7b819c503e7fbee0b47.jpg?imageMogr2/thumbnail/!75p" alt="c8c233af1e8af7b819c503e7fbee0b47.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/0acd0b1958e7cc413db48a7f95565dc2.jpg?imageMogr2/thumbnail/!75p" alt="0acd0b1958e7cc413db48a7f95565dc2.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/80b0341e21f65e29bce2c80afe7eb3a5.jpg?imageMogr2/thumbnail/!75p" alt="80b0341e21f65e29bce2c80afe7eb3a5.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/a3f7137e7e82ddabe947807b381814d9.jpg?imageMogr2/thumbnail/!75p" alt="a3f7137e7e82ddabe947807b381814d9.jpg"></p>
 <h2 id="有用"><a href="#有用" class="headerlink" title="有用"></a><a href="http://www.luojiji.com/thread-1265-1-1.html" target="_blank" rel="noopener">有用</a></h2><p>最近在搬家，住了好多年的房子了，你懂的，在清理东西的时候总是有很多东西让我为难，比方说一些容量已经明显偏小还没有拆封的U盘，一些开会赠送的小礼品。</p>
 <p>你要是扔了吧，它看起来还是有点价值的，要是留着吧我心里清楚，无非是等到下次搬家的时候再扔掉嘛。哎，再这个左右为难的处境里，其实也暴露了我这个人身处再过度时代的一些特点，再实物经济时代，占有东西是所有人的本能，哪怕超过自己肉体和空间的承受极限。而在未来的信息经济时代，很多东西是可以更方便的获取到的，减轻自己的负担，让自己可以更轻松，更快捷的和世界连接才是王道啊。所以我最后采取了一个策略，</p>
 <blockquote>
@@ -321,7 +291,7 @@
 </blockquote>
 <h2 id="关于“断舍离”的清单"><a href="#关于“断舍离”的清单" class="headerlink" title="关于“断舍离”的清单"></a><a href="http://www.luojiji.com/thread-8805-1-1.html" target="_blank" rel="noopener">关于“断舍离”的清单</a></h2><p>“断舍离”变成了一个流行语。但是为什么越“断”东西越多？究竟是要“舍”什么、“离”什么？</p>
 <p>这张清单帮你抓住“断舍离”的精髓，成为一个生活得越来越轻松的人。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201706/04/101654k4qi7akr7nrz4i3f.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201706/04/101654k4qi7akr7nrz4i3f.jpg" alt></p>
 <ol>
 <li><p>“断舍离”这一概念起源于日本，由山下英子在2000年提出。“断”指不买、不收取不需要的东西；“舍”指把堆放的无用之物全部清理掉；“离”则指抛弃对物质的迷恋，让自己处于简单、舒适的空间之中。</p>
 </li>
@@ -356,7 +326,7 @@
 <li><p>断舍离时，<strong>务必要避开亲妈</strong>。</p>
 </li>
 </ol>
-<p><img alt="abandon.jpg" data-src="http://opb37u589.bkt.clouddn.com/abandon.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/abandon.jpg?imageMogr2/thumbnail/!75p" alt="abandon.jpg"></p>
 <h2 id="《断舍离》：学会断舍离，才是人生开挂的开始"><a href="#《断舍离》：学会断舍离，才是人生开挂的开始" class="headerlink" title="《断舍离》：学会断舍离，才是人生开挂的开始"></a><a href="http://www.jianshu.com/p/27a75f346e5b?from=jiantop.com" target="_blank" rel="noopener">《断舍离》：学会断舍离，才是人生开挂的开始</a></h2><blockquote>
 <p>人生的种种苦恼，总混杂在我们对物品的执着中，我们在理清与身边物品的关系中，会使我们不断问自己：你真正害怕的是什么？对物品断舍离了，那对自己的过去，是否也勇敢地断舍离了？那些令你心酸纠结不已的回忆，你认真思考过吗？若已从中得到教训，何必再耿耿于怀，不肯放手？</p>
 </blockquote>
@@ -372,12 +342,12 @@
 <p>第三章 确立自我轴心，让自己喜欢上自己<br>Part 01 通过身体，了解自我轴心<br>Part 02 变得更好的力量<br>Part 03自我中心，自我牺牲，自作自受，自我责任<br>Part 04 从我开始，行动起来<br>Part 05 不愿承认失败的我们<br>Part 06 先确立自我轴心，才能把握距离感<br>Part 07 充分利用愤怒与嫉妒<br>Part 08 不知不觉就给自己设限的我们<br>Part 09 语言改变命运<br>Part 10 <strong>执著是磨炼出来的</strong><br>纸上研讨小组 case3 “想报复母亲的我”（30多岁•女性）</p>
 <p>第四章 运用俯瞰力，在高处把握人、事、物<br>Part 01 引爆人生革命的三要素<br>Part 02 刷厕所能提升财运吗<br>Part 03 俯瞰一下，便能重新审视前提<br>Part 04 辨明抽离与俯瞰的区别<br>Part 05 将平衡机制作为“相”的“解释力”<br>Part 06 金钱就是能量<br>Part 07 换个角度来俯瞰吧<br>纸上研讨小组 case4 “无法放弃第二个孩子”（40多岁•女性）</p>
 <p>第五章 掌握自在力，重拾快活人生<br>Part 01 俯瞰，掌握人生真谛<br>Part 02 断舍离，通往愉悦之路<br>Part 03 自在力萌芽的瞬间<br>Part 04 我们身边的自在力<br>Part 05 用好奇心代替否定<br>Part 06 游刃有余地处在“龙蛇之眼”间<br>Part 07 黑色愤怒与白色愤怒<br>Part 08 工作是一种自在的境界<br>Part 09 卷起内裤，享受自在<br>后记 观自在菩萨，观存在于自己心中的“菩萨”</p>
-<h2 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a><a href="https://book.douban.com/subject/26351085/" target="_blank" rel="noopener">读书笔记</a></h2><p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p45137074-1.jpg"></p>
+<h2 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a><a href="https://book.douban.com/subject/26351085/" target="_blank" rel="noopener">读书笔记</a></h2><p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p45137074-1.jpg" alt></p>
 <p>烦恼的源头：<br>1.是自我肯定感的欠缺；<br>2.无意识地以他人为轴心；<br>3.自我限制。</p>
 <p>一个以他人为轴心的人，在生活中总是处处以他人的标准和价值观要求自己，拼命迎合他人，会把自己搞得很累，甚至把自己变成受害者，觉得都是因为别人害自己这么痛苦。这样的人在关系中没有自己，只有别人。他们无法肯定自己，爱上自己，对自己的感受、立场和想法模糊不清，在人际关系中非常被动纠结。</p>
 <p>自在力则要求我们自己肯定自己，自己爱上自己，以及重新去审视那些理所当然的价值观，看看那些价值观是自己的，还是他人的，要求我们在生活中深入了解自己，先以自己为轴心，认清自己的想法，再去以他人为轴心，然后为自己的人生做出决定和承担责任。</p>
 <p>一个人的一生是不断地认识自己的过程。一个人对自己的认识越多越容易为自己的人生做主，也就越不容易被外界所影响和改变。认识自己的方法有很多，断舍离是其中一种，让你通过物品，通过你与物品的关系重新认识自己，认识你与其他人的关系，认识这个世界，确立自我为轴心的生活方式，从而掌握自己的命运，过上自在自由的生活。</p>
-<h2 id="断舍离"><a href="#断舍离" class="headerlink" title="断舍离"></a><a href="https://book.douban.com/subject/24749465/" target="_blank" rel="noopener">断舍离</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s26872396.jpg"></p>
+<h2 id="断舍离"><a href="#断舍离" class="headerlink" title="断舍离"></a><a href="https://book.douban.com/subject/24749465/" target="_blank" rel="noopener">断舍离</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s26872396.jpg" alt></p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>推荐序 想幸福，先放下对幸福的执念<br>前言 什么是断舍离</p>
 <p>第一章 只要了解个中奥妙，就能激发干劲——断舍离的机制<br>断舍离是不收拾的收拾法<br>从关系轴和时间轴看物品<br>为了维持好心情而收拾<br>与整理术、收纳术有什么不一样<br>筛减物品带来的自我察觉<br>夺回被占据的空间和能量<br>从衣柜开始，来一场自我改革吧！<br>从不穿的衣服着手，去除自己的执念<br>筛减物品的同时，也改变了人际关系<br>由实践到意识的转变过程<br>和物品成为好朋友<br>磨砺内在的感应力<br>东西要用才有价值<br>断舍离专栏1 蒙古人与断舍离的生活法</p>
 <p>第二章 我们为什么没办法收拾——无法丢弃的理由<br>物质过度泛滥的社会<br>捡便宜心理和折扣的陷阱<br>入口是“断”的闸门，出口是“舍”的闸门<br>香鱼变成鲶鱼了吗<br>三种“扔不掉东西”的人<br>“总之我就是不想待在家里！”——逃避现实型<br>“那些回不去的幸福时光”——执着过去型<br>“没有了就会很不安”——担忧未来型<br>对“现在”的界定因人而异<br>扔不掉就是不想扔<br>当杂物占据了空间<br>没有收拾的屋子就像“便秘”<br>代表停滞和腐朽运的灰尘与杂物<br>破烂儿还可以分三类<br>认清自己与物品之间的关系<br>时间轴要锁定在“现在”<br>不要把重点放在“非日常”上<br>找回对自己的信任</p>
@@ -474,13 +444,13 @@
 <p>•家里的物品尽可能选择能叠放，能大小套在一起及可多次使用的</p>
 <p>•买物品时，以要使用10年以上为前提</p>
 <p>•尽可能不申请会员卡</p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p28222460-1.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p28222460-2.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p28222460-3.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p28222460-4.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p28222460-5.jpg"></p>
-<h3 id="《断舍离》读书笔记PPT"><a href="#《断舍离》读书笔记PPT" class="headerlink" title="《断舍离》读书笔记PPT"></a><a href="https://book.douban.com/subject/24749465/" target="_blank" rel="noopener">《断舍离》读书笔记PPT</a></h3><p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p32634114-1.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p32634114-2.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p32634114-3.jpg"><br><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p32634114-4.jpg"></p>
-<h2 id="断舍离·瑜伽篇"><a href="#断舍离·瑜伽篇" class="headerlink" title="断舍离·瑜伽篇"></a><a href="https://book.douban.com/subject/26588563/" target="_blank" rel="noopener">断舍离·瑜伽篇</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28272646.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p28222460-1.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p28222460-2.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p28222460-3.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p28222460-4.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p28222460-5.jpg" alt></p>
+<h3 id="《断舍离》读书笔记PPT"><a href="#《断舍离》读书笔记PPT" class="headerlink" title="《断舍离》读书笔记PPT"></a><a href="https://book.douban.com/subject/24749465/" target="_blank" rel="noopener">《断舍离》读书笔记PPT</a></h3><p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p32634114-1.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p32634114-2.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p32634114-3.jpg" alt><br><img data-src="https://img3.doubanio.com/view/page_note/large/public/p32634114-4.jpg" alt></p>
+<h2 id="断舍离·瑜伽篇"><a href="#断舍离·瑜伽篇" class="headerlink" title="断舍离·瑜伽篇"></a><a href="https://book.douban.com/subject/26588563/" target="_blank" rel="noopener">断舍离·瑜伽篇</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28272646.jpg" alt></p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>前言</p>
 <p>第一章　培养一颗坚定不移的心<br>生命即神（生命本身就是神）<br>选择让生命喜悦的生活方式<br>世间万物皆有生命<br>理解对你真正有必要的是什么<br>改变心灵，改变身体<br>“生存的力量”就是“做选择时的决断力”<br>容易动摇者的特点是“以他人为支柱”<br>让你自由的答案就在心中<br>“雅俗参半，人生路”<br>通过伪装自我来学习<br>最大限度地发挥出自我能力<br>敢于面对痛苦<br>生死在天<br>掌握最真的智慧<br>“初学者应从形式开始入门”<br>内心必定体现于形式<br>加深对自己的提问<br>“<strong>学习、体验、冥想</strong>”<br>询问你的心情，询问你的身体<br>勿将体验视作绝对<br>所谓冥想就是回忆和反省<br>纵观全局，才能看到重点<br>练习瑜伽是为了身心的平衡<br>专栏 冲瑜伽的根基在于“日本式精神” ?<br>举头三尺有神明</p>
 <p>第二章　正确审视<br>“别轻信，别怀疑，只需亲身体验”<br>逐一查看手中的信息<br>客观性的定义是什么<br>勇敢面对“不明白”<br>“对你的信赖”同时也是对我自己的信赖<br>通过分类思考培养纵观全局的能力<br>以自我为轴心进行思考练习<br>“别自缚，别拘泥，别体谅”<br>“海外冥想法”的精华<br>价值基准用在何处<br>体会自己灵魂深处的追求<br>“断舍离”和瑜伽都有一个共同目标<br>感到厌恶是改变自我的好机会<br>“断舍离”对母亲的期待<br>一切终将在自己身上应验<br>做选择时的决断力是自我的圣地<br>专栏 冲瑜伽的根基在于“日本式精神” ?<br>有远见方得始终</p>
@@ -488,13 +458,13 @@
 <p>第四章　从体验中汲取知识<br>“别轻信，别怀疑，只需亲身体验”<br>为了弄明白问题而积累的体验<br>将所学运用到生活中<br>为什么体验之后却一无所获的人日益增多<br>感情不分“好”与“坏”<br>“分清‘疲劳’和‘疲劳感’的不同”<br>疲劳的种类<br>单靠营养分析无法衡量的“营养”<br>对食物的偏见<br>最合适的食量要询问你的身体<br>“越吃越累”是一种残留能量<br>“你们的头脑已死！”<br>没有感激之情是因为心死了<br>“让每个人的心中充满平静”<br>“扔掉它，感觉很困扰”，这句话就是借口<br>无法摆脱烦恼的时候<br>抛弃“被害者意识”<br>专栏 冲瑜伽的根基在于“日本式精神” ?<br>日式文化根基深厚</p>
 <p>第五章　充分发挥自我<br>“调身、调心、调息”<br>调整身心状态的重要原则<br>现代医学的极限，瑜伽的可能性<br>即便解剖也无法获知心灵的作用<br>只要方法对，一切都可以是瑜伽<br>时尚也属于“补气”的一种<br>“通过一切训练来加强丹田”<br>丹田十足的人<br>丹田具有让身心平稳的力量<br>支撑相扑的精神后盾<br>“学习的原则是‘修破离’”<br>每个人的瑜伽各不相同<br>在生活中应用瑜伽<br>通过断舍离来磨炼“内在认知”<br>后记</p>
 <p>“断舍离”的要点之一在于，要以思考自我真正需求为中心，而不是成为物的附庸。断舍离所要倡导的正是这样的生活和行为方式。它所标榜的是让你达到一种自在境界，不为外物所累，清心自在。通过实践断舍离，人们将清空环境，清空杂念，过简单清爽的生活，享受自由舒适的人生。对物品断舍离了，那对自己的过去，是否也勇敢地断舍离了？那些令你心酸纠结不已的回忆，你认真思考过吗？若已从中得到教训，何必再耿耿于怀，不肯放手……</p>
-<h2 id="断舍离（心灵篇）"><a href="#断舍离（心灵篇）" class="headerlink" title="断舍离（心灵篇）"></a><a href="https://book.douban.com/subject/25815819/" target="_blank" rel="noopener">断舍离（心灵篇）</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s27206606.jpg"></p>
+<h2 id="断舍离（心灵篇）"><a href="#断舍离（心灵篇）" class="headerlink" title="断舍离（心灵篇）"></a><a href="https://book.douban.com/subject/25815819/" target="_blank" rel="noopener">断舍离（心灵篇）</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s27206606.jpg" alt></p>
 <h3 id="目录-3"><a href="#目录-3" class="headerlink" title="目录"></a>目录</h3><p>序言 断舍离得到的心灵提升<br>编者序 断舍离，心灵的加法哲学</p>
 <p>第一章 形体所呈现的 “看不见的世界”<br>第一节 从收拾开始，锻炼生活能力<br>“不会收拾的女人”与“不收拾的男人”<br>“身体、感情、思考”，重新审视家务事<br>不要急于向山顶仰望<br>认清当下自己所处的位置<br>第二节 重新思考“可惜”这个词<br>“扔不了”很奇怪<br>关注物品，就永远都扔不了<br>舍≠弃，断≠绝</p>
 <p>第三节 【深刻的洞察】物品投射出的人际关系与自我<br>把父母灌输的观念也断舍离<br>真实的想法就藏在物品里<br>纠结是认清自我的好时候<br>不要对你的同住者抱以期待<br>断舍离格言1</p>
 <p>第二章 超越幸与不幸的“更深沉奥秘的世界”<br>第一节 现在我们需要的，是有意识生活的态度<br>什么是真正的积极与乐观<br>不要放弃分析、思考和感觉<br>观照本色，有意识地生活<br>第二节 不再计较幸与不幸<br>“开运”的似是而非<br>与其招运，不如感谢得天独厚的缘分<br>比起愿望与期待，更应拥有确信与梦想<br>第三节 【高远的观点】与一切相通的自在力量——俯瞰力<br>俯瞰力，就是有意识、自在、果敢生活的力量<br>在“离”的状态中修炼俯瞰力<br>观看内在，培养俯瞰的能力<br>用三分法的智慧磨炼俯瞰力<br>学会俯瞰，就能试着“以他人为中心”<br>断舍离格言2</p>
-<h2 id="家庭断舍离"><a href="#家庭断舍离" class="headerlink" title="家庭断舍离"></a><a href="https://book.douban.com/subject/26901346/" target="_blank" rel="noopener">家庭断舍离</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s29118383.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/large/public/p808293.jpg"></p>
+<h2 id="家庭断舍离"><a href="#家庭断舍离" class="headerlink" title="家庭断舍离"></a><a href="https://book.douban.com/subject/26901346/" target="_blank" rel="noopener">家庭断舍离</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s29118383.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/large/public/p808293.jpg" alt></p>
 <h3 id="目录-4"><a href="#目录-4" class="headerlink" title="目录"></a>目录</h3><p>序 父母家应该由孩子收拾吗</p>
 <p>1 “想帮父母施行断舍离”的原因是什么<br>家庭断舍离注定伴随着与父母的战争<br>2 “父母家由孩子收拾”到底应不应该<br>案例1 掉头回父母家之后变得“一蹶不振”的男人<br>案例2 去婆婆家“单身赴任”的女人<br>“总想做点什么改变父母家”背后的心理<br>3 为什么要觉察“自己内心的外界驱动”<br>请意识到“受外界驱动的自己”</p>
 <p>第一章 与“不丢东西的父母”的战争 ［山下英子的亲身经历］</p>
@@ -517,18 +487,18 @@
 <p>3 断舍离可以传递“好心情”<br>人们都会羡慕“好心情”的人<br>好心情断舍离要“保密”进行<br>因为潜意识相通，所以好心情可以传递</p>
 <p>4 试试扔掉后会不会为难，以及享受变化<br>＊1，首先产生时间概念，其次选定场所<br>＊2，从“用不着的东西”开始，一点点丢掉<br>＊3，难以舍弃的东西，请对它致谢或致歉后再扔<br>＊4，扔掉收纳用品反而更奏效<br>为什么我们在向他人寻求扔物许可<br>为什么总觉得“扔掉后会给自己带来困扰”？<br>为什么不知道从哪里扔起才合适<br>你和父母抱着同样的抵触心理<br>为什么总感觉“断舍离毫无进展”</p>
 <p>5 断舍离追求的最高级别的“快感”是什么<br>用加分法的视角享受变化，而不是减分法<br>在享受反反复复的过程中继续下去<br>不顺利，才是机会<br>后记</p>
-<h2 id="断舍离·人生清单"><a href="#断舍离·人生清单" class="headerlink" title="断舍离·人生清单"></a><a href="https://book.douban.com/subject/26663659/" target="_blank" rel="noopener">断舍离·人生清单</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28342703.jpg"></p>
+<h2 id="断舍离·人生清单"><a href="#断舍离·人生清单" class="headerlink" title="断舍离·人生清单"></a><a href="https://book.douban.com/subject/26663659/" target="_blank" rel="noopener">断舍离·人生清单</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28342703.jpg" alt></p>
 <h3 id="目录-5"><a href="#目录-5" class="headerlink" title="目录"></a>目录</h3><p>序言…002</p>
 <p>第一章　人生的谢幕离不开断舍离<br>生活中，周围的物品真的适合你吗？<br>“断舍离式”人生的临终…002<br>● 放手不需要的物品，人生更快乐<br>●“轻松”的生活，是基于对人生问题的分析<br>■ 断舍离的基本准则<br>结束“想要更多”的欲望，活得简简单单！<br>在物资充实的日本，活出充实的每一天…006<br>● 因为“物资充实”反而感到“烦恼”的人<br>● 明明已经够了，人们却“想要更多”<br>■ 断舍离式·思维丰富度观察笔记<br>拥有的太少就难以幸福——这样的价值观正确吗？<br>比起“过多”，我们总是优先考虑“不足”…010<br>● 判断“过多”还是“不足”需要“信念”<br>轻松、舒适地度过今后的人生！<br>人生各阶段的交替之时，就是“断舍离的好时机”…012<br>● 随着年龄增长，人会更容易被物品所支配<br>● 轻装上阵，人生旅程才能舒适<br>人生的停滞是因为物品和思维的淤积！<br>无论何时都要将“舍弃”放在第一位…014<br>● 我们都对舍弃物品充满恐惧<br>● 消除心中的淤积，让心灵流动<br>● 无法舍弃是因为不信任自我<br>■ 通过“舍弃”来加速人生的新陈代谢<br>随着年龄增长，更加灵活地应对自己的烦恼！<br>掌握“不强迫他人的思维方式”…018<br>● 别改变“他人”，而应改变和他人的“关系性”<br>● 不用改变“他人”和“自己”也能解决问题<br>■ 如何专注于和他人的“关系性”<br>抛开借口，作出决断，实际行动。<br>以“小小的成功”为契机，今后要活得更有朝气…022<br>● 放弃整理，就是“放弃人生”<br>● 放弃整理要通过“舍弃物品”来克服<br>■ 通过“整理物品”来恢复人生的勇气<br>请体会活在“当下”的含义。<br>请停止思考衰老和死亡…026<br>● 无解的问题：死亡的意义<br>● 能够活到今天，就应该心存感激<br>■ 你脑中的“印象”是基于事实吗<br>舍弃不需要的物品，心才会从容。<br>“做减法”，今后的人生才会顺畅…030<br>● 通过舍弃得到内心的充实和从容<br>● 做减法的能力是生存动力<br>■ 现代社会成立的基础是“做加法”<br>从小被教育不许浪费的小孩，长大后房间总是一团糟。<br>“浪费”的陷阱…034<br>● 你是否像尊重物品一样尊重你自己<br>● 遭报应这样的观念毫无根据<br>■ 你的心里是否有个害怕“浪费”的小孩</p>
 <p>第二章　 为了毫无悔恨地面对死亡而必不可少的实践练习<br>反复问自己“要还是不要”“快乐还是不快乐”。<br>度过愉快的每一天所必需的10个断舍离…040<br>● 舍弃“必须做某事”的想法<br>● 培养解决烦恼的能力<br>● 重新审视思维的枷锁，维持“自我认知”<br>■ 随着年龄增长务必注意的10个“断舍离”<br>为了维持自己的身心健康，“断舍离”必不可少。<br>“物品”的断舍离…044<br>● 物品堆积会危害生命<br>● 淤积现象随处可见<br>■ “物品的断舍离”是指让生活空间更舒适<br>专　栏<br>“衣物”“餐具”“书籍”“食品储备”……<br>难以断舍离的物品…048<br>● 不穿的衣物堆积如山，想穿的衣物几乎没有<br>●“餐具”会为自己的生命“补气”<br>●“我希望别人认为我是这样的人”：这样的印象体现于你购买的书籍中<br>● 冰箱内部才是重中之重？食物堆积的本质<br>选择和取舍交往对象，度过充实的人生！<br>“人际关系”的断舍离…056<br>● 首先应该意识到“和那个人难以打交道”的原因<br>● 通过整理人际关系来减少压力<br>● 将待在一起会“心情舒畅”或“心情郁闷”的对象列出来<br>专　栏<br>“无法舍弃的我”就是“不愿被舍弃的我”…060<br>● 比起和他人的关系性，和家人的关系更容易引起问题<br>面对大量蜂拥而至的信息，不要浪费时间。<br>“信息”的断舍离…064<br>● 必要的信息自然会来到你身边<br>● 不要因为不必要的信息陷入内心的混沌<br>■ 随着年龄增长，就越不应被“信息”所迷惑<br>比起今后后悔“当初没做这件事就好了”，倒不如现在“幸好做了这件事”。<br>“对后悔的恐惧”的断舍离…068<br>● 思考和行动哪个在前<br>■ 断舍离和“后悔”的关系<br>专注“现在、这里、我”，寻找“能够做到的事”。<br>“烦恼”的断舍离…072<br>● 源自生活的不安和烦恼<br>■ 断舍离式·烦恼的思维地图<br>物尽其用，钱尽其值。<br>“对金钱的不安”的断舍离…076<br>● 担心无法拥有而总是不安<br>● 信赖自己就能摆脱不安<br>● 幸福并非取决于金钱的多少<br>专　栏<br>重新思考“工作”“家人”和“照料”。<br>你的第二生命更应敢于冒险…080<br>● 找寻能够给予你充实感的“工作”<br>● 不要犹豫，只需思索和行动，自立和自由也会随之而来<br>● “照料他人、被他人照料都是理所当然”的想法是一种执念<br>不要勉强抑制怒气，找准“模式”来寻求对策。<br>“愤怒情感”的断舍离…084<br>● 通过审视和验证价值观来减少愤怒<br>● 希望别人更理解自己，却事与愿违时的愤怒<br>■ 不要被“愤怒”的情感支配人生<br>不要等待，自己先行动起来。<br>“对他人有所期望”的断舍离…088<br>● 等待就表明对他人有所期望<br>■ “经常被他人辜负自己期望”的理由<br>与其浪费时间烦恼，不如马上行动！<br>“借口”的断舍离…092<br>● 正因为麻烦，所以才要行动<br>● 从“想做”到“做”的语言转变<br>■ 从“借口”中“领悟”<br>你说的话甚至会塑造你的人生。<br>不要轻视语言的力量…096<br>● 改变每天早上的口头禅<br>● 改变话语就能改变自己<br>● 越是期望高，越难以实现<br>■ 改变语言会带来好运<br>“自我”和“自私”截然不同！<br>“自私”的断舍离…100<br>● 勿将自己的价值观强加于人<br>● 随着年龄增长，人们更容易倾向“自私”<br>■ 生活中你会选择哪种“基准”<br>专　栏<br>锻炼“自我”，活出自己的人生…104<br>● 把握“饮食”“人际关系”和“时间的使用方法”三方面来塑造自我<br>● 自我的确立是最难以处理的“人际关系”<br>● 我们从出生开始就一直受限于他人对自己的看法中</p>
 <p>第三章　编写人生清单<br>坚持你的道路，就能看到未来。<br>尝试编写自己的年表…110<br>● 着眼过去，明确未来的构想<br>■ 通过“自己的年表”，从过往人生中寻找对未来的启发<br>■ 来尝试编写“自己的年表”吧<br>由简到繁。<br>“今后想做的事情清单”的魔法…116<br>● 想做的事应该从日常琐事开始<br>● 不要因为“花钱”而封闭心门<br>■ “今后想做的事情”清单<br>每一天都值得感激。<br>用感激的心情度过每一天…120<br>● 日常生活就是由各种值得感激的事情连接而成<br>■ 将感激的心情意识化<br>为了愉快地度过余下的人生和有限的时间。<br>收集“中意”的物品，生命会更闪耀…124<br>● 如果周围都是你中意的物品，那一定会心情大好<br>● 人生要用“加分法”才能更充实<br>■ 我“中意”的物品<br>对有缘人想要传达的讯息是什么？<br>明确你想要留下的东西…128<br>● 留下思念而不是垃圾<br>● 想要留下的不必多，却要最好<br>■ 重要的东西也要“心情舒畅地”放手<br>值得珍惜的人，都是能够保持内心坦然的人。<br>为了“以防万一”，要好好选择紧急情况时的联系人…132<br>● 选择能够让你保持自我的人，作为人生之友<br>● 能够接受最真实的你，才是人生之友<br>■ 选择自己的“VIP”<br>在人生的第二阶段，重新审视和伴侣的关系。<br>对伴侣的看法要坦白和诚实…136<br>● 现代社会人们的平均寿命越来越长<br>■ 你和伴侣有没有想法上的分歧？<br>我所期望的“最后那一刻”。<br>将“自我”坚持到最后那一刻…140<br>● 为了确立“自我”<br>■ 拿出觉悟和勇气<br>和社会的关系也有终结的那一天。<br>明确和自己相关的信息…144<br>● 和自己相关的信息该由谁、如何处理<br>■ 手机和个人电脑中的信息<br>■ 贺年卡中的信息<br>■ 公共养老保险的信息<br>■ 个人养老保险的信息<br>■ 信用卡的信息<br>虽说不用在意自己的后事。<br>即使是少量财产、即使家人关系和睦，也可能产生纷争…148<br>● 不引起财产纷争的解决方法<br>■ 我的财产笔记<br>什么都不做而悄然辞世就是最佳选择吗？<br>在人生的终点，该怎样谢幕…152<br>● 思考人生临终的含义<br>■ 思考自己的临终<br>从“天国”传达给“这个世界”的讯息。<br>首先设想一个能代表自己的“讯息”…156<br>● 在“天国”的我如果能够俯瞰“这个世界”<br>● 死亡并非结束，而是永恒<br>■ 我这个人<br>后记…160</p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p39159581-2.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p39159581-1.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p39159581-3.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p39159581-4.jpg"></p>
-<h2 id="断舍离-让女人找回纯粹的自己"><a href="#断舍离-让女人找回纯粹的自己" class="headerlink" title="断舍离 让女人找回纯粹的自己"></a><a href="https://book.douban.com/subject/26864776/" target="_blank" rel="noopener">断舍离 让女人找回纯粹的自己</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s29014822.jpg"></p>
-<h2 id="简单断舍离生活"><a href="#简单断舍离生活" class="headerlink" title="简单断舍离生活"></a><a href="https://book.douban.com/subject/26954576/" target="_blank" rel="noopener">简单断舍离生活</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s29281224.jpg"></p>
-<h2 id="工作断舍离"><a href="#工作断舍离" class="headerlink" title="工作断舍离"></a><a href="https://book.douban.com/subject/26295702/" target="_blank" rel="noopener">工作断舍离</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s27978414.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p39159581-2.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p39159581-1.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p39159581-3.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p39159581-4.jpg" alt></p>
+<h2 id="断舍离-让女人找回纯粹的自己"><a href="#断舍离-让女人找回纯粹的自己" class="headerlink" title="断舍离 让女人找回纯粹的自己"></a><a href="https://book.douban.com/subject/26864776/" target="_blank" rel="noopener">断舍离 让女人找回纯粹的自己</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s29014822.jpg" alt></p>
+<h2 id="简单断舍离生活"><a href="#简单断舍离生活" class="headerlink" title="简单断舍离生活"></a><a href="https://book.douban.com/subject/26954576/" target="_blank" rel="noopener">简单断舍离生活</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s29281224.jpg" alt></p>
+<h2 id="工作断舍离"><a href="#工作断舍离" class="headerlink" title="工作断舍离"></a><a href="https://book.douban.com/subject/26295702/" target="_blank" rel="noopener">工作断舍离</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s27978414.jpg" alt></p>
 <h3 id="目录-6"><a href="#目录-6" class="headerlink" title="目录"></a>目录</h3><p>第一章    为什么要给工作断舍离？——消除工作中的不安<br>断舍离：关注当下，扔掉对未来的不安<br>不要为无意义的东西找借口<br>不受外在干扰，敢于自我判断<br>不会整理是因为不懂舍弃<br>心灵和身体一样，也需要新陈代谢<br>“7•5•1法则”让生活更整洁美好</p>
 <p>第二章    “断舍离”让我们掌握的能力<br>“断舍离” 让你认清自我<br>“断”让你温暖，“舍”要满怀谢意，“离”要充满理解<br>不看过去，不看未来，只关注当下的自我<br>断舍离要当机立断<br>“断舍离”是严格筛选，彻底使用<br>断舍离，只留存“必要”“适合”“舒服”</p>
 <p>第三章    实践断舍离，从训练分类开始<br>为什么会议总是长而无效<br>为什么男人不擅长收拾厨房？<br>三分类的实战训练<br>“断舍离”让你实现“达观人生”</p>
@@ -543,14 +513,14 @@
 <p>5.早晨上班时的“困扰”<br>每天早上在穿着上花费很多时间<br>觉得读早报很麻烦<br>上班坐车让你筋疲力尽</p>
 <p>6.日常生活中的“困扰”<br>收藏的兴趣不被家人支持<br>家里像垃圾桶一样脏乱差</p>
 <p>第六章 只要磨炼俯瞰力，就能提升“断舍离”力<br>“俯瞰力”是“看透本质的能力”<br>通盘了解，再做判断<br>如何训练俯瞰力<br>迈出第一步是做任何事的关键<br>掌握俯瞰力，才能觉悟<br>后序</p>
-<h2 id="年龄断舍离"><a href="#年龄断舍离" class="headerlink" title="年龄断舍离"></a><a href="https://book.douban.com/subject/26295627/" target="_blank" rel="noopener">年龄断舍离</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s27978415.jpg"></p>
+<h2 id="年龄断舍离"><a href="#年龄断舍离" class="headerlink" title="年龄断舍离"></a><a href="https://book.douban.com/subject/26295627/" target="_blank" rel="noopener">年龄断舍离</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s27978415.jpg" alt></p>
 <h3 id="目录-7"><a href="#目录-7" class="headerlink" title="目录"></a>目录</h3><p>卷首对谈 “减法”是年轻与长寿的秘诀<br>什么是“抗衰老机制”<br>食物、运动、内心平衡是长寿的秘诀<br>区分“过剩”与“不足”很重要<br>限制卡路里让人更加健康长寿<br>我们迎来了一个寿命125岁的时代？！</p>
 <p>第一章 用“减法”换回青春光泽<br>用减法净化身心<br>不随便添东西，就不用烦恼怎么扔东西<br>“年龄增长与老化”都是自己想象出来的<br>把成功和失败都视为动力<br>留有余地才是恰到好处<br>在“断”上做到极致，就能恢复活力</p>
 <p>第二章“限制法”可以让身体保持年轻状态<br>增强回春力量的“断舍离”<br>不要因为东西便宜就买回来<br>只摄取合乎自身需要的热量<br>在饮食上，要懂得拒绝，允许剩余<br>营养不足和营养过剩都是疾病<br>通过断舍离，瘦身10公斤<br>姿势美，人才美</p>
 <p>第三章断绝没用的信息，就会变得年轻<br>信息真的是越多越好吗？<br>体验一下没有电视的家<br>去除没用的知识，智慧就会增加<br>断舍离让你活用大脑</p>
 <p>第四章 断绝“变老”的思维定势<br>思考的改变，从“舍”开始<br>摆脱不安，自信起来<br>正面思考，为自己加分<br>整理看得见的空间，提升看不见的心灵<br>稍微给身体一点限制，享受年龄的增长</p>
 <p>第五章 以“年龄断舍离”来开创新的未来<br>遵从自己的内心<br>不要把“平常之物”视为理所当然<br>保持年轻的秘诀是“变化刺激”<br>做个有觉悟、有勇气的乐天派<br>去除消极的口头禅<br>不要整天想着运气好不好<br>扩大“快乐的圆圈”<br>结语</p>
-<h2 id="断舍离：心灵减负篇"><a href="#断舍离：心灵减负篇" class="headerlink" title="断舍离：心灵减负篇"></a><a href="https://book.douban.com/subject/26336340/" target="_blank" rel="noopener">断舍离：心灵减负篇</a></h2><p><img alt data-src="https://img1.doubanio.com/lpic/s28018537.jpg"></p>
+<h2 id="断舍离：心灵减负篇"><a href="#断舍离：心灵减负篇" class="headerlink" title="断舍离：心灵减负篇"></a><a href="https://book.douban.com/subject/26336340/" target="_blank" rel="noopener">断舍离：心灵减负篇</a></h2><p><img data-src="https://img1.doubanio.com/lpic/s28018537.jpg" alt></p>
 <h3 id="目录-8"><a href="#目录-8" class="headerlink" title="目录"></a>目录</h3><p>开篇对话“断舍离”　34<br>放下执念，给心灵一次扫除　34<br>不求拥有什么，只问需要什么　36<br>打磨自己，为心灵减负　38<br>别费心空想，先认清现实　40<br>不必在意结果，只求走入内心　42</p>
 <p>█ Part 1 扔掉看得见的东西，改变看不见的世界<br>难舍物品=心理依赖　48<br>什么是依赖症？　51<br>“抑郁”“依赖”与“断舍离”　53</p>
 <p>█ Part 2 为心灵做减法，最简单的生活之道<br>心灵加减法　58<br>案例：洋子女士（化名） 50多岁女性 全职太太　64<br>告诉自己一切都很美好，压力没有那么大　68</p>
@@ -572,8 +542,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/IPCreator/Concept/S/Share/" rel="bookmark">Share</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Movie/Citizen Kane/" rel="bookmark">Citizen Kane</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Movie/Top movies from Andy/" rel="bookmark">Top movies from Andy</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Movie/Pride and Prejudice/" rel="bookmark">Pride and Prejudice</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Journey/IPCreator/Journey/Movie/Mal┬na/" rel="bookmark">Malèna</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Share/" rel="tag"><i class="fa fa-tag"></i> Share</a>
           </div>
@@ -585,21 +576,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Book/IPCreator/Book/Hillbilly Elegy/" rel="next" title="Hillbilly Elegy">
-                  <i class="fa fa-chevron-left"></i> Hillbilly Elegy
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Journey/IPCreator/Journey/Food/Delicious Foods/" rel="prev" title="Delicious Foods">
-                  Delicious Foods <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Book/IPCreator/Book/Hillbilly Elegy/" rel="prev" title="Hillbilly Elegy">
+      <i class="fa fa-chevron-left"></i> Hillbilly Elegy
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Journey/IPCreator/Journey/Food/Delicious Foods/" rel="next" title="Delicious Foods">
+      Delicious Foods <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -612,7 +600,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -643,8 +653,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -653,14 +663,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -671,11 +681,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -709,7 +714,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -721,51 +726,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -774,18 +740,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -795,63 +755,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -859,14 +762,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -893,40 +796,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/A/Abandon/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

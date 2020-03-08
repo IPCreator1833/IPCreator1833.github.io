@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="We do what we say.We own what we do.说到做到,尽心尽力.">
 <meta name="keywords" content="Lenovo">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/DeepCreator/Company/Lenovo/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/DeepCreator/Company/Lenovo/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/DeepCreator/Company/Lenovo/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,40 +256,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="Lenovo_logo_2015.png" data-src="http://opb37u589.bkt.clouddn.com/Lenovo_logo_2015.png?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/Lenovo_logo_2015.png?imageMogr2/thumbnail/!75p" alt="Lenovo_logo_2015.png"></p>
 <blockquote>
 <p><a href="http://appserver.lenovo.com.cn/About/culture.html" target="_blank" rel="noopener">We do what we say.We own what we do.<br>说到做到,尽心尽力.</a></p>
 </blockquote>
 <a id="more"></a>
 <p><a href="http://wiki.mbalib.com/wiki/%E9%B8%B5%E9%B8%9F%E7%90%86%E8%AE%BA" target="_blank" rel="noopener">鸵鸟理论</a>来自于原联想集团的董事局主席柳传志，原文如下：“当两只鸡一样大的时候，人家肯定觉得你比他小；当你是只火鸡，人家是只小鸡，你觉得自己大的不行了吧，小鸡会觉得咱俩一样大；只有当你是只鸵鸟的时候，小鸡才会承认你大。所以，千万不要把自己的力量估计得过高，你一定要站在人家角度的去想。你想取得优势，你就要比别人有非常明显的优势才行。所以，当我们还不是鸵鸟时候，说话口气不要太大。”</p>
 <p>联想提出“鸵鸟理论”，即只有比别人有非常明显的优势时，才具有竞争优势。这个理论是为提醒自己应有自知之明，提醒我们从别人的角度考虑问题，虚心学习，取长补短，使自己不断得到提升。做大一个公司，的确是一件高度复杂和极具挑战事情。不过，正因为有挑战性，也是非常带劲的。关键是，要时时刻刻学习。</p>
-<h2 id="联想之道-The-Lenovo-Way"><a href="#联想之道-The-Lenovo-Way" class="headerlink" title="联想之道 The Lenovo Way"></a><a href="http://appserver.lenovo.com.cn/About/culture.html" target="_blank" rel="noopener">联想之道 The Lenovo Way</a></h2><p><img alt data-src="http://appserver.lenovo.com.cn/About/Video/images/lj_20120601_p1.jpg"></p>
+<h2 id="联想之道-The-Lenovo-Way"><a href="#联想之道-The-Lenovo-Way" class="headerlink" title="联想之道 The Lenovo Way"></a><a href="http://appserver.lenovo.com.cn/About/culture.html" target="_blank" rel="noopener">联想之道 The Lenovo Way</a></h2><p><img data-src="http://appserver.lenovo.com.cn/About/Video/images/lj_20120601_p1.jpg" alt></p>
 <p>了解背景<br>能基于内外部的事实和数据做出决策<br>能及时总结过去的经验教训</p>
 <p>分析现状<br>能充分分析当前的要求和所需的资源<br>能有效沟通目标并吸取团队成员的意见建议</p>
 <p>明确目标<br>能透彻了解端到端流程、步骤并评估潜在的风险<br>能把目标转化成为严格、可执行的方案</p>
 <p>做好规划<br>把客户需求放在首位，并据此制定可行的和具有挑战性的目标<br>能平衡长期目标和短期目标</p>
-<p><img alt data-src="http://appserver.lenovo.com.cn/About/Video/images/lj_20120601_p2.jpg"></p>
+<p><img data-src="http://appserver.lenovo.com.cn/About/Video/images/lj_20120601_p2.jpg" alt></p>
 <p>建立流程<br>能建立简捷、高效并切实为业务目标服务的流程<br>能充分利用资源来达成内外部目标</p>
 <p>各司其责<br>具有高度的责任感，不推卸责任，积极提供问题的解决方案<br>鼓励信守承诺的行为</p>
 <p>有效落实<br>相互信任，精诚合作<br>能提供资源、排除障碍去推动目标达成</p>
 <p>结果导向<br>建立明确的考量标准，让结果说话<br>灵活应对变化，确保实现既定目标</p>
-<p><img alt data-src="http://appserver.lenovo.com.cn/About/Video/images/lj_20120601_p3.jpg"></p>
+<p><img data-src="http://appserver.lenovo.com.cn/About/Video/images/lj_20120601_p3.jpg" alt></p>
 <p>关注长期<br>关注企业长期利益和长远发展<br>不能只看眼前和急功近利</p>
 <p>注重大局<br>注重大局和公司整体利益<br>能打破部门界限，为目标的达成而共同努力</p>
 <p>公司为重<br>能分清轻重缓急并抓住重点<br>当关系到公司利益时能坦诚表达并主动站出来维护公司利益</p>
 <p>主动承担<br>能对公司的事情主动承担、主动负责<br>能以主动满足客户需求为第一要任，并以之影响他人</p>
-<p><img alt data-src="http://appserver.lenovo.com.cn/About/Video/images/lj_20120601_p4.jpg"></p>
+<p><img data-src="http://appserver.lenovo.com.cn/About/Video/images/lj_20120601_p4.jpg" alt></p>
 <p>总结过去<br>能及时复盘，总结经验教训以改进工作和提高能力<br>能以质量取胜，而不是以数量取胜</p>
 <p>蓄势未来<br>拥有强烈的好奇心，敢于探索和开拓<br>能以包容的心态鼓励畅所欲言</p>
 <p>自我完善<br>拥有强烈的进取心，不断挑战更高的目标<br>能以开放的心态积极寻求和接受他人的反馈，持续地改进和提高</p>
 <p>共同成长<br>能积极寻求和运用反馈、辅导等方式帮助他人进行改善<br>能把个人发展与公司的发展融合在一起</p>
-<p><img alt data-src="http://appserver.lenovo.com.cn/About/Video/images/lj_20120601_p5.jpg"></p>
+<p><img data-src="http://appserver.lenovo.com.cn/About/Video/images/lj_20120601_p5.jpg" alt></p>
 <p>勤思好问<br>尊重不同的观点和意见，鼓励新创意和优化解决问题的方法。<br>对既成的思维和假设条件都要大胆质疑，多问“为什么”。</p>
 <p>冷静观察<br>仔细观察身边的世界，关注行业趋势、关注客户和技术发展，了解新规律和新思想。<br>拓宽视野，探求新的信息和思维方式。</p>
 <p>勇于尝试<br>通过实践来检验自己的想法，依据收集到的数据进行决策。<br>大胆探索新的机会，但对风险有清醒的预估。</p>
 <p>集思广益<br>从背景、经历和观点不同的人那里寻求建议，获得启发。<br>注重相互协作，乐于采纳更好的方法。<br>融汇贯通<br>花时间思考和酝酿创意，博采众长从而形成独到的见解。<br>洞察未来，发现新的机遇。</p>
 <h2 id="联想手机专利为何热衷“买买买”？全因自有专利“底裤”太短？"><a href="#联想手机专利为何热衷“买买买”？全因自有专利“底裤”太短？" class="headerlink" title="联想手机专利为何热衷“买买买”？全因自有专利“底裤”太短？"></a><a href="https://www.huxiu.com/article/107121.html" target="_blank" rel="noopener">联想手机专利为何热衷“买买买”？全因自有专利“底裤”太短？</a></h2><p>法眼快评  2015-01-26 06:47</p>
-<p><img alt data-src="https://img.huxiucdn.com/article/cover/201501/26/064603827004.jpg?imageView2/1/w/1000/h/750/|imageMogr2/strip/interlace/1/quality/85/format/jpg"></p>
+<p><img data-src="https://img.huxiucdn.com/article/cover/201501/26/064603827004.jpg?imageView2/1/w/1000/h/750/|imageMogr2/strip/interlace/1/quality/85/format/jpg" alt></p>
 <p>“2000多项专利的所有权，2.1万项专利的使用权。”</p>
 <p>在谈及联想并购摩托罗拉时，这是联想杨元庆在很多场合都乐此不疲“紧挂嘴边”的“口头禅”。</p>
 <p>根据当初联想集团与谷歌就摩托罗拉移动达成的收购协议，联想支付的交易对价约为29.1亿美元，获得三项核心内容：摩托罗拉品牌、3500名员工以及数量庞大的专利组合——2000多项专利的所有权以及2.1万项专利的交叉许可授权。</p>
@@ -330,15 +300,15 @@
 <p>那么，在没有并购摩托罗拉之前，联想手机的“专利底裤”到底有多短呢？</p>
 <p>我们以国家知识产权局网站的统计数据为基础，从专利数量、专利意识、专利结构、专利倾向及申请时间分布等多个维度，详细看看联想手机的专利“家底”。</p>
 <p>专利规模：咋看很耀眼 其实手机专利并不多</p>
-<p><img alt data-src="https://img.huxiucdn.com/upload/20150125/1422180207246260.jpg"></p>
+<p><img data-src="https://img.huxiucdn.com/upload/20150125/1422180207246260.jpg" alt></p>
 <p>通过上表，我们可以看到，在专利可检索总量方面，联想是苹果的2.7倍；在发明公布数上，联想是苹果的3.1倍；在发明授权数上，联想是苹果的1.3倍；在实用新型专利数上，联想是苹果的3.4倍；而在外观设计专利数上，联想是苹果的1.7倍。</p>
 <p>乍眼一看，作为创新能力和实力衡量指标的专利申请和保护，联想较苹果领先很多，这或许也就是联想杨元庆敢多次公开叫板“苹果”，并在接受媒体采访时敢宣称“联想最有希望挑战苹果”、“联想会是最后的赢家”的“底气”所在。</p>
 <p>不过，如果你真的据此认为，联想手机真的有机会超越苹果，那可能就显得很“草率”。事实上，联想公司旗下属于手机相关的专利并没有表面看起来的那么多。</p>
 <p>联想旗下有多家公司主体，从投资到实业，从产品到销售，从手机、电脑到网络安全，涉猎领域广泛。</p>
 <p>不过，令人费解的是，虽然联想旗下有专司手机业务的子公司——联想移动通信科技有限公司，但是，与手机相关的专利却散落在多个法人主体身上，包括联想（北京）有限公司、厦门毅想通信研发中心有限公司、联想移动通信（武汉）有限公司、联想移动通信软件（武汉）有限公司、联想创新有限公司（香港）和联想移动通信科技有限公司等等。</p>
-<p><img alt data-src="https://img.huxiucdn.com/upload/20150125/1422180218399639.jpg"></p>
+<p><img data-src="https://img.huxiucdn.com/upload/20150125/1422180218399639.jpg" alt></p>
 <p>尽然如此，联想手机持有的与手机相关的专利情况并不乐观。与专注于手机业务一些手机厂商相比，联想手机的专利差距明显。</p>
-<p><img alt data-src="https://img.huxiucdn.com/upload/20150125/1422180228935548.jpg"></p>
+<p><img data-src="https://img.huxiucdn.com/upload/20150125/1422180228935548.jpg" alt></p>
 <p>通过上表，我们可以看到，在发明授权数上，酷派是联想的6.2倍；在实用新型专利数上，酷派是联想的4倍；只有在外观设计专利数上，联想才是酷派的3.2倍。</p>
 <p>需要说明的是，此处表格中所统计的联想手机专利数字范围仅指直接与手机相关的专利。具体由厦门毅想通信研发中心有限公司、联想移动通信（武汉）有限公司、联想移动通信软件（武汉）有限公司和联想移动通信科技有限公司所持有的所有专利和部分联想（北京）有限公司持有的直接与手机相关专利。可能存在“挂一漏万”的情况。</p>
 <p>但是，我们依旧可以看出，联想手机在具有竞争力和防御力上的发明专利领域积累并没有想象中的多。这其实也多少反映出一些“联想性格”——销售驱动型公司而非技术驱动型公司。</p>
@@ -349,16 +319,16 @@
 <p>对于手机业务，联想的战略也曾多次“摇摆”。</p>
 <p>具体负责联想手机业务的联想子公司，联想移动通信科技有限公司成立于2002年4月。从成立时间上看，仅比魅族早不到一年。但与魅族不同的是，联想手机还算是比较注重专利保护和积累的。</p>
 <p>诚如前述，不论是联想母公司，还是联想负责手机业务的子公司，外观设计在专利组成中的比重都很高。</p>
-<p><img alt data-src="https://img.huxiucdn.com/upload/20150125/1422180236315808.jpg"></p>
+<p><img data-src="https://img.huxiucdn.com/upload/20150125/1422180236315808.jpg" alt></p>
 <p>从上图我们可以看到，在已获得的授权专利中，在发明专利、实用新型、外观设计上的布局，联想手机的比例依序是：21%、28%、51%。而酷派的比例依序是：51%、43%、6%。</p>
 <p>事实上，<strong>联想</strong> 手机的专利结构与<strong>魅族</strong> 非常相似。魅族已获得授权的专利中，发明专利、实用新型、外观设计的比例依序为4%、15%、81%。</p>
 <p>联想手机“专利之短”：轻研发、重设计家底太薄</p>
 <p>在功能机时代，联想手机应该还是模范践行“贸工技”的销售驱动模式，曾重金聘请大小S代言联想手机，全面布局专卖店、大卖场及运营商等渠道。</p>
 <p>而进入智能机时代后，联想手机一度还是用“功能机思维”卖“智能手机”，大搞“机海战术”。</p>
 <p>为此，我们以联想旗下具体负责手机业务的联想移动通信科技有限公司（以下简称“联想移动”）已获得专利授权的各类专利的申请时间分布做进一步分析。</p>
-<p><img alt data-src="https://img.huxiucdn.com/upload/20150125/1422180243827959.jpg"></p>
-<p><img alt data-src="https://img.huxiucdn.com/upload/20150125/1422180267739910.jpg"></p>
-<p><img alt data-src="https://img.huxiucdn.com/upload/20150125/1422180276513804.jpg"></p>
+<p><img data-src="https://img.huxiucdn.com/upload/20150125/1422180243827959.jpg" alt></p>
+<p><img data-src="https://img.huxiucdn.com/upload/20150125/1422180267739910.jpg" alt></p>
+<p><img data-src="https://img.huxiucdn.com/upload/20150125/1422180276513804.jpg" alt></p>
 <p>通过上述三图可以看到，从整体策略来看，在功能机时代，联想专司手机业务的子公司——联想移动在成立的头三年里，申请的外观设计数（32件）是其申请的发明专利（3件）和实用新型（2件）之和的6倍。这也足以说明，联想涉足手机市场时，依旧体现出很明显的“贸工技”特征。</p>
 <p>具体到联想手机的外观设计专利保护，我们可以看到，2007年和2011年分别是联想手机业务外观设计的“高峰期”。这两个时点在手机市场的跨代中也是关键的时点。因为2007年是功能机时代的“巅峰时刻”，而2011年则是智能手机的“兴起之时”。</p>
 <p>在这两个关键时点上，都成为联想手机业务的外观设计申请“高点”，也表明了联想手机业务从功能机到智能手机跨代升级期间，一贯秉持的“机海战术”。</p>
@@ -371,7 +341,7 @@
 <p>2014年1月，联想集团以29.1亿美元的价格从谷歌手中收购了摩托罗拉移动，联想集团从谷歌手中获得了2000多项专利，并获得了谷歌2.1万项专利的交叉授权。</p>
 <p>2014年3月，联想以1亿美元收购专利组织UnwiredPlanet持有的21项专利，包括3G、LTE专利以及其它重要移动专利，并同时获得2500项专利的交叉授权。</p>
 <p>2014年4月，联想收购了NEC在全球多个国家申请的超过3800项专利组合，涉及专利技术已广泛用于智能手机的生产制造。</p>
-<h2 id="如果收购黑莓，联想能得到什么？"><a href="#如果收购黑莓，联想能得到什么？" class="headerlink" title="如果收购黑莓，联想能得到什么？"></a><a href="http://www.ifanr.com/261448" target="_blank" rel="noopener">如果收购黑莓，联想能得到什么？</a></h2><p><img alt data-src="https://images.ifanr.cn/wp-content/uploads/2013/03/blackberry.jpg"></p>
+<h2 id="如果收购黑莓，联想能得到什么？"><a href="#如果收购黑莓，联想能得到什么？" class="headerlink" title="如果收购黑莓，联想能得到什么？"></a><a href="http://www.ifanr.com/261448" target="_blank" rel="noopener">如果收购黑莓，联想能得到什么？</a></h2><p><img data-src="https://images.ifanr.cn/wp-content/uploads/2013/03/blackberry.jpg" alt></p>
 <p>2013-03-13 15:20</p>
 <p>如果依据规模来看，联想手机业务在中国本土市场的市占率已经排在了第二位。对于联想而言，国际市场是其必须要面对的事情。近日关于联想有意收购黑莓的消息甚嚣尘上，市场上对这件事情的想象伴随着资本市场上黑莓股票的攀升，尽管公司内部不断辟谣，但总归有种无风不起浪的感觉。</p>
 <p>感觉归感觉，无论真假，在看待这则“传闻”的时候我们不妨思考，倘若联想真的有意收购，黑莓有什么东西会让联想产生“联想”？</p>
@@ -469,7 +439,7 @@
 <p>最好的方式是，你在用人之前，特别是关键的领导人，把这个人尽量反复考察。还有一个考察机制，检查他是不是确实按照这个去做；甚至机制灵不灵，你还可以进行抽查。一旦明确之后，就放手让他们去做。</p>
 </blockquote>
 <p>深入了解情况其实是很必要的，但是你不可能深入了解所有的地方，才能知道战略执行能力强与否。更重要的是，用好领军的人。<strong>如果一个人不了解手下有多少人是能够独当一面的，他就不具备独当一面的能力。</strong></p>
-<p><img alt="lenovoorg20180529.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/lenovoorg20180529.jpg?imageMogr2/thumbnail/!75p"><br>联想几个重要阶段的组织架构</p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/lenovoorg20180529.jpg?imageMogr2/thumbnail/!75p" alt="lenovoorg20180529.jpg"><br>联想几个重要阶段的组织架构</p>
 <p>“我和任正非性格不同”</p>
 <p>HRBC：一家公司应该如何把握自己的发展节奏？</p>
 <p>柳传志：做企业不要太受外部因素的左右，自己需要心里有数。如果我要受外部因素左右，我早就响应国家号召，投入到前瞻性的科研里；可投研发的话，钱从哪来，现金流转得起来吗，你给我投钱吗？</p>
@@ -497,7 +467,7 @@
 <p>在中国，发展空间、容量很大的基础产业，包括消费类，都是好产业。我觉得有若干项产业，我们不必拿到美国去比，农业在美国未必是核心产业，在中国肯定是重要领域。食品安全问题，让农业发展存在很大空间。但要真正做大，难度很大。</p>
 <p>所以首先，有意做的事情，在中国有若干个领域，我们得选几个领域，我自己做得动的。</p>
 <p>其次，得有一个领头人，他的核心价值观需要跟我们一致：既懂得“屋顶”那一层，又懂得“管理三要素”，知道怎么把自己这块基础搭扎实，又懂得业务怎么做。</p>
-<p><img alt="lenovomanagement20180529.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/lenovomanagement20180529.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/lenovomanagement20180529.jpg?imageMogr2/thumbnail/!75p" alt="lenovomanagement20180529.jpg"></p>
 <p>我会给他一个机制，让他知道，做好了从物质上到精神上都是自己的事业，让他们彻底调动积极性。把人选好了，机制安排好了，让他们去做；你让队伍来了解调查他们的情况，这个联想能做到，联想已经有了比较成熟的管理体系和文化。</p>
 <p>他们自己还会建立新的体系和文化，但是我们基本的东西，他们可以借鉴。比如，做农业或现代服务业，未来我们有一个健康养老业务，绝对是跟地产业务分开，不是靠地产去赚钱。但这个业务没有十年左右的时间，是不可能有赢利的。那里面的医护人员，除了要有好的待遇之外，没有极强的责任心、非常规范地做事情的话，是做不到的。只有企业文化才能形成这些，这是联想的优势。</p>
 <blockquote>
@@ -557,7 +527,7 @@
 <p>王以超 万艳 |文</p>
 <p>本文有删节，原文参见《哈佛商业评论》中文版2012年7—8月合刊《柳传志：“复盘”联想战略》。</p>
 <h2 id="联想：不能申请专利的知识"><a href="#联想：不能申请专利的知识" class="headerlink" title="联想：不能申请专利的知识"></a><a href="https://www.huxiu.com/article/245347.html" target="_blank" rel="noopener">联想：不能申请专利的知识</a></h2><p>2018-05-23 15:25  刘韧</p>
-<p><img alt data-src="https://img.huxiucdn.com/article/cover/201805/23/152344304803.jpg?imageView2/1/w/1000/h/750/|imageMogr2/strip/interlace/1/quality/85/format/jpg"></p>
+<p><img data-src="https://img.huxiucdn.com/article/cover/201805/23/152344304803.jpg?imageView2/1/w/1000/h/750/|imageMogr2/strip/interlace/1/quality/85/format/jpg" alt></p>
 <p>虎嗅注：本文写于1998年。但还是那句老话，好文章常读常新。</p>
 <p>现在，联想因为“投票”事件，正经历一场舆论危机，连带也引发了对联想“贸工技”路线的讨论，这篇文章聚焦联想的管理，但也能一窥联想选择“贸工技”的原因，一些对联想的质疑，也能从文中找到答案。</p>
 <p>本文转自微信公众号“刘韧”（ID：LiuRenNews），作者：刘韧，虎嗅获授权转载。</p>
@@ -651,7 +621,7 @@
 <p>联想走“贸、工、技”的道路至少可以让联想知道成果转化为产品，做到什么程度，应该开始小批量生产；做到什么程度，应该开始大批量生产；做到什么时候，应该做市场上的宣传动员工作。联想认为“会做贸易以后，看问题才会有穿透力。”所以，联想会让科技人员去做销售，会让报到第一天的杨元庆背报价，跑用户，会出现研究员胡锡兰站柜台一站再没有离开销售岗位的佳话。</p>
 <p>联想现在做大了，从原来模仿成功企业就可以做，现在变成了探路人，在这种情况下，联想如何解决“摸着石头过河”和IT行业要求快速反应带来的挑战？在这种情况下，联想还能不能定出战略？怎样定战略？</p>
 <p>这个问题，柳传志不认为是问题，他说：“联想是费尽心思琢磨出来的，在办企业的外部环境不断变化的情况下，联想已经琢磨清楚了在什么边界情况下做什么事情，所以，后面的路我们依然能走。做联想，我们不是照菜谱炒菜，而搞清楚了盐是怎么回事，味精是怎么回事，糖是什么东西，鲜鱼什么样，咸鱼什么样，我们是一边写菜谱，一边炒菜，有写菜谱的能力，就有更改的能力。当然，我们的战略也在不停地调整之中，高阳写胡学岩，把他写神了，那是因为高阳没做过企业，不知道企业所定的目标必须经常调整。”</p>
-<p><img alt data-src="https://img.huxiucdn.com/article/content/201805/23/141228105620.jpg?imageView2/2/w/1000/format/jpg/interlace/1/q/85"></p>
+<p><img data-src="https://img.huxiucdn.com/article/content/201805/23/141228105620.jpg?imageView2/2/w/1000/format/jpg/interlace/1/q/85" alt></p>
 <p>柳传志的“有所为，有所不为”观：“没钱赚的事不干，有钱赚但投不起钱的事不干，有钱赚也投得起钱，但是没有可靠的人去做，这样的事也不能干。”</p>
 <p>带队伍</p>
 <p>柳传志喜欢读书，读书的时候，他很佩服作家们能把人分析得很透彻，把企业分析得很透彻，但他知道如果真正要这些作家来管人、管企业，肯定行不通。</p>
@@ -671,7 +641,7 @@
 <p>为了做到说话算数，李勤每一次讲话都让秘书记录下来，自己承诺的事算数，要求的事情，李勤也要做到算数。要是谁答应的事没做好，李勤就会揪住他不放，一定等他解释清楚后才能过关。李勤把这称做工作无戏言。“工作上一旦有了戏言，工作就没有标准了。”在这种氛围下，联想出现过部门经理年终离任务指标目标还差几千元没有完成，他宁肯把自己的工资奖金都补进去也要完成任务的情形。</p>
 <p>上下意见不一致的时候，如果两条路都能走通，李勤认为应该充分尊重下面人的意见，因为事情最终要落实到下面做。如果是冲突性的矛盾，李勤会组织他们反复讨论，还不行，李勤会说：“先按你们的意见办，但我保留找后账的权力。你这么做如果做不好，应验了我说得对，我要找后账。如果你做成了，我也认真做一个检讨。”</p>
 <p>当自己的队伍能干所交代的事情的时候，李勤认为自己不能抢着去干，干了等于是抢功。“大家都能干的时候，一定要让大家好好干，我专门去发奖。别人干不了的事，我要抢着去干，作为领导，能做到这些，信誉就强。</p>
-<p><img alt data-src="https://img.huxiucdn.com/article/content/201805/23/141228533708.jpg?imageView2/2/w/1000/format/jpg/interlace/1/q/85"><br>李勤认为，撤换干部宜”拐大弯，不拐死弯”</p>
+<p><img data-src="https://img.huxiucdn.com/article/content/201805/23/141228533708.jpg?imageView2/2/w/1000/format/jpg/interlace/1/q/85" alt><br>李勤认为，撤换干部宜”拐大弯，不拐死弯”</p>
 <p>不管事的管理</p>
 <p>在联想，只有老同志才见过柳传志发脾气、推桌子的样子。柳传志把那个时候“穷凶极恶”的原因归结为尚处在“命令型”的管事阶段。因为是以管事为主，因为最终要以事情是否做得成以及做得怎么样作为惟一的衡量标准，所以，管事的人看到事情在推进过程中出问题，一定最着急。</p>
 <p>处在“命令型”管事阶段的管理因为是对手下进行直接安排，所以，对部下基本素质的要求相对于管人来说就不是那么重要。柳传志把这话说得很到位：“一个小公司1个人，大小事情全要听总经理吩咐，因此找1个大专生也就够了，因为全是总经理一个在出思想，底下的人全部是执行而已。做不好就骂他们。”</p>
@@ -707,8 +677,20 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/IPCreator/Company/Lenovo/" rel="bookmark">Lenovo</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/People/IPCreator/People/Chuan-Zhi Liu/" rel="bookmark">Chuan-Zhi Liu</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Lenovo/" rel="tag"><i class="fa fa-tag"></i> Lenovo</a>
           </div>
@@ -720,21 +702,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/SEP/" rel="next" title="SEP">
-                  <i class="fa fa-chevron-left"></i> SEP
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/NPE/" rel="prev" title="NPE">
-                  NPE <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/SEP/" rel="prev" title="SEP">
+      <i class="fa fa-chevron-left"></i> SEP
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/NPE/" rel="next" title="NPE">
+      NPE <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -747,7 +726,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -778,8 +779,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -788,14 +789,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -806,11 +807,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -844,7 +840,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -856,51 +852,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -909,18 +866,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -930,63 +881,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -994,14 +888,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1028,40 +922,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/DeepCreator/Company/Lenovo/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

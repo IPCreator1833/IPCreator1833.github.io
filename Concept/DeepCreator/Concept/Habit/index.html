@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="万事开头难，习惯成自然。">
 <meta name="keywords" content="Habit">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Habit/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Habit/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Habit/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="habit20180718.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/habit20180718.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/habit20180718.jpg?imageMogr2/thumbnail/!75p" alt="habit20180718.jpg"></p>
 <blockquote>
 <p>万事开头难，习惯成自然。</p>
 </blockquote>
@@ -312,12 +282,12 @@
 <p><a href="http://hukui-blog.logdown.com/posts/2017/05/09/2017-5-9orid-break-emotional-disturbance" target="_blank" rel="noopener">破除习惯回路的方法</a>：</p>
 <p>习惯是由三个部分组成的，Trigger-&gt;Behavior-&gt;Reward。比如爱吃甜食，Trigger就是看到美味的蛋糕，Behavior就是吃掉它，Reward就是很美味，大脑就记住这个循环了，下次只要一看到美味的蛋糕就会触发这个循环。破解的方法就是在Trigger发动之后，用好奇心观察接下来身体或者心里是什么感受，做某个Behavior的时候是什么感觉。</p>
 <p>然后就会发现好奇心会带来两个好处：<br>暂停：可以把这个循环暂时的停住，不往下发展；<br>感受：可以把原本被循环掩盖住的感觉通过好奇仔细的发觉出来，用这个方法尝试戒烟，让吸烟者在想抽烟的时候仔细用自己的好奇心观察下吸烟的感觉，有的人就会发现烟味其实很难闻，跟大便一样，很恶心。这样就可能就不会再继续执行这个行为。<br>当然值得注意的是，这并不是什么魔法，只要一次就能彻底戒烟，而是通过不断的用好奇心来观察，导致新的行为（不吸烟），然后感受到没有陷入旧循环带来的愉悦（不吸烟带来的成就感）。这样就能让旧循环逐步迁移到新的循环中。</p>
-<h2 id="如何有效自我管理，摆脱坏习惯的困扰？"><a href="#如何有效自我管理，摆脱坏习惯的困扰？" class="headerlink" title="如何有效自我管理，摆脱坏习惯的困扰？"></a><a href="http://www.luojiji.com/thread-12808-1-1.html" target="_blank" rel="noopener">如何有效自我管理，摆脱坏习惯的困扰？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201808/26/071606vihz1o516z19d1hu.jpg"></p>
+<h2 id="如何有效自我管理，摆脱坏习惯的困扰？"><a href="#如何有效自我管理，摆脱坏习惯的困扰？" class="headerlink" title="如何有效自我管理，摆脱坏习惯的困扰？"></a><a href="http://www.luojiji.com/thread-12808-1-1.html" target="_blank" rel="noopener">如何有效自我管理，摆脱坏习惯的困扰？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201808/26/071606vihz1o516z19d1hu.jpg" alt></p>
 <p>古罗马诗人奥维德曾说：“没有什么比习惯的力量更强大。”</p>
 <p>好习惯让人身心健康、事半功倍，而坏习惯则会影响工作生活。都知道习惯的重要性，可怎么才能改掉坏习惯、养成好习惯呢？</p>
 <p>今天这张书单，咱们就用四本书，与你分享习惯养成的秘密。</p>
 <p>一、为什么我们会沉迷一些坏习惯？</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29756931.jpg"><br><a href="https://book.douban.com/subject/30163521/" target="_blank" rel="noopener">《 欲罢不能 》</a></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29756931.jpg" alt><br><a href="https://book.douban.com/subject/30163521/" target="_blank" rel="noopener">《 欲罢不能 》</a></p>
 <ol>
 <li><p>有些事情我们明知不好，比如沉迷游戏，为啥还是忍不住呢？这和我们的大脑构造有关。大脑中有一块叫“快感中枢”的区域，能从生理上导致我们行为上瘾。上瘾的过程，分为快乐、学习、期待、渴望四个阶段。</p>
 </li>
@@ -332,7 +302,7 @@
 </ol>
 <p>更多行为上瘾的原理，欢迎观看《欲罢不能》。</p>
 <p>二、如何制定目标，改掉坏习惯？</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29588196.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29588196.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/27125748/" target="_blank" rel="noopener">《意志力》</a></p>
 </blockquote>
@@ -350,7 +320,7 @@
 </ol>
 <p>更多制定目标的方法，欢迎观看《意志力》。</p>
 <p>三、怎样才能将好习惯坚持下去？</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29051384.jpg"><br><a href="https://book.douban.com/subject/26877306/" target="_blank" rel="noopener">《 微习惯 》</a></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29051384.jpg" alt><br><a href="https://book.douban.com/subject/26877306/" target="_blank" rel="noopener">《 微习惯 》</a></p>
 <ol>
 <li><p>计划制定得很好，但往往半途而废、坚持不下去，是很多人的困扰。给你介绍一种简单到几乎不可能失败的习惯养成法——微习惯。把一件事拆成无限小，要求自己每天执行。比如，把每天100个俯卧撑缩减成每天1个，把每天写3000字缩减成每天30个。久而久之，“负担”就会变成自发的习惯。</p>
 </li>
@@ -364,7 +334,7 @@
 <p>① 身份认同发生改变，比如坚持每天写作一段时间后，开始觉得自己是个“写手”“作家”。<br>② 行动前不再深思熟虑，而是主动去做。<br>③ 不再有坚持不了的想法，默认会一直这样做。</p>
 <p>更多微习惯养成的技巧，欢迎观看《微习惯》。</p>
 <p>四、高效能人士该具备哪些好习惯？</p>
-<p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29471649.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/subject/l/public/s29471649.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/26284789/" target="_blank" rel="noopener">《高效能人士的7个习惯》</a></p>
 </blockquote>
@@ -408,7 +378,7 @@
 <li>还有一个作用，就是<strong>让我见过的人都觉得对我做的事有贡献</strong>，这就是日积月累经营自己环境的方法。</li>
 </ol>
 <p>总之，所有和人打交道的场合，你可以有三种设定：<strong>斗争，交易和请教</strong>。永远设定成最后一种，然后长期坚持，你会受益无穷。</p>
-<h2 id="习惯力——我们因何失败，如何成功？"><a href="#习惯力——我们因何失败，如何成功？" class="headerlink" title="习惯力——我们因何失败，如何成功？"></a><a href="https://book.douban.com/subject/26868685/" target="_blank" rel="noopener">习惯力——我们因何失败，如何成功？</a></h2><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29027489.jpg"></p>
+<h2 id="习惯力——我们因何失败，如何成功？"><a href="#习惯力——我们因何失败，如何成功？" class="headerlink" title="习惯力——我们因何失败，如何成功？"></a><a href="https://book.douban.com/subject/26868685/" target="_blank" rel="noopener">习惯力——我们因何失败，如何成功？</a></h2><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s29027489.jpg" alt></p>
 <p>What got you here won’t get you there</p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>无论你是只管理自己，还是领导一家《财富》500强企业</p>
 <p>都应该杜绝这20+1个魔鬼习惯</p>
@@ -579,7 +549,7 @@
 <p>————————————————————————————————</p>
 <p>个人感悟：写下上面的内容，主要是想把书中的精华以自己的语言再整理一次，强化印象。在培养好习惯方面，我还没有好的track record，但现在感觉比较有法可依了。准备用上面的方法论实践实践，我的keynote habit将是：每天早上起床后进行祈祷和沉思，写下当天一定要做好的三件事，然后当天一定要把这三件事做好（整个过程有很详细的步骤，具体很多，此处不赘述）。我的cue是”起床“，我的reward是”获得灵性的进步“，因为“strive that your actions day by day may be beautiful prayers. Turn towards God and seek always to do that which is right and noble”。希望一年后再看这篇笔记，我真的做到了。</p>
 <h2 id="高效能人士的七个习惯（精华版）"><a href="#高效能人士的七个习惯（精华版）" class="headerlink" title="高效能人士的七个习惯（精华版）"></a><a href="https://book.douban.com/subject/1048007/" target="_blank" rel="noopener">高效能人士的七个习惯（精华版）</a></h2><p>The Seven Habits of Highly Effective People</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s1067863.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s1067863.jpg" alt></p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>前言 如何善用本书<br>第一部分 重新探索自我<br>第一章 由内而外全面造就自己<br>第二章 七个习惯——概论<br>第二部分 个人的成功：从依赖到独立<br>第三章 习惯一：积极主动——个人愿景的原则<br>第四章 习惯二：以终为始——自我领导的原则<br>第五章 习惯三：要事第一——自我管理的原则<br>第三部分 公众的成功：从独立到互赖<br>第六章 你不是一座孤岛<br>第七章 习惯四：双赢思维——人际领导的原则<br>第八章 习惯五：知彼知己——同理心交流的原则<br>第九章 习惯六：统合综效——创造性合作的原则<br>第四部分 全面观照生命<br>第十章 习惯七：不断更新——平衡的自我更新的原则<br>第十一章 再次由内而外造就自己<br>附录<br>一、你是哪种类型的人？——生活重心面面观<br>二、第四代时间管理——高效能人士的一天</p>
 <h3 id="高效能人士的七个习惯-书摘"><a href="#高效能人士的七个习惯-书摘" class="headerlink" title="高效能人士的七个习惯 书摘"></a><a href="https://book.douban.com/review/2944931/" target="_blank" rel="noopener">高效能人士的七个习惯 书摘</a></h3><p>高效人士的7个习惯<br>史蒂芬•科维</p>
 <p>必须发掘并运用一些原则或自然法则。<br>最根本的是，任何努力的成功，都离不开恰达好处并游刃有余的应用某些原则。<br>“我就是我生命的创造力”<br>生活方式、阅读、聆听、生命的美好</p>
@@ -594,7 +564,7 @@
 <p>C8<br>首先寻求去了解对方，然后在争取对方了解自己。<br>移情聆听<br>要做到先理解别人，先诊断，后开方并不容易。<br>只有你做好了被对方影响的准备，才能深入到移情聆听的阶段，而这时需要足够的安全感的，因为这时候你会变得很脆弱。<br>平庸的业务员推销产品，接触的业务员销售解决问题满足需求之道。<br>有效沟通的四个阶段：1.复述语句；2.加入解释，纯用自己的词句表达；3.渗入个人的感觉；4.既加以解释，有带有情感。<br>抛开自己的经验，尽力真正了解对方。</p>
 <p>C9<br>与任何合作最重要的是，重视不同个体的不同心理、情绪与智能，以及个人眼中所见到的不同世界。<br>假如两人意见相同，其中一人必属多余。<br>勇于冒险，肯于包容。<br>1.低层次的沟通源于低信任度，经常借助法律说话；2.中层信任尊重彼此，保持礼貌，但并不一定为对方设想，双方都有得失；3.统合综效的沟通，双赢互惠。<br>与人合作最重要的是，重视不同个体的不同心理、情绪与智能，以及个人眼中所见到的不同世界。<br>自以为是的人总以为自己最客观，别人都有所偏颇，其实这才是真正的画地为牢。<br>你不一定要对他们表示赞同，但是可以表示肯定，并尽量给予理解。</p>
 <p>C10<br>人生最值得的投资就是磨练自己。<br>自我提升和完善的四个层面：1.身体；2.精神；3.智力；4.社会、情感。<br>身体：1.耐力（每天心律100维持30分钟）；2.韧性；3.力量。<br>精神：价值体系。<br>智力：阅读、写作<br>社会/情感：安全感<br>音乐剧：梦幻骑士&gt;无法实现的梦。</p>
-<h2 id="高效能人士的第八个习惯——从效能迈向卓越"><a href="#高效能人士的第八个习惯——从效能迈向卓越" class="headerlink" title="高效能人士的第八个习惯——从效能迈向卓越"></a><a href="https://book.douban.com/subject/1220597/" target="_blank" rel="noopener">高效能人士的第八个习惯——从效能迈向卓越</a></h2><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s6230959.jpg"></p>
+<h2 id="高效能人士的第八个习惯——从效能迈向卓越"><a href="#高效能人士的第八个习惯——从效能迈向卓越" class="headerlink" title="高效能人士的第八个习惯——从效能迈向卓越"></a><a href="https://book.douban.com/subject/1220597/" target="_blank" rel="noopener">高效能人士的第八个习惯——从效能迈向卓越</a></h2><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s6230959.jpg" alt></p>
 <h3 id="目录-3"><a href="#目录-3" class="headerlink" title="目录"></a>目录</h3><p>引子 为什么提出第八个习惯<br>第一部分 找到你自己的心声<br>第二部分 激励他人去寻找他们的心声<br>第三部分 掌握关键－以身作则和探索航向<br>第四部分 实施－整合体系和充分授权<br>第五部分 智慧时代<br>20个常见问题的对话<br>第八个习惯附录</p>
 <h3 id="Notes：最终，我们开始朝圣"><a href="#Notes：最终，我们开始朝圣" class="headerlink" title="Notes：最终，我们开始朝圣"></a><a href="https://book.douban.com/review/1955272/" target="_blank" rel="noopener">Notes：最终，我们开始朝圣</a></h3><p>我很喜欢七个习惯，但是对这第八个习惯不仅仅是喜欢了，我相信，这是我们走向成熟人生的“少有人走的路”。</p>
 <ol start="0">
@@ -656,8 +626,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Scene/" rel="bookmark">Scene</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Investment/" rel="bookmark">Investment</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Freedom/" rel="bookmark">Freedom</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Wealth/" rel="bookmark">Wealth</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Logic/" rel="bookmark">Logic</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Habit/" rel="tag"><i class="fa fa-tag"></i> Habit</a>
           </div>
@@ -669,21 +660,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Reading/" rel="next" title="Reading">
-                  <i class="fa fa-chevron-left"></i> Reading
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/DeepCreator/Concept/Why/" rel="prev" title="Why">
-                  Why <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Reading/" rel="prev" title="Reading">
+      <i class="fa fa-chevron-left"></i> Reading
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/DeepCreator/Concept/Why/" rel="next" title="Why">
+      Why <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -696,7 +684,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -727,8 +737,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -737,14 +747,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -755,11 +765,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -793,7 +798,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -805,51 +810,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -858,18 +824,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -879,63 +839,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -943,14 +846,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -977,40 +880,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Habit/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

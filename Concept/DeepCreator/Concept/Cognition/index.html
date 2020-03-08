@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="一念天堂，一念地狱。">
 <meta name="keywords" content="Cognition,Perceive">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/DeepCreator/Concept/Cognition/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/DeepCreator/Concept/Cognition/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/DeepCreator/Concept/Cognition/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="cognition20180721.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/cognition20180721.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/cognition20180721.jpg?imageMogr2/thumbnail/!75p" alt="cognition20180721.jpg"></p>
 <blockquote>
 <p>一念天堂，一念地狱。</p>
 </blockquote>
@@ -294,7 +264,7 @@
 <p>认知不同，关注点和优先级不同，选择和行为不同，结果不同。</p>
 <p>底层核心概念和逻辑非常重要和关键。</p>
 <p>财富可能一夜暴富<br>认知却很难一步登天。——DeepCreator</p>
-<p><img alt="cognition20180416.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/cognition20180416.jpg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/cognition20180416.jpg?imageMogr2/thumbnail/!75p" alt="cognition20180416.jpg"></p>
 <p>所谓的<strong>信念</strong>：——DeepCreator</p>
 <blockquote>
 <p>坚定不移的正确认知，发现塑造成为真实的自我</p>
@@ -517,7 +487,7 @@
 <li><p>人缘分为劳动性人缘和资产性人缘。当你和价值比你低的人交往，你就拥有资产性人缘，不需要做什么就有好人缘，当你和价值比你高一些的人交往，你要付出的就是劳动性人缘，你付出的多一些。但是和你价值差距很大的，即使你可以付出很多即使性的贡献，也很难让对方和你建立长期交换的关系状态所以还是积累自己的价值吧。</p>
 </li>
 </ul>
-<h2 id="偏见——十三邀第一辑"><a href="#偏见——十三邀第一辑" class="headerlink" title="偏见——十三邀第一辑"></a><a href="https://book.douban.com/subject/27136947/" target="_blank" rel="noopener">偏见——十三邀第一辑</a></h2><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29763168.jpg"></p>
+<h2 id="偏见——十三邀第一辑"><a href="#偏见——十三邀第一辑" class="headerlink" title="偏见——十三邀第一辑"></a><a href="https://book.douban.com/subject/27136947/" target="_blank" rel="noopener">偏见——十三邀第一辑</a></h2><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s29763168.jpg" alt></p>
 <h3 id="内容简介-1"><a href="#内容简介-1" class="headerlink" title="内容简介"></a>内容简介</h3><p>谈话自有它的内在逻辑，它逼迫讲述者勾勒自己的轮廓、探视自己的内心。判断很可能片面、浅薄与武断，但背后，是我们对他人与时代真诚的理解欲望。</p>
 <p>十三邀是一档单向空间与腾讯新闻合作的访谈节目，邀请当今商界、娱乐界、文化界的杰出人物，许知远作为主持人，带着“好奇心、偏见与虚荣”， 深入探寻每位嘉宾的成长经历和思想涟漪，在与这十多位“社会切片”的对话中，观察和理解这个世界。本辑嘉宾是罗振宇、姚晨、蔡澜、俞飞鸿、陈嘉映、白先勇、贾樟柯、李安、冯小刚、叶准、二次元（未末、董志凌、驰骋）、金承志、王小波（李银河、李静、姚勇）。</p>
 <p>这本书里，记录了：</p>
@@ -548,7 +518,7 @@
 <p>所有人都站在时代的背景之前：南方讲话之后，改革开放开始，只要能抓到老鼠的猫就是好猫，一批人开始先富起来。罗振宇感到强烈的时代震荡，是从大学室友们开始。刚进学校宿舍的时候，大家的生活费都差不多，可能你 60 块，我就 80 块，每个人都会为了晚上要不要留出一块钱吃一碗面而纠结。等到他毕业的时候，贫富差距出现了。</p>
 <p>毕业以后，不再有“分配”，这时候，家庭关系的差异、富裕程度的差异，直接导致了一个人毕业去向的不同，而他选择了一个逃避的港湾：考研。</p>
 <p>他考上了北京广播学院，也就是现在的中国传媒大学。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/1526043359840f0bd334704"><br>在访谈节目《十三邀》中的罗振宇</p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/1526043359840f0bd334704" alt><br>在访谈节目《十三邀》中的罗振宇</p>
 <p>1993 年，陈嘉映刚从宾夕法尼亚大学修读博士学位完毕，回到北京。后来他成为中国著名的哲学家。“才过两三年，已经没有年轻人再对文化感兴趣，都是先富起来。一夜之间人文学者的地位一落千丈。”</p>
 <p>在这样的环境下，考上研究生的罗振宇，第一次拎着两箱书走进宿舍，却撞上了室友丢在地上的一大堆啤酒瓶。</p>
 <p>室友问他：“几点了？”</p>
@@ -569,7 +539,7 @@
 <p>她最终还是承认自己入错了行：有些时候，努力也无法补足天赋。</p>
 <p>即使发现了这件事，她仍然要在舞蹈学院继续三年的学习。</p>
 <p>“你发现了，也不可能逃出去呀。”姚晨这样说。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/1526043360727cbb8684189"><br>在访谈节目《十三邀》中的姚晨</p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/1526043360727cbb8684189" alt><br>在访谈节目《十三邀》中的姚晨</p>
 <p>幸运的是，她在大学时遇到一位表演老师，认为她有表演天分，说服她去考表演。来到北京电影学院的姚晨，成为优等生，如果同学们要排练《暗恋桃花源》，她一定是云之凡的角色，一直是大青衣；当时的老师都说，如果跟姚晨一组，就能提高你们的作业质量。</p>
 <p>但到了第二、第三年，她发现了变化，宿舍里突然都没人了。</p>
 <p>同学们都被挑去拍戏、拍广告。而主持试镜的人见到姚晨总会说：“这孩子怎么长得这么怪”；“这孩子长得挺有特点的，就是不知道该把你往什么地方用。”</p>
@@ -584,7 +554,7 @@
 <p>许知远在他的书《偏见》里谈到贾樟柯，认为贾樟柯是让人羡慕的。“<strong>那些县城的个人故事、感伤时刻、无所事事、光荣与梦想，滋养了他，令他足以坦然面对任何新变化</strong>。……他诚实地带着他的县城经验，从容地进入了世界。”</p>
 <p>拍电影二十年来，贾樟柯越来越想回到汾阳生活，回到当年的街道，和小伙伴们一起晚上去看电影，或者到县城去看演出。他谈起一个故乡的朋友，从八十年代末开始沉迷香港电影，从电影中研究香港的地理位置，并且能够准确地画出一张香港地图，标出港岛、油尖旺、九龙——黑帮电影中出现过的地点。等到贾樟柯到了香港，发现位置都准确。他说，总想把这个朋友拍进电影里——直到现在，故乡仍然是他创作的灵感源泉。</p>
 <p>他不是一个焦虑的外省青年。事实上，站在汾阳的角度，去看外面的世界，有时候会觉得，外面的世界发展得太慢了。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/pgc-image/1526043359562dd1084d22d"><br>在访谈节目《十三邀》中，贾樟柯带许知远去了汾阳</p>
+<p><img data-src="http://p1.pstatp.com/large/pgc-image/1526043359562dd1084d22d" alt><br>在访谈节目《十三邀》中，贾樟柯带许知远去了汾阳</p>
 <p>在拍摄《三峡好人》的时候，他对于<strong>阶层固化</strong>有了第一手的感受。深入长江流域之后，人们的生活似乎是流动的，但这种流动并不带来改变，而是从长江打工，变成到东莞打工。到了奉节老城，满城都在放烟花，剧组的人都误以为是要欢迎他们，一问才知道，是一个老板的儿子过生日的庆祝节目。而在奉节的普通人家，是可以用家徒四壁来形容的，只有“一个竹椅子，一些塑料袋，全部的家底”，贾樟柯就这样描述他的见闻。</p>
 <p>自从拍戏以来，贾樟柯也会遇到来自观众的质疑。让他感到失落的不是质疑本身，而是这些质疑在二十多年来，并没有变化。</p>
 <p>他总结了自己最常遇到的三种质疑：</p>
@@ -634,7 +604,7 @@
 <p>举个例子。美国的福克斯新闻，就看准了人的这个弱点，既然没人爱看客观中立的东西，那好，我干脆就给你们看想看的，美国不是强硬的保守派多吗，那我所有的新闻都跟你们这些人站在一边。比如，不管有多少人呼吁禁枪，福克斯一定赞成枪支合法化；美国跟外国打仗，它也一定是坚定的支持者，谁要是质疑，就说谁不爱国；哪怕是起标题，也是想各种办法讨好保守派，比如，保守派反对奥巴马的政策，福克斯就把《选民对经济的担心给奥巴马带来新麻烦》这个标题，改成《奥巴马跟白人妇女有大问题》，以此来攻击奥巴马。</p>
 <p>你看，这就是确认偏误，生活中我们都有这个毛病。下次你再对别人的观点嗤之以鼻时，不妨静下来好好想一想，是不是确认偏误在搞鬼。</p>
 <p>本文源自：别想说服我！</p>
-<h2 id="你有没有这把锤子？"><a href="#你有没有这把锤子？" class="headerlink" title="你有没有这把锤子？"></a><a href="http://www.luojiji.com/thread-5976-1-1.html" target="_blank" rel="noopener">你有没有这把锤子？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201608/22/102144tejwdl18dzw1z88p.jpg"></p>
+<h2 id="你有没有这把锤子？"><a href="#你有没有这把锤子？" class="headerlink" title="你有没有这把锤子？"></a><a href="http://www.luojiji.com/thread-5976-1-1.html" target="_blank" rel="noopener">你有没有这把锤子？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201608/22/102144tejwdl18dzw1z88p.jpg" alt></p>
 <p>1<br>———</p>
 <p>你的车里有没有这么一把锤子？</p>
 <p>按照说明书的讲法，如果不幸受困车内，你可以用它轻易地砸开车窗逃离。你周围的亲戚朋友有没有？迄今为止，你们中有谁曾经用过？</p>
@@ -683,7 +653,7 @@
 <p>罗胖曰：</p>
 <p>我一直在清理家里的藏书。<br>零碎的小书很好办。<br>除非手头要用，一律扔掉或送人。<br>真正为难的是那些大书——<br>《资治通鉴》、《简明大不列颠百科全书》、《杜佑通典》、《四库全书总目提要》、《辞海》、《辞源》······<br>在互联网时代，我明明再也不会翻开它们了。<br>但，它们是我和文化本体连接在一起的精神之锚。<br>保存无价值。失去会恐惧。<br>它们是我的“这把锤子”。<br>你猜，我最后把它们怎么了？</p>
 <h2 id="愚昧者的愚昧——自欺与欺骗背后的逻辑"><a href="#愚昧者的愚昧——自欺与欺骗背后的逻辑" class="headerlink" title="愚昧者的愚昧——自欺与欺骗背后的逻辑"></a><a href="https://book.douban.com/subject/26675645/" target="_blank" rel="noopener">愚昧者的愚昧——自欺与欺骗背后的逻辑</a></h2><p>The Folly of Fools: The Logic of Deceit and Self-Deception in Human</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s28351940.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s28351940.jpg" alt></p>
 <p>当我们坐在驾驶舱中准备奔赴战场，或是身处一段爱情关系，一场办公室纠纷中的时候，我们有太多的机会欺骗和自欺，虽然我们也能意识到这么做有多么脱离现实，会带来多么可怕的灾难。但是我们还是会这么做。这本书主要是写自欺如何为欺骗打掩护的，其背后的原因又是什么。</p>
 <p>目录  · · · · · ·<br>译者序<br>前言<br>第1章　自欺的进化论逻辑<br>自欺的进化<br>欺骗无处不在<br>自欺到底是什么<br>通过认知负载来发现人类的谎言<br>自我欺骗比语言更久远<br>自欺的九种类型<br>社会偏见的构建<br>虚假主体叙述<br>服务于欺骗的无意识模块<br>自欺的特征<br>第2章　自然界中的欺骗<br>欺骗者和受骗者之间激烈的协同演化<br>频率依赖性的自然选择：蝴蝶的例子<br>史诗级的协同进化角力<br>智力与欺骗<br>拟雌<br>假警报信号<br>伪装<br>装死和濒死伪装<br>随机性策略<br>欺骗会引发怒火<br>动物们可能察觉到了谎言<br>作为演化博弈的欺骗<br>更进一步的欺骗理论<br>第3章　强加性自欺的神经心理学基础和等级区分<br>意识知识的神经生理学原理<br>思维抑制的神经生理学原理<br>抑制思维只会适得其反<br>通过神经抑制来促进欺骗<br>无意识自我识别能揭露自欺<br>强加性自欺<br>内隐自尊 VS 外显自尊<br>屈打成招、拷问，以及拍马屁<br>儿童“虐待”事件中的虚假回忆<br>自欺是心灵的免疫系统<br>安慰剂效应<br>第4章　家庭中的自欺以及分裂的自我<br>亲代和子代之间的冲突<br>极端虐待<br>基因组印记<br>对立印记基因之间的内部冲突<br>亲代操控与印记<br>婚姻冲突对基因冲突的影响<br>印记和自欺<br>儿童的骗术<br>父母如何影响儿童的欺骗行为<br>第5章　欺骗、自欺与两性<br>为什么要有性别区分<br>两性，即两种协同演化的物种<br>求偶阶段的欺骗和自欺<br>孩子的父亲是谁<br>男性如何回应女性不忠<br>谎言和女性月经周期<br>男人会高估女人对自己的兴趣<br>男性否定自身的同性恋倾向<br>自欺对婚姻是好是坏<br>幻想的吸引力和危险之处<br>背叛带来的痛苦<br>第6章　自欺的免疫学原理<br>免疫系统耗资巨大<br>睡眠的重要性<br>和免疫讨价还价<br>书写过往心理创伤，提高免疫功能<br>同性恋倾向以及否认的影响<br>积极情感和免疫功能<br>音乐的作用<br>上年纪的好处<br>幸福的免疫理论<br>第7章　自欺的心理学原理<br>某些信息视而不见，某些信息宁滥勿缺<br>偏误信息编码和偏误信息解释<br>偏误记忆<br>合理化不当行为和偏误叙述<br>未来感受预测<br>所有的偏误都是自欺在搞鬼<br>否认和投射<br>否认能够自证<br>哪儿是头，哪儿是尾<br>认知失调和自我辩护<br>失谐削减的社会作用<br>猴子和幼童的认知失调<br>第8章　日常生活中的自欺<br>过度自信的性别差异<br>股市中的隐喻<br>生活中那些操控着我们的隐喻<br>姓名—字母效应<br>装傻充愣<br>面孔值<br>垃圾邮件和反垃圾<br>幽默、大笑和自欺<br>麻醉品和自欺<br>被人玩弄于股掌之间<br>职业大骗子<br>测谎仪和测谎测试<br>第9章　航空航天事故中的自欺<br>佛罗里达航空90号航班：毁于自欺欺人<br>亚马孙上空三万七千英尺的灾难<br>艾尔达在指挥—俄罗斯航空593班机事故<br>是机长的操作失误还是疲劳驾驶惹的祸<br>冰雪压沉了飞机，航空公司打败了FAA<br>美国在航空安全上的疏漏是“9·11”的帮凶<br>“挑战者”号灾难<br>“哥伦比亚”号事故<br>埃及以及埃航的全盘否认<br>不自欺，救飞机<br>第10章　虚假历史叙述<br>美国的虚假历史叙述<br>通过小规模的战争和委任代理的方式来实现控制<br>美国的历史教科书<br>美国历史大图观<br>日本篡改历史<br>虚假历史叙述的意义何在<br>第11章　自欺与战争<br>从黑猩猩突袭到人类战争<br>自欺能促发战争<br>从贬低他人到过度自信而自取灭亡<br>美国2003年攻打伊拉克<br>先搜集证据，又充耳不闻<br>从战争的结果看空袭<br>把历史记忆轰炸干净，炸了又炸<br>自我欺骗和战争历史<br>第12章　自欺和社会科学的知识结构<br>正义必然通向真理<br>科学的成功来源于自欺抗体<br>学科的社会属性越强，发展水平越落后<br>生物学中的自欺<br>经济学是一门科学吗<br>文化人类学<br>心理学<br>精神分析：自欺研究中的自欺<br>自欺会摧毁科学<br>第13章　与生命中的自欺战斗<br>要不要和自欺搏斗<br>一连串的小便宜后面跟着一个大灾难<br>那些愤怒的想法其实就是搞砸的信号<br>校正自己的偏误吧<br>为什么我们屡教不改<br>清醒的价值<br>以为自己在骗人的白日梦，非常危险<br>祈祷和冥想的好处<br>朋友们和心理咨询的意义<br>过度自信招致的自欺和危害<br>一场永无止境的表演<br>致谢</p>
 <h2 id="成甲：关于学习的三个认知升级"><a href="#成甲：关于学习的三个认知升级" class="headerlink" title="成甲：关于学习的三个认知升级"></a><a href="http://www.luojiji.com/thread-7601-1-1.html" target="_blank" rel="noopener">成甲：关于学习的三个认知升级</a></h2><p>这条音频的内容是，成甲在2016年关于学习的三个认知升级。成甲是“得到”的说书人，也是《好好学习：个人知识管理精进指南》的作者。应“得到”知识新闻工作室的邀请，他为我们独家撰写了一篇文章，下面和你分享一下。</p>
@@ -718,7 +688,7 @@
 <li><p>互联网时代，每个人都生活在区块一样的小圈子里，谁能提供打破区块、连接区块的“链”，谁就能享受这个时代的财富红利。同理，学习不仅要系统化，还要碎片化，甚至浅显化。<strong>因为<a href="https://deepcreator.com/Concept/Relation.html" target="_blank" rel="noopener">连接</a>带来的价值，远大于孤立的知识本身。</strong></p>
 </li>
 </ol>
-<h3 id="认知突围：做复杂时代的明白人-1"><a href="#认知突围：做复杂时代的明白人-1" class="headerlink" title="认知突围：做复杂时代的明白人"></a><a href="https://book.douban.com/subject/27093280/" target="_blank" rel="noopener">认知突围：做复杂时代的明白人</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29499370.jpg"></p>
+<h3 id="认知突围：做复杂时代的明白人-1"><a href="#认知突围：做复杂时代的明白人-1" class="headerlink" title="认知突围：做复杂时代的明白人"></a><a href="https://book.douban.com/subject/27093280/" target="_blank" rel="noopener">认知突围：做复杂时代的明白人</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29499370.jpg" alt></p>
 <p>重新认识自己——没<a href="https://deepcreator.com/Concept/Opportunity.html" target="_blank" rel="noopener">机会</a>真的怪不了运气<br>重新认识<a href="https://deepcreator.com/Concept/Knowledge.html" target="_blank" rel="noopener">知识</a>——知识不是无用，是你不会 用<br>重新认识<a href="https://deepcreator.com/Business/Finance.html" target="_blank" rel="noopener">金钱</a>——无节制地省钱是个大坑<br>重新认识<a href="https://deepcreator.com/Concept/Energy.html" target="_blank" rel="noopener">时间</a>——时间用在哪儿，决定你是谁<br>重新认识<a href="https://deepcreator.com/Concept/Relation.html" target="_blank" rel="noopener">关系</a>——尊重界限，找准自身定位<br>重新认识<a href="https://deepcreator.com/Concept/Life.html" target="_blank" rel="noopener">人生</a>——格局，决定你的世界</p>
 <h4 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a>读书笔记</h4><ol>
 <li>你被<a href="https://deepcreator.com/Concept/Brain.html" target="_blank" rel="noopener">大脑</a>骗了，你了解认知的并不是真实的自己</li>
@@ -889,7 +859,7 @@
 <p>当我们面临一件棘手的事情、长时间难于解决的问题的时候，抱有简单认知信念的人总想着有一揽子的解决方案可以马上药到病除，然后一劳永逸。而拥有复杂信念的人则知道把事情进行整分处理，拆分成一个个简单的小问题，并且从这些小问题进行深入分析，因为他知道现在的问题不是原因，而只是现状，只能通过一件件拆分的小事进行深挖，才能够知道病根，才知道以后如何避免出现类似问题。</p>
 <p>一个人的认知信念决定其学习能力，具体复杂认知信念的人可以在相互冲突的信息中随时获得新知，不断进步，跌代自己的认知。</p>
 <p>当然，也不是所有人天生就具备复杂认知信念，当你亲身经历了一件真正从0到1的事情之后，尝到了复杂认知信念带来的甜头，我想，你多少会有改变的。</p>
-<h3 id="收藏清单｜成为巨人，你需要这些工具"><a href="#收藏清单｜成为巨人，你需要这些工具" class="headerlink" title="收藏清单｜成为巨人，你需要这些工具"></a><a href="http://www.luojiji.com/thread-9697-1-1.html" target="_blank" rel="noopener">收藏清单｜成为巨人，你需要这些工具</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/06/001511bs6rz55qza22yz2t.jpg"></p>
+<h3 id="收藏清单｜成为巨人，你需要这些工具"><a href="#收藏清单｜成为巨人，你需要这些工具" class="headerlink" title="收藏清单｜成为巨人，你需要这些工具"></a><a href="http://www.luojiji.com/thread-9697-1-1.html" target="_blank" rel="noopener">收藏清单｜成为巨人，你需要这些工具</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201709/06/001511bs6rz55qza22yz2t.jpg" alt></p>
 <ol>
 <li>成为牛人的第一步，是先要有<strong>大局观</strong>。不要让自己的动作和目标分散，纠结具体的成败。而是要有意识的把它们建立成一个系统，让系统不断的发展。比方说，大学阶段或工作阶段的系统目标，不是毕业证和升职加薪，而是学习能力和工作能力。</li>
 </ol>
@@ -923,7 +893,7 @@
 <blockquote>
 <p>每一个牛人的成功，并不仅仅是自己很牛，而是能让更多的人愿意跟他协作。故事，就是最好的基石。讲好一个真诚的故事，不仅能打动你的合伙人、投资人，还有用户。</p>
 </blockquote>
-<h3 id="关于摆脱存量思维的清单"><a href="#关于摆脱存量思维的清单" class="headerlink" title="关于摆脱存量思维的清单"></a><a href="http://www.luojiji.com/thread-9186-1-1.html" target="_blank" rel="noopener">关于摆脱存量思维的清单</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201707/16/111612af86mff2fk2hgdgd.jpg"></p>
+<h3 id="关于摆脱存量思维的清单"><a href="#关于摆脱存量思维的清单" class="headerlink" title="关于摆脱存量思维的清单"></a><a href="http://www.luojiji.com/thread-9186-1-1.html" target="_blank" rel="noopener">关于摆脱存量思维的清单</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201707/16/111612af86mff2fk2hgdgd.jpg" alt></p>
 <blockquote>
 <p>知道工作的行业已经没落，可还是舍不得看似稳定的生活；明明更好的机会就在眼前，却因瞻前顾后而错过……生活中那些错过的机会，多半是“存量思维”在作怪。</p>
 </blockquote>
@@ -977,7 +947,7 @@
 <ol start="4">
 <li>其实，细想一下，这种态度也不完全是粗暴的否定，它也含有另外一层意思，那就是，<strong>每个人各有天分，不要在你不擅长的事情上浪费时间，去找到你真正有天赋的地方。</strong></li>
 </ol>
-<h3 id="30天，完成一场认知升级"><a href="#30天，完成一场认知升级" class="headerlink" title="30天，完成一场认知升级"></a><a href>30天，完成一场认知升级</a></h3><p><img alt="cognition20180508.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/cognition20180508.jpg?imageMogr2/thumbnail/!75p"></p>
+<h3 id="30天，完成一场认知升级"><a href="#30天，完成一场认知升级" class="headerlink" title="30天，完成一场认知升级"></a><a href>30天，完成一场认知升级</a></h3><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/cognition20180508.jpg?imageMogr2/thumbnail/!75p" alt="cognition20180508.jpg"></p>
 <p>罗振宇、脱不花告诉我，《30天认知训练营》要明确告诉你能从中获得什么。我一言以蔽之，不惑。四十不惑的不惑。它不是一种特定能力，而是一层认知境界。</p>
 <p>中国人传统上认为四十不惑是成长的重要里程碑，<strong>三十而立，四十不惑</strong>，需要经历漫漫修练。现在你有<a href="https://deepcreator.com/Concept/Opportunity.html" target="_blank" rel="noopener">机会</a>提前达成。</p>
 <p>1</p>
@@ -1118,7 +1088,7 @@
 </ol>
 <p>推荐延伸阅读：<br>查理·芒格《穷查理宝典》<br>查理·芒格关于误判心理学的三次演讲：<br>1、1992年2月2日，在加州理工学院教职员俱乐部布雷（Bray）讲座上的演讲；<br>2、1994年10月6日，受剑桥行为研究中心邀请，在哈佛大学教职员俱乐部发表的演讲；<br>3、1995年4月24日，受剑桥行为研究中心邀请，在波士顿港酒店发表的演讲。</p>
 <p>本讲小结<br>总结一下，我们今天说了查理·芒格的误判心理学。说的是，有一些心理倾向，或者是思维定式，会在你不自觉的时候就影响了你的判断。<br>如果你想要避免落入误判的陷阱，你就要注意这些误判。<br>今天思维训练的灵感来源是一本书，《穷查理宝典》，我把这本书推荐给你。</p>
-<p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29389289.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/subject/l/public/s29389289.jpg" alt></p>
 <blockquote>
 <p> Poor Charlie’s Almanack： The Wit and Wisdom of Charlie T. Munger <a href="https://book.douban.com/subject/26992478/" target="_blank" rel="noopener">《穷查理宝典》（珍藏版）</a></p>
 </blockquote>
@@ -1318,7 +1288,7 @@
 <p>只有我们自己能赋予历史以意义，如果幸运，我们偶尔还能超越死亡。</p>
 <p>本讲小结</p>
 <p>总结一下，今天的思维训练，我们讲了我们为什么还应该读历史。灵感来自于杜兰特夫妇的书《历史的教训》，这本书不厚，但很值得一看。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s27990471.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s27990471.jpg" alt></p>
 <blockquote>
 <p>历史的教训  The Lessons of History</p>
 </blockquote>
@@ -1376,7 +1346,7 @@
 <p>总结一下，今天我们讲了，如果掌握套路，你能达到任何目标。我们讲了波利亚的四步解题法和达里奥的五步成功路。它们<strong>步骤相似，精神实质一致</strong>，贯彻两者始终的，都是<strong>直面真相</strong>，坦然面对短板，缜密计划，反复训练，重视反馈。<br>达里奥说成功之道就是这么简单，就是做来不易，我想波利亚会完全同意。</p>
 <p>今日思考</p>
 <p>今天的思维训练，灵感来源是数学家波利亚的一本书《怎样解题：数学思维的新方法》。我给你留一个思考题：</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s27168353.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s27168353.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/6983584/" target="_blank" rel="noopener">怎样解题 —— 数学思维的新方法</a></p>
 </blockquote>
@@ -1416,7 +1386,7 @@
 <p>邻近 主要指时间顺序，顺序倒序插序之中，首选顺叙，它对读者的认知负荷要求最小。插叙或者倒叙，不仅要用的谨慎，更要达到特别的目的，使读者在按照时间顺序的叙述中，意识到这是作者再一次给我发来的信号。</p>
 <p>因果关系 则不只是狭义的因为、所以，平克还把反驳和限制也视作文法中的因果关系，例如除非，尽管，但是，等等等等。</p>
 <p>本讲小结<br>总结一下，今天的思维训练，我们讲写作，合格的写作者首先要追求做减法；要把合格的写作者变成好作者，就要学会做加法。<br>做加法的智慧，我在平克的这本《写作风格的意识》受到了启发，也推荐你看看。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s28514860.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s28514860.jpg" alt></p>
 <blockquote>
 <p>寫作風格的意識 The Sense of Style</p>
 </blockquote>
@@ -1485,7 +1455,7 @@
 <p>你的目标是利益不是立场，要寻找差别，去赢得更大的空间，而不要让自己被立场限制，要对事不对人。同时，在压力面前，不要比拼意志，真正做到讲道理，赢得谈判中的合理性。</p>
 </blockquote>
 <p>今天的思维训练，灵感来源是罗杰·费希尔的的《谈判力》。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s11214643.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s11214643.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/11445551/" target="_blank" rel="noopener">谈判力</a> Getting to Yes: Negotiating Agreement Without Giving In</p>
 </blockquote>
@@ -1516,7 +1486,7 @@
 <p>艾克曼说，笑有几十种，常见的就有十八种，人笑的原因太多：开心会笑，掩饰开心也要笑，不开心更会苦笑；害怕会笑，表达轻蔑也笑，更不要说各种混合笑。这些都可以是真的笑。</p>
 <p>那假笑是什么？<br>第一个标志刚才讲了，假笑没有真笑那么对称；<br>第二个标志是眼睛。 假笑时眼睛周围的肌肉不动。反过来说，当你看到面前的女孩笑靥如花，仿佛眼睛也在笑，那她真的是在欢笑，要珍惜；<br>第三个标志是假笑消失得比较突然。 假如三个标志同时出现，你对面前这个人应该有点数了。<br>表情如此直达内心，但作为一个科学家，艾克曼没有说它能包打听。他提醒我们，错杀与放过的两难，摆在测谎仪面前，同样摆在表情测谎术面前。从表情获得的信息，必须与语言、动作参照，因此我们对人这种动物抽象了解得再多，也不能取代对面前这个人的真切了解。<br>谎言与辨谎的竞赛没有结束，只是换了战场。</p>
 <p>本讲小结<br>总结一下，今天的思维训练，我们讲了怎么通过破解表情秘密来分辨谎言。<br>灵感来自于表情辨谎专家埃克曼的书《说谎：揭穿商业、政治与婚姻中的骗局》，推荐你去看看。</p>
-<p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s3388808.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/subject/l/public/s3388808.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/3321968/" target="_blank" rel="noopener">说谎 </a> Telling Lies: Clues to Deceit in the Marketplace, Politics and Marriage</p>
 </blockquote>
@@ -1599,7 +1569,7 @@
 <p>本讲小结</p>
 <p>总结一下，今天我们讲了一个非常有趣的经济学家谢林，和他提出的聚焦点。中国人认为顶级的智慧叫“析妙理于毫芒”，意思是在最细微的地方解剖精妙的道理。谢林当得起这句话。</p>
 <p>在刚才我今天提到的四本书里，我尤其推荐最后一本，谢林的《微观动机与宏观行为》，建议你也去看看，体会一下在精微与广大两极之间自由来往的思想。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s24949231.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s24949231.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/21318655/" target="_blank" rel="noopener">微观动机与宏观行为</a> Micromotives and Macrobehavior</p>
 </blockquote>
@@ -1646,7 +1616,7 @@
 <p>极化就是要捕捉这个自信：如果是乐观预测，极化会输出一个更乐观的预测；如果是悲观预测，极化会输出一个更悲观的预测。</p>
 <p>善断计划的预测准确率高得惊人。参与者不过是群普通人，智商还可以但不特殊，教育背景参差不齐，也没有内幕信息，借助相当简单的算法，但他们的预测击败了全部现有的预测系统，甚至战胜了专业情报分析师。</p>
 <p>了解如何成为超级预测者，推荐读泰特罗克的书《超预测》（ Superforcastering: The Art and Science of Prediction ）。我把他许为当年最佳图书。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s28534023.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s28534023.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/26749968/" target="_blank" rel="noopener">超预测</a>  Superforecasting: The Art and Science of Prediction</p>
 </blockquote>
@@ -1703,7 +1673,7 @@
 <p>今天我们讲了一个便携的贝叶斯推理工具，希望你能学会使用它。再回顾一下这个工具的用法：</p>
 <p>第一明确你的问题，第二列出几种可能的情形，给予他们一样的权重，第三尊重新的信息，给每个新信息赋予1到5不同的分数，对应哪种情形就把分加到那种情形上。 持续一段时间，你会得到答案。</p>
 <p>让我获得启发的是学者格尔德·吉仁泽的新书《风险与好的决策》，推荐有风险意识的你看看这本书。</p>
-<p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s28037097.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/subject/l/public/s28037097.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/26338839/" target="_blank" rel="noopener">风险与好的决策</a>  RISK SAVVY: HOW TO MAKE GOOD DECISIONS</p>
 </blockquote>
@@ -1746,7 +1716,7 @@
 <p>本讲小结</p>
 <p>总结一下，今天我们讲的认知是，少数战胜多数是常态。所以你要把组织做小，因为只有小集团才能够统一利益，灵活组织应对问题。</p>
 <p>今天的认知训练是受到了美国经济学家和社会学家曼瑟尔·奥尔森的早年的名著《集体行动的逻辑》的启发。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29740490.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29740490.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/27095965/" target="_blank" rel="noopener">集体行动的逻辑</a> ——公共物品与集团理论</p>
 </blockquote>
@@ -1813,7 +1783,7 @@
 <li>如果你幸而成功，你的人力资本会转化为财务资本，然后你用财务资本作多元化投资。人力资本是刚性的，调整起来事倍功半，没有人做得到像自己期望的那样灵活。<br>你的人力资本最好继续用来全身心拥抱你选定的方向；你的财务资本，也就是钱，那是真正的灵活（fungible），它没有历史包袱，用它来迎接环境变迁的挑战，事半功倍。</li>
 </ol>
 <p>本讲小结<br>总结一下，今天我们讨论的问题是：成功者，怎么做能保证持续成功？<br>你想成为下一个成功者，最短的路是做现在的成功者认为毫无意义的事情。而对于个人的启发是一面专心做事，一面自我警惕，注重财务投资。<br>今天的观点启发来自哈佛商学院教授克理斯腾森的名著《创新者的窘境》。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s27776092.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s27776092.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/25807982/" target="_blank" rel="noopener">创新者的窘境(全新修订版) </a>The Innovator’s Dilemma: When New Technologies Cause Great Firms to Fail</p>
 </blockquote>
@@ -1946,7 +1916,7 @@
 <p>本讲小结</p>
 <p>总结一下，今天的思维训练，我们讲阅读，你没必要也不可能在许多领域都成为专家，但你需要了解许多领域的新知。不同领域新知的碰撞、分解、移植和重组，是创新的最主要来源，而广泛读书可以帮你达到目的。</p>
 <p>今天的思维训练，我受到了迪昂《脑的阅读：破解人类阅读之谜 》这本书的启发，也推荐你看看。欢迎你把今天的内容分享给爱读书的朋友。</p>
-<p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s6509549.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/subject/l/public/s6509549.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/6510682/" target="_blank" rel="noopener">脑的阅读</a>  Reading in the Brain: The Science and Evolution of a Human Invention</p>
 </blockquote>
@@ -2174,7 +2144,7 @@
 <p>《高手》这本书，就是专栏一年以来的文章精选集。书里选的文章，不是过去传统意义上那种作者凭着自己感觉的个人精选，而是“算法”的胜利。</p>
 <p>这些文章，根据用户阅读数量和点赞排序选出最受认可的，然后和编辑评判相结合，“人工”+“智能”，为你精心打磨出了这本书。</p>
 <p>现在，我迫不及待，想把它交付给你。</p>
-<h3 id="穷人最需要奢侈品"><a href="#穷人最需要奢侈品" class="headerlink" title="穷人最需要奢侈品"></a><a href="http://www.luojiji.com/thread-2554-1-1.html" target="_blank" rel="noopener">穷人最需要奢侈品</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/24/182530gmx2x7chysaxkeex.jpg"></p>
+<h3 id="穷人最需要奢侈品"><a href="#穷人最需要奢侈品" class="headerlink" title="穷人最需要奢侈品"></a><a href="http://www.luojiji.com/thread-2554-1-1.html" target="_blank" rel="noopener">穷人最需要奢侈品</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/24/182530gmx2x7chysaxkeex.jpg" alt></p>
 <p>乔治孙</p>
 <p>是的，你没有看错，我也并非危言耸听，最渴求奢侈品牌的绝对是贫穷人群，而不是富人。</p>
 <p>举个例子，近期的朋友圈都在流传香奈儿降价、抢购请从速的讯息，但你有没有发现，对消息回应最积极、抢着冲去专卖店排队的人恐怕也不是我们常说的“有钱佬”，多半时候，这些人就是你我生活周遭的张三、李四、王五。</p>
@@ -2240,7 +2210,7 @@
 <blockquote>
 <p>如果一个错误的认知，能点燃一个人的希望，让他开始行动，放长远来看，其实是一件莫大的幸运。</p>
 </blockquote>
-<h3 id="中国家庭的那些浆糊逻辑"><a href="#中国家庭的那些浆糊逻辑" class="headerlink" title="中国家庭的那些浆糊逻辑"></a><a href="http://www.luojiji.com/thread-2510-1-1.html" target="_blank" rel="noopener">中国家庭的那些浆糊逻辑</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/24/021350wdw1hnw35dhmx0uy.jpg"></p>
+<h3 id="中国家庭的那些浆糊逻辑"><a href="#中国家庭的那些浆糊逻辑" class="headerlink" title="中国家庭的那些浆糊逻辑"></a><a href="http://www.luojiji.com/thread-2510-1-1.html" target="_blank" rel="noopener">中国家庭的那些浆糊逻辑</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/24/021350wdw1hnw35dhmx0uy.jpg" alt></p>
 <p>武志红</p>
 <p>清官难断家务事，这句中国式的真理和另一句话紧密地绑在一起：难得糊涂。</p>
 <p>糊涂哲学，不仅盛行于残酷的中国社会，也盛行于一样残酷的中国家庭。所以中国家庭，很容易像一锅粥一样搅不清。但心理学，也许可以将其解析清楚。</p>
@@ -2278,22 +2248,22 @@
 <blockquote>
 <p>成长，就是和回到子宫的渴望搏斗。</p>
 </blockquote>
-<h3 id="网络把我们变傻了吗？"><a href="#网络把我们变傻了吗？" class="headerlink" title="网络把我们变傻了吗？"></a><a href="http://www.luojiji.com/thread-2396-1-1.html" target="_blank" rel="noopener">网络把我们变傻了吗？</a></h3><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/23/164515nkeachkt3zckahze.jpg"></p>
+<h3 id="网络把我们变傻了吗？"><a href="#网络把我们变傻了吗？" class="headerlink" title="网络把我们变傻了吗？"></a><a href="http://www.luojiji.com/thread-2396-1-1.html" target="_blank" rel="noopener">网络把我们变傻了吗？</a></h3><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/23/164515nkeachkt3zckahze.jpg" alt></p>
 <p>出现此类认知偏差，是因为这些观察者只盯着某个局部，缺乏系统性视野和统计头脑；常有人说50年代的小学生毕业生如何写得一手好字，算得一手好账，他没意识到，这只是说明，那时最有天份最好学的孩子也只有机会读到小学；那些哀叹电视挤掉了图书的人也没意识到，今天整天沉迷于电视的人，若没电视，八成是在搓麻将，蹲在墙根晒太阳，或围着火炉子搓手。</p>
 <p>新媒体确实产生了大量肤浅和碎片化的信息，但不是因为它挤掉了长篇深度内容，而是因为它成倍扩大了受众面，要满足这么多受众，其多数内容必定是肤浅和碎片化的，基于人类的认知局限，深度阅读只能是也从来都是少数人在少数时候能够且愿意做的事情；没有新媒体，或许有些人会多翻几本书，但那未必是深度阅读，因为不是所有被钉进书籍里的都是深度内容。</p>
 <p>很多人大概想象不到充分利用互联网可以让阅读达到何等深度，为了弄清一个问题，你可以在一晚上读几十条维基，做上百次搜索，下载查阅十几篇论文，核实几十个数据来源，在过去，即便你能利用最好的图书馆，类似过程也要几周时间，只有专业研究者才会去做，而在今天，只要有足够好奇心和专注力，任何人都可以进行如此深度的阅读。</p>
 <p>从印刷术、报纸、广播、电视，到互联网、智能手机、社交网，新型传播媒介始终在拓展大众的信息来源，开阔其眼界，让他们认识到生活还有更多可能性，从来没有人因为信息来源更多而变得更愚蠢、更不自由，只有一些自以为是的知识分子，才会像比皇帝还着急的太监，每次都跳出来惊呼太多信息会让民众迷失堕落变蠢乃至丧失自由。</p>
 <p>自尼尔·波兹曼的《娱乐至死》出版30年以来，历史已经证明他完全错了，乔治·奥威尔才是对的，自由的丧失，从来都是从信息源的剥夺开始，而这一剥夺必须依靠强制才能做到，动物庄园的建设者们，无不视新媒体为大敌，必欲除之而后快；不幸的是，今天仍有众多像卡尔这样的人，一遍遍拾起波兹曼的牙慧，以愚昧大众拯救者的姿态，攻击他们刚获得的新自由。</p>
-<p><a href="https://book.douban.com/subject/23774518/" target="_blank" rel="noopener">1984</a><br><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s26372338.jpg"></p>
+<p><a href="https://book.douban.com/subject/23774518/" target="_blank" rel="noopener">1984</a><br><img data-src="https://img1.doubanio.com/view/subject/l/public/s26372338.jpg" alt></p>
 <blockquote>
 <p>《1984》描写了未来社会即1984年大洋国一个普通人的日常生活。在大洋国，权力高度集中在“党”英社的手中，到处张贴着党的领袖老大哥的画像，几乎到处都安有电屏幕，思想警察神出鬼没，人们主要指党员，无时无刻不在被监视、被监听，连自由地思想都是一种罪。主人公温斯顿·史密斯在真理部从事篡改历史的工作，他对所处的社会和老大哥渐渐地产生了怀疑，在与另一名党员朱莉雅秘密恋爱后，逐渐成为思想犯，被思想警察逮捕……全书文笔犀利冷峻，以惊人的敏锐洞察力、严密的逻辑推理和丰富的想象力刻画了未来极权主义社会的面貌，警醒世人提防这种预想中的黑暗成为现实。</p>
 </blockquote>
 <p><a href="https://book.douban.com/subject/26319730/" target="_blank" rel="noopener">娱乐至死 Amusing Ourselves to Death: Public Discourse in the Age of Show Business</a></p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s28048575.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s28048575.jpg" alt></p>
 <blockquote>
 <p>电视时代蒸蒸日上，电视改变了公众话语的内容和意义，政治、宗教、教育、体育、商业和任何其他公共领域的内容，都日渐以娱乐的方式出现，并成为一种文化精神，而人类无声无息地成为娱乐的附庸，毫无怨言，甚至心甘情愿，其结果是我们成了一个娱乐至死的物种。乔治·奥威尔曾在《一九八四》中预言人类将会遭受外来压迫，失去自由；赫胥黎则在《美丽新世界》中表达了另一种忧虑：人们会渐渐爱上工业技术带来的娱乐和文化，不再思考。《娱乐至死》想告大家可能成为现实的，是赫胥黎的预言，不是奥威尔的预言；毁掉我们的，不是我们憎恨的东西，恰恰是我们热爱的东西！</p>
 </blockquote>
-<p><a href="https://book.douban.com/subject/25838937/" target="_blank" rel="noopener">美丽新世界</a><br><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29279098.jpg"></p>
+<p><a href="https://book.douban.com/subject/25838937/" target="_blank" rel="noopener">美丽新世界</a><br><img data-src="https://img1.doubanio.com/view/subject/l/public/s29279098.jpg" alt></p>
 <blockquote>
 <p>公元26世纪，在一个“新世界”里，近乎所有人都住在城市，并说着同一种语言。这些人在出生之前，就被预设成为贵、低、贱几种种姓，于工业化的育婴房里成批生产。在乌托邦集权主义者的统治下，新社会“安定、本分、稳定”，偶有对现状产生怀疑或叛逆心态者，均被视为不安定因素放逐到边远地 区。在那里，人人安居乐业、衣食无忧，但家庭，个性，甚至喜怒哀乐却消失殆尽……</p>
 </blockquote>
@@ -2332,7 +2302,7 @@
 <li><p>所以，<strong>想象未来最大的困难，不是你有没有想到一些细节，而是缺了对关键技术的想象，细节越多，错误也就越多。</strong></p>
 </li>
 </ol>
-<p><img alt data-src="http://p3.pstatp.com/large/615c0004088683cb0fde"></p>
+<p><img data-src="http://p3.pstatp.com/large/615c0004088683cb0fde" alt></p>
 <blockquote>
 <ol>
 <li>傅盛认知三部曲之一：所谓成长就是认知升级</li>
@@ -2341,13 +2311,13 @@
 <li>傅盛认知三部曲后记：到底什么是认知？</li>
 </ol>
 </blockquote>
-<p><img alt="fusheng20180501.jpeg" data-src="http://p53s4d2qk.bkt.clouddn.com/fusheng20180501.jpeg?imageMogr2/thumbnail/!75p"></p>
+<p><img data-src="http://p53s4d2qk.bkt.clouddn.com/fusheng20180501.jpeg?imageMogr2/thumbnail/!75p" alt="fusheng20180501.jpeg"></p>
 <h2 id="1-傅盛认知三部曲之一：所谓成长就是认知升级"><a href="#1-傅盛认知三部曲之一：所谓成长就是认知升级" class="headerlink" title="1.傅盛认知三部曲之一：所谓成长就是认知升级"></a><a href="https://36kr.com/p/5065824.html" target="_blank" rel="noopener">1.傅盛认知三部曲之一：所谓成长就是认知升级</a></h2><blockquote>
 <p>怎么才能让一家公司更快地成长？一个人怎么才能从一群人的竞争当中脱颖而出？</p>
 </blockquote>
 <p>我一直在思索，怎么才能让一家公司更快地成长？一个人怎么才能从一群人的竞争当中脱颖而出？</p>
 <h3 id="1、人的四种认知状态"><a href="#1、人的四种认知状态" class="headerlink" title="1、人的四种认知状态"></a>1、人的四种认知状态</h3><p>最近我看了一幅图，我在其上加了一个数字注脚。</p>
-<p><img alt data-src="https://pic.36krcnd.com/201703/05120632/rg906gxxmojr2bpp!1200"></p>
+<p><img data-src="https://pic.36krcnd.com/201703/05120632/rg906gxxmojr2bpp!1200" alt></p>
 <p>这是一个人认知的四种状态——“不知道自己不知道”，“知道自己不知道”，“知道自己知道”和“不知道自己知道”，也是人的四种境界。我将其简单翻译为：</p>
 <p>不知道自己不知道——以为自己什么都知道，自以为是的认知状态。</p>
 <p>知道自己不知道——有敬畏之心，开始空杯心态，准备丰富自己的认知。</p>
@@ -2402,7 +2372,7 @@
 <h2 id="2-傅盛认知三部曲之二：管理本质就是认知管理"><a href="#2-傅盛认知三部曲之二：管理本质就是认知管理" class="headerlink" title="2.傅盛认知三部曲之二：管理本质就是认知管理"></a><a href="https://36kr.com/p/5071158.html?from=authorlatest" target="_blank" rel="noopener">2.傅盛认知三部曲之二：管理本质就是认知管理</a></h2><blockquote>
 <p>谁建立正确认知，谁就能脱颖而出</p>
 </blockquote>
-<p><img alt data-src="https://pic.36krcnd.com/avatar/201704/17100255/pdq6xkg9dukc22fq.jpg!heading"></p>
+<p><img data-src="https://pic.36krcnd.com/avatar/201704/17100255/pdq6xkg9dukc22fq.jpg!heading" alt></p>
 <p>我曾经讲过管理三段论——<strong>目标、路径、资源</strong>。找到一个目标，想清楚路径，再投入资源。</p>
 <p>但它有一个大前提叫——有判断力。没有判断力，搞错了目标，路径切不进去，资源就调不动。而这种判断力的本质，就是认知。</p>
 <p>这个时代，管理不是执行管理，不是组织结构管理，而是你比别人更理解一件事情。管理的本质就是一种认知管理。</p>
@@ -2425,7 +2395,7 @@
 <p>不敢忽略，本质就是分不清优先级。怎么去建立优先级？分清优先级的前提是认知清晰。你脑海里有一个格局，叫大趋势。要知道什么是更重要的。找到最关键的点，牢牢不放。不是最关键的点，学会妥协和让步。有时候，我们思维会有盲点。原因在于：视野不够宽，反思不够频。</p>
 <p>人和人最大的区别就在于思维格局。<strong>什么是中层？什么是创始人？两者区别就在于：一个是迷恋具体情况，我在努力工作；一个是高低结合，我既能努力工作，又能不断花时间去反思，去判断，去拿到认知。而且清楚知道，低的目的是高。即我的每一个执行，本质上又在建立我的认知。</strong></p>
 <h3 id="三个管理维度：信息、时间、人"><a href="#三个管理维度：信息、时间、人" class="headerlink" title="三个管理维度：信息、时间、人"></a>三个管理维度：信息、时间、人</h3><p>宏观层面，领导者要构建对行业的认知体系；那么微观层面，执行操作时，怎样才能做到更聪明的工作？怎样找到那件最重要的事？我从信息、时间、人三个维度剖析管理方法。</p>
-<p><img alt data-src="https://pic.36krcnd.com/201704/17095409/gjqq9f5lfb2ltrxs!1200"></p>
+<p><img data-src="https://pic.36krcnd.com/201704/17095409/gjqq9f5lfb2ltrxs!1200" alt></p>
 <p>先说信息维度。人的本质就是一个CPU。运算能力再强，没有足够的数据输入也不会有产出。有足够大的信息输入，足够高的反思频度，你才会有足够的信息输出，也才会产生格局，做出正确判断。搜集信息的目的，不是为了保持自身现状，而是为了进一步成长获得新能力，使我们做出正确的判断和聪明的决策。</p>
 <p><strong>信息怎么输入？第一，深入分析对手。花时间加大信息搜集，磨刀不误砍柴工。第二，定期遍访行业。了解对手，否则会失去行业认知。第三，不断招聘行业里的人。他们不仅是来工作的，也会带来行业里的认知。</strong></p>
 <p>一个领导者的本质就是做正确的决定。只要你拿到足够的信息，就能做出正确的决定，执行将容易十倍，矛盾也会迎刃而解。有一句话叫主将无能累死三军。执行很难的本质是没有做出正确的决定。</p>
@@ -2444,7 +2414,7 @@
 <h2 id="3-傅盛认知三部曲之三：战略就是格局-破局"><a href="#3-傅盛认知三部曲之三：战略就是格局-破局" class="headerlink" title="3.傅盛认知三部曲之三：战略就是格局+破局"></a><a href="https://36kr.com/p/5071119.html" target="_blank" rel="noopener">3.傅盛认知三部曲之三：战略就是格局+破局</a></h2><blockquote>
 <p>战略就是大格局之下寻找破局点</p>
 </blockquote>
-<p><img alt data-src="https://pic.36krcnd.com/avatar/201704/17070000/h9j1hos9spxb3mbx.jpg!heading"></p>
+<p><img data-src="https://pic.36krcnd.com/avatar/201704/17070000/h9j1hos9spxb3mbx.jpg!heading" alt></p>
 <p>两年前，我写过一篇《一家公司CEO该如何做战略》。应该说，上市以来，我花在战略思考的时间，不少。伴随猎豹前进中遇到的一些问题，我的思考也在不断深入。</p>
 <p>我曾经说过战略三部曲是预测——破局点——All in。破局的单点，被很多人讨论。但，预测这件事，给忽略了。然而，预测背后就是格局观。怎么理解？</p>
 <p>今天的移动互联网，纯粹靠一个单点爆发，已经很难了。过去十年，甚至二十年，互联网是一片蛮荒之地，需求稀缺，人才也稀缺。只要你投身这个行业，随便找个单点开始深耕；只要你还算努力和坚韧，运气也不太差，就有机会做家不错的公司。所以，那个时候不需要预测，需要的就是干干干！</p>
@@ -2496,7 +2466,7 @@
 <p>回到战略，它的本质是什么？我认为，战略就是一个杠杆。它让你做的每一件事，都放大几倍，几十倍。一旦远离这个杠杆，就变成小公司创业模式。关键是，这种创业模式，又比不过真正的创业公司。</p>
 <p>猎豹走到今天，重新回到创业，置身于一处——于大格局之下，寻找新的破局点。战略如是。</p>
 <p>截止现在，我的认知三部曲已全部发布。其中《认知三部曲之一：成长就是认知升级》分享了认知迭代的本质就是捅破那层窗户纸；《认知三部曲之二：管理本质就是认知管理》分享了分享了一个领导如何在大格局下构建对整个行业的认知体系，并从信息、时间、人的三个维度，剖析了管理之道；《认知三部曲之三：战略就是格局+破局》分享了大格局的认知下，升级战略打法，积累势能，寻找新的突破口。</p>
-<h2 id="傅盛认知三部曲后记：到底什么是认知？"><a href="#傅盛认知三部曲后记：到底什么是认知？" class="headerlink" title="傅盛认知三部曲后记：到底什么是认知？"></a><a href="http://36kr.com/p/5072217.html" target="_blank" rel="noopener">傅盛认知三部曲后记：到底什么是认知？</a></h2><p><img alt data-src="https://pic.36krcnd.com/avatar/201704/24131042/fb66hlqcanil2q9e.jpg!heading"></p>
+<h2 id="傅盛认知三部曲后记：到底什么是认知？"><a href="#傅盛认知三部曲后记：到底什么是认知？" class="headerlink" title="傅盛认知三部曲后记：到底什么是认知？"></a><a href="http://36kr.com/p/5072217.html" target="_blank" rel="noopener">傅盛认知三部曲后记：到底什么是认知？</a></h2><p><img data-src="https://pic.36krcnd.com/avatar/201704/24131042/fb66hlqcanil2q9e.jpg!heading" alt></p>
 <blockquote>
 <p>我从认知三要素讲起……</p>
 </blockquote>
@@ -2513,7 +2483,7 @@
 <p>本质上，整个中国教育就是技能教育。发一张答题卡，谁填得好，谁就优秀。它是一种封闭条件下的技能组合。</p>
 <p>而认知是什么呢？<strong>认知是基于一个综合情况而做出的一个精准判断。什么叫综合情况？就是复杂情况下，做了超出常人的不一样的判断。从这个维度看，技能本质是一个封闭式问题，而认知更多是一个开放式问题。</strong></p>
 <p>这里，我画了一幅图来描述认知产生的整个过程。</p>
-<p><img alt data-src="https://pic.36krcnd.com/201704/24130424/givz9ck2miuxx5x7!1200"></p>
+<p><img data-src="https://pic.36krcnd.com/201704/24130424/givz9ck2miuxx5x7!1200" alt></p>
 <p>认知产生原理跟神经网络的模型训练很像。简言之，通过海量信息不断输入，再进行自我思维模式的训练，最后输出一个判断。由此，我总结了认知的三个要素，分别为输入、训练和判断。</p>
 <h3 id="认知第一要素：信息输入与挖掘"><a href="#认知第一要素：信息输入与挖掘" class="headerlink" title="认知第一要素：信息输入与挖掘"></a>认知第一要素：信息输入与挖掘</h3><p>有一句话很流行：道理听了无数，依然无法过好这一生。为什么？不同人面对信息，有不同的态度、方法和能力。所有这些因素，决定了认知的起跑线。同样刷朋友圈，你看花边新闻，人家看某一篇论文，认知能一样吗？</p>
 <p>有的人，凭着一股喜欢，叶公好龙。比如我面试一些技术人员，让他们讲讲对 <strong>AlphaGO的原理</strong>，十有八九，答不上来。有人说，AlphaGO就是运算能力更强，能算出更多步数。</p>
@@ -2565,12 +2535,12 @@
 <p>傅盛举了一个今日头条创始人张一鸣的例子。在创办今日头条之前，张一鸣还创办过一家公司，但是公司做得不好，张一鸣就离开了。有记者问张一鸣，他对之前一起创业的兄弟们没有愧疚感吗？张一鸣回答说，“创业就是一个小概率事件，它就跟赌博一样，赌输了你有什么愧疚感呢？”</p>
 <p>傅盛说，这句话给他的印象很深，因为他从没有在这个视角上考虑过问题。当一个人要去面对这种别人难以想象的困难的时候，要非常冷静地去看待，而不是用简单意义上的人性去看待这些问题。傅盛表示，公司就是一个组织，当自己不是从自我出发来看待这些问题，而是从一个<strong>旁观者</strong>出发去看待这些问题的时候，就能够冷静很多。</p>
 <p>总之，傅盛认为，他在猎豹不断成长过程中学到的最重要的两件事情，<strong>一是进化，进化无可避免，因此必须更快清空，然后去下一个新的阵地；二是要用更理性的第三方视角来看待组织的变化。</strong></p>
-<h2 id="傅盛2018新年演讲：凡杀不死我的，必使我更强大"><a href="#傅盛2018新年演讲：凡杀不死我的，必使我更强大" class="headerlink" title="傅盛2018新年演讲：凡杀不死我的，必使我更强大"></a><a href="https://www.toutiao.com/i6519758188005294599/" target="_blank" rel="noopener">傅盛2018新年演讲：凡杀不死我的，必使我更强大</a></h2><p><img alt data-src="http://p1.pstatp.com/large/615d00034133808f28e0"></p>
+<h2 id="傅盛2018新年演讲：凡杀不死我的，必使我更强大"><a href="#傅盛2018新年演讲：凡杀不死我的，必使我更强大" class="headerlink" title="傅盛2018新年演讲：凡杀不死我的，必使我更强大"></a><a href="https://www.toutiao.com/i6519758188005294599/" target="_blank" rel="noopener">傅盛2018新年演讲：凡杀不死我的，必使我更强大</a></h2><p><img data-src="http://p1.pstatp.com/large/615d00034133808f28e0" alt></p>
 <p>过去几年，猎豹年会，从包飞机三亚，到2000多人包邮轮环日韩，上百号人去北海道滑雪，春运期间包两个高铁去迪士尼，直到今年包动车到澳门。年会，已成了猎豹人最翘首期盼的日子。而我，一般会在这个时刻带大家一起回顾，反思。如下，分享给你们：）</p>
 <p>一年又一年。</p>
 <p>每年此时，我都会回顾走过的路。有时候，欣然觉得，我们走在一条康庄大道；而有时，又猛然警觉，我们可能遇到了从未想过的挑战。</p>
 <p>这一年，对我而言，成长是撕碎的，极致的，进化的。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/615d000341a1a0f9d5a3"></p>
+<p><img data-src="http://p3.pstatp.com/large/615d000341a1a0f9d5a3" alt></p>
 <p>2017年的答卷</p>
 <p>2017年，诸多困难的一次集中式爆发：PC大盘萎靡，海外也面临外部环境变化，Facebook、Google对整个移动广告网络进行大量调整，收入锐减。</p>
 <p>一整年，每三个月，我都觉得是一次考验。市场上充斥着各种声音，包括股价表现，甚至境外机构发起对我们的恶意做空。我也目睹了，一批与我们同时代甚至还年轻的企业，在剧烈变化中崩盘，消失，甚或卖掉。</p>
@@ -2610,7 +2580,7 @@
 <p>如同尼采的一句话：凡杀不死我的，必使我更强大。</p>
 <p>庆幸的是，猎豹今天已经不一样了——猎豹所遭遇的所有的困难，都进化成了猎豹的基因。</p>
 <p>公司的本质是什么？<br>或许，正是因为遇到困难，更加促使我不断思考本质。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/615c000413b2ec121f8f"></p>
+<p><img data-src="http://p3.pstatp.com/large/615c000413b2ec121f8f" alt></p>
 <p>这一年，我去了火人节，读了很多书，重新思考很多问题。我在想——公司的本质究竟是什么？其实第一反应就是收入。</p>
 <p>谁对于公司是这么判断的呢？网上的评论分子。因为，只要你的收入和股价出问题，他们就觉得你不行了。有时候，我骂一句，你懂个屁，然后就被截屏，说CEO深夜骂街。我心里想，CEO深夜骂街有什么了不起？美国总统还白天骂街，不一样治理好美国吗？</p>
 <p>任何一件事情，我们都不应该简单看评论。如果我们也和他们一样，用一个收入考核现在的变化，就会失去真正的内在价值。</p>
@@ -2627,7 +2597,7 @@
 <p>进化中的猎豹基因：<br>积极进取 彪悍执行 突破自我<br>反脆弱 充满好奇 理性客观</p>
 </blockquote>
 <p>我今年最大的感触是，从崛起的年轻人的身上，深深感受到了属于猎豹的味道，属于猎豹的基因。于是，我把它们认认真真地写了下来：</p>
-<p><img alt data-src="http://p3.pstatp.com/large/615f00024e0f481d27e0"></p>
+<p><img data-src="http://p3.pstatp.com/large/615f00024e0f481d27e0" alt></p>
 <p>猎豹第一个基因，积极进取。我们选择了猎豹这只动物作为标志，虽然它并不完美，但我非常喜欢。我觉得它有精神。很多时候，猎豹的潜伏，只为那一瞬间的出击。在这个世界上，猎豹是独一无二的存在。</p>
 <p>猎豹人应该是一群有进取精神的人。我记得，有一次，有人转述别人一句话给我，说我们是机会主义；我说，你回去转述他——一个锄地的老农民，永远不要去嘲笑一个在外拼搏人的梦想。</p>
 <p>猎豹第二个基因，彪悍执行。年终总结时，一位同事说了一句话，也算我们的一个缩影——从厌倦或不适应闪电执行，正在变得擅于闪电执行。</p>
@@ -2664,14 +2634,14 @@
 <p>有一次，我在硅谷见Elon Musk，问了一个问题，我说，你做SpaceX、特斯拉，是不是觉得这件事情能赢，或者你当时怎么想的？他说，其实我真的不知道我一定能赢，这件事非常难，但我做这件事并不是因为它容易，就是因为它难。难，才有我做的价值；难，才有这个机会取得不一样的成就。</p>
 <p>猎豹今天就处在这样的阶段。</p>
 <p>AI为产品赋能 区块链思想放大生态势能<br>如果我们想变得更大更强，就要突破自我的限制，必须去跨越整个组织体系的边界——用AI为我们的产品赋能，为用户提供最好的工具，以此为核心建立猎豹的生态；用区块链的思维放大我们的生态势能。这是我们在新的阶段要做的事情。</p>
-<p><img alt data-src="http://p1.pstatp.com/large/615e00025c45cc99580c"></p>
+<p><img data-src="http://p1.pstatp.com/large/615e00025c45cc99580c" alt></p>
 <p>AI就是新时代的生产力，但AI本身并不是产品。AI必须与各个产品结合。AI+工具，是猎豹在这么多年技术和产品积累的一个最有可能突破的点。</p>
 <p>人类的历史车轮不断前进的本质，就是被工具推动。从石头到马车，再到汽车、飞机、电脑，都让人上了一个新的台阶。如果我们用泛的概念看，机器人也是工具。</p>
 <p>沿着这个点，猎豹可挖掘的机会真的很多。我们不仅将以AI赋能已有的工具产品，打造新的AI+软硬一体化的产品矩阵，也将以区块链改造我们自己的生态体系。</p>
 <p>虽然生态这个词被乐视用坏了，但真正好的公司都是生态化的。如果你只会打铁，工业化一出现，你就被淘汰了；如果你只会射箭，火器一出现，肯定被灭；如果你只会骑马，坦克一出现，只能投降。</p>
 <p>为什么说区块链也是猎豹的机会？谁不怕自己的比特币丢？谁不希望找到更好的新的安全的区块链应用？这些都是释放猎豹几十年安全产品积累的最好出口。</p>
 <p>“管理者” 转变为 “赋能者”和 “超级节点”<br>不仅如此，我也在思考，如何用区块链的思想，去中心化地改造自己。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/615b0004823adbf0e57a"></p>
+<p><img data-src="http://p3.pstatp.com/large/615b0004823adbf0e57a" alt></p>
 <p>摒弃自上而下的层级汇报体系，即使这样做，更加有序、高效、职责分明。但它同时也意味着：僵化、脆弱、缺乏生命力。整个组织系统反馈时间太长，对顶端的依赖太大，容错率太小。</p>
 <p>虽然互联网时代，我们就在强调扁平化，去中心化。但在未来的时代，这样的组织架构还要加强。给年轻人更多机会，建立有效的自我激励机制，让整个组织自主进化，真正让每个人自觉把自己当作公司的主人翁。</p>
 <p>当有一天，我们形成这样的共识，这样的文化，我不需要给你们下任务，你们自己就会想到这件事并做好，你们就开始自我突破了。我想，这样的组织，才会变得灵活、创新、具有持久的生命力。</p>
@@ -2690,7 +2660,7 @@
 <p>我最近经常作一个比喻——你究竟想成为瓷器还是弹簧？瓷器看上去很美，很坚硬，但遭受一点外力就会碎掉，我们管它叫玻璃心，瓷器心；而弹簧，就是你不断有向下施压的劲道，虽然看上去压得很深，一旦当它迸发，就会产生比以前更强大的弹力。</p>
 <p>猎豹过去七年，尤其2017年，团队的成长，变化很多。我的确看到很多人有一个坚硬的外壳，不愿去面对这样一个大变化的时代。</p>
 <p>如果不想被时代抛弃，我们只有开放心态。愿意相信，极度开放，极度透明，互信心态，从我做起，可以带来好结果。相信你的队友，相信跟你合作的人，出现问题时，先苛刻要求自己。不简单抱怨，而是积极面对；放弃自我保护，积极开放。</p>
-<p><img alt data-src="http://p3.pstatp.com/large/615c0004088683cb0fde"></p>
+<p><img data-src="http://p3.pstatp.com/large/615c0004088683cb0fde" alt></p>
 <p>我希望，我们能成为弹簧一样的人。把所有压向你的困难、遭遇的失败，都变成自我吸收的一种机会，一种途径，一种养分。</p>
 <p>三种不同维度的人：<br>No……</p>
 <p>Yes，but……</p>
@@ -2708,7 +2678,7 @@
 <p>人也好，公司也好，只有不断与外界发生连接，才能真正成长并改造自我。就像一颗树苗，如果不从外面获取阳光和水，谈何成长？总不能说，靠天地灵气？况且，灵气总有用完的时候。</p>
 <p>一个去中心化的猎豹正在形成<br>回顾2017，最让我欣喜的就是，一个去中心化的猎豹正在形成。</p>
 <p>对我而言，做一家公司，商业成就有多有少，但能有一批人，怀抱共同愿景，共同成长，尤其一些年轻人，一点点变强大，我特别开心。我想，一个人的成就感，既来自于自我成长，更来自于身边人的成长。</p>
-<p><img alt data-src="http://p9.pstatp.com/large/615e00025d800e95a693"></p>
+<p><img data-src="http://p9.pstatp.com/large/615e00025d800e95a693" alt></p>
 <p>新的一年，我希望每一位猎豹人，都能勇敢打破自己内心的边界，不断自我进化。如同，你们为猎豹写下的那句Slogan——让世界更聪明，让自己更美好！</p>
 <h2 id="傅盛：性格不决定命运，决定命运的是目标和方法论"><a href="#傅盛：性格不决定命运，决定命运的是目标和方法论" class="headerlink" title="傅盛：性格不决定命运，决定命运的是目标和方法论"></a>傅盛：性格不决定命运，决定命运的是目标和方法论</h2><p>近日，傅盛接受人民日报专访表示，“性格决定命运，其实我觉得这句话比较害人，我觉得，性格并不决定命运，只有目标跟自己的方法论才决定命运。”</p>
 <p>— 核心观点 —</p>
@@ -2818,8 +2788,8 @@
 <blockquote>
 <p>所谓要改变世界，必先改变自己。我希望大家能够一起给自己更高的要求，树立更高的目标，不断去自我进化。而创业的过程就是一个你和你创办的公司一起成长的过程。大家一起共同成长，也是创业真正最有意思的事情。</p>
 </blockquote>
-<h2 id="傅盛回复雷军：猎豹是谁？猎豹为什么而奋斗？"><a href="#傅盛回复雷军：猎豹是谁？猎豹为什么而奋斗？" class="headerlink" title="傅盛回复雷军：猎豹是谁？猎豹为什么而奋斗？"></a><a href="https://www.toutiao.com/i6551715488282444291/" target="_blank" rel="noopener">傅盛回复雷军：猎豹是谁？猎豹为什么而奋斗？</a></h2><p><img alt data-src="http://p3.pstatp.com/large/pgc-image/15254400166507920e21e6e"></p>
-<p><img alt data-src="http://p3.pstatp.com/large/pgc-image/1525440016949e14b61f83e"></p>
+<h2 id="傅盛回复雷军：猎豹是谁？猎豹为什么而奋斗？"><a href="#傅盛回复雷军：猎豹是谁？猎豹为什么而奋斗？" class="headerlink" title="傅盛回复雷军：猎豹是谁？猎豹为什么而奋斗？"></a><a href="https://www.toutiao.com/i6551715488282444291/" target="_blank" rel="noopener">傅盛回复雷军：猎豹是谁？猎豹为什么而奋斗？</a></h2><p><img data-src="http://p3.pstatp.com/large/pgc-image/15254400166507920e21e6e" alt></p>
+<p><img data-src="http://p3.pstatp.com/large/pgc-image/1525440016949e14b61f83e" alt></p>
 <blockquote>
 <p>在一个拥挤的房间里开始创业</p>
 </blockquote>
@@ -2840,7 +2810,7 @@
 <p>对猎豹和我而言，这一点永远不会变。</p>
 <p>面对未来的困难，纵然有恐惧、质疑、嘲笑、批评，我们都可以战胜。还是那句话——在复杂的世界里，做个简单的孩子；永远保持孩子一般的初心，用好奇心打败灰心，用初心替代胜负心。</p>
 <p>用无尽的热爱，不顾一切的努力，做伟大的产品，做伟大的公司，看更大的世界！永远相信美好的事情即将发生！</p>
-<h2 id="北大120周年校庆｜傅盛：年轻人最不怕的就是失败"><a href="#北大120周年校庆｜傅盛：年轻人最不怕的就是失败" class="headerlink" title="北大120周年校庆｜傅盛：年轻人最不怕的就是失败"></a><a href="https://www.toutiao.com/i6552870761239937550/" target="_blank" rel="noopener">北大120周年校庆｜傅盛：年轻人最不怕的就是失败</a></h2><p><img alt data-src="http://p3.pstatp.com/large/pgc-image/1525708911415e7853272aa"></p>
+<h2 id="北大120周年校庆｜傅盛：年轻人最不怕的就是失败"><a href="#北大120周年校庆｜傅盛：年轻人最不怕的就是失败" class="headerlink" title="北大120周年校庆｜傅盛：年轻人最不怕的就是失败"></a><a href="https://www.toutiao.com/i6552870761239937550/" target="_blank" rel="noopener">北大120周年校庆｜傅盛：年轻人最不怕的就是失败</a></h2><p><img data-src="http://p3.pstatp.com/large/pgc-image/1525708911415e7853272aa" alt></p>
 <blockquote>
 <p>人的成长就是认知升级</p>
 </blockquote>
@@ -2882,7 +2852,7 @@
 <p>刘强东说，关掉自己的线下店。因为线下店里的每个人来看了什么东西，买了什么，停留了多久等等，都没法数据化。线下店的效率永远没有办法与线上销售同日而语。如今，线下店可以实现谁来了也知道，做了什么动作，都可以知道，线下也是网络的一部分。互联网会变成基础经济。</p>
 </blockquote>
 <p>VUCA时代：从复杂到超级复杂<br>有一个词叫VUCA时代，四个字母分别指易变性、不确定性、复杂性和模糊性。这个概念来自一本书叫《赋能》。作者是美军特种兵，他记录了美军打伊拉克时很快取胜，但打基地组织时却很难打。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29615316.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29615316.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/subject/27204181/" target="_blank" rel="noopener">赋能</a>：打造应对不确定性的敏捷团队</p>
 </blockquote>
@@ -2991,7 +2961,7 @@
 <p>然而导致狮子捕杀不成功的，还有一个原因，是狮子的这次攻击根本就没想成功——狮子想通过攻击来观察这一群猎物里哪些跑得慢、哪些容易出错、哪些容易落单，甚至在攻击的时候，使猎物在奔跑中受伤。</p>
 <p>狮子具有识别猎物错误的能力。当它在夜间发动一次佯攻时，能通过脚步声准确判断出猎物里哪只羚羊或者斑马的腿瘸了，或者发现有几只猎物的腿是瘸的——这个过程就是一个“火力侦察”过程。</p>
 <p>如果狮子仅仅趴在那儿，然后出其不意地扑上去，成功率就会非常低。</p>
-<p>俗话说“不怕贼偷，就怕贼惦记”，狮子的攻击都是有目标的，它所捕杀的猎物往往都是它在之前进行了仔细识别和认知的，这种方式也是“火力侦察”。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/17/091900qittk4r6t00nlfnx.jpg"><br>狮子捕杀羚羊</p>
+<p>俗话说“不怕贼偷，就怕贼惦记”，狮子的攻击都是有目标的，它所捕杀的猎物往往都是它在之前进行了仔细识别和认知的，这种方式也是“火力侦察”。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201806/17/091900qittk4r6t00nlfnx.jpg" alt><br>狮子捕杀羚羊</p>
 <p>“格物”：与物“格斗”</p>
 <p>无论是“番茄酱笔”，还是太阳马戏团，以及狮子的佯攻，其实都是一种“格物致知”。这个单元开始的时候，我们提到了“格物致知”。</p>
 <blockquote>
@@ -3076,7 +3046,7 @@
 <p>可问题是，中国的这个案子，我发现和1934年我们那个案子，有一点非常重要的区别，就是1934年易君左道歉是对谁道歉，对全部扬州人道歉，而05年深圳发生的这个案子，道歉的对象是这两个河南公民本人，我想这中间有非常重要的差别。</p>
 <p>我们假设时光倒流回到2005年，我们河南籍的不管是工商联，还是省政府，还是什么样的民间组织，我们都开始通过法律途径和深圳公安局打这场官司，而且得到的结果是，深圳市公安局向所有河南人民道歉，我相信这样的示范一旦出来，以后这样的地域歧视是不是就会少一点了呢。</p>
 <p>本期推荐书籍：<br>《信任论》 郑也夫 著<br>《西铭》 张载（宋代） 著<br>《1934：扬州案中的歧视》 章敬平 著</p>
-<h2 id="观念的水位"><a href="#观念的水位" class="headerlink" title="观念的水位"></a><a href="https://book.douban.com/subject/20463108/" target="_blank" rel="noopener">观念的水位</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s26846213.jpg"></p>
+<h2 id="观念的水位"><a href="#观念的水位" class="headerlink" title="观念的水位"></a><a href="https://book.douban.com/subject/20463108/" target="_blank" rel="noopener">观念的水位</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s26846213.jpg" alt></p>
 <p>作为国内公共领域最重要的声音之一，刘瑜的文字向来拥趸众多，之前的作品更多关注美国民主，与中国相关度不高。而本书更多关注东亚、中东欧、南美洲以及非洲国家的政治与民主化，比如英国、俄罗斯、委内瑞拉、赞比亚等，这些国家的民主化进程参差不齐，而很多情况与现今中国有较强的可比性，这无疑让这本书更生动，更接地气。</p>
 <p>喜欢刘瑜文字的人，在本书中仍然可以找到惊喜，她是幽默的：“所谓民主，就是选一个人上去挨骂。”她还是犀利的：“别说什么‘关了灯都一样’，21世纪了，为什么总要关着灯呢。”书中内容，包括、国际时政、政治书评影评以及一些个体化思考的杂论，更为多样化，阅读上带有跳跃感，但并不会有断裂之感，相反，用刘瑜自己的话说：“我相信这些文章集结在一起所传递的信息，相比它们零散的存在，其重量和清晰度是不一样的，而这些信息在今天的中国值得被反复和清晰地传递。”</p>
 <p>一个更好的社会，更好的制度的降临并不是“自动”的，观念的变化是必要环节，而本书最终要达到的目的，就是“<strong>将过于霸道的声音拧小，将被屏蔽的声音放大，将司空见惯的思维方式打上一个问号，将盒子里的光释放</strong>”，“告诉他人他们不知道自己知道的观念”。</p>
@@ -3224,8 +3194,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/3C/" rel="bookmark">3C</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Poverty/" rel="bookmark">Poverty</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Boundary/" rel="bookmark">Boundary</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Occam-Razor/" rel="bookmark">Occam's Razor</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Ivory-Tower/" rel="bookmark">Ivory Tower</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Cognition/" rel="tag"><i class="fa fa-tag"></i> Cognition</a>
               <a href="/tags/Perceive/" rel="tag"><i class="fa fa-tag"></i> Perceive</a>
@@ -3238,21 +3229,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/IPR/DeepCreator/IPR/Trademark/" rel="next" title="Trademark">
-                  <i class="fa fa-chevron-left"></i> Trademark
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/AI/DeepCreator/AI/Computer/" rel="prev" title="Computer">
-                  Computer <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IPR/DeepCreator/IPR/Trademark/" rel="prev" title="Trademark">
+      <i class="fa fa-chevron-left"></i> Trademark
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/AI/DeepCreator/AI/Computer/" rel="next" title="Computer">
+      Computer <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -3265,7 +3253,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -3296,8 +3306,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -3306,14 +3316,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -3324,11 +3334,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -3362,7 +3367,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -3374,51 +3379,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -3427,18 +3393,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -3448,63 +3408,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -3512,14 +3415,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -3546,40 +3449,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/DeepCreator/Concept/Cognition/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="沟通能力指的是：能在大多数情况下维持或增进关系，并借此实现自己目标的能力。——沟通中最忌讳的就是自以为是和自作聪明。">
 <meta name="keywords" content="Communication">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/C/Communication/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/C/Communication/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/C/Communication/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,13 +256,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/14/114119ppddffnjwpap9da8.jpg"></p>
+        <p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/14/114119ppddffnjwpap9da8.jpg" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/review/8216487/" target="_blank" rel="noopener">沟通能力指的是：能在大多数情况下维持或增进关系，并借此实现自己目标的能力。</a>——沟通中最忌讳的就是自以为是和自作聪明。</p>
 </blockquote>
 <a id="more"></a>
-<p><img alt data-src="http://opb37u589.bkt.clouddn.com/aid141009-v4-728px-Develop-Good-Communication-Skills-Step-8.jpg?imageMogr2/thumbnail/!75p"></p>
-<p><img alt data-src="https://img3.doubanio.com/lpic/s27920443.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/aid141009-v4-728px-Develop-Good-Communication-Skills-Step-8.jpg?imageMogr2/thumbnail/!75p" alt></p>
+<p><img data-src="https://img3.doubanio.com/lpic/s27920443.jpg" alt></p>
 <blockquote>
 <p>好好说话。</p>
 </blockquote>
@@ -320,7 +290,7 @@
 <p>第一，只问你真正想听到对方回答的问题。不管你有多么的老练，如果你只是装装样子，对方肯定会发现你是在耍小把戏吸引别人的喜欢。第二，尽量保持双重的视角。你想问什么样的问题，你想得到什么样的回答，不仅要从这样的角度进行思考，还要从对方的兴趣出发。</p>
 </blockquote>
 <p>以上就是《怎样才叫会说话》这本书里介绍的一些沟通技巧，希望对你有帮助。</p>
-<h2 id="你说的话，老板和同事会认真听吗？"><a href="#你说的话，老板和同事会认真听吗？" class="headerlink" title="你说的话，老板和同事会认真听吗？"></a><a href="http://www.luojiji.com/thread-11431-1-1.html" target="_blank" rel="noopener">你说的话，老板和同事会认真听吗？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/16/101542fkh3xxycq1thhttv.jpg"></p>
+<h2 id="你说的话，老板和同事会认真听吗？"><a href="#你说的话，老板和同事会认真听吗？" class="headerlink" title="你说的话，老板和同事会认真听吗？"></a><a href="http://www.luojiji.com/thread-11431-1-1.html" target="_blank" rel="noopener">你说的话，老板和同事会认真听吗？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201803/16/101542fkh3xxycq1thhttv.jpg" alt></p>
 <p>2018-03-16 汤君健 罗辑思维</p>
 <pre><code>明明是为公司着想，提建议却总被挡回去？
 
@@ -331,7 +301,7 @@
 别的同事提一个想法，很快被认可，自己说话却没人响应。为什么？
 </code></pre><p>职场上，说话没分量、意见被忽视、建议不被采纳，你是否也正在被这些问题困扰？那你有没有想过该怎么破解？</p>
 <p>你好，我是汤君健，曾服务于500强企业，现在是一家创业公司的创始合伙人。</p>
-<p>我在「得到」App的精品课《有效提升你的职场说服力》，提炼了自己12年的企业管理经验，帮你破解这些问题。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/16/101611nli97zlf7il6bf62.jpg"></p>
+<p>我在「得到」App的精品课《有效提升你的职场说服力》，提炼了自己12年的企业管理经验，帮你破解这些问题。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201803/16/101611nli97zlf7il6bf62.jpg" alt></p>
 <p>你为什么需要职场说服力？</p>
 <p>职场说服力，本质上是让别人跟你达成共识的能力。这，是一项职场必备技能。</p>
 <p>要说服同事，让他配合你的工作；要说服上级，让他相信你的能力、支持你的主张；……都需要用到它。</p>
@@ -352,18 +322,18 @@
 
 ……
 </code></pre><p>这些，就是这堂课要帮你的。</p>
-<p>它能够让你训练一套表达习惯、养成一套思维方式，帮助你成为职场上“说话有分量”的人。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/16/101653q4lhx8qh65g0jxgj.jpg"></p>
+<p>它能够让你训练一套表达习惯、养成一套思维方式，帮助你成为职场上“说话有分量”的人。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201803/16/101653q4lhx8qh65g0jxgj.jpg" alt></p>
 <h2 id="方法：怎样跟害怕冲突的上司沟通"><a href="#方法：怎样跟害怕冲突的上司沟通" class="headerlink" title="方法：怎样跟害怕冲突的上司沟通"></a><a href="http://www.luojiji.com/thread-11489-1-1.html" target="_blank" rel="noopener">方法：怎样跟害怕冲突的上司沟通</a></h2><p>在职场中很多人都会碰到这样的问题，当你需要老板支持时，上司很难站出来为你出头，尤其是不同部门之间有冲突时，温和的上司就不喜欢面对冲突。《哈佛商业评论口袋商学院》一书就针对这样的困境提出了四个解决方法。</p>
 <p>第一，让上司更容易接受即将出现的冲突。如果你的上司防备心很重，又很厌恶冲突，当有问题出现时，你要从公司获取最佳利益的角度出发去说服上司。比如：“如果我们的印刷商持续存在质量问题怎么办？那你看这样做好不好，我还打算开始研究其他的选择。”温和地引导上司，这样你的上司会确信，你是在跟他朝着共同的目标努力，而不是将他推向一个独自承担压力的位置。</p>
 <p>第二，把注意力放在问题的解决上。厌恶冲突的上司会很怕与人沟通冲突问题，解决过程中要对事不对人，这有助于营造中立气氛。面对问题时，你可以提出具体的解决方案。比如说你发现你们的周会变成了一个大家发牢骚的周会，这时你可以不跟上司说发牢骚的事，而是提出建议或解决方案：为了让周会开得更有效率，可以提前去收集大家的问题，做一份提纲。</p>
 <p>第三，在冲突来临前，多收集支持性的证据。如果你希望上司能从帮助你的角度去运用他的权威，你一定要给他提供所需要的一切材料，比如构想草案和相关数据，或是解释你想做的事情的具体策划和目标。有一位公司经理，当他的下属去推动他申请更高预算的时候，这位经理感到压力非常大。于是这个下属就做了很多准备工作，他明确了团队每个成员的职责，做了非常清晰的成本结算，同时非常清晰地说明了更高的预算可以获得怎样的成效。最后，他的老板就带着更大信心去找到了公司高层，要到了这笔预算。</p>
 <p>第四，一定要循序渐进。如果你感觉到某一次谈话让你的上司觉得很尴尬很不愉快，那你一定要记住，下一次切不可再这样贸然进入主题，你可以用一些中性的、没有威胁性的话题，慢慢地打破僵局，甚至可以先从某个公共话题开始，当你感觉到他很放松的时候，就可以逐渐切入有冲突性的话题了。</p>
 <p>以上就是和害怕冲突的上司打交道的四个方法。</p>
-<h2 id="怎么让老板、同事更愿意听你的？"><a href="#怎么让老板、同事更愿意听你的？" class="headerlink" title="怎么让老板、同事更愿意听你的？"></a><a href="http://www.luojiji.com/thread-11458-1-1.html" target="_blank" rel="noopener">怎么让老板、同事更愿意听你的？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/19/090032hp3jv0bl33hrwg0j.jpg"></p>
+<h2 id="怎么让老板、同事更愿意听你的？"><a href="#怎么让老板、同事更愿意听你的？" class="headerlink" title="怎么让老板、同事更愿意听你的？"></a><a href="http://www.luojiji.com/thread-11458-1-1.html" target="_blank" rel="noopener">怎么让老板、同事更愿意听你的？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201803/19/090032hp3jv0bl33hrwg0j.jpg" alt></p>
 <p>2018-03-19 「得到」 罗辑思维<br>引言</p>
 <p>工作中，良好的沟通和说服能力，能让别人迅速接受自己的建议，轻松撬动更多资源，是一项必备技能。具体要怎样提升这项能力，让领导同事更愿意听自己的呢？</p>
 <p>「得到」作者汤君健的这篇清单，15条件建议，助你能干又会说，掌握职场话语权。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201803/19/090050pq98cuucfur9j8cd.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201803/19/090050pq98cuucfur9j8cd.jpg" alt></p>
 <ol>
 <li>职场说服力，不同于生活中的“会说话”。它有一套独特的表达习惯和思维方式。这些“套路”，可以通过<strong>刻意练习</strong>获得。</li>
 </ol>
@@ -432,7 +402,7 @@
 <p>第三，多使用“皮格马利翁效应”，小心“泥人效应”。爱德华兹在书里介绍了心理学里的“皮格马利翁效应”（Pygmalion Effect），这个理论由美国心理学家罗森塔尔提出，主要说的是，“你期望什么，你就会得到什么，你得到的不是你想要的，而是你期待的”。 泥人效应正好与皮格马利翁效应相反，说的是，低期望会导致拙劣表现的现象，这种现象在职场上非常普遍。爱德华兹说，对别人怀有最高的期望不仅对新认识的人很重要，对老朋友也很重要，“扮演荧光笔的重点在于不断找寻他人的优点。当你对别人说他们很优秀，他们就会变得更好；当你用心找寻别人的优点，你也会非常开心”。</p>
 <h2 id="聊天之道：如何在闲聊中提升自我"><a href="#聊天之道：如何在闲聊中提升自我" class="headerlink" title="聊天之道：如何在闲聊中提升自我"></a><a href="http://www.luojiji.com/thread-10915-1-1.html" target="_blank" rel="noopener">聊天之道：如何在闲聊中提升自我</a></h2><p>2018-01-14 「得到」 罗辑思维<br>引言<br>不管是与合作伙伴，还是与朋友亲人，闲聊是人与人之间最常用的交流方式。实际上，闲聊不仅能用来消磨时间，它可以变得很有意义。</p>
 <p>如何在轻松的闲聊中获得提升？脱不花的这篇清单供你参考，愿你在闲聊中也能有所收获。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/14/114217aczpepqq7qqqx3q4.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/14/114217aczpepqq7qqqx3q4.jpg" alt></p>
 <ol>
 <li><p>人与人生存状态的真正差别，体现在怎么打发闲暇时间。</p>
 </li>
@@ -477,8 +447,8 @@
 <p>芭芭拉·帕克特介绍，“我想、我希望、或许、一点、小小的、可能”，这些都是自我贬损语言。如果你确实知道某件事时，千万别说：“我想……”，因为这种说法带有自我贬损意味与不确定性。比如，一位客户经理接受顾客反馈时说 “我想我会去做的”，这样不如“我今天就去做”那么礼貌而有力。</p>
 <p>西方国家的人们常常会把“对不起”挂在嘴边。帕克特认为，除非你真心想向人道歉，或者是需要承担道歉的责任，否则不要随便说对不起。在做开场白时，不要用道歉或是优柔寡断的字句开始自己的表述，有礼貌并不代表要贬低自己的问题点或者要求。比如，当你第一句就说：“我痛恨要说出这件事，我真的很不想说这件事。”对方可能会想那你为什么要说。当你说出礼貌而有力的开场白时，记得不要在结尾使用“我不知道……你觉得怎么样呢”这种游移不定的语气，它会削弱句子的力量。</p>
 <p>帕克特还建议人们，在做商务汇报时，不要重复“嗯、噢、这个、那个、好吗、之类的、可以吗”这样的虚词，这样会让听众分心。<strong>在沟通时，也可以多用“我”，而不是“你”。</strong> 比如，“我不同意”要比“你错了”这种表述的效果好；“我没听懂”要比“你没有正确表达”好；“我不知道”要比“你没告诉我”好。</p>
-<h2 id="换种方式，试试"><a href="#换种方式，试试" class="headerlink" title="换种方式，试试"></a>换种方式，试试</h2><p><img alt="9c9dd971bd3f185e5b97524b1ea5b34b.jpg" data-src="http://opb37u589.bkt.clouddn.com/9c9dd971bd3f185e5b97524b1ea5b34b.jpg?imageMogr2/thumbnail/!75p"><br><img alt="c4d7cc08d6ff92c207593b41b1e22725.jpg" data-src="http://opb37u589.bkt.clouddn.com/c4d7cc08d6ff92c207593b41b1e22725.jpg?imageMogr2/thumbnail/!75p"><br><img alt="e8da09ac86c4bab58c3602607d16a01e.jpg" data-src="http://opb37u589.bkt.clouddn.com/e8da09ac86c4bab58c3602607d16a01e.jpg?imageMogr2/thumbnail/!75p"><br><img alt="39b09eca3fc24f069565631315e94392.jpg" data-src="http://opb37u589.bkt.clouddn.com/39b09eca3fc24f069565631315e94392.jpg?imageMogr2/thumbnail/!75p"><br><img alt="6498adfa1610c576342534d1eeb8b1e9.jpg" data-src="http://opb37u589.bkt.clouddn.com/6498adfa1610c576342534d1eeb8b1e9.jpg?imageMogr2/thumbnail/!75p"><br><img alt="5ca2b7989ff96bf4c1a7ed45b3bee465.jpg" data-src="http://opb37u589.bkt.clouddn.com/5ca2b7989ff96bf4c1a7ed45b3bee465.jpg?imageMogr2/thumbnail/!75p"><br><img alt="c8916d916aa685d72e687b294567ab3c.jpg" data-src="http://opb37u589.bkt.clouddn.com/c8916d916aa685d72e687b294567ab3c.jpg?imageMogr2/thumbnail/!75p"><br><img alt="ba6f36981e450aedde01e53597866c64.jpg" data-src="http://opb37u589.bkt.clouddn.com/ba6f36981e450aedde01e53597866c64.jpg?imageMogr2/thumbnail/!75p"></p>
-<h2 id="优秀的人往往不合群？"><a href="#优秀的人往往不合群？" class="headerlink" title="优秀的人往往不合群？"></a><a href="http://www.luojiji.com/thread-2656-1-1.html" target="_blank" rel="noopener">优秀的人往往不合群？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/25/172840n7x2kct7xxmxkc39.jpg"></p>
+<h2 id="换种方式，试试"><a href="#换种方式，试试" class="headerlink" title="换种方式，试试"></a>换种方式，试试</h2><p><img data-src="http://opb37u589.bkt.clouddn.com/9c9dd971bd3f185e5b97524b1ea5b34b.jpg?imageMogr2/thumbnail/!75p" alt="9c9dd971bd3f185e5b97524b1ea5b34b.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/c4d7cc08d6ff92c207593b41b1e22725.jpg?imageMogr2/thumbnail/!75p" alt="c4d7cc08d6ff92c207593b41b1e22725.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/e8da09ac86c4bab58c3602607d16a01e.jpg?imageMogr2/thumbnail/!75p" alt="e8da09ac86c4bab58c3602607d16a01e.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/39b09eca3fc24f069565631315e94392.jpg?imageMogr2/thumbnail/!75p" alt="39b09eca3fc24f069565631315e94392.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/6498adfa1610c576342534d1eeb8b1e9.jpg?imageMogr2/thumbnail/!75p" alt="6498adfa1610c576342534d1eeb8b1e9.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/5ca2b7989ff96bf4c1a7ed45b3bee465.jpg?imageMogr2/thumbnail/!75p" alt="5ca2b7989ff96bf4c1a7ed45b3bee465.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/c8916d916aa685d72e687b294567ab3c.jpg?imageMogr2/thumbnail/!75p" alt="c8916d916aa685d72e687b294567ab3c.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/ba6f36981e450aedde01e53597866c64.jpg?imageMogr2/thumbnail/!75p" alt="ba6f36981e450aedde01e53597866c64.jpg"></p>
+<h2 id="优秀的人往往不合群？"><a href="#优秀的人往往不合群？" class="headerlink" title="优秀的人往往不合群？"></a><a href="http://www.luojiji.com/thread-2656-1-1.html" target="_blank" rel="noopener">优秀的人往往不合群？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/25/172840n7x2kct7xxmxkc39.jpg" alt></p>
 <p>职业笔记</p>
 <p>讲起不合群，大多数人的记忆中一定会有这样的场景：寝室有一学霸，每天7点准时起床去自习，早出晚归。寝室有来串门的同学一起聊天，他基本都不加入。即使我们聊天的时候谈笑很大声，他也好像不为所动，只在干自己的事情。</p>
 <p>而也曾经有一个宿舍，宿舍里面6个人。每当宿舍6个人都凑齐的时候，寝室长总会组织大家打牌，或者有时候就大家一起开黑打DOTA。更多时候，大家是相约好一起聚在寝室而非赶巧。</p>
@@ -604,13 +574,13 @@
 <p>另外，不要以为只有提问者会对你的观点感到困惑，还要观察坐在提问者周围的其他三个人，看看他们是什么表情，他们的身体语言有没有表达出某种突然的放松？通过这样的观察，你会捕捉到，他们在表达“我没听懂但我不想问”或者“我没听懂，但这家伙的问题正好是我想问的，现在我搞懂了”。</p>
 <p>以上就是让他人接受你的理念和想法的6个步骤，供你参考。</p>
 <p>本期内容参考来源：微信公众号“中欧商业评论”《有了一个大胆的想法后，你还要学会兜售它》</p>
-<h2 id="沟通的艺术（插图修订第14版）"><a href="#沟通的艺术（插图修订第14版）" class="headerlink" title="沟通的艺术（插图修订第14版）"></a><a href="https://book.douban.com/subject/26275861/" target="_blank" rel="noopener">沟通的艺术（插图修订第14版）</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s27920443.jpg"></p>
+<h2 id="沟通的艺术（插图修订第14版）"><a href="#沟通的艺术（插图修订第14版）" class="headerlink" title="沟通的艺术（插图修订第14版）"></a><a href="https://book.douban.com/subject/26275861/" target="_blank" rel="noopener">沟通的艺术（插图修订第14版）</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s27920443.jpg" alt></p>
 <p>看入人里，看出人外<br>Looking Out Looking In</p>
 <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>译者序<br>前　言<br>致　谢</p>
 <p>第一章　人际沟通入门<br>第一部分 看入人里<br>第二章　沟通和认同：自我的塑造与展现<br>第三章　知觉：看到什么就是什么<br>第四章　情绪：感觉、思考和沟通<br>第二部分　看出人外<br>第五章　语言：障碍与桥梁<br>第六章　非语言沟通：超越字词之外的信息<br>第七章　倾听：不只是听见<br>第三部分　看人之间<br>第八章　沟通和关系的演变<br>第九章　人际沟通中的亲密关系<br>第十章　增进沟通气氛<br>第十一章　处理人际冲突<br>出版后记</p>
 <h3 id="什么样的人，才有资格被称为沟通高手？"><a href="#什么样的人，才有资格被称为沟通高手？" class="headerlink" title="什么样的人，才有资格被称为沟通高手？"></a><a href="https://book.douban.com/review/8216487/" target="_blank" rel="noopener">什么样的人，才有资格被称为沟通高手？</a></h3><p>版权归作者所有，任何形式转载请联系作者。<br>作者：李小墨（来自豆瓣）<br>来源：<a href="https://book.douban.com/review/8216487/" target="_blank" rel="noopener">https://book.douban.com/review/8216487/</a></p>
 <p>【本文原创首发于个人公众号：深夜书桌（ID: shenyeshuzhuo）】</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p395031.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p395031.jpg" alt></p>
 <p>写在前面的话：</p>
 <p>这个月时间，我精读了《沟通的艺术：看入人里，看出人外》。</p>
 <p>什么样的书值得花一个月的时间去读？我没办法界定，但《沟通的艺术：看入人里，看出人外》绝对值得。</p>
@@ -679,7 +649,7 @@
 <p>因为了解自己，所以能很好地控制自己的言行，因为了解他人，所以能做出得当的反应；是那些相处起来很舒服的人，他们能在坚持自己的原则和照顾他人的感受之间取得微妙的平衡，他们的沟通行为恰当且有效；是那些从容优雅、进退有度的人。</p>
 </blockquote>
 <p>我相信，沟通能力是通过不断的学习、训练、调整而提升起来的，没有人是天生的沟通高手。愿你的精进之路，少走弯路。</p>
-<h2 id="沟通圣经"><a href="#沟通圣经" class="headerlink" title="沟通圣经"></a><a href="https://book.douban.com/subject/26663916/" target="_blank" rel="noopener">沟通圣经</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s28339690.jpg"></p>
+<h2 id="沟通圣经"><a href="#沟通圣经" class="headerlink" title="沟通圣经"></a><a href="https://book.douban.com/subject/26663916/" target="_blank" rel="noopener">沟通圣经</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s28339690.jpg" alt></p>
 <h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>第1章 沟通的过程<br>第2章 说<br>第3章 听<br>第4章 人际互动与非语言沟通<br>第5章 打电话<br>第6章 面谈<br>第7章 求职面试<br>第8章 团队沟通<br>第9章 主持和参与会议<br>第10章 演讲<br>第11章 视觉辅助工具<br>第12章 增进阅读速度<br>第13章 提高阅读效率<br>第14章 撰写英文商务文章<br>第15章 求职<br>第16章 撰写报告<br>第17章 其他文书任务<br>第18章 视觉沟通<br>练习解答<br>出版后记</p>
 <h3 id="有效沟通的五个面-amp-倾听的技术"><a href="#有效沟通的五个面-amp-倾听的技术" class="headerlink" title="有效沟通的五个面 &amp; 倾听的技术"></a><a href="https://book.douban.com/review/7822140/" target="_blank" rel="noopener">有效沟通的五个面 &amp; 倾听的技术</a></h3><p>世界上有两件最难的事：把别人的钱装进自己的口袋；把自己的思想装进别人的脑袋。<br>我终于看懂了「圣经」的意思，准确地说是中国人对于「圣经」的理解，其实就是“教科书”的代名词，是「大而全」的解释语，这本『沟通圣经』（听说读写全方位沟通技巧）的英文版原名是「Mastering Communication」，其实就是精通沟通所需要的技术指导。<br>全书讲解细致、内容全面，书写的结构化很高，旨在帮助读者增进“沟通技巧”或“商务沟通能力”，内容详细解说“听说读写”所有可能的沟通情境所需要的技巧，如电话、谈话、会议、演讲、简报、写信、报导、问卷、电子邮件等，并说明非语言沟通、聆听、阅读、视觉沟通，以及如何利用各种视觉辅助工具等，是一本细致的工具书，适合放在案头需要时翻阅。</p>
 <p>作者尼基·斯坦顿[英国]认为无论什么形式的沟通，背后总是有四个主要目标：<br>No1. 被接收（被听到或被读到）<br>No2. 被理解<br>No3. 被接受<br>No4. 使对方采取行动（改变行为或态度）<br>对于这四个目标我基本是认可的，而且这四个目标是逐级递进的。斯坦顿认为只要没达到其中任何一个目标，沟通就失败了，对于这个观点，我并不认同，沟通本身就是有许多不同层次的需求，并不一定以达成行动的改变为唯一最终目标，被倾听本身也是有效的沟通目的。而且，即使以四个目标为完整的沟通需求，没有达成某一个目标，也只能说是沟通的效果还有提高空间，定义为“失败”是低估了沟通过程中的价值。<br>将我对本书最有感的两个部分与你做一些拆解分享。</p>
@@ -697,12 +667,12 @@
 <p>事实上，我们在倾听的技能上是很薄弱的，这一点当我开始学习心理咨询之初感觉非常深刻，坐在咨询师的位置上，充满了诉说的欲望，总是想把内心的声音传递给对方，可惜的是，真正让对方感到有益的开始，恰恰是当我静下心里、调整坐姿、竖起耳朵去倾听他的时候。<br>沟通的关键往往是接收者、听者，而非说话者。越是成功的人，往往越是擅于倾听的人。<br>有效的倾听可以鼓励对方诉说内心，可以得到对方有效的信息，可以增进彼此的关系，最后也会得到对方倾听你的机会。<br>检验自己日常倾听能力的十个问题<br>No1. 你会选择合适的位置来听清楚对方的谈话吗？<br>No2. 你除了听内容，还会听潜藏在文字之下的情绪吗？<br>No3. 你会不注意说话人的外表，只在意他说的内容吗？<br>No4. 你除了听对方说什么，还会看着对方吗？<br>No5. 你在评判对方说的话时，会注意到自己的偏见和感觉吗？<br>No6. 你会把注意力一直放在所说的主题上，跟着对方的思路吗？<br>No7. 你会尽量找出所听内容的逻辑与推理吗？<br>No8. 听到觉得是错误的内容时，你会克制自己不插嘴或不继续听吗？<br>No9. 在讨论的时候，你愿意让别人做最后的决定吗？<br>No10. 在提出意见、回答或反驳时，你会先确定自己顾虑到对方的立场了吗？<br>经常地在日常沟通中，内心问一问自己这些问题，可以清楚自己需要在哪些方面去提高自己的倾听能力。要做到良好的倾听，最简单的办法，也是最基础的办法就是「专心」，专心在对方的身上，专心在对方的话上。<br>增进倾听技巧的10个方法<br>❶准备好去听：倾听不是一种被动的技巧，需要付出积极的努力，「准备好」其实是一种积极的倾听态度。<br>❷充满好奇：听不到对方的声音，听者也负有一半的责任，对于对方、对于对方的话，你心里面充满了好奇吗？<br>❸心胸开阔：知道自己有哪些偏见，能把不合意的信息吸收到而不是排斥掉吗？<br>❹听出重点：不好的听者通常只会听事件的部分，听出重点的能力取决于辨认信息结构过渡语言与重复部分的能力。<br>❺批判性倾听：对说话者提出的假设与理由带着中立而批判的态度，仔细衡量各种证据的价值与主题背后的逻辑基础。<br>❻避免分心：人的注意力会不断地变动起伏，分心非常容易，也许别人不是好听者，但是你可以证明你是好听者。<br>❼学会笔记：如果所说的内容对你很重要，最好把重点简单记下来。<br>❽协助说话者：在倾听的过程当中，学会用多种方式鼓励说话者，让对方感觉到你确实在专心的听。<br>❾积极回应：学会先回应对方说过的话，然后再开始自己的内容，同时也能确认，自己是否真的听懂对方的意思了。<br>❿绝不插话：克制住自己的嘴，如果对方停顿了，并不表示他已经说完了，所以要有耐心留出空间。<br>这些沟通的技巧，你 Get 到了吗？『沟通圣经』有许多非常实操的技巧，包含的内容非常全面，去向作者索取吧。</p>
 <h3 id="这些沟通知识你了解吗？"><a href="#这些沟通知识你了解吗？" class="headerlink" title="这些沟通知识你了解吗？"></a><a href="https://book.douban.com/review/7871376/" target="_blank" rel="noopener">这些沟通知识你了解吗？</a></h3><p>因为工作的关系，我经常需要和甲方还有监理单位打交道，面对面沟通自不必说，电话沟通也很多，而且还经常需要文字性的往来，有时候一句话没说好，文件上一个字没用合适就能引起不必要的矛盾，所以我每次与他们打交道就谨言慎行，我以为这样就万事大吉了，可是还是经常挨领导批评。尽管心中苦恼，可是我却没法找到一种合适的方法去解决问题，因为在中国很难找到关于沟通的书籍。</p>
 <p>之前一些爱看书的朋友一直说《沟通圣经》如何之好，我刚开始一直不以为然，当一本书被冠以“圣经”二字，就容易被人排斥，我当初就是这种心理，后来看到朋友们看完书写的一些书评和读书笔记，很是奇怪，有的朋友说这本书教会了他如何打电话，有的朋友说这本书教会他一些演讲技巧，还有一些朋友说这本书教会他增进阅读速度，提高阅读效率的方法，更有朋友说这本书让他了解到了一些关于求职的知识。</p>
-<p><img alt data-src="https://img1.doubanio.com/view/thing_review/l/public/p142989.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/thing_review/l/public/p142989.jpg" alt></p>
 <p>朋友的这些说法勾起了我阅读这本书的兴趣，准确说我不相信一本书能有如此功能，现在前前后后花了差不多两周的时间我读完了这本《沟通圣经—听说读写全方位沟通技巧》，我想说这些朋友的话没有言过其实，相反我个人觉得这本书完全可以作为一本关于沟通的教科书，而且也很大程度上解决了我的问题，这本书在英国畅销三十余年，修订五次，是资深管理培训师尼基•斯坦顿多年实践经验总结，主要教你用最恰当的沟通方式达到预期效果，那么我们一起来看看这本教科书都讲解了什么内容才达到如此效果呢。</p>
 <p>全书分为十八章来写，既然我把它称为教科书，自然要首先了解每一章都是讲解什么内容的。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p142990.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p142990.jpg" alt></p>
 <p>怎么样当你看到这些目录之后，开始对这本书感兴趣了吗，？大家都知道我们在学习一门课程之前一般都会先去了解这门课，不然盲目地学习只会事倍功半，所以在书中第一章给我们讲解了沟通的过程，可是虽然是第一章的内容我就感觉收获了很多干货。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p142992.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p142992.jpg" alt></p>
 <p>首先沟通是个交互的过程，发送者不仅仅说给接收者发送就完了，最终目的是需要接收者给出反馈，因为沟通的目标是：</p>
 <ol>
 <li>被接受（被听到或被读到）</li>
@@ -710,11 +680,11 @@
 <li>被接受</li>
 <li>使对方采取行动（改变行为或态度）</li>
 </ol>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p142993.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p142993.jpg" alt></p>
 <p>只要没有达到其中的一个目标你的沟通就失败了，这种沟通就是无效沟通，我们可以仔细想想我们日常的沟通成功了多少，失败了多少，如果沟通无效，那么你想做的事情是否也因为沟通无效而失败呢？</p>
 <p>为什么我们无效的沟通这么多？影响沟通的有哪些障碍因素？</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p142995.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p49166950-1.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p142995.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p49166950-1.jpg" alt></p>
 <ol>
 <li><p>感受不同<br>每个人对于不同的事情理解和感受不尽相同，有时候因为不同年龄、国籍、文化、教育、职业、性别、地位、个性可能会影响你当时的感受，因为感受不同无形中影响你对事情的定义的期望，所以说感受不同也会影响沟通。</p>
 </li>
@@ -745,7 +715,7 @@
 </ol>
 <p>有时候你的“个性”可能给别人留下不好的印象，从而让别人无法愿意跟你好好沟通下去。</p>
 <p>那怎么才能让沟通更有效呢，我们需要考虑五个方面：</p>
-<p><img alt data-src="https://img1.doubanio.com/view/thing_review/l/public/p142997.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/thing_review/l/public/p142997.jpg" alt></p>
 <ol>
 <li>原因（目的）</li>
 </ol>
@@ -762,7 +732,7 @@
 <li>内容</li>
 </ol>
 <p>在我看来所有需要考虑的东西内容是最复杂的，不是那么容易就能确定的，我常常与人沟通的时候不知道说些什么，沟通的内容我们如何确定呢？<br>我们需要七个步骤：</p>
-<p><img alt data-src="https://img1.doubanio.com/view/thing_review/l/public/p142998.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/thing_review/l/public/p142998.jpg" alt></p>
 <p>比如我们每个月都要开旬例会，目的就是跟甲方还有监理汇报一下上旬完成的工作以及下旬的工作安排，其实这个已经明确目的了，我们自己需要做一个文字性的旬报材料向甲方和监理汇报一下工作，然后在汇报工作中更好地提出我方的建议和想法。因为所有的汇报工作都体现在这张旬报材料上，所以对于旬报的内容就必须严格筛选和斟酌，不然就很难达到目的。这项工作一直由我负责，因为没做过，第一次开会就被甲方严重批评，弄得我很不爽，按照这七大步骤再加上同事的配合，现在做起来就没有那么难了。</p>
 <ol start="5">
 <li>方式（语气和风格）</li>
@@ -770,7 +740,7 @@
 <p>不同的沟通方式，可能效果不太一样，为了达到某个目的你是需要跟别人在qq微信上沟通，还是需要打电话抑或需要请对方吃饭当面面谈，这些你需要根据具体事情考虑清楚。<br>这些方面在你日常的沟通中，你考虑过吗，从现在开始我们也开始这样做，看看我们和别人沟通的结果有没有改善的可能。</p>
 <p>通过这一章的介绍我对沟通有个大致了解和初步认识，对沟通认识完之后我就开始对朋友所说的关于打电话，演讲以及提高阅读速度等章节进行了深入地阅读，每一章都很详细地介绍了对应地方法和技巧，</p>
 <p>比如在第十三章提高阅读效率这一章中介绍了SQ3R阅读法有关阅读的五个步骤：</p>
-<p><img alt data-src="https://img1.doubanio.com/view/thing_review/l/public/p142999.jpg"></p>
+<p><img data-src="https://img1.doubanio.com/view/thing_review/l/public/p142999.jpg" alt></p>
 <p>这个方法对如何提高阅读效率确实很有效果和可操作性，其它章节关于相关的技巧和方法也介绍的很详细，每一章内容都很独立，任意一章都可以当成一本书来看，虽然现在这本书我已经看完了，但是很多内容我还没有消化掉，没事的时候我总喜欢翻翻看看，因为我觉得这就是一本关于有效沟通的教科书。</p>
 <h3 id="如何提高你的面谈效率"><a href="#如何提高你的面谈效率" class="headerlink" title="如何提高你的面谈效率"></a><a href="https://book.douban.com/review/7920269/" target="_blank" rel="noopener">如何提高你的面谈效率</a></h3><p>人其实有时候是一个挺矛盾的存在，自知又不自知。一方面人们往往“当局者迷，旁观者清”看不清或者是不愿承认自己的真实想法或感情，旁人往往能够轻易洞悉你的反常和改变，“知人者智，自知者明”这是很困难的事。另一方面却是世界上最了解你的人只有你自己，如果连你自己都不知道想要什么的话，没有人能够帮你。<br>       很不幸，我就是那个其实太多时候不知道自己想要干嘛的人，秉承着上文的观点，自己看不清就去找别人，这对处于困惑中的人来说无疑是一种救赎。<br>       但我很快发现每次我找完朋友聊天之后，但效果往往和我预期的不一样，我的心情不仅没有变好，反而更加沉重。直到我看到了尼吉斯·坦顿的《沟通圣经——听说读写全方位沟通技巧》我才发现其实我根本不不会聊天。<br>      《沟通圣经》第六章讲的是面谈，具体包括了面谈的整个过程，从面谈开始的准备到面谈内容、面谈过程以及最终的结果评估都为读者提供了一套行之有效的实践参考模式。下面就和大家一起分享这整个过程。<br>                                                     没有效率的面谈<br>    我们自以为知道怎么面谈，结果许多的面谈过程反而变得没有效率、浪费时间。下列几点是常出现的问题：<br>     a. 时间拖太长<br>     b.话题扯太远，结果花太多时间讨论无关的事情。<br>     c.其中一方说个不停，另外一方根本插不上话。</p>
 <pre><code>                                                 什么是面谈？
@@ -811,7 +781,7 @@
 <p>4.把问题排序<br>       仔细想过要在面谈中采用哪些种类的问题，还要考虑以什么顺序提出这些问题。</p>
 <p>5.结束面谈<br>       结束面谈时，有三件事要做:<br>     a.简短的总结面谈的成果，或是双方在面谈中表达的观点。<br>     b.谢谢对方的合作。<br>     c.确定下次会买你的时间，或是双方之后要采取的行动。</p>
 <pre><code>这么做既是一种礼貌，也是一种总结回顾。当然如果有需要，也可以做一些后续工作，如调查补充信息，与其他相关人员面谈、确定面谈结果是否达到自己的预期、进行后续的面谈等。这样一个完整的面谈过程就可以结束了。
-</code></pre><h2 id="用眼睛和他人沟通"><a href="#用眼睛和他人沟通" class="headerlink" title="用眼睛和他人沟通"></a><a href="http://www.luojiji.com/thread-1467-1-1.html" target="_blank" rel="noopener">用眼睛和他人沟通</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/16/233216r3nb54rry9oprhyp.jpg"><br>作者：（美）罗恩•克拉克<br>选自《教育的55个细节——一位美国优秀教师的教学心得》</p>
+</code></pre><h2 id="用眼睛和他人沟通"><a href="#用眼睛和他人沟通" class="headerlink" title="用眼睛和他人沟通"></a><a href="http://www.luojiji.com/thread-1467-1-1.html" target="_blank" rel="noopener">用眼睛和他人沟通</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/16/233216r3nb54rry9oprhyp.jpg" alt><br>作者：（美）罗恩•克拉克<br>选自《教育的55个细节——一位美国优秀教师的教学心得》</p>
 <p>我花了很长时间训练我的学生用眼睛来与人沟通。为了让他们有更多的实践机会，我把他们每两个人分成一组，然后告诉他们，当你发表演说时，眼睛要注视着对方，语气里要带有更多的强调成分、加入更多的感情色彩。如果这时你的眼睛看着别处或盯着地板，那就说明你对自己所说的话并不确信，或者你说的可能根本就不是事实。我还告诉他们，我听说如果眼睛不停地往左上方瞟的话，就说明你正在撒谎。我经常训练他们两个人一组互相对话，让他们逐渐意识到，用眼睛看着对方说话是非常有效的。</p>
 <p><strong>用眼睛和别人沟通，不仅表明你很<a href="http://deepcreator.com/2017/10/03/Concept/Confidence/" target="_blank" rel="noopener">自信</a>，同时也表示你对别人很<a href>尊敬</a>。</strong>在课堂上，当一个学生发言时，我都会确保其他所有的同学转身看着他，专心听他发言。一个学生的发言没结束，我绝不允许其他的同学举手补充。如果他们这样做的话，那就说明他们把很多精力放在了自己要补充发言的内容上，而没有专心听那个正在发言的同学说什么。我让他们想像一下，如果一个人正在努力表达一种想法，而他周围的人却不断挥舞着手臂，这会让正在发言的人感到自己的观点一钱不值，因此我们不能这样做。</p>
 <p>我现在还记得我自己上学的时候，只要用眼睛盯着老师，根本就走不了神。如果我盯着我前边同学的后脑勺或我的铅笔，那就很容易走神了，但一看着老师，我马上就能回过神来。因此，后来在我讲课的时候，我要确保所有人的眼睛一直盯着我。因为站在前边，所以我能看见学生们脸上的表情，并且能指出他们谁没听懂，谁走神了，或谁在专心地跟着老师的思路走。同时，我作为一个活生生的人站在他们面前，不停地在动，并辅以手势或板书，让孩子们始终跟着我的思维走。</p>
@@ -822,10 +792,10 @@
 <p>看完了此文，悚然而惊。</p>
 <p>回想一下——<br>几乎我认识的所有以诚恳、谦和、热情而著称的人，都有<strong>直视人说话</strong>的习惯。<br>好人缘，或者好姻缘，说到底——<br>无非就是“<strong>用心</strong>”二字而已。<br>祝各位情人节快乐。</p>
 <h2 id="1分钟心理学：你了解自己的沟通模式吗？"><a href="#1分钟心理学：你了解自己的沟通模式吗？" class="headerlink" title="1分钟心理学：你了解自己的沟通模式吗？"></a><a href="http://www.xinli001.com/info/100016620" target="_blank" rel="noopener">1分钟心理学：你了解自己的沟通模式吗？</a></h2><p>壹心理导读：你真的了解自己吗？你在人际交往中采用哪种沟通模式呢？</p>
-<p><img alt data-src="http://image.xinli001.com/20150912/01250584245cf8f0aba128.jpg!600"><br><img alt data-src="http://image.xinli001.com/20150915/171948fb7613223f5a16d5.jpg!600"><br><img alt data-src="http://image.xinli001.com/20150912/012557e0094614f592437a.jpg!600"><br><img alt data-src="http://image.xinli001.com/20150912/01261453898dd19c948415.jpg!600"></p>
-<h2 id="关于如何成为会聊天的人的清单"><a href="#关于如何成为会聊天的人的清单" class="headerlink" title="关于如何成为会聊天的人的清单"></a><a href="http://www.luojiji.com/thread-9447-1-1.html" target="_blank" rel="noopener">关于如何成为会聊天的人的清单</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/09/073551fie7l7lxx5o5xolx.jpg"><br>2017-08-09 「得到」 罗辑思维<br>引言</p>
+<p><img data-src="http://image.xinli001.com/20150912/01250584245cf8f0aba128.jpg!600" alt><br><img data-src="http://image.xinli001.com/20150915/171948fb7613223f5a16d5.jpg!600" alt><br><img data-src="http://image.xinli001.com/20150912/012557e0094614f592437a.jpg!600" alt><br><img data-src="http://image.xinli001.com/20150912/01261453898dd19c948415.jpg!600" alt></p>
+<h2 id="关于如何成为会聊天的人的清单"><a href="#关于如何成为会聊天的人的清单" class="headerlink" title="关于如何成为会聊天的人的清单"></a><a href="http://www.luojiji.com/thread-9447-1-1.html" target="_blank" rel="noopener">关于如何成为会聊天的人的清单</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201708/09/073551fie7l7lxx5o5xolx.jpg" alt><br>2017-08-09 「得到」 罗辑思维<br>引言</p>
 <p>有些人很会聊天，处处都是人群的焦点；有些人却是“话题终结者”，分分钟把天聊死。</p>
-<p>「得到」App邀请人际关系洞察家熊太行创作了这篇清单，14条建议，教你如何成为一个会聊天的人。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201708/09/073610pz24d5ndbux3xnbg.jpg"></p>
+<p>「得到」App邀请人际关系洞察家熊太行创作了这篇清单，14条建议，教你如何成为一个会聊天的人。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201708/09/073610pz24d5ndbux3xnbg.jpg" alt></p>
 <ol>
 <li><p>想要变成一个会聊天的人，和成为一个好的相声演员差不多：若非天赋异禀，最好猛下功夫。</p>
 </li>
@@ -856,8 +826,8 @@
 <li><p>最后来一句老话：己所不欲，勿施于人。开口前，想想如果别人这么说，自己是什么感受，大概就知道这个话题要不要说了。</p>
 </li>
 </ol>
-<h2 id="行动清单-这份气场修炼指南，助你掌控全场"><a href="#行动清单-这份气场修炼指南，助你掌控全场" class="headerlink" title="行动清单 | 这份气场修炼指南，助你掌控全场"></a><a href="http://www.luojiji.com/thread-10104-1-1.html" target="_blank" rel="noopener">行动清单 | 这份气场修炼指南，助你掌控全场</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/12/075547ny5bdkzz8pvlxzdf.jpg"><br>2017-10-12 「得到」 罗辑思维<br>引言<br>气场，看不见摸不着，却能在无形之中感染和影响他人。</p>
-<p>打造强大气场，虽非朝夕之功，但确实可以通过练习做到。这篇清单，就帮你破解强大气场背后的那些细节。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/12/075604d90d08cav90vanv9.jpg"></p>
+<h2 id="行动清单-这份气场修炼指南，助你掌控全场"><a href="#行动清单-这份气场修炼指南，助你掌控全场" class="headerlink" title="行动清单 | 这份气场修炼指南，助你掌控全场"></a><a href="http://www.luojiji.com/thread-10104-1-1.html" target="_blank" rel="noopener">行动清单 | 这份气场修炼指南，助你掌控全场</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201710/12/075547ny5bdkzz8pvlxzdf.jpg" alt><br>2017-10-12 「得到」 罗辑思维<br>引言<br>气场，看不见摸不着，却能在无形之中感染和影响他人。</p>
+<p>打造强大气场，虽非朝夕之功，但确实可以通过练习做到。这篇清单，就帮你破解强大气场背后的那些细节。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/12/075604d90d08cav90vanv9.jpg" alt></p>
 <ol>
 <li><p>气场，是一个人表现出来的说服力和对抗说服能力的总和。有人霸气外露，有人气场强劲却不显现。前者的典型人物有项羽，没人敢惹但容易被预测；而后者更像韩信，憋着做大事儿。</p>
 </li>
@@ -888,9 +858,9 @@
 <li><p>在社会丛林中，你对关系越通透练达，能够获取关系中的主动权，自然也就拥有了气场。</p>
 </li>
 </ol>
-<h2 id="行动清单-怎么才能结交到比你厉害的朋友"><a href="#行动清单-怎么才能结交到比你厉害的朋友" class="headerlink" title="行动清单 | 怎么才能结交到比你厉害的朋友"></a><a href="http://www.luojiji.com/thread-10085-1-1.html" target="_blank" rel="noopener">行动清单 | 怎么才能结交到比你厉害的朋友</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/10/074911lh0z7ve3lz3373z0.jpg"><br>2017-10-10 「得到」 罗辑思维</p>
+<h2 id="行动清单-怎么才能结交到比你厉害的朋友"><a href="#行动清单-怎么才能结交到比你厉害的朋友" class="headerlink" title="行动清单 | 怎么才能结交到比你厉害的朋友"></a><a href="http://www.luojiji.com/thread-10085-1-1.html" target="_blank" rel="noopener">行动清单 | 怎么才能结交到比你厉害的朋友</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201710/10/074911lh0z7ve3lz3373z0.jpg" alt><br>2017-10-10 「得到」 罗辑思维</p>
 <p>引言<br>究竟是你先变厉害，才能交往到更厉害的人？还是先跟厉害的人交往，你才会变得厉害？</p>
-<p>不要纠结这个问题了，这篇清单，就和你分享一下跟高手打交道的技巧。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/10/074932nt1mhzq2anqzq2t9.jpg"></p>
+<p>不要纠结这个问题了，这篇清单，就和你分享一下跟高手打交道的技巧。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/10/074932nt1mhzq2anqzq2t9.jpg" alt></p>
 <ol>
 <li><p>商业哲学家吉米·罗恩说过，你是你最常接触的五个人的平均值。正如我们常说的“下棋找高手”“物以类聚，人以群分”“不友不如己者”，<strong>与你交往的人层次越高，你的能力提升就越快，机会也越多。</strong></p>
 </li>
@@ -1003,9 +973,9 @@
 <p>想做到这点，<strong>先要承认自身的弱点，但大部分人都拒绝承认自己的缺点</strong>。“作为旁观者，我们总是可以敏锐地看出他人被蛊惑；作为当局者，我们却始终不能相信自己会被诱导。”沃顿商学院市场营销学的教授乔纳·伯杰（Jonah Berger）把这种情形称为差异幻觉（illusion of difference）：细微的差异就能让我们看不到显而易见的相似之处，我们会错误地认为所有的想法都完全来源于自己。比如， 因为理念上的细微差异，我们拒绝承认受到老板的影响。·埃弗斯说，承认自己的弱点和更为谦卑的态度，可以帮助我们更容易地意识到自己在何时被操控了。</p>
 <p>接着要了解那些技巧高超的说服者是如何做的。影响力专家罗伯特·西奥迪尼鼓励人们利用好感、互惠、社会认同、承诺和一致性、权威以及稀缺六个原则来提升自己的影响力，他认为最好的说服者不只能言善辩、极富魅力，而且还拥有“先发影响力”，能在开口前就奠定胜局，这种能力甚至可以让人们在还没有了解事物的详细状况之前就对其重要性和必要性深信不疑。西奥迪尼在新书《先发影响力》中举了一些案例：听到德国音乐就能使我们更倾向于购买昂贵的德国葡萄酒；询问顾客是否富有冒险精神能让其更愿意尝试新品；网购高档家具时，若在页面看到云朵的照片就能让消费者更在乎商品的舒适性而不是价格。</p>
 <p>埃弗斯总结说：“倘若我们能意识到自己是一个不完美且容易犯错的思考者，同时，让自己更好地理解那些操盘者所使用的说服技巧，那么我们就有机会提高做出良好决策的概率，而不必将自己与新观念和新视角相隔绝。”</p>
-<h2 id="1分钟心理学：我们是如何变得越来越亲密的？"><a href="#1分钟心理学：我们是如何变得越来越亲密的？" class="headerlink" title="1分钟心理学：我们是如何变得越来越亲密的？"></a><a href="http://www.xinli001.com/info/100305930" target="_blank" rel="noopener">1分钟心理学：我们是如何变得越来越亲密的？</a></h2><p><img alt data-src="http://image.xinli001.com/20151222/033224j40ghi6ax6fwfrk5.jpg!600"></p>
+<h2 id="1分钟心理学：我们是如何变得越来越亲密的？"><a href="#1分钟心理学：我们是如何变得越来越亲密的？" class="headerlink" title="1分钟心理学：我们是如何变得越来越亲密的？"></a><a href="http://www.xinli001.com/info/100305930" target="_blank" rel="noopener">1分钟心理学：我们是如何变得越来越亲密的？</a></h2><p><img data-src="http://image.xinli001.com/20151222/033224j40ghi6ax6fwfrk5.jpg!600" alt></p>
 <p>壹心理导读：对于全球人口而言，在茫茫人海中，一个人与一个人相遇的概率大概是180亿分之一。虽说缘分难得，但这仅仅才是开始。相识后人际关系，有的随时间越来越亲密，有的则因时间而脱落。那么，人与人之间的远亲疏远究竟是怎么建立起来的呢？—— <a href="http://www.xinli001.com" target="_blank" rel="noopener">www.xinli001.com</a></p>
-<h2 id="人际沟通"><a href="#人际沟通" class="headerlink" title="人际沟通"></a><a href="https://baike.baidu.com/item/%E4%BA%BA%E9%99%85%E6%B2%9F%E9%80%9A/2534" target="_blank" rel="noopener">人际沟通</a></h2><h2 id="沟通"><a href="#沟通" class="headerlink" title="沟通"></a><a href="https://baike.baidu.com/item/%E6%B2%9F%E9%80%9A/81026" target="_blank" rel="noopener">沟通</a></h2><h2 id="辩论七律"><a href="#辩论七律" class="headerlink" title="辩论七律"></a><a href="http://www.luojiji.com/thread-1463-1-1.html" target="_blank" rel="noopener">辩论七律</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/16/232355oi228kr22ld4imii.jpg"></p>
+<h2 id="人际沟通"><a href="#人际沟通" class="headerlink" title="人际沟通"></a><a href="https://baike.baidu.com/item/%E4%BA%BA%E9%99%85%E6%B2%9F%E9%80%9A/2534" target="_blank" rel="noopener">人际沟通</a></h2><h2 id="沟通"><a href="#沟通" class="headerlink" title="沟通"></a><a href="https://baike.baidu.com/item/%E6%B2%9F%E9%80%9A/81026" target="_blank" rel="noopener">沟通</a></h2><h2 id="辩论七律"><a href="#辩论七律" class="headerlink" title="辩论七律"></a><a href="http://www.luojiji.com/thread-1463-1-1.html" target="_blank" rel="noopener">辩论七律</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/16/232355oi228kr22ld4imii.jpg" alt></p>
 <p>作者：奥卡姆剃刀</p>
 <p>互联网拉近了人们的距离，但并没有同化人们的思想，网络辩论硝烟弥漫，热点话题层出不穷。但嘈杂背后的真相，却是情绪释放的帖子远多于冷静讲理的帖子，即使试图讲理的帖子，也有很多是逻辑混乱的，以致于各说各话，难获共识。特别是在微博，四处起火，一地鸡毛，而乱相丛生最主要的原因是网友的逻辑能力欠缺。根据多年的辩论经验我总结了七条辩论逻辑，供您参考。</p>
 <p>1、有“证伪性”才有意义</p>
@@ -1035,7 +1005,7 @@
 <blockquote>
 <p>辩论的目的是什么？找到真理？<br>别扯了。人类历史上几乎所有辩论的目的都是为了——赢。<br>所以，辩论的规则不是为了发现真知。<br>尊重辩论的规则，只是为了让你赢得有尊严。</p>
 </blockquote>
-<h2 id="为什么沟通会“降低”群体智慧？"><a href="#为什么沟通会“降低”群体智慧？" class="headerlink" title="为什么沟通会“降低”群体智慧？"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1465&amp;highlight=%E6%99%BA%E6%85%A7" target="_blank" rel="noopener">为什么沟通会“降低”群体智慧？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/16/232757c8kzymle0kk508jm.jpg"></p>
+<h2 id="为什么沟通会“降低”群体智慧？"><a href="#为什么沟通会“降低”群体智慧？" class="headerlink" title="为什么沟通会“降低”群体智慧？"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1465&amp;highlight=%E6%99%BA%E6%85%A7" target="_blank" rel="noopener">为什么沟通会“降低”群体智慧？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/16/232757c8kzymle0kk508jm.jpg" alt></p>
 <p>作者：脱不花妹妹</p>
 <p>有科学家进行了一个持续十几年的简单实验——在玻璃罐子中放满糖果（超过目测能力的数量），然后请一群人来猜测糖果的数量。记录每个人的个人答案、群体的平均数与真实正确数字之间的关系。以2007年在哥伦比亚商学院的实验为例，73个学生参加实验，平均数为1115颗，而真实数字为1116颗。而在73个人的个人答案中，其实天差地别，离这个真实数字都相差很远。也就是说，在这个实验中，人群中涌出的群体智慧远远超过了个人智慧。</p>
 <p><strong>保持群体中每一个个体的独立性，是群体智慧发挥作用的重要前提。</strong></p>
@@ -1046,7 +1016,7 @@
 <p>每一次我们提到公司文化、团队组建要保持<a href="http://deepcreator.com/2017/10/15/Concept/Open/" target="_blank" rel="noopener">开放性</a>和<a href="http://deepcreator.com/2017/10/14/Concept/Diversity/" target="_blank" rel="noopener">多样性</a>，<a href="http://deepcreator.com/2017/09/03/Concept/Management/" target="_blank" rel="noopener">管理</a>者往往都表示非常认可，但是，有多少管理者会意识到，多样性的意思首先就是必须保护、尊重和鼓励员工的独立性呢？又有多少公司一边高喊“<a href="http://deepcreator.com/2017/04/05/Concept/meta-skill-innovation/" target="_blank" rel="noopener">创新</a>”的口号，一边忙着给员工进行洗脑教育呢？独立思考、自由表达，是与传统沉重的管理机器相悖的一件事，不过，我们相信，这正是管理创新者的巨大机遇所在。</p>
 <p>罗胖曰：<br>在西方文化中，有所谓“酒神精神(Dionysian)”和“日神精神”的对峙。<br>乍看上去，“日神精神”所代表的理性思维方式是一切秩序、价值、进步的源泉。<br>但实际上，人类历史上的每一次浩劫都有极端理性思维的影子。<br>相形之下，“酒神精神”所蕴藏的感性特质——<br>直觉、灵感、动情、游戏、狂欢，才是这个世界变得美好的真正原因。</p>
 <p><a href="https://baike.baidu.com/item/%E9%85%92%E7%A5%9E%E7%B2%BE%E7%A5%9E" target="_blank" rel="noopener">在《悲剧的诞生》中，尼采运用这两个术语解释了古希腊文明发展的独特性。这两个术语在希腊悲剧中起着相当重要作用的原则与阿波罗神和酒神狄奥尼索斯相关联。<br>阿波罗（日神）原则讲求实事求是、理性和秩序，狄俄尼索斯（酒神）原则与狂热、过度和不稳定联系在一起。</a></p>
-<p><img alt data-src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=379ecb3f0c2442a7ae0efaa3e978ca76/ac345982b2b7d0a2a53bf521c8ef76094a369a98.jpg"></p>
+<p><img data-src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=379ecb3f0c2442a7ae0efaa3e978ca76/ac345982b2b7d0a2a53bf521c8ef76094a369a98.jpg" alt></p>
 <ol>
 <li><p>注重培养自己对抗多数的能力<br>如果你突然受到多数的压力，赶紧给自己这三句话：<br>我不需要那么多朋友的。<br>那些准备坑我的不是朋友。<br>会有明白人站在我这边。</p>
 </li>
@@ -1061,7 +1031,7 @@
 <li><p>整理自己的外观 一些相貌天生是带气场的，比如更高的鼻梁、上斜的眼角、结实的肌肉（女人也是），轮廓分明而且立体的脸，自然就会有气场。当然最主要的是，要干净整洁，不能邋遢。</p>
 </li>
 </ol>
-<h2 id="非暴力沟通"><a href="#非暴力沟通" class="headerlink" title="非暴力沟通"></a><a href="https://book.douban.com/subject/3533221/" target="_blank" rel="noopener">非暴力沟通</a></h2><p><img alt data-src="https://img1.doubanio.com/lpic/s9346487.jpg"></p>
+<h2 id="非暴力沟通"><a href="#非暴力沟通" class="headerlink" title="非暴力沟通"></a><a href="https://book.douban.com/subject/3533221/" target="_blank" rel="noopener">非暴力沟通</a></h2><p><img data-src="https://img1.doubanio.com/lpic/s9346487.jpg" alt></p>
 <p>Nonviolent Communication: A Language of Life</p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>译序<br>前言<br>第一章 让爱融入生活<br>第二章 是什么蒙蔽了爱？<br>第三章 区分观察和评论<br>第四章 体会和表达感受<br>第五章 感受的根源<br>第六章 请求帮助<br>第七章 用全身心倾听<br>第八章 倾听的力量<br>第九章 爱自己<br>第十章 充分表达愤怒<br>第十一章 运用强制力避免伤害<br>第十二章 重获生活的热情<br>第十三章 表达感激<br>后记<br>附录：非暴力沟通模式<br>编后记</p>
 <h3 id="亲密关系中的非暴力沟通"><a href="#亲密关系中的非暴力沟通" class="headerlink" title="亲密关系中的非暴力沟通"></a><a href="https://book.douban.com/review/6479232/" target="_blank" rel="noopener">亲密关系中的非暴力沟通</a></h3><p>我惯常用暴力沟通与家人和男友交流，家人会委屈，男友会纵容，但有时候又会爆发矛盾。<br>总结一下：男友一旦有不顺我心意的地方，我就会发脾气指责他，质问他到底爱不爱我。还会跟他抱怨说，在一起久了，他待我没以前好了。男友一般又无辜又委屈的哄我。矛盾往往在于，我嘴巴上可能只要求一，但我内心对他的要求有一、二、三、四。可男友又不是情圣，哪会去猜我那深不可测的心思。比如我可能想他主动送我礼物，但我说出来的要求可能就是把他的淘宝账号密码支付宝密码全给我，他全给我了！主动送礼物这事又羞于启齿，在那等啊等，最后好失望。有期待为何不说清楚，最后还要向他撒气。<br>有时候感觉他对我的关心不够，我又开始发脾气指责。实际上呢？他完全是一个你让他多关心一点，他绝对不会少关心半分的靠谱小伙。他只是不知道你需要多少程度的关心。<br>非暴力沟通就是让你学会放弃指责，提出自己的需要。当然也要倾听对方的需要，毕竟有时候还会有矛盾。不能两全其美，但也可以得到一个折中的方案。<br>还有对对方提的请求，往往非常强硬。或者表面上柔软，但要是不符合期待我就会生气。这是什么？不是请求啊，是命令！常用这种暴力沟通方式即便有时候的确是请求，也会被人看作是命令。命令的执行会少很多乐趣，被认为是强迫的。试想我要是有这么个男朋友，那不得把我自己逼死……</p>
@@ -1101,13 +1071,13 @@
 <p>33.如何表扬的例子：马歇尔，当你提到这两个观点时（让我看她的笔记本），我很欣喜，感到将来有盼头了，我一直在寻找和儿子的沟通办法，这两个观点给我很大的启发。</p>
 <p>34.非暴力沟通股利我们充分表达赶集。在表达感激时，我们说出：（1）对我们有益的行为；（2）我们的哪些需要得到满足；（3）我们的需要得到满足后，我们是什么样的心情。</p>
 <p>【发脾气是本能，控制脾气是本事】拿破仑：我发现，凡是一个情绪比较浮躁的人，都不能做出正确的决定。成功人士，基本上都比较理智。所以，我认为一个人要获得成功，首先就要控制自己浮躁的情绪。 脾气不好本质是修炼不够；看不惯别人缺点，容忍不了别人犯错是胸怀不够。</p>
-<p><img alt data-src="https://img3.doubanio.com/view/page_note/large/public/p32635816-4.jpg"></p>
-<h2 id="过年回家，如何机智应对各种“盘问”"><a href="#过年回家，如何机智应对各种“盘问”" class="headerlink" title="过年回家，如何机智应对各种“盘问”"></a><a href="http://www.luojiji.com/thread-10905-1-1.html" target="_blank" rel="noopener">过年回家，如何机智应对各种“盘问”</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/13/075238arr91qefuftv9ef9.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/page_note/large/public/p32635816-4.jpg" alt></p>
+<h2 id="过年回家，如何机智应对各种“盘问”"><a href="#过年回家，如何机智应对各种“盘问”" class="headerlink" title="过年回家，如何机智应对各种“盘问”"></a><a href="http://www.luojiji.com/thread-10905-1-1.html" target="_blank" rel="noopener">过年回家，如何机智应对各种“盘问”</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/13/075238arr91qefuftv9ef9.jpg" alt></p>
 <p>2018-01-13 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>春节就要来了，面对亲戚朋友的各种刁钻问题，该如何应对？靠幽默化解尴尬，大概有四种方法：巧妙置换逻辑、转移问题重点、适度自嘲、偷换文字概念。具体要如何操作？</p>
 <p>「得到」作者李新，作为一名喜剧编剧，总结了十个年底回家要应对的经典场景，带你学会套路，巧妙化解各种尴尬。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/13/075259go1h630266b0hy03.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/13/075259go1h630266b0hy03.jpg" alt></p>
 <p>场景一 问：“今年也老大不小了，什么时候买房啊？”</p>
 <p>在这个场景中，如果直接回答对方的问题，就会把自己陷入“买不起房”的境地，十分尴尬。</p>
 <blockquote>
@@ -1169,12 +1139,12 @@
 <p>应对建议：“等北京空气好了呗。”</p>
 </blockquote>
 <p>分析：这个问题中“什么时候”可以做多种解释，对方问你的是具体时间，你给的是一个不确定的时间——北京空气什么时候会好，很难有人知道，但也巧妙的回答了对方的问题。</p>
-<h2 id="认知清单｜说话之道：公司里如何进行有效沟通？"><a href="#认知清单｜说话之道：公司里如何进行有效沟通？" class="headerlink" title="认知清单｜说话之道：公司里如何进行有效沟通？"></a><a href="http://www.luojiji.com/thread-10276-1-1.html" target="_blank" rel="noopener">认知清单｜说话之道：公司里如何进行有效沟通？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201711/01/101833l1yz171yi4ua4uvr.jpg"></p>
+<h2 id="认知清单｜说话之道：公司里如何进行有效沟通？"><a href="#认知清单｜说话之道：公司里如何进行有效沟通？" class="headerlink" title="认知清单｜说话之道：公司里如何进行有效沟通？"></a><a href="http://www.luojiji.com/thread-10276-1-1.html" target="_blank" rel="noopener">认知清单｜说话之道：公司里如何进行有效沟通？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201711/01/101833l1yz171yi4ua4uvr.jpg" alt></p>
 <p>2017-11-01 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>同样的话，不同的沟通方式会产生截然不同的效果。在不同场合选择恰当的沟通方式，不仅关乎情商，更直接体现一个人的职业性。</p>
 <p>职场中如何进行有效沟通？哪些话要当面说？哪些要用文字确认？吴军博士的这篇清单，值得每个职场人收藏践行。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201711/01/101855ixjxmyzkvowoudq9.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201711/01/101855ixjxmyzkvowoudq9.jpg" alt></p>
 <ol>
 <li><p>绝大多数时候，<strong>遇事最好提前沟通</strong>。不要因为害怕别人反对而不打招呼、自己做主。这样做，不仅出了问题要自己承担，还会给人留下不尊重人、缺乏团队精神的负面印象。</p>
 </li>
@@ -1221,8 +1191,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/3C/" rel="bookmark">3C</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Hobby/" rel="bookmark">Hobby</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Chat/" rel="bookmark">Chat</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Listening/" rel="bookmark">Listening</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Communication/" rel="bookmark">Communication</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Communication/" rel="tag"><i class="fa fa-tag"></i> Communication</a>
           </div>
@@ -1234,21 +1225,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/P/Probability/" rel="next" title="Probability">
-                  <i class="fa fa-chevron-left"></i> Probability
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/A/Appreciation/" rel="prev" title="Appreciation">
-                  Appreciation <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/P/Probability/" rel="prev" title="Probability">
+      <i class="fa fa-chevron-left"></i> Probability
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/A/Appreciation/" rel="next" title="Appreciation">
+      Appreciation <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -1261,7 +1249,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -1292,8 +1302,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -1302,14 +1312,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1320,11 +1330,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -1358,7 +1363,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -1370,51 +1375,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -1423,18 +1389,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1444,63 +1404,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -1508,14 +1411,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -1542,40 +1445,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/C/Communication/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

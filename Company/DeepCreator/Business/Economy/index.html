@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="经济学是关于对人性的理解和刻画的学问——薛兆丰">
 <meta name="keywords" content="Economy,Finance">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/DeepCreator/Business/Economy/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/DeepCreator/Business/Economy/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/DeepCreator/Business/Economy/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="economy20180804.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/economy20180804.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://p53s4d2qk.bkt.clouddn.com/economy20180804.jpg?imageMogr2/thumbnail/!75p" alt="economy20180804.jpg"></p>
 <blockquote>
 <p><a href="http://www.luojiji.com/thread-9144-1-1.html" target="_blank" rel="noopener">经济学是关于对人性的理解和刻画的学问</a>——薛兆丰</p>
 </blockquote>
@@ -372,7 +342,7 @@
 <p>思想史毕竟都是二手资料，想深入还是需要去读经典原著，有两本基本上必须读，一本就是经济学的开山之作亚当·斯密的《国富论》，胡长明的译本听说是最通俗的。另外一本是凯恩斯的《通论》，听说高鸿业亦的比较好，尽管凯恩斯现在备受批判，但是，清华大学韩秀云说经济学基本上可以分为两派，新古典经济学和凯恩斯学派。其他大师依据个人兴趣的吧，我个人感兴趣的是马克思、熊彼得、哈耶克。</p>
 <p>上面说的凯恩的批判，顺便说说对经济学的批判，学习最重要的就是质疑批判精神，推荐李俊慧的《经济学讲义》和《经济学的邀请》，前者批判很精彩，尤其批判凯恩斯，情绪有些大，且不可尽信，后者对新古典较为系统的批判和反思，非常不错。</p>
 <p>最后再声明一点，我并非经济学科班出身，主要依据自学过程的遇到的一些通俗作品进行推荐，专业认知请指正和补充，也让我有所收益。</p>
-<h3 id="经济学视角看世界，经济学理论综述：4星-《薛兆丰经济学讲义》"><a href="#经济学视角看世界，经济学理论综述：4星-《薛兆丰经济学讲义》" class="headerlink" title="经济学视角看世界，经济学理论综述：4星|《薛兆丰经济学讲义》"></a><a href="https://book.douban.com/review/9557843/" target="_blank" rel="noopener">经济学视角看世界，经济学理论综述：4星|《薛兆丰经济学讲义》</a></h3><p><img alt data-src="https://img1.doubanio.com/view/thing_review/l/public/p1757489.jpg"></p>
+<h3 id="经济学视角看世界，经济学理论综述：4星-《薛兆丰经济学讲义》"><a href="#经济学视角看世界，经济学理论综述：4星-《薛兆丰经济学讲义》" class="headerlink" title="经济学视角看世界，经济学理论综述：4星|《薛兆丰经济学讲义》"></a><a href="https://book.douban.com/review/9557843/" target="_blank" rel="noopener">经济学视角看世界，经济学理论综述：4星|《薛兆丰经济学讲义》</a></h3><p><img data-src="https://img1.doubanio.com/view/thing_review/l/public/p1757489.jpg" alt></p>
 <p>本书是薛兆丰在得到APP的专栏课的讲稿整理而成，分为118讲，每一讲的篇幅都接近。篇幅较长，500多页。</p>
 <p>全书系统讲主流经济学的主要观点。涉及到一些不同经济学流派之间的争议。引用了许多著名的法院案例和一些著名经济学论文。法院案例基本是美国的。受固定字数所限，个别地方该展开没能展开。</p>
 <p>比去年作者的《经济学讲义》更系统。</p>
@@ -414,15 +384,15 @@
 <p>29：冲击无所不在,而经济体当中,每一个个体需要花一段时间才能对新的冲击做出反应。 这一段时间,就是我们所说的时间滞后迟钝期。真实经济周期理论认为,一切破前面的经济学家描绘为调节缓慢反应不够充分, 市场无效的现象,其实都是正常的。P481</p>
 <p>30：到晚年弗里德曼自己反思,他说拿今天跟30年前比,人们只不过是在口头上更接受市场了,嘴上说得好听,但在实际政策上却没有多少改进。P501</p>
 <p>31：也正因为这样,人们在做经济选择时,因为自己要承担后果,人们就会变得理性; 而在政治领域,由于每位选民都不需要对自己的政治主张直接承担责任,人们就会理性地选择不理性。 用卡普兰的话来说叫“理性胡闹”(rational irrationality). P508</p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757490.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757491.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757493.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757492.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757495.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757494.jpg"></p>
-<p><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757496.jpg"></p>
-<h2 id="《小岛经济学》"><a href="#《小岛经济学》" class="headerlink" title="《小岛经济学》"></a><a href="https://www.toutiao.com/a1606702380338206/" target="_blank" rel="noopener">《小岛经济学》</a></h2><p><img alt data-src="https://sf3-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/22963006316a4333b92b526cc1dacd6a~754x909_noop.image"></p>
-<p><img alt data-src="https://sf1-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/770a1d04d7154f0b88a069a0a9c8b3bc~752x876_noop.image"></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757490.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757491.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757493.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757492.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757495.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757494.jpg" alt></p>
+<p><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p1757496.jpg" alt></p>
+<h2 id="《小岛经济学》"><a href="#《小岛经济学》" class="headerlink" title="《小岛经济学》"></a><a href="https://www.toutiao.com/a1606702380338206/" target="_blank" rel="noopener">《小岛经济学》</a></h2><p><img data-src="https://sf3-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/22963006316a4333b92b526cc1dacd6a~754x909_noop.image" alt></p>
+<p><img data-src="https://sf1-ttcdn-tos.pstatp.com/img/tos-cn-i-0022/770a1d04d7154f0b88a069a0a9c8b3bc~752x876_noop.image" alt></p>
 <p>从前有一个与世隔绝的小岛.假设一个岛上有1000口人,人与人之间交换物品过活，但有时候你手里用来交换的东西不一定就是对方想要的，怎么办？于是人们就用都喜欢的金银作为交换的东西，于是交换方便了。但金银要磨损，携带也不方便，当交换活动频繁时，发现这个东西太繁琐，限制了交换活动，于是为了解决这个问题，想了一个办法，就是由岛上的管理者发行一种符号，用它来代替金银，于是钞票出现了。</p>
 <p>　　刚开始这种钞票可以随时得兑换金银。大家都很放心，因为钞票就是金银。可是岛上金银的产量太小，当人们的交换活动更加频繁时，钞票不够用了，只能暂停交换。暂停交换的后果就是大家不生产别人想要的东西了，因为虽然别人用，但交换不出去，套用现在的话说就是经济发展减速了。</p>
 <p>　 于是大家想了一个办法，成立一家钱庄，这个钱庄是大家的，由钱庄来发行钞票，印出的钞票借给想用钱的人，然后这个人有钱了再还给钱庄。于是银行就出现了。</p>
@@ -432,7 +402,7 @@
 <p>可是有一部分聪明人开始怎么才能把钱弄到自己手上，他在海边捡了一颗石子，说这个石子值100万快钱，把它卖给了一个人，这个人觉得整个岛上的钱加一起也没有100万啊，怎么办，于是向钱庄借，钱庄也没有这么多钱，于是把印钞机打开，印了这100万，借给了他买了这个石子。</p>
 <p>　　然后这个人开始卖这个石子，100万卖给了第二个人，由于第一个卖石子的人把钱花了，所以岛上的钱多了，所以这一百万可以筹集到，多买些产品就有了。但当把这个石子以200万转让的时候，钱庄只能又印了100万钞票，就这样钞票越印越多，可是当这个石子不停的流动转让时，大家并不觉得岛上的钱多，产品价格还是原来的那样。可是当这个石子不流通或流通的慢时，大家觉得钱多了，可是如果当持有石子的人把它扔到大海里，那就等于岛上凭空多出N多个100 万来，怎么办，央行最害怕的就是这颗石子没了。它没了岛上产品的价格就会飞涨，就会通货膨胀。那么持有石子的人就绑定了岛上的经济。</p>
 <h2 id="鱼价引爆经济学——真实商业有多难"><a href="#鱼价引爆经济学——真实商业有多难" class="headerlink" title="鱼价引爆经济学——真实商业有多难"></a><a href="https://book.douban.com/subject/11613936/" target="_blank" rel="noopener">鱼价引爆经济学——真实商业有多难</a></h2><p>The Price of Fish: A New Approach to Wicked Economics and Better Decisions</p>
-<p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s27247455.jpg"></p>
+<p><img data-src="https://img3.doubanio.com/view/subject/l/public/s27247455.jpg" alt></p>
 <h3 id="内容简介-1"><a href="#内容简介-1" class="headerlink" title="内容简介"></a>内容简介</h3><p>美国独立出版人金奖图书</p>
 <p>鱼价故事引爆最精采绝伦的思考</p>
 <p>沙丁鱼罐头的价格越来越高，后果是什么？经济学告诉我们，这样一来，消费人群就会减少，最终沙丁鱼捕捞会自行恢复平衡。但现实却是，该地区的沙丁鱼绝种。</p>
@@ -457,7 +427,7 @@
 <p>Life is between B and D。要想活出一个精彩的人生。正确的决策很重要。而如何成为一个好的决策者，关于那些，这本书都会告诉你。它还试图从经济学的角度来帮助我们理解市场供求的变化、政治变化，甚至渔业所遭受的来自全球市场的广泛压力。试图给我们描述为什么个体在决策中会偏离理性决策的路径。既解释了我们限制理性的原因，也探讨了我们限制理性的方式，并给予一些利于我们理性选择的小建议。</p>
 <h3 id="真实世界的棘手问题"><a href="#真实世界的棘手问题" class="headerlink" title="真实世界的棘手问题"></a><a href="https://book.douban.com/review/5650588/" target="_blank" rel="noopener">真实世界的棘手问题</a></h3><p>你有没有想过买鱼也会是一个复杂的问题？</p>
 <p>甲。明天是家人的生日，你跟老板说，明天记得给留一条老鼠斑，老板说没问题。你有没有是否担心老板不记得了于是再跟其他的人说同样的要求，又或者老板觉得你明天不会买，所以根本就没有进货？<br>乙。你平常买鱼是在超市里买还是在菜市场买？我们都觉得菜市场要比超市要便宜，但是你有没有发现，有时候部分海产品超市要比菜市场便宜呢？还有，为什么有些市场能以所谓的平价超市出现？<br>丙。老板跟你很熟，你也常在他那买鱼。但是有一天你发现另一家店铺更便宜，更实惠，于是你就老去另一家买。再后来，老板看到连老主顾都跑了，连忙把价格也降下来。于是，你又在那一家买鱼了。<br>以上三个问题，其实分别对应的是《鱼价经济学》中所提到的选择、经济学和系统。作者抛开简单的经济学建模方式，认为真正的经济行为是一个真实世界的棘手问题，分别牵涉到以上提到的三项，还有进化。怎么理解呢？让我们还是回到我刚才编的蹩脚故事吧。<br>传统经济学认为人是理性的，但是其实整个经济行为都是建立在不理性的基础上的。正如甲故事中，顾客提出邀约，但是两个人都存在违约的风险，你可能不买，他也可能没得卖，这时候作为理性人，顾客的选择是今天就买好了，不用等到明天，而老板的选择是你先把钱给我，然而如果我们留意周围的世界，我们会发现，其实我们都是不理性的，这就是所谓的信任。当然，信任并不见得就是好事，至少每次经济泡沫都是基于信任与贪婪开始的。<br>而另一方面，鱼价的问题其实牵涉到了政府、企业主以及第三方。众所周知，中国高速收费、燃油之贵已经直接影响到了我们的菜盘子。而企业主之间的相互竞争也使得鱼价忽高忽低，在这些企业主中，笔者倒是很喜欢吉之岛这样的卖家，每到晚8点，你总能买到半价的农副产品。最耐人寻味的是第三方，我们总是以前面两者来定义这些部门，不是叫NGO（非政府组织），就是叫非营利性组织。他们是否会影响到价格呢？其实，希望工程都可以算鱼价制定的参与者之一，正是农村文化水平的提高才能使得饲养技术的提高。当然，人们更多的是关心政府介入经济的深浅，不过作者给出了一个中肯的答案，既不能期待像古典经济学家一样回到自由放任的时代，也不能让政府包打天下。<br>那么什么是系统呢？我们说，菜市场的老板就是一个系统，他是根据竞争对手的价格（前馈）和顾客的光顾（反馈），来管理价格和生产。而在大超市这种系统更为成熟，一个物品的摆放可能就是一堂生动的管理课。<br>可见，鱼价的决定因包含着经济学、心理学和管理学的知识，这就是所谓的棘手问题，而这些棘手问题其实回到了奥利地学派关于作为行为者的人这一基本概念，因此从某种意义上说，真实的商业更接近于哈耶克提出的交易学。当然，这里我们似乎漏了进化。这使我想起了另一个故事。<br>海鱼的冷藏与运输一直是一个大问题，以前都是拿碎冰冰冻着，后来人们发明了“冰衣”。所谓冰衣，就是在大个的冰鲜鱼的面上结着一层冰，当然，这种商业改造也使得有些商人打上了歪主意，冰衣是越来越厚，赚的“冰钱”也越来越多。后来，还是有人发明了薄涂层，最大限度的减少冰衣，才真正使得人们买的物美价廉。<br>按照作者的解释，冰衣或许算得上进化了，商人赚了钱，老百姓也能吃到好的海鱼，但是只有真正的让价格等于价值，那么才能实现所谓的“可持续发展”，这才是真实商业的突破。</p>
-<h2 id="人与经济"><a href="#人与经济" class="headerlink" title="人与经济"></a><a href="https://book.douban.com/subject/25816569/" target="_blank" rel="noopener">人与经济</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s27229956.jpg"></p>
+<h2 id="人与经济"><a href="#人与经济" class="headerlink" title="人与经济"></a><a href="https://book.douban.com/subject/25816569/" target="_blank" rel="noopener">人与经济</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s27229956.jpg" alt></p>
 <h3 id="内容简介-2"><a href="#内容简介-2" class="headerlink" title="内容简介"></a>内容简介</h3><p>本书是汪丁丁关于市场和经济的思考，其实包括三个层面，一是对中国特色之下的市场经济，即政府或出于善意或因为无知而对市场的过度干预的批判，比如“善意的恶法”，二是对市场充分发挥调节作用之后的结果的冷静、客观认识，即必然会出现“我们都不喜欢的结果”，三是即使实现了充分的市场，又会带来新的问题，比如西方市场经济国家所出现的问题。所以，本书重点在于前两点，在市场的方向之下，国家和政府如何解决发展的难题。</p>
 <p>中国经济体是与其他国家有很大不同的经济体。无论从劳动力市场、股票市场、房地产市场角度，还是从国内市场、国际市场角度，都可以看到其独有的特征，也存在许多特殊的问题。</p>
 <p>对此，汪丁丁教授通过同积极思考的青年学子们的对话和讨论，对中国经济中的正常与非正常、劳资关系、合同法、“两市”、经济增长的制约、市场困惑等重大问题进行了哲学层面的深入探讨。也许你没能去北大听课，但是你可以买来一套《青年对话录》来参与讨论与思考。读汪丁丁的书，如同在黑暗的隧道中艰难前行，一开始你可能茫然无措，但最终你将适应这黑暗并发现其中的微光，在它的指引下一路向前。</p>
@@ -497,7 +467,7 @@
 <p>这种方法本质上是<strong>基于随机过程中的马尔可夫决策过程（MDP）。</strong></p>
 <p>收益递增与正反馈原理在作者看来这是复杂经济学的显著特征，因为只有基于正反馈，体系才会呈现复杂性与多样性，打破原有的结构，并建立新的结构。作者用正反馈来研究技术选择问题，发现基于正反馈逻辑的技术才可能发生路径依赖性，即人们从诸多目的相同的技术中选择了其中的一种。</p>
 <p>“对一种经济学方法的描述，并不一定能构成一种研究纲领”。在我的理解中，基于“过程与涌现”的观点尽管提供了丰富的案例以及新颖的方法，但确实没有理论可以统领或联系一般现象，这便是复杂经济领域面临的最大问题。从新的角度去理解经济学，这条道路究竟能走多远，很大程度取决于这个问题是否能解决。</p>
-<h3 id="经济学领域究竟发生了什么"><a href="#经济学领域究竟发生了什么" class="headerlink" title="经济学领域究竟发生了什么?　"></a><a href="http://m.ce.cn/ttt/201807/27/t20180727_29872277.shtml" target="_blank" rel="noopener">经济学领域究竟发生了什么?　</a></h3><p><img alt data-src="http://i.ce.cn/newwap/ttt/201807/27/W020180727556271864822.png"></p>
+<h3 id="经济学领域究竟发生了什么"><a href="#经济学领域究竟发生了什么" class="headerlink" title="经济学领域究竟发生了什么?　"></a><a href="http://m.ce.cn/ttt/201807/27/t20180727_29872277.shtml" target="_blank" rel="noopener">经济学领域究竟发生了什么?　</a></h3><p><img data-src="http://i.ce.cn/newwap/ttt/201807/27/W020180727556271864822.png" alt></p>
 <p>中国经济网（来源：经济日报-中国经济网） 2018-07-27 15:20:00<br>布莱恩·阿瑟访谈录</p>
 <p>问:经济学领域究竟发生了什么?</p>
 <p>答:经济学正在发生重大变化。在过去的二三十年里,经济学家们认为,他们的标准方法,即新古典经济学,已经严重脱离了现实。新古典经济学假设人们是超理性的,在一个静态的、均衡的世界中进行决策。然而,经济学已经发生了分化,许多经济学家着手寻找更加现实的假设。因此,我们看到了行为经济学、收益递增经济学、进化博弈论的出现。复杂经济学也是如此。</p>
@@ -536,7 +506,7 @@
 <p>第四个对策是控制好货币政策和宏观审慎政策。货币政策要从宽松走向中性和稳健，要告别过去高负债、高增长的模式。宏观审慎政策的两个要点，一是去杠杆，因为根据顺周期理论，当经济发展非常顺利时，人们会忽视风险、盲目扩张，导致杠杆率非常高；二是要防止市场得“传染病”，避免引发系统风险，方法就是在不同金融市场之间设立“防火墙”。</p>
 <p>最后，魏杰提醒说，从2018年开始的三年是最关键的三年，“我建议企业家们，三年内不要冒险，别只想着扩张，财富安全是第一位。”</p>
 <p>以上就是著名经济学家魏杰对于未来三年中国经济重点的看法，也就是要采用四个对策来防范金融风险。</p>
-<h2 id="经济到底为了什么"><a href="#经济到底为了什么" class="headerlink" title="经济到底为了什么"></a><a href="https://book.douban.com/subject/11601995/" target="_blank" rel="noopener">经济到底为了什么</a></h2><p><img alt="economy20180621.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/economy20180621.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="经济到底为了什么"><a href="#经济到底为了什么" class="headerlink" title="经济到底为了什么"></a><a href="https://book.douban.com/subject/11601995/" target="_blank" rel="noopener">经济到底为了什么</a></h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/economy20180621.jpg?imageMogr2/thumbnail/!75p" alt="economy20180621.jpg"></p>
 <p>为什么物质产品越来越丰富，人们却仍不快乐？为什么不论城市还是乡村，人们的压力都越来越大？为什么我们追求共同富裕，而贫富差距却日甚一日？为什么国内生产总值增长了，幸福指数却不断下降……</p>
 <p>约翰•格拉夫和戴维•巴特克在本书中引导读者思考经济学的一个关键问题，即经济到底为了什么？继而给出了一个适合所有经济制度的简单目标：为最大多数人提供最大、最长久的幸福。同时，他们驳斥了人们对GDP的盲目崇拜，然后循序渐进地从专业角度阐述了生活品质、安全感、社会公正、幸福、时间和经济发展等问题，即如何让经济增长促成整个社会的全面进步，在医疗保健、退休保障、经济收入、教育水平、幸福指数、可持续发展等方面作出改善，从而创建一个更加幸福、健康、公平且更具可持续发展的未来。</p>
 <p>两位作者不仅回顾了过去的成功经验与失败教训，也融入了当今社会的事例，向我们展示了以下场景：当个人和市场、政府共同合作时，我们就能够创造一种经济制度，它能够提供人们真正渴望的事物——幸福、健康、与家人朋友相处的时光、公平的薪资等——而不仅仅是更多的物质产品。</p>
@@ -554,12 +524,12 @@
 <p>第十一章 自由放任主义并没有完全消失<br>肯尼迪对GDP的质疑 // 227<br>尼克松的可持续发展理念 // 231<br>卡特执政时期的通货膨胀 // 234<br>里根认为政府本身才是问题所在 // 237<br>克林顿执政时期的繁荣与潜在风险 // 239<br>小布什执政时期美国经济的噩梦 // 242</p>
 <p>第十二章 一团混乱的金融危机<br>金融危机的导火索 // 248<br>揭开金融骗局的神秘面纱 // 249<br>金融危机初现端倪 // 254<br>金融海啸袭击全球 // 255<br>7 000亿美元的刺激计划 // 257<br>金融危机来了，怎么办？ // 260</p>
 <p>第十三章 经济到底为了什么<br>《权利法案》启示录 // 267<br>我们需要的是市场经济，而非市场社会 // 273<br>关于幸福的倡议 // 276<br><strong>经济就是为了迈向自由和幸福的生活</strong> // 278<br>致谢 // 281</p>
-<h2 id="优雅的理性——用经济学的眼光看世界"><a href="#优雅的理性——用经济学的眼光看世界" class="headerlink" title="优雅的理性——用经济学的眼光看世界"></a><a href="https://book.douban.com/subject/25785749/" target="_blank" rel="noopener">优雅的理性——用经济学的眼光看世界</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s27168991.jpg"></p>
+<h2 id="优雅的理性——用经济学的眼光看世界"><a href="#优雅的理性——用经济学的眼光看世界" class="headerlink" title="优雅的理性——用经济学的眼光看世界"></a><a href="https://book.douban.com/subject/25785749/" target="_blank" rel="noopener">优雅的理性——用经济学的眼光看世界</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s27168991.jpg" alt></p>
 <h3 id="作者简介-1"><a href="#作者简介-1" class="headerlink" title="作者简介"></a>作者简介</h3><p>熊秉元</p>
 <p>著名法律经济学家。台大经济系毕业，美国布朗大学取得硕博士学位后，返回母校; 在台大经济系暨研究所任教二十余年, 主要研究领域为法律经济学和经济学方法论。目前为浙江大学永谦讲座教授, 浙江大学法律与经济研究中心主任, 并在澳门大学法学院任教。近年来在两岸推展「法律经济学」, 渐有成果。两岸三地主要大学的法学院里, 担任讲座教授的经济学者, 他是第一位, 目前也是唯一的一位。</p>
 <p>除学术论文外，出版过《灯塔的故事》、《寻找心中那把尺》、《大家都站着》、《我是体育老师》、《会移动的城堡》、《熊秉元漫步法律》、《法律经济学开讲》、《走进经济学》、《吃鱼的方法》等书, 并曾在台湾《经济日报》、《印刻文学生活志》、《联合报》、香港《信报》、和大陆《南方周末》等发表专栏。熊氏是经济学家，也是散文家; 在华语散文界，他与著名的经济散文学家「顶侠」张五常并称，有「巨侠」之誉。作品被知名文化评论家南方朔誉为「熊氏散文」，他的两篇文章被选为台湾高职国文的课文；在华人经济学界，获此殊荣仅有熊氏一人。</p>
 <h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>推荐序 感受经济学的理性之美/001<br>第一部 经济学家的人生哲思：<br>何不潇洒一些<br>为人生目标做经济分析/003<br>生命的比拟/006<br>不同阶段，不同角色/008<br>喜怒哀乐的经济逻辑/011<br>道德情操小论/015<br>人比人气死人，是比错了方向！/018<br>选择记忆/020<br>牺牲谁比较好？/023<br>认识世界的过程，形似指鹿为马/026<br>海绵、刺猬和傻瓜/028<br>人生里的两支鱼竿/031<br>伦常关系其实是种工具/035<br>为何父不父、子不子？/038<br>大头大头、下雨不愁/040<br>面对死亡，何不潇洒一些/043<br>艰涩道理浅中求/047<br>大师的招数/049<br>波斯纳的便士/052<br>第二部 经济学家的理性与感性：<br>悲剧是无解的吗<br>“不讨喜”的经济学家/059<br>人为财死的逻辑/062<br>报应的逻辑/064<br>正义的逻辑/067<br>正义的刻度/070<br>亚当•斯密也叹息/074<br>纵贯法学/078<br>什么是好的理论？/080<br>冲突不一定都是坏事/083<br>智慧的点线面/086<br>蚂蚁和蜜蜂的经济思维/089<br>悲剧是无解的吗/092<br>“多多”不一定“益善”/092<br>读法律以修水管/097<br>何谓“自由”/100<br>我们都在给别人“贴标签”/104<br>生活给的启示/106<br>文章是为读者而写，为自己写的是日记/111<br>第三部 经济学家的社会观察：<br>当多数人都是输家时<br>“半大人”和“二十仔”/117<br>重新界定“成年人”的涵意/120<br>可以聚众换偶吗？/123<br>“驼兽纪”/125<br>裁其跅弛，百年树人/128<br>一个拉拉队员之死/131<br>艾滋器官的价值/134<br>关键时刻的优雅“很贵”/137<br>仅靠道德无法建立可长可久之道/139<br>谁该承担歧视的重担？/142<br>市场经济启示录/145<br>“坐在金矿上”而不自知/147<br>尔爱其羊，就能求羊得羊？/150<br>请“文明”的善后/152<br>“商品的市场”和“言论的市场”/155<br>台湾地区选举，可能多数人都是输家/158<br>为何不投降/160<br>“高墙”里外/163<br>寻找司法女神的真容/166<br>第四部 经济学家的两岸漫游：<br>在历史的足迹里迷惘<br>包罗万象的中国大陆/171<br>北京见闻——经济基础决定尊严高低/175<br>武汉见闻——百废待兴/179<br>向前看，向钱看/183<br>海峡两岸的同与异/187<br>大陆法学院见闻——发现经济学中的“创造性破坏”/189<br>要怎么收获“两岸共赢”/192<br>台湾有什么特别/194<br>“吻”一下，值两百万/197<br>“序”中有“乱”/199<br>台北，停滞的宝岛风情画/203<br>“关系”在两岸三地的不同地位/205<br>化“古老”为神奇/209<br>层层审核中的“雁过拔毛”故事/211<br>台湾经验停看听/214<br>国家需要多久才能成熟/218</p>
-<h2 id="中间人经济——经纪人、中介、交易商如何创造价值并赚取利润"><a href="#中间人经济——经纪人、中介、交易商如何创造价值并赚取利润" class="headerlink" title="中间人经济——经纪人、中介、交易商如何创造价值并赚取利润"></a><a href="https://book.douban.com/subject/27618864/" target="_blank" rel="noopener">中间人经济——经纪人、中介、交易商如何创造价值并赚取利润</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29655775.jpg"></p>
+<h2 id="中间人经济——经纪人、中介、交易商如何创造价值并赚取利润"><a href="#中间人经济——经纪人、中介、交易商如何创造价值并赚取利润" class="headerlink" title="中间人经济——经纪人、中介、交易商如何创造价值并赚取利润"></a><a href="https://book.douban.com/subject/27618864/" target="_blank" rel="noopener">中间人经济——经纪人、中介、交易商如何创造价值并赚取利润</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29655775.jpg" alt></p>
 <h3 id="内容简介-3"><a href="#内容简介-3" class="headerlink" title="内容简介"></a>内容简介</h3><p>仔细观察周围，我们不难发现，身边充斥着各式各样的中间人：</p>
 <p>地产中介连接着买房的和卖房的人，<br>电商平台连接着买家和卖家，<br>滴滴打车连接着车主和打车的人，<br>大众点评连接着商户和消费者，</p>
 <p>……</p>
@@ -639,7 +609,7 @@
 <p>262p 中间人的实质，是市场机制下分工的进一步演化，是合乎理性的存在。</p>
 <p>263p 没有人喜欢中间人，但我们大部分人都是中间人。</p>
 <p>264p 中间人是连接关系网节点，但只有带给客户温暖和自身业务能力突出的中间人才能增加利用关系网创造价值。</p>
-<h2 id="7分钟，带你体验经济学的乐趣"><a href="#7分钟，带你体验经济学的乐趣" class="headerlink" title="7分钟，带你体验经济学的乐趣"></a><a href="http://www.luojiji.com/thread-12484-1-1.html" target="_blank" rel="noopener">7分钟，带你体验经济学的乐趣</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201807/18/095644g6gi46gv7hm4llmi.jpg"></p>
+<h2 id="7分钟，带你体验经济学的乐趣"><a href="#7分钟，带你体验经济学的乐趣" class="headerlink" title="7分钟，带你体验经济学的乐趣"></a><a href="http://www.luojiji.com/thread-12484-1-1.html" target="_blank" rel="noopener">7分钟，带你体验经济学的乐趣</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201807/18/095644g6gi46gv7hm4llmi.jpg" alt></p>
 <p>提到经济学，你最先想到的是啥？</p>
 <p>估计很多人会想到GDP、宏观调控、国际贸易……这些大词。</p>
 <p>但事实上，经济学可以很亲民。它就存在于我们的日常生活之中，帮助我们理解生活中的种种问题。</p>
@@ -749,7 +719,7 @@
 <p>我所讲授的内容受到了大量读者、学生和用户的反馈。从去年开始的专栏，现在已经吸引了超过了26万名的订阅用户，而他们在每一讲下的留言，累计已经超过了7000万字。这是我很高兴看到的现象。</p>
 <p>这个课程和这本《薛兆丰经济学讲义》来自一个伟大的学术传统，它跟每一个人都有关系，它能够被每一个人所理解、消化和实践。我还能获得这么多的反馈和锤炼，我有信心让这个课程和这本讲义一个一个版本地迭代下去。</p>
 <p>我的愿望是，每个中国人都能够<a href="https://deepcreator.com/Person/Experience.html" target="_blank" rel="noopener">体验</a>经济学带来的乐趣，具备经济学思维。</p>
-<h2 id="为什么出租车会灭亡"><a href="#为什么出租车会灭亡" class="headerlink" title="为什么出租车会灭亡"></a><a href="http://www.luojiji.com/thread-2724-1-1.html" target="_blank" rel="noopener">为什么出租车会灭亡</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/26/120543sv5oeco4yzi58793.jpg"></p>
+<h2 id="为什么出租车会灭亡"><a href="#为什么出租车会灭亡" class="headerlink" title="为什么出租车会灭亡"></a><a href="http://www.luojiji.com/thread-2724-1-1.html" target="_blank" rel="noopener">为什么出租车会灭亡</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/26/120543sv5oeco4yzi58793.jpg" alt></p>
 <p>薛兆丰</p>
 <p>出租车市场的管制和牌照由来已久。历史上最早出现的出租车就是马车，英国早在1635年就开始立法管制出租马车(Hackney Carriage Act)，1654年就开始发放出租马车的牌照。</p>
 <p>许多专家说，不论古今中外，出租车都是需要管制的。确实如此。我们得问问，</p>
@@ -893,7 +863,7 @@
 <p>那最后一个标准呢，就是立言。经济学家是以写文章、发表言论为本职工作的，所以这自然是最重要的一个标准，但它也当然是最难的一个标准。我们都是外行，经济学家内行经常说的那个话我么都听不懂，我们作为一个外行，怎么能判断他们说的是对是错，是不是一个好的经济学家呢？你看，在佛教发展的历史上也有这么一段，佛陀灭度之后（就是释迦摩尼死了之后），很多人都说，我听他说过法，我知道他怎么说的，我说给你听。所以佛陀在生前就说过一句话，说末法时代，邪师说法如恒河沙——就是会多得不得了说我的说法，但都是邪说。但怎么办呢？所以后来佛教就搞出了所谓的三法印，也有四法印、五法印的说法——就立了三条标准，只要不符合这三条标准都是胡说，至少不符合佛陀的原意。你看现在佛教经典当中，《阿含经》基本可以判断是佛陀所说，很多中国流传的民间的那些经文其实未必是真佛经。那怎么判断？就用三法印来判断，就是诸行无常，诸法无我，涅槃寂静（这佛法我们就不说了）。那今天我们是不是可以提出一个关于经济学的一个法印呢——就是什么样的观点就证明他是一个好经济学家？当然我没有这个能力，我请教了很多经济学家，大家基本上给我两条标准：第一，就是他是不是主张保护私有产权，第二，就是他是不是主张自由交易。说起来很简单，具体的道理我前面也都讲过，你不要以为这两条很容易，一旦回到具体生活当中，经常是容易犯糊涂的。比如说德索托现在在世界上行走，比如说埃及或者各种各样的第三世界国家都请他去，他万变不离其宗就是这么一句话——保护穷人的私有产权。你听起来好像是一句很枯燥的话，但这背后的道理深了去了。但是还是有人给德索托起了一个外号，说他是产权民粹主义者，说你就会这一套，别的不会，有本事你写一个公式我看看——你看，这就是不知道什么叫经济学家立言的根本。再比如说张五常先生（刚才我们讲的经济学法印的第二条就是是不是主张市场的自由交易），张五常先生经常在一些真实世界的案例当中说出来的那个话，别人觉得匪夷所思。比如说他坚定地反对劳动合同法，坚定地反对所谓的最低工资标准。今天我们听起来，这不都是保护穷人的做法吗，你这个老头是不是替资本家说话？其实我们只要稍微一深想，就能明白张五常为什么这么说。因为雇佣也是一种交易，这种交易的自由度也应该得到保护——而不是用什么劳动合同法，最低工资标准来干扰它。一旦干扰会产生恶果的，这个恶果不仅会落在资本家的头上，更多的恶果会落在劳工阶层的头上，这个道理以前的节目我们其实也讲过。</p>
 <p>但是作为一个经济学家，干预大声疾呼，不从流俗，和主流意见相反，这也是需要勇气的。张五常先生从中国搞劳动合同法那一天一直喊到了今天，那背后的道理其实很简单，就是作为一个经济学家，他恪守保护私有产权、支持自由交易这两条标准的金线。</p>
 <p>那节目的最后还是给大家推荐这套书，张五常先生所写的《经济解释》。这套书可以说是张五常先生一身经济学术的精华——我敢保证里面没有一个公式，没有太多的数字，任何普通人只要识字，你就可以读得懂。如果你不懂经济学，读了这套书你会对经济学产生非常独特的温情的感觉；如果你懂了经济学，你会对这么高水平的著作高山仰止。当然你说我就不为求知我就是好奇，读这本书有没有效果？也有。因为我读这本书很多年前，这套书可以说陪伴了我很多年（当然这套不是，这套是新版）。那即使你不为求知，读完这本书之后你也会叫交上一个朋友。因为张五常这个人特别有意思，在他这套书里面字里行间都表现出了那种孤傲之气。而这种孤傲是从哪里来的呢？是从智慧来的，你会看到一个学者是怎么样把玩他这门学问，从中得到了一种什么样的智力上的愉悦。</p>
-<h2 id="经济学家的观点"><a href="#经济学家的观点" class="headerlink" title="经济学家的观点"></a>经济学家的观点</h2><p><img alt="Image_20180215075219.jpg" data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075219.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180215075215.jpg" data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075215.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180215075210.jpg" data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075210.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180215075206.jpg" data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075206.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180215075202.jpg" data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075202.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180215075158.jpg" data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075158.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180215075154.jpg" data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075154.jpg?imageMogr2/thumbnail/!75p"><br><img alt="Image_20180215075150.jpg" data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075150.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="经济学家的观点"><a href="#经济学家的观点" class="headerlink" title="经济学家的观点"></a>经济学家的观点</h2><p><img data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075219.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180215075219.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075215.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180215075215.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075210.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180215075210.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075206.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180215075206.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075202.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180215075202.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075158.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180215075158.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075154.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180215075154.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/Image_20180215075150.jpg?imageMogr2/thumbnail/!75p" alt="Image_20180215075150.jpg"></p>
 <h2 id="事实案例"><a href="#事实案例" class="headerlink" title="事实案例"></a>事实案例</h2><h3 id="产品质量并非越高越好？"><a href="#产品质量并非越高越好？" class="headerlink" title="产品质量并非越高越好？"></a><a href="http://www.luojiji.com/thread-3531-1-1.html" target="_blank" rel="noopener">产品质量并非越高越好？</a></h3><p>什么样的企业是坏企业？大部分消费者可能觉得，为了省成本，生产的产品质量很次，一定就是无良厂家。不过呢，最近薛兆丰在他的新书中说，产品质量其实并不是厂家说了算，质量高低完全是<a href="https://deepcreator.com/Business/Consumption.html" target="_blank" rel="noopener">消费</a>者自己决定的。</p>
 <p>什么意思呢？比如说吧，油箱上加个挡板，能让汽车更安全，但为了降低成本，很多低档车厂家没有加。很多人就批评了，生命无价、安全第一啊，这些无良厂家不是蔑视生命吗？其实，安全也是有价格的，加挡板是安全了，但也更贵了啊，对小康之家来说，安全差点，小心开就是了，反而价格便宜更重要。有人图安全，有人贪便宜，厂商取的是中间值。换句话说，安全程度是市场自己的<a href="https://deepcreator.com/Concept/Choice.html" target="_blank" rel="noopener">选择</a>，厂家只是顺应了需求而已。</p>
 <p>再比如说，前几年国家降低了牛奶的质检标准，允许低质量的牛奶进入市场。这引来舆论一片骂声，说国家不负责任。其实，政府做得对，为什么？质检标准太高，太多厂家达不了标就会去造假，受害的还是消费者，而硬性标准降低以后，厂家掺假的积极性降低了，同时，这并不妨碍有能力的厂家提高产品质量啊，只要消费者能分辨出不同品质的牛奶，大家自然愿意按照各自的需求买单。</p>
@@ -917,7 +887,7 @@
 <h2 id="经济学家：中美贸易冲突的原因"><a href="#经济学家：中美贸易冲突的原因" class="headerlink" title="经济学家：中美贸易冲突的原因"></a><a href="http://www.luojiji.com/thread-12150-1-1.html" target="_blank" rel="noopener">经济学家：中美贸易冲突的原因</a></h2><p>哈继铭曾在知名投资银行中金和高盛担任首席经济学家，现在是中国金融四十人论坛高级研究员。在复旦大学的一次演讲中，哈继铭针对当下国际关系和宏观经济领域很热点的中美贸易冲突问题给出了自己的看法。FT中文网整理了他的演讲。当然，中美贸易不平衡现象是客观存在的，但将这种贸易不平衡简单归结为汇率操纵的结果并不客观。2005年之后很长一段时间，即使人民币汇率上升，中国出口占世界出口比例也一直在提高，中美贸易顺差也没有因为人民币升值而降低。</p>
 <p>哈继铭的观点是，中美贸易的不平衡确实客观存在，但是原因并不在美国人经常指责的汇率操纵。他认为原因有三个方面。首先是1971年著名的布雷顿森林体系解体之后，美元不再紧盯黄金，政府可以采用更自由的货币政策。自此之后，美国对外贸易就再也没有出现过顺差。而在此之前，美国如果出现贸易逆差，就会出现货币紧缩，从而抑制进口并推动出口，把美国的进出口贸易推到均衡状态。第二个原因是中国在不断向产业链上游攀升。过往大家都知道，中国自身从出口商品中分享到的收益并不大，但是现在中国出口产品附加值占比在逐渐提高。 第三个原因是储蓄率的差异。哈继铭说，一个普遍现象是，国民储蓄率高的国家往往都是贸易顺差；而像美国和英国这样储蓄率低的国家，常年贸易逆差。</p>
 <p>至于当前的中美贸易冲突，哈继铭认为，其中既有深层次原因，比如中国对美国的追赶态势造成的国际地位改变，“如果从2018年开始，美国平均GDP增速为2%，中国平均GDP增速为6%，中国GDP总量将在2031年超越美国，成为世界第一大经济体”、美国国内的贫富差距和失业问题、长久以来对中国经济体制特征的质疑；也有当下策略性的原因，比如美国政府中温和派的离职、制造贸易争端有利于共和党中期选举等。</p>
-<h2 id="Sharing-Economy"><a href="#Sharing-Economy" class="headerlink" title="Sharing Economy"></a>Sharing Economy</h2><p><img alt="sharingeconomy20180413.jpg" data-src="http://p53s4d2qk.bkt.clouddn.com/sharingeconomy20180413.jpg?imageMogr2/thumbnail/!75p"></p>
+<h2 id="Sharing-Economy"><a href="#Sharing-Economy" class="headerlink" title="Sharing Economy"></a>Sharing Economy</h2><p><img data-src="http://p53s4d2qk.bkt.clouddn.com/sharingeconomy20180413.jpg?imageMogr2/thumbnail/!75p" alt="sharingeconomy20180413.jpg"></p>
 <blockquote>
 <p><a href="https://baike.baidu.com/item/%E5%85%B1%E4%BA%AB%E7%BB%8F%E6%B5%8E/965155?fr=aladdin" target="_blank" rel="noopener">本质</a>——整合线下的闲散物品或服务者，让他们以较低的价格提供产品或服务。</p>
 </blockquote>
@@ -940,7 +910,7 @@
 <p>过去200年的工业化进程，形成了所谓的自由市场，它让企业变成整个经济的原动力，出现了大集团、大流通、大卖场。但是今天，<strong>分享经济让我们可以把新的连接点从企业降到个人</strong>，这会出现不一样的商业逻辑。陈驰认为，今天的分享经济只是开始，可以渗透到各个领域，可以让个人根据自己的存量资本、资产、盈余，去参与到全领域的商品服务中。</p>
 <p>以上就是“小猪短租“联合创始人兼CEO陈驰对分享经济的一些分析，希望你能从中有所收获。</p>
 <p>本文源自：笔记侠（《分享经济4年前和4年后的逻辑不一样，看不懂你就输了》）</p>
-<h2 id="一般人看足球，厉害的人看足球经济学"><a href="#一般人看足球，厉害的人看足球经济学" class="headerlink" title="一般人看足球，厉害的人看足球经济学"></a><a href="http://www.luojiji.com/thread-12176-1-1.html" target="_blank" rel="noopener">一般人看足球，厉害的人看足球经济学</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/15/105214l0b77z2h0ssyzh2h.jpg"></p>
+<h2 id="一般人看足球，厉害的人看足球经济学"><a href="#一般人看足球，厉害的人看足球经济学" class="headerlink" title="一般人看足球，厉害的人看足球经济学"></a><a href="http://www.luojiji.com/thread-12176-1-1.html" target="_blank" rel="noopener">一般人看足球，厉害的人看足球经济学</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/15/105214l0b77z2h0ssyzh2h.jpg" alt></p>
 <p>世界杯刚刚开幕，普通人看足球，厉害的人却能通过足球看到经济学。</p>
 <p>今天我们为你介绍的这本书，就是——</p>
 <p>《足球经济学》</p>
@@ -1421,12 +1391,12 @@
 <p>老天爷，你要知道啊，中国有句古话，叫赔钱的生意没人做，杀头的生意有人做啊。你以为杀人就一定能解决这个问题吗？而且你怎么知道他放了地沟油呢？这需要考虑一个问题叫监管成本。你横不能在每个早点摊，每个包子铺，每一个小餐馆的后厨里都派一个公务员看着吧。那你又怎么避免这个公务员和老板勾结成奸呢？每十个公务员后面还得派一个纪检干部。你又有什么把握这个纪检干部不会腐化堕落呢，你是不是还要派纪检干部看住前面这个纪检干部呢？整个这个系统一旦搭建成，整个社会要付出的社会制度的成本会有多高呢？</p>
 <p>这个问题怎么解决？其实也并不是没有希望。他要靠市场经济的自我发育，把那些零散的商业最后整合成几个寡头，就像美国现在这样，全美国几乎所有的餐馆你一看，就是背后那几个寡头。一方面职业经理人不会为了股东的利益，去干冒坐牢的危险；另一方面，任何一个小型的食品安全事件，都会导致他股价暴跌，整个品牌巨大受损。所以他们根本不会去干这个事情。只有当市场出现寡头的时候，这件事情才会发生缓解，我们中国人才有能力把地沟油赶出餐桌。所以这件事情不是制度设计的问题，有时候还需要耐性。</p>
 <p>我的一个媒体界的前辈告诉过我一个词，说我们都生活在一个复利时代。这个概念其实就是两句话。第一，任何好事你做了，不要以为只会收获当下的收益，他一定是在好处之后还有好处，利润之后还有利润；另一方面，就是任何成本一旦支出，你都知道，成本之后还有成本，只不过在刚开始的时候，你未必知道而已。</p>
-<h2 id="吴晓波"><a href="#吴晓波" class="headerlink" title="吴晓波"></a>吴晓波</h2><h3 id="浩荡两千年"><a href="#浩荡两千年" class="headerlink" title="浩荡两千年"></a><a href="https://book.douban.com/subject/6980818/" target="_blank" rel="noopener">浩荡两千年</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s7008353.jpg"></p>
+<h2 id="吴晓波"><a href="#吴晓波" class="headerlink" title="吴晓波"></a>吴晓波</h2><h3 id="浩荡两千年"><a href="#浩荡两千年" class="headerlink" title="浩荡两千年"></a><a href="https://book.douban.com/subject/6980818/" target="_blank" rel="noopener">浩荡两千年</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s7008353.jpg" alt></p>
 <p>《浩荡两千年:中国企业公元前7世纪-1869年》内容简介：中国的工商文明为什么早慧而晚熟？中国的商人阶层在社会进步中到底扮演了怎样的角色？中国的政商关系为何如此僵硬而对立？中国的市场经济体制最终将以怎样的方式全面建成？在“中国特色”与普世规律之间是否存在斡旋融合的空间？</p>
 <p>作为“中国企业史三部曲”系列研究著作的第三部，继《激荡三十年》、《跌荡一百年》之后，在公元前7世纪到1869年长达两千多年的时间跨度里，著名财经作家吴晓波继续前两部作品的研究主题，再次探寻国家与资本、政府与商人阶层之间的关系，并试图寻找出这些事关当代的问题的答案。作者的写作表明，在高度专制的中央集权制度下，政府与工商阶层的对立、紧张关系，贯穿于两千余年的帝国时期。两千余年来，国家机器对商业的控制、干扰及盘剥，是阻碍工商文明发展的最重要因素，长达两千多年的中国企业史，归根到底是一部政商博弈史。在《浩荡两千年:中国企业公元前7世纪-1869年》一书中，以上问题有的已找到了答案，有的则还在大雾中徘徊。</p>
-<h3 id="激荡三十年"><a href="#激荡三十年" class="headerlink" title="激荡三十年"></a><a href="https://book.douban.com/subject/3151575/" target="_blank" rel="noopener">激荡三十年</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s3203360.jpg"></p>
+<h3 id="激荡三十年"><a href="#激荡三十年" class="headerlink" title="激荡三十年"></a><a href="https://book.douban.com/subject/3151575/" target="_blank" rel="noopener">激荡三十年</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s3203360.jpg" alt></p>
 <p>尽管任何一段历史都有它不可替代的独特性，可是，1978年—2008年的中国，却是最不可能重复的，在一个拥有近13亿人口的大国里，僵化的计划经济体制日渐瓦解了，一群小人物把中国变成了一个巨大的试验场，它在众口睽睽之下，以不可逆转的姿态向商业社会转轨……</p>
-<h3 id="激荡十年，水大鱼大"><a href="#激荡十年，水大鱼大" class="headerlink" title="激荡十年，水大鱼大"></a><a href="https://book.douban.com/subject/27179563/" target="_blank" rel="noopener">激荡十年，水大鱼大</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29636034.jpg"></p>
+<h3 id="激荡十年，水大鱼大"><a href="#激荡十年，水大鱼大" class="headerlink" title="激荡十年，水大鱼大"></a><a href="https://book.douban.com/subject/27179563/" target="_blank" rel="noopener">激荡十年，水大鱼大</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29636034.jpg" alt></p>
 <p>知名财经作者吴晓波新作，畅销十年、销量超过两百万册的《激荡三十年》续篇，至此完成改革开放四十年企业史完整记录。</p>
 <p>作为时代记录者，吴晓波有意识地从1978年中国改革开放伊始，记录中国翻天覆地的变化和对我们影响至深的人物与事件，串成一部我们每个人的时代激荡史。而最新的这十年，无疑更壮观，也更扑朔迷离。</p>
 <p>很多事情，在当时并未有很深很透的感受，回过头来再看，可能命运的轨迹就在那一刻无意中形成。这也是我们之所以应该回望历史的原因。</p>
@@ -1438,14 +1408,14 @@
 <p>在这十年当中，中国公司的体量发生了巨大的变化，在世界500强的名单中，中国公司的数量从35家增加到了115家，其中，有四家进入到前十大的行列中。在互联网及电子消费类公司中，腾讯和阿里巴巴的市值分别增加了15倍和70倍，闯进全球前十大市值公司之列，在智能手机领域，有四家中国公司进入前六强，而在传统的冰箱、空调和电视机市场上，中国公司的产能均为全球第一。在排名前十大的全球房地产公司中，中国公司占到了7家。全球资产规模最大的前四大银行都是中国的。</p>
 <p>中国的商业投资界发生了基础设施级别的巨变，以互联网为基础性平台的生态被视为新的世界，它以更高的效率和新的消费者互动关系，重构了商业的基本逻辑，在十年时间里，中国人的信息获取、社交、购物、日常服务以及金融支付等方式都发生了令人难以置信的改变。</p>
 <p>因此，这个十年，是中国水大鱼大的十年，风云激荡的十年。这十年的变化，对很多人来说，可能更甚于之前的三十年。在这本《激荡十年，水大鱼大》之中，我们将跟随作者的笔触，再次经历这改变了每个人的十年。</p>
-<h3 id="《跌荡一百年》（上、下）（全二册）"><a href="#《跌荡一百年》（上、下）（全二册）" class="headerlink" title="《跌荡一百年》（上、下）（全二册）"></a><a href="https://book.douban.com/subject/25858897/" target="_blank" rel="noopener">《跌荡一百年》（上、下）（全二册）</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s27252020.jpg"></p>
-<h3 id="吴晓波中国企业史三部曲完整典藏版"><a href="#吴晓波中国企业史三部曲完整典藏版" class="headerlink" title="吴晓波中国企业史三部曲完整典藏版"></a><a href="https://book.douban.com/subject/10453927/" target="_blank" rel="noopener">吴晓波中国企业史三部曲完整典藏版</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s10368900.jpg"></p>
+<h3 id="《跌荡一百年》（上、下）（全二册）"><a href="#《跌荡一百年》（上、下）（全二册）" class="headerlink" title="《跌荡一百年》（上、下）（全二册）"></a><a href="https://book.douban.com/subject/25858897/" target="_blank" rel="noopener">《跌荡一百年》（上、下）（全二册）</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s27252020.jpg" alt></p>
+<h3 id="吴晓波中国企业史三部曲完整典藏版"><a href="#吴晓波中国企业史三部曲完整典藏版" class="headerlink" title="吴晓波中国企业史三部曲完整典藏版"></a><a href="https://book.douban.com/subject/10453927/" target="_blank" rel="noopener">吴晓波中国企业史三部曲完整典藏版</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s10368900.jpg" alt></p>
 <p>第一部整体叙述中国商业史的编年体著作</p>
 <p>吴晓波中国企业史三部曲完整版</p>
 <p>如果把当代放入两千余年的历史之中进行考察，你会惊讶地发现，正在发生的一切，竟似曾相遇，每一次经济变法，每一个繁华盛世，每一回改朝换代，都可以进行前后的印证和逻辑推导。我们正穿行在一条“历史的三峡”中，它漫长而曲折，沿途风景壮美，险滩时时出现，过往的经验及教训都投影在我们的行动和抉择之中。</p>
 <p>在两千多年的时间里，中国是工商经济最为发达的国家。然而，当世界进入到工业革命时期，它竟远远落后，受各国欺凌，成为“东亚病夫”。在经历百年跌荡之后，中国经济再度崛起，在二十一世纪初，重回强国之列，与此同时，新的社会矛盾又提出了继续变革的要求。</p>
 <p>本书作者以宏大的历史视野和雄厚的笔力，由春秋时期的“管仲变法”开始，及至当代改革开放，叙述了两千七百多年的历代经济变革和工商变迁。辩驳得失，以史为鉴，本书适合所有关心中国前途的政府官员、企业界、学术界人士阅读珍藏，也是当代青年了解中国的启蒙读本。</p>
-<h3 id="腾讯传"><a href="#腾讯传" class="headerlink" title="腾讯传"></a><a href="https://book.douban.com/subject/26929955/" target="_blank" rel="noopener">腾讯传</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29653026.jpg"></p>
+<h3 id="腾讯传"><a href="#腾讯传" class="headerlink" title="腾讯传"></a><a href="https://book.douban.com/subject/26929955/" target="_blank" rel="noopener">腾讯传</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29653026.jpg" alt></p>
 <p>腾讯官方唯一授权的权威传记</p>
 <p>著名财经作家吴晓波倾力之作</p>
 <p>当市值最高的中国互联网公司，遇上中国财经界最冷静的一双眼睛</p>
@@ -1455,7 +1425,7 @@
 <p>本书全景式地记录了腾讯崛起的经历，并以互联网的视角重新诠释了中国在融入全球化进程中的曲折与独特性。</p>
 <p>从1998年开始创业到成为世界级互联网巨头，腾讯以即时通信工具起步，逐渐进入社交网络、互动娱乐、网络媒体、电子商务等领域，在超高速发展的同时亦饱受争议，在“3Q大战”的激烈冲突之后又进一步走向开放……腾讯的发展路径，亦是中国互联网企业成长的缩影。我们可以看到，中国的互联网人在应用性迭代和对本国消费者的行为了解上，找到了自己的办法，并开始领跑全球。</p>
 <p>读懂腾讯，读懂中国互联网。</p>
-<h3 id="历代经济变革得失"><a href="#历代经济变革得失" class="headerlink" title="历代经济变革得失"></a><a href="https://book.douban.com/subject/24851460/" target="_blank" rel="noopener">历代经济变革得失</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s26824603.jpg"></p>
+<h3 id="历代经济变革得失"><a href="#历代经济变革得失" class="headerlink" title="历代经济变革得失"></a><a href="https://book.douban.com/subject/24851460/" target="_blank" rel="noopener">历代经济变革得失</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s26824603.jpg" alt></p>
 <p>著名财经作家吴晓波再度发力！</p>
 <p>向钱穆先生之《中国历代政治得失》致敬之作！</p>
 <p>打破时间壁垒，勾勒历代变法全貌！</p>
@@ -1464,7 +1434,7 @@
 <p>其实无法真正理解当前的中国！</p>
 <p>两千七百年前，春秋时期的齐国宰相管仲改制变法，使得齐国一跃成为霸主，傲视群雄；公元1069年，王安石在宋神宗的支持下，推行新法，一时国库充实，北宋积贫积弱的局面为之缓解；公元1978年，总设计师邓小平开始实施改革开放政策，百年积弱的中国经济再度崛起，重回强国之列。在两千多年的时间里，中国经历了十数次重大的经济变革，每一次变法，都顺应社会发展而发生，也都对历史进程产生了重大影响。而今，新的社会发展又提出了继续变革的要求……</p>
 <p>本书是作者近年来研究中国经济变革史的集大成著作，对中国历史上十数次的重大经济变法的种种措施和实践作了系统的概述和比照，指明因革演变，坦陈利害得失，既高屋建瓴地总括了中国式改革的历史脉络，又剖析了隐藏在历代经济变革中的内在逻辑与规律。辩驳得失，以史为鉴，实不失为一部简明的“中国经济史”。</p>
-<h3 id="《大败局》十周年套装纪念版"><a href="#《大败局》十周年套装纪念版" class="headerlink" title="《大败局》十周年套装纪念版"></a><a href="https://book.douban.com/subject/5379353/" target="_blank" rel="noopener">《大败局》十周年套装纪念版</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s6501085.jpg"></p>
+<h3 id="《大败局》十周年套装纪念版"><a href="#《大败局》十周年套装纪念版" class="headerlink" title="《大败局》十周年套装纪念版"></a><a href="https://book.douban.com/subject/5379353/" target="_blank" rel="noopener">《大败局》十周年套装纪念版</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s6501085.jpg" alt></p>
 <p>《〈大败局〉十周年套装纪念版》包括《大败局1》、《大败局2》两册，以下是这两本书的内容简介： 《大败局1》 中有关于中国企业失败的MBA式教案！本书解读十大著名企业盛极而衰的失败原因：标王失败的原因是什么？数十亿资产的企业为何这般脆弱？“青年近卫军”为何如此短命？狂热的激情是怎样成为祸根的？中国“第一品牌”是怎样砸掉的？中国网络经济的原罪是什么？暴利到底给企业留下了什么？“多元化”的陷阱有多深？企业家离政治该有多近？是一本放在手上另人发烫的书！</p>
 <p>一个个国内著名得很著名得很——我真不知该如何描绘它们的著名</p>
 <p>突然在它们“花样年华”的日子里突然灰飞烟灭，突然无声无息的倒下了！</p>
@@ -1475,7 +1445,7 @@
 <p>《大败局2》 所记录的败局均发生在2000年到2007年之间，将它们与《大败局》中的失败案例合在一起来阅读，你将可以看到过去10年里发生在中国商业界的众多兴衰往事。出现在本书中的企业家，都是他们那一代人中的不世豪杰。跟《大败局》中的众多草莽人物相比，一个让人印象深刻的区别是，他们中的不少人拥有令人羡慕的高学历，他们中有教授（宋如华）、发明家（顾雏军）、博士（仰融）、军医（赵新先）、作家（吕梁）以及哈佛商学院总裁班学员（孙宏斌）等等。他们也并非对风险毫不在意，如托普的宋如华在创业之初就曾经专门拜访落难中的牟其中和史玉柱，向他们当面讨教失败教训。甚至在公司规范化经营及战略设计上，这些公司也与当年《大败局》中的企业不可同日而语。华晨、德隆、三九及健力宝等公司都曾经重金聘请全球最优秀的咨询公司为其服务，德隆的唐万新甚至还有一个拥有150名研究员的战略研究部门。</p>
 <p>在《大败局Ⅱ》中，我们更多地看到了一种“工程师+赌徒”的商业人格模式。他们往往有较好的专业素养，在某些领域有超人的直觉和运营天赋，同时更有着不可遏制的豪情赌性，敢于在机遇降临的那一刻，倾命一搏。</p>
 <p>这是企业家职业中最惊心动魄的一跳，成者上天堂，败者落地狱，其微妙控制完全取决于天时、地利与人和等因素。</p>
-<h2 id="薛兆丰"><a href="#薛兆丰" class="headerlink" title="薛兆丰"></a>薛兆丰</h2><h3 id="经济学通识"><a href="#经济学通识" class="headerlink" title="经济学通识"></a><a href="https://book.douban.com/subject/26582558/" target="_blank" rel="noopener">经济学通识</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s29408045.jpg"></p>
+<h2 id="薛兆丰"><a href="#薛兆丰" class="headerlink" title="薛兆丰"></a>薛兆丰</h2><h3 id="经济学通识"><a href="#经济学通识" class="headerlink" title="经济学通识"></a><a href="https://book.douban.com/subject/26582558/" target="_blank" rel="noopener">经济学通识</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s29408045.jpg" alt></p>
 <p>给我一双慧眼吧</p>
 <p>2015-07-31罗振宇罗辑思维</p>
 <p>今天这个周五上新日，我们推荐给大家的是——《经济学通识》，薛兆丰教授的作品。</p>
@@ -1555,17 +1525,17 @@
 <p>《经济学通识》，罗辑思维联手北京大学出版社升级复活，独家首发。</p>
 <p>世界并不复杂，只是你需要重塑一双慧眼。</p>
 <p>☞ 戳此购买《经济学通识》<a href="http://t.cn/RLpUZFD" target="_blank" rel="noopener">http://t.cn/RLpUZFD</a></p>
-<h3 id="经济学的争议"><a href="#经济学的争议" class="headerlink" title="经济学的争议"></a><a href="https://book.douban.com/subject/1059914/" target="_blank" rel="noopener">经济学的争议</a></h3><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s2705840.jpg"></p>
+<h3 id="经济学的争议"><a href="#经济学的争议" class="headerlink" title="经济学的争议"></a><a href="https://book.douban.com/subject/1059914/" target="_blank" rel="noopener">经济学的争议</a></h3><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s2705840.jpg" alt></p>
 <p>这本书收有经济散文约130篇，包括《愈让步，愈进步》《你毁你的独木桥，我修我的阳关道》《怎样减少违法》《消灭的走私的绝招》《谁在危机自由竞争》《微软行为的经济学依据》等。</p>
 <p>目录  · · · · · ·<br>自由贸易<br>《愈让步，愈进步！》<br>《你毁你的独木桥，我修我的阳关道》<br>《怎样减少违法》<br>《香蕉战殃及无辜》<br>《自由贸易与失业》<br>《谴责西雅图暴乱》<br>《消灭走私的绝招》<br>《国际贸易中的胡说》<br>《民族主义的特洛伊木马》<br>《不必忧虑中国农业》<br>垄断与竞争<br>《谁在危及自由竞争？》<br>《微软行为的经济学依据》<br>《凭什么挑战微软？》<br>《不要学美国的反垄断法》<br>《垄断经济学》<br>《谁不正当竞争》<br>《造作的“自由”竞争》<br>《反垄断只要一招》<br>《真假IP电话》<br>《盗版岂能有理》<br>《谁创造了暴利》<br>价格与管制》<br>《从经济学原理看“投机倒把”》<br>《为什么要价格歧视》<br>《无处不是价格战》<br>《何必阻止机票降价》<br>《行医管制才是症结》<br>《火车票价还不够高》<br>《康德未曾出远门》<br>《最低工资法不可取》<br>《也谈药品管制》<br>《牛奶为何倒进大海》<br>《资源争用不应靠民主解决》<br>政府与市场<br>《让楼价下来》<br>《扩张财政旧神话，东亚政客新说辞》<br>《中国需要组建跨国公司吗？》<br>《好制度使我们致富》<br>《钞票与选票之争》<br>《什么令人丧失信心》<br>《市场经济的胜负》<br>《从“事与愿违”说起》<br>《经济发展岂是任务》<br>《市场从不失灵》<br>《析“体育经济”》<br>《遇袭是祸不是福》<br>《爱国要讲方法》<br>劳力与福利<br>《工作不是福利》<br>《神秘的依存关系》<br>《多考试，少知识》<br>《美国“社保”进退两难》<br>《科教应该商业化》<br>《别那么早退休》<br>《市场经济的人才观》<br>《让什么人来做老板》<br>《贫富没那么悬殊》<br>《失业不是浪费》<br>《文笔的定价》<br>《为“歧视”正名》<br>《交易有别于奴役》<br>《从高考改革到学券制》<br>《从明星现象看收入不均》<br>科技泡沫<br>《自由软件过眼云烟》<br>《还是没有完全竞争》<br>《圈不住的眼球——也谈科技概念股》<br>《泡沫是如何吹成的》<br>《从联储神话到纳指泡沫》<br>金融政策<br>《深大菜票与联系汇率》<br>《关上了门，赶走了人》<br>《资本流动并非症结》<br>《借债理应还钱》<br>《只向前看的资本价值原理》<br>《中国股市的作用》<br>《通货膨胀与失业》<br>《香港的经济困局》<br>《国有股宜按市价定期定量减持》<br>生活观念<br>《也谈“公平”》<br>《为“狗仔队”辩护》<br>《是否该死?》<br>《自私的天敌是自私》<br>《也谈克隆》<br>《烟民们的官司》<br>《天气预报的生意经》<br>《金钱与专家意见》<br>《从需求定律看文艺的江河日下》<br>《财产权利面面观》<br>《生活中的“成本”》<br>《婚姻的契约本质》<br>《现代人是否真幸福》<br>《从安乐死说起》<br>《大学的恋爱用途》<br>《没有受害人的违法》<br>《行善的冲动》<br>《“价值”观的谬误》<br>经济学与经济学家<br>《学术的自由竞》争<br>《哈耶克：走出奴役之路》<br>《经济学帝国主义》<br>《射不中经济学的箭》<br>《环保思想家和经济学实干家》<br>《走火入魔的汪丁丁》<br>《与大师为伍——读张五常《经济解释》》<br>《从周星驰说起》<br>《明师与名师》<br>《需求曲线必定向下》<br>《我怎样管理经济论坛》<br>《夏业良的失策》<br>《经济学能帮多大忙？》</p>
-<h3 id="薛兆丰经济学讲义"><a href="#薛兆丰经济学讲义" class="headerlink" title="薛兆丰经济学讲义"></a><a href="https://book.douban.com/subject/30242320/" target="_blank" rel="noopener">薛兆丰经济学讲义</a></h3><p><img alt data-src="https://img1.doubanio.com/view/subject/l/public/s29787408.jpg"></p>
+<h3 id="薛兆丰经济学讲义"><a href="#薛兆丰经济学讲义" class="headerlink" title="薛兆丰经济学讲义"></a><a href="https://book.douban.com/subject/30242320/" target="_blank" rel="noopener">薛兆丰经济学讲义</a></h3><p><img data-src="https://img1.doubanio.com/view/subject/l/public/s29787408.jpg" alt></p>
 <p>我们每天收到无数纷繁复杂的信息，看到各种光怪陆离的现象，世界是复杂的。</p>
 <p>世界又并不复杂，只是你需要一双慧眼。经济学是一种帮助你成为明白人的智慧，它是观察世界的视角和态度，而不是一堆函数、公式和图表。</p>
 <p>薛兆丰老师善于把复杂的现象用简单直接的方式说清楚。这本书讲解了生活中不可能绕过的经济学核心概念，比如稀缺、成本、价格、交易、信息不对称、收入等与个人生活密切相关的知识，通过大量真实案例的经济学分析，更实际、更有趣、更深入和彻底地将经济学思维运用于各种实际场景，帮你绕过经济学花招，理解现象背后的经济逻辑，从而启发你将同样的思维运用到日常生活和工作中去。</p>
 <p>你将摆脱直觉和经验的控制，拥有可以举一反三、能够学以致用的知识体系，从而对这个由海量陌生人连接而成的社会做出恰如其分的反应。</p>
 <p>相信读完本书之后，你会对自己身处的世界有更深刻的理解，成为这个复杂世界的明白人。</p>
 <p>目录  · · · · · ·<br>目 录<br>前言 每个人的经济学 / IX<br>第1章 稀缺 为何商业是最大的慈善<br>真实世界 经济学的视角 / 003<br>第001讲 战俘营里的经济组织 / 003<br>第002讲 马粪争夺案 / 007<br>第003讲 看得见的和看不见的 / 010<br>第004讲 区分愿望与结果 / 014<br>人性观 人是理性和自私的吗 / 018<br>第005讲 不确定性、进化与经济理论 / 018<br>第006讲 亚当·斯密的人性观 / 022<br>第007讲 铅笔的故事 / 026<br>第008讲 商业是最大的慈善 / 028<br>区别对待 选择的标准 / 032<br>第009讲 稀缺 / 032<br>第010讲 选择和歧视 / 035<br>第011讲 凡歧视必得付代价 / 038<br>第012讲 歧视的作用和限制歧视的恶果 / 041<br>第2章 成本 不要只盯着钱<br>选择偏好 放弃的最大价值 / 049<br>第013讲 一句话给成本下定义 / 049<br>第014讲 你的成本由别人决定 / 053<br>第015讲 别只盯着钱 / 057<br>资源的价值 重新理解盈利与亏损 / 061<br>第016讲 从成本角度理解盈利与亏损 / 061<br>第017讲 最终产品的供需决定原材料的成本 / 064<br>第018讲 “租”是对资产的付费 / 067<br>第019讲 寻租—乞丐没有白拿施舍 / 071<br>科斯定律 从社会成本看问题 / 075<br>第020讲 社会成本问题 / 075<br>第021讲 谁用得好就归谁 / 083<br>第022讲 是否要不惜一切代价保护环境 / 086<br>交易费用 平衡的艺术 / 090<br>第023讲 有人群就有交易费用 / 090<br>第024讲 征地的权衡 / 094<br>第025讲 寻求合作解 / 100<br>第3章 需求 好东西运到远方去<br>边际革命 不是越多越好 / 107<br>第026讲 个人主义的主观价值论 / 107<br>第027讲 边际革命 / 110<br>需求定律 关于人性的定律 / 115<br>第028讲 需求第一定律 / 115<br>第029讲 需求第二定律 / 122<br>第030讲 需求第三定律 / 131<br>第4章 价格 如何减少竞争的无谓损失<br>资源配置 如何分饼决定饼做多大 / 139<br>第031讲 经济计算问题 / 139<br>第032讲 知识在社会中的运用 / 143<br>第033讲 如何分饼决定饼做多大 / 147<br>第034讲 换个角度看乘人之危发财的行为 / 151<br>竞争的逻辑 社会成本决定规则的优劣 / 155<br>第035讲 竞争的规则 / 155<br>第036讲 各种竞争规则孰优孰劣 / 158<br>第037讲 何谓短缺和过剩 / 162<br>价格管制 人会追求损失最小化 / 166<br>第038讲 最省事儿地违反价格管制 / 166<br>第039讲 春运火车票价还不够高 / 169<br>第040讲 美国的房租管制 / 176<br>第041讲 解除价格管制—果断与沉稳的拿捏 / 180<br>第042讲 实物补贴和货币补贴的权衡 / 184<br>竞争的维度 没有人可以控制市场因素 / 189<br>第043讲 房价上升好不好 / 189<br>第044讲 廉价保障房更贵 / 193<br>第045讲 没有使用需求就没有投资需求 / 196<br>第5章 权利 自由不等于免费<br>资源的占有 你的权利从哪里来 / 201<br>第046讲 权利有别于能力 / 201<br>第047讲 权利是人赋的而非天赋的 / 203<br>第048讲 自由不等于免费 / 207<br>产权界定 保护与限制 / 211<br>第049讲 产权的兴起 / 211<br>第050讲 产权：使用权、收益权和转让权 / 215<br>第051讲 产权保护之一：财产原则 / 218<br>第052讲 产权保护之二：责任原则 / 222<br>第053讲 产权保护之三：不可转让原则 / 225<br>公共服务 公用品与私用品 / 232<br>第054讲 经济学家论道路拥堵 / 232<br>第055讲 拥堵费的实践 / 235<br>第056讲 公用品和私用品 / 240<br>第057讲 灯塔的故事 / 244<br>第6章 耐心 想象力决定生产力<br>不确定性 时间偏好带来的回报 / 251<br>第058讲 易耗品与耐用品 / 251<br>第059讲 不耐产生交易 / 255<br>第060讲 利率管制及其后果 / 258<br>第061讲 利率变化支配资本现值 / 262<br>有效市场假说 时间维度上的平衡消费 / 267<br>第062讲 投资就是时间上的平衡消费 / 267<br>第063讲 股价究竟能不能预测 / 271<br>第064讲 股市到底有没有泡沫 / 275<br>第065讲 肥猪丸与回报率 / 279<br>预测未来 债券、保险与期货 / 283<br>第066讲 未雨绸缪：储蓄还是买保险 / 283<br>第067讲 保险的运作原理 / 286<br>第068讲 那些不是保险的保险 / 289<br>第069讲 当商品不被当作商品 / 293<br>第070讲 用期货合约来重新分配不可避免的风险 / 297<br>第7章 供应 好钢用在刀刃上<br>比较优势 天生我才必有用 / 305<br>第071讲 比较优势原理 / 305<br>第072讲 顺差逆差，孰优孰劣 / 309<br>第073讲 贸易对等和贸易报复 / 313<br>第074讲 贸易保护理由辨析 / 316<br>价格歧视 定价和竞争的策略 / 321<br>第075讲 受价者和觅价者 / 321<br>第076讲 价格歧视能给觅价者脱罪 / 326<br>第077讲 价格歧视的策略 / 330<br>第078讲 行业竞争程度不看企业个数 / 334<br>第8章 信息不对称 谁的话语权更大<br>信任的建立 直面信息不对称 / 341<br>第079讲 柠檬市场的故事 / 341<br>第080讲 何谓优质 / 345<br>制度的对策 缔约自由比自由更重要 / 349<br>第081讲 重复交易与第三方背书 / 349<br>第082讲 担保、延保与共享合同 / 351<br>第083讲 沉没成本、人质与抵押 / 356<br>第084讲 广告代言与形象打扮 / 358<br>第085讲 特许经营合同中的强者和弱者 / 362<br>第086讲 如何保障食品、药品和化妆品的质量 / 365<br>第087讲 婚姻经济学 / 370<br>责任的分担 让防范的成本最小 / 375<br>第088讲 汉德公式 / 375<br>第089讲 监管要看边际效应 / 381<br>第090讲 监管本身也要引入竞争机制 / 385<br>第9章 合作 为何同工不同酬<br>决策权 谁来当老板 / 393<br>第091讲 企业的团队本质 / 393<br>第092讲 谁来当老板：资本和劳动力 / 397<br>第093讲 谁来当老板：专用资源和通用资源 / 399<br>第094讲 谁来当老板：固定收入和剩余索取 / 403<br>收入分配 政府是否应该劫富济贫 / 408<br>第095讲 收入的高低和节奏由什么决定 / 408<br>第096讲 事与愿违之同工同酬法 / 413<br>第097讲 事与愿违之最低工资法 / 417<br>第098讲 基尼系数与收入分配 / 420<br>脱贫致富 最富裕的穷人在今天 / 425<br>第099讲 工人违约是否应该成为权利 / 425<br>第100讲 罢工的性质 / 429<br>第101讲 工作权利遇到的障碍 / 432<br>第102讲 最富裕的穷人在今天 / 437<br>第10章 协调 众人如何彼此影响<br>货币规律 货币像水又像蜜 / 445<br>第103讲 货币的起源 / 445<br>第104讲 商业银行创造货币 / 448<br>第105讲 通货膨胀的根源 / 453<br>第106讲 通货膨胀的过程 / 456<br>第107讲 通货膨胀与失业 / 460<br>经济周期 聪明人彼此不同意 / 466<br>第108讲 奥地利学派看经济周期 / 466<br>第109讲 凯恩斯主义学派看经济周期 / 472<br>第110讲 货币主义学派和理性预期学派看经济周期 / 476<br>第111讲 真实经济周期理论 / 481<br>第112讲 聪明人为什么会彼此不同意 / 484<br>公共选择 选举未必反映大多数人的意愿 / 492<br>第113讲 选举由中间派说了算 / 492<br>第114讲 阿罗不可能定律 / 496<br>第115讲 民主为何会产生不良经济政策 / 499<br>第116讲 关于收入再分配的戴雷科特定律 / 508<br>第117讲 脱贫致富之路知易行难 / 512<br>第118讲 中国做对了什么 / 516<br>后记 何为地道的经济学思维 / 521<br>致谢 / 533<br>关于作者 / 535</p>
-<h2 id="郎咸平说：新经济颠覆了什么"><a href="#郎咸平说：新经济颠覆了什么" class="headerlink" title="郎咸平说：新经济颠覆了什么"></a><a href="https://book.douban.com/subject/26847863/" target="_blank" rel="noopener">郎咸平说：新经济颠覆了什么</a></h2><p><img alt data-src="https://img3.doubanio.com/view/subject/l/public/s28943460.jpg"></p>
+<h2 id="郎咸平说：新经济颠覆了什么"><a href="#郎咸平说：新经济颠覆了什么" class="headerlink" title="郎咸平说：新经济颠覆了什么"></a><a href="https://book.douban.com/subject/26847863/" target="_blank" rel="noopener">郎咸平说：新经济颠覆了什么</a></h2><p><img data-src="https://img3.doubanio.com/view/subject/l/public/s28943460.jpg" alt></p>
 <p>正所谓“上帝欲其灭亡，必先令其疯狂”，在当下中国，“互联网+资本催化”的新经济引擎高速运转，大有碾压一切、颠覆一切之势。在新经济狂热之下，每个人都在全力以赴寻找“下一个风口”，幻想成为下一只飞起来的猪。</p>
 <p>对此，一向以“危机论”著称的郎咸平教授再次发出盛世危言：新经济光环背后，危机已悄然而至！中国式O2O还能烧多久？P2P监管黑洞有多大？互联网造车为什么不靠谱？共享经济为什么徒有虚名？BAT为什么股价阴跌不止？小米做错了什么？凡客败在哪里？ ……</p>
 <p>在高歌猛进的时代，郎咸平教授的冷眼批判显得不合时宜，却是一剂最好的清醒药。他提出的问题值得我们深入思考：在这轮前所未有的新经济大变局下，什么是不变的？</p>
@@ -1590,7 +1560,7 @@
 <p>第十八章　摆脱价格战，从工业3.5 做起<br>一、结果出人意料的价格大战<br>二、工业3.5 时代的模块化生产方式<br>三、工业3.5 时代的扁平化管理模式</p>
 <p>第十九章　重振制造业，政府是关键！<br>一、2012 ：拐点来临，方舟无踪<br>二、奥巴马“五板斧”重振美国制造业<br>三、德国政府“三板斧”救助中小企业<br>四、中国制造2025 之重庆经验</p>
 <p>第二十章　从中国制造到中国营造<br>一、比中国制造更牛的是中国营造<br>二、做好中国营造的三大关键环节<br>三、房地产企业助力中国营造出海</p>
-<h2 id="一本书看懂白银如何影响中国历史"><a href="#一本书看懂白银如何影响中国历史" class="headerlink" title="一本书看懂白银如何影响中国历史"></a><a href="http://www.luojiji.com/thread-12215-1-1.html" target="_blank" rel="noopener">一本书看懂白银如何影响中国历史</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/20/102128ubcmc1m4v9ycpjnx.jpg"></p>
+<h2 id="一本书看懂白银如何影响中国历史"><a href="#一本书看懂白银如何影响中国历史" class="headerlink" title="一本书看懂白银如何影响中国历史"></a><a href="http://www.luojiji.com/thread-12215-1-1.html" target="_blank" rel="noopener">一本书看懂白银如何影响中国历史</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/20/102128ubcmc1m4v9ycpjnx.jpg" alt></p>
 <p>原创： 「罗辑思维」  罗辑思维  今天</p>
 <p>今天，给大家介绍的书——</p>
 <p>《白银帝国》。</p>
@@ -1624,7 +1594,7 @@
 <li><p>很多学者认为：<strong>固守白银，是中国走向衰落的重要原因</strong>。不管事实是否如此，不可否认的是，白银深刻影响了中国历史。相信你也能从这条“白银之线”中，窥见白银与中国政治、经济的千年律动。</p>
 </li>
 </ol>
-<h2 id="“菜市场经济学展”，带来的认知清单"><a href="#“菜市场经济学展”，带来的认知清单" class="headerlink" title="“菜市场经济学展”，带来的认知清单"></a><a href="http://www.luojiji.com/thread-12241-1-1.html" target="_blank" rel="noopener">“菜市场经济学展”，带来的认知清单</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/23/103856ut3f84g9n8f5k8z6.jpg"></p>
+<h2 id="“菜市场经济学展”，带来的认知清单"><a href="#“菜市场经济学展”，带来的认知清单" class="headerlink" title="“菜市场经济学展”，带来的认知清单"></a><a href="http://www.luojiji.com/thread-12241-1-1.html" target="_blank" rel="noopener">“菜市场经济学展”，带来的认知清单</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/23/103856ut3f84g9n8f5k8z6.jpg" alt></p>
 <p>原创： 脱不花  罗辑思维  今天</p>
 <p>2018年6月15–18日，得到App在北京的三源里菜市场，举办了一场名为《菜市场遇见经济学》的跨界艺术展。</p>
 <p>所有的参加者、支持者，谢谢你。</p>
@@ -1641,7 +1611,7 @@
 </blockquote>
 <p>知识的魅力将以各种形式被呈现。知识产品的形态将会加速演化。</p>
 <p>未来，这条赛道的产业机会将不受限于形态，只受限于想象。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104018fjie82j6ws6i6iet.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104018fjie82j6ws6i6iet.jpg" alt></p>
 <ol start="2">
 <li><strong>消费升级靠体验，体验升级靠知识。</strong></li>
 </ol>
@@ -1650,7 +1620,7 @@
 <p>人们只要不具备对某个领域的认知，就不可能唤起新的需求，更不可能开启对这个领域的消费。就好比如果一个人没学过艺术知识，他就不可能投资艺术收藏；一个人不懂保险知识，他永远不会投保高额的商业保险。如果你听过薛兆丰对菜市场里的经济学奥秘的解读，你从此会对日常买菜这件事都产生完全不同的体验。</p>
 <p>知识将不再是纸面上、庙堂上的东西了。</p>
 <p>知识将会和越来越多的具体场景结合，成为商业的新驱动力。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104019l8uyjcvwphbx33jy.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104019l8uyjcvwphbx33jy.jpg" alt></p>
 <ol start="3">
 <li>最好的创意，是回归本源。</li>
 </ol>
@@ -1661,7 +1631,7 @@
 <p>一本美食书，就应该在一场盛宴上发布；一本历史书，也许应该为它专门排演一场话剧；一本金融题材的书上市，也许应该为它组织一个去意大利寻找银行起源的旅行团。</p>
 <p>顺着这个思路，就不难想到：一本经济学讲义，应该在菜市场发布。</p>
 <p>真正的难点，不在于想出新创意。真正的难点，是回到本源，同时有勇气对“行业惯例”视而不见。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104019ypiipp5ocqirepcx.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104019ypiipp5ocqirepcx.jpg" alt></p>
 <ol start="4">
 <li>时间尺度，决定创意能力。</li>
 </ol>
@@ -1671,29 +1641,29 @@
 <p>但是，如果以10年为时间尺度，那么，目标就是——让每个人都能在最日常的生活中体会到经济学的魅力，体验用经济学思维来解构世界的乐趣，吸引越来越多的人学习经济学。</p>
 <p>看起来很虚幻的一个目标。但是，这种目标才能够指导我们做对的事情，同时还能让我们把事情做对。</p>
 <p>这并不排斥商业目的。因为越多人爱上经济学，那么薛兆丰作为第一大经济学课堂的主讲老师，就越会获得头部红利。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104019qm9jjzosmn9soo95.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104019qm9jjzosmn9soo95.jpg" alt></p>
 <ol start="5">
 <li>所有行业都在涌现“高自尊物种”。</li>
 </ol>
 <p>以往我们理解别的公司的维度，往往非常“势利”且狭隘：大公司还是小公司？名公司还是新公司？国际公司还是本土公司？传统公司还是互联网公司？有钱的公司还是没钱的公司？如此等等。但是，这些维度实际上无法帮你筛选合作伙伴。</p>
 <p>我们注意到：这个时代，每个行业都出现了“高自尊物种”。这些公司不见得大，不见得富有，但是它们无论对自己还是对用户，都有独特的要求。</p>
-<p>即使在菜市场，也有这样的“高自尊物种”。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104019v0kshduhthereh1x.jpg"></p>
+<p>即使在菜市场，也有这样的“高自尊物种”。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104019v0kshduhthereh1x.jpg" alt></p>
 <p>我们这次展览的所在地——北京三源里菜市场，就是一个有品牌自觉和文化自信的菜市场。他们很清楚地知道自己不仅仅是个菜市场，还是一个生活方式的地标，一个民生服务的象征。不仅有了不起的生意传统，而且被人们寄托了关于菜市场的所有美好想象。</p>
 <p>有了这样的“高自尊认知”，才会对所有大尺度的创意保持开放。他们的开放甚至表现为：没有收取一分钱的场地租金，而在这个展览结束后，他们自己拿出预算，把这个展览的大部分装置，改为永久保留。也许在不久的将来，你可以随时到三源里看一个永久的经济学展了。</p>
 <p>这样的“高自尊物种”，也必然是势能高地，一旦合作成功，产生的品牌能量，对全市场是具有俯冲效应的。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104020xfu2ogayapzkyfgk.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104020xfu2ogayapzkyfgk.jpg" alt></p>
 <ol start="6">
 <li>做品牌的价值投资者，相信时间的复利。</li>
 </ol>
 <p>一个品牌诞生的最初，是一套识别系统，让用户能够把自己和其他人区分开来，让用户在竞争中能把自己识别和挑选出来。但是，随着品牌的成长，真正决定一个品牌长期竞争力的，是要从一套识别系统，升级为一套信用系统。</p>
 <p>因为只有信用，才能“以不创新的方式实现长期创新”，从而获取超出市场平均水平的收益。</p>
 <p>所以，从长期来看，营销的目的不是展现奇技淫巧，不是抓取眼球，不是猎奇和热闹。创业者在品牌问题上必须选择价值投资战略，积累品牌资产，或者说，只在那些能积累品牌资产的地方投入资源。最终形成自己的品牌资产观。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104020iw9rqildvdllldli.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104020iw9rqildvdllldli.jpg" alt></p>
 <p>得到App作为一家领先的知识服务机构，使命和责任就是要在各种可能的场景，为用户展现知识的魅力。这不是吸引注意力，而是为了增强用户与得到App之间的信用，扩展用户大脑中的认知带宽。</p>
 <p>罗振宇的“罗胖60秒”语音坚持了2000天，这是为用户的第一次下载得到App积累的信用；“时间的朋友”跨年演讲要坚持20年，这是为人们免费支持我们的菜市场展览积累的信用。</p>
 <p>我们的新slogan：“<strong>知识就在得到</strong>”，是一项需要长期积累的品牌资产。</p>
 <p>信用，就是时间的复利。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104020z4sz9obk8xubxbls.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201806/23/104020z4sz9obk8xubxbls.jpg" alt></p>
 <p>以上，是我们对这次活动的复盘。希望对所有正在思考未来市场演化的人，有帮助。</p>
 <h2 id="郭树清新采访：如何看待中美贸易冲突"><a href="#郭树清新采访：如何看待中美贸易冲突" class="headerlink" title="郭树清新采访：如何看待中美贸易冲突"></a><a href="http://www.luojiji.com/thread-12353-1-1.html" target="_blank" rel="noopener">郭树清新采访：如何看待中美贸易冲突</a></h2><p>美国和中国之间的第一轮关税增加，会在7月6日开始启动。世界主要市场都在等待它会产生怎样的后果，以及后续牵涉到其中的各国又会作何反应。</p>
 <p>同时身兼中国人民银行党委书记和中国银保监会主席的郭树清，可谓是中国当前最重要的经济大员之一。7月5日，中国银保监会网站刊登了一篇郭树清接受《金融时报》记者的采访实录。在其中，郭树清对中美贸易冲突问题发表了自己的看法。</p>
@@ -1723,8 +1693,29 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Investment/" rel="bookmark">Investment</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Principle/" rel="bookmark">Principle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Poverty/" rel="bookmark">Poverty</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Profession/2020/Wealth/" rel="bookmark">Wealth</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Wisdom/2020/Politics/" rel="bookmark">Politics</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Economy/" rel="tag"><i class="fa fa-tag"></i> Economy</a>
               <a href="/tags/Finance/" rel="tag"><i class="fa fa-tag"></i> Finance</a>
@@ -1737,21 +1728,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/AI/DeepCreator/AI/Tensorflow/" rel="next" title="Tensorflow">
-                  <i class="fa fa-chevron-left"></i> Tensorflow
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Company/DeepCreator/Business/Service/" rel="prev" title="Service">
-                  Service <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/AI/DeepCreator/AI/Tensorflow/" rel="prev" title="Tensorflow">
+      <i class="fa fa-chevron-left"></i> Tensorflow
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Company/DeepCreator/Company/Starbucks/" rel="next" title="Starbucks">
+      Starbucks <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -1764,7 +1752,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -1795,8 +1805,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -1805,14 +1815,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1823,11 +1833,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -1861,7 +1866,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -1873,51 +1878,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -1926,18 +1892,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -1947,63 +1907,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -2011,14 +1914,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -2045,40 +1948,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/DeepCreator/Business/Economy/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

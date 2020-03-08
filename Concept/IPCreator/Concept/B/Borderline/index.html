@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="可以形象地理解为我们常说的道德底线和行为原则。">
 <meta name="keywords" content="Borderline">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/B/Borderline/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/B/Borderline/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/B/Borderline/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="waou.jpg" data-src="http://opb37u589.bkt.clouddn.com/waou.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/waou.jpg?imageMogr2/thumbnail/!75p" alt="waou.jpg"></p>
 <blockquote>
 <p>可以形象地理解为我们常说的道德底线和行为原则。</p>
 </blockquote>
@@ -295,8 +265,8 @@
 <p>IPCreator：对他人只有建议权，选择权和决定权在于他人，他人为他们自己的选择和行为负责，又有什么不能理解和包容的呢？遵循的原则：谁买单谁说了算，避免的陷阱：他行动你买单。</p>
 </blockquote>
 <p><a href="https://book.douban.com/review/7380437/" target="_blank" rel="noopener">『有时伤害，有时相助，人们总在不经意的时候与他人的人生紧密相连。』这是对《解忧杂货店》的贴切注解，也让我想起以前看完《刺猬的优雅》的感受。我们浑身的刺因被他人误解而益发尖锐，只想躲在自己的世界里，却也因为他人善意的相助，开始变得柔软，愿意面向虽然阴暗却偶有阳光的真实世界。我们是什么样子﹖世界就是什么样子﹖《解忧杂货店》解的是别人的忧，却在无形中填补了我们内心的破洞，并用最巧妙的方式告诉你：微小却长存的善意，才是解忧的不二之法。</a></p>
-<p><img alt="borderline0000.jpg" data-src="http://opb37u589.bkt.clouddn.com/borderline0000.jpg?imageMogr2/thumbnail/!75p"><br><img alt="borderline0001.jpg" data-src="http://opb37u589.bkt.clouddn.com/borderline0001.jpg?imageMogr2/thumbnail/!75p"><br><img alt="borderline0002.jpg" data-src="http://opb37u589.bkt.clouddn.com/borderline0002.jpg?imageMogr2/thumbnail/!75p"><br><img alt="borderline0003.jpg" data-src="http://opb37u589.bkt.clouddn.com/borderline0003.jpg?imageMogr2/thumbnail/!75p"><br><img alt="borderline0004.jpg" data-src="http://opb37u589.bkt.clouddn.com/borderline0004.jpg?imageMogr2/thumbnail/!75p"><br><img alt="borderline0005.jpg" data-src="http://opb37u589.bkt.clouddn.com/borderline0005.jpg?imageMogr2/thumbnail/!75p"><br><img alt="borderline0006.jpg" data-src="http://opb37u589.bkt.clouddn.com/borderline0006.jpg?imageMogr2/thumbnail/!75p"><br><img alt="borderline0007.jpg" data-src="http://opb37u589.bkt.clouddn.com/borderline0007.jpg?imageMogr2/thumbnail/!75p"><br><img alt="borderline0008.jpg" data-src="http://opb37u589.bkt.clouddn.com/borderline0008.jpg?imageMogr2/thumbnail/!75p"></p>
-<h2 id="人际关系痛苦的根源：缺乏界限感"><a href="#人际关系痛苦的根源：缺乏界限感" class="headerlink" title="人际关系痛苦的根源：缺乏界限感"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=5456&amp;highlight=%E7%97%9B%E8%8B%A6" target="_blank" rel="noopener">人际关系痛苦的根源：缺乏界限感</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201607/04/134757ukuymhlhqhjx5yjm.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/borderline0000.jpg?imageMogr2/thumbnail/!75p" alt="borderline0000.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/borderline0001.jpg?imageMogr2/thumbnail/!75p" alt="borderline0001.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/borderline0002.jpg?imageMogr2/thumbnail/!75p" alt="borderline0002.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/borderline0003.jpg?imageMogr2/thumbnail/!75p" alt="borderline0003.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/borderline0004.jpg?imageMogr2/thumbnail/!75p" alt="borderline0004.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/borderline0005.jpg?imageMogr2/thumbnail/!75p" alt="borderline0005.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/borderline0006.jpg?imageMogr2/thumbnail/!75p" alt="borderline0006.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/borderline0007.jpg?imageMogr2/thumbnail/!75p" alt="borderline0007.jpg"><br><img data-src="http://opb37u589.bkt.clouddn.com/borderline0008.jpg?imageMogr2/thumbnail/!75p" alt="borderline0008.jpg"></p>
+<h2 id="人际关系痛苦的根源：缺乏界限感"><a href="#人际关系痛苦的根源：缺乏界限感" class="headerlink" title="人际关系痛苦的根源：缺乏界限感"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=5456&amp;highlight=%E7%97%9B%E8%8B%A6" target="_blank" rel="noopener">人际关系痛苦的根源：缺乏界限感</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201607/04/134757ukuymhlhqhjx5yjm.jpg" alt></p>
 <p>2016-07-04 Darlene Lancer 罗辑思维</p>
 <p>爱的存在不能没有界限，即便对孩子的爱也是如此。</p>
 <p>所谓外部界限，就是你的底线，即你愿意、不愿意或不允许做某事的原则。</p>
@@ -367,10 +337,10 @@
 <p>本文作者 Darlene Lancer，译文由译言网网友 lauralee 翻译，英文原载于psychcentral。</p>
 <p>罗胖曰：</p>
 <p>什么叫人“成熟”了？<br>本文给出了一个最有意思的答案——<br>在物质、身体、心理、情绪、性、精神这六个维度上，<br><strong>对自我边界的认知清晰了。</strong><br>当然，清晰并不是一成不变。<br><strong>终其一生，每一次边界上的细小弃守和扩张，</strong><br>都是在向世界宣告我们的一次改变。</p>
-<h2 id="武志红关于建立人际关系“界限意识”的清单"><a href="#武志红关于建立人际关系“界限意识”的清单" class="headerlink" title="武志红关于建立人际关系“界限意识”的清单"></a><a href="http://www.luojiji.com/thread-9231-1-1.html" target="_blank" rel="noopener">武志红关于建立人际关系“界限意识”的清单</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201707/21/213438b9qhul4emvhl9lk9.jpg"></p>
+<h2 id="武志红关于建立人际关系“界限意识”的清单"><a href="#武志红关于建立人际关系“界限意识”的清单" class="headerlink" title="武志红关于建立人际关系“界限意识”的清单"></a><a href="http://www.luojiji.com/thread-9231-1-1.html" target="_blank" rel="noopener">武志红关于建立人际关系“界限意识”的清单</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201707/21/213438b9qhul4emvhl9lk9.jpg" alt></p>
 <p>2017-07-20 「得到」 罗辑思维<br>引言</p>
 <p>如何处理人际关系是现代工作和生活的一大难题，通常我们会把它归结为“情商”的高低。但真实的情况可能不止于“情商”那么简单，而是看你有没有“界限意识”。</p>
-<p>著名心理学家武志红为你创作了这份清单，希望对你有帮助。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201707/21/213559ajjtj6jzkm5km1mt.jpg"></p>
+<p>著名心理学家武志红为你创作了这份清单，希望对你有帮助。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201707/21/213559ajjtj6jzkm5km1mt.jpg" alt></p>
 <ol>
 <li><p>在现代社会的人际关系中，“界限”是你必须拥有的行为意识。所谓“界限”就是每件事的作用范围和边界。</p>
 </li>
@@ -397,11 +367,11 @@
 <p>我们害怕过年，也许是过年的时候，边界很容易被入侵。我们害怕过年，也许是过年的时候，很容易会没有了自己。我们害怕过年，也许是过年的时候，生命的活力都被禁锢了。我们害怕过年，也许是过年的时候，从未得到过认可。所以很多人会觉得，过年回家一趟，身累，心更累。</p>
 </blockquote>
 <h2 id="个人边界有利于人际交往"><a href="#个人边界有利于人际交往" class="headerlink" title="个人边界有利于人际交往"></a><a href="http://www.jianshu.com/p/ee56ee7deff8" target="_blank" rel="noopener">个人边界有利于人际交往</a></h2><p>作者：张晗心理咨询师</p>
-<p><img alt data-src="http://upload-images.jianshu.io/upload_images/2375614-e3ff278b32ce562d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2375614-e3ff278b32ce562d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>我想以英国诗人R.S.托马斯的诗歌《边界》来引出本文想要延展的主题–边界。</p>
 <p>虽然诗歌里描述的边界和文章里讨论的各指不同，一个客观世界的边界，一个是主观感受的边界。你通过对客观的边界的理解来加深对主观世界边界的认识。</p>
 <p>哪里是城镇的尽头<br>乡村的开始？<br>灰色潮与绿色潮之间<br>那根高水位标在哪里？<br>我们漫步在一个看不见的边缘<br>回忆着荣耀，<br>那时劳动者在地里<br>没有超过没膝的深度，<br>他抬头看着钟的声音<br>从礼拜上帝的大教堂荡漾而来。<br>乡村退落了，乘着几个<br>世纪的潮水把城镇带走。<br>现在城镇欢迎它自己回来，<br>时间的遇难者，挣扎在漂流的弃物中。</p>
-<p><img alt data-src="http://upload-images.jianshu.io/upload_images/2375614-a585a4ce001416a0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br>图片发自网络</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2375614-a585a4ce001416a0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>图片发自网络</p>
 <p>人与人之间，存在着微妙的人际边界。个人边界是隐形的，有时候不易察觉，有时候它又像一堵墙横亘在人与人之间，无法跨越。</p>
 <p>**个人边界（Personal Boundaries)是指我们建起来的关于身体、情感、精神的界限，以保护我们不受别人的操纵、利用和侵犯。</p>
 <p>个人边界可以形象地理解为我们常说的道德底线和行为原则，让我们知道哪些是能接受的，哪些是不能接受的，当别人越过人际界线时，我们该如何面对和处理。**</p>
@@ -420,7 +390,7 @@
 <p>对方说的哪些话让你感到不舒服，你可以不用隐藏自己的情绪，可以告诉对方哪些话让你不舒服，下次对方就会注意，不会再说这些让你不舒服的话。如果对方没有改变，那你就可以考虑是否在和他做朋友了。</p>
 <p>对于别人提出的不合理的要求或者你不愿意去做的事情，你可以表明你的立场和理由，坚定地拒绝，大声地说NO。</p>
 <p>把握好人际边界，就会让人与人交往的变得简单，感受边界带来的舒服，远离关系带来束缚。清晰的人际关系边界，实际上正是对人的尊重，它也让人际关系变得简单而和谐。</p>
-<h2 id="你有清晰的个人界限吗？"><a href="#你有清晰的个人界限吗？" class="headerlink" title="你有清晰的个人界限吗？"></a><a href="http://www.xinli001.com/info/100358127" target="_blank" rel="noopener">你有清晰的个人界限吗？</a></h2><p><img alt data-src="http://ossimg.xinli001.com/20161107/6881f6516101fbb42f953353669fe309.jpg"></p>
+<h2 id="你有清晰的个人界限吗？"><a href="#你有清晰的个人界限吗？" class="headerlink" title="你有清晰的个人界限吗？"></a><a href="http://www.xinli001.com/info/100358127" target="_blank" rel="noopener">你有清晰的个人界限吗？</a></h2><p><img data-src="http://ossimg.xinli001.com/20161107/6881f6516101fbb42f953353669fe309.jpg" alt></p>
 <p>文|Doris 微信公众号：zhiyu365</p>
 <p>我们中的很多人是关系的“侵略者”，也是“被侵略”的人，这让我们在很多关系中都处在不舒服的位置上。而我们所处的所有关系的质量取决于界限的力量。设定界限，能够保证我们生命中的重要关系是对等的，是相互照应、相互尊敬且相互支持的。</p>
 <p>♥ 与我们身边的人设定界限，这会促使他们用更加尊重的方式对待我们。</p>
@@ -429,7 +399,7 @@
 <p>32岁的媒介事务经理Elisa刘感觉自己就像是一只刺猬，不过身上的刺儿是别人给的。为什么？她说，在办公室，“好像谁都可以支使我”。总有同事顺口说，小刘，帮我复印一下这个资料；帮我给财务部送个函件，等等；而一些明显谁做谁受累不讨好的棘手事件，也总会落到她的头上。Elisa一边去做这些事情，一边在心里又会非常愤怒……她总是在心底里问一个问题：为什么我必须为你们去做这些事情？</p>
 <p>Elisa对于自己的困境还有所觉察。而在广告公司做DM直投杂志编辑的朱迪，则生活在关系的一团乱麻中而不自知。她的父母与闺密帮助她决定哪个男人可能是Mr.Right，她的好友认为她的工作太毁人，甚至有些命令似地说：“你应该辞职！”朱迪允许别人进入自己的生活，把一切搅得凌乱不堪，她自己也像藤蔓一样缠绕进别人的生活里。她知道自己的生活很不对劲，但哪里不对劲？她不知道。</p>
 <p>界限，对于生活在人际网中央、讲求和谐与整体的中国人来说，可能是很模糊的一个概念。也正是如此，我们中的很多人是关系的“侵略者”，也是“被侵略”的人，这让我们在很多关系中都处在不舒服的位置上。而我们所处的所有关系的质量取决于界限的力量。设定界限，能够保证我们生命中的重要关系是对等的，是相互照应、相互尊敬且相互支持的。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20161107/b7de779f1e6f0ba48f1f66d07c654c57.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20161107/b7de779f1e6f0ba48f1f66d07c654c57.jpg" alt></p>
 <p><strong>界限是自尊的标尺</strong></p>
 <p>我们的个人界限为我们身边的人设定了可接受行为的限度。你不妨想一想，与你关系亲近的人经常是如何对待你的？他们是否用幽默的方式贬低你？他们是否利用了你善良的天性？他们是否给你留下了负罪感？如果答案是肯定的，那么，你可能需要重新设置你的界限。</p>
 <p>界限是自尊的标尺，将界限设置在一个对你来说感觉舒适的水平上，这一点至关重要。个人界限既能保护你又能使你产生吸引力。界限不清则会使你变得脆弱，被人想当然，更容易被别人虐待或伤害。</p>
@@ -438,12 +408,12 @@
 <blockquote>
 <p>模糊脆弱的界限还会吸引那些想利用我们的人。而强有力的界限，则会吸引那些尊敬和在乎我们的人。</p>
 </blockquote>
-<p><img alt data-src="http://ossimg.xinli001.com/20161107/525093c73dd70aa3e8890cc3230deae6.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20161107/525093c73dd70aa3e8890cc3230deae6.jpg" alt></p>
 <p>跳出以往</p>
 <p>人都是在不断变化中，所以界限也需要不断更新。假如以前你总是愿意花大量工作时间帮助同事，但现在却发现时间不够用，那么你就需要更新界限了：“我要让自己开心，我看重自己，希望别人也看重我。”</p>
 <p>丽莎是一个独立按摩师，她为新顾客设置了界限。她将那些仓促改变预约的顾客进行分类，并且逐一向他们解释说，对她而言，时间就是金钱。在那些顾客中，50%对按摩预约更加尊重；25%同意为取消预约而支付小费；其余的人则不再向她预约按摩。由此，丽莎现在挣得跟以前一样多，但有了更多自由时间。</p>
 <p>不过，有时如给自己设置的界限太强劲，也会变成阻止好事进入的障碍。大卫，28岁，他的目标是找一份薪酬更高的工作。显然他很喜欢做一名平面设计师，并且拿现在那份薪水能让自己过得很舒坦，但他觉得自己给予女友的东西还不够，担心女友会离他而去。由于在前一次爱情关系中受过伤，大卫已经为自己设立了屏障，以保护自己不再遭受被抛弃的痛苦。经过心理辅导后，他接受了这一点：爱并不是伴随着保障而来的。他放松了界限，现在已经跟女友结婚两年了，并且还在同一家公司快乐地工作着。</p>
-<p><img alt data-src="http://ossimg.xinli001.com/20161107/43348250a437952e43ec50b7a5c2ef55.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20161107/43348250a437952e43ec50b7a5c2ef55.jpg" alt></p>
 <p>向前走</p>
 <p>请记住，那些跟你关系亲近的人可能有一种既定的兴趣，他们喜欢看到你保持原来的样子。他们可能喜欢有人可以呼之即来，打个电话一起喝茶，或者随时对他们表示同情。也许他们需要看到有人比他们更胖、更穷、更伤心或更紧张，这样会使他们自我感觉更好一些。</p>
 <blockquote>
@@ -453,7 +423,7 @@
 <blockquote>
 <p>为自己设立界限，人们不仅会尊重你，也不会再浪费你的时间。这样你就可以做你自己，追求自己想要的东西，行为举止中也不用再担心别人对你有看法。</p>
 </blockquote>
-<p><img alt data-src="http://ossimg.xinli001.com/20161107/f5cbe9b3701423146f4ca2e4962037ab.jpg"></p>
+<p><img data-src="http://ossimg.xinli001.com/20161107/f5cbe9b3701423146f4ca2e4962037ab.jpg" alt></p>
 <p>6个步骤帮助你确定界限</p>
 <ol>
 <li><p>对你生命中每一个重要的人，辨别他们所说或所做的哪些让你感到不高兴或受伤。接着对此采取特定的明确行动，例如对他们说：“请不要提醒我，说我总是戒烟失败。这次我想成功戒烟，我真的需要你的帮助。”</p>
@@ -469,7 +439,7 @@
 <li><p>随着你对别人设置的界限延展，同时你也要提升自己的标准。不再挖苦别人，不再用幽默作为武器批评或贬低别人。</p>
 </li>
 </ol>
-<h2 id="过犹不及——如何建立你的心理界线"><a href="#过犹不及——如何建立你的心理界线" class="headerlink" title="过犹不及——如何建立你的心理界线"></a><a href="https://book.douban.com/subject/5906677/" target="_blank" rel="noopener">过犹不及——如何建立你的心理界线</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s6277694.jpg"></p>
+<h2 id="过犹不及——如何建立你的心理界线"><a href="#过犹不及——如何建立你的心理界线" class="headerlink" title="过犹不及——如何建立你的心理界线"></a><a href="https://book.douban.com/subject/5906677/" target="_blank" rel="noopener">过犹不及——如何建立你的心理界线</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s6277694.jpg" alt></p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>《过犹不及:如何建立你的心理界线》内容简介：你的生活失控了吗？别人老是占你的便宜吗？你很难向别人说“不”吗？你因为上帝没有回应你的祷告而失望吗？人们常常专注在要有爱心、避免自私自利。却忘记自己的有限和界线。他们往往会问：“对别人设界线不是很自私吗？”，“我要怎么回答那些需要我爱心、精力、金钱帮助的人呢？”为什么设立界线会让我感到愧疚或恐惧？”“我可以在设限后仍是个有爱心的人吗？”想要有一个平衡健全的生活，明确的“界线，是很重要的，它是个人产权的分界线，指出你应该为哪些东西负责。它可以定义你是什么.或者，你不是什么。</p>
 <h3 id="作者简介"><a href="#作者简介" class="headerlink" title="作者简介"></a>作者简介</h3><p>亨利·克劳德、约翰·汤森德：他们是美国广受欢迎的讲员、知名作家与执业心理医师，并共同主持全美播出的心理咨询节目“新生命”(New Life Live)，也合办讲习会、研究中心与教会训练小组。<br>两人毕业自同一所心理学研究院(Rose-mead Graduate School of Psychology)，获临床心理学博士学位，也在加州新港滩合开心理辅导诊所。他们是许多畅销书的作者，包括《过犹不及》、《为孩子立界线》、《为约会立界线》等。</p>
 <p>一、心理界线包括：<br>语言——“好”代表你同意什么，喜欢什么，会去做什么；“不”代表你否定什么，不喜欢什么，不会去做什么。我们要用明确的语言来表明自己的立场<br>真理——也就是事实，用事实来捍卫自己的立场<br>空间上的距离——远离要侵犯我界线的人和事物<br>时间——从混乱和迷失中停止一段时间<br>情感上的距离<br>其他人<br>后果——“篱笆”上的铁刺，即别人不尊重我的界线所要承受的后果</p>
@@ -498,7 +468,7 @@
 <p>8．    嫉妒律 The Law of Envy<br>嫉妒应该是一种征兆，代表你生活中有所缺失。</p>
 <p>9．    活动律The Law of Activity<br>人是反应者（responders）与发起者（initiators）。很多时候，我们之所以有界线问题，是我们缺少创始的冲力（initiative）——缺少敦促自己进入生活的能力。我们除对外来的邀约有所响应外，同时也应该驱策自己主动投入生活。</p>
 <p>10．    显露律 The Law of Exposure<br>你的那些界线必须让人清楚看见，在彼此的“关系“中能够互相沟通。</p>
-<h2 id="曾國藩：做人有分寸，是人生的-最高境界！"><a href="#曾國藩：做人有分寸，是人生的-最高境界！" class="headerlink" title="曾國藩：做人有分寸，是人生的 最高境界！"></a><a href="https://www.cmoney.tw/notes/note-detail.aspx?nid=92490" target="_blank" rel="noopener">曾國藩：做人有分寸，是人生的 最高境界！</a></h2><p><img alt data-src="http://opb37u589.bkt.clouddn.com/20171026141610722.JPG?imageMogr2/thumbnail/!75p"></p>
+<h2 id="曾國藩：做人有分寸，是人生的-最高境界！"><a href="#曾國藩：做人有分寸，是人生的-最高境界！" class="headerlink" title="曾國藩：做人有分寸，是人生的 最高境界！"></a><a href="https://www.cmoney.tw/notes/note-detail.aspx?nid=92490" target="_blank" rel="noopener">曾國藩：做人有分寸，是人生的 最高境界！</a></h2><p><img data-src="http://opb37u589.bkt.clouddn.com/20171026141610722.JPG?imageMogr2/thumbnail/!75p" alt></p>
 <p>在現在的社會中，<br>許多人不懂的拿捏分寸，<br>太過誇大或太過自卑都是不懂得分寸<br>一個人懂不懂分寸，<br>看他說話、待人、處事就知道！</p>
 <p>說話要懂得分寸<br>一艘船觸礁後在海上漂泊，<br>船上的糧食馬上就要吃完了。<br>眼見得救無望，船員們都很焦急。<br>這時一個悲觀的船員開始不停的嘮叨<br>「我們要活不成了」，<br>船員一臉嘮叨了幾天，<br>其他船員們把他丟進了大海。<br>之後，又出現了另一個樂觀的船員，<br>他喋喋不休地呼喊「我們一定會得救的」，<br>幾天之後，這名樂觀的船員也被丟進了海裡。</p>
 <p>做人做事<br>離不開「分寸」二字<br>大千世界，古往今來，<br>做事做人都離不開「分寸」二字，<br>而人生中最難把握的也恰恰是「分寸」二字。<br>孔子說「七十而從心所欲，不逾矩」，<br>矩指的規矩，也可以說是分寸。<br>宋玉在《登徒子好色賦》中寫到<br>「東家之子，<br>增之一分則太長，減之一分則太短」，<br>這裡也是說的一種分寸。<br>做人可以不聰明，但一定要有「分寸」。</p>
@@ -518,8 +488,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Borderline/" rel="bookmark">Borderline</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Borderline/" rel="tag"><i class="fa fa-tag"></i> Borderline</a>
           </div>
@@ -531,21 +510,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/R/Reason/" rel="next" title="Reason">
-                  <i class="fa fa-chevron-left"></i> Reason
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/A/Anxiety/" rel="prev" title="Anxiety">
-                  Anxiety <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/R/Reason/" rel="prev" title="Reason">
+      <i class="fa fa-chevron-left"></i> Reason
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/A/Anxiety/" rel="next" title="Anxiety">
+      Anxiety <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -558,7 +534,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -589,8 +587,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -599,14 +597,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -617,11 +615,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -655,7 +648,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -667,51 +660,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -720,18 +674,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -741,63 +689,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -805,14 +696,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -839,40 +730,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/B/Borderline/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

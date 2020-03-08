@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="假如你走到大街上，身上的西装看起来很明显是新的，那么裁缝的工作就没有做到位。好的西装看起来应该就像你身上与生俱来的一部分。">
 <meta name="keywords" content="Gentleman">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Book/" itemprop="url" rel="index">
-                    <span itemprop="name">Book</span>
-                  </a>
+                  <a href="/categories/Book/" itemprop="url" rel="index"><span itemprop="name">Book</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Book/IPCreator/Book/Gentleman/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Book/IPCreator/Book/Gentleman/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Book/IPCreator/Book/Gentleman/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt data-src="http://opb37u589.bkt.clouddn.com/p916506.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/p916506.jpg?imageMogr2/thumbnail/!75p" alt></p>
 <blockquote>
 <p><a href="https://book.douban.com/review/8801151/" target="_blank" rel="noopener">假如你走到大街上，身上的西装看起来很明显是新的，那么裁缝的工作就没有做到位。<br>好的西装看起来应该就像你身上与生俱来的一部分。</a></p>
 </blockquote>
@@ -309,12 +279,12 @@
 </ol>
 <p>现在我终于敢向你推荐这本书了。</p>
 <p>培养当一个体面的男人，有两个时机最好，<strong>一个是小时候，一个就是现在。</strong></p>
-<h2 id="男士指南｜让自己活得更有质地的20大原则"><a href="#男士指南｜让自己活得更有质地的20大原则" class="headerlink" title="男士指南｜让自己活得更有质地的20大原则"></a><a href="http://www.luojiji.com/thread-10931-1-1.html" target="_blank" rel="noopener">男士指南｜让自己活得更有质地的20大原则</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/16/073513ocn0ds8gn8nwknhz.jpg"></p>
+<h2 id="男士指南｜让自己活得更有质地的20大原则"><a href="#男士指南｜让自己活得更有质地的20大原则" class="headerlink" title="男士指南｜让自己活得更有质地的20大原则"></a><a href="http://www.luojiji.com/thread-10931-1-1.html" target="_blank" rel="noopener">男士指南｜让自己活得更有质地的20大原则</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/16/073513ocn0ds8gn8nwknhz.jpg" alt></p>
 <p>2018-01-16 「得到」 罗辑思维</p>
 <p>引言</p>
 <p>近日，电影《无问西东》上映。剧中几个男人的选择，都让自己的人生问心无愧。有人说：这部电影，可以视为男性品鉴指南。</p>
 <p>一个男人如何活得更有质地，而不是沦为“油腻中年男”？这篇清单给你20条建议，“<strong>愿你历尽千帆，归来仍是少年</strong>”。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/16/073539my9qvbswyvebveuu.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/16/073539my9qvbswyvebveuu.jpg" alt></p>
 <ol>
 <li><p>先考功名，再做学问。若你有无师自通对抗应试教育体制的能力，那自然最好，然而这需要足够的艰辛，以及亨通的运气。</p>
 </li>
@@ -359,23 +329,23 @@
 <li><p>知行合一。知道了不做，等于不知道啊。</p>
 </li>
 </ol>
-<h2 id="成为一个体面人的感觉有多好"><a href="#成为一个体面人的感觉有多好" class="headerlink" title="成为一个体面人的感觉有多好"></a><a href="http://www.luojiji.com/thread-9757-1-1.html" target="_blank" rel="noopener">成为一个体面人的感觉有多好</a></h2><p>2017-09-08 罗振宇 罗辑思维<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/08/075406s4mlo8afeaera88j.jpg"></p>
+<h2 id="成为一个体面人的感觉有多好"><a href="#成为一个体面人的感觉有多好" class="headerlink" title="成为一个体面人的感觉有多好"></a><a href="http://www.luojiji.com/thread-9757-1-1.html" target="_blank" rel="noopener">成为一个体面人的感觉有多好</a></h2><p>2017-09-08 罗振宇 罗辑思维<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/08/075406s4mlo8afeaera88j.jpg" alt></p>
 <p>绅士这个词，有非常古老的传统。翻译成今天的话，就是一个体面的男人。</p>
 <p>最近，我觉得我有资格聊体面这个话题了。</p>
 <p>第一，我已经成功减掉了16斤体重。</p>
-<p>第二，在刚刚过去的002号知识发布会上，我终于穿上了正式的定制衬衫和双排扣西装。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/08/075414y4yzvq79y8o7pbdj.jpg"></p>
+<p>第二，在刚刚过去的002号知识发布会上，我终于穿上了正式的定制衬衫和双排扣西装。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/08/075414y4yzvq79y8o7pbdj.jpg" alt></p>
 <p>所以今天，我才觉得自己有资格推荐给你这本《绅士指南》。</p>
 <p>这是一本帮助男人变得更体面的工具书。</p>
 <p>从服装搭配、日常用品到行为举止，最全面的知识都可以从这本书里查到。</p>
 <p>就算你自己不太想操心穿衣打扮，也应该给女朋友或者太太来一本。</p>
-<p>与其让她们按照自己的喜好给你买衣服，倒不如让她了解通行全世界的男人规则。<br><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p916494.jpg"></p>
+<p>与其让她们按照自己的喜好给你买衣服，倒不如让她了解通行全世界的男人规则。<br><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p916494.jpg" alt></p>
 <p>为什么要体面？</p>
 <p>为什么体面这件事今天变得越来越重要？</p>
 <p>因为我们今天生活节奏不断加快，每天都要面对陌生人频繁<a href="http://deepcreator.com/2017/10/15/Concept/Cooperation/" target="_blank" rel="noopener">协作</a>。</p>
 <p>过去熟人社会那种让别人慢慢了解你的为人、不看表面看内涵的方式，越来越使不上了。</p>
 <p>很多时候你的机会只有一次，而且稍纵即逝。</p>
 <p>第一印象、第一句话变得至关重要。</p>
-<p>一次口若悬河的面试，很可能会被你三天没洗的头发毁掉。<br><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p916495.jpg"></p>
+<p>一次口若悬河的面试，很可能会被你三天没洗的头发毁掉。<br><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p916495.jpg" alt></p>
 <p>体面不是往身上堆钱，</p>
 <p>而是用恰到好处的钱，<strong>恰如其分的形象，塑造自己最宽阔的个人界面。</strong></p>
 <p>想做到这一点，光有想法和决心，没有基本知识是不行的——</p>
@@ -392,11 +362,11 @@
 <p>●雪茄烟的颜色和尺寸有哪些门道？</p>
 <p>●如何挑一个给自己加分的经典公文包？</p>
 <p>●名人和富人们在什么地方买衣服？</p>
-<p>这些小问题，答案都可以在《绅士指南》里找到。有的很实用，有的不妨做有趣的谈资。<br><img alt data-src="https://img1.doubanio.com/view/thing_review/l/public/p916498.jpg"></p>
+<p>这些小问题，答案都可以在《绅士指南》里找到。有的很实用，有的不妨做有趣的谈资。<br><img data-src="https://img1.doubanio.com/view/thing_review/l/public/p916498.jpg" alt></p>
 <p>关于男人的头发、胡子、内衣、衬衫、西装、领带、大衣、运动装、鞋子和搭配饰品最重要的知识，都可以查到。</p>
 <p>还有，一个男人穿衣戴帽体面之后，还应该注意哪些行为举止和生活方式。</p>
 <p>有文，有图，很直观。</p>
-<p>而且我相信，坚持不懈地做一个体面人，总有一天，哪怕曾经是谈资的所谓“奢侈品”，也会变成你的日用之物。<br><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p916501.jpg"></p>
+<p>而且我相信，坚持不懈地做一个体面人，总有一天，哪怕曾经是谈资的所谓“奢侈品”，也会变成你的日用之物。<br><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p916501.jpg" alt></p>
 <p>做更好的自己</p>
 <blockquote>
 <p>体面的反义词，叫自我懈怠。</p>
@@ -406,24 +376,24 @@
 <p>当你穿上一双体面的皮鞋，你就会想配一条合身的裤子，然后你就会在意一条漂亮的腰带，然后你会发现自己还缺点配饰。</p>
 <p>继而你会对自己的<strong>身材</strong>有要求，开始<strong><a href="http://deepcreator.com/2018/12/24/MVP/Habit/Tough%20Workout/" target="_blank" rel="noopener">健身锻炼</a></strong>。</p>
 <p>这样不断升级的你，不光能赢得更多<a href="http://deepcreator.com/2017/10/15/Concept/Stranger/" target="_blank" rel="noopener">陌生人</a>的<a href="http://deepcreator.com/2017/10/03/Concept/Trust/" target="_blank" rel="noopener">信任</a>，更能在去听一场音乐会、看一场画展、谈一场恋爱的时候，收获更多更好的体验。</p>
-<p>体面不是为了炫耀，是为了做更好的自己。<br><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p916504.jpg"></p>
+<p>体面不是为了炫耀，是为了做更好的自己。<br><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p916504.jpg" alt></p>
 <p>你的私家形象顾问</p>
 <p>别担心，男人想要的体面没那么复杂。</p>
 <p>翻开《绅士指南》你就知道，男人的经典就是那些，查尔斯王子年轻时候穿的西装，今天看依旧不过时。</p>
 <p>这对大部分男人来说是个好消息，我们根本不用追逐潮流。</p>
 <p>这本书在国外出版已经超过10年，翻译成了18个国家的版本，被欧洲权威时尚媒体评为男人最应收藏的个人形象指导书。</p>
-<p>「罗辑思维」联手北京美术摄影出版社定制的独家版本，布面烫银精装，本身也很体面。<br><img alt data-src="https://img3.doubanio.com/view/thing_review/l/public/p916506.jpg"></p>
+<p>「罗辑思维」联手北京美术摄影出版社定制的独家版本，布面烫银精装，本身也很体面。<br><img data-src="https://img3.doubanio.com/view/thing_review/l/public/p916506.jpg" alt></p>
 <p>《绅士指南》里有句话让我印象深刻——</p>
 <blockquote>
 <p>假如你走到大街上，身上的西装看起来很明显是新的，那么裁缝的工作就没有做到位。<br>好的西装看起来应该就像你身上与生俱来的一部分。</p>
 </blockquote>
 <p>其实，谁也不是天生体面，我们为之修炼的，恰恰像一件好西装一样，让它看上去自然而然，像是与生俱来的一部分。</p>
 <p>我们一起加油。</p>
-<h2 id="一个职场战神的包里该有哪些装备"><a href="#一个职场战神的包里该有哪些装备" class="headerlink" title="一个职场战神的包里该有哪些装备"></a><a href="http://www.luojiji.com/thread-10820-1-1.html" target="_blank" rel="noopener">一个职场战神的包里该有哪些装备</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/03/072501rzzrqyf484qr048k.jpg"></p>
+<h2 id="一个职场战神的包里该有哪些装备"><a href="#一个职场战神的包里该有哪些装备" class="headerlink" title="一个职场战神的包里该有哪些装备"></a><a href="http://www.luojiji.com/thread-10820-1-1.html" target="_blank" rel="noopener">一个职场战神的包里该有哪些装备</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/03/072501rzzrqyf484qr048k.jpg" alt></p>
 <p>2018-01-03 「得到」 罗辑思维<br>引言</p>
 <p>新的一年，调整好开工状态了吗？工作中，选择正确的工具，不仅能提升效率，还能避免需要时翻找的尴尬，让你随时保持高效和得体。</p>
 <p>这篇清单为你分享脱不花的14条建议，看看一个高效的人包里都有哪些装备。</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201801/03/072514fuk9usxne0glzltu.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201801/03/072514fuk9usxne0glzltu.jpg" alt></p>
 <ol>
 <li><p>大部分人都是职场战士，但极少数人会是战神级别的。战神的装备都是“神器”，与常人不同、杀伤力大，我热衷于见到战神就翻看他的随身装备。</p>
 </li>
@@ -436,8 +406,8 @@
 <li><p>笔和纸质笔记本，我长期在这两方面花了N万块钱。应该有两支笔，最好色彩不同，一是便于把笔记的不同内容区隔开，更重要的是：无论如何，笔都是世界上最容易丢的东西。亲测最好用的笔是<strong>日本派通</strong>。和别人说话时，做纸质笔记和抱着电子设备打字，对方的感受是非常不同的。最好用的随身笔记本，我首推日本<strong>stalogy网格本</strong>。</p>
 </li>
 </ol>
-<p><img alt="pentel2018.JPG" data-src="http://opb37u589.bkt.clouddn.com/pentel2018.JPG?imageMogr2/thumbnail/!75p"></p>
-<p><img alt data-src="https://img30.360buyimg.com/popWaterMark/jfs/t5701/68/4173998260/161352/a37ce3d2/59489370N6312e1bb.jpg"></p>
+<p><img data-src="http://opb37u589.bkt.clouddn.com/pentel2018.JPG?imageMogr2/thumbnail/!75p" alt="pentel2018.JPG"></p>
+<p><img data-src="https://img30.360buyimg.com/popWaterMark/jfs/t5701/68/4173998260/161352/a37ce3d2/59489370N6312e1bb.jpg" alt></p>
 <ol start="6">
 <li><p>除非你要去极落后区域，否则只需要这样一个钱包——能放两百块纸币和两张信用卡。所有还没电子化的优惠卡和会员卡都可以扔了，因为这些店已跟不上时代。钱包里还应该有一张印有公司发票信息的卡片，开发票时能免除很多废话。</p>
 </li>
@@ -458,9 +428,9 @@
 <li><p>无论如何，所有个人装备的重点是“个人”——自己准备、自己装备。一个有教养的人，不会让别人替自己背包、拿杯子、端茶递水。见过最不体面的行为，就是一个所谓的领导让随员替自己给客人递名片。</p>
 </li>
 </ol>
-<h2 id="细节致胜：如何用礼仪为自己加分？"><a href="#细节致胜：如何用礼仪为自己加分？" class="headerlink" title="细节致胜：如何用礼仪为自己加分？"></a><a href="http://www.luojiji.com/thread-10725-1-1.html" target="_blank" rel="noopener">细节致胜：如何用礼仪为自己加分？</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/23/073053un7mn7nm2s99dnmz.jpg"><br>2017-12-23 「得到」 罗辑思维<br>引言</p>
+<h2 id="细节致胜：如何用礼仪为自己加分？"><a href="#细节致胜：如何用礼仪为自己加分？" class="headerlink" title="细节致胜：如何用礼仪为自己加分？"></a><a href="http://www.luojiji.com/thread-10725-1-1.html" target="_blank" rel="noopener">细节致胜：如何用礼仪为自己加分？</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201712/23/073053un7mn7nm2s99dnmz.jpg" alt><br>2017-12-23 「得到」 罗辑思维<br>引言</p>
 <p>俗话说：不学礼，无以立。传统社会如此，在当今这个陌生人社会更是如此。我们对一个人的第一印象，往往从关乎礼仪的细节开始。</p>
-<p>如何用礼仪为自己“加分”？脱不花的这11点心得，与你分享。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201712/23/073110znry4zjfwyfldnwf.jpg"></p>
+<p>如何用礼仪为自己“加分”？脱不花的这11点心得，与你分享。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201712/23/073110znry4zjfwyfldnwf.jpg" alt></p>
 <ol>
 <li><p>礼仪是一门奇怪的知识：如此重要，同时如此容易习得，却又如此轻易被忽略。</p>
 </li>
@@ -485,7 +455,7 @@
 <li><p>礼仪修养深厚的一个标志是：<strong>不拿同样的标准要求别人</strong>。</p>
 </li>
 </ol>
-<h2 id="绅士指南"><a href="#绅士指南" class="headerlink" title="绅士指南"></a><a href="https://book.douban.com/subject/27132541/" target="_blank" rel="noopener">绅士指南</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s29536374.jpg"></p>
+<h2 id="绅士指南"><a href="#绅士指南" class="headerlink" title="绅士指南"></a><a href="https://book.douban.com/subject/27132541/" target="_blank" rel="noopener">绅士指南</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s29536374.jpg" alt></p>
 <h3 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h3><p>这本书要告诉我们什么是“永恒的时尚经典”。</p>
 <p>这本书是关于男士服饰搭配及日常用品等细节讲解的信息宝库：有关于国际著名品牌服装、布料和织物的个性搭配的诸多建议，有引领现代风格的时尚大师的介绍，有很多服装的款型和详细地址，还有很多男士日常用品的推荐。这本书会详尽地指导你如何着装，从你的领带和领带打法到你的鞋子以及在哪儿定制鞋子，从你的拳击短裤到你的晚礼服，从你的巴伯尔夹克衫到太阳镜，让你大出风头，却又不失优雅。《绅士指南》插图华美丰富，同时还为你讲述了很多名人和时尚界绅士的故事。</p>
 <p>只要你能够按照书中所述着装，就一定会很得体，无论你身处伦敦、巴黎、布鲁塞尔、杜塞尔多夫还是罗马、米兰、纽约亦或是北京。绅士着装意味着要搭配定做的精制服装和批量生产的服装，既追求奢华，也谦虚务实。绅士着装并不等于顽固守旧，创新已经证明了其价值，它已被伦敦、米兰和纽约的国际时尚界所接受。</p>
@@ -509,77 +479,77 @@
 <p>238 我们的日常伙伴<br>240 备忘记事本·<br>242 时尚出行<br>244 短途旅行包<br>246 西装的打包诀窍<br>247 打包行李的正确方式<br>248 手杖·<br>249 旅行毛毯<br>250 眼镜<br>252 不仅仅在阳光灿烂时<br>255 手帕·<br>256 如何手工装饰胸前口袋<br>258 正确的组合<br>260 手套<br>262 围巾的改进<br>265针织品<br>267 最初是毛衣<br>268 从绵羊到羊毛<br>270 经典的针织品<br>272 英法之间·<br>273 根西岛毛衣详解<br>275 从细针到厚棒针织衫<br>276 和谐的搭配·</p>
 <p>278 冬日必备<br>280 纯粹的低调：羊绒衫<br>283运动生活<br>285 为什么要运动？·<br>286 骑马<br>288 骑马全套装备<br>290 时尚观众·<br>292 一杆进洞<br>294 鳄鱼<br>295 特别的Polo衫<br>296 水上运动全套装备<br>299礼服<br>301 白色还是黑色·<br>302 燕尾服—用什么和其搭配·<br>303 黑白配<br>304 白色领带·<br>306 抽烟夹克<br>306 可以租借<br>307 合适的鞋·<br>308 常礼服</p>
 <p>311附录<br>312 照料好你的衣柜<br>314 领带<br>314 皮鞋<br>315 皮鞋修理<br>316 图片来源<br>317 书目提供选萃<br>317 致谢</p>
-<h2 id="收藏清单｜西装冷知识，王牌特工的秘密"><a href="#收藏清单｜西装冷知识，王牌特工的秘密" class="headerlink" title="[收藏清单｜西装冷知识，王牌特工的秘密]"></a>[收藏清单｜西装冷知识，王牌特工的秘密]</h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110109ubo6z6u677ttv67q.jpg"><br>2017-10-22 「得到」 罗辑思维<br>引言</p>
+<h2 id="收藏清单｜西装冷知识，王牌特工的秘密"><a href="#收藏清单｜西装冷知识，王牌特工的秘密" class="headerlink" title="[收藏清单｜西装冷知识，王牌特工的秘密]"></a>[收藏清单｜西装冷知识，王牌特工的秘密]</h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110109ubo6z6u677ttv67q.jpg" alt><br>2017-10-22 「得到」 罗辑思维<br>引言</p>
 <p>首周末狂揽一亿美金票房的《王牌特工2》，旋风刚刚刮到中国。这绝对是一部关于绅士着装教科书级的神作。</p>
-<p>收下这个清单，不仅帮你看懂皇家特工的门道，更能为男人挑选职场战衣提供参考。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110123p7unku13rrf9b4fu.jpg"></p>
+<p>收下这个清单，不仅帮你看懂皇家特工的门道，更能为男人挑选职场战衣提供参考。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110123p7unku13rrf9b4fu.jpg" alt></p>
 <ol>
-<li><p>现代西装的发源地是<strong>英格兰</strong>，它的基本样式是在20世纪初确定下来，而且成为上班族的统一着装，包括特工。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110136f8ho7o0dhyiood24.jpg"></p>
+<li><p>现代西装的发源地是<strong>英格兰</strong>，它的基本样式是在20世纪初确定下来，而且成为上班族的统一着装，包括特工。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110136f8ho7o0dhyiood24.jpg" alt></p>
 </li>
-<li><p>不是谁都有资格穿牛仔裤开新品发布会。只要时间、季节和气候合适，西装仍然是全球男士正式场合最得体的国际语言，没有之一。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110157scu6lunbmn4lsu2c.jpg"></p>
+<li><p>不是谁都有资格穿牛仔裤开新品发布会。只要时间、季节和气候合适，西装仍然是全球男士正式场合最得体的国际语言，没有之一。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110157scu6lunbmn4lsu2c.jpg" alt></p>
 </li>
-<li><p>挑西装，按<strong>样式&gt;颜色&gt;面料</strong>这三个因素来排序，样式是最重要的因素。如果不得不在面料和样式之间权衡的话，选后者。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110217cxb831zf42x3hz1w.jpg"></p>
+<li><p>挑西装，按<strong>样式&gt;颜色&gt;面料</strong>这三个因素来排序，样式是最重要的因素。如果不得不在面料和样式之间权衡的话，选后者。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110217cxb831zf42x3hz1w.jpg" alt></p>
 </li>
-<li><p>所谓好样式，可不是T台上的时髦潮流，而是100年来一再使用的基本样式版型，也是著名裁剪师和成衣生产商眼里的国际标准。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110232ke9s5ekplclykfmy.jpg"></p>
+<li><p>所谓好样式，可不是T台上的时髦潮流，而是100年来一再使用的基本样式版型，也是著名裁剪师和成衣生产商眼里的国际标准。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110232ke9s5ekplclykfmy.jpg" alt></p>
 </li>
-<li><p><strong>双排扣西装比单排扣西装更正式</strong>。电影里三个皇家特工的决胜之战，一人一件双排扣西装，酷毙了。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110245tlluolk3lvlvl9l9.jpg"></p>
+<li><p><strong>双排扣西装比单排扣西装更正式</strong>。电影里三个皇家特工的决胜之战，一人一件双排扣西装，酷毙了。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110245tlluolk3lvlvl9l9.jpg" alt></p>
 </li>
-<li><p>一件好西装有矫正身材的神奇功效，能把男人最好的一面展现出来。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110303e96pbbumbrjspp8u.jpg"></p>
+<li><p>一件好西装有矫正身材的神奇功效，能把男人最好的一面展现出来。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110303e96pbbumbrjspp8u.jpg" alt></p>
 </li>
-<li><p>穿西装最理想的体型当然是体健肩宽，此处可参考普京的造型。衣服合身就能穿衣显瘦脱衣有肉，夸张的垫肩反而是画蛇添足。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110316cap3jzkmbdmo2yjj.jpg"></p>
+<li><p>穿西装最理想的体型当然是体健肩宽，此处可参考普京的造型。衣服合身就能穿衣显瘦脱衣有肉，夸张的垫肩反而是画蛇添足。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110316cap3jzkmbdmo2yjj.jpg" alt></p>
 </li>
-<li><p>身材瘦的人别拿垫肩让自己“虚假繁荣”，窄幅西装和贴身裤子反而显得特别干练。王石近年的衣品是正面典型。如果比较胖，西装的修饰作用也很明显，而且能增强气场。但切忌西装过于肥大，那只能让人显得更臃肿。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110328kl33jnhmna4z4hly.jpg"></p>
+<li><p>身材瘦的人别拿垫肩让自己“虚假繁荣”，窄幅西装和贴身裤子反而显得特别干练。王石近年的衣品是正面典型。如果比较胖，西装的修饰作用也很明显，而且能增强气场。但切忌西装过于肥大，那只能让人显得更臃肿。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110328kl33jnhmna4z4hly.jpg" alt></p>
 </li>
-<li><p>最安全的颜色是<strong>深蓝、浅灰、深灰和黑色</strong>，蓝底白色细条纹是无可争议的经典。在伦敦，大多数股票经纪人、银行家、律师和政治家都这么穿。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110346c2eje2yefbvtp7yd.jpg"></p>
+<li><p>最安全的颜色是<strong>深蓝、浅灰、深灰和黑色</strong>，蓝底白色细条纹是无可争议的经典。在伦敦，大多数股票经纪人、银行家、律师和政治家都这么穿。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110346c2eje2yefbvtp7yd.jpg" alt></p>
 </li>
-<li><p>褐色或绿色西装只适合周末或运动场合。格子呢西装在欧洲其他国家和美国已经成为职业装，但保守的英国人还难以接受。如果你需要面对国际化客户，这一点区别不可不知。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110401az4d5xz44iwexwxx.jpg"></p>
+<li><p>褐色或绿色西装只适合周末或运动场合。格子呢西装在欧洲其他国家和美国已经成为职业装，但保守的英国人还难以接受。如果你需要面对国际化客户，这一点区别不可不知。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110401az4d5xz44iwexwxx.jpg" alt></p>
 </li>
-<li><p>即使是夏天，最好的西装面料也是纯羊毛，它的抗皱能力超强。而且纯羊毛西装起褶也不用怕，它很快会恢复。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110415o0qy22sywbc0i4t0.jpg"></p>
+<li><p>即使是夏天，最好的西装面料也是纯羊毛，它的抗皱能力超强。而且纯羊毛西装起褶也不用怕，它很快会恢复。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110415o0qy22sywbc0i4t0.jpg" alt></p>
 </li>
-<li><p><strong>上衣、裤子和背心是标准的西装三件套</strong>。婚礼穿没问题，但商务场合，可能会过于隆重。今天的办公室通常都很暖和，上衣和裤子两件套就足够了。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110430ltizkt6bsq83iqtc.jpg"></p>
+<li><p><strong>上衣、裤子和背心是标准的西装三件套</strong>。婚礼穿没问题，但商务场合，可能会过于隆重。今天的办公室通常都很暖和，上衣和裤子两件套就足够了。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110430ltizkt6bsq83iqtc.jpg" alt></p>
 </li>
-<li><p>注意两个细节，袖子上可以打开的扣子，和领子上空着的扣眼，潜台词其实是：“我的西装很好，也很贵。”<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110444m9yvcdas2tvffv8y.jpg"></p>
+<li><p>注意两个细节，袖子上可以打开的扣子，和领子上空着的扣眼，潜台词其实是：“我的西装很好，也很贵。”<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110444m9yvcdas2tvffv8y.jpg" alt></p>
 </li>
-<li><p>英国和意大利是出产男士西装的重镇。英国偏保守，更严格地遵循传统上层社会着装原则。意大利人在审美、面料、颜色和裁剪上更艺术。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110457kpsk4mguap4jovau.jpg"></p>
+<li><p>英国和意大利是出产男士西装的重镇。英国偏保守，更严格地遵循传统上层社会着装原则。意大利人在审美、面料、颜色和裁剪上更艺术。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110457kpsk4mguap4jovau.jpg" alt></p>
 </li>
-<li><p>全定制(custom tailoring)和半定制 (made to measure)这两个词很有用。不差钱的话，当然可以选昂贵的一对一全定制。但在标准版型基础上根据你的身材和个性进行调整，反而是更聪明的定制方法。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110514bctwu0qsll0vu9l0.jpg"></p>
+<li><p>全定制(custom tailoring)和半定制 (made to measure)这两个词很有用。不差钱的话，当然可以选昂贵的一对一全定制。但在标准版型基础上根据你的身材和个性进行调整，反而是更聪明的定制方法。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110514bctwu0qsll0vu9l0.jpg" alt></p>
 </li>
-<li><p>英国伦敦的萨维尔街是全世界定制西服爱好者的圣地。《王牌特工》里那个用来掩人耳目的服装店Kingsman（皇家绅士）就开在这条街，而且电影制作方真的注册了这个服装衍生品牌。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110529iv1f6ffbntvzn6wf.jpg"></p>
+<li><p>英国伦敦的萨维尔街是全世界定制西服爱好者的圣地。《王牌特工》里那个用来掩人耳目的服装店Kingsman（皇家绅士）就开在这条街，而且电影制作方真的注册了这个服装衍生品牌。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201710/22/110529iv1f6ffbntvzn6wf.jpg" alt></p>
 </li>
 <li><p>如果你身上的西装一眼看得出新崭崭的，反而不够完美。真正的好西装，即使是新的，也应该看起来跟你自来熟。</p>
 </li>
 </ol>
-<h2 id="收藏清单-一件好衬衫的知识旅程"><a href="#收藏清单-一件好衬衫的知识旅程" class="headerlink" title="收藏清单 | 一件好衬衫的知识旅程"></a><a href="http://www.luojiji.com/thread-9767-1-1.html" target="_blank" rel="noopener">收藏清单 | 一件好衬衫的知识旅程</a></h2><p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074828b40fnulpfz0074iq.jpg"><br>2017-09-09 「得到」 罗辑思维<br>引言<br>一件男士衬衫，100块钱的大路货和几百美金的私人定制，到底不同在哪里？</p>
-<p>给你一份关于好衬衫的知识清单，下次逛街就能心中有数。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074845bx60oavjm630s05k.jpg"></p>
+<h2 id="收藏清单-一件好衬衫的知识旅程"><a href="#收藏清单-一件好衬衫的知识旅程" class="headerlink" title="收藏清单 | 一件好衬衫的知识旅程"></a><a href="http://www.luojiji.com/thread-9767-1-1.html" target="_blank" rel="noopener">收藏清单 | 一件好衬衫的知识旅程</a></h2><p><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074828b40fnulpfz0074iq.jpg" alt><br>2017-09-09 「得到」 罗辑思维<br>引言<br>一件男士衬衫，100块钱的大路货和几百美金的私人定制，到底不同在哪里？</p>
+<p>给你一份关于好衬衫的知识清单，下次逛街就能心中有数。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074845bx60oavjm630s05k.jpg" alt></p>
 <ol>
-<li><p><strong>白衬衫为王</strong>。这个法则，至今已经延续了至少200年。干净挺括的白衬衫必须勤洗、勤烫，还要有足够的数量换，这意味着经济实力和个人自律。如果穿白衬衫，但领圈、袖口有污渍，负分。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074905lz4fleam1sarrt6a.jpg"></p>
+<li><p><strong>白衬衫为王</strong>。这个法则，至今已经延续了至少200年。干净挺括的白衬衫必须勤洗、勤烫，还要有足够的数量换，这意味着经济实力和个人自律。如果穿白衬衫，但领圈、袖口有污渍，负分。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074905lz4fleam1sarrt6a.jpg" alt></p>
 </li>
-<li><p>不轻易外露。直到18世纪，衬衫还是穿在外衣下面，只有领子可见，这个传统影响至今。在西方世界，官方仪式上，政要只穿衬衫出现是难以想象的。这一条在正式商务场合仍然也适用。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074905z6caiucia6cdldxl.jpg"></p>
+<li><p>不轻易外露。直到18世纪，衬衫还是穿在外衣下面，只有领子可见，这个传统影响至今。在西方世界，官方仪式上，政要只穿衬衫出现是难以想象的。这一条在正式商务场合仍然也适用。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074905z6caiucia6cdldxl.jpg" alt></p>
 </li>
-<li><p>格子代表学院气。格子衬衫在英国一直是周末休闲的代表，但牛津、剑桥和常青藤学术圈的人喜欢它，好莱坞电影里的教授也这么穿。现在，你可以理解中国程序员的标准着装了。但请记住，<strong>干净是王道</strong>。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074905yd1sizpkd7dy7s1d.jpg"></p>
+<li><p>格子代表学院气。格子衬衫在英国一直是周末休闲的代表，但牛津、剑桥和常青藤学术圈的人喜欢它，好莱坞电影里的教授也这么穿。现在，你可以理解中国程序员的标准着装了。但请记住，<strong>干净是王道</strong>。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074905yd1sizpkd7dy7s1d.jpg" alt></p>
 </li>
-<li><p>学会看细节，别被价格标签蒙蔽。后肩从中分成两片而不是只有一片，下摆前后片之间有三角形衬料加固，这样的小工序可以帮你判断一件成衣是不是真高档。大批量生产的时候，这种额外工序会增加很多成本。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074905mz2zoby727il272r.jpg"></p>
+<li><p>学会看细节，别被价格标签蒙蔽。后肩从中分成两片而不是只有一片，下摆前后片之间有三角形衬料加固，这样的小工序可以帮你判断一件成衣是不是真高档。大批量生产的时候，这种额外工序会增加很多成本。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074905mz2zoby727il272r.jpg" alt></p>
 </li>
-<li><p>高级衬衫通常有可拆卸的领撑，它用铜、牛角或者塑料做成。一头尖，一头是圆弧。插进领子里，让领口保持漂亮曲线，不让领尖上翻。要是打领带的话，领撑尤其重要。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074906qg10oxq8obr0iqiw.jpg"></p>
+<li><p>高级衬衫通常有可拆卸的领撑，它用铜、牛角或者塑料做成。一头尖，一头是圆弧。插进领子里，让领口保持漂亮曲线，不让领尖上翻。要是打领带的话，领撑尤其重要。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074906qg10oxq8obr0iqiw.jpg" alt></p>
 </li>
-<li><p>买衣服时，最好带上自己最常用的领带，当场试试系上领带后，衬衣领尖会不会翘起来。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074906yj02k7kik32fx2gz.jpg"></p>
+<li><p>买衣服时，最好带上自己最常用的领带，当场试试系上领带后，衬衣领尖会不会翘起来。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074906yj02k7kik32fx2gz.jpg" alt></p>
 </li>
-<li><p>领子宽窄不用追逐潮流。裁剪得足够宽大，穿起来才舒服。领围多大算合适？系上扣子之后，还能塞进自己的<strong>两根手指</strong>就刚刚好。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074906vh8go5gwmqwrw51m.jpg"></p>
+<li><p>领子宽窄不用追逐潮流。裁剪得足够宽大，穿起来才舒服。领围多大算合适？系上扣子之后，还能塞进自己的<strong>两根手指</strong>就刚刚好。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074906vh8go5gwmqwrw51m.jpg" alt></p>
 </li>
-<li><p>缝合线针脚越多越耐磨。一件好衬衫，<strong>每1英寸（2.54cm）</strong>不少于18针，极致的能到22针。质量普通的衬衣为了省工，会用双针机器双重接缝。但，<strong>好衬衫都是单针缝合的。</strong><br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074906nh8bpp5b18htcqih.jpg"></p>
+<li><p>缝合线针脚越多越耐磨。一件好衬衫，<strong>每1英寸（2.54cm）</strong>不少于18针，极致的能到22针。质量普通的衬衣为了省工，会用双针机器双重接缝。但，<strong>好衬衫都是单针缝合的。</strong><br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074906nh8bpp5b18htcqih.jpg" alt></p>
 </li>
-<li><p>袖子的长度要盖住手腕，刚好到拇指根部。穿在西服里面的时候，袖口应该露出西服半英寸。袖口应该足够紧，这样才不会滑下来。做工不好的便宜衬衫，袖子常常过于宽松，显得累赘。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074906brobktm7hr0kaklv.jpg"></p>
+<li><p>袖子的长度要盖住手腕，刚好到拇指根部。穿在西服里面的时候，袖口应该露出西服半英寸。袖口应该足够紧，这样才不会滑下来。做工不好的便宜衬衫，袖子常常过于宽松，显得累赘。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074906brobktm7hr0kaklv.jpg" alt></p>
 </li>
-<li><p>衬衫不会省布料。正装衬衫必须扎进裤腰里，所以衣服后片要完全盖住臀部，前片超过关键部位，扎进腰里不会滑出来，长度才算合适。<strong>后背要比前面长，确保弯腰的时候人舒服。</strong><br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074907yudyjskn0svbeyuu.jpg"></p>
+<li><p>衬衫不会省布料。正装衬衫必须扎进裤腰里，所以衣服后片要完全盖住臀部，前片超过关键部位，扎进腰里不会滑出来，长度才算合适。<strong>后背要比前面长，确保弯腰的时候人舒服。</strong><br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074907yudyjskn0svbeyuu.jpg" alt></p>
 </li>
-<li><p>很多顶级制衣工作室和生产商，会用瑞士阿鲁姆公司生产的埃及棉面料。海岛棉也是顶级的高档衬衫面料。另外，大致知道府绸、牛津布、肋斜纹、维耶勒法兰绒这些面料词汇，不会轻易被推销员唬住。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074907rihtif4wfr2lhbrc.jpg"></p>
+<li><p>很多顶级制衣工作室和生产商，会用瑞士阿鲁姆公司生产的埃及棉面料。海岛棉也是顶级的高档衬衫面料。另外，大致知道府绸、牛津布、肋斜纹、维耶勒法兰绒这些面料词汇，不会轻易被推销员唬住。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074907rihtif4wfr2lhbrc.jpg" alt></p>
 </li>
-<li><p>贝壳做成的传统纽扣，是一件好衬衣的必备物件。最好的衬衫，纽扣是手工缝上去的，扣眼的缝线也是手工缝的。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074907hlelmy6yc22ebmyc.jpg"></p>
+<li><p>贝壳做成的传统纽扣，是一件好衬衣的必备物件。最好的衬衫，纽扣是手工缝上去的，扣眼的缝线也是手工缝的。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074907hlelmy6yc22ebmyc.jpg" alt></p>
 </li>
-<li><p>如果有条件的话，定制款衬衫是最合身和舒服的。好的定制衬衫，连两个胳膊都是分别量的，因为大多数人两只胳膊长度并不一样。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074907ibbg4qbg5zqjvf0s.jpg"></p>
+<li><p>如果有条件的话，定制款衬衫是最合身和舒服的。好的定制衬衫，连两个胳膊都是分别量的，因为大多数人两只胳膊长度并不一样。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074907ibbg4qbg5zqjvf0s.jpg" alt></p>
 </li>
-<li><p>关于高品质衬衫，记住伦敦的杰明街(Jermyn St.)，英国最好的衬衫生产商都在那里，不过他们目前大部分工艺都依靠机器生产了。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074907o18ei0ee1d660eie.jpg"></p>
+<li><p>关于高品质衬衫，记住伦敦的杰明街(Jermyn St.)，英国最好的衬衫生产商都在那里，不过他们目前大部分工艺都依靠机器生产了。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074907o18ei0ee1d660eie.jpg" alt></p>
 </li>
-<li><p>意大利的那不勒斯，领子、袖窿、扣眼、前门襟等重要工序，仍然保持着一针一线手工缝制衬衫的传统。如果你钟爱手工品质，旅行到了此处，值得前往定做一件。<br><img alt data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074908r6px5kqx1g4iqoko.jpg"></p>
+<li><p>意大利的那不勒斯，领子、袖窿、扣眼、前门襟等重要工序，仍然保持着一针一线手工缝制衬衫的传统。如果你钟爱手工品质，旅行到了此处，值得前往定做一件。<br><img data-src="http://www.luojiji.com/data/attachment/forum/201709/09/074908r6px5kqx1g4iqoko.jpg" alt></p>
 </li>
 </ol>
 <p>一个体面男人，只了解衬衫怎么够？</p>
@@ -591,8 +561,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Concept/DeepCreator/Concept/Gentleman/" rel="bookmark">Gentleman</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Gentleman/" rel="tag"><i class="fa fa-tag"></i> Gentleman</a>
           </div>
@@ -604,21 +583,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/M/Meeting/" rel="next" title="Meeting">
-                  <i class="fa fa-chevron-left"></i> Meeting
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/People/IPCreator/People/Lao-tzu/" rel="prev" title="Lao-tzu">
-                  Lao-tzu <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/M/Meeting/" rel="prev" title="Meeting">
+      <i class="fa fa-chevron-left"></i> Meeting
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/People/IPCreator/People/Lao-tzu/" rel="next" title="Lao-tzu">
+      Lao-tzu <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -631,7 +607,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -662,8 +660,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -672,14 +670,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -690,11 +688,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -728,7 +721,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -740,51 +733,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -793,18 +747,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -814,63 +762,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -878,14 +769,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -912,40 +803,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Book/IPCreator/Book/Gentleman/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

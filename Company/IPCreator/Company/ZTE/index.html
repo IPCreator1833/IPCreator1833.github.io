@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="愿景：成为M-ICT时代的领导者。">
 <meta name="keywords" content="ZTE">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Company/" itemprop="url" rel="index">
-                    <span itemprop="name">Company</span>
-                  </a>
+                  <a href="/categories/Company/" itemprop="url" rel="index"><span itemprop="name">Company</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Company/IPCreator/Company/ZTE/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Company/IPCreator/Company/ZTE/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Company/IPCreator/Company/ZTE/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="ZTE_logo.png" data-src="http://opb37u589.bkt.clouddn.com/ZTE_logo.png?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/ZTE_logo.png?imageMogr2/thumbnail/!75p" alt="ZTE_logo.png"></p>
 <blockquote>
 <p>愿景：成为M-ICT时代的领导者。</p>
 </blockquote>
@@ -295,18 +265,18 @@
 <h2 id="中兴通讯（0763-HK）：中兴的转身与逆袭，新的赛道，新的机会"><a href="#中兴通讯（0763-HK）：中兴的转身与逆袭，新的赛道，新的机会" class="headerlink" title="中兴通讯（0763.HK）：中兴的转身与逆袭，新的赛道，新的机会"></a><a href="http://www.gelonghui.com/p/162811.html" target="_blank" rel="noopener">中兴通讯（0763.HK）：中兴的转身与逆袭，新的赛道，新的机会</a></h2><p>中兴通讯（0763.HK）：中兴的转身与逆袭，新的赛道，新的机会<br>2018-01-1620662 阅读 · 7 喜欢 · 0 评论<br>中国通讯的发展史与中国的崛起亦步亦趋，关键词一直都是跨越式的发展，用几年时间赶超发展了几十年的发达国家，3G落后了10年，4G落后了5年，5G按照商用进度落后一年，但是在4G时代，中国利用两年的时间已在4G网络质量对美国有了超越。到了5G发展时代，美国与中国已经在同一起跑线上，在中国，华为和中兴通讯就是主设备的龙头，华为没有上市，中兴在17年蹭蹭地涨了121%，并不断创历史新高。这个时候就该问，有多少是属于业绩转好，那些事5G预期，两者就分别代表了中兴通讯的安全边际和未来成长空间。</p>
 <p>一、此中兴非彼中兴</p>
 <p>古话说，攘外必先安内，多好的机遇和赛道，多久远的积累，到了一个不适合的人或管理团队手上，二世而亡的例子并不少见。曾经一同起步的中兴和华为，如今已经不能相提并论。任正非掌舵的华为，奉行的是狼性文化，主打高质量政策，从模仿到超越，注重研发突破，追求全公司向同一目标奋进的公司制度管理，而过去侯为贵掌舵的中兴通讯，则是奉行低价政策，采取跟随政策，最为高新产业却有着典型的国有企业文化弊病，基层养老，高层与旗下众多的关联公司有着说不尽的关系，高层权利分散，相互扯皮。这就导致了中兴对于长远利益的缺乏追求的动力，对于一个高新企业来说，这是一个致命的缺点。</p>
-<p><img alt data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182108742.!wm"></p>
+<p><img data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182108742.!wm" alt></p>
 <p>在3G红利逐渐消退的2013年，叠加手机业务的失败，中兴通讯就出现大额的亏损，靠着4G红利才缓了过来，但从利润上看，中兴通讯就没有过业绩上的突破。在每一代技术的投资都比前一代技术投资要多的情况下，中兴利润却没有实现大幅度增长，中兴还沉浸在PHS和CDMA、REVA的时候，华为正在为全球最主流的GSM和WCDMA后起直追，后大获成功。2016年3月，因涉嫌违反美国对伊朗禁运政策，中兴被列入“实体清单”，因此产生8.92亿美元的罚款，从而导致了当年净利润23.6亿人民币的亏损。</p>
 <p>美国在事件中要求涉事管理层辞职或不再管理相关业务，2016年4月5日，公司召开董事会，选举赵先明为新一任董事长，管理层从副总到业务骨干大换血。正是这个事件，加速了中兴通讯的内部改革。</p>
 <p>2017年3月14日，赵先明辞职，选举殷一民为新任董事长。殷一民担任中兴通讯执行董事已达20年，2004 - 2010年就曾担任中兴的总裁，从芯片、通信设备到终端，从产品研发到市场营销，中兴最核心的各个业务体系，殷一民都有过管理经验，他在中兴通讯的威望很高。正因换帅的原因，公司的管理体制发生了改变，业务也从分散到专注于运营商服务和5G，殷一民在对内的“2020倍增战略”提出，中兴应该聚焦其优势，擅长领域，这个优势领域就是运营商业务，同时，中兴将坚定不移的推动5G，也将其自己定义为“5G先锋”。市场并不瞎，从那个时候就开始重新对中兴通讯估值，中兴通讯重新回到正轨。</p>
-<p><img alt data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182123832.!wm"></p>
+<p><img data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182123832.!wm" alt></p>
 <p>2017年4月24日更是推出了员工股权激励方案解决员工动力问题。推出股权激励方案向占公司在册员工总数3.5%的包括公司董事、高级管理人员及业务骨干在内，涉及股票期权约15000万份，占公司已发行总股本3.6%，其中97.84%将分配给包括研发、销售等核心骨干员工；行权价格为每股人民币17.06元。有效期为5年，等待期为2年，此后3年每年分别有1/3股票期权在满足行权条件后可以行权，对应业绩指标分别为：2017年、2018年及2019年加权平均净资产收益均不低于10%；以人民币38.25亿元为基数，2017年、2018年及2019年归属于上市公司普通股股东的净利润增长率分别不低于10%、20%及30%。</p>
 <p>另外，中兴已经着手出售一些子公司，剥离在下行业务，包括努比亚手机业务，中兴物联，中兴供应链等，根据2017年中报披露，航天光宇于4月向珠海国兴睿科资本管理中心公开转让持有的中兴新2.5%股权，深圳市中兴新通讯设备有限公司10%股权正在谋求转让中，同时，中兴也在实行“穿透式”管理，希望掌握对子公司更强的掌控力，改变互相扯皮的管理方式。</p>
 <p>管理改革涉及的历史遗留问题比较多，必然不可能一蹴而就，但这个总是一个好的开始，股权激励计划、出售多余的子公司，每一个措施都指向过去的管理痛点，可以预测的是，未来的中兴，可以重新按照一个正常的高新技术公司对待。</p>
 <p>二、现有业务的估值</p>
 <p>如果按照正常的高新技术公司对待，现有的业务价值多少？</p>
 <p>首先看18年总体的市场规模，根据通信技术的周期，如今的中兴通讯正处于4G转向5G的过度阶段，在这个阶段，4G投入减弱，5G仍在研发阶段仍不会反应到业绩上，无线通讯设备市场会下降到2888亿，并于2019 年随着5G 的商用化部署开始大幅回升。所以在营收上，中兴能保持增长已经是不错的成绩，背后代表的是市场占有率的提升。</p>
-<p><img alt data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182132994.!wm"></p>
+<p><img data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182132994.!wm" alt></p>
 <p>具体来说，中兴通讯的业务可以分为运营商网络、消费者业务和政企业务三大业务板块，2017年中报显示，三大业务分别实现营收1012.3 亿元，其中运营商网络收入占比最大（323.5 亿元，占比59.9%），消费者业务和政企业务分别为178.9 亿元（占比33.13%）和37.7亿元（占比6.97%），相比于2016年，运营商网络收入占比有所夸大，消费者业务持平，比较弱的政企业务收入减少，这是好事，中兴的聚焦运营商业务正在稳步进行。</p>
 <p>运营商网络业务板块拆分为无线网络、有线网络和云计算及IT 系统集成三部分。无线网络业务占比最大（2016 年营收371 亿元，占比64%），有线网络业务占比为23%，云计算和IT 系统集成业务占比为13%。按照半年报业绩，今年实现增长是大概率事件，按无线和有线增长10%左右，云计算增长比较快，算20%，这一整块营收大概为637亿元（增长10.2%）。</p>
 <p>消费者业务板块可分为手机业务、固网终端和家庭媒体终端三个部分。手机业务收入占比最大（2016 年营业收入占消费者业务68%），固网终端和家庭媒体终端分别占20%和12%。2017 年中兴通讯集中于海外的运营商渠道，成本压力极大降低。据测算，中兴通讯2017 年手机业务近90%销售收入将来自海外，主要来自于北美的运营商渠道，手机业务有望扭亏，整块业务全年增长15%应该没问题，即384亿元左右。</p>
@@ -316,12 +286,12 @@
 <p>三、中兴5G能成么？</p>
 <p>首先要普及的概念是，4G到5G的投资规模远高于3G到4G的规模，中国5G 网络建设的总投资将超1.3 万亿元，同比4G 网络建设投资的7900 亿元增长超过67.9%，这是全球普遍认识的最低限度。在产业链的投资上通信网络设备占比最大，近40%，投资总额将达5200 亿元。中国2017年6月发布的《5G经济社会影响白皮书》指出，预计到2030年，5G将带动我国直接经济产出6.3万亿元、经济增加值2.9万亿元、就业机会800万个；间接贡献方面，5G将带动总产出10.6万亿元、经济增加值3.6万亿元、就业机会1150万个，5G的空间很广阔。</p>
 <p>另外，在整个5G 网络建设投资中，以主设备为主的硬件设备的布局先行，这就是为什么，5G概念股将无疑是2018年最被关注也是最为确定的股票概念主题之一。中兴通讯作为三大运营商的核心供应商，在时点和市场空间上，都将成为5G 网络建设最大收益者之一。</p>
-<p><img alt data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182145572.!wm"></p>
+<p><img data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182145572.!wm" alt></p>
 <p>在全球竞争格局上，根据IHS统计，2016 年全球无线通信网络设备市场规模为433 亿美元（折合人民币3007 亿元），爱立信、诺基亚、华为和中兴占据了近89%的市场份额，分别为27.7%、23.6%、25.3%、12.3%，回顾整个发展史，完全就是中国的逆袭史，华为从13年占据14.3%的份额到16年到达20.5%，位居世界第一。</p>
-<p><img alt data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182153245.!wm"></p>
+<p><img data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182153245.!wm" alt></p>
 <p>由于中国公司在技术上的迎头赶上以及高性价比的特点，中国的产品一直都是都处于优势，这个趋势如今仍未改变。各种迹象表明，中兴在5G上的发力，正在走与华为类似的逆袭之路。</p>
 <p>在技术上，早在2014 年6 月，中兴通讯就提出了全球Pre5G 理念，最早提出利用最实用的5G核心技术，依托现有的4G网络，更快地接入5G服务，为移动运营商提供更为高效的5G 演进之路，提前5G 商用进程。中兴通讯很早就提出了“5G先锋”的口号，提前开启5G预研工作，这是中兴的改变，从2015年开始，持续加大对5G研发投入，每年投入5G领域的预算超过30亿人民币，管理层的改革，更是扫清了研发的道路。从下图可以看到，中兴从14年开始，研发费用一直保持上市，16年已经占到收入的12.4%，这个比例在17年大概率会继续提高。</p>
-<p><img alt data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182203879.!wm"></p>
+<p><img data-src="http://glhsns.img-cn-hangzhou.aliyuncs.com/201801/p20180116182203879.!wm" alt></p>
 <p>在中兴通讯关注的5G和运营商业务中，核心技术领域包括5G 无线、核心网、承载、芯片，这些都是具有高技术门槛的行业，2016 年，中兴通讯全球首家对5G 高频和低频领域进行了关键技术验证，成功完成5G 高频外场测试，率先通过中国国家5G 试验一阶段测试，奠定了5G技术的领先定位；在芯片方面中兴也颇为亮眼，2017年6月，华为抢先量产了首款NB-loT芯片，9 月底，中兴微电子发布Rose Finch7100 芯片，这是中国自主研发的首颗NB-IOT 安全物联网芯片；基站方面，Global Data 2017年6月的LTE产品评级报告，将中兴通讯LTE系列基站在小区容量和用户容量方面均优于其它同类产品。在5G的关键技术大部分领域，中兴在技术和性价比上并不处于下风。</p>
 <p>另外，中兴通讯已经加入了超过40 个国际标准化组织和行业联盟，在3GPP 5GNR 累计提交4000 余篇国际提案，3 个5G 关键规划的editor 席位。其中，中兴通讯高音女士当选3GPP RAN3 副主席。这其实侧面反映了，中兴的技术水平并不落后。</p>
 <p>而且，由于Pre5G的方案更符合5G商用的急迫需求，从而对于运营商更有吸引力，2016年12 实现了意大利和记黄埔和VimpelCom 10 亿欧元的订单的突破，成为独家供货，这个事情直接刺激了华为。截至目前，Pre5G 相关产品和解决方案已经在中国、日本、奥地利、新加坡、西班牙、马来西亚、泰国、印尼等40 多个国家的60 多张网络中部署。</p>
@@ -335,8 +305,17 @@
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Company/DeepCreator/Company/ZTE/" rel="bookmark">ZTE</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/ZTE/" rel="tag"><i class="fa fa-tag"></i> ZTE</a>
           </div>
@@ -348,21 +327,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Company/DeepCreator/Company/ZTE/" rel="next" title="ZTE">
-                  <i class="fa fa-chevron-left"></i> ZTE
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Company/IPCreator/Company/Lenovo/" rel="prev" title="Lenovo">
-                  Lenovo <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/People/IPCreator/People/Ma Yun/" rel="prev" title="Ma Yun">
+      <i class="fa fa-chevron-left"></i> Ma Yun
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Company/DeepCreator/Company/ZTE/" rel="next" title="ZTE">
+      ZTE <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -375,7 +351,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -406,8 +404,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -416,14 +414,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -434,11 +432,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -472,7 +465,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -484,51 +477,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -537,18 +491,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -558,63 +506,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -622,14 +513,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -656,40 +547,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Company/IPCreator/Company/ZTE/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>

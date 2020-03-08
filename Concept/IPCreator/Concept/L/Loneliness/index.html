@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <link rel="mask-icon" href="/img/apple-touch-icon.png" color="#222">
-  <link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -19,40 +18,10 @@
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
-
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: true,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},
-    path: 'search.json',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
 
   <meta name="description" content="所有人格修习的目标，都是从一只必须和人亲近的狗，成长为一只可以适当孤独的猫。">
 <meta name="keywords" content="Loneliness">
@@ -74,10 +43,8 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true
   };
 </script>
 
@@ -112,6 +79,7 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="生命之旅" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -120,6 +88,14 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
   <div class="site-meta">
 
     <div>
@@ -132,11 +108,9 @@
         <p class="site-subtitle">常识、专业和价值。</p>
   </div>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -178,24 +152,29 @@
 
 </nav>
   <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
+           type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
 </div>
-<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
 
   </div>
 </div>
@@ -209,7 +188,7 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-  <a href="https://github.com/IPCreator1833" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/IPCreator1833" class="github-corner" title="IPCreator" aria-label="IPCreator" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -248,20 +227,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Concept/" itemprop="url" rel="index">
-                    <span itemprop="name">Concept</span>
-                  </a>
+                  <a href="/categories/Concept/" itemprop="url" rel="index"><span itemprop="name">Concept</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
@@ -270,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Concept/IPCreator/Concept/L/Loneliness/#comments" itemprop="discussionUrl">
+    <a title="valine" href="/Concept/IPCreator/Concept/L/Loneliness/#valine-comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/Concept/IPCreator/Concept/L/Loneliness/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -286,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img alt="need-a-break.jpg" data-src="http://opb37u589.bkt.clouddn.com/need-a-break.jpg?imageMogr2/thumbnail/!75p"></p>
+        <p><img data-src="http://opb37u589.bkt.clouddn.com/need-a-break.jpg?imageMogr2/thumbnail/!75p" alt="need-a-break.jpg"></p>
 <blockquote>
 <p><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=9459&amp;highlight=%E5%AD%A4%E7%8B%AC" target="_blank" rel="noopener">所有人格修习的目标，都是从一只必须和人亲近的狗，成长为一只可以适当孤独的猫。</a></p>
 </blockquote>
@@ -315,10 +285,10 @@
 <li>这让我想起了熊逸老师的一句话：“所有人格修习的目标，都是从一只必须和人亲近的狗，成长为一只可以适当孤独的猫。”</li>
 </ol>
 <p>从狗到猫，就意味着你的人格不再依赖于关系，而且还有了自己的领地。</p>
-<h2 id="你在热闹中失去的，会在孤独中找回来"><a href="#你在热闹中失去的，会在孤独中找回来" class="headerlink" title="你在热闹中失去的，会在孤独中找回来"></a><a href="http://www.xinli001.com/info/100387110?from=shouye" target="_blank" rel="noopener">你在热闹中失去的，会在孤独中找回来</a></h2><p><img alt data-src="https://ossimg.xinli001.com/20180206/70a824956a76df842b7c243fd237fd04.jpeg"></p>
+<h2 id="你在热闹中失去的，会在孤独中找回来"><a href="#你在热闹中失去的，会在孤独中找回来" class="headerlink" title="你在热闹中失去的，会在孤独中找回来"></a><a href="http://www.xinli001.com/info/100387110?from=shouye" target="_blank" rel="noopener">你在热闹中失去的，会在孤独中找回来</a></h2><p><img data-src="https://ossimg.xinli001.com/20180206/70a824956a76df842b7c243fd237fd04.jpeg" alt></p>
 <p>因为孤独，是一种主观感受。当你感到孤独的时候，孤独才存在。</p>
 <p>孤独与独处无关，而是与内心的满足感有关。</p>
-<p><img alt data-src="https://ossimg.xinli001.com/20180206/89e69de24bf352a04971c85536d1a44b.jpeg"></p>
+<p><img data-src="https://ossimg.xinli001.com/20180206/89e69de24bf352a04971c85536d1a44b.jpeg" alt></p>
 <p>一个人只有在独处的时候才能成为真正的自己——叔本华在《孤独通行证》</p>
 <p>一个人自身拥有得越多，别人所能给予他的越少。正是这一自我满足的能力，决定了自我的幸福程度。</p>
 <p>如何与我们的孤独和平相处？</p>
@@ -326,7 +296,7 @@
 <p> （2）寻找意义感，创造更深邃的连接<br> 我们每个人的存在都是独一无二的，也都有自己的意义。</p>
 <p> 当我们寻找到属于自己的价值和意义时，我们就不再感到自己只是宇宙光河中的一粒微尘，不再只是无数的生命重复演绎过的人类永恒中的一个，我们才开始真正的成为自己。</p>
 <p> 而所谓孤独，大概就是为人生寻找到自我价值实现的必经之路吧。</p>
-<p> <img alt data-src="https://ossimg.xinli001.com/20180206/5372d00a53d0dc4a9736a09041e249e9.jpeg"></p>
+<p> <img data-src="https://ossimg.xinli001.com/20180206/5372d00a53d0dc4a9736a09041e249e9.jpeg" alt></p>
 <h2 id="为什么朋友圈会让人感到孤独"><a href="#为什么朋友圈会让人感到孤独" class="headerlink" title="为什么朋友圈会让人感到孤独"></a><a href="http://www.luojiji.com/thread-4451-1-1.html" target="_blank" rel="noopener">为什么朋友圈会让人感到孤独</a></h2><p> 你有没有发现，当你的朋友圈里的人越来越多，反而没有几个能谈得来的人，而且有时候你想说说心里话，也不知道找谁说。为什么朋友圈让我们觉得孤独呢？</p>
 <p> 首先，我们看看为什么人们愿意发朋友圈。</p>
 <p> 对于那些性格比较害羞，或者是有社交障碍的人来说，朋友圈会减少他们的焦虑。因为面对面交流是实时发生的，你没办法控制自己想要说什么。但当你在朋友圈发东西的时候，或者回复别人朋友圈的时候，你有更多的时间去考虑自己该说什么话。华盛顿大学有一位副教授，曾经研究过脸书和孤独之间的关系。她发现那些不擅长社交的人，或者经常感觉孤独的人，更喜欢用脸书。</p>
@@ -335,7 +305,7 @@
 <p> 人天生就很孤独，但同时又害怕亲密关系，因为人类的关系非常丰富，也很复杂，需要花很多的精力来处理，有时候还需要一些技巧。所以我们就要求助于技术。技术节省我们的精力，把复杂的关系变得简单。比如朋友圈可以让我们很方便地和其他人保持联系。</p>
 <p> 但技术带给我们的可能是错觉。比如，你刷朋友圈的时候，就会有这样的错觉，一是它可以让我们关注任何我们想去的地方；二是我有那么多朋友，总是有人在关心我，总有人愿意听我说话；第三种错觉，也就是我们永远不会孤独，是最要命的错觉。当一个人有这种想法的时候，他只要单独呆上几秒钟，就会有焦虑的感觉，然后他就会去拿手机，开始刷朋友圈。这可能就是许多人感到朋友越来越多，联系越来越多，但却越来越孤独的真正原因。</p>
 <p> 本文源自：公众号“壹心理”（为什么朋友圈好友越来越多却找不到一个可以说话的人？）</p>
-<h2 id="孤独六讲"><a href="#孤独六讲" class="headerlink" title="孤独六讲"></a><a href="https://book.douban.com/subject/4124727/" target="_blank" rel="noopener">孤独六讲</a></h2><p><img alt data-src="https://img3.doubanio.com/lpic/s4075572.jpg"></p>
+<h2 id="孤独六讲"><a href="#孤独六讲" class="headerlink" title="孤独六讲"></a><a href="https://book.douban.com/subject/4124727/" target="_blank" rel="noopener">孤独六讲</a></h2><p><img data-src="https://img3.doubanio.com/lpic/s4075572.jpg" alt></p>
 <blockquote>
 <p>孤独是生命圆满的开始，在破碎重整中找回自我。</p>
 </blockquote>
@@ -391,7 +361,7 @@
 <p>当一个人有这种想法的时候，他只要单独呆上几秒钟，就会有焦虑的感觉，然后他就会去拿手机，开始刷朋友圈。这可能就是许多人感到朋友越来越多，联系越来越多，但却越来越孤独的真正原因。</p>
 <p>本文源自：公众号“壹心理”（为什么朋友圈好友越来越多却找不到一个可以说话的人？）</p>
 <h2 id="人越多越孤独"><a href="#人越多越孤独" class="headerlink" title="人越多越孤独"></a><a href="http://www.luojiji.com/forum.php?mod=viewthread&amp;tid=1630&amp;highlight=%E5%AD%A4%E7%8B%AC" target="_blank" rel="noopener">人越多越孤独</a></h2><p>作者：[英] 理查德·怀斯曼</p>
-<p><img alt data-src="http://www.luojiji.com/data/attachment/forum/201512/18/171719vm2lbl3tl2elevch.jpg"></p>
+<p><img data-src="http://www.luojiji.com/data/attachment/forum/201512/18/171719vm2lbl3tl2elevch.jpg" alt></p>
 <p>莱文最初的研究是探索美国36个主要城市的人是不是乐于助人。他和自己的研究团队，把实验地点选在了停车场。把贴有邮票、写好地址的信封放到了随机选出的汽车挡风玻璃上，并在旁边放了一张手写的小卡片，卡片的文字是“我在你车子的旁边看到了这封信”，他们想看看从每一个地区能够收到多少封信。</p>
 <p>其他一些实验也为这个关于好心程度的测试做了有益的补充。他们在随机选择的人面前走过，刻意把钢笔掉在地上，然后计算有多少人会把钢笔捡起来并交还给他们。一名非常健康的实验者故意绑上假腿支架，然后假装费劲儿地去捡刚掉在地上的一摞杂志，而另一位隐藏的实验者会观察公众对此情景的反应。同一位研究人员还曾带上墨镜，手拿一根白色的拐杖，看有多少路人会主动搀扶自己穿过交通繁忙的街道。</p>
 <p>为了让这些测试尽可能的科学，莱文投入了大量的时间和精力。比如说，在掉钢笔的实验中，研究人员会持续以标准的步行速度（每秒钟 1.5 步）走向对面过来的人，事先不断练习，很自然地伸手到口袋里，并在看起来没有注意到的情况下，让钢笔掉在地上。在装扮成盲人的时候，研究人员选择的站立位置是，有斑马线和交通信号灯，而且行人流动的频率和数量都比较适中的街角。在绿灯亮的时候实验者会走到街角站好，然后私下计算多久以后才会有人来搀扶他们穿越马路。</p>
@@ -463,8 +433,11 @@
     
     
     
+      
+
 
       <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/Loneliness/" rel="tag"><i class="fa fa-tag"></i> Loneliness</a>
           </div>
@@ -476,21 +449,18 @@
     </div>
   </div>
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/Concept/IPCreator/Concept/M/Miracle/" rel="next" title="Miracle">
-                  <i class="fa fa-chevron-left"></i> Miracle
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Concept/IPCreator/Concept/A/Analogy/" rel="prev" title="Analogy">
-                  Analogy <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/M/Miracle/" rel="prev" title="Miracle">
+      <i class="fa fa-chevron-left"></i> Miracle
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Concept/IPCreator/Concept/A/Analogy/" rel="next" title="Analogy">
+      Analogy <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -503,7 +473,29 @@
 
           </div>
           
-    <div class="comments" id="comments"></div>
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -534,8 +526,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="IPCreator"
-    src="/img/work-hard-life-easy.png">
+    <img class="site-author-image" itemprop="image" alt="IPCreator"
+      src="/img/work-hard-life-easy.png">
   <p class="site-author-name" itemprop="name">IPCreator</p>
   <div class="site-description" itemprop="description">Life is a journey.</div>
 </div>
@@ -544,14 +536,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1513</span>
+          <span class="site-state-item-count">1514</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -562,11 +554,6 @@
       </div>
   </nav>
 </div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
 
 
   <div class="links-of-blogroll motion-element">
@@ -600,7 +587,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
@@ -612,51 +599,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">405:22</span>
+    <span title="站点阅读时长">405:39</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
   </div>
 
-
-<!-- 在网页底部添加网站运行时间 -->
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-    var now = new Date();
-    function createtime() {
-        var grt= new Date("03/24/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime()+250);
-        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-        document.getElementById("timeDate").innerHTML = " "+dnum+" D ";
-        document.getElementById("times").innerHTML = hnum + " H " + mnum + " M " + snum + " S";
-    }
-setInterval("createtime()",250);
-</script>
         
-<div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -665,18 +613,12 @@ setInterval("createtime()",250);
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
@@ -686,63 +628,6 @@ setInterval("createtime()",250);
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
 <script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -750,14 +635,14 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script pjax>
+  <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
     wpac_init.push({
       widget: 'Rating',
-      id: 11184,
-      el: 'wpac-rating',
-      color: 'fc6423'
+      id    : 11184,
+      el    : 'wpac-rating',
+      color : 'fc6423'
     });
     (function() {
       if ('WIDGETPACK_LOADED' in window) return;
@@ -784,40 +669,48 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
-
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Concept/IPCreator/Concept/L/Loneliness/',]
+      });
+      });
+  </script>
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
-    appKey: 'qy3Id9srq8HBxwKg3CVSdNNq',
-    placeholder: "Just go go",
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: '' || 'zh-cn',
-    path: location.pathname,
-    recordIP: false,
-    serverURLs: ''
-  });
-}, window.Valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'C75jI23HEPhTehiFhCvUSbJY-gzGzoHsz',
+      appKey     : 'qy3Id9srq8HBxwKg3CVSdNNq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
 </script>
-
-    </div>
 
 </body>
 </html>
