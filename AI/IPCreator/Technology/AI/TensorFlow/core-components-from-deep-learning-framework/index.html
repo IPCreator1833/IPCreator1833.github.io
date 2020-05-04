@@ -31,17 +31,10 @@
 <meta property="og:site_name" content="生命之旅">
 <meta property="og:description" content="本文作者：恒亮 许多初学者觉得深度学习框架抽象，虽然调用了几个函数/方法，计算了几个数学难题，但始终不能理解这些框架的全貌。为了更好地认识深度学习框架，也为了给一些想要自己亲手搭建深度学习框架的朋友提供一些基础性的指导，日前来自苏黎世联邦理工学院计算机科学系的硕士研究生Gokula Krishnan Santhanam在博客上撰文，概括了大部分深度学习框架都会包含的五大核心组件，为我们详细剖析了深">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/5880dff2d8158.png?imageMogr2/format/jpg/quality/90">
-<meta property="og:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/5880dff3b7b49.png?imageMogr2/format/jpg/quality/90">
-<meta property="og:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/5880dff1dcf2b.png?imageMogr2/format/jpg/quality/90">
-<meta property="og:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/5880e0a603465.png?imageMogr2/format/jpg/quality/90">
-<meta property="og:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/5880e0965f90a.png?imageMogr2/format/jpg/quality/90">
-<meta property="og:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/5880e27618064.png?imageMogr2/format/jpg/quality/90">
 <meta property="og:updated_time" content="2017-03-27T09:54:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Five Core Components of Deep Learning Framework">
 <meta name="twitter:description" content="本文作者：恒亮 许多初学者觉得深度学习框架抽象，虽然调用了几个函数/方法，计算了几个数学难题，但始终不能理解这些框架的全貌。为了更好地认识深度学习框架，也为了给一些想要自己亲手搭建深度学习框架的朋友提供一些基础性的指导，日前来自苏黎世联邦理工学院计算机科学系的硕士研究生Gokula Krishnan Santhanam在博客上撰文，概括了大部分深度学习框架都会包含的五大核心组件，为我们详细剖析了深">
-<meta name="twitter:image" content="http://static.leiphone.com/uploads/new/article/740_740/201701/5880dff2d8158.png?imageMogr2/format/jpg/quality/90">
 
 <link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/TensorFlow/core-components-from-deep-learning-framework/">
 
@@ -283,13 +276,13 @@
 <a id="more"></a>
 <h2 id="1-张量（Tensor）"><a href="#1-张量（Tensor）" class="headerlink" title="1. 张量（Tensor）"></a>1. 张量（Tensor）</h2><p> 张量是所有深度学习框架中最核心的组件，因为后续的所有运算和优化算法都是基于张量进行的。几何代数中定义的张量是基于向量和矩阵的推广，通俗一点理解的话，我们可以将 <strong>标量视为零阶张量，矢量视为一阶张量，那么矩阵就是二阶张量。</strong></p>
 <p> 举例来说，我们可以将任意一张RGB彩色图片表示成一个三阶张量（三个维度分别是图片的高度、宽度和色彩数据）。如下图所示是一张普通的水果图片，按照RGB三原色表示，其可以拆分为三张红色、绿色和蓝色的灰度图片，如果将这种表示方法用张量的形式写出来，就是图中最下方的那张表格。</p>
-<p> <img src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880dff2d8158.png?imageMogr2/format/jpg/quality/90" alt></p>
-<p> <img src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880dff3b7b49.png?imageMogr2/format/jpg/quality/90" alt></p>
-<p> <img src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880dff1dcf2b.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p> <img data-src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880dff2d8158.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p> <img data-src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880dff3b7b49.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p> <img data-src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880dff1dcf2b.png?imageMogr2/format/jpg/quality/90" alt></p>
 <p> 图中只显示了前5行、320列的数据，每个方格代表一个像素点，其中的数据[1.0, 1.0, 1.0]即为颜色。假设用[1.0, 0, 0]表示红色，[0, 1.0, 0]表示绿色，[0, 0, 1.0]表示蓝色，那么如图所示，前面5行的数据则全是白色。</p>
 <p> 将这一定义进行扩展，我们也可以用四阶张量表示一个包含多张图片的数据集，其中的四个维度分别是：图片在数据集中的编号，图片高度、宽度，以及色彩数据。</p>
 <p> 将各种各样的数据抽象成张量表示，然后再输入神经网络模型进行后续处理是一种非常必要且高效的策略。因为如果没有这一步骤，我们就需要根据各种不同类型的数据组织形式定义各种不同类型的数据操作，这会浪费大量的开发者精力。更关键的是，当数据处理完成后，我们还可以方便地将张量再转换回想要的格式。例如Python NumPy包中numpy.imread和numpy.imsave两个方法，分别用来将图片转换成张量对象（即代码中的Tensor对象），和将张量再转换成图片保存起来。</p>
-<h2 id="2-基于张量的各种操作"><a href="#2-基于张量的各种操作" class="headerlink" title="2. 基于张量的各种操作"></a>2. 基于张量的各种操作</h2><p> <img src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880e0a603465.png?imageMogr2/format/jpg/quality/90" alt></p>
+<h2 id="2-基于张量的各种操作"><a href="#2-基于张量的各种操作" class="headerlink" title="2. 基于张量的各种操作"></a>2. 基于张量的各种操作</h2><p> <img data-src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880e0a603465.png?imageMogr2/format/jpg/quality/90" alt></p>
 <p> 有了张量对象之后，下面一步就是一系列针对这一对象的数学运算和处理过程。</p>
 <p> 其实，整个神经网络都可以简单视为为了达到某种目的，针对输入张量进行的一系列操作过程。而所谓的“学习”就是不断纠正神经网络的实际输出结果和预期结果之间误差的过程。这里的一系列操作包含的范围很宽，可以是简单的矩阵乘法，也可以是卷积、池化和LSTM等稍复杂的运算。而且各框架支持的张量操作通常也不尽相同，详细情况可以查看其官方文档（如下为NumPy、Theano和TensorFlow的说明文档）。</p>
 <p> NumPy：<a href="http://www.scipy-lectures.org/intro/numpy/operations.html" target="_blank" rel="noopener">http://www.scipy-lectures.org/intro/numpy/operations.html</a><br> Theano：<a href="http://deeplearning.net/software/theano/library/tensor/basic.html" target="_blank" rel="noopener">http://deeplearning.net/software/theano/library/tensor/basic.html</a><br> TensorFlow：<a href="https://www.tensorflow.org/api_docs/python/math_ops/" target="_blank" rel="noopener">https://www.tensorflow.org/api_docs/python/math_ops/</a></p>
@@ -297,7 +290,7 @@
 <h2 id="3-计算图（Computation-Graph）"><a href="#3-计算图（Computation-Graph）" class="headerlink" title="3. 计算图（Computation Graph）"></a>3. 计算图（Computation Graph）</h2><p> 有了张量和基于张量的各种操作之后，下一步就是将各种操作整合起来，输出我们需要的结果。</p>
 <p> 但不幸的是，随着操作种类和数量的增多，有可能引发各种意想不到的问题，包括多个操作之间应该并行还是顺次执行，如何协同各种不同的底层设备，以及如何避免各种类型的冗余操作等等。这些问题有可能拉低整个深度学习网络的运行效率或者引入不必要的Bug，而计算图正是为解决这一问题产生的。</p>
 <p> 据雷锋网了解，计算图首次被引入人工智能领域是在2009年的论文《Learning Deep Architectures for AI》。当时的图片如下所示，作者用不同的占位符（*，+，sin）构成操作结点，以字母x、a、b构成变量结点，再以有向线段将这些结点连接起来，组成一个表征运算逻辑关系的清晰明了的“图”型数据结构，这就是最初的计算图。</p>
-<p> <img src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880e0965f90a.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p> <img data-src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880e0965f90a.png?imageMogr2/format/jpg/quality/90" alt></p>
 <p> 后来随着技术的不断演进，加上脚本语言和低级语言各自不同的特点（概括地说，脚本语言建模方便但执行缓慢，低级语言则正好相反），因此业界逐渐形成了这样的一种开发框架： <strong> 前端用Python等脚本语言建模，后端用C++等低级语言执行（这里低级是就应用层而言），以此综合了两者的优点。</strong> 可以看到，这种开发框架大大降低了传统框架做跨设备计算时的代码耦合度，也避免了每次后端变动都需要修改前端的维护开销。而这里，在前端和后端之间起到关键耦合作用的就是计算图。</p>
 <p> <strong>将计算图作为前后端之间的中间表示（Intermediate Representations）可以带来良好的交互性</strong>，开发者可以将Tensor对象作为数据结构，函数/方法作为操作类型，将特定的操作类型应用于特定的数据结构，从而定义出类似MATLAB的强大建模语言。</p>
 <p> 需要注意的是，通常情况下开发者不会将用于中间表示得到的计算图直接用于模型构造，因为这样的计算图通常包含了大量的冗余求解目标，也没有提取共享变量，因而通常都会经过依赖性剪枝、符号融合、内存共享等方法对计算图进行优化。</p>
@@ -313,7 +306,7 @@
 <p> 第一种方法是模拟传统的编译器。就好像传统编译器会把高级语言编译成特定平台的汇编语言实现高效运行一样，这种方法将高级语言转换为C语言，然后在C语言基础上编译、执行。为了实现这种转换，每一种张量操作的实现代码都会预先加入C语言的转换部分，然后由编译器在编译阶段将这些由C语言实现的张量操作综合在一起。目前pyCUDA和Cython等编译器都已经实现了这一功能。</p>
 <p> 第二种方法就是前文提到的，利用脚本语言实现前端建模，用低级语言如C++实现后端运行，这意味着高级语言和低级语言之间的交互都发生在框架内部，因此每次的后端变动都不需要修改前端，也不需要完整编译（只需要通过修改编译参数进行部分编译），因此整体速度也就更快。</p>
 <p> 除此之外，由于低级语言的最优化编程难度很高，而且大部分的基础操作其实也都有公开的最优解决方案，因此另一个显著的加速手段就是利用现成的扩展包。例如最初用Fortran实现的BLAS（基础线性代数子程序），就是一个非常优秀的基本矩阵（张量）运算库，此外还有英特尔的MKL（Math Kernel Library）等，开发者可以根据个人喜好灵活选择。</p>
-<p> <img src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880e27618064.png?imageMogr2/format/jpg/quality/90" alt></p>
+<p> <img data-src="http://static.leiphone.com/uploads/new/article/740_740/201701/5880e27618064.png?imageMogr2/format/jpg/quality/90" alt></p>
 <p> 值得一提的是，一般的BLAS库只是针对普通的CPU场景进行了优化，但目前大部分的深度学习模型都已经开始采用并行GPU的运算模式，因此 <strong>利用诸如NVIDIA推出的针对GPU优化的cuBLAS和cuDNN等更据针对性的库可能是更好的选择。</strong></p>
 <p> 运算速度对于深度学习框架来说至关重要，例如同样训练一个神经网络，不加速需要4天的时间，加速的话可能只要4小时。在快速发展的人工智能领域，特别是对那些成立不久的人工智能初创公司而言，这种差别可能就会决定谁是先驱者，而谁是追随者。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p> 原文作者在文末指出：<strong>为了向开发者提供尽量简单的接口，大部分深度学习框架通常都会将普通的概念抽象化</strong>，这可能是造成许多用户感知不到上述五点核心组件的重要原因。</p>
@@ -439,7 +432,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1531</span>
+          <span class="site-state-item-count">1532</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -508,7 +501,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">411:44</span>
+    <span title="站点阅读时长">412:02</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>

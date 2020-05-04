@@ -31,17 +31,10 @@
 <meta property="og:site_name" content="生命之旅">
 <meta property="og:description" content="原文出处： 占小狼 前言对于C语言开发的程序员来说，在内存管理方面，必须负责每一个对象的生命周期，从有到无。对于Java程序员你来说，在虚拟机内存管理的帮助下，不需要为每个new对象都匹配free操作，内存泄露和内存溢出等问题也不太容易出现，不过也正是因为把内存管理交给了虚拟机，一旦运行中的程序出现了内存泄露问题，给排查过程造成很大困难。所以只有理解了Java虚拟机的运行机制，才能够运筹帷幄于各种">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2184951-75502fd0f9001ece.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2184951-a72a68ca4967fdd9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2184951-de41c8e6b7e7a36d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2184951-7b275068f0b4f36f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2184951-5718ab305b056d54.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2184951-3e3fb6dc3ec8253c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:updated_time" content="2020-02-22T00:35:20.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Things about JVM Memory">
 <meta name="twitter:description" content="原文出处： 占小狼 前言对于C语言开发的程序员来说，在内存管理方面，必须负责每一个对象的生命周期，从有到无。对于Java程序员你来说，在虚拟机内存管理的帮助下，不需要为每个new对象都匹配free操作，内存泄露和内存溢出等问题也不太容易出现，不过也正是因为把内存管理交给了虚拟机，一旦运行中的程序出现了内存泄露问题，给排查过程造成很大困难。所以只有理解了Java虚拟机的运行机制，才能够运筹帷幄于各种">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2184951-75502fd0f9001ece.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 <link rel="canonical" href="https://hazyman.com/Technology/IPCreator/Technology/Program/Java/ram-of-java/">
 
@@ -271,23 +264,23 @@
       
         <p>原文出处： <a href="http://www.jianshu.com/p/eaef248b5a2c" target="_blank" rel="noopener">占小狼</a></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于C语言开发的程序员来说，在内存管理方面，必须负责每一个对象的生命周期，从有到无。<br>对于Java程序员你来说，在虚拟机内存管理的帮助下，不需要为每个new对象都匹配free操作，内存泄露和内存溢出等问题也不太容易出现，不过也正是因为把内存管理交给了虚拟机，一旦运行中的程序出现了内存泄露问题，给排查过程造成很大困难。所以只有理解了Java虚拟机的运行机制，才能够运筹帷幄于各种代码。本文以HotSpot为例说说虚拟机的那些事。</p>
-<p>JAVA虚拟机把管理的内存划分为几个不同的数据区。<br><img src="http://upload-images.jianshu.io/upload_images/2184951-75502fd0f9001ece.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>JAVA虚拟机把管理的内存划分为几个不同的数据区。<br><img data-src="http://upload-images.jianshu.io/upload_images/2184951-75502fd0f9001ece.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
  <a id="more"></a>
 <p>Java堆<br>Java堆是被所有线程共享的一块内存区域，主要用于存放对象实例，Java虚拟机规范中有这样一段描述：所有的对象实例和数据都要在堆上进行分配。为对象分配内存就是把一块大小确定的内存从堆内存中划分出来，通常有两种方法实现：</p>
 <p>1 、指针碰撞法<br>假设Java堆中内存时完整的，已分配的内存和空闲内存分别在不同的一侧，通过一个指针作为分界点，需要分配内存时，仅仅需要把指针往空闲的一端移动与对象大小相等的距离。</p>
 <p>2、空闲列表法<br>事实上，Java堆的内存并不是完整的，已分配的内存和空闲内存相互交错，JVM通过维护一个列表，记录可用的内存块信息，当分配操作发生时，从列表中找到一个足够大的内存块分配给对象实例，并更新列表上的记录。</p>
 <p>对象创建是一个非常频繁的行为，进行堆内存分配时还需要考虑多线程并发问题，可能出现正在给对象A分配内存，指针或记录还未更新，对象B又同时分配到原来的内存，解决这个问题有两种方案：<br>1、采用CAS保证数据更新操作的原子性；<br>2、把内存分配的行为按照线程进行划分，在不同的空间中进行，每个线程在Java堆中预先分配一个内存块，称为本地线程分配缓冲（Thread Local Allocation Buffer, TLAB）;</p>
-<p>Java栈<br>Java栈是线程私有的，每个线程对应一个Java栈，每个线程在执行一个方法时会创建一个对应的栈帧（Stack Frame），栈帧负责存储局部变量变量表、操作数栈、动态链接和方法返回地址等信息。每个方法的调用过程，相当于栈帧在Java栈的入栈和出栈过程。<br><img src="http://upload-images.jianshu.io/upload_images/2184951-a72a68ca4967fdd9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>Java栈<br>Java栈是线程私有的，每个线程对应一个Java栈，每个线程在执行一个方法时会创建一个对应的栈帧（Stack Frame），栈帧负责存储局部变量变量表、操作数栈、动态链接和方法返回地址等信息。每个方法的调用过程，相当于栈帧在Java栈的入栈和出栈过程。<br><img data-src="http://upload-images.jianshu.io/upload_images/2184951-a72a68ca4967fdd9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>局部变量表 用于存放方法参数和方法内部定义的局部变量，其大小在代码编译期间已经确定，在方法运行期间不会改变。局部变量表以变量槽（Slot）为最小存储单位，每个Slot能够存放一个boolean、byte、char、shot、int、float、reference和returnAddress类型的32位数据，对于64位的数据类型long和double，虚拟机会以高位对齐的方式为其分配两个连续的Slot空间。</p>
 <p>在方法执行时，如果是实例方法，即非static方法，局部变量表中第0位Slot默认存放对象实例的引用，在方法中可以通过关键字 this 进行访问，方法参数按照参数列表顺序，从第1位Slot开始分配，方法内部变量则按照定义顺序进行分配其余的Slot。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class test &#123;</span><br><span class="line">    public int calc(int a, int b, String operation) &#123;</span><br><span class="line">        operation = &quot;+&quot;;</span><br><span class="line">        return  a + b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void main(String args[]) &#123;</span><br><span class="line">        calc(100, 200, &quot;+&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>对应的局部变量表如下：<br><img src="http://upload-images.jianshu.io/upload_images/2184951-de41c8e6b7e7a36d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
-<p>使用 javap -c 命令查看方法calc的字节码<br><img src="http://upload-images.jianshu.io/upload_images/2184951-7b275068f0b4f36f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>对应的局部变量表如下：<br><img data-src="http://upload-images.jianshu.io/upload_images/2184951-de41c8e6b7e7a36d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>使用 javap -c 命令查看方法calc的字节码<br><img data-src="http://upload-images.jianshu.io/upload_images/2184951-7b275068f0b4f36f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>其中iload_1和iload_2分别从局部变量表中的第1位和第2位中加载数据。</p>
 <p>方法区<br>方法区和Java堆一样，是所有线程共享的内存区域，用于存放已被虚拟机加载的类信息、常量、静态变量和即时编译器编译后的代码等数据。<br>运行时常量池是方法区的一部分，用于存放编译期间生成的各种字面常量和符号引用。</p>
 <p>指令计数器<br>指令计数器是线程私有的，每个线程都有独立的指令计数器，计数器记录着虚拟机正在执行的字节码指令的地址，分支、循环、跳转、异常处理和线程恢复等操作都依赖这个计数器完成。如果线程执行的是native方法，这个计数器则为空。</p>
 <p>对象的内存布局<br>对象在内存中布局可以分成三块区域：对象头、实例数据和对齐填充。<br>1、对象头<br>对象头包括两部分信息：运行时数据和类型指针，如果对象是一个数组，还需要一块用于记录数组长度的数据。</p>
-<p>1.1、运行时数据包括哈希码（HashCode）、GC分代年龄、锁状态标志、线程持有的锁、偏向锁ID和偏向时间戳等，这部分数据在32位和64位虚拟机中的长度分别为32bit和64bit，官方称为”Mark Word”。Mark Word被设计成非固定的数据结构，以实现在有限空间内保存尽可能多的数据。<br>32位的虚拟机中，对象未被锁定的状态下，Mark Word的32bit中25bit存储对象的HashCode、4bit存储对象分代年龄、2bit存储锁标志位、1bit固定为0，具体如下：<br><img src="http://upload-images.jianshu.io/upload_images/2184951-5718ab305b056d54.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
-<p>其它状态（轻量级锁定、重量级锁定、GC锁定、可偏向锁）下Mark Word的存储内容如下：<br><img src="http://upload-images.jianshu.io/upload_images/2184951-3e3fb6dc3ec8253c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>1.1、运行时数据包括哈希码（HashCode）、GC分代年龄、锁状态标志、线程持有的锁、偏向锁ID和偏向时间戳等，这部分数据在32位和64位虚拟机中的长度分别为32bit和64bit，官方称为”Mark Word”。Mark Word被设计成非固定的数据结构，以实现在有限空间内保存尽可能多的数据。<br>32位的虚拟机中，对象未被锁定的状态下，Mark Word的32bit中25bit存储对象的HashCode、4bit存储对象分代年龄、2bit存储锁标志位、1bit固定为0，具体如下：<br><img data-src="http://upload-images.jianshu.io/upload_images/2184951-5718ab305b056d54.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>其它状态（轻量级锁定、重量级锁定、GC锁定、可偏向锁）下Mark Word的存储内容如下：<br><img data-src="http://upload-images.jianshu.io/upload_images/2184951-3e3fb6dc3ec8253c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>1.2、对象头的类型指针指向该对象的类元数据，虚拟机通过这个指针可以确定该对象是哪个类的实例。</p>
 <p>2、实例数据<br>实例数据就是在程序代码中所定义的各种类型的字段，包括从父类继承的，这部分的存储顺序会受到虚拟机分配策略和字段在源码中定义顺序的影响。<br>3、对齐填充<br>由于HotSpot的自动内存管理要求对象的起始地址必须是8字节的整数倍，即对象的大小必须是8字节的整数倍，对象头的数据正好是8的整数倍，所以当实例数据不够8字节整数倍时，需要通过对齐填充进行补全。<br> <!-- more --></p>
 
@@ -417,7 +410,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1531</span>
+          <span class="site-state-item-count">1532</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -486,7 +479,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">411:44</span>
+    <span title="站点阅读时长">412:02</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
