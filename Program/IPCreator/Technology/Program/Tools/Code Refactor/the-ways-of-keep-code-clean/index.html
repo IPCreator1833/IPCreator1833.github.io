@@ -13,14 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
   <meta name="description" content="王烨clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。 也许这是个千人千面的话题，每个工程师都有自己的理解。比如我，从一个天天被骂代码写得烂的人，逐渐学习成长，到现在也能写的出“人模人样”的代码来了。这期间算是积累了一点经验心得，想和大家分享，抛砖引玉。 本文主要针对面向对象编程的clean code来阐述，面向过程代码的思路会比较不">
@@ -31,10 +31,19 @@
 <meta property="og:site_name" content="生命之旅">
 <meta property="og:description" content="王烨clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。 也许这是个千人千面的话题，每个工程师都有自己的理解。比如我，从一个天天被骂代码写得烂的人，逐渐学习成长，到现在也能写的出“人模人样”的代码来了。这期间算是积累了一点经验心得，想和大家分享，抛砖引玉。 本文主要针对面向对象编程的clean code来阐述，面向过程代码的思路会比较不">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://okkntqe2h.bkt.clouddn.com/clean-code.jpg">
+<meta property="og:image" content="http://tech.meituan.com/img/poi%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE.png">
+<meta property="og:image" content="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1%E5%9B%BE.png">
+<meta property="og:image" content="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png">
+<meta property="og:image" content="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png">
+<meta property="og:image" content="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_2.png">
+<meta property="og:image" content="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_3.png">
+<meta property="og:image" content="http://tech.meituan.com/img/qrcode_for_gh.jpg">
 <meta property="og:updated_time" content="2017-03-27T10:02:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Talking About Clean Code">
 <meta name="twitter:description" content="王烨clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。 也许这是个千人千面的话题，每个工程师都有自己的理解。比如我，从一个天天被骂代码写得烂的人，逐渐学习成长，到现在也能写的出“人模人样”的代码来了。这期间算是积累了一点经验心得，想和大家分享，抛砖引玉。 本文主要针对面向对象编程的clean code来阐述，面向过程代码的思路会比较不">
+<meta name="twitter:image" content="http://okkntqe2h.bkt.clouddn.com/clean-code.jpg">
 
 <link rel="canonical" href="https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/">
 
@@ -44,7 +53,8 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true
+    isPost : true,
+    lang   : 'zh-CN'
   };
 </script>
 
@@ -98,14 +108,12 @@
 
   <div class="site-meta">
 
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">生命之旅</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">常识、专业和价值。</p>
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">生命之旅</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">常识、专业和价值。</p>
   </div>
 
   <div class="site-nav-right">
@@ -116,32 +124,33 @@
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -149,17 +158,18 @@
         </a>
       </li>
   </ul>
-
 </nav>
-  <div class="site-search">
-    <div class="search-pop-overlay">
-  <div class="popup search-popup">
-      <div class="search-header">
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+    <input autocomplete="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
@@ -173,10 +183,9 @@
   </div>
 </div>
 
+    </div>
   </div>
-</div>
 
-  </div>
 </div>
     </header>
 
@@ -196,14 +205,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +231,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -243,7 +251,7 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
@@ -263,7 +271,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><a href="http://tech.meituan.com/clean-code.html" target="_blank" rel="noopener">王烨</a><br><img data-src="http://okkntqe2h.bkt.clouddn.com/clean-code.jpg" alt><br>clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。</p>
+        <p><a href="http://tech.meituan.com/clean-code.html" target="_blank" rel="noopener">王烨</a><br><img src="http://okkntqe2h.bkt.clouddn.com/clean-code.jpg" alt><br>clean code，顾名思义就是整洁的代码，或者说清晰、漂亮的代码，相信大多数工程师都希望自己能写出这样的代码。</p>
 <p>也许这是个千人千面的话题，每个工程师都有自己的理解。比如我，从一个天天被骂代码写得烂的人，逐渐学习成长，到现在也能写的出“人模人样”的代码来了。这期间算是积累了一点经验心得，想和大家分享，抛砖引玉。</p>
 <p>本文主要针对面向对象编程的clean code来阐述，面向过程代码的思路会比较不同，不在本文的讨论范畴。</p>
 <a id="more"></a>
@@ -385,17 +393,17 @@
 <p>任务开始先更新R树，然后利用R树的结构和匹配算法来拿到和控制区相交的配送范围ID列表。<br>再批量根据配送范围ID列表，拿到配送范围列表。<br>然后针对这一批配送范围列表（数量很小），用原始多边形相交匹配的方法做进一步过滤，并且对过滤后的商家ID去重。<br>这个优化已经在第一期优化中上线，整个过程耗时由40多分钟缩短到20分钟以内。</p>
 <p>第一期优化改为R树以后，运行了一段时间，随着数据量增大，性能又开始逐渐恶化，一个月后已经恶化到50多分钟。于是继续深入代码分析，寻找了两个优化点，安排第二期优化并上线。</p>
 <p>这两个优化点是：</p>
-<p>第2步的c步骤，原来是根据门店ID列表从DB批量获取门店，现在可以改成mget的方式从缓存批量获取（此时商家数据已被缓存）；<br>第2步的d步骤，根据是否已是热门商家、自营、在线支付等条件来判断是否需要插入或者更新之前的商家和控制区的关系。<br>上线后效果<br>通过日志观察，执行时间由50多分钟缩短到15分钟以内，下图是截取了一天的4台机器的日志时间（单位：毫秒）：<br>poi优化效果图<br>可以看到，效果还是非常明显的。<br><img data-src="http://tech.meituan.com/img/poi%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE.png" alt></p>
+<p>第2步的c步骤，原来是根据门店ID列表从DB批量获取门店，现在可以改成mget的方式从缓存批量获取（此时商家数据已被缓存）；<br>第2步的d步骤，根据是否已是热门商家、自营、在线支付等条件来判断是否需要插入或者更新之前的商家和控制区的关系。<br>上线后效果<br>通过日志观察，执行时间由50多分钟缩短到15分钟以内，下图是截取了一天的4台机器的日志时间（单位：毫秒）：<br>poi优化效果图<br>可以看到，效果还是非常明显的。<br><img src="http://tech.meituan.com/img/poi%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE.png" alt></p>
 <h3 id="案例二：POI缓存设计与实现"><a href="#案例二：POI缓存设计与实现" class="headerlink" title="案例二：POI缓存设计与实现"></a>案例二：POI缓存设计与实现</h3><p>背景<br>2014年Q4，数据库中关于POI（这里可以简单理解为外卖的门店）相关的数据的读流量急剧上升，虽然说加入从库节点可以解决一部分问题，但是毕竟节点的增加是会达到极限的，达到极限后主从复制会达到瓶颈，可能会造成数据不一致。所以此时，急需引入一种新的技术方案来分担数据库的压力，降低数据库POI相关数据的读流量。另外，任何场景都考虑加DB从库的做法，会对资源造成一定的浪费。</p>
 <p>实现方案<br>基于已有的经过考验的技术方案，我选择Tair来作为缓存的存储方案，来帮DB分担来自于各应用端的POI数据的读流量的压力。理由主要是从可用性、高性能、可扩展性、是否经过线上大规模数据和高并发流量的考验、是否有专业运维团队、是否有成熟工具等几个方面综合考量决定。</p>
 <p>详细设计<br>第一版设计<br>缓存的更新策略，根据业务的特点、已有的技术方案和实现成本，选择了用MQ来接收POI改变的消息来触发缓存的更新，但是这个过程有可能失败；同时启用了key的过期策略，并且调用端会先判断是否过期，如过期，会从后端DB加载数据并回设到缓存，再返回。通过两个方面双保险确保了缓存数据的可用。</p>
 <p>第二版设计<br>第一版设计运行到一段时间以后，我们发现了两个问题：</p>
-<p>某些情况下不能保证数据的实时一致（比如技术人员手动改动DB数据、利用MQ更新缓存失败），这个时候只能等待5分钟的过期时间，有的业务是不允许的。<br>加入了过期时间导致另外一个问题：Tair在缓存不命中的那一刻，会尝试从硬盘中Load数据，如果硬盘没有再去DB中Load数据。这无疑会进一步延长Tair的响应时间，这样不仅使得业务的超时比率加大，而且会导致Tair的性能进一步变差。<br>为了解决上述问题，我们从美团点评负责基础架构的同事那里了解到Databus可以解决缓存数据在某些情况下不一致的问题，并且可以去掉过期时间机制，从而提高查询效率，避免tair在内存不命中时查询硬盘。而且为了防止DataBus单点出现故障影响我们的业务，我们保留了之前接MQ消息更新缓存的方案，作了切换开关，利用这个方案作容错，整体架构如下：<br><img data-src="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1%E5%9B%BE.png" alt></p>
-<p>上线后效果<br>上线后，通过持续地监控数据发现，随着调用量的上升，到DB的流量有了明显地减少，极大地减轻了DB的压力。同时这些数据接口的响应时间也有了明显地减少。缓存更新的双重保障机制，也基本保证了缓存数据的可用。见下图：<br><img data-src="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png" alt><br>poi缓存优化效果图</p>
+<p>某些情况下不能保证数据的实时一致（比如技术人员手动改动DB数据、利用MQ更新缓存失败），这个时候只能等待5分钟的过期时间，有的业务是不允许的。<br>加入了过期时间导致另外一个问题：Tair在缓存不命中的那一刻，会尝试从硬盘中Load数据，如果硬盘没有再去DB中Load数据。这无疑会进一步延长Tair的响应时间，这样不仅使得业务的超时比率加大，而且会导致Tair的性能进一步变差。<br>为了解决上述问题，我们从美团点评负责基础架构的同事那里了解到Databus可以解决缓存数据在某些情况下不一致的问题，并且可以去掉过期时间机制，从而提高查询效率，避免tair在内存不命中时查询硬盘。而且为了防止DataBus单点出现故障影响我们的业务，我们保留了之前接MQ消息更新缓存的方案，作了切换开关，利用这个方案作容错，整体架构如下：<br><img src="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1%E5%9B%BE.png" alt></p>
+<p>上线后效果<br>上线后，通过持续地监控数据发现，随着调用量的上升，到DB的流量有了明显地减少，极大地减轻了DB的压力。同时这些数据接口的响应时间也有了明显地减少。缓存更新的双重保障机制，也基本保证了缓存数据的可用。见下图：<br><img src="http://tech.meituan.com/img/poi%E7%BC%93%E5%AD%98%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png" alt><br>poi缓存优化效果图</p>
 <h3 id="案例三：业务运营后台相关页面的性能优化"><a href="#案例三：业务运营后台相关页面的性能优化" class="headerlink" title="案例三：业务运营后台相关页面的性能优化"></a>案例三：业务运营后台相关页面的性能优化</h3><p>背景<br>随着业务的快速发展，带来的访问量和数据量的急剧上升，通过我们相应的监控系统可以发现，系统的某些页面的性能开始出现恶化。 从用户方的反馈，也证明了这点。此时此刻，有必要迅速排期，敏捷开发，对这些页面进行调优。</p>
-<p>欢迎页<br>需求背景：欢迎页是地推人员乃至总部各种角色人员进入外卖运营后台的首页，会显示地推人员最想看到最关心的一些核心数据，其重要性不言而喻，所以该页面的性能恶化会严重影响到用户体验。因此，首先需要优化的就是欢迎页。通过相应定位和分析，发现导致性能恶化的主要原因有两个：数据接口层和计算展现层。<br>解决方案：对症下药，分而治之。经过仔细排查、分析定位，数据接口层采用接口调用批量化、异步RPC调用的方式来进行有效优化，计算展现层决定采用预先计算、再把计算好的结果缓存的方式来提高查询速度。其中，缓存方案根据业务场景和技术特点，选用Redis。定好方案后，快速开发上线。<br>上线效果：上线后性能对比图，如下：<br><img data-src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png" alt><br>组织架构页<br>需求背景：组织架构页，采用了四层树形结构图，一起呈现加载，第一版上线后发现性能非常差。用户迫切希望对这个页面的性能进行调优。<br>解决方案：经过分析代码，定位到一个比较经典的问题：里面执行了太多次小数据量的SQL查询。于是采用多个SQL合并成大SQL的方式，然后使用本地缓存来缓存这些数据，合理预估数据量和性能，充分测试后上线。<br>上线效果：上线后性能对比图，如下：<br><img data-src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_2.png" alt><br>订单关联楼宇页<br>需求背景：随着订单量日益增大，订单表积累的数据日益增多，订单关联楼宇页的性能也日益变差（响应时间线性上升）。而这个页面和地推人员的业绩息息相关，所以地推人员使用该页面的频率非常高，性能日益恶化极大地影响了地推人员的用户体验。<br>解决方案：经过分析与设计，决定采用当时已有的订单二级索引月分表来代替原始的订单表来供前端的查询请求；并且限制住筛选的时间条件，使得筛选的开始时间和结束时间不能跨月（事先和用户沟通过，可以接受，能满足用户的基本需求），这样就只需一个月分索引表即可，通过适当的功能限制来达到性能的调优。这样从二级索引月分表中根据各种查询条件查到最终的分页的订单ID集合，然后再根据订单ID从订单库来查出相应的订单数据集合。<br>上线效果：上线后发现在调用量几乎没怎么变的情况下，性能提升明显，如下图：<br><img data-src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_3.png" alt><br>其他<br>除了上面介绍的之外，优化还涉及前端、分布式文件系统、CDN、全文索引、空间索引等几方面。限于篇幅，我们留到未来再做介绍。</p>
+<p>欢迎页<br>需求背景：欢迎页是地推人员乃至总部各种角色人员进入外卖运营后台的首页，会显示地推人员最想看到最关心的一些核心数据，其重要性不言而喻，所以该页面的性能恶化会严重影响到用户体验。因此，首先需要优化的就是欢迎页。通过相应定位和分析，发现导致性能恶化的主要原因有两个：数据接口层和计算展现层。<br>解决方案：对症下药，分而治之。经过仔细排查、分析定位，数据接口层采用接口调用批量化、异步RPC调用的方式来进行有效优化，计算展现层决定采用预先计算、再把计算好的结果缓存的方式来提高查询速度。其中，缓存方案根据业务场景和技术特点，选用Redis。定好方案后，快速开发上线。<br>上线效果：上线后性能对比图，如下：<br><img src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_1.png" alt><br>组织架构页<br>需求背景：组织架构页，采用了四层树形结构图，一起呈现加载，第一版上线后发现性能非常差。用户迫切希望对这个页面的性能进行调优。<br>解决方案：经过分析代码，定位到一个比较经典的问题：里面执行了太多次小数据量的SQL查询。于是采用多个SQL合并成大SQL的方式，然后使用本地缓存来缓存这些数据，合理预估数据量和性能，充分测试后上线。<br>上线效果：上线后性能对比图，如下：<br><img src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_2.png" alt><br>订单关联楼宇页<br>需求背景：随着订单量日益增大，订单表积累的数据日益增多，订单关联楼宇页的性能也日益变差（响应时间线性上升）。而这个页面和地推人员的业绩息息相关，所以地推人员使用该页面的频率非常高，性能日益恶化极大地影响了地推人员的用户体验。<br>解决方案：经过分析与设计，决定采用当时已有的订单二级索引月分表来代替原始的订单表来供前端的查询请求；并且限制住筛选的时间条件，使得筛选的开始时间和结束时间不能跨月（事先和用户沟通过，可以接受，能满足用户的基本需求），这样就只需一个月分索引表即可，通过适当的功能限制来达到性能的调优。这样从二级索引月分表中根据各种查询条件查到最终的分页的订单ID集合，然后再根据订单ID从订单库来查出相应的订单数据集合。<br>上线效果：上线后发现在调用量几乎没怎么变的情况下，性能提升明显，如下图：<br><img src="http://tech.meituan.com/img/%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%9B%BE_3.png" alt><br>其他<br>除了上面介绍的之外，优化还涉及前端、分布式文件系统、CDN、全文索引、空间索引等几方面。限于篇幅，我们留到未来再做介绍。</p>
 <p>不想错过技术博客更新？想给文章评论、和作者互动？第一时间获取技术沙龙信息？</p>
-<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img data-src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>公众号二维码</p>
+<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>公众号二维码</p>
 
     </div>
 
@@ -437,7 +445,6 @@
   
   
 
-  </div>
 
 
           </div>
@@ -525,14 +532,13 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+        <a href="/atom.xml" title="RSS → /atom.xml"><i class="rss fa-fw"></i>RSS</a>
       </span>
   </div>
 
 
   <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
       Links
     </div>
     <ul class="links-of-blogroll-list">
@@ -556,17 +562,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
+      <i class="fa fa-chart-area"></i>
     </span>
     <span title="站点总字数">27.2m</span>
     <span class="post-meta-divider">|</span>
@@ -575,7 +583,7 @@
     </span>
     <span title="站点阅读时长">411:44</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -616,7 +624,6 @@
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
@@ -659,6 +666,26 @@
 
 
 
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
 
 
 
@@ -672,7 +699,7 @@
       quicklink({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://hazyman.com/Program/IPCreator/Technology/Program/Tools/Code Refactor/the-ways-of-keep-code-clean/',]
       });
       });
   </script>
@@ -697,9 +724,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       meta       : guest,
       pageSize   : '10' || 10,
       visitor    : false,
-      lang       : 'zh-cn' || 'zh-cn',
+      lang       : '' || 'zh-cn',
       path       : location.pathname,
-      recordIP   : true,
+      recordIP   : false,
       serverURLs : ''
     });
   }, window.Valine);

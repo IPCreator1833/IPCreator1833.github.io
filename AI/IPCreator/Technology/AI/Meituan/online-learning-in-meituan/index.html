@@ -13,14 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
   <meta name="description" content="孔东营 背景Online Learning是工业界比较常用的机器学习算法，在很多场景下都能有很好的效果。本文主要介绍Online Learning的基本原理和两种常用的Online Learning算法：FTRL（Follow The Regularized Leader）[1]和BPR（Bayesian Probit Regression）[2]，以及Online Learning在美团移动端推">
@@ -31,10 +31,20 @@
 <meta property="og:site_name" content="生命之旅">
 <meta property="og:description" content="孔东营 背景Online Learning是工业界比较常用的机器学习算法，在很多场景下都能有很好的效果。本文主要介绍Online Learning的基本原理和两种常用的Online Learning算法：FTRL（Follow The Regularized Leader）[1]和BPR（Bayesian Probit Regression）[2]，以及Online Learning在美团移动端推">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-flow.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-model-flow.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/bayesian-online-learning-flow.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-rerank.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-server.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-skip-above.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-feature.png">
+<meta property="og:image" content="http://tech.meituan.com/img/online-learning/online-learning-result.png">
+<meta property="og:image" content="http://tech.meituan.com/img/qrcode_for_gh.jpg">
 <meta property="og:updated_time" content="2017-03-27T09:04:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Online Learning Algorithm Theory and Practice">
 <meta name="twitter:description" content="孔东营 背景Online Learning是工业界比较常用的机器学习算法，在很多场景下都能有很好的效果。本文主要介绍Online Learning的基本原理和两种常用的Online Learning算法：FTRL（Follow The Regularized Leader）[1]和BPR（Bayesian Probit Regression）[2]，以及Online Learning在美团移动端推">
+<meta name="twitter:image" content="http://tech.meituan.com/img/online-learning/online-learning-flow.png">
 
 <link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/Meituan/online-learning-in-meituan/">
 
@@ -44,7 +54,8 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true
+    isPost : true,
+    lang   : 'zh-CN'
   };
 </script>
 
@@ -98,14 +109,12 @@
 
   <div class="site-meta">
 
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">生命之旅</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">常识、专业和价值。</p>
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">生命之旅</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">常识、专业和价值。</p>
   </div>
 
   <div class="site-nav-right">
@@ -116,32 +125,33 @@
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -149,17 +159,18 @@
         </a>
       </li>
   </ul>
-
 </nav>
-  <div class="site-search">
-    <div class="search-pop-overlay">
-  <div class="popup search-popup">
-      <div class="search-header">
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+    <input autocomplete="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
@@ -173,10 +184,9 @@
   </div>
 </div>
 
+    </div>
   </div>
-</div>
 
-  </div>
 </div>
     </header>
 
@@ -196,14 +206,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://hazyman.com/AI/IPCreator/Technology/AI/Meituan/online-learning-in-meituan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +232,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -243,7 +252,7 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
@@ -264,15 +273,15 @@
 
       
         <p><a href="http://tech.meituan.com/online-learning.html" target="_blank" rel="noopener">孔东营</a></p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p><img data-src="http://tech.meituan.com/img/online-learning/online-learning-flow.png" alt><br>Online Learning是工业界比较常用的机器学习算法，在很多场景下都能有很好的效果。本文主要介绍Online Learning的基本原理和两种常用的Online Learning算法：FTRL（Follow The Regularized Leader）[1]和BPR（Bayesian Probit Regression）[2]，以及Online Learning在美团移动端推荐重排序的应用。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p><img src="http://tech.meituan.com/img/online-learning/online-learning-flow.png" alt><br>Online Learning是工业界比较常用的机器学习算法，在很多场景下都能有很好的效果。本文主要介绍Online Learning的基本原理和两种常用的Online Learning算法：FTRL（Follow The Regularized Leader）[1]和BPR（Bayesian Probit Regression）[2]，以及Online Learning在美团移动端推荐重排序的应用。</p>
    <a id="more"></a>
 <h2 id="什么是Online-Learning"><a href="#什么是Online-Learning" class="headerlink" title="什么是Online Learning"></a>什么是Online Learning</h2><p>准确地说，Online Learning并不是一种模型，而是一种模型的训练方法，Online Learning能够根据线上反馈数据，实时快速地进行模型调整，使得模型及时反映线上的变化，提高线上预测的准确率。Online Learning的流程包括：将模型的预测结果展现给用户，然后收集用户的反馈数据，再用来训练模型，形成闭环的系统。如上图所示：</p>
 <p>   Online Learning有点像自动控制系统，但又不尽相同，二者的区别是：Online Learning的优化目标是整体的损失函数最小化，而自动控制系统要求最终结果与期望值的偏差最小。</p>
 <p>   传统的训练方法，模型上线后，更新的周期会比较长（一般是一天，效率高的时候为一小时），这种模型上线后，一般是静态的（一段时间内不会改变），不会与线上的状况有任何互动，假设预测错了，只能在下一次更新的时候完成更正。Online Learning训练方法不同，会根据线上预测的结果动态调整模型。如果模型预测错误，会及时做出修正。因此，Online Learning能够更加及时地反映线上变化。</p>
-<p>   Online Learning的优化目标<br>   <img data-src="http://tech.meituan.com/img/online-learning/online-learning-model-flow.png" alt></p>
+<p>   Online Learning的优化目标<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-model-flow.png" alt></p>
 <p>   如上图所示，Online Learning训练过程也需要优化一个目标函数（红框标注的），但是和其他的训练方法不同，Online Learning要求快速求出目标函数的最优解，最好是能有解析解。</p>
 <h2 id="怎样实现Online-Learning"><a href="#怎样实现Online-Learning" class="headerlink" title="怎样实现Online Learning"></a>怎样实现Online Learning</h2><p>   前面说到Online Learning要求快速求出目标函数的最优解。要满足这个要求，一般的做法有两种：Bayesian Online Learning和Follow The Regularized Leader。下面就详细介绍这两种做法的思路。</p>
-<p>   Bayesian Online Learning<br>   贝叶斯方法能够比较自然地导出Online Learning的训练方法：给定参数先验，根据反馈计算后验，将其作为下一次预测的先验，然后再根据反馈计算后验，如此进行下去，就是一个Online Learning的过程，如下图所示。<br>   <img data-src="http://tech.meituan.com/img/online-learning/bayesian-online-learning-flow.png" alt></p>
+<p>   Bayesian Online Learning<br>   贝叶斯方法能够比较自然地导出Online Learning的训练方法：给定参数先验，根据反馈计算后验，将其作为下一次预测的先验，然后再根据反馈计算后验，如此进行下去，就是一个Online Learning的过程，如下图所示。<br>   <img src="http://tech.meituan.com/img/online-learning/bayesian-online-learning-flow.png" alt></p>
 <p>   举个例子， 我们做一个抛硬币实验，估算硬币正面的概率μμ。我们假设μμ的先验满足<br>   p(μ)=Beta(α,β)<br>   p(μ)=Beta⁡(α,β)</p>
 <p>   对于观测值Y＝1Y＝1，代表是正面，我们可以算的后验：<br>   p(μ|Y=1)=Beta(α+1,β)<br>   p(μ|Y=1)=Beta⁡(α+1,β)</p>
 <p>   对于观测值Y＝0Y＝0，代表是反面，我们可以算的后验：<br>   p(μ|Y=0)=Beta(α,β+1)<br>   p(μ|Y=0)=Beta⁡(α,β+1)</p>
@@ -345,26 +354,26 @@
 <p>   更新</p>
 <p>   wt+1,i={0−ηt(zt,i−sgn(zt,i)λ1))|zt,i|&lt;λ1otherwise<br>   wt+1,i={0|zt,i|&lt;λ1−ηt(zt,i−sgn(zt,i)λ1))otherwise<br>   Online Learning实践<br>   前面讲了Online Learning的基本原理，这里以移动端推荐重排序为例，介绍一下Online Learning在实际中的应用。</p>
 <p>   推荐重排序介绍</p>
-<p>   目前的推荐系统，主要采用了两层架构，首先是触发层，会根据上下文条件和用户的历史行为，触发用户可能感兴趣的item，然后由排序模型对触发的item排序，如下图所示：<br>   <img data-src="http://tech.meituan.com/img/online-learning/online-learning-rerank.png" alt></p>
+<p>   目前的推荐系统，主要采用了两层架构，首先是触发层，会根据上下文条件和用户的历史行为，触发用户可能感兴趣的item，然后由排序模型对触发的item排序，如下图所示：<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-rerank.png" alt></p>
 <p>   推荐重排序既能融合不同触发策略，又能较大幅度提高推荐效果（我们这里主要是下单率）。在移动端，屏幕更加小，用户每次看到的item数目更加少，排序的作用更加突出。</p>
 <p>   美团重排序Online Learning架构</p>
-<p>   美团Online Learning架构如下图所示：<br>   <img data-src="http://tech.meituan.com/img/online-learning/online-learning-server.png" alt></p>
+<p>   美团Online Learning架构如下图所示：<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-server.png" alt></p>
 <p>   线上的展示日志，点击日志和下单日志会写入不同的Kafka流。读取Kafka流，以HBase为中间缓存，完成label match（下单和点击对映到相应的展示日志），在做label match的过成中，会对把同一个session的日志放在一起，方便后面做skip above：</p>
 <p>   训练数据生成</p>
-<p>   移动端推荐的数据跟PC端不同，移动端一次会加载很多item，但是无法保证这些item会被用户看到。为了保证数据的准确性，我们采用了skip above的办法，如下图所示：<br>   <img data-src="http://tech.meituan.com/img/online-learning/online-learning-skip-above.png" alt></p>
+<p>   移动端推荐的数据跟PC端不同，移动端一次会加载很多item，但是无法保证这些item会被用户看到。为了保证数据的准确性，我们采用了skip above的办法，如下图所示：<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-skip-above.png" alt></p>
 <p>   假设用户点击了第i个位置，我们保留从第1条到第i+2条数据作为训练数据，其他的丢弃。这样能够最大程度的保证训练样本中的数据是被用户看到的。</p>
 <p>   特征</p>
-<p>   用的特征如下图所示：<br>   <img data-src="http://tech.meituan.com/img/online-learning/online-learning-feature.png" alt></p>
+<p>   用的特征如下图所示：<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-feature.png" alt></p>
 <p>   算法选择</p>
 <p>   我们尝试了FTRL和BPR效果，线下实验效果如下表：</p>
 <p>   算法       AUC         模型参数个数<br>   FTRL    0.8432    200W<br>   BPR    0.8441    1500W<br>   BPR的效果略好，但是我们线上选用了FTRL模型，主要原因是FTRL能够产生稀疏化的效果，训练出的模型会比较小。</p>
 <p>   模型训练</p>
 <p>   训练算法不断地从HBase中读取数据，完成模型地训练，训练模型放在Medis（美团内部地Redis）中，线上会用Medis中的模型预测下单率，根据预测的下单率，完成排序。</p>
 <p>   线上效果</p>
-<p>   上线后，最终的效果如下图所示，和base算法相比，下单率提高了5%。<br>   <img data-src="http://tech.meituan.com/img/online-learning/online-learning-result.png" alt></p>
+<p>   上线后，最终的效果如下图所示，和base算法相比，下单率提高了5%。<br>   <img src="http://tech.meituan.com/img/online-learning/online-learning-result.png" alt></p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>   [1] McMahan H B, Holt G, Sculley D, et al. Ad Click Prediction: a View from the Trenches. Proceedings of the 19th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD). 2013.<br>   [2] Graepel T, Candela J Q, Borchert T,et al. Web-Scale Bayesian Click-Through Rate Prediction for Sponsored Search Advertising in Microsoft’s Bing Search Engine. Proceedings of the 27th International Conference on Machine Learning ICML. 2010.<br>   [3] Murphy K P. Machine Learning: A Probabilistic Perspective. The MIT Press. 2012.</p>
 <p>   不想错过技术博客更新？想给文章评论、和作者互动？第一时间获取技术沙龙信息？</p>
-<p>   请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br>   <img data-src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>   公众号二维码</p>
+<p>   请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br>   <img src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>   公众号二维码</p>
 
     </div>
 
@@ -428,7 +437,6 @@
   
   
 
-  </div>
 
 
           </div>
@@ -516,14 +524,13 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+        <a href="/atom.xml" title="RSS → /atom.xml"><i class="rss fa-fw"></i>RSS</a>
       </span>
   </div>
 
 
   <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
       Links
     </div>
     <ul class="links-of-blogroll-list">
@@ -547,17 +554,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
+      <i class="fa fa-chart-area"></i>
     </span>
     <span title="站点总字数">27.2m</span>
     <span class="post-meta-divider">|</span>
@@ -566,7 +575,7 @@
     </span>
     <span title="站点阅读时长">411:44</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -607,7 +616,6 @@
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
@@ -650,6 +658,26 @@
 
 
 
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
 
 
 
@@ -663,7 +691,7 @@
       quicklink({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/AI/IPCreator/Technology/AI/Meituan/online-learning-in-meituan/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://hazyman.com/AI/IPCreator/Technology/AI/Meituan/online-learning-in-meituan/',]
       });
       });
   </script>
@@ -688,9 +716,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       meta       : guest,
       pageSize   : '10' || 10,
       visitor    : false,
-      lang       : 'zh-cn' || 'zh-cn',
+      lang       : '' || 'zh-cn',
       path       : location.pathname,
-      recordIP   : true,
+      recordIP   : false,
       serverURLs : ''
     });
   }, window.Valine);

@@ -13,14 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
   <meta name="description" content="机器学习中的数据清洗与特征处理综述caohao 背景随着美团交易规模的逐步增大，积累下来的业务数据和交易数据越来越多，这些数据是美团做为一个团购平台最宝贵的财富。通过对这些数据的分析和挖掘，不仅能给美团业务发展方向提供决策支持，也为业务的迭代指明了方向。目前在美团的团购系统中大量地应用到了机器学习和数据挖掘技术，例如个性化推荐、筛选排序、搜索排序、用户建模等等，为公司创造了巨大的价值。 本文主要介">
@@ -31,10 +31,17 @@
 <meta property="og:site_name" content="生命之旅">
 <meta property="og:description" content="机器学习中的数据清洗与特征处理综述caohao 背景随着美团交易规模的逐步增大，积累下来的业务数据和交易数据越来越多，这些数据是美团做为一个团购平台最宝贵的财富。通过对这些数据的分析和挖掘，不仅能给美团业务发展方向提供决策支持，也为业务的迭代指明了方向。目前在美团的团购系统中大量地应用到了机器学习和数据挖掘技术，例如个性化推荐、筛选排序、搜索排序、用户建模等等，为公司创造了巨大的价值。 本文主要介">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://tech.meituan.com/img/ml_data_feature_process/ml_frame.png">
+<meta property="og:image" content="http://tech.meituan.com/img/ml_data_feature_process/rank_frame.png">
+<meta property="og:image" content="http://tech.meituan.com/img/ml_data_feature_process/ml_feature_selection_frame.png">
+<meta property="og:image" content="http://tech.meituan.com/img/ml_data_feature_process/ml_feature_increase.png">
+<meta property="og:image" content="http://tech.meituan.com/img/ml_data_feature_process/ml_feature_supervise.png">
+<meta property="og:image" content="http://tech.meituan.com/img/qrcode_for_gh.jpg">
 <meta property="og:updated_time" content="2017-03-27T09:06:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Clean Data and Remark Features in Meituan">
 <meta name="twitter:description" content="机器学习中的数据清洗与特征处理综述caohao 背景随着美团交易规模的逐步增大，积累下来的业务数据和交易数据越来越多，这些数据是美团做为一个团购平台最宝贵的财富。通过对这些数据的分析和挖掘，不仅能给美团业务发展方向提供决策支持，也为业务的迭代指明了方向。目前在美团的团购系统中大量地应用到了机器学习和数据挖掘技术，例如个性化推荐、筛选排序、搜索排序、用户建模等等，为公司创造了巨大的价值。 本文主要介">
+<meta name="twitter:image" content="http://tech.meituan.com/img/ml_data_feature_process/ml_frame.png">
 
 <link rel="canonical" href="https://hazyman.com/AI/IPCreator/Technology/AI/Business/data-clean-and-remark-feature-in-meituan/">
 
@@ -44,7 +51,8 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true
+    isPost : true,
+    lang   : 'zh-CN'
   };
 </script>
 
@@ -98,14 +106,12 @@
 
   <div class="site-meta">
 
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">生命之旅</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">常识、专业和价值。</p>
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">生命之旅</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">常识、专业和价值。</p>
   </div>
 
   <div class="site-nav-right">
@@ -116,32 +122,33 @@
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -149,17 +156,18 @@
         </a>
       </li>
   </ul>
-
 </nav>
-  <div class="site-search">
-    <div class="search-pop-overlay">
-  <div class="popup search-popup">
-      <div class="search-header">
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+    <input autocomplete="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
@@ -173,10 +181,9 @@
   </div>
 </div>
 
+    </div>
   </div>
-</div>
 
-  </div>
 </div>
     </header>
 
@@ -196,14 +203,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://hazyman.com/AI/IPCreator/Technology/AI/Business/data-clean-and-remark-feature-in-meituan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +229,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -243,7 +249,7 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
@@ -267,14 +273,14 @@
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>随着美团交易规模的逐步增大，积累下来的业务数据和交易数据越来越多，这些数据是美团做为一个团购平台最宝贵的财富。通过对这些数据的分析和挖掘，不仅能给美团业务发展方向提供决策支持，也为业务的迭代指明了方向。目前在美团的团购系统中大量地应用到了机器学习和数据挖掘技术，例如个性化推荐、筛选排序、搜索排序、用户建模等等，为公司创造了巨大的价值。</p>
 <p>本文主要介绍在美团的推荐与个性化团队实践中的数据清洗与特征挖掘方法。主要内容已经在内部公开课”机器学习InAction系列”讲过，本博客的内容主要是讲座内容的提炼和总结。</p>
 <a id="more"></a>
-<h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p><img data-src="http://tech.meituan.com/img/ml_data_feature_process/ml_frame.png" alt><br>机器学习框架<br>如上图所示是一个经典的机器学习问题框架图。数据清洗和特征挖掘的工作是在灰色框中框出的部分，即“数据清洗=&gt;特征，标注数据生成=&gt;模型学习=&gt;模型应用”中的前两个步骤。<br>灰色框中蓝色箭头对应的是离线处理部分。主要工作是</p>
+<h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p><img src="http://tech.meituan.com/img/ml_data_feature_process/ml_frame.png" alt><br>机器学习框架<br>如上图所示是一个经典的机器学习问题框架图。数据清洗和特征挖掘的工作是在灰色框中框出的部分，即“数据清洗=&gt;特征，标注数据生成=&gt;模型学习=&gt;模型应用”中的前两个步骤。<br>灰色框中蓝色箭头对应的是离线处理部分。主要工作是</p>
 <p>从原始数据，如文本、图像或者应用数据中清洗出特征数据和标注数据。<br>对清洗出的特征和标注数据进行处理，例如样本采样，样本调权，异常点去除，特征归一化处理，特征变化，特征组合等过程。最终生成的数据主要是供模型训练使用。<br>灰色框中绿色箭头对应的是在线处理的部分。所做的主要工作和离线处理的类似，主要的区别在于1.不需要清洗标注数据，只需要处理得到特征数据，在线模型使用特征数据预测出样本可能的标签。2.最终生成数据的用处，最终生成的数据主要用于模型的预测，而不是训练。<br>在离线的处理部分，可以进行较多的实验和迭代，尝试不同的样本采样、样本权重、特征处理方法、特征组合方法等，最终得到一个最优的方法，在离线评估得到好的结果后，最终将确定的方案在线上使用。<br>另外，由于在线和离线环境不同，存储数据、获取数据的方法存在较大的差异。例如离线数据获取可以将数据存储在Hadoop，批量地进行分析处理等操作，并且容忍一定的失败。而在线服务获取数据需要稳定、延时小等，可以将数据建入索引、存入KV存储系统等。后面在相应的部分会详细地介绍。</p>
 <p>本文以点击下单率预测为例，结合实例来介绍如何进行数据清洗和特征处理。首先介绍下点击下单率预测任务，其业务目标是提高团购用户的用户体验，帮助用户更快更好地找到自己想买的单子。这个概念或者说目标看起来比较虚，我们需要将其转换成一个技术目标，便于度量和实现。最终确定的技术目标是点击下单率预估，去预测用户点击或者购买团购单的概率。我们将预测出来点击或者下单率高的单子排在前面，预测的越准确，用户在排序靠前的单子点击、下单的就越多，省去了用户反复翻页的开销，很快就能找到自己想要的单子。离线我们用常用的衡量排序结果的AUC指标，在线的我们通过ABTest来测试算法对下单率、用户转化率等指标的影响。</p>
 <h2 id="特征使用方案"><a href="#特征使用方案" class="headerlink" title="特征使用方案"></a>特征使用方案</h2><p>在确定了目标之后，下一步，我们需要确定使用哪些数据来达到目标。需要事先梳理哪些特征数据可能与用户是否点击下单相关。我们可以借鉴一些业务经验，另外可以采用一些特征选择、特征分析等方法来辅助我们选择。具体的特征选择，特征分析等方法我们后面会详细介绍。从业务经验来判断，可能影响用户是否点击下单的因素有：</p>
 <p>距离，很显然这是一个很重要的特征。如果购买一个离用户距离较远的单子，用户去消费这个单子需要付出很多的代价。 当然，也并不是没有买很远单子的用户，但是这个比例会比较小。<br>用户历史行为，对于老用户，之前可能在美团有过购买、点击等行为。<br>用户实时兴趣。<br>单子质量，上面的特征都是比较好衡量的，单子质量可能是更复杂的一个特征。<br>是否热门，用户评价人数，购买数等等。<br>在确定好要使用哪些数据之后，我们需要对使用数据的可用性进行评估，包括数据的获取难度，数据的规模，数据的准确率，数据的覆盖率等，</p>
 <p>数据获取难度<br>例如获取用户id不难，但是获取用户年龄和性别较困难，因为用户注册或者购买时，这些并不是必填项。即使填了也不完全准确。这些特征可能是通过额外的预测模型预测的，那就存在着模型精度的问题。<br>数据覆盖率<br>数据覆盖率也是一个重要的考量因素，例如距离特征，并不是所有用户的距离我们都能获取到。PC端的就没有距离，还有很多用户禁止使用它们的地理位置信息等。<br>用户历史行为，只有老用户才会有行为。<br>用户实时行为，如果用户刚打开app，还没有任何行为，同样面临着一个冷启动的问题。<br>数据的准确率<br>单子质量，用户性别等，都会有准确率的问题。</p>
 <h2 id="特征获取方案"><a href="#特征获取方案" class="headerlink" title="特征获取方案"></a>特征获取方案</h2><p>Ok，在选定好要用的特征之后，我们需要考虑一个问题。就是这些数据从哪可以获取？只有获取了这些数据我们才能用上。否则，提一个不可能获取到的特征，获取不到，提了也是白提。下面就介绍下特征获取方案。</p>
-<p>离线特征获取方案<br>离线可以使用海量的数据，借助于分布式文件存储平台，例如HDFS等，使用例如MapReduce，Spark等处理工具来处理海量的数据等。<br>在线特征获取方案<br>在线特征比较注重获取数据的延时，由于是在线服务，需要在非常短的时间内获取到相应的数据，对查找性能要求非常高，可以将数据存储在索引、kv存储等。而查找性能与数据的数据量会有矛盾，需要折衷处理，我们使用了特征分层获取方案，如下图所示。<br><img data-src="http://tech.meituan.com/img/ml_data_feature_process/rank_frame.png" alt><br>服务架构<br>出于性能考虑。在粗排阶段，使用更基础的特征，数据直接建入索引。精排阶段，再使用一些个性化特征等。<br>特征与标注数据清洗<br>在了解特征数据放在哪儿、怎样获取之后。下一步就是考虑如何处理特征和标注数据了。下面3节都是主要讲的特征和标注处理方法</p>
+<p>离线特征获取方案<br>离线可以使用海量的数据，借助于分布式文件存储平台，例如HDFS等，使用例如MapReduce，Spark等处理工具来处理海量的数据等。<br>在线特征获取方案<br>在线特征比较注重获取数据的延时，由于是在线服务，需要在非常短的时间内获取到相应的数据，对查找性能要求非常高，可以将数据存储在索引、kv存储等。而查找性能与数据的数据量会有矛盾，需要折衷处理，我们使用了特征分层获取方案，如下图所示。<br><img src="http://tech.meituan.com/img/ml_data_feature_process/rank_frame.png" alt><br>服务架构<br>出于性能考虑。在粗排阶段，使用更基础的特征，数据直接建入索引。精排阶段，再使用一些个性化特征等。<br>特征与标注数据清洗<br>在了解特征数据放在哪儿、怎样获取之后。下一步就是考虑如何处理特征和标注数据了。下面3节都是主要讲的特征和标注处理方法</p>
 <p>##标注数据清洗<br>首先介绍下如何清洗特征数据，清洗特征数据方法可以分为离线清洗和在线清洗两种方法。</p>
 <p>离线清洗数据<br>离线清洗优点是方便评估新特征效果，缺点是实时性差，与线上实时环境有一定误差。对于实时特征难以训练得到恰当的权重。<br>在线清洗数据<br>在线清洗优点是实时性强，完全记录的线上实际数据，缺点是新特征加入需要一段时间做数据积累。</p>
 <h2 id="样本采样与样本过滤"><a href="#样本采样与样本过滤" class="headerlink" title="样本采样与样本过滤"></a>样本采样与样本过滤</h2><p>特征数据只有在和标注数据合并之后，才能用来做为模型的训练。下面介绍下如何清洗标注数据。主要是数据采样和样本过滤。</p>
@@ -293,17 +299,17 @@
 <p>那问题来了，既然升维后模型能力能变强，那么是不是特征维度越高越好呢？为什么要进行特征降维&amp;特征选择？主要是出于如下考虑：1. 特征维数越高，模型越容易过拟合，此时更复杂的模型就不好用。2. 相互独立的特征维数越高，在模型不变的情况下，在测试集上达到相同的效果表现所需要的训练样本的数目就越大。 3. 特征数量增加带来的训练、测试以及存储的开销都会增大。4.在某些模型中，例如基于距离计算的模型KMeans，KNN等模型，在进行距离计算时，维度过高会影响精度和性能。5.可视化分析的需要。在低维的情况下，例如二维，三维，我们可以把数据绘制出来，可视化地看到数据。当维度增高时，就难以绘制出来了。在机器学习中，有一个非常经典的维度灾难的概念。用来描述当空间维度增加时，分析和组织高维空间，因体积指数增加而遇到各种问题场景。例如，100个平均分布的点能把一个单位区间以每个点距离不超过0.01采样；而当维度增加到10后，如果以相邻点距离不超过0.01小方格采样单位超一单位超正方体，则需要10^20 个采样点。</p>
 <p>正是由于高维特征有如上描述的各种各样的问题，所以我们需要进行特征降维和特征选择等工作。特征降维常用的算法有PCA，LDA等。特征降维的目标是将高维空间中的数据集映射到低维空间数据，同时尽可能少地丢失信息，或者降维后的数据点尽可能地容易被区分</p>
 <p>PCA算法<br>通过协方差矩阵的特征值分解能够得到数据的主成分，以二维特征为例，两个特征之间可能存在线性关系（例如运动的时速和秒速度），这样就造成了第二维信息是冗余的。PCA的目标是发现这种特征之间的线性关系，并去除。<br>LDA算法<br>考虑label，降维后的数据点尽可能地容易被区分</p>
-<h2 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h2><p>特征选择的目标是寻找最优特征子集。特征选择能剔除不相关(irrelevant)或冗余(redundant )的特征，从而达到减少特征个数，提高模型精确度，减少运行时间的目的。另一方面，选取出真正相关的特征简化模型，协助理解数据产生的过程。<br>特征选择的一般过程如下图所示：<br><img data-src="http://tech.meituan.com/img/ml_data_feature_process/ml_feature_selection_frame.png" alt><br>特征选择的过程 ( M. Dash and H. Liu 1997 )<br>主要分为产生过程，评估过程，停止条件和验证过程。</p>
+<h2 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h2><p>特征选择的目标是寻找最优特征子集。特征选择能剔除不相关(irrelevant)或冗余(redundant )的特征，从而达到减少特征个数，提高模型精确度，减少运行时间的目的。另一方面，选取出真正相关的特征简化模型，协助理解数据产生的过程。<br>特征选择的一般过程如下图所示：<br><img src="http://tech.meituan.com/img/ml_data_feature_process/ml_feature_selection_frame.png" alt><br>特征选择的过程 ( M. Dash and H. Liu 1997 )<br>主要分为产生过程，评估过程，停止条件和验证过程。</p>
 <p>特征选择-产生过程和生成特征子集方法<br>完全搜索(Complete)<br>广度优先搜索( Breadth First Search )<br>广度优先遍历特征子空间。枚举所有组合，穷举搜索，实用性不高。<br>分支限界搜索( Branch and Bound )<br>穷举基础上加入分支限界。例如：剪掉某些不可能搜索出比当前最优解更优的分支。<br>其他，如定向搜索 (Beam Search )，最优优先搜索 ( Best First Search )等<br>启发式搜索(Heuristic)<br>序列前向选择( SFS ， Sequential Forward Selection )<br>从空集开始，每次加入一个选最优。<br>序列后向选择( SBS ， Sequential Backward Selection )<br>从全集开始，每次减少一个选最优。<br>增L去R选择算法 ( LRS ， Plus-L Minus-R Selection )<br>从空集开始，每次加入L个，减去R个，选最优（L&gt;R)或者从全集开始，每次减去R个，增加L个，选最优(L&lt;R)。<br>其他如双向搜索( BDS ， Bidirectional Search )，序列浮动选择( Sequential Floating Selection )等</p>
 <p>随机搜索(Random)<br>随机产生序列选择算法(RGSS， Random Generation plus Sequential Selection)<br>随机产生一个特征子集，然后在该子集上执行SFS与SBS算法。<br>模拟退火算法( SA， Simulated Annealing )<br>以一定的概率来接受一个比当前解要差的解，而且这个概率随着时间推移逐渐降低<br>遗传算法( GA， Genetic Algorithms )<br>通过交叉、突变等操作繁殖出下一代特征子集，并且评分越高的特征子集被选中参加繁殖的概率越高。<br>随机算法共同缺点:依赖随机因素，有实验结果难重现。</p>
 <h2 id="特征选择－有效性分析"><a href="#特征选择－有效性分析" class="headerlink" title="特征选择－有效性分析"></a>特征选择－有效性分析</h2><p>对特征的有效性进行分析，得到各个特征的特征权重，根据是否与模型有关可以分为1.与模型相关特征权重，使用所有的特征数据训练出来模型，看在模型中各个特征的权重，由于需要训练出模型，模型相关的权重与此次学习所用的模型比较相关。不同的模型有不同的模型权重衡量方法。例如线性模型中，特征的权重系数等。2.与模型无关特征权重。主要分析特征与label的相关性，这样的分析是与这次学习所使用的模型无关的。与模型无关特征权重分析方法包括(1)交叉熵，(2)Information Gain，(3)Odds ratio，(4)互信息，(5)KL散度等</p>
 <h2 id="特征监控"><a href="#特征监控" class="headerlink" title="特征监控"></a>特征监控</h2><p>在机器学习任务中，特征非常重要。</p>
-<p>个人经验，80%的效果由特征带来。下图是随着特征数的增加，最终模型预测值与实际值的相关系数变化。<br><img data-src="http://tech.meituan.com/img/ml_data_feature_process/ml_feature_increase.png" alt><br>特征重要性<br>对于重要的特征进行监控与有效性分析，了解模型所用的特征是否存在问题，当某个特别重要的特征出问题时，需要做好备案，防止灾难性结果。需要建立特征有效性的长效监控机制<br>我们对关键特征进行了监控，下面特征监控界面的一个截图。通过监控我们发现有一个特征的覆盖率每天都在下降，与特征数据提供方联系之后，发现特征数据提供方的数据源存在着问题，在修复问题之后，该特征恢复正常并且覆盖率有了较大提升。<br><img data-src="http://tech.meituan.com/img/ml_data_feature_process/ml_feature_supervise.png" alt><br>特征监控</p>
+<p>个人经验，80%的效果由特征带来。下图是随着特征数的增加，最终模型预测值与实际值的相关系数变化。<br><img src="http://tech.meituan.com/img/ml_data_feature_process/ml_feature_increase.png" alt><br>特征重要性<br>对于重要的特征进行监控与有效性分析，了解模型所用的特征是否存在问题，当某个特别重要的特征出问题时，需要做好备案，防止灾难性结果。需要建立特征有效性的长效监控机制<br>我们对关键特征进行了监控，下面特征监控界面的一个截图。通过监控我们发现有一个特征的覆盖率每天都在下降，与特征数据提供方联系之后，发现特征数据提供方的数据源存在着问题，在修复问题之后，该特征恢复正常并且覆盖率有了较大提升。<br><img src="http://tech.meituan.com/img/ml_data_feature_process/ml_feature_supervise.png" alt><br>特征监控</p>
 <p>在发现特征出现异常时，我们会及时采取措施，对服务进行降级处理，并联系特征数据的提供方尽快修复。对于特征数据生成过程中缺乏监控的情况也会督促做好监控，在源头解决问题。</p>
 <p>机器学习InAction系列讲座介绍：结合美团在机器学习上的实践，我们进行一个实战（InAction）系列的介绍（带“机器学习InAction系列”标签的5篇文章），介绍机器学习在解决问题的实战中所需的基本技术、经验和技巧。本文主要介绍了数据清洗与特征处理，其他四篇文章主要介绍了机器学习解决问题流程和模型训练、模型优化等工作。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>《elements of statistical learning》<br><a href="http://en.wikipedia.org/wiki/Supervised_learning" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Supervised_learning</a><br><a href="http://www.cnblogs.com/heaad/archive/2011/01/02/1924088.html" target="_blank" rel="noopener">http://www.cnblogs.com/heaad/archive/2011/01/02/1924088.html</a><br><a href="http://zh.wikipedia.org/zh-cn/维数灾难" target="_blank" rel="noopener">http://zh.wikipedia.org/zh-cn/维数灾难</a><br><a href="http://www.cs.waikato.ac.nz/ml/weka/" target="_blank" rel="noopener">http://www.cs.waikato.ac.nz/ml/weka/</a><br><a href="http://blog.csdn.net/lihaifeng555/article/details/4543752" target="_blank" rel="noopener">http://blog.csdn.net/lihaifeng555/article/details/4543752</a><br><a href="http://blog.csdn.net/abcjennifer/article/details/8002329" target="_blank" rel="noopener">http://blog.csdn.net/abcjennifer/article/details/8002329</a><br><a href="http://www.cnblogs.com/leftnoteasy/archive/2011/01/08/lda-and-pca-machine-learning.html" target="_blank" rel="noopener">http://www.cnblogs.com/leftnoteasy/archive/2011/01/08/lda-and-pca-machine-learning.html</a></p>
 <p>不想错过技术博客更新？想给文章评论、和作者互动？第一时间获取技术沙龙信息？</p>
-<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img data-src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>公众号二维码</p>
+<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>公众号二维码</p>
 
     </div>
 
@@ -365,7 +371,6 @@
   
   
 
-  </div>
 
 
           </div>
@@ -453,14 +458,13 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+        <a href="/atom.xml" title="RSS → /atom.xml"><i class="rss fa-fw"></i>RSS</a>
       </span>
   </div>
 
 
   <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
       Links
     </div>
     <ul class="links-of-blogroll-list">
@@ -484,17 +488,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
+      <i class="fa fa-chart-area"></i>
     </span>
     <span title="站点总字数">27.2m</span>
     <span class="post-meta-divider">|</span>
@@ -503,7 +509,7 @@
     </span>
     <span title="站点阅读时长">411:44</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -544,7 +550,6 @@
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
@@ -587,6 +592,26 @@
 
 
 
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
 
 
 
@@ -600,7 +625,7 @@
       quicklink({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/AI/IPCreator/Technology/AI/Business/data-clean-and-remark-feature-in-meituan/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://hazyman.com/AI/IPCreator/Technology/AI/Business/data-clean-and-remark-feature-in-meituan/',]
       });
       });
   </script>
@@ -625,9 +650,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       meta       : guest,
       pageSize   : '10' || 10,
       visitor    : false,
-      lang       : 'zh-cn' || 'zh-cn',
+      lang       : '' || 'zh-cn',
       path       : location.pathname,
-      recordIP   : true,
+      recordIP   : false,
       serverURLs : ''
     });
   }, window.Valine);

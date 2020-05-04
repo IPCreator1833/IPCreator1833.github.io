@@ -13,14 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
   <meta name="description" content="Source 我们都知道，不管是Java还是Android都绕不开JVM(Java虚拟机)。虽然Android有dalvik和art，但是Android的编程语言还是Java，了解JVM机对于我们掌握Java知识有莫大的帮助。下面我将从以下部分来聊聊JVM:1) JVM运行时数据区域2) HotSpot 虚拟机对象的创建，内存布局以及访问定位3) 垃圾收集算法4) 垃圾收集器">
@@ -31,10 +31,25 @@
 <meta property="og:site_name" content="生命之旅">
 <meta property="og:description" content="Source 我们都知道，不管是Java还是Android都绕不开JVM(Java虚拟机)。虽然Android有dalvik和art，但是Android的编程语言还是Java，了解JVM机对于我们掌握Java知识有莫大的帮助。下面我将从以下部分来聊聊JVM:1) JVM运行时数据区域2) HotSpot 虚拟机对象的创建，内存布局以及访问定位3) 垃圾收集算法4) 垃圾收集器">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-af3f10e6c1b0027a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-af3f10e6c1b0027a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-840a71b05e711834.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-ccfe76d2f2bf3d16.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-99a7bc27d8b467aa.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-a28cb01e4ea5dd76.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-f78dbc61d3555a6b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-1f0f33041789993f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-551b2e2baa930ae4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-4350ced80de5614c.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-04697f66eb1264fb.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-3defdc5f710a677b.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-13ab01c567c8fe82.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1986868-aceb6cae17227ff8.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:updated_time" content="2020-02-22T00:35:01.870Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Virtual Machine">
 <meta name="twitter:description" content="Source 我们都知道，不管是Java还是Android都绕不开JVM(Java虚拟机)。虽然Android有dalvik和art，但是Android的编程语言还是Java，了解JVM机对于我们掌握Java知识有莫大的帮助。下面我将从以下部分来聊聊JVM:1) JVM运行时数据区域2) HotSpot 虚拟机对象的创建，内存布局以及访问定位3) 垃圾收集算法4) 垃圾收集器">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1986868-af3f10e6c1b0027a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 <link rel="canonical" href="https://hazyman.com/Technology/IPCreator/Technology/Program/Java/java-jvm/">
 
@@ -44,7 +59,8 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true
+    isPost : true,
+    lang   : 'zh-CN'
   };
 </script>
 
@@ -98,14 +114,12 @@
 
   <div class="site-meta">
 
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">生命之旅</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">常识、专业和价值。</p>
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">生命之旅</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">常识、专业和价值。</p>
   </div>
 
   <div class="site-nav-right">
@@ -116,32 +130,33 @@
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -149,17 +164,18 @@
         </a>
       </li>
   </ul>
-
 </nav>
-  <div class="site-search">
-    <div class="search-pop-overlay">
-  <div class="popup search-popup">
-      <div class="search-header">
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+    <input autocomplete="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
@@ -173,10 +189,9 @@
   </div>
 </div>
 
+    </div>
   </div>
-</div>
 
-  </div>
 </div>
     </header>
 
@@ -196,14 +211,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://hazyman.com/Technology/IPCreator/Technology/Program/Java/java-jvm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +237,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -243,7 +257,7 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
@@ -263,11 +277,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img data-src="http://upload-images.jianshu.io/upload_images/1986868-af3f10e6c1b0027a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br><a href="http://www.jianshu.com/p/24c074138efa" target="_blank" rel="noopener">Source</a></p>
+        <p><img src="http://upload-images.jianshu.io/upload_images/1986868-af3f10e6c1b0027a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br><a href="http://www.jianshu.com/p/24c074138efa" target="_blank" rel="noopener">Source</a></p>
 <p>我们都知道，不管是Java还是Android都绕不开JVM(Java虚拟机)。虽然Android有dalvik和art，但是Android的编程语言还是Java，了解JVM机对于我们掌握Java知识有莫大的帮助。下面我将从以下部分来聊聊JVM:<br>1) JVM运行时数据区域<br>2) HotSpot 虚拟机对象的创建，内存布局以及访问定位<br>3) 垃圾收集算法<br>4) 垃圾收集器</p>
  <a id="more"></a>
 <h1 id="你不得不了解的JVM（一）"><a href="#你不得不了解的JVM（一）" class="headerlink" title="你不得不了解的JVM（一）"></a>你不得不了解的JVM（一）</h1><p>我们都知道，不管是Java还是Android都绕不开JVM(Java虚拟机)。虽然Android有dalvik和art，但是Android的编程语言还是Java，了解JVM机对于我们掌握Java知识有莫大的帮助。下面我将从以下部分来聊聊JVM:<br>1) JVM运行时数据区域<br>2) HotSpot 虚拟机对象的创建，内存布局以及访问定位<br>3) 垃圾收集算法<br>4) 垃圾收集器<br>本文涉及内容比较多，所以本内容采用2篇文章来讲述，这篇文章主要讲讲1)和2)，3)和4)在（二）中再具体讲讲。那么接下来我们以问题为驱动来聊聊上面的每一个问题吧。<br>1)关于JVM运行时数据区域，我们会想到什么呢？JVM在执行Java程序代码的过程中会将它所管理的内存划分为若干不同的数据区，而这些区域各自的作用是什么呢？。<br>2)HotSpot虚拟机是什么？先不管他是什么，至少来讲他是虚拟机，虚拟机是用来执行程序代码的。我们知道Java是面向对象的程序语言之一，那么虚拟机在执行程序的过程中肯定会遇到对象的创建和销毁，所以我们就需要了解虚拟机对对象的创建，内存分配以及内存访问定位。<br>3)JVM是如何对垃圾进行收集的？具体的算法是什么？ 我们知道，Java有内存动态分配和垃圾收集技术，我们程序员并不需要管理内存。由于垃圾收集技术算法实现涉及了大量的代码细节（主要是本人技术水平有限，哈哈），而且各种虚拟机操纵内存方式各不相同，所以在这节并不会详细讲虚拟机实现垃圾收集算法的具体实现，而是让大家了解一些垃圾收集算法。<br>4)在我们了解了基本的垃圾收集算法的之后，我们就需要结合具体的虚拟机来了解一下。<br>上面讲了我们需要了解的相关内容，接下来就是具体讲讲每一点的具体知识吧。大家坐稳了…….</p>
-<p>1)JVM运行时数据区域,讲这块内容之前，我们先来看一张关于JVM内存区的图<br><img data-src="http://upload-images.jianshu.io/upload_images/1986868-af3f10e6c1b0027a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>1)JVM运行时数据区域,讲这块内容之前，我们先来看一张关于JVM内存区的图<br><img src="http://upload-images.jianshu.io/upload_images/1986868-af3f10e6c1b0027a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>这张图中，我们清楚的知道：被编译过的.class文件通过类加载器加载到内存中，我们的重点是在内存划分的区域。从图中，我们看到了5大区域：线程共享的方法区和堆，线程私有的java虚拟机栈，本地方法栈以及程序计数器。我们具体来了解一下这5个内存划分：</p>
 <p>程序计数器：（Program Counter Register）这个区域是唯一一个不会抛出OutOfMemoryError异常的区域。它是一块比较小的内存，是当前线程所执行的字节码的行号指示器。</p>
 <p>java虚拟机栈：它描述的是java方法执行的内存模型，每个方法在执行的时候会创建一个栈帧用来存储局部变量，操作数，动态链接等。</p>
@@ -279,40 +293,40 @@
 <p>2) HotSpot 虚拟机对象的创建，内存布局以及访问定位：在讲这个问题之前我们需要讲讲HotSpot虚拟机。HotSpot的正式发布名称为”Java HotSpot Performance Engine”，是Java虚拟机的一个实现，包含了服务器版和桌面应用程序版，现时由Oracle维护并发布。它利用JIT及自适应优化技术（自动查找性能热点并进行动态优化，这也是HotSpot名字的由来）来提高性能。从上面的介绍中我们知道HotSpot虚拟机是Oracle公司发布的一个java虚拟机的实现。既然是java虚拟机的实现，那么也是绕不开JVM的。那么接下来就讲讲HotSpot虚拟机对于对象的创建，内存分配以及定位等相关知识吧。</p>
 <p>2.1）对象的创建<br>既然是讲对象的创建，那就是要从Object obj = new Object()开始讲起：<br>a：虚拟机在遇到new指令时，首先会去检查这个指令的参数是否能在常量池中定位到一个类的符号引用并且检查该符号引用代表的类是否已经被加载，解析和初始化过。如果没有，那就必须先执行相应的类加载。<br>b：在类经过加载检查后，虚拟机就需要为新生对象分配内存了。对象所需要的内存大小在类加载完成之后就可以确定。<br>c：在分配完内存之后，虚拟机需要将分配到的内存空间初始化为零值。<br>d：接下来，虚拟机会对对象进行必要的设置，如对象的hash码，对象的GC分代信息等。<br>e：最后执行对象的init方法对对象进行初始化。<br>到此，对象的创建过程已经完毕。其中，在b中我们可以继续了解对象内存分配的相关知识，虚拟机是通过何种方式为对象分配内存的呢？对象创建在虚拟机中是很频繁的，那么如何保证分配内存的时候线程安全呢？这些问题都是值得我们去思考的。讲完了对象的创建，我们继续讲讲对象的内存布局吧。</p>
 <p>2.2)对象的内存布局<br>在HotSpot虚拟机中，对象在内存中存储的布局分为对象头，实例数据和对齐填充3个部分。<br>对象头（Header）：主要存储了2部分信息，第1部分是对象自身运行的数据，如hashcode，GC分代等信息；<br>第2部分是类型指针，就是对象对它的类元数据指针，其实就是一个引用。虚拟机通过这个指针（引用）来确定对象是哪个类的实例。<br>实例数据（Instance Data）：对象真正存储的有效信息，也就是程序代码中所写的各种类型的字段内容。<br>对齐填充（Padding）：这个不是必然存在的。</p>
-<p>2.3)对象的访问定位<br>我们知道了对象的创建，内存布局等相关内容之后，需要知道存储的对象如何找到呢？这就涉及到对象的定位问题了。我们java程序需要通过栈上的引用数据来操作具体的对象。对对象的访问方式取决于虚拟机的实现，目前比较主流的有句柄和直接指针两种方式。下面让我们看看这两种方式吧，直接上图：<br><img data-src="http://upload-images.jianshu.io/upload_images/1986868-840a71b05e711834.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/1986868-ccfe76d2f2bf3d16.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>2.3)对象的访问定位<br>我们知道了对象的创建，内存布局等相关内容之后，需要知道存储的对象如何找到呢？这就涉及到对象的定位问题了。我们java程序需要通过栈上的引用数据来操作具体的对象。对对象的访问方式取决于虚拟机的实现，目前比较主流的有句柄和直接指针两种方式。下面让我们看看这两种方式吧，直接上图：<br><img src="http://upload-images.jianshu.io/upload_images/1986868-840a71b05e711834.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1986868-ccfe76d2f2bf3d16.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>见图知意了吧。第1张图是通过句柄的方式对对象进行访问，在java堆中划分出来一块内存作为句柄池，而reference中存储的是对象的句柄地址，句柄中存储了对象实例等信息。第2张图是通过直接指针的方式，reference中存储的是实例对象的地址。</p>
 <p>这两种对象引用的方式各有千秋，通过句柄的好处是reference中存储的是稳定的句柄地址，在对象被移动的时候只会改变句柄的实例指针而reference本身不需要修改；使用直接指针的好处是速度开，不需要在java堆中在划分出一块内存区域同时节省了指针定位的开销。但是就HotSpot而言，采用的是直接指针方式。</p>
 <p>写到这里，我们应该对JVM的运行时的内存区域和对象创建过程有了一个初步的认识，在下一篇文章中，我会讲讲垃圾收集算法和垃圾搜集器，期待更新吧~~~</p>
 <h1 id="你不得不了解的JVM（二）"><a href="#你不得不了解的JVM（二）" class="headerlink" title="你不得不了解的JVM（二）"></a>你不得不了解的JVM（二）</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上一篇文章 你不得不了解的JVM(一)中，我们了解了<br>1) JVM运行时数据区域；<br>2) HotSpot 虚拟机对象的创建，内存布局以及访问定位；<br>那么这篇文章我们就需要了解一下<br>3) 垃圾收集算法<br>4) 垃圾收集器。</p>
 <p>首先我们了解一下垃圾收集算法这块内容。因为垃圾算法的实现设计大量程序细节，各个平台的虚拟机操作内存的方法各不相同，因此在本节中我们主要讲讲垃圾收集算法，并不涉及具体实现。 下面让我们来一一了解一下各种收集算法吧。</p>
-<h2 id="3-垃圾收集算法"><a href="#3-垃圾收集算法" class="headerlink" title="3) 垃圾收集算法"></a>3) 垃圾收集算法</h2><h3 id="1）标记-清除算法"><a href="#1）标记-清除算法" class="headerlink" title="1）标记-清除算法"></a>1）标记-清除算法</h3><p><img data-src="http://upload-images.jianshu.io/upload_images/1986868-99a7bc27d8b467aa.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="3-垃圾收集算法"><a href="#3-垃圾收集算法" class="headerlink" title="3) 垃圾收集算法"></a>3) 垃圾收集算法</h2><h3 id="1）标记-清除算法"><a href="#1）标记-清除算法" class="headerlink" title="1）标记-清除算法"></a>1）标记-清除算法</h3><p><img src="http://upload-images.jianshu.io/upload_images/1986868-99a7bc27d8b467aa.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>上图为标记-清除算法的示意图。首先需要标记可回收的内存，然后再对可回收的内存进行回收。这样做是不是很简单粗暴呢？当然，这样做的2个不足分别是：1）标记-清除效率不高；2）标记-清除之后产生大量不连续的空间碎片。基于这样的不足，有了标记-整理算法。</p>
-<h3 id="2）标记-整理算法"><a href="#2）标记-整理算法" class="headerlink" title="2）标记-整理算法"></a>2）标记-整理算法</h3><p><img data-src="http://upload-images.jianshu.io/upload_images/1986868-a28cb01e4ea5dd76.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h3 id="2）标记-整理算法"><a href="#2）标记-整理算法" class="headerlink" title="2）标记-整理算法"></a>2）标记-整理算法</h3><p><img src="http://upload-images.jianshu.io/upload_images/1986868-a28cb01e4ea5dd76.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>如图是标记-整理算法示意图。相比标记-清除算法，不同的是整理过程。将存活对象移到一端，然后清除可回收对象。这样做的明显好处就是产生了连续的空间。</p>
-<h3 id="3）复制算法"><a href="#3）复制算法" class="headerlink" title="3）复制算法"></a>3）复制算法</h3><p><img data-src="http://upload-images.jianshu.io/upload_images/1986868-f78dbc61d3555a6b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h3 id="3）复制算法"><a href="#3）复制算法" class="headerlink" title="3）复制算法"></a>3）复制算法</h3><p><img src="http://upload-images.jianshu.io/upload_images/1986868-f78dbc61d3555a6b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>上图是复制算法实现图。它将内存分为大小相等的2块，每次只是使用其中一块。当一块内存用完之后，就将存活的对象复制到另外一块内存区域并将本块内存清理。这样做的大大降低了内存空间使用率。我们的HotSpot的年轻代就是使用复制算法，只不过它的比例不是1：1，而是8：1。这个稍后我们会讲到。</p>
-<h3 id="4）分代收集算法"><a href="#4）分代收集算法" class="headerlink" title="4）分代收集算法"></a>4）分代收集算法</h3><p><img data-src="http://upload-images.jianshu.io/upload_images/1986868-1f0f33041789993f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h3 id="4）分代收集算法"><a href="#4）分代收集算法" class="headerlink" title="4）分代收集算法"></a>4）分代收集算法</h3><p><img src="http://upload-images.jianshu.io/upload_images/1986868-1f0f33041789993f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>基于上面的几种收集算法，当前商业虚拟机基本采用的都是分代收集。结合了复制和标记-整理的优势。一般做法是将Java堆分为新生代和老年代。由于新生代会不断产生新生对象，因此采用了复制算法；而年老代的对象存活率较高，因此采用了标记-整理算法。<br>在新生代中，我们可以看到新生代=Eden+S0+S1；他们设计的默认比例是8：1：1；这个参数是可以通过虚拟机参数进行调整的。</p>
 <p>以上，我们了解了基本的垃圾收集算法，只是了解哦！</p>
 <h2 id="4-垃圾收集器。"><a href="#4-垃圾收集器。" class="headerlink" title="4) 垃圾收集器。"></a>4) 垃圾收集器。</h2><p>如果说垃圾收集算法是内存回收的方法论，那么垃圾收集器就是内存回收的具体实现。上面说过，各个平台虚拟机对内存的操作各不相同，因此本章所讲的收集器是基于JDK1.7Update14之后的HotSpot虚拟机。</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/1986868-551b2e2baa930ae4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1986868-551b2e2baa930ae4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>上图是基于java虚拟机的HotSpot虚拟机垃圾收集器。一共是7种收集器，接下来让我们一一做个了解吧。</p>
 <p>1）Serial/Serial Old<br>Serial最基本，发展历史最悠久的收集器。具体原理让我们看一张图最明了</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/1986868-4350ced80de5614c.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1986868-4350ced80de5614c.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>上图是Serial和Serial Old 两种垃圾收集器的运行示意图。其中Serial 和Serial Old的区别就是一个是运行在年轻代一个是运行在年老代。从图中我们可以看到，他是一个单线程模式的垃圾收集器。这里不仅仅是说该收集器是使用单线程或者一个CPU去完成垃圾收集，更重要的是它在进行垃圾收集的时候必须暂停用户线程，直到收集完成，也就是Stop the World。</p>
-<p>2）ParNew<br>ParNew收集器其实是Serial收集器的多线程版本。它也是运行在年轻代中，如图：<br><img data-src="http://upload-images.jianshu.io/upload_images/1986868-04697f66eb1264fb.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>2）ParNew<br>ParNew收集器其实是Serial收集器的多线程版本。它也是运行在年轻代中，如图：<br><img src="http://upload-images.jianshu.io/upload_images/1986868-04697f66eb1264fb.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>如图，在新生代中采用的是多线程模式进行垃圾收集同时也需要暂停用户线程直到垃圾收集完毕。这种模式和Serial相比，CPU数量越多的情况下优势更加明显。如果CPU数量很少，比如2个，那么这种收集效率可能比Serial更低，因为它存在线程交互的开销。</p>
 <p>3)Parallel Scavenge/Parallel Old</p>
 <p>Parallel Scavenge也是一个新生代，多线程收集器。那么这种收集器和之前的ParNew有什么区别呢？区别还是有的，不然怎么会出来这种收集器呢？其实Parallel Scavenge收集器的特点是它关注一个可控的吞吐量。那么什么是吞吐量，我这边也不做任何讲述，直接上一个公式大家就知道了。<br>吞吐量=运行用户代码时间/（运行用户代码时间+垃圾收集时间）；<br>是不是很明白？垃圾收集时间越短，吞吐量就是越大。这里就有一个问题：垃圾收集时间越短，一般来讲收集的垃圾量就是越少，也就是回收的内存量越小，那么总内存一定的情况下，我们在一定时间内回收的次数就是越多。这就需要我们控制好回收时间来制约回收次数了。<br>同时，这里也有一个Parallel Old收集器，顾名思义是Parallel Scavenge收集器的年老代版本。<br>如下图：</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/1986868-3defdc5f710a677b.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1986868-3defdc5f710a677b.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>4）CMS<br>CMS(Concurrent Mark Sweep),从名字我们知道这是一款基于并发使用标记清除算法的垃圾收集器。他是一款以获得最短回收停顿时间为目标的收集器。让我们赶紧来看看他的实现吧。上图</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/1986868-13ab01c567c8fe82.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1986868-13ab01c567c8fe82.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>如上图，它分为以下步骤：<br>1 初始标记：仅仅标记GC Roots能直接关联到的对象，时间很短，阻塞用户线程<br>2 并发标记：标记可回收对象，和用户线程并行。<br>3 重新标记：标记在并发阶段因用户线程继续运行产生的可回收对象，修正并发标记，此时是阻塞用户线程。<br>4 并发清理：使用标记-清除算法将垃圾进行清理。</p>
 <p>这种收集算法存在3个缺点：<br>1 对CPU资源敏感。一般并发执行的程序对CPU数量都是比较敏感的<br>2 无法处理浮动垃圾。在并发清理阶段用户线程还在执行，这时产生的垃圾无法清理。<br>3 由于标记-清除算法产生大量的空间碎片。</p>
 <p>下面，我们讲讲最后一个垃圾手机器G1</p>
 <p>5）G1<br>G1，Garbage-First是当今收集器技术发展的最前沿成果之一，它是一款面向服务端的垃圾收集器。</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/1986868-aceb6cae17227ff8.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1986868-aceb6cae17227ff8.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>实现思路：将整个java堆划分为多个大小相等的独立区域(Region),G1跟踪各个Region里面的垃圾堆积和价值大小，在后台维护一个优先列表，每次进行优先回收。那么Region不是孤立的。那么如何避免全堆扫描呢？<br>G1使用Remembered Set。每一个Region对应一个Remembered Set，在虚拟机对Reference类型的数据进行写操作的时候，会检查Reference引用的对象是否处于不同的Region中，如是则记录到Remembered Set中。</p>
 <p>初始标记：标记GC Roots能直接关联到的对象，耗时短<br>并发标记：找出存活的对象，耗时长<br>最终标记：修正并发标记<br>筛选回收：根据用户所期望的GC停顿时间来制定回收计划<br>可以发现它和CMS的前半部分步骤是一样的。当然，其实G1收集器的实现是非常复杂的，这里只是蜻蜓点水般的讲到一点，如果有兴趣可以继续深入学习。欢迎多多进行技术交流……</p>
 
@@ -375,7 +389,6 @@
   
   
 
-  </div>
 
 
           </div>
@@ -463,14 +476,13 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+        <a href="/atom.xml" title="RSS → /atom.xml"><i class="rss fa-fw"></i>RSS</a>
       </span>
   </div>
 
 
   <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
       Links
     </div>
     <ul class="links-of-blogroll-list">
@@ -494,17 +506,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
+      <i class="fa fa-chart-area"></i>
     </span>
     <span title="站点总字数">27.2m</span>
     <span class="post-meta-divider">|</span>
@@ -513,7 +527,7 @@
     </span>
     <span title="站点阅读时长">411:44</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -554,7 +568,6 @@
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
@@ -597,6 +610,26 @@
 
 
 
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
 
 
 
@@ -610,7 +643,7 @@
       quicklink({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Technology/IPCreator/Technology/Program/Java/java-jvm/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://hazyman.com/Technology/IPCreator/Technology/Program/Java/java-jvm/',]
       });
       });
   </script>
@@ -635,9 +668,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       meta       : guest,
       pageSize   : '10' || 10,
       visitor    : false,
-      lang       : 'zh-cn' || 'zh-cn',
+      lang       : '' || 'zh-cn',
       path       : location.pathname,
-      recordIP   : true,
+      recordIP   : false,
       serverURLs : ''
     });
   }, window.Valine);

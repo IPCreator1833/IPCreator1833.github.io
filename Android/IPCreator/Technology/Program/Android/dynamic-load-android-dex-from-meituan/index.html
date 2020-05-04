@@ -13,14 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+    var CONFIG = {"hostname":"hazyman.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
   <meta name="description" content="美团Android DEX自动拆包及动态加载简介jianshuai xiaoyang ·2015-06-15 10:00 概述 作为一个android开发者，在开发应用时，随着业务规模发展到一定程度，不断地加入新功能、添加新的类库，代码在急剧的膨胀，相应的apk包的大小也急剧增加， 那么终有一天，你会不幸遇到这个错误： 生成的apk在android 2.3或之前的机器上无法安装，提示INSTALL">
@@ -31,10 +31,13 @@
 <meta property="og:site_name" content="生命之旅">
 <meta property="og:description" content="美团Android DEX自动拆包及动态加载简介jianshuai xiaoyang ·2015-06-15 10:00 概述 作为一个android开发者，在开发应用时，随着业务规模发展到一定程度，不断地加入新功能、添加新的类库，代码在急剧的膨胀，相应的apk包的大小也急剧增加， 那么终有一天，你会不幸遇到这个错误： 生成的apk在android 2.3或之前的机器上无法安装，提示INSTALL">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://tech.meituan.com/img/mt_android_auto_split_dex/android_packaging.png">
+<meta property="og:image" content="http://tech.meituan.com/img/qrcode_for_gh.jpg">
 <meta property="og:updated_time" content="2017-03-27T07:54:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dynamic Load Android DEX  by Meituan">
 <meta name="twitter:description" content="美团Android DEX自动拆包及动态加载简介jianshuai xiaoyang ·2015-06-15 10:00 概述 作为一个android开发者，在开发应用时，随着业务规模发展到一定程度，不断地加入新功能、添加新的类库，代码在急剧的膨胀，相应的apk包的大小也急剧增加， 那么终有一天，你会不幸遇到这个错误： 生成的apk在android 2.3或之前的机器上无法安装，提示INSTALL">
+<meta name="twitter:image" content="http://tech.meituan.com/img/mt_android_auto_split_dex/android_packaging.png">
 
 <link rel="canonical" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/dynamic-load-android-dex-from-meituan/">
 
@@ -44,7 +47,8 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true
+    isPost : true,
+    lang   : 'zh-CN'
   };
 </script>
 
@@ -98,14 +102,12 @@
 
   <div class="site-meta">
 
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">生命之旅</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">常识、专业和价值。</p>
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">生命之旅</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">常识、专业和价值。</p>
   </div>
 
   <div class="site-nav-right">
@@ -116,32 +118,33 @@
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -149,17 +152,18 @@
         </a>
       </li>
   </ul>
-
 </nav>
-  <div class="site-search">
-    <div class="search-pop-overlay">
-  <div class="popup search-popup">
-      <div class="search-header">
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+    <input autocomplete="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
@@ -173,10 +177,9 @@
   </div>
 </div>
 
+    </div>
   </div>
-</div>
 
-  </div>
 </div>
     </header>
 
@@ -196,14 +199,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://hazyman.com/Android/IPCreator/Technology/Program/Android/dynamic-load-android-dex-from-meituan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +225,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -243,7 +245,7 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
@@ -299,14 +301,14 @@ dependencies { compile &apos;com.android.support:MultiDex:1.0.0&apos;
 <p>下面代码片段为怎么通过DexFile来加载Secondary DEX并放到BaseDexClassLoader的DexPathList中:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">private static void install(ClassLoader loader, List&lt;File&gt; additionalClassPathEntries,</span><br><span class="line">                            File optimizedDirectory)</span><br><span class="line">        throws IllegalArgumentException, IllegalAccessException,</span><br><span class="line">        NoSuchFieldException, InvocationTargetException, NoSuchMethodException &#123;</span><br><span class="line">    /* The patched class loader is expected to be a descendant of</span><br><span class="line">     * dalvik.system.BaseDexClassLoader. We modify its</span><br><span class="line">     * dalvik.system.DexPathList pathList field to append additional DEX</span><br><span class="line">     * file entries.</span><br><span class="line">     */</span><br><span class="line">    Field pathListField = findField(loader, &quot;pathList&quot;);</span><br><span class="line">    Object dexPathList = pathListField.get(loader);</span><br><span class="line">    ArrayList&lt;IOException&gt; suppressedExceptions = new ArrayList&lt;IOException&gt;();</span><br><span class="line">    expandFieldArray(dexPathList, &quot;dexElements&quot;, makeDexElements(dexPathList,</span><br><span class="line">            new ArrayList&lt;File&gt;(additionalClassPathEntries), optimizedDirectory,</span><br><span class="line">            suppressedExceptions));</span><br><span class="line">    try &#123;</span><br><span class="line">        if (suppressedExceptions.size() &gt; 0) &#123;</span><br><span class="line">            for (IOException e : suppressedExceptions) &#123;</span><br><span class="line">                //Log.w(TAG, &quot;Exception in makeDexElement&quot;, e);</span><br><span class="line">            &#125;</span><br><span class="line">            Field suppressedExceptionsField =</span><br><span class="line">                    findField(loader, &quot;dexElementsSuppressedExceptions&quot;);</span><br><span class="line">            IOException[] dexElementsSuppressedExceptions =</span><br><span class="line">                    (IOException[]) suppressedExceptionsField.get(loader);</span><br><span class="line"></span><br><span class="line">            if (dexElementsSuppressedExceptions == null) &#123;</span><br><span class="line">                dexElementsSuppressedExceptions =</span><br><span class="line">                        suppressedExceptions.toArray(</span><br><span class="line">                                new IOException[suppressedExceptions.size()]);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                IOException[] combined =</span><br><span class="line">                        new IOException[suppressedExceptions.size() +</span><br><span class="line">                                dexElementsSuppressedExceptions.length];</span><br><span class="line">                suppressedExceptions.toArray(combined);</span><br><span class="line">                System.arraycopy(dexElementsSuppressedExceptions, 0, combined,</span><br><span class="line">                        suppressedExceptions.size(), dexElementsSuppressedExceptions.length);</span><br><span class="line">                dexElementsSuppressedExceptions = combined;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            suppressedExceptionsField.set(loader, dexElementsSuppressedExceptions);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch(Exception e) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Dex自动拆包及动态加载方案简介"><a href="#Dex自动拆包及动态加载方案简介" class="headerlink" title="Dex自动拆包及动态加载方案简介"></a>Dex自动拆包及动态加载方案简介</h2><p>通过查看MultiDex的源码，我们发现MultiDex在冷启动时容易导致ANR的瓶颈， 在2.1版本之前的Dalvik的VM版本中， MultiDex的安装大概分为几步，第一步打开apk这个zip包，第二步把MultiDex的dex解压出来（除去Classes.dex之外的其他DEX，例如：classes2.dex， classes3.dex等等)，因为android系统在启动app时只加载了第一个Classes.dex，其他的DEX需要我们人工进行安装，第三步通过反射进行安装，这三步其实都比较耗时， 为了解决这个问题我们考虑是否可以把DEX的加载放到一个异步线程中，这样冷启动速度能提高不少，同时能够减少冷启动过程中的ANR，对于Dalvik linearAlloc的一个缺陷(Issue 22586)和限制(Issue 78035)，我们考虑是否可以人工对DEX的拆分进行干预，使每个DEX的大小在一定的合理范围内，这样就减少触发Dalvik linearAlloc的缺陷和限制； 为了实现这几个目的，我们需要解决下面三个问题：</p>
-<p>在打包过程中如何产生多个的DEX包？<br>如果做到动态加载，怎么决定哪些DEX动态加载呢？<br>如果启动后在工作线程中做动态加载，如果没有加载完而用户进行页面操作需要使用到动态加载DEX中的class怎么办？<br>我们首先来分析如何解决第一个问题，在使用MultiDex方案时，我们知道BuildTool会自动把代码进行拆成多个DEX包，并且可以通过配置文件来控制哪些代码放到第一个DEX包中， 下图是Android的打包流程示意图：<br><img data-src="http://tech.meituan.com/img/mt_android_auto_split_dex/android_packaging.png" alt></p>
+<p>在打包过程中如何产生多个的DEX包？<br>如果做到动态加载，怎么决定哪些DEX动态加载呢？<br>如果启动后在工作线程中做动态加载，如果没有加载完而用户进行页面操作需要使用到动态加载DEX中的class怎么办？<br>我们首先来分析如何解决第一个问题，在使用MultiDex方案时，我们知道BuildTool会自动把代码进行拆成多个DEX包，并且可以通过配置文件来控制哪些代码放到第一个DEX包中， 下图是Android的打包流程示意图：<br><img src="http://tech.meituan.com/img/mt_android_auto_split_dex/android_packaging.png" alt></p>
 <p>为了实现产生多个DEX包，我们可以在生成DEX文件的这一步中， 在Ant或gradle中自定义一个Task来干预DEX产生的过程，从而产生多个DEX，下图是在ant和gradle中干预产生DEX的自定task的截图:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tasks.whenTaskAdded &#123; task -&gt;</span><br><span class="line">    if (task.name.startsWith(&apos;proguard&apos;) &amp;&amp; (task.name.endsWith(&apos;Debug&apos;) || task.name.endsWith(&apos;Release&apos;))) &#123;</span><br><span class="line">        task.doLast &#123;</span><br><span class="line">            makeDexFileAfterProguardJar();</span><br><span class="line">        &#125;</span><br><span class="line">        task.doFirst &#123;</span><br><span class="line">            delete &quot;$&#123;project.buildDir&#125;/intermediates/classes-proguard&quot;;</span><br><span class="line"></span><br><span class="line">            String flavor = task.name.substring(&apos;proguard&apos;.length(), task.name.lastIndexOf(task.name.endsWith(&apos;Debug&apos;) ? &quot;Debug&quot; : &quot;Release&quot;));</span><br><span class="line">            generateMainIndexKeepList(flavor.toLowerCase());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else if (task.name.startsWith(&apos;zipalign&apos;) &amp;&amp; (task.name.endsWith(&apos;Debug&apos;) || task.name.endsWith(&apos;Release&apos;))) &#123;</span><br><span class="line">        task.doFirst &#123;</span><br><span class="line">            ensureMultiDexInApk();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>上一步解决了如何打包出多个DEX的问题了，那我们该怎么该根据什么来决定哪些class放到Main DEX，哪些放到Secondary DEX呢（这里的Main DEX是指在2.1版本的Dalvik VM之前由android系统在启动apk时自己主动加载的Classes.dex，而Secondary DEX是指需要我们自己安装进去的DEX，例如：Classes2.dex, Classes3.dex等）， 这个需要分析出放到Main DEX中的class依赖，需要确保把Main DEX中class所有的依赖都要放进来，否则在启动时会发生ClassNotFoundException, 这里我们的方案是把Service、Receiver、Provider涉及到的代码都放到Main DEX中，而把Activity涉及到的代码进行了一定的拆分，把首页Activity、Laucher Activity、欢迎页的Activity、城市列表页Activity等所依赖的class放到了Main DEX中，把二级、三级页面的Activity以及业务频道的代码放到了Secondary DEX中，为了减少人工分析class的依赖所带了的不可维护性和高风险性，我们编写了一个能够自动分析Class依赖的脚本， 从而能够保证Main DEX包含class以及他们所依赖的所有class都在其内，这样这个脚本就会在打包之前自动分析出启动到Main DEX所涉及的所有代码，保证Main DEX运行正常。</p>
 <p>随着第二个问题的迎刃而解，我们来到了比较棘手的第三问题，如果我们在后台加载Secondary DEX过程中，用户点击界面将要跳转到使用了在Secondary DEX中class的界面， 那此时必然发生ClassNotFoundException, 那怎么解决这个问题呢，在所有的Activity跳转代码处添加判断Secondary DEX是否加载完成？这个方法可行，但工作量非常大； 那有没有更好的解决方案呢？我们通过分析Activity的启动过程，发现Activity是由ActivityThread 通过Instrumentation来启动的，我们是否可以在Instrumentation中做一定的手脚呢？通过分析代码ActivityThread和Instrumentation发现，Instrumentation有关Activity启动相关的方法大概有：execStartActivity、newActivity等等，这样我们就可以在这些方法中添加代码逻辑进行判断这个Class是否加载了，如果加载则直接启动这个Activity，如果没有加载完成则启动一个等待的Activity显示给用户，然后在这个Activity中等待后台Secondary DEX加载完成，完成后自动跳转到用户实际要跳转的Activity；这样在代码充分解耦合，以及每个业务代码能够做到颗粒化的前提下，我们就做到Secondary DEX的按需加载了， 下面是Instrumentation添加的部分关键代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">public ActivityResult execStartActivity(Context who, IBinder contextThread, IBinder token, Activity target,</span><br><span class="line">                                        Intent intent, int requestCode) &#123;</span><br><span class="line">    ActivityResult activityResult = null;</span><br><span class="line">    String className;</span><br><span class="line">    if (intent.getComponent() != null) &#123;</span><br><span class="line">        className = intent.getComponent().getClassName();</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        ResolveInfo resolveActivity = who.getPackageManager().resolveActivity(intent, 0);</span><br><span class="line"></span><br><span class="line">        if (resolveActivity != null &amp;&amp; resolveActivity.activityInfo != null) &#123;</span><br><span class="line">            className = resolveActivity.activityInfo.name;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            className = null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!TextUtils.isEmpty(className)) &#123;</span><br><span class="line">        boolean shouldInterrupted = !MeituanApplication.isDexAvailable();</span><br><span class="line">        if (MeituanApplication.sIsDexAvailable.get() || mByPassActivityClassNameList.contains(className)) &#123;</span><br><span class="line">            shouldInterrupted = false;</span><br><span class="line">        &#125;</span><br><span class="line">        if (shouldInterrupted) &#123;</span><br><span class="line">            Intent interruptedIntent = new Intent(mContext, WaitingActivity.class);</span><br><span class="line"></span><br><span class="line">            activityResult = execStartActivity(who, contextThread, token, target, interruptedIntent, requestCode);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            activityResult = execStartActivity(who, contextThread, token, target, intent, requestCode);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        activityResult = execStartActivity(who, contextThread, token, target, intent, requestCode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return activityResult;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public Activity newActivity(Class&lt;?&gt; clazz, Context context, IBinder token,</span><br><span class="line">                            Application application, Intent intent, ActivityInfo info,</span><br><span class="line">                            CharSequence title, Activity parent, String id, Object lastNonConfigurationInstance)</span><br><span class="line">        throws InstantiationException, IllegalAccessException &#123;</span><br><span class="line"></span><br><span class="line">    String className = &quot;&quot;;</span><br><span class="line">    Activity newActivity = null;</span><br><span class="line">    if (intent.getComponent() != null) &#123;</span><br><span class="line">        className = intent.getComponent().getClassName();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    boolean shouldInterrupted = !MeituanApplication.isDexAvailable();</span><br><span class="line">    if (MeituanApplication.sIsDexAvailable.get() || mByPassActivityClassNameList.contains(className)) &#123;</span><br><span class="line">        shouldInterrupted = false;</span><br><span class="line">    &#125;</span><br><span class="line">    if (shouldInterrupted) &#123;</span><br><span class="line">        intent = new Intent(mContext, WaitingActivity.class);</span><br><span class="line">        newActivity = mBase.newActivity(clazz, context, token,</span><br><span class="line">                application, intent, info, title, parent, id,</span><br><span class="line">                lastNonConfigurationInstance);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        newActivity = mBase.newActivity(clazz, context, token,</span><br><span class="line">                application, intent, info, title, parent, id,</span><br><span class="line">                lastNonConfigurationInstance);</span><br><span class="line">    &#125;</span><br><span class="line">    return newActivity;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>实际应用中我们还遇到另外一个比较棘手的问题， 就是Field的过多的问题，Field过多是由我们目前采用的代码组织结构引入的，我们为了方便多业务线、多团队并发协作的情况下开发，我们采用的aar的方式进行开发，并同时在aar依赖链的最底层引入了一个通用业务aar，而这个通用业务aar中包含了很多资源，而ADT14以及更高的版本中对Library资源处理时，Library的R资源不再是static final的了，详情请查看google官方说明，这样在最终打包时Library中的R没法做到内联，这样带来了R field过多的情况，导致需要拆分多个Secondary DEX，为了解决这个问题我们采用的是在打包过程中利用脚本把Libray中R field（例如ID、Layout、Drawable等）的引用替换成常量，然后删去Library中R.class中的相应Field。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面就是我们在使用MultiDex过程中进化而来的DEX自动化拆包的方案， 这样我们就可以通过脚本控制来进行自动化的拆分DEX，然后在运行时自由的加载Secondary DEX，既能保证冷启动速度，又能减少运行时的内存占用。</p>
 <p>不想错过技术博客更新？想给文章评论、和作者互动？第一时间获取技术沙龙信息？</p>
-<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img data-src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>公众号二维码</p>
+<p>请关注我们的官方微信公众号“美团点评技术团队”。现在就拿出手机，扫一扫：<br><img src="http://tech.meituan.com/img/qrcode_for_gh.jpg" alt><br>公众号二维码</p>
 
     </div>
 
@@ -348,7 +350,6 @@ dependencies { compile &apos;com.android.support:MultiDex:1.0.0&apos;
   
   
 
-  </div>
 
 
           </div>
@@ -436,14 +437,13 @@ dependencies { compile &apos;com.android.support:MultiDex:1.0.0&apos;
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+        <a href="/atom.xml" title="RSS → /atom.xml"><i class="rss fa-fw"></i>RSS</a>
       </span>
   </div>
 
 
   <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
       Links
     </div>
     <ul class="links-of-blogroll-list">
@@ -467,17 +467,19 @@ dependencies { compile &apos;com.android.support:MultiDex:1.0.0&apos;
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">IPCreator</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
+      <i class="fa fa-chart-area"></i>
     </span>
     <span title="站点总字数">27.2m</span>
     <span class="post-meta-divider">|</span>
@@ -486,7 +488,7 @@ dependencies { compile &apos;com.android.support:MultiDex:1.0.0&apos;
     </span>
     <span title="站点阅读时长">411:44</span>
 </div>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -527,7 +529,6 @@ dependencies { compile &apos;com.android.support:MultiDex:1.0.0&apos;
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
@@ -570,6 +571,26 @@ dependencies { compile &apos;com.android.support:MultiDex:1.0.0&apos;
 
 
 
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
 
 
 
@@ -583,7 +604,7 @@ dependencies { compile &apos;com.android.support:MultiDex:1.0.0&apos;
       quicklink({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri == 'https://hazyman.com/Android/IPCreator/Technology/Program/Android/dynamic-load-android-dex-from-meituan/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://hazyman.com/Android/IPCreator/Technology/Program/Android/dynamic-load-android-dex-from-meituan/',]
       });
       });
   </script>
@@ -608,9 +629,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       meta       : guest,
       pageSize   : '10' || 10,
       visitor    : false,
-      lang       : 'zh-cn' || 'zh-cn',
+      lang       : '' || 'zh-cn',
       path       : location.pathname,
-      recordIP   : true,
+      recordIP   : false,
       serverURLs : ''
     });
   }, window.Valine);
